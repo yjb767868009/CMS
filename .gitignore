@@ -1,4 +1,11 @@
-/target/
+target/classes
+target/generated-sources
+target/generated-test-sources
+target/maven-archiver
+target/maven-status
+target/test-classes
+target/springboot_vue-0.0.1-SNAPSHOT.jar.original
+
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
@@ -8,7 +15,6 @@
 .project
 .settings
 .springBeans
-.sts4-cache
 
 ### IntelliJ IDEA ###
 .idea
@@ -17,9 +23,14 @@
 *.ipr
 
 ### NetBeans ###
-/nbproject/private/
-/build/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+## images
+*.lpop
+
+## NodeJS
+node_modules

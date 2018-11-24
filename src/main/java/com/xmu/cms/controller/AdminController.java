@@ -2,6 +2,7 @@ package com.xmu.cms.controller;
 
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.service.StudentService;
+import com.xmu.cms.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,21 +21,20 @@ import java.util.List;
 @RequestMapping(value = "/admin")
 public class AdminController {
 
-    private List<Teacher> teachers = new ArrayList<>();
-    private List<Student> students = new ArrayList<>();
-
     @Autowired
     private StudentService studentService;
 
+    @Autowired
+    private TeacherService teacherService;
+
     @PostMapping(value = "/login")
     public Admin adminLogIn(@ModelAttribute Admin admin){
-
         return admin;
     }
 
     @GetMapping(value = "/teachers")
     public List<Teacher> getAllTeachers(){
-        return teachers;
+        return teacherService.getAllTeachers();
     }
 
     @GetMapping(value = "/students")
@@ -44,7 +44,7 @@ public class AdminController {
 
     @PostMapping(value = "/teacher")
     public Teacher newTeacher(@ModelAttribute Teacher teacher){
-        return teacher;
+        return teacherService.newTeacher(teacher);
     }
 
     @PutMapping(value = "/teacher")

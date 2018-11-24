@@ -43,7 +43,7 @@ public class AdminController {
     }
 
     @PostMapping(value = "/teacher")
-    public Teacher newTeacher(@ModelAttribute Teacher teacher){
+    public String newTeacher(@ModelAttribute Teacher teacher){
         return teacherService.newTeacher(teacher);
     }
 

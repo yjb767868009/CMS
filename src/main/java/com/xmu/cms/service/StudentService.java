@@ -9,11 +9,11 @@ import java.util.List;
  * @version 1.0
  */
 public interface StudentService {
-    public List<Student> getAllStudents();
+    List<Student> getAllStudents();
 
-    public Student newStudent(Student student);
+    String newStudent(Student student);
 
-    public Student modifyStudent(Student student);
+    String modifyStudent(Student student);
 
-    public Student deleteStudent(Student student);
+    String deleteStudent(Student student);
 }

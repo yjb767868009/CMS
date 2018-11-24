@@ -9,11 +9,11 @@ import java.util.List;
  * @version 1.0
  */
 public interface TeacherService {
-    public List<Teacher> getAllTeachers();
+    List<Teacher> getAllTeachers();
 
-    public Teacher newTeacher(Teacher teacher);
+    String newTeacher(Teacher teacher);
 
-    public Teacher modifyTeacher(Teacher teacher);
+    String modifyTeacher(Teacher teacher);
 
-    public Teacher deleteTeacher(Teacher teacher);
+    String deleteTeacher(Teacher teacher);
 }

@@ -24,17 +24,17 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student newStudent(Student student) {
+    public String newStudent(Student student) {
         return studentDao.newStudent(student);
     }
 
     @Override
-    public Student modifyStudent(Student student) {
-        return studentDao.modiftStudent(student);
+    public String modifyStudent(Student student) {
+        return studentDao.modifyStudent(student);
     }
 
     @Override
-    public Student deleteStudent(Student student) {
+    public String deleteStudent(Student student) {
         return studentDao.deleteStudent(student);
     }
 }

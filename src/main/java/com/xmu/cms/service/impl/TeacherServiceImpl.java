@@ -1,6 +1,7 @@
 package com.xmu.cms.service.impl;
 
 import com.xmu.cms.entity.Teacher;
+import com.xmu.cms.dao.TeacherDao;
 import com.xmu.cms.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,17 +22,17 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher newTeacher(Teacher teacher) {
-        return teacherDao.newTeacher();
+    public String newTeacher(Teacher teacher) {
+        return teacherDao.newTeacher(teacher);
     }
 
     @Override
-    public Teacher modifyTeacher(Teacher teacher) {
-        return teacherDao.modifyTeacher();
+    public String modifyTeacher(Teacher teacher) {
+        return teacherDao.modifyTeacher(teacher);
     }
 
     @Override
-    public Teacher deleteTeacher(Teacher teacher) {
-        return teacherDao.deleteTeacher();
+    public String deleteTeacher(Teacher teacher) {
+        return teacherDao.deleteTeacher(teacher);
     }
 }

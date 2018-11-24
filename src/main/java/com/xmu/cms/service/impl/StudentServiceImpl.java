@@ -22,4 +22,19 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getAllStudents() {
         return studentDao.getAllStudents();
     }
+
+    @Override
+    public Student newStudent(Student student) {
+        return studentDao.newStudent(student);
+    }
+
+    @Override
+    public Student modifyStudent(Student student) {
+        return studentDao.modiftStudent(student);
+    }
+
+    @Override
+    public Student deleteStudent(Student student) {
+        return studentDao.deleteStudent(student);
+    }
 }

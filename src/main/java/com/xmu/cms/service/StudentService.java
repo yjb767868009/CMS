@@ -10,4 +10,10 @@ import java.util.List;
  */
 public interface StudentService {
     public List<Student> getAllStudents();
+
+    public Student newStudent(Student student);
+
+    public Student modifyStudent(Student student);
+
+    public Student deleteStudent(Student student);
 }

@@ -13,5 +13,11 @@ import java.util.List;
 
 @Mapper
 public interface StudentDao {
-    public List<Student> getAllStudents();
+    List<Student> getAllStudents();
+
+    String newStudent(Student student);
+
+    String modifyStudent(Student student);
+
+    String deleteStudent(Student student);
 }

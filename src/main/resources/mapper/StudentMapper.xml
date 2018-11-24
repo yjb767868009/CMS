@@ -7,4 +7,19 @@
         SELECT * FROM student
     </select>
 
+    <insert id="newStudent" parameterType="com.xmu.cms.entity.Student">
+        INSERT INTO student(id, account, password, email, name, messageInterval, activation)
+        VALUE (#{id},#{account},#{password},#{email},#{name},#{messageInterval},#{activation})
+    </insert>
+
+    <update id="modifyStudent" parameterType="com.xmu.cms.entity.Student">
+        UPDATE student
+        SET  account=#{account},password=#{password},email=#{email},name=#{name},messageInterval=#{messageInterval},activation=#{activation}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="deleteStudent" parameterType="com.xmu.cms.entity.Student">
+        DELETE FROM student WHERE id=#{id}
+    </delete>
+
 </mapper>

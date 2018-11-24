@@ -1,6 +1,7 @@
 package com.xmu.cms.service;
 
 import com.xmu.cms.entity.Teacher;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

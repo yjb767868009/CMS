@@ -7,20 +7,30 @@ import java.awt.*;
  * @version 1.0
  */
 public class Teacher {
-    private String id;
+    private Long id;
     private String account;
     private String password;
     private String email;
     private String name;
+    private Integer messageInterval;
+    private Boolean activation;
 
-    private boolean activation;
-    private int messageInterval;
-
-    public Teacher(String id, String account, String password, String email) {
+    public Teacher(Long id, String account, String password, String email, String name, Integer messageInterval, Boolean activation) {
         this.id = id;
         this.account = account;
         this.password = password;
         this.email = email;
+        this.name = name;
+        this.messageInterval = messageInterval;
+        this.activation = activation;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getAccount() {
@@ -55,19 +65,19 @@ public class Teacher {
         this.name = name;
     }
 
-    public boolean isActivation() {
-        return activation;
-    }
-
-    public void setActivation(boolean activation) {
-        this.activation = activation;
-    }
-
-    public int getMessageInterval() {
+    public Integer getMessageInterval() {
         return messageInterval;
     }
 
-    public void setMessageInterval(int messageInterval) {
+    public void setMessageInterval(Integer messageInterval) {
         this.messageInterval = messageInterval;
+    }
+
+    public Boolean getActivation() {
+        return activation;
+    }
+
+    public void setActivation(Boolean activation) {
+        this.activation = activation;
     }
 }

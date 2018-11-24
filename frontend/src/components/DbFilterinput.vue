@@ -29,6 +29,11 @@
         <el-form-item>
             <el-button>搜索</el-button>
         </el-form-item>
+        
+        <el-form-item>
+            <el-button type="primary" class="el-icon-plus"> 新增教师账号</el-button>
+        </el-form-item>
+        
         <!-- <el-form-item v-if='formInline.sex' label="Description">
             <el-input v-model="formInline.email" placeholder="Please input suffix of email"></el-input>
         </el-form-item>
@@ -36,6 +41,8 @@
         <el-form-item v-else='formInline.sex' label="Description">
             <el-input v-model="formInline.email" disabled placeholder="Please input suffix of email"></el-input>
         </el-form-item> -->
+
+
 
     </el-form>
 </template>

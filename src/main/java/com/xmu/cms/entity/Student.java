@@ -6,19 +6,30 @@ package com.xmu.cms.entity;
  */
 public class Student {
 
-    private String id;
+    private Long id;
     private String account;
     private String password;
     private String email;
     private String name;
-    private boolean activation;
-    private int messageInterval;
+    private Integer messageInterval;
+    private Integer activation;
 
-    public Student(String id, String account, String password, String name) {
+    public Student(Long id, String account, String password, String email, String name, Integer messageInterval, Integer activation) {
         this.id = id;
         this.account = account;
         this.password = password;
+        this.email = email;
         this.name = name;
+        this.messageInterval = messageInterval;
+        this.activation = activation;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getAccount() {
@@ -53,19 +64,19 @@ public class Student {
         this.name = name;
     }
 
-    public boolean isActivation() {
-        return activation;
-    }
-
-    public void setActivation(boolean activation) {
-        this.activation = activation;
-    }
-
-    public int getMessageInterval() {
+    public Integer getMessageInterval() {
         return messageInterval;
     }
 
-    public void setMessageInterval(int messageInterval) {
+    public void setMessageInterval(Integer messageInterval) {
         this.messageInterval = messageInterval;
+    }
+
+    public Integer getActivation() {
+        return activation;
+    }
+
+    public void setActivation(Integer activation) {
+        this.activation = activation;
     }
 }

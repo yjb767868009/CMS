@@ -3,7 +3,7 @@
 
 <mapper namespace="com.xmu.cms.dao.StudentDao">
 
-    <select id="getAllStudents" parameterType="com.xmu.cms.entity.Student" resultType="com.xmu.cms.entity.Student">
+    <select id="getAllStudents" resultType="com.xmu.cms.entity.Student">
         SELECT * FROM student
     </select>
 

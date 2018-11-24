@@ -8,7 +8,7 @@
             <el-table-column
                     fixed
                     prop="id"
-                    label="教工号"
+                    label="学号"
                     width="100">
             </el-table-column>
             <el-table-column
@@ -50,13 +50,13 @@
 
 <script>
     import Bus from '../eventBus'
-    import DbModal from './DbModal.vue'
+    import DbModal from './StudentModal.vue'
 
     export default {
         data(){
             return {
                 tableData: [],
-                apiUrl: 'http://127.0.0.1:8000/api/persons',
+                apiUrl: 'http://127.0.0.1:8000/api/admin',
                 total: 0,
                 pageSize: 10,
                 currentPage: 1,
@@ -67,7 +67,7 @@
             }
         },
         components: {
-            DbModal
+            StudentModal
         },
         mounted () {
             this.getCustomers();

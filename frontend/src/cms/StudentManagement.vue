@@ -7,7 +7,7 @@
             </el-col>
             <el-col :span="20" class="content">
                 <db-filterinput></db-filterinput>
-                <teacher-table></teacher-table>
+                <student-table></student-table>
             </el-col>
 
 
@@ -29,12 +29,12 @@
     import CmsHeader  from './components/CmsHeader.vue'
     import CmsSidebar from './components/CmsSidebar.vue'
     import DbFilterinput from './components/DbFilterinput.vue'
-    import TeacherTable from './components/TeacherTable.vue'
+    import TeacherTable from './components/StudentTable.vue'
     import CmsFooter from './components/CmsFooter.vue'
     import ElRow from "element-ui/packages/row/src/row";
 
     export default {
-        name: 'app',
+        name: 'StudentManagement',
         components: {
             ElRow, CmsHeader,
             CmsSidebar,

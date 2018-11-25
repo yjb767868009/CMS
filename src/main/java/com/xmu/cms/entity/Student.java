@@ -5,8 +5,7 @@ package com.xmu.cms.entity;
  * @version 1.0
  */
 public class Student {
-
-    private Long id;
+    private Long studentId;
     private String account;
     private String password;
     private String email;
@@ -14,8 +13,8 @@ public class Student {
     private Integer messageInterval;
     private Integer activation;
 
-    public Student(Long id, String account, String password, String email, String name, Integer messageInterval, Integer activation) {
-        this.id = id;
+    public Student(Long studentId, String account, String password, String email, String name, Integer messageInterval, Integer activation) {
+        this.studentId = studentId;
         this.account = account;
         this.password = password;
         this.email = email;
@@ -24,12 +23,12 @@ public class Student {
         this.activation = activation;
     }
 
-    public Long getId() {
-        return id;
+    public Long getStudentId() {
+        return studentId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
     public String getAccount() {

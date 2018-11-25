@@ -1,13 +1,11 @@
 package com.xmu.cms.entity;
 
-import java.awt.*;
-
 /**
  * @author JuboYu on 2018/11/23.
  * @version 1.0
  */
 public class Teacher {
-    private Long id;
+    private Long teacherId;
     private String account;
     private String password;
     private String email;
@@ -15,8 +13,8 @@ public class Teacher {
     private Integer messageInterval;
     private Boolean activation;
 
-    public Teacher(Long id, String account, String password, String email, String name, Integer messageInterval, Boolean activation) {
-        this.id = id;
+    public Teacher(Long teacherId, String account, String password, String email, String name, Integer messageInterval, Boolean activation) {
+        this.teacherId = teacherId;
         this.account = account;
         this.password = password;
         this.email = email;
@@ -25,12 +23,12 @@ public class Teacher {
         this.activation = activation;
     }
 
-    public Long getId() {
-        return id;
+    public Long getTeacherId() {
+        return teacherId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTeacherId(Long id) {
+        this.teacherId = id;
     }
 
     public String getAccount() {

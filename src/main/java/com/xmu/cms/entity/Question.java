@@ -1,33 +1,61 @@
 package com.xmu.cms.entity;
 
 /**
- * @author Zhengjing Zhang on 2018/11/24.
+ * @author JuboYu on 2018/11/25.
  * @version 1.0
  */
 public class Question {
     private Long id;
     private boolean selected;
     private double score;
-    public Question(){
-        selected=false;
-        score=0;
+    private Long studentId;
+    private Long presentationId;
+
+    public Question(Long id, boolean selected, double score, Long studentId, Long presentationId) {
+        this.id = id;
+        this.selected = selected;
+        this.score = score;
+        this.studentId = studentId;
+        this.presentationId = presentationId;
     }
-    public void setID(Long id){
-        this.id=id;
+
+    public Long getId() {
+        return id;
     }
-    public Long getID(){
-        return this.id;
+
+    public void setId(Long id) {
+        this.id = id;
     }
-    public void isSelected(){
-        selected=true;
+
+    public boolean isSelected() {
+        return selected;
     }
-    public void notSelected(){
-        selected=false;
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
-    public void setScore(double score){
-        this.score=score;
+
+    public double getScore() {
+        return score;
     }
-    public double get_score(){
-        return this.score;
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public Long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
+    }
+
+    public Long getPresentationId() {
+        return presentationId;
+    }
+
+    public void setPresentationId(Long presentationId) {
+        this.presentationId = presentationId;
     }
 }

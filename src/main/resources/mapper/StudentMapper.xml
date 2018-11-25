@@ -12,13 +12,13 @@
         VALUE (#{studentId},#{account},#{password},#{email},#{name},#{messageInterval},#{activation})
     </insert>
 
-    <update id="modifyStudent" parameterType="com.xmu.cms.entity.Student">
+    <update id="modifyStudentById" parameterType="java.lang.Long">
         UPDATE student
         SET  account=#{account},password=#{password},email=#{email},name=#{name},messageInterval=#{messageInterval},activation=#{activation}
         WHERE studentId=#{studentId}
     </update>
 
-    <delete id="deleteStudent" parameterType="com.xmu.cms.entity.Student">
+    <delete id="deleteStudentById" parameterType="java.lang.Long">
         DELETE FROM student WHERE studentId=#{studentId}
     </delete>
 

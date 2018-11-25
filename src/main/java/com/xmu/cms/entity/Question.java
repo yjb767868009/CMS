@@ -1,7 +1,7 @@
 package com.xmu.cms.entity;
 
 /**
- * @author JuboYu on 2018/11/25.aa
+ * @author JuboYu on 2018/11/25.ab
  * @version 1.0
  */
 public class Question {

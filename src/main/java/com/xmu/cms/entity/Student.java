@@ -5,15 +5,15 @@ package com.xmu.cms.entity;
  * @version 1.0
  */
 public class Student {
-    private Long studentId;
+    private Integer studentId;
     private String account;
     private String password;
     private String email;
     private String name;
     private Integer messageInterval;
-    private Integer activation;
+    private Boolean activation;
 
-    public Student(Long studentId, String account, String password, String email, String name, Integer messageInterval, Integer activation) {
+    public Student(Integer studentId, String account, String password, String email, String name, Integer messageInterval, Boolean activation) {
         this.studentId = studentId;
         this.account = account;
         this.password = password;
@@ -23,11 +23,11 @@ public class Student {
         this.activation = activation;
     }
 
-    public Long getStudentId() {
+    public Integer getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(Long studentId) {
+    public void setStudentId(Integer studentId) {
         this.studentId = studentId;
     }
 
@@ -71,11 +71,11 @@ public class Student {
         this.messageInterval = messageInterval;
     }
 
-    public Integer getActivation() {
+    public Boolean getActivation() {
         return activation;
     }
 
-    public void setActivation(Integer activation) {
+    public void setActivation(Boolean activation) {
         this.activation = activation;
     }
 }

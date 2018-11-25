@@ -5,13 +5,13 @@ package com.xmu.cms.entity;
  * @version 1.0
  */
 public class Question {
-    private Long questionId;
+    private Integer questionId;
     private boolean selected;
     private double score;
-    private Long studentId;
-    private Long presentationId;
+    private Integer studentId;
+    private Integer presentationId;
 
-    public Question(Long questionId, boolean selected, double score, Long studentId, Long presentationId) {
+    public Question(Integer questionId, boolean selected, double score, Integer studentId, Integer presentationId) {
         this.questionId = questionId;
         this.selected = selected;
         this.score = score;
@@ -19,11 +19,11 @@ public class Question {
         this.presentationId = presentationId;
     }
 
-    public Long getQuestionId() {
+    public Integer getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(Long questionId) {
+    public void setQuestionId(Integer questionId) {
         this.questionId = questionId;
     }
 
@@ -43,19 +43,19 @@ public class Question {
         this.score = score;
     }
 
-    public Long getStudentId() {
+    public Integer getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(Long studentId) {
+    public void setStudentId(Integer studentId) {
         this.studentId = studentId;
     }
 
-    public Long getPresentationId() {
+    public Integer getPresentationId() {
         return presentationId;
     }
 
-    public void setPresentationId(Long presentationId) {
+    public void setPresentationId(Integer presentationId) {
         this.presentationId = presentationId;
     }
 }

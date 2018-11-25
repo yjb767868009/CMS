@@ -5,7 +5,7 @@ package com.xmu.cms.entity;
  * @version 1.0
  */
 public class Teacher {
-    private Long teacherId;
+    private Integer teacherId;
     private String account;
     private String password;
     private String email;
@@ -13,7 +13,7 @@ public class Teacher {
     private Integer messageInterval;
     private Boolean activation;
 
-    public Teacher(Long teacherId, String account, String password, String email, String name, Integer messageInterval, Boolean activation) {
+    public Teacher(Integer teacherId, String account, String password, String email, String name, Integer messageInterval, Boolean activation) {
         this.teacherId = teacherId;
         this.account = account;
         this.password = password;
@@ -23,11 +23,11 @@ public class Teacher {
         this.activation = activation;
     }
 
-    public Long getTeacherId() {
+    public Integer getTeacherId() {
         return teacherId;
     }
 
-    public void setTeacherId(Long id) {
+    public void setTeacherId(Integer id) {
         this.teacherId = id;
     }
 

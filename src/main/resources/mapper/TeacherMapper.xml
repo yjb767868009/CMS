@@ -19,11 +19,11 @@
     </update>
 
     <insert id="newTeacher">
-        INSERT teacher
-        SET teacherId=#{teacherId},account=#{account},password=#{password},email=#{email},name=#{name},messageInterval=#{messageInterval},activation=#{activation}
+        INSERT INTO teacher (account, password, email, name, messageInterval, activation)
+        VALUE (#{account},#{password},#{email},#{name},#{messageInterval},#{activation})
     </insert>
 
-    <delete id="deleteTeacherById" parameterType="java.lang.Long">
+    <delete id="deleteTeacherById" parameterType="java.lang.Integer">
         delete FROM teacher WHERE teacherId=#{teacherId}
     </delete>
 </mapper>

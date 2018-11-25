@@ -5,16 +5,16 @@ package com.xmu.cms.entity;
  * @version 1.0
  */
 public class Presentation {
-    private Long presentationId;
+    private Integer presentationId;
     private String ppt;
     private String report;
     private Float presentationScore;
     private Float reportScore;
     private Float teamOrder;
-    private Long teamId;
-    private Long seminarId;
+    private Integer teamId;
+    private Integer seminarId;
 
-    public Presentation(Long presentationId, String ppt, String report, Float presentationScore, Float reportScore, Float teamOrder, Long teamId, Long seminarId) {
+    public Presentation(Integer presentationId, String ppt, String report, Float presentationScore, Float reportScore, Float teamOrder, Integer teamId, Integer seminarId) {
         this.presentationId = presentationId;
         this.ppt = ppt;
         this.report = report;
@@ -25,11 +25,11 @@ public class Presentation {
         this.seminarId = seminarId;
     }
 
-    public Long getPresentationId() {
+    public Integer getPresentationId() {
         return presentationId;
     }
 
-    public void setPresentationId(Long presentationId) {
+    public void setPresentationId(Integer presentationId) {
         this.presentationId = presentationId;
     }
 
@@ -73,19 +73,19 @@ public class Presentation {
         this.teamOrder = teamOrder;
     }
 
-    public Long getTeamId() {
+    public Integer getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(Long teamId) {
+    public void setTeamId(Integer teamId) {
         this.teamId = teamId;
     }
 
-    public Long getSeminarId() {
+    public Integer getSeminarId() {
         return seminarId;
     }
 
-    public void setSeminarId(Long seminarId) {
+    public void setSeminarId(Integer seminarId) {
         this.seminarId = seminarId;
     }
 }

@@ -59,45 +59,80 @@ public class AdminController {
                              @RequestParam(value = "account") String account,
                              @RequestParam(value = "password") String password,
                              @RequestParam(value = "email") String email) {
-        return teacherDao.newTeacher(name,account,password,email);
+        Integer count = teacherDao.newTeacher(name, account, password, email,1,false);
+        if (count==0){
+            return "Insert error";
+        }else {
+            return "Success";
+        }
     }
 
     @PutMapping(value = "/teacher/{teacherId}")
-    public String modifyTeacherById(@PathVariable("teacherId") Long teacherId,
+    public String modifyTeacherById(@PathVariable("teacherId") Integer teacherId,
                                     @RequestParam(value = "name") String name,
                                     @RequestParam(value = "account") String account,
                                     @RequestParam(value = "email") String email) {
-        return teacherDao.modifyTeacherById(teacherId, name, account, email);
+        Integer count = teacherDao.modifyTeacherById(teacherId, name, account, email);
+        if (count == 0) {
+            return "Update error";
+        } else {
+            return "Success";
+        }
     }
 
     @PatchMapping(value = "/teacher/{teacherId}/modifyPassword")
-    public String modifyTeacherPasswordById(@PathVariable("teacherId") Long teacherId,
+    public String modifyTeacherPasswordById(@PathVariable("teacherId") Integer teacherId,
                                             @RequestParam(value = "password") String password) {
-        return teacherDao.modifyTeacherPasswordById(teacherId, password);
+        Integer count = teacherDao.modifyTeacherPasswordById(teacherId, password);
+        if (count == 0) {
+            return "Update error";
+        } else {
+            return "Success";
+        }
     }
 
     @DeleteMapping(value = "/teacher/{teacherId}")
-    public String deleteTeacher(@PathVariable("teacherId") Long teacherId) {
-        return teacherDao.deleteTeacherById(teacherId);
+    public String deleteTeacher(@PathVariable("teacherId") Integer teacherId) {
+        Integer count = teacherDao.deleteTeacherById(teacherId);
+        if (count == 0) {
+            return "Delete error";
+        } else {
+            return "Success";
+        }
     }
 
     @PutMapping(value = "/student/{studentId}")
-    public String modifyStudent(@PathVariable("studentId") Long studentId,
-                                 @RequestParam("name") String name,
-                                 @RequestParam("account") String account,
-                                 @RequestParam("email") String email) {
-        return studentDao.modifyStudentById(studentId,name,account,email);
+    public String modifyStudent(@PathVariable("studentId") Integer studentId,
+                                @RequestParam("name") String name,
+                                @RequestParam("account") String account,
+                                @RequestParam("email") String email) {
+        Integer count = studentDao.modifyStudentById(studentId, name, account, email);
+        if (count == 0) {
+            return "Update error";
+        } else {
+            return "Success";
+        }
     }
 
     @PatchMapping(value = "student/{studentId}/modifyPassword")
-    public String modifyStudentPasswordById(@PathVariable("studentId") Long studentId,
-                                            @RequestParam(value = "password") String password){
-        return studentDao.modifyStudentPasswordById(studentId,password);
+    public String modifyStudentPasswordById(@PathVariable("studentId") Integer studentId,
+                                            @RequestParam(value = "password") String password) {
+        Integer count = studentDao.modifyStudentPasswordById(studentId, password);
+        if (count == 0) {
+            return "Update error";
+        } else {
+            return "Success";
+        }
     }
 
     @DeleteMapping(value = "/student/{studentId}")
-    public String deleteStudent(@PathVariable("studentId") Long studentId) {
-        return studentDao.deleteStudentById(studentId);
+    public String deleteStudent(@PathVariable("studentId") Integer studentId) {
+        Integer count = studentDao.deleteStudentById(studentId);
+        if (count == 0) {
+            return "Delete error";
+        } else {
+            return "Success";
+        }
     }
 
 }

@@ -1,11 +1,14 @@
 package com.xmu.cms.dao;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
  * @author JuboYu on 2018/11/25.
  * @version 1.0
  */
+
+@Mapper
 public interface AdminDao {
     /**
      * search password by account

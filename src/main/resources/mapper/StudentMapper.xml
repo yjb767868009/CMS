@@ -24,7 +24,7 @@
         WHERE studentId=#{studentId}
     </update>
 
-    <delete id="deleteStudentById" parameterType="java.lang.Long">
+    <delete id="deleteStudentById" parameterType="java.lang.Integer">
         DELETE FROM student WHERE studentId=#{studentId}
     </delete>
 

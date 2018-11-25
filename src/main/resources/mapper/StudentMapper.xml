@@ -14,7 +14,7 @@
 
     <update id="modifyStudentById">
         UPDATE student
-        SET  name=#{name},account=#{account},email=#{email}
+        SET name=#{name},account=#{account},email=#{email}
         WHERE studentId=#{studentId}
     </update>
 

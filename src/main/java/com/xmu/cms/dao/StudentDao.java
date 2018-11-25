@@ -47,6 +47,7 @@ public interface StudentDao {
      * modify student's password by his id
      *
      * @param studentId student's id
+     * @param password student's new password
      * @return String message
      */
     String modifyStudentPasswordById(@Param("studentId") Long studentId,

@@ -43,9 +43,9 @@ public interface TeacherDao {
      * @return String message
      */
     String modifyTeacherById(@Param("teacherId") Long teacherId,
-                             @Param("name") Long name,
-                             @Param("account") Long account,
-                             @Param("email") Long email);
+                             @Param("name") String name,
+                             @Param("account") String account,
+                             @Param("email") String email);
 
     /**
      * modify teacher's password by his id

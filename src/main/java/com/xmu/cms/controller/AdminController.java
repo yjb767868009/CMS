@@ -2,17 +2,14 @@ package com.xmu.cms.controller;
 
 import com.xmu.cms.dao.StudentDao;
 import com.xmu.cms.dao.TeacherDao;
+import com.xmu.cms.dao.AdminDao;
 import com.xmu.cms.entity.Student;
-import com.xmu.cms.service.StudentService;
-import com.xmu.cms.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.xmu.cms.entity.Admin;
 import com.xmu.cms.entity.Teacher;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,7 +59,7 @@ public class AdminController {
                              @RequestParam(value = "account") String account,
                              @RequestParam(value = "password") String password,
                              @RequestParam(value = "email") String email) {
-        return teacherDao.newTeacher(teacher);
+        return teacherDao.newTeacher(name,account,password,email);
     }
 
     @PutMapping(value = "/teacher/{teacherId}")

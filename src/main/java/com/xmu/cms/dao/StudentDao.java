@@ -39,9 +39,9 @@ public interface StudentDao {
      * @return String message
      */
     String modifyStudentById(@Param("studentId")Long studentId,
-                             @Param("name") Long name,
-                             @Param("account") Long account,
-                             @Param("email") Long email);
+                             @Param("name") String name,
+                             @Param("account") String account,
+                             @Param("email") String email);
 
     /**
      * modify student's password by his id

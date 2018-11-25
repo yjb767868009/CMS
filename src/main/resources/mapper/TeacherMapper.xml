@@ -6,15 +6,24 @@
         SELECT * from teacher
     </select>
 
-    <update id="modifyTeacher" parameterType="com.xmu.cms.entity.Teacher">
-
+    <update id="modifyTeacherById">
+        UPDATE teacher
+        SET name=#{name},account=#{account},email=#{email}
+        WHERE teacherId=#{teacherId}
     </update>
 
-    <insert id="newTeacher" parameterType="com.xmu.cms.entity.Teacher">
+    <update id="modifyTeacherPasswordById">
+        UPDATE teacher
+        SET password=#{password}
+        WHERE teacherId=#{teacherId}
+    </update>
 
+    <insert id="newTeacher">
+        INSERT teacher
+        SET teacherId=#{teacherId},account=#{account},password=#{password},email=#{email},name=#{name},messageInterval=#{messageInterval},activation=#{activation}
     </insert>
 
-    <delete id="deleteTeacher" parameterType="com.xmu.cms.entity.Teacher">
-
+    <delete id="deleteTeacherById" parameterType="java.lang.Long">
+        delete FROM teacher WHERE teacherId=#{teacherId}
     </delete>
 </mapper>

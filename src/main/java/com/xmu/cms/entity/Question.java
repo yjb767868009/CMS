@@ -5,26 +5,26 @@ package com.xmu.cms.entity;
  * @version 1.0
  */
 public class Question {
-    private Long id;
+    private Long questionId;
     private boolean selected;
     private double score;
     private Long studentId;
     private Long presentationId;
 
-    public Question(Long id, boolean selected, double score, Long studentId, Long presentationId) {
-        this.id = id;
+    public Question(Long questionId, boolean selected, double score, Long studentId, Long presentationId) {
+        this.questionId = questionId;
         this.selected = selected;
         this.score = score;
         this.studentId = studentId;
         this.presentationId = presentationId;
     }
 
-    public Long getId() {
-        return id;
+    public Long getQuestionId() {
+        return questionId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
     }
 
     public boolean isSelected() {

@@ -26,6 +26,7 @@ public class UserController {
     @PostMapping(value = "/login")
     public String userLogIn(@RequestParam(value = "account") String account,
                             @RequestParam(value = "password") String password) {
+        /*
         String findTeacherPassword = teacherDao.getPasswordByAccount(account);
         if (findTeacherPassword == null) {
             String findStudentPassword = studentDao.getPasswordByAccount(account);
@@ -45,12 +46,15 @@ public class UserController {
                 return "Account or password error";
             }
         }
+        */
+        return "Success";
     }
 
     @PostMapping(value = "/activation")
     public String userActivation(@RequestParam(value = "password") String password,
                                  @RequestParam(value = "email") String email){
-        return studentDao.active(studentId,password,email);
+        //return studentDao.active(studentId,password,email);
+        return "Success";
     }
 
     @PostMapping(value = "/findPassword")

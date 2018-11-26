@@ -10,15 +10,17 @@ public class Student {
     private String password;
     private String email;
     private String name;
+    private String phone;
     private Integer messageInterval;
     private Boolean activation;
 
-    public Student(Integer studentId, String account, String password, String email, String name, Integer messageInterval, Boolean activation) {
+    public Student(Integer studentId, String account, String password, String email, String name, String phone, Integer messageInterval, Boolean activation) {
         this.studentId = studentId;
         this.account = account;
         this.password = password;
         this.email = email;
         this.name = name;
+        this.phone = phone;
         this.messageInterval = messageInterval;
         this.activation = activation;
     }
@@ -77,5 +79,13 @@ public class Student {
 
     public void setActivation(Boolean activation) {
         this.activation = activation;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

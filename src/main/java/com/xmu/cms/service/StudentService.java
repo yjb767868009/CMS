@@ -3,6 +3,7 @@ package com.xmu.cms.service;
 import com.xmu.cms.dao.StudentDao;
 import com.xmu.cms.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -10,13 +11,14 @@ import java.util.List;
  * @author JuboYu on 2018/11/26.
  * @version 1.0
  */
+
 public interface StudentService {
-    public List<Student> getAllStudents();
+    List<Student> getAllStudents();
 
-    public String modifyStudentById(Integer studentId, String name, String account, String email);
+    String modifyStudentById(Integer studentId, String name, String account, String email);
 
-    public String modifyStudentPasswordById(Integer studentId, String password);
+    String modifyStudentPasswordById(Integer studentId, String password);
 
-    public String deleteStudentById(Integer studentId);
+    String deleteStudentById(Integer studentId);
 
 }

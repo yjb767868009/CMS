@@ -1,8 +1,5 @@
 package com.xmu.cms.controller;
 
-import com.xmu.cms.dao.StudentDao;
-import com.xmu.cms.dao.TeacherDao;
-import com.xmu.cms.dao.AdminDao;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.service.AdminService;
 import com.xmu.cms.service.StudentService;
@@ -24,18 +21,18 @@ import java.util.List;
 public class AdminController {
 
     @Autowired
+    private AdminService adminService;
+
+    @Autowired
     private StudentService studentService;
 
     @Autowired
     private TeacherService teacherService;
 
-    @Autowired
-    private AdminService adminService;
-
     @PostMapping(value = "/login")
     public String adminLogIn(@RequestParam(value = "account") String account,
                              @RequestParam(value = "password") String password) {
-        return adminService.adminLogIn(account,password);
+        return adminService.adminLogIn(account, password);
     }
 
     @GetMapping(value = "/teachers")
@@ -53,7 +50,7 @@ public class AdminController {
                              @RequestParam(value = "account") String account,
                              @RequestParam(value = "password") String password,
                              @RequestParam(value = "email") String email) {
-        return teacherService.newTeacher(name,account,password,email);
+        return teacherService.newTeacher(name, account, password, email);
     }
 
     @PutMapping(value = "/teacher/{teacherId}")
@@ -61,13 +58,13 @@ public class AdminController {
                                     @RequestParam(value = "name") String name,
                                     @RequestParam(value = "account") String account,
                                     @RequestParam(value = "email") String email) {
-        return teacherService.modifyTeacherById(teacherId,name,account,email);
+        return teacherService.modifyTeacherById(teacherId, name, account, email);
     }
 
     @PatchMapping(value = "/teacher/{teacherId}/modifyPassword")
     public String modifyTeacherPasswordById(@PathVariable("teacherId") Integer teacherId,
                                             @RequestParam(value = "password") String password) {
-        return teacherService.modifyTeacherPasswordById(teacherId,password);
+        return teacherService.modifyTeacherPasswordById(teacherId, password);
     }
 
     @DeleteMapping(value = "/teacher/{teacherId}")
@@ -80,13 +77,13 @@ public class AdminController {
                                 @RequestParam("name") String name,
                                 @RequestParam("account") String account,
                                 @RequestParam("email") String email) {
-        return studentService.modifyStudentById(studentId,name,account,email);
+        return studentService.modifyStudentById(studentId, name, account, email);
     }
 
     @PatchMapping(value = "student/{studentId}/modifyPassword")
     public String modifyStudentPasswordById(@PathVariable("studentId") Integer studentId,
                                             @RequestParam(value = "password") String password) {
-        return studentService.modifyStudentPasswordById(studentId,password);
+        return studentService.modifyStudentPasswordById(studentId, password);
     }
 
     @DeleteMapping(value = "/student/{studentId}")

@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
  * @author JuboYu on 2018/11/26.
  * @version 1.0
  */
-@Service
-public interface AdminService {
 
-    public String adminLogIn(String account,String password);
+public interface AdminService {
+    String adminLogIn(String account, String password);
 }

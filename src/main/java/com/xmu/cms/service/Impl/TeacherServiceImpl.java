@@ -4,6 +4,7 @@ import com.xmu.cms.dao.TeacherDao;
 import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @author JuboYu on 2018/11/26.
  * @version 1.0
  */
+@Service
 public class TeacherServiceImpl implements TeacherService {
     @Autowired
     private TeacherDao teacherDao;

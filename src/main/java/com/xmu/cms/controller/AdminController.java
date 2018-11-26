@@ -59,10 +59,10 @@ public class AdminController {
                              @RequestParam(value = "account") String account,
                              @RequestParam(value = "password") String password,
                              @RequestParam(value = "email") String email) {
-        Integer count = teacherDao.newTeacher(name, account, password, email,1,false);
-        if (count==0){
+        Integer count = teacherDao.newTeacher(name, account, password, email, 1, false);
+        if (count == 0) {
             return "Insert error";
-        }else {
+        } else {
             return "Success";
         }
     }

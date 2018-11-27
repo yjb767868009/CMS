@@ -1,48 +1,21 @@
 <template>
     <el-form :inline="true" :model="formInline">
 
-        <!-- <el-form-item label="">
-            <el-select v-model="formInline.sex" clearable placeholder="number or name"
+        <el-form-item label="">
+            <el-input v-model="formInline.number" clearable placeholder="输入教工号"
                        v-on:visible-change="selectDemo">
-                <el-option
-                        v-for="(item, index) in type_options"
-                        :key = "index"
-                        :label="item.label"
-                        :value="item.value">
-                </el-option>
-            </el-select>
-        </el-form-item> -->
-        <el-form-item>
-        <el-input
-            placeholder= "number or name"
-            clearable
-            prefix-icon="el-icon-search"
-            v-model="formInline.filter"
-        >
-        </el-input>
+            </el-input>
         </el-form-item>
-        
+
         <el-form-item label="每页显示">
-            <el-select v-model="formInline.itemsPerPage"></el-select>
+            <el-select v-model="formInline.page" placeholder="5">
+                <el-option>1</el-option>
+                <el-option>2</el-option>
+                <el-option>3</el-option>
+                <el-option>4</el-option>
+                <el-option>5</el-option>
+            </el-select>
         </el-form-item>
-
-        <el-form-item>
-            <el-button>搜索</el-button>
-        </el-form-item>
-        
-        <el-form-item>
-            <el-button type="primary" class="el-icon-plus"> 新增教师账号</el-button>
-        </el-form-item>
-        
-        <!-- <el-form-item v-if='formInline.sex' label="Description">
-            <el-input v-model="formInline.email" placeholder="Please input suffix of email"></el-input>
-        </el-form-item>
-
-        <el-form-item v-else='formInline.sex' label="Description">
-            <el-input v-model="formInline.email" disabled placeholder="Please input suffix of email"></el-input>
-        </el-form-item> -->
-
-
 
     </el-form>
 </template>
@@ -57,22 +30,22 @@
             return {
                 type_options: [],
                 formInline: {
-                    sex: '',
-                    email: ''
+                    number: '',
+                    page: '5'
                 },
                 formLabelWidth: '120px'
             }
         },
 
         watch: {
-            'formInline.sex': 'filterResultData',
-            'formInline.email': 'filterResultData'
+            'formInline.number': 'filterResultData',
+            'formInline.page': 'filterResultData'
         },
 
         methods: {
             selectDemo: function (params) {
                 if (params) {
-                    this.$axios.get("http://127.0.0.1:8000/api/persons/sex")
+                    this.$axios.get(`http://127.0.0.1:8000/teachers/${this.formInline.number}`)
                         .then((response) => {
                             this.type_options = response.data;
                             console.log(response.data);
@@ -84,14 +57,9 @@
             },
             filterResultData: _.debounce(
                 function () {
-                    this.$axios.get("http://127.0.0.1:8000/api/persons", {
-                        params: {
-                            sex: this.formInline.sex,
-                            email: this.formInline.email,
-                        }
-                    }).then((response) => {
-                        response.data['sex'] = this.formInline.sex;
-                        response.data['email'] = this.formInline.email;
+                    this.$axios.get(`http://127.0.0.1:8000/teachers/${this.formInline.number}`)
+                    .then((response) => {
+                        response.data['number'] = this.formInline.number;
                         Bus.$emit('filterResultData', response.data);
                         console.log(response.data);
                     }).catch(function (response) {

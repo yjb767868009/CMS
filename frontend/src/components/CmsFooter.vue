@@ -1,26 +1,10 @@
 <template>
     <div class="container">
         <div class="footer-main"><p class="footer-main-title">{{ message }}</p><a
-                href="https://git.code.tencent.com/xmu2018/software_221" target="_blank" class="footer-main-link">git</a><a
-                href="mailto:992964285@qq.com" class="footer-main-link">Email</a><a
+                href="https://git.code.tencent.com/xmu2018/software_221" target="_blank" class="footer-main-link">Github</a><a
+                href="mailto:99296485@qq.com" class="footer-main-link">Email</a><a
                 href="https://github.com/ElemeFE/element/blob/master/.github/CONTRIBUTING.en-US.md" target="_blank"
                 class="footer-main-link">License</a></div>
-
-        <div class="layout-copy footdoc">
-
-            <i class="footdoc">
-                <canvas id="myCanvas" width="80" height="80" style="background-color: transparent;"></canvas>
-            </i>
-            <i class="footdoc">2018 @ Created by 2-7 </i>
-        </div>
-
-        <div class="footer-social">
-            <i class="doc-icon-weixin footdoc">
-                
-            </i>
-            <i class="doc-icon-github footdoc"></i>
-        </div>
-
     </div>
 
 </template>
@@ -30,7 +14,7 @@
     export default {
         data(){
             return {
-                message: 'Course Manage System',
+                message: 'Course Management System',
             }
         },
         mounted (){

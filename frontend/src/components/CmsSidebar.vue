@@ -1,17 +1,26 @@
 <template>
-<ul class="el-meun">
-    <li class="el-menu-item is-active" style="">管理教师信息</li>
-    <li class="el-menu-item" style="">管理学生信息</li>
-</ul>    
+    <ul>
+    <li class="el-menu-item is-active" @click="ShowTeacher" style="">{{msg1}}</li>
+    <li class="el-menu-item" @click="ShowStudent" style="">{{msg2}}</li>
+    </ul>
 </template>
 
 <script>
 
     export default {
-        name: 'db-sidebar',
+        name: 'cms-sidebar',
         data() {
             return {
-                msg: 'sidebar'
+                msg1: '教师信息管理',
+                msg2: '学生信息管理'
+            }
+        },
+        methods:{
+            ShowTeacher:function(){
+                this.$emit('ShowTeacher')
+            },
+            ShowStudent:function(){
+                this.$emit('ShowStudnet')
             }
         }
     }

@@ -7,9 +7,9 @@
                 class="table">
             <el-table-column
                     fixed
-                    prop="id"
+                    prop="number"
                     label="学号"
-                    width="100">
+                    width="150">
             </el-table-column>
             <el-table-column
                     prop="name"
@@ -29,11 +29,11 @@
             <el-table-column
                     prop="email"
                     label="电子邮箱"
-                    width="200">
+                    width="150">
             </el-table-column>
             <el-table-column
                     fixed="right"
-                    label="操作"
+                    label="Operation"
                     width="100">
                 <template scope="scope">
                     <el-button @click="editItem(scope.$index, tableData)" type="text" size="large">Edit</el-button>
@@ -43,20 +43,20 @@
         <el-pagination class="pagination" layout="prev, pager, next" :total="total" :page-size="pageSize"
                        v-on:current-change="changePage">
         </el-pagination>
-        <db-modal :dialogFormVisible="dialogFormVisible" :form="form" v-on:canclemodal="dialogVisible"></db-modal>
+        <student-modal :dialogFormVisible="dialogFormVisible" :form="form" v-on:canclemodal="dialogVisible"></student-modal>
     </div>
 
 </template>
 
 <script>
     import Bus from '../eventBus'
-    import DbModal from './StudentModal.vue'
+    import StudentModal from './StudentModal.vue'
 
     export default {
         data(){
             return {
                 tableData: [],
-                apiUrl: 'http://127.0.0.1:8000/api/admin',
+                apiUrl: 'http://127.0.0.1:8000/students',
                 total: 0,
                 pageSize: 10,
                 currentPage: 1,
@@ -67,7 +67,7 @@
             }
         },
         components: {
-            StudentModal
+            DbModal
         },
         mounted () {
             this.getCustomers();
@@ -110,7 +110,7 @@
             editItem: function (index, rows) {
                 this.dialogFormVisible = true;
                 const itemId = rows[index].id;
-                const idurl = 'http://127.0.0.1:8000/api/persons/detail/' + itemId;
+                const idurl = 'http://127.0.0.1:8000/students/' + itemId;
                 this.$axios.get(idurl).then((response) => {
                     this.form = response.data;
                 }).catch(function (response) {

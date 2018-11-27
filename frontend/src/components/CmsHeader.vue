@@ -12,8 +12,8 @@
         name: 'db-header',
         data () {
             return {
-                msg: 'CMS',
-                intro:'Manager'
+                msg: 'Admin',
+                intro:''
             }
         }
     }

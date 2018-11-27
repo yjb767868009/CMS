@@ -7,9 +7,9 @@
                 class="table">
             <el-table-column
                     fixed
-                    prop="id"
+                    prop="number"
                     label="教工号"
-                    width="100">
+                    width="150">
             </el-table-column>
             <el-table-column
                     prop="name"
@@ -29,11 +29,11 @@
             <el-table-column
                     prop="email"
                     label="电子邮箱"
-                    width="200">
+                    width="150">
             </el-table-column>
             <el-table-column
                     fixed="right"
-                    label="操作"
+                    label="Operation"
                     width="100">
                 <template scope="scope">
                     <el-button @click="editItem(scope.$index, tableData)" type="text" size="large">Edit</el-button>
@@ -56,7 +56,7 @@
         data(){
             return {
                 tableData: [],
-                apiUrl: 'http://127.0.0.1:8000/api/admin',
+                apiUrl: 'http://127.0.0.1:8000/api/persons',
                 total: 0,
                 pageSize: 10,
                 currentPage: 1,

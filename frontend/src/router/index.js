@@ -1,40 +1,31 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
-import Element from 'element-ui'
-import 'element-ui/lib/theme-default/index.css'
+import Admin from '@/views/Admin'
+import AdminLogin from '@/views/AdminLogin'
+import Login from '@/views/Login'
 
 Vue.use(Router)
-Vue.use(Element)
 
 export default new Router({
-    routes:[
-        {
-            path:'/Login',
-            name:'Login',
-            component:Login
-        },
-        {
-            path:'/AdminLogin',
-            name:'AdminLogin',
-            component:AdminLogin
-        },
-        {
-            path:'/Admin',
-            name:'Admin',
-            component:Admin
-        },
-        {
-            path:'/Admin/Teachers',
-            name:'TeacherManagement',
-            component:TeacherManagement
-        },
-        {
-            path:'/Admin/Students',
-            name:'StudentManagement',
-            component:StudentManagement
-        },
-        
-
-    ]
+  routes: [
+    {
+      path:'/',
+      redirect:'/login'
+    },
+    {
+      path:'/login',
+      name:'Login',
+      component:Login
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: Admin
+    },
+    {
+      path:'/adminLogin',
+      name:'AdminLogin',
+      component:AdminLogin
+    }
+  ]
 })

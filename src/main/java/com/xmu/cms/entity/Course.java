@@ -1,5 +1,7 @@
 package com.xmu.cms.entity;
 
+import java.util.Date;
+
 /**
  * @author JuboYu on 2018/11/26.
  * @version 1.0
@@ -8,17 +10,21 @@ public class Course {
     private Integer courseId;
     private String name;
     private String introduction;
-    private Float presentationProportion;
-    private Float reportProportion;
-    private Float questionProportion;
+    private Float presentationWeight;
+    private Float reportWeight;
+    private Float questionWeight;
+    private Date teamStartTime;
+    private Date teamEndTime;
 
-    public Course(Integer courseId, String name, String introduction, Float presentationProportion, Float reportProportion, Float questionProportion) {
+    public Course(Integer courseId, String name, String introduction, Float presentationWeight, Float reportWeight, Float questionWeight, Date teamStartTime, Date teamEndTime) {
         this.courseId = courseId;
         this.name = name;
         this.introduction = introduction;
-        this.presentationProportion = presentationProportion;
-        this.reportProportion = reportProportion;
-        this.questionProportion = questionProportion;
+        this.presentationWeight = presentationWeight;
+        this.reportWeight = reportWeight;
+        this.questionWeight = questionWeight;
+        this.teamStartTime = teamStartTime;
+        this.teamEndTime = teamEndTime;
     }
 
     public Integer getCourseId() {
@@ -45,27 +51,43 @@ public class Course {
         this.introduction = introduction;
     }
 
-    public Float getPresentationProportion() {
-        return presentationProportion;
+    public Float getPresentationWeight() {
+        return presentationWeight;
     }
 
-    public void setPresentationProportion(Float presentationProportion) {
-        this.presentationProportion = presentationProportion;
+    public void setPresentationWeight(Float presentationWeight) {
+        this.presentationWeight = presentationWeight;
     }
 
-    public Float getReportProportion() {
-        return reportProportion;
+    public Float getReportWeight() {
+        return reportWeight;
     }
 
-    public void setReportProportion(Float reportProportion) {
-        this.reportProportion = reportProportion;
+    public void setReportWeight(Float reportWeight) {
+        this.reportWeight = reportWeight;
     }
 
-    public Float getQuestionProportion() {
-        return questionProportion;
+    public Float getQuestionWeight() {
+        return questionWeight;
     }
 
-    public void setQuestionProportion(Float questionProportion) {
-        this.questionProportion = questionProportion;
+    public void setQuestionWeight(Float questionWeight) {
+        this.questionWeight = questionWeight;
+    }
+
+    public Date getTeamStartTime() {
+        return teamStartTime;
+    }
+
+    public void setTeamStartTime(Date teamStartTime) {
+        this.teamStartTime = teamStartTime;
+    }
+
+    public Date getTeamEndTime() {
+        return teamEndTime;
+    }
+
+    public void setTeamEndTime(Date teamEndTime) {
+        this.teamEndTime = teamEndTime;
     }
 }

@@ -11,26 +11,28 @@ public class Teacher {
     private String email;
     private String name;
     private String phone;
+    private String sex;
     private Integer messageInterval;
-    private Boolean activation;
+    private Boolean isActivation;
 
-    public Teacher(Integer teacherId, String account, String password, String email, String name, String phone, Integer messageInterval, Boolean activation) {
+    public Teacher(Integer teacherId, String account, String password, String email, String name, String phone, String sex, Integer messageInterval, Boolean isActivation) {
         this.teacherId = teacherId;
         this.account = account;
         this.password = password;
         this.email = email;
         this.name = name;
         this.phone = phone;
+        this.sex = sex;
         this.messageInterval = messageInterval;
-        this.activation = activation;
+        this.isActivation = isActivation;
     }
 
     public Integer getTeacherId() {
         return teacherId;
     }
 
-    public void setTeacherId(Integer id) {
-        this.teacherId = id;
+    public void setTeacherId(Integer teacherId) {
+        this.teacherId = teacherId;
     }
 
     public String getAccount() {
@@ -65,6 +67,22 @@ public class Teacher {
         this.name = name;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
     public Integer getMessageInterval() {
         return messageInterval;
     }
@@ -74,18 +92,10 @@ public class Teacher {
     }
 
     public Boolean getActivation() {
-        return activation;
+        return isActivation;
     }
 
     public void setActivation(Boolean activation) {
-        this.activation = activation;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+        isActivation = activation;
     }
 }

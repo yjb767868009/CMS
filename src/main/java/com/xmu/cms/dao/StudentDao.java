@@ -33,12 +33,12 @@ public interface StudentDao {
      * modify student by his id
      *
      * @param studentId student's id
-     * @param name student's new name
-     * @param account student's new account
-     * @param email student's new email
+     * @param name      student's new name
+     * @param account   student's new account
+     * @param email     student's new email
      * @return String message
      */
-    Integer modifyStudentById(@Param("studentId")Integer studentId,
+    Integer modifyStudentById(@Param("studentId") Integer studentId,
                               @Param("name") String name,
                               @Param("account") String account,
                               @Param("email") String email);
@@ -47,7 +47,7 @@ public interface StudentDao {
      * modify student's password by his id
      *
      * @param studentId student's id
-     * @param password student's new password
+     * @param password  student's new password
      * @return String message
      */
     Integer modifyStudentPasswordById(@Param("studentId") Integer studentId,

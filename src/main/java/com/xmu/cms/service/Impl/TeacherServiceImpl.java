@@ -27,7 +27,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public String newTeacher(String name, String account, String password, String email) {
-        Integer count = teacherDao.newTeacher(name, account, password, email, 1, false);
+        Integer count = teacherDao.newTeacher(name, account, password, email, "", "", 1, false);
         if (count == 0) {
             return "Insert error";
         } else {

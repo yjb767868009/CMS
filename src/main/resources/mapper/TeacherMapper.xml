@@ -2,9 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.dao.TeacherDao">
+
     <select id="getAllTeachers" resultType="com.xmu.cms.entity.Teacher">
-        SELECT *
-        from teacher
+        SELECT teacher_id       as teacherId,
+               account,
+               password,
+               email,
+               name,
+               phone,
+               sex,
+               message_interval as messageInterval,
+               activation
+        FROM teacher
     </select>
 
     <update id="modifyTeacherById">
@@ -12,24 +21,24 @@
         SET name    = #{name},
             account = #{account},
             email   = #{email}
-        WHERE teacherId = #{teacherId}
+        WHERE teacher_id = #{teacherId}
     </update>
 
     <update id="modifyTeacherPasswordById">
         UPDATE teacher
         SET password = #{password}
-        WHERE teacherId = #{teacherId}
+        WHERE teacher_id = #{teacherId}
     </update>
 
     <insert id="newTeacher">
-        INSERT INTO teacher (account, password, email, name, messageInterval, activation)
-        VALUE (#{account}, #{password}, #{email}, #{name}, #{messageInterval}, #{activation})
+        INSERT INTO teacher (account, password, email, name, phone, sex, message_interval, activation)
+        VALUE (#{account}, #{password}, #{email}, #{name}, #{phone}, #{sex}, #{messageInterval}, #{isActivation})
     </insert>
 
     <delete id="deleteTeacherById" parameterType="java.lang.Integer">
         delete
         FROM teacher
-        WHERE teacherId = #{teacherId}
+        WHERE teacher_id = #{teacherId}
     </delete>
 
     <select id="getPasswordByAccount" parameterType="java.lang.String">

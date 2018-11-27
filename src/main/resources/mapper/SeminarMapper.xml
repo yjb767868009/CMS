@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xmu.cms.dao.SeminarDao">
+
+    <select id="getAllSeminarByCourseId" parameterType="java.lang.Integer">
+        SELECT seminar_id      as seminarId,
+               round_id        as roundId,
+               course_id       as courseId,
+               max_team_num    as maxTeamNum,
+               topic,
+               introduction,
+               sign_start_time as signStartTime,
+               sign_end_time   as signEndTime,
+               report_end_time as reportEndTime,
+               status,
+               visible,
+               sign_order      as signOrder
+        FROM seminar
+        WHERE course_id = #{courseId}
+    </select>
+
+</mapper>

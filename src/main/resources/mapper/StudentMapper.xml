@@ -4,12 +4,20 @@
 <mapper namespace="com.xmu.cms.dao.StudentDao">
 
     <select id="getAllStudents" resultType="com.xmu.cms.entity.Student">
-        SELECT *
+        SELECT student_id       as studentId,
+               account,
+               password,
+               email,
+               name,
+               phone,
+               sex,
+               message_interval as messageInterval,
+               activation
         FROM student
     </select>
 
     <insert id="newStudent" parameterType="com.xmu.cms.entity.Student">
-        INSERT INTO student (studentId, account, password, email, name, messageInterval, activation)
+        INSERT INTO student (student_id, account, password, email, name, message_interval, activation)
         VALUE (#{studentId}, #{account}, #{password}, #{email}, #{name}, #{messageInterval}, #{activation})
     </insert>
 
@@ -18,19 +26,19 @@
         SET name    = #{name},
             account = #{account},
             email   = #{email}
-        WHERE studentId = #{studentId}
+        WHERE student_id = #{studentId}
     </update>
 
     <update id="modifyStudentPasswordById">
         UPDATE student
         SET password = #{password}
-        WHERE studentId = #{studentId}
+        WHERE student_id = #{studentId}
     </update>
 
     <delete id="deleteStudentById" parameterType="java.lang.Integer">
         DELETE
         FROM student
-        WHERE studentId = #{studentId}
+        WHERE student_id = #{studentId}
     </delete>
 
     <select id="getPasswordByAccount" parameterType="java.lang.String">

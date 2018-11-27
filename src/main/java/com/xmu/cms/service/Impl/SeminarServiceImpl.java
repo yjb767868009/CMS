@@ -21,4 +21,9 @@ public class SeminarServiceImpl implements SeminarService {
     public List<Seminar> getSeminarsByCourseId(Integer courseId) {
         return seminarDao.getAllSeminarByCourseId(courseId);
     }
+
+    @Override
+    public Seminar getSeminarById(Integer seminarId) {
+        return seminarDao.getSeminarById(seminarId);
+    }
 }

@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface SeminarService {
     List<Seminar> getSeminarsByCourseId(Integer courseId);
+
+    Seminar getSeminarById(Integer seminarId);
 }

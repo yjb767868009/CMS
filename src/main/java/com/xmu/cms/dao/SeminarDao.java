@@ -11,4 +11,6 @@ import java.util.List;
  */
 public interface SeminarDao {
     List<Seminar> getAllSeminarByCourseId(@Param("courseId") Integer courseId);
+
+    Seminar getSeminarById(@Param("seminarId") Integer seminarId);
 }

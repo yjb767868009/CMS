@@ -76,4 +76,12 @@ public interface TeacherDao {
      * @return account's password
      */
     String getPasswordByAccount(@Param("account") String account);
+
+    /**
+     * search teacher by name
+     *
+     * @param name teacher's name
+     * @return List<teacher>
+     */
+    List<Teacher> getTeacherByName(@Param("name") String name);
 }

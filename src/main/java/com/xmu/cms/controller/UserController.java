@@ -16,7 +16,7 @@ import java.util.List;
  * @version 1.0
  */
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/api")
 public class UserController {
 
     @Autowired
@@ -53,6 +53,5 @@ public class UserController {
     public String modifyMessageInterval(@RequestParam(value = "messageInterval") Integer messageInterval) {
         return "Success";
     }
-
 
 }

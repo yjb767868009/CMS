@@ -64,4 +64,9 @@ public class TeacherServiceImpl implements TeacherService {
             return "Success";
         }
     }
+
+    @Override
+    public List<Teacher> getTeacherByName(String name) {
+        return teacherDao.getTeacherByName(name);
+    }
 }

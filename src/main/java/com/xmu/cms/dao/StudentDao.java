@@ -68,4 +68,12 @@ public interface StudentDao {
      * @return account's password
      */
     String getPasswordByAccount(@Param("account") String account);
+
+    /**
+     * search teacher by name
+     *
+     * @param name student's name
+     * @return List<Student>
+     */
+    List<Student> getStudentByName(@Param("name") String name);
 }

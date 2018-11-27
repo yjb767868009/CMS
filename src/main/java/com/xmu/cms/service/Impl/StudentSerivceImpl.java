@@ -51,4 +51,10 @@ public class StudentSerivceImpl implements StudentService {
             return "Success";
         }
     }
+
+    @Override
+    public List<Student> getStudentByName(String name) {
+        return studentDao.getStudentByName(name);
+    }
+
 }

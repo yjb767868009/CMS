@@ -21,4 +21,6 @@ public interface StudentService {
 
     String deleteStudentById(Integer studentId);
 
+    List<Student> getStudentByName(String Name);
+
 }

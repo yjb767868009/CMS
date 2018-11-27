@@ -91,4 +91,13 @@ public class AdminController {
         return studentService.deleteStudentById(studentId);
     }
 
+    @GetMapping(value = "/teacher/name")
+    public List<Teacher> getTeacherByName(@RequestParam("name") String name) {
+        return teacherService.getTeacherByName(name);
+    }
+
+    @GetMapping(value = "/student/name")
+    public List<Student> getStudentByName(@RequestParam("name") String name) {
+        return studentService.getStudentByName(name);
+    }
 }

@@ -25,5 +25,6 @@ public interface TeacherService {
 
     String deleteTeacherById(Integer teacherId);
 
+    List<Teacher> getTeacherByName(String name);
 
 }

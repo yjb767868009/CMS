@@ -46,4 +46,18 @@
         FROM student
         WHERE account = #{account}
     </select>
+
+    <select id="getStudentByName" resultType="com.xmu.cms.entity.Student">
+        SELECT student_id       as studentId,
+               account,
+               password,
+               email,
+               name,
+               phone,
+               sex,
+               message_interval as messageInterval,
+               activation
+        FROM student
+        WHERE name = #{name}
+    </select>
 </mapper>

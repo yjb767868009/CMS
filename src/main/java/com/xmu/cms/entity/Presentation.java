@@ -6,15 +6,16 @@ package com.xmu.cms.entity;
  */
 public class Presentation {
     private Integer presentationId;
+    private Integer teamId;
+    private Integer seminarId;
+    private Integer teamOrder;
     private String ppt;
     private String report;
     private Float presentationScore;
     private Float reportScore;
-    private Float teamOrder;
-    private Integer teamId;
-    private Integer seminarId;
 
-    public Presentation(Integer presentationId, String ppt, String report, Float presentationScore, Float reportScore, Float teamOrder, Integer teamId, Integer seminarId) {
+
+    public Presentation(Integer presentationId, String ppt, String report, Float presentationScore, Float reportScore, Integer teamOrder, Integer teamId, Integer seminarId) {
         this.presentationId = presentationId;
         this.ppt = ppt;
         this.report = report;
@@ -25,12 +26,48 @@ public class Presentation {
         this.seminarId = seminarId;
     }
 
+    public Presentation(Integer presentationId, Integer teamId, Integer seminarId, Integer teamOrder, String ppt, String report, Float presentationScore, Float reportScore) {
+        this.presentationId = presentationId;
+        this.teamId = teamId;
+        this.seminarId = seminarId;
+        this.teamOrder = teamOrder;
+        this.ppt = ppt;
+        this.report = report;
+        this.presentationScore = presentationScore;
+        this.reportScore = reportScore;
+    }
+
+
     public Integer getPresentationId() {
         return presentationId;
     }
 
     public void setPresentationId(Integer presentationId) {
         this.presentationId = presentationId;
+    }
+
+    public Integer getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(Integer teamId) {
+        this.teamId = teamId;
+    }
+
+    public Integer getSeminarId() {
+        return seminarId;
+    }
+
+    public void setSeminarId(Integer seminarId) {
+        this.seminarId = seminarId;
+    }
+
+    public Integer getTeamOrder() {
+        return teamOrder;
+    }
+
+    public void setTeamOrder(Integer teamOrder) {
+        this.teamOrder = teamOrder;
     }
 
     public String getPpt() {
@@ -63,29 +100,5 @@ public class Presentation {
 
     public void setReportScore(Float reportScore) {
         this.reportScore = reportScore;
-    }
-
-    public Float getTeamOrder() {
-        return teamOrder;
-    }
-
-    public void setTeamOrder(Float teamOrder) {
-        this.teamOrder = teamOrder;
-    }
-
-    public Integer getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(Integer teamId) {
-        this.teamId = teamId;
-    }
-
-    public Integer getSeminarId() {
-        return seminarId;
-    }
-
-    public void setSeminarId(Integer seminarId) {
-        this.seminarId = seminarId;
     }
 }

@@ -1,6 +1,5 @@
 package com.xmu.cms.dao;
 
-import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.entity.Team;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -12,8 +11,7 @@ import java.util.List;
  * @version 1.0
  */
 @Mapper
-public interface SeminarDao {
-    List<Seminar> getAllSeminarByCourseId(@Param("courseId") Integer courseId);
+public interface TeamDao {
 
-    Seminar getSeminarById(@Param("seminarId") Integer seminarId);
+    List<Team> getAllTeamsInSeminar(@Param("seminarId") Integer seminarId);
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xmu.cms.dao.TeamDao">
+    <select id="getAllTeamsInSeminar" parameterType="java.lang.Integer" resultType="com.xmu.cms.entity.Team">
+        SELECT team_id as teamId, leader_id as leaderId, course_id as courseId, team_name as teamName, valid as isValid
+        FROM team,
+             presentation
+        WHERE team.team_id = presentation.team_id
+          AND presentation.seminar_id = #{seminar_id}
+    </select>
+</mapper>

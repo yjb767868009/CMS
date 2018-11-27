@@ -60,4 +60,12 @@ public interface StudentDao {
      * @return String message
      */
     Integer deleteStudentById(Integer studentId);
+
+    /**
+     * get student's password by account
+     *
+     * @param account log in account
+     * @return account's password
+     */
+    String getPasswordByAccount(@Param("account") String account);
 }

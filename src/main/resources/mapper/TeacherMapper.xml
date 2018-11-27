@@ -3,27 +3,38 @@
 
 <mapper namespace="com.xmu.cms.dao.TeacherDao">
     <select id="getAllTeachers" resultType="com.xmu.cms.entity.Teacher">
-        SELECT * from teacher
+        SELECT *
+        from teacher
     </select>
 
     <update id="modifyTeacherById">
         UPDATE teacher
-        SET name=#{name},account=#{account},email=#{email}
-        WHERE teacherId=#{teacherId}
+        SET name    = #{name},
+            account = #{account},
+            email   = #{email}
+        WHERE teacherId = #{teacherId}
     </update>
 
     <update id="modifyTeacherPasswordById">
         UPDATE teacher
-        SET password=#{password}
-        WHERE teacherId=#{teacherId}
+        SET password = #{password}
+        WHERE teacherId = #{teacherId}
     </update>
 
     <insert id="newTeacher">
         INSERT INTO teacher (account, password, email, name, messageInterval, activation)
-        VALUE (#{account},#{password},#{email},#{name},#{messageInterval},#{activation})
+        VALUE (#{account}, #{password}, #{email}, #{name}, #{messageInterval}, #{activation})
     </insert>
 
     <delete id="deleteTeacherById" parameterType="java.lang.Integer">
-        delete FROM teacher WHERE teacherId=#{teacherId}
+        delete
+        FROM teacher
+        WHERE teacherId = #{teacherId}
     </delete>
+
+    <select id="getPasswordByAccount" parameterType="java.lang.String">
+        SELECT password
+        FROM teacher
+        WHERE account = #{account}
+    </select>
 </mapper>

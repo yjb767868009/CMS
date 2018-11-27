@@ -66,4 +66,12 @@ public interface TeacherDao {
      * @return String message
      */
     Integer deleteTeacherById(Integer teacherId);
+
+    /**
+     * get teacher's password by account
+     *
+     * @param account log in account
+     * @return account's password
+     */
+    String getPasswordByAccount(@Param("account") String account);
 }

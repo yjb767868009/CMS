@@ -50,6 +50,7 @@
         <dependency>
             <groupId>usr.cesare</groupId>
             <artifactId>MybatisGenerator</artifactId>
+            <version>1.4-stable</version>
         </dependency>
 
     </dependencies>

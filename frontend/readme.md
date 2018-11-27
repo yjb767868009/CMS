@@ -1,10 +1,21 @@
-#部署
-装个node先
-windows到官网下 .msi即可
+# cms
 
-编译前端开发环境
-cd到frontend 
+> A Vue.js project
+
+## Build Setup
+
+``` bash
+# install dependencies
 npm install
 
-开启热加载（开发模式）
+# serve with hot reload at localhost:8080
 npm run dev
+
+# build for production with minification
+npm run build
+
+# build for production and view the bundle analyzer report
+npm run build --report
+```
+
+For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

@@ -1,6 +1,8 @@
 package com.xmu.cms.service;
 
 import com.xmu.cms.dao.TeacherDao;
+import com.xmu.cms.entity.Course;
+import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,5 +24,6 @@ public interface TeacherService {
     String modifyTeacherPasswordById(Integer teacherId, String password);
 
     String deleteTeacherById(Integer teacherId);
+
 
 }

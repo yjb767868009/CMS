@@ -50,7 +50,7 @@ public class UserController {
     }
 
     @PatchMapping(value = "/modifyMessageInterval")
-    public String modifyMessageInterval(@RequestParam(value = "messageInterval") Integer messageOnterval) {
+    public String modifyMessageInterval(@RequestParam(value = "messageInterval") Integer messageInterval) {
         return "Success";
     }
 

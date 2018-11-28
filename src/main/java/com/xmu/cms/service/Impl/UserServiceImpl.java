@@ -6,6 +6,9 @@ import com.xmu.cms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author JuboYu on 2018/11/26.
  * @version 1.0
@@ -27,7 +30,7 @@ public class UserServiceImpl implements UserService {
                 return "No this account";
             } else {
                 if (findStudentPassword.equals(password)) {
-                    return "Student";
+                    return "Success";
                 } else {
                     return "Account or password error";
                 }

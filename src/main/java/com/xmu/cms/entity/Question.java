@@ -6,17 +6,19 @@ package com.xmu.cms.entity;
  */
 public class Question {
     private Integer questionId;
-    private boolean selected;
-    private double score;
     private Integer studentId;
+    private Integer teamId;
     private Integer presentationId;
+    private boolean selected;
+    private float score;
 
-    public Question(Integer questionId, boolean selected, double score, Integer studentId, Integer presentationId) {
+    public Question(Integer questionId, Integer studentId, Integer teamId, Integer presentationId, boolean selected, float score) {
         this.questionId = questionId;
+        this.studentId = studentId;
+        this.teamId = teamId;
+        this.presentationId = presentationId;
         this.selected = selected;
         this.score = score;
-        this.studentId = studentId;
-        this.presentationId = presentationId;
     }
 
     public Integer getQuestionId() {
@@ -35,11 +37,11 @@ public class Question {
         this.selected = selected;
     }
 
-    public double getScore() {
+    public float getScore() {
         return score;
     }
 
-    public void setScore(double score) {
+    public void setScore(float score) {
         this.score = score;
     }
 
@@ -57,5 +59,13 @@ public class Question {
 
     public void setPresentationId(Integer presentationId) {
         this.presentationId = presentationId;
+    }
+
+    public Integer getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(Integer teamId) {
+        this.teamId = teamId;
     }
 }

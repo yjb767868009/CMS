@@ -11,4 +11,8 @@ import java.util.List;
  */
 public interface CourseService {
     List<Course> getAllCoursesByTeacherId(Integer teacherId);
+
+    String deleteCourseById(Integer courseId);
+
+    List<Course> getAllCoursesByStudentId(Integer studentId);
 }

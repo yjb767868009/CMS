@@ -8,6 +8,7 @@ import java.util.Date;
  */
 public class Course {
     private Integer courseId;
+    private Integer teacherId;
     private String name;
     private String introduction;
     private Float presentationWeight;
@@ -16,8 +17,9 @@ public class Course {
     private Date teamStartTime;
     private Date teamEndTime;
 
-    public Course(Integer courseId, String name, String introduction, Float presentationWeight, Float reportWeight, Float questionWeight, Date teamStartTime, Date teamEndTime) {
+    public Course(Integer courseId, Integer teacherId, String name, String introduction, Float presentationWeight, Float reportWeight, Float questionWeight, Date teamStartTime, Date teamEndTime) {
         this.courseId = courseId;
+        this.teacherId = teacherId;
         this.name = name;
         this.introduction = introduction;
         this.presentationWeight = presentationWeight;
@@ -33,6 +35,14 @@ public class Course {
 
     public void setCourseId(Integer courseId) {
         this.courseId = courseId;
+    }
+
+    public Integer getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Integer teacherId) {
+        this.teacherId = teacherId;
     }
 
     public String getName() {

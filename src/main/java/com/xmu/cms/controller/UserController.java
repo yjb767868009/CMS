@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -24,8 +25,9 @@ public class UserController {
 
     @PostMapping(value = "/login")
     public String userLogIn(@RequestParam(value = "account") String account,
-                            @RequestParam(value = "password") String password) {
-        return userService.userLogIn(account, password);
+                            @RequestParam(value = "password") String password,
+                            HttpSession session) {
+        return userService.userLogIn(account, password, session);
     }
 
     @PostMapping(value = "/activation")

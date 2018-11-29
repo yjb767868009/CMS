@@ -19,7 +19,7 @@
     <select id="getAllCourseByStudentId" resultType="com.xmu.cms.entity.Course">
         SELECT course.course_id   as courseId,
                teacher_id         as teacherId,
-               name,
+               course.name,
                introduction,
                presetation_weight as presestationWeight,
                report_weight      as reportWeight,

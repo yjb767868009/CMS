@@ -3,6 +3,7 @@ package com.xmu.cms.aspect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -15,14 +16,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author JuboYu on 2018/11/28.
+ * @author JuboYu on 2018/11/29.
  * @version 1.0
  */
 @Aspect
 @Component
-public class AdminAspect extends com.xmu.cms.aspect.Aspect {
-    @Around("@annotation(com.xmu.cms.aspect.CheckAdminPermission)")
-    public Object checkPermission(ProceedingJoinPoint point) throws Throwable {
-        return checkPermission(point, "admin");
+public class StudentAspect extends com.xmu.cms.aspect.Aspect {
+
+    @Around("@annotation(com.xmu.cms.aspect.CheckStudentPermission)")
+    public Object checkStudentPermission(ProceedingJoinPoint point) throws Throwable {
+        return checkPermission(point, "student");
     }
 }

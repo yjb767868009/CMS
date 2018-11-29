@@ -1,6 +1,7 @@
 package com.xmu.cms.service;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author JuboYu on 2018/11/26.
@@ -8,5 +9,5 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface UserService {
 
-    String userLogIn(String account, String password);
+    String userLogIn(String account, String password, HttpSession session);
 }

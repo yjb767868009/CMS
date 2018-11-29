@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author JuboYu on 2018/11/26.
@@ -22,7 +23,7 @@ public class UserServiceImpl implements UserService {
     private TeacherDao teacherDao;
 
     @Override
-    public String userLogIn(String account, String password) {
+    public String userLogIn(String account, String password, HttpSession session) {
         String findTeacherPassword = teacherDao.getPasswordByAccount(account);
         if (findTeacherPassword == null) {
             String findStudentPassword = studentDao.getPasswordByAccount(account);
@@ -30,13 +31,17 @@ public class UserServiceImpl implements UserService {
                 return "No this account";
             } else {
                 if (findStudentPassword.equals(password)) {
-                    return "Success";
+                    session.setAttribute("userType", "student");
+                    session.setAttribute("userId", account);
+                    return "Student";
                 } else {
                     return "Account or password error";
                 }
             }
         } else {
             if (findTeacherPassword.equals(password)) {
+                session.setAttribute("userType", "teacher");
+                session.setAttribute("userId", account);
                 return "Teacher";
             } else {
                 return "Account or password error";

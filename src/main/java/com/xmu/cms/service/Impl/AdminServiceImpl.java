@@ -24,6 +24,7 @@ public class AdminServiceImpl implements AdminService {
         } else {
             if (password.equals(findPassword)) {
                 session.setAttribute("userType", "admin");
+                session.setAttribute("userId", account);
                 return "Success";
             } else {
                 return "Account or Password error";

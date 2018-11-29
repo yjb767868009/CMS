@@ -14,18 +14,6 @@ public class Presentation {
     private Float presentationScore;
     private Float reportScore;
 
-
-    public Presentation(Integer presentationId, String ppt, String report, Float presentationScore, Float reportScore, Integer teamOrder, Integer teamId, Integer seminarId) {
-        this.presentationId = presentationId;
-        this.ppt = ppt;
-        this.report = report;
-        this.presentationScore = presentationScore;
-        this.reportScore = reportScore;
-        this.teamOrder = teamOrder;
-        this.teamId = teamId;
-        this.seminarId = seminarId;
-    }
-
     public Presentation(Integer presentationId, Integer teamId, Integer seminarId, Integer teamOrder, String ppt, String report, Float presentationScore, Float reportScore) {
         this.presentationId = presentationId;
         this.teamId = teamId;
@@ -36,7 +24,6 @@ public class Presentation {
         this.presentationScore = presentationScore;
         this.reportScore = reportScore;
     }
-
 
     public Integer getPresentationId() {
         return presentationId;

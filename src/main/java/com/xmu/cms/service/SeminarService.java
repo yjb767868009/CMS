@@ -1,19 +1,19 @@
 package com.xmu.cms.service;
 
-import com.xmu.cms.entity.Seminar;
-
-import java.util.List;
+import java.util.Date;
 
 /**
- * @author JuboYu on 2018/11/27.
+ * @author JuboYu on 2018/11/29.
  * @version 1.0
  */
 public interface SeminarService {
-    List<Seminar> getSeminarsByCourseId(Integer courseId);
+    String newSeminarTurningClass(Integer seminarId, Integer turningClassId, Integer roundId, Integer maxTeamNum, Date signStartTime, Date signEndTime, Boolean signOrder);
 
-    Seminar getSeminarById(Integer seminarId);
+    String modifySeminarTurningClass(Integer seminarId, Integer turningClassId, Integer roundId, Integer maxTeamNum, Date signStartTime, Date signEndTime, Date reportEndTime, Integer status, Boolean signOrder);
 
-    String newSeminar(Integer courseId, String topic, String introduction, Boolean visible);
+    String startSeminarTurningClass(Integer seminarId, Integer turningClassId);
 
-    String modifySeminar(Integer courseId, Integer seminarId, String topic, String introduction, Boolean visible);
+    String stopSeminarTurningClass(Integer seminarId, Integer turningClassId);
+
+    String endSeminarTurningClass(Integer seminarId, Integer turningClassId);
 }

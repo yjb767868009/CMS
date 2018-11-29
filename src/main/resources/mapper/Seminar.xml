@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.xmu.cms.dao.SeminarTurningClassDao">
+<mapper namespace="com.xmu.cms.dao.SeminarDao">
     <insert id="newSeminarTurningClass">
-        INSERT seminar_turning_class (seminar_id,
-                                      turning_class_id,
-                                      max_team_num,
-                                      round_id,
-                                      sign_start_time,
-                                      sign_end_time,
-                                      # report_end_time,
-                                      status,
-                                      sign_order)
+        INSERT seminar (seminar_id,
+                        turning_class_id,
+                        max_team_num,
+                        round_id,
+                        sign_start_time,
+                        sign_end_time,
+                        # report_end_time,
+                        status,
+                        sign_order)
         VALUE (#{seminrId},
                #{turningClassId},
                #{roundId},
@@ -23,7 +23,7 @@
     </insert>
 
     <update id="modifySeminarTurningClass">
-        UPDATE seminar_turning_class
+        UPDATE seminar
         SET round_id        = #{roundId},
             max_team_num    = #{maxTeamNum},
             sign_start_time = #{signStartTime},
@@ -33,21 +33,21 @@
     </update>
 
     <update id="startSeminarTurningClass">
-        UPDATE seminar_turning_class
+        UPDATE seminar
         SET status = 1
         WHERE seminar_id = #{seminarId}
           AND turning_class_id = #{turningClassId}
     </update>
 
     <update id="stopSeminarTurningClass">
-        UPDATE seminar_turning_class
+        UPDATE seminar
         SET status = 2
         WHERE seminar_id = #{seminarId}
           AND turning_class_id = #{turningClassId}
     </update>
 
     <update id="endSeminarTurningClass">
-        UPDATE seminar_turning_class
+        UPDATE seminar
         SET status = 3
         WHERE seminar_id = #{seminarId}
           AND turning_class_id = #{turningClassId}

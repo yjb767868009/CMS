@@ -1,7 +1,6 @@
 package com.xmu.cms.service;
 
 import com.xmu.cms.entity.Course;
-import com.xmu.cms.entity.Seminar;
 
 import java.util.List;
 

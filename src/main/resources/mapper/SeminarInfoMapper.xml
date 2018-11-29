@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.xmu.cms.dao.SeminarDao">
+<mapper namespace="com.xmu.cms.dao.SeminarInfoDao">
 
-    <select id="getAllSeminarByCourseId" parameterType="java.lang.Integer" resultType="com.xmu.cms.entity.Seminar">
+    <select id="getAllSeminarByCourseId" parameterType="java.lang.Integer" resultType="com.xmu.cms.entity.SeminarInfo">
         SELECT seminar_id as seminarId, course_id as courseId, topic, introduction, visible
-        FROM seminar
+        FROM seminar_info
         WHERE course_id = #{courseId}
     </select>
 
-    <select id="getSeminarById" parameterType="java.lang.Integer" resultType="com.xmu.cms.entity.Seminar">
+    <select id="getSeminarById" parameterType="java.lang.Integer" resultType="com.xmu.cms.entity.SeminarInfo">
         SELECT seminar_id as seminarId, course_id as courseId, topic, introduction, visible
-        FROM seminar
+        FROM seminar_info
         WHERE course_id = #{seminarId}
     </select>
 
     <insert id="newSeminar">
-        INSERT seminar (course_id, topic, introduction, visible)
+        INSERT seminar_info (course_id, topic, introduction, visible)
         VALUE (#{courseId}, #{topic}, #{introduction}, #{visible})
     </insert>
 
     <update id="modifySeminar">
-        UPDATE seminar
+        UPDATE seminar_info
         SET course_id    = #{courseId},
             topic        = #{topic},
             introduction = #{introduction},

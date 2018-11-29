@@ -2,14 +2,11 @@ package com.xmu.cms.controller;
 
 import com.xmu.cms.aspect.CheckTeacherPermission;
 import com.xmu.cms.entity.Round;
-import com.xmu.cms.entity.Seminar;
-import com.xmu.cms.entity.TurningClass;
+import com.xmu.cms.entity.SeminarInfo;
 import com.xmu.cms.service.*;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -27,10 +24,10 @@ public class CourseController {
     private TurningClassService turningClassService;
 
     @Autowired
-    private SeminarService seminarService;
+    private SeminarInfoService seminarInfoService;
 
     @Autowired
-    private SeminarTurningClassService seminarTurningClassService;
+    private SeminarService seminarService;
 
     @Autowired
     private RoundService roundService;
@@ -41,8 +38,8 @@ public class CourseController {
     }
 
     @GetMapping(value = "/seminars")
-    public List<Seminar> getSeminars(@PathVariable("courseId") Integer courseId) {
-        return seminarService.getSeminarsByCourseId(courseId);
+    public List<SeminarInfo> getSeminars(@PathVariable("courseId") Integer courseId) {
+        return seminarInfoService.getSeminarsByCourseId(courseId);
     }
 
     @DeleteMapping(value = "")
@@ -66,7 +63,7 @@ public class CourseController {
                              @RequestParam("topic") String topic,
                              @RequestParam("introduction") String introduction,
                              @RequestParam("visible") Boolean visible) {
-        return seminarService.newSeminar(courseId, topic, introduction, visible);
+        return seminarInfoService.newSeminar(courseId, topic, introduction, visible);
     }
 
     @PutMapping(value = "/modifySeminar/{seminarId}")
@@ -76,7 +73,7 @@ public class CourseController {
                                 @RequestParam("topic") String topic,
                                 @RequestParam("introduction") String introduction,
                                 @RequestParam("visible") Boolean visible) {
-        return seminarService.modifySeminar(courseId, seminarId, topic, introduction, visible);
+        return seminarInfoService.modifySeminar(courseId, seminarId, topic, introduction, visible);
     }
 
     @PostMapping(value = "/newSeminarTurningClass")
@@ -88,10 +85,10 @@ public class CourseController {
                                          @RequestParam("signStartTime") Date signStartTime,
                                          @RequestParam("signEndTime") Date signEndTime,
                                          @RequestParam("signOrder") Boolean signOrder) {
-        return seminarTurningClassService.newSeminarTurningClass(seminarId, turningClassId, roundId, maxTeamNum, signStartTime, signEndTime, signOrder);
+        return seminarService.newSeminarTurningClass(seminarId, turningClassId, roundId, maxTeamNum, signStartTime, signEndTime, signOrder);
     }
 
-    @PutMapping(value = "/modfiySeminarTurningClass")
+    @PutMapping(value = "/modifySeminarTurningClass")
     @CheckTeacherPermission
     public String modifySeminarTurningClass(@RequestParam("seminarId") Integer seminarId,
                                             @RequestParam("turningClassId") Integer turningClassId,
@@ -102,6 +99,6 @@ public class CourseController {
                                             @RequestParam("reportEndTime") Date reportEndTime,
                                             @RequestParam("status") Integer status,
                                             @RequestParam("signOrder") Boolean signOrder) {
-        return seminarTurningClassService.modifySeminarTurningClass(seminarId, turningClassId, roundId, maxTeamNum, signStartTime, signEndTime, reportEndTime, status, signOrder);
+        return seminarService.modifySeminarTurningClass(seminarId, turningClassId, roundId, maxTeamNum, signStartTime, signEndTime, reportEndTime, status, signOrder);
     }
 }

@@ -1,39 +1,67 @@
 package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.SeminarDao;
-import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.service.SeminarService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Date;
 
 /**
- * @author JuboYu on 2018/11/27.
+ * @author JuboYu on 2018/11/29.
  * @version 1.0
  */
-@Service
 public class SeminarServiceImpl implements SeminarService {
+
     @Autowired
     private SeminarDao seminarDao;
 
     @Override
-    public List<Seminar> getSeminarsByCourseId(Integer courseId) {
-        return seminarDao.getAllSeminarByCourseId(courseId);
+    public String newSeminarTurningClass(Integer seminarId, Integer turningClassId, Integer roundId, Integer maxTeamNum, Date signStartTime, Date signEndTime, Boolean signOrder) {
+        Integer count = seminarDao.newSeminarTurningClass(seminarId, turningClassId, roundId, maxTeamNum, signStartTime, signEndTime, signOrder);
+        if (count == 0) {
+            return "Insert Error";
+        } else {
+            return "Success";
+        }
     }
 
     @Override
-    public Seminar getSeminarById(Integer seminarId) {
-        return seminarDao.getSeminarById(seminarId);
+    public String modifySeminarTurningClass(Integer seminarId, Integer turningClassId, Integer roundId, Integer maxTeamNum, Date signStartTime, Date signEndTime, Date reportEndTime, Integer status, Boolean signOrder) {
+        Integer count = seminarDao.modifySeminarTurningClass(seminarId, turningClassId, roundId, maxTeamNum, signStartTime, signEndTime, signOrder);
+        if (count == 0) {
+            return "Update Error";
+        } else {
+            return "Success";
+        }
     }
 
     @Override
-    public String newSeminar(Integer courseId, String topic, String introduction, Boolean visible) {
-        return seminarDao.newSeminar(courseId, topic, introduction, visible);
+    public String startSeminarTurningClass(Integer seminarId, Integer turningClassId) {
+        Integer count = seminarDao.startSeminarTurningClass(seminarId, turningClassId);
+        if (count == 1) {
+            return "Success";
+        } else {
+            return "Start SeminarInfo Error";
+        }
     }
 
     @Override
-    public String modifySeminar(Integer courseId, Integer seminarId, String topic, String introduction, Boolean visible) {
-        return seminarDao.modifySeminar(courseId,seminarId, topic, introduction, visible);
+    public String stopSeminarTurningClass(Integer seminarId, Integer turningClassId) {
+        Integer count = seminarDao.stopSeminarTurningClass(seminarId, turningClassId);
+        if (count == 1) {
+            return "Success";
+        } else {
+            return "Stop SeminarInfo Error";
+        }
+    }
+
+    @Override
+    public String endSeminarTurningClass(Integer seminarId, Integer turningClassId) {
+        Integer count = seminarDao.endSeminarTurningClass(seminarId, turningClassId);
+        if (count == 1) {
+            return "Success";
+        } else {
+            return "End SeminarInfo Error";
+        }
     }
 }

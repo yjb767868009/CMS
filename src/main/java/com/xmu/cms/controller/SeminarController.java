@@ -2,11 +2,11 @@ package com.xmu.cms.controller;
 
 import com.xmu.cms.aspect.CheckTeacherPermission;
 import com.xmu.cms.entity.Score;
-import com.xmu.cms.entity.Seminar;
+import com.xmu.cms.entity.SeminarInfo;
 import com.xmu.cms.entity.Team;
 import com.xmu.cms.service.ScoreService;
+import com.xmu.cms.service.SeminarInfoService;
 import com.xmu.cms.service.SeminarService;
-import com.xmu.cms.service.SeminarTurningClassService;
 import com.xmu.cms.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +21,10 @@ import java.util.List;
 @RequestMapping(value = "/api/seminar/{seminarId}")
 public class SeminarController {
     @Autowired
-    private SeminarService seminarService;
+    private SeminarInfoService seminarInfoService;
 
     @Autowired
-    private SeminarTurningClassService seminarTurningClassService;
+    private SeminarService seminarService;
 
     @Autowired
     private TeamService teamService;
@@ -33,8 +33,8 @@ public class SeminarController {
     private ScoreService scoreService;
 
     @GetMapping(value = "")
-    public Seminar getSeminarById(@PathVariable("seminarId") Integer seminarId) {
-        return seminarService.getSeminarById(seminarId);
+    public SeminarInfo getSeminarById(@PathVariable("seminarId") Integer seminarId) {
+        return seminarInfoService.getSeminarById(seminarId);
     }
 
     @GetMapping(value = "/teams")
@@ -51,21 +51,21 @@ public class SeminarController {
     @CheckTeacherPermission
     public String startSeminarTurningClass(@PathVariable("seminarId") Integer seminarId,
                                            @PathVariable("turningClassId") Integer turningClassId) {
-        return seminarTurningClassService.startSeminarTurningClass(seminarId, turningClassId);
+        return seminarService.startSeminarTurningClass(seminarId, turningClassId);
     }
 
     @PatchMapping(value = "/turningClass/{turningClassId}/stop")
     @CheckTeacherPermission
     public String stopSeminarTurningClass(@PathVariable("seminarId") Integer seminarId,
                                           @PathVariable("turningClassId") Integer turningClassId) {
-        return seminarTurningClassService.stopSeminarTurningClass(seminarId, turningClassId);
+        return seminarService.stopSeminarTurningClass(seminarId, turningClassId);
     }
 
     @PatchMapping(value = "/turningClass/{turningClassId}/end")
     @CheckTeacherPermission
     public String endSeminarTurningClass(@PathVariable("seminarId") Integer seminarId,
                                          @PathVariable("turningClassId") Integer turningClassId) {
-        return seminarTurningClassService.endSeminarTurningClass(seminarId, turningClassId);
+        return seminarService.endSeminarTurningClass(seminarId, turningClassId);
     }
 
     @GetMapping(value = "/turningClass/{turningClassId}/scores")

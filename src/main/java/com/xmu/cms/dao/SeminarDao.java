@@ -1,30 +1,36 @@
 package com.xmu.cms.dao;
 
-import com.xmu.cms.entity.Seminar;
-import com.xmu.cms.entity.Team;
-import org.apache.ibatis.annotations.Mapper;
+import java.util.Date;
+
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
 /**
- * @author JuboYu on 2018/11/27.
+ * @author JuboYu on 2018/11/29.
  * @version 1.0
  */
-@Mapper
 public interface SeminarDao {
-    List<Seminar> getAllSeminarByCourseId(@Param("courseId") Integer courseId);
+    Integer newSeminarTurningClass(@Param("seminarId") Integer seminarId,
+                                   @Param("turningClassId") Integer turningClassId,
+                                   @Param("roundId") Integer roundId,
+                                   @Param("maxTeamNum") Integer maxTeamNum,
+                                   @Param("signStartTime") Date signStartTime,
+                                   @Param("signEndTime") Date signEndTime,
+                                   @Param("signOrder") Boolean signOrder);
 
-    Seminar getSeminarById(@Param("seminarId") Integer seminarId);
+    Integer modifySeminarTurningClass(@Param("seminarId") Integer seminarId,
+                                      @Param("turningClassId") Integer turningClassId,
+                                      @Param("roundId") Integer roundId,
+                                      @Param("maxTeamNum") Integer maxTeamNum,
+                                      @Param("signStartTime") Date signStartTime,
+                                      @Param("signEndTime") Date signEndTime,
+                                      @Param("signOrder") Boolean signOrder);
 
-    String newSeminar(@Param("courseId") Integer courseId,
-                      @Param("topic") String topic,
-                      @Param("introduction") String introduction,
-                      @Param("visible") Boolean visible);
+    Integer startSeminarTurningClass(@Param("seminarId") Integer seminarId,
+                                     @Param("turningClassId") Integer turningClassId);
 
-    String modifySeminar(@Param("courseId") Integer courseId,
-                         @Param("seminarId") Integer seminarId,
-                         @Param("topic") String topic,
-                         @Param("introduction") String introduction,
-                         @Param("visible") Boolean visible);
+    Integer stopSeminarTurningClass(@Param("seminarId") Integer seminarId,
+                                    @Param("turningClassId") Integer turningClassId);
+
+    Integer endSeminarTurningClass(@Param("seminarId") Integer seminarId,
+                                   @Param("turningClassId") Integer turningClassId);
 }

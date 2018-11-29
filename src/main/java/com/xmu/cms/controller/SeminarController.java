@@ -1,9 +1,10 @@
 package com.xmu.cms.controller;
 
 import com.xmu.cms.aspect.CheckTeacherPermission;
+import com.xmu.cms.entity.Score;
 import com.xmu.cms.entity.Seminar;
-import com.xmu.cms.entity.SeminarTurningClass;
 import com.xmu.cms.entity.Team;
+import com.xmu.cms.service.ScoreService;
 import com.xmu.cms.service.SeminarService;
 import com.xmu.cms.service.SeminarTurningClassService;
 import com.xmu.cms.service.TeamService;
@@ -27,6 +28,9 @@ public class SeminarController {
 
     @Autowired
     private TeamService teamService;
+
+    @Autowired
+    private ScoreService scoreService;
 
     @GetMapping(value = "")
     public Seminar getSeminarById(@PathVariable("seminarId") Integer seminarId) {
@@ -62,5 +66,11 @@ public class SeminarController {
     public String endSeminarTurningClass(@PathVariable("seminarId") Integer seminarId,
                                          @PathVariable("turningClassId") Integer turningClassId) {
         return seminarTurningClassService.endSeminarTurningClass(seminarId, turningClassId);
+    }
+
+    @GetMapping(value = "/turningClass/{turningClassId}/scores")
+    public Score getAllScoreInSeminarTurningClass(@PathVariable("seminarId") Integer seminarId,
+                                                  @PathVariable("turningClassId") Integer turningClassId) {
+        return scoreService.getAllScoresInSeminarTurningClass(seminarId, turningClassId);
     }
 }

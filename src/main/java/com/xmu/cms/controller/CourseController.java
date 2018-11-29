@@ -2,12 +2,15 @@ package com.xmu.cms.controller;
 
 import com.xmu.cms.aspect.CheckTeacherPermission;
 import com.xmu.cms.entity.Seminar;
+import com.xmu.cms.entity.TurningClass;
 import com.xmu.cms.service.CourseService;
 import com.xmu.cms.service.SeminarService;
+import com.xmu.cms.service.TurningClassService;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -21,6 +24,9 @@ public class CourseController {
     private CourseService courseService;
 
     @Autowired
+    private TurningClassService turningClassService;
+
+    @Autowired
     private SeminarService seminarService;
 
     @GetMapping(value = "/seminars")
@@ -30,7 +36,16 @@ public class CourseController {
 
     @DeleteMapping(value = "")
     @CheckTeacherPermission
-    public String deleteCourse(@PathVariable("courseId") Integer courseId){
+    public String deleteCourse(@PathVariable("courseId") Integer courseId) {
         return courseService.deleteCourseById(courseId);
+    }
+
+    @PostMapping(value = "/turningClass")
+    @CheckTeacherPermission
+    public String newTurningClass(@PathVariable("courseId") Integer courseId,
+                                  @RequestParam(value = "name") String name,
+                                  @RequestParam(value = "classTime") String classTime,
+                                  @RequestParam(value = "classPlace") String classPlace) {
+        return turningClassService.newTurningClass(courseId, name, classTime, classPlace);
     }
 }

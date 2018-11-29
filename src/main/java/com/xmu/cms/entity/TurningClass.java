@@ -6,15 +6,15 @@ package com.xmu.cms.entity;
  */
 public class TurningClass {
     private Integer turningClassId;
+    private Integer courseId;
     private String name;
-    private String introduction;
-    private String classPlace;
     private String classTime;
+    private String classPlace;
 
-    public TurningClass(Integer turningClassId, String name, String introduction, String classPlace, String classTime) {
+    public TurningClass(Integer turningClassId, Integer courseId, String name, String classPlace, String classTime) {
         this.turningClassId = turningClassId;
+        this.courseId = courseId;
         this.name = name;
-        this.introduction = introduction;
         this.classPlace = classPlace;
         this.classTime = classTime;
     }
@@ -35,14 +35,6 @@ public class TurningClass {
         this.name = name;
     }
 
-    public String getIntroduction() {
-        return introduction;
-    }
-
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction;
-    }
-
     public String getClassPlace() {
         return classPlace;
     }
@@ -57,5 +49,13 @@ public class TurningClass {
 
     public void setClassTime(String classTime) {
         this.classTime = classTime;
+    }
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
     }
 }

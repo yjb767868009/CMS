@@ -57,13 +57,6 @@ public class SeminarController {
         return seminarTurningClassService.stopSeminarTurningClass(seminarId, turningClassId);
     }
 
-    @PatchMapping(value = "/turningClass/{turningClassId}/continue")
-    @CheckTeacherPermission
-    public String continueSeminarTurningClass(@PathVariable("seminarId") Integer seminarId,
-                                              @PathVariable("turningClassId") Integer turningClassId) {
-        return seminarTurningClassService.continueSeminarTurningClass(seminarId, turningClassId);
-    }
-
     @PatchMapping(value = "/turningClass/{turningClassId}/end")
     @CheckTeacherPermission
     public String endSeminarTurningClass(@PathVariable("seminarId") Integer seminarId,

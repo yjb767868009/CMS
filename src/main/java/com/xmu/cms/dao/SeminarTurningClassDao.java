@@ -33,7 +33,4 @@ public interface SeminarTurningClassDao {
 
     Integer endSeminarTurningClass(@Param("seminarId") Integer seminarId,
                                    @Param("turningClassId") Integer turningClassId);
-
-    Integer continueSeminarTurningClass(@Param("seminarId") Integer seminarId,
-                                        @Param("turningClassId") Integer turningClassId);
 }

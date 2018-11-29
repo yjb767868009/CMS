@@ -16,6 +16,4 @@ public interface SeminarTurningClassService {
     String stopSeminarTurningClass(Integer seminarId, Integer turningClassId);
 
     String endSeminarTurningClass(Integer seminarId, Integer turningClassId);
-
-    String continueSeminarTurningClass(Integer seminarId, Integer turningClassId);
 }

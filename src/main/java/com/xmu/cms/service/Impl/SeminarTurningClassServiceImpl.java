@@ -64,14 +64,4 @@ public class SeminarTurningClassServiceImpl implements SeminarTurningClassServic
             return "End Seminar Error";
         }
     }
-
-    @Override
-    public String continueSeminarTurningClass(Integer seminarId, Integer turningClassId) {
-        Integer count = seminarTurningClassDao.continueSeminarTurningClass(seminarId, turningClassId);
-        if (count == 1) {
-            return "Success";
-        } else {
-            return "Continue Seminar Error";
-        }
-    }
 }

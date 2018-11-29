@@ -24,4 +24,16 @@ public interface SeminarTurningClassDao {
                                       @Param("signStartTime") Date signStartTime,
                                       @Param("signEndTime") Date signEndTime,
                                       @Param("signOrder") Boolean signOrder);
+
+    Integer startSeminarTurningClass(@Param("seminarId") Integer seminarId,
+                                     @Param("turningClassId") Integer turningClassId);
+
+    Integer stopSeminarTurningClass(@Param("seminarId") Integer seminarId,
+                                    @Param("turningClassId") Integer turningClassId);
+
+    Integer endSeminarTurningClass(@Param("seminarId") Integer seminarId,
+                                   @Param("turningClassId") Integer turningClassId);
+
+    Integer continueSeminarTurningClass(@Param("seminarId") Integer seminarId,
+                                        @Param("turningClassId") Integer turningClassId);
 }

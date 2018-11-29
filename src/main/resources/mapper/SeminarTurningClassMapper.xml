@@ -31,4 +31,32 @@
         WHERE seminar_id = #{seminarId}
           AND turning_class_id = #{turningClassId}
     </update>
+
+    <update id="startSeminarTurningClass">
+        UPDATE seminar_turning_class
+        SET status = 1
+        WHERE seminar_id = #{seminarId}
+          AND turning_class_id = #{turningClassId}
+    </update>
+
+    <update id="stopSeminarTurningClass">
+        UPDATE seminar_turning_class
+        SET status = 2
+        WHERE seminar_id = #{seminarId}
+          AND turning_class_id = #{turningClassId}
+    </update>
+
+    <update id="continueSeminarTurningClass">
+        UPDATE seminar_turning_class
+        SET status = 1
+        WHERE seminar_id = #{seminarId}
+          AND turning_class_id = #{turningClassId}
+    </update>
+
+    <update id="endSeminarTurningClass">
+        UPDATE seminar_turning_class
+        SET status = 3
+        WHERE seminar_id = #{seminarId}
+          AND turning_class_id = #{turningClassId}
+    </update>
 </mapper>

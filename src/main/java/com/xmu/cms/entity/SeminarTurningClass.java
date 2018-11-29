@@ -14,6 +14,9 @@ public class SeminarTurningClass {
     private Date signStartTime;
     private Date signEndTime;
     private Date reportEndTime;
+    /**
+     * status 0表示未开始，1表示进行中，2表示暂停，4表示结束
+     */
     private Integer status;
     private Boolean signOrder;
 

@@ -32,7 +32,7 @@
 
     <insert id="newTeacher">
         INSERT INTO teacher (account, password, email, name, phone, sex, message_interval, activation)
-        VALUE (#{account}, #{password}, #{email}, #{name}, #{phone}, #{sex}, #{messageInterval}, #{isActivation})
+        VALUE (#{account}, #{password}, #{email}, #{name}, #{phone}, #{sex}, #{messageInterval}, #{activation})
     </insert>
 
     <delete id="deleteTeacherById" parameterType="java.lang.Integer">

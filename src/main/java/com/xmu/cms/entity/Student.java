@@ -13,9 +13,9 @@ public class Student {
     private String phone;
     private String sex;
     private Integer messageInterval;
-    private Boolean isActivation;
+    private Boolean activation;
 
-    public Student(Integer studentId, String account, String password, String email, String name, String phone, String sex, Integer messageInterval, Boolean isActivation) {
+    public Student(Integer studentId, String account, String password, String email, String name, String phone, String sex, Integer messageInterval, Boolean activation) {
         this.studentId = studentId;
         this.account = account;
         this.password = password;
@@ -24,7 +24,7 @@ public class Student {
         this.phone = phone;
         this.sex = sex;
         this.messageInterval = messageInterval;
-        this.isActivation = isActivation;
+        this.activation = activation;
     }
 
     public Integer getStudentId() {
@@ -92,10 +92,10 @@ public class Student {
     }
 
     public Boolean getActivation() {
-        return isActivation;
+        return activation;
     }
 
     public void setActivation(Boolean activation) {
-        isActivation = activation;
+        this.activation = activation;
     }
 }

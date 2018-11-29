@@ -9,21 +9,14 @@ public class Team {
     private Integer leaderId;
     private Integer courseId;
     private String teamName;
-    private Boolean isValid;
+    private Boolean valid;
 
-    public Team(Integer teamId, Integer leaderId, Integer courseId, String teamName, Boolean isValid) {
+    public Team(Integer teamId, Integer leaderId, Integer courseId, String teamName, Boolean valid) {
         this.teamId = teamId;
         this.leaderId = leaderId;
         this.courseId = courseId;
         this.teamName = teamName;
-        this.isValid = isValid;
-    }
-
-    public Team(Integer teamId, Integer leaderId, String teamName, Boolean isValid) {
-        this.teamId = teamId;
-        this.leaderId = leaderId;
-        this.teamName = teamName;
-        this.isValid = isValid;
+        this.valid = valid;
     }
 
     public Integer getTeamId() {
@@ -59,10 +52,10 @@ public class Team {
     }
 
     public Boolean getValid() {
-        return isValid;
+        return valid;
     }
 
     public void setValid(Boolean valid) {
-        isValid = valid;
+        this.valid = valid;
     }
 }

@@ -3,7 +3,11 @@
 
 <mapper namespace="com.xmu.cms.dao.TeamDao">
     <select id="getAllTeamsInSeminar" parameterType="java.lang.Integer" resultType="com.xmu.cms.entity.Team">
-        SELECT team.team_id as teamId, leader_id as leaderId, course_id as courseId, team_name as teamName, valid as isValid
+        SELECT team.team_id as teamId,
+               leader_id    as leaderId,
+               course_id    as courseId,
+               team_name    as teamName,
+               valid
         FROM team,
              presentation
         WHERE team.team_id = presentation.team_id

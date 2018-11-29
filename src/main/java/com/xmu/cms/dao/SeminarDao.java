@@ -16,4 +16,15 @@ public interface SeminarDao {
     List<Seminar> getAllSeminarByCourseId(@Param("courseId") Integer courseId);
 
     Seminar getSeminarById(@Param("seminarId") Integer seminarId);
+
+    String newSeminar(@Param("courseId") Integer courseId,
+                      @Param("topic") String topic,
+                      @Param("introduction") String introduction,
+                      @Param("visible") Boolean visible);
+
+    String modifySeminar(@Param("courseId") Integer courseId,
+                         @Param("seminarId") Integer seminarId,
+                         @Param("topic") String topic,
+                         @Param("introduction") String introduction,
+                         @Param("visible") Boolean visible);
 }

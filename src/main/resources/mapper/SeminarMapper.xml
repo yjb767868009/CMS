@@ -4,37 +4,28 @@
 <mapper namespace="com.xmu.cms.dao.SeminarDao">
 
     <select id="getAllSeminarByCourseId" parameterType="java.lang.Integer" resultType="com.xmu.cms.entity.Seminar">
-        SELECT seminar_id      as seminarId,
-               round_id        as roundId,
-               course_id       as courseId,
-               max_team_num    as maxTeamNum,
-               topic,
-               introduction,
-               sign_start_time as signStartTime,
-               sign_end_time   as signEndTime,
-               report_end_time as reportEndTime,
-               status,
-               visible,
-               sign_order      as signOrder
+        SELECT seminar_id as seminarId, course_id as courseId, topic, introduction, visible
         FROM seminar
         WHERE course_id = #{courseId}
     </select>
 
     <select id="getSeminarById" parameterType="java.lang.Integer" resultType="com.xmu.cms.entity.Seminar">
-        SELECT seminar_id      as seminarId,
-               round_id        as roundId,
-               course_id       as courseId,
-               max_team_num    as maxTeamNum,
-               topic,
-               introduction,
-               sign_start_time as signStartTime,
-               sign_end_time   as signEndTime,
-               report_end_time as reportEndTime,
-               status,
-               visible,
-               sign_order      as signOrder
+        SELECT seminar_id as seminarId, course_id as courseId, topic, introduction, visible
         FROM seminar
         WHERE course_id = #{seminarId}
     </select>
 
+    <insert id="newSeminar">
+        INSERT seminar (course_id, topic, introduction, visible)
+        VALUE (#{courseId}, #{topic}, #{introduction}, #{visible})
+    </insert>
+
+    <update id="modifySeminar">
+        UPDATE seminar
+        SET course_id    = #{courseId},
+            topic        = #{topic},
+            introduction = #{introduction},
+            visible      = #{visible}
+        WHERE seminar_id = #{seminarId}
+    </update>
 </mapper>

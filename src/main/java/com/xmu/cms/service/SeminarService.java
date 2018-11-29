@@ -1,7 +1,6 @@
 package com.xmu.cms.service;
 
 import com.xmu.cms.entity.Seminar;
-import com.xmu.cms.entity.Team;
 
 import java.util.List;
 
@@ -13,4 +12,8 @@ public interface SeminarService {
     List<Seminar> getSeminarsByCourseId(Integer courseId);
 
     Seminar getSeminarById(Integer seminarId);
+
+    String newSeminar(Integer courseId, String topic, String introduction, Boolean visible);
+
+    String modifySeminar(Integer courseId, Integer seminarId, String topic, String introduction, Boolean visible);
 }

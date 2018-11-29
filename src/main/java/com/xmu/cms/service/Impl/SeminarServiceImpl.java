@@ -2,7 +2,6 @@ package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.SeminarDao;
 import com.xmu.cms.entity.Seminar;
-import com.xmu.cms.entity.Team;
 import com.xmu.cms.service.SeminarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,5 +25,15 @@ public class SeminarServiceImpl implements SeminarService {
     @Override
     public Seminar getSeminarById(Integer seminarId) {
         return seminarDao.getSeminarById(seminarId);
+    }
+
+    @Override
+    public String newSeminar(Integer courseId, String topic, String introduction, Boolean visible) {
+        return seminarDao.newSeminar(courseId, topic, introduction, visible);
+    }
+
+    @Override
+    public String modifySeminar(Integer courseId, Integer seminarId, String topic, String introduction, Boolean visible) {
+        return seminarDao.modifySeminar(courseId,seminarId, topic, introduction, visible);
     }
 }

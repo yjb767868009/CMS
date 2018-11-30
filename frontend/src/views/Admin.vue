@@ -1,8 +1,8 @@
 <template>
-<el-container style="height:100%">
+<el-container style="height:100%;margin:0 auto">
     <el-header>Admin</el-header>
 
-<el-container style="height:600px;border: 1px solid #eee">
+<el-container style="height:100%;border: 1px solid #eee">
   <el-aside width="200px" style="background-color: rgb(255,255,255);height:100%">
     <el-menu :default-openeds="['1']">
       <el-submenu index="1">
@@ -18,8 +18,8 @@
   
   <keep-alive>
 
-    <el-container v-if="show_teacher">
-      <el-header style="text-align: right;background-color:rgb(238, 241, 246); font-size: 12px">
+    <el-container v-if="showTeacher">
+      <el-header style="text-align: left;background-color:rgb(238, 241, 246); font-size: 12px">
         <span style="color:rgb(0,0,0)"><i class="el-icon-search"></i></span>
         <el-input style="width:30%" v-model="teacherSearchKey" placeholder="输入教工号/姓名" @keyup.enter.native="searchTeacher">
         </el-input>
@@ -51,8 +51,8 @@
       </el-main>
     </el-container>
 
-    <el-container v-else>
-      <el-header style="text-align: right;background-color:rgb(238, 241, 246); font-size: 12px">
+    <el-container  v-else-if="showStudent">
+      <el-header style="text-align: left;background-color:rgb(238, 241, 246); font-size: 12px">
         <span style="color:rgb(0,0,0)"><i class="el-icon-search"></i></span>
         <el-input style="width:30%" v-model="studentSearchKey" placeholder="输入学号/姓名" @keyup.enter.native="searchStudent">
         </el-input>
@@ -81,11 +81,79 @@
               </template>
           </el-table-column>
         </el-table>
-        <db-modal :dialogFormVisible="dialogFormVisible" :form="addTeacherForm" v-on:canclemodal="dialogVisible"></db-modal>
       </el-main>
     </el-container>
 
-  </keep-alive>
+    
+    </keep-alive>
+
+    <el-container v-if="showAddTeacher">
+      <el-header style="text-align: left;background-color:rgb(238, 241, 246);color:rgb(0,0,0);"> 
+      创建教师用户
+      </el-header>
+        <el-main>
+          <el-form ref="form" :model="addTeacherForm" style="width:40%">
+            <el-form-item label="教师姓名">
+              <el-input v-model="addTeacherForm.name" placeholder="请输入老师姓名"></el-input>
+            </el-form-item>
+            <el-form-item label="教工号">
+              <el-input v-model="addTeacherForm.account" placeholder="请输入教工号"></el-input>
+            </el-form-item>
+            <el-form-item label="电子邮箱">
+              <el-input v-model="addTeacherForm.email" placeholder="请输入电子邮箱"></el-input>
+            </el-form-item>
+            <el-form-item label="初始密码">
+              <el-input v-model="addTeacherForm.password" placeholder="请输入初始密码"></el-input>
+            </el-form-item>
+          </el-form>
+          <el-button type="primary" @click="postAddTeacher">提交</el-button>
+          <el-button type="info" @click="cancelAddTeacher">取消</el-button>
+        </el-main>
+      </el-container>
+
+      <el-container v-if="showModifyTeacher">
+      <el-header style="text-align: left;background-color:rgb(238, 241, 246);color:rgb(0,0,0);"> 
+      修改教师信息
+      </el-header>
+        <el-main>
+          <el-form ref="form" :model="modifyTeacherForm" style="width:40%">
+            <el-form-item label="教师姓名">
+              <el-input v-model="modifyTeacherForm.name" placeholder="请输入老师姓名"></el-input>
+            </el-form-item>
+            <el-form-item label="教工号">
+              <el-input v-model="modifyTeacherForm.account" placeholder="请输入教工号"></el-input>
+            </el-form-item>
+            <el-form-item label="电子邮箱">
+              <el-input v-model="modifyTeacherForm.email" placeholder="请输入电子邮箱"></el-input>
+            </el-form-item>
+          </el-form>
+          <el-button type="primary" @click="postModifyTeacher">提交</el-button>
+          <el-button type="info" @click="cancelAddTeacher">取消</el-button>
+        </el-main>
+      </el-container>
+
+      <el-container v-if="showModifyStudent">
+      <el-header style="text-align: left;background-color:rgb(238, 241, 246);color:rgb(0,0,0);"> 
+      修改学生信息
+      </el-header>
+        <el-main>
+          <el-form ref="form" :model="modifyStudentForm" style="width:40%">
+            <el-form-item label="学生姓名">
+              <el-input v-model="modifyStudentForm.name" placeholder="请输入学生姓名"></el-input>
+            </el-form-item>
+            <el-form-item label="学号">
+              <el-input v-model="modifyStudentForm.account" placeholder="请输入学号"></el-input>
+            </el-form-item>
+            <el-form-item label="电子邮箱">
+              <el-input v-model="modifyStudentForm.email" placeholder="请输入电子邮箱"></el-input>
+            </el-form-item>
+          </el-form>
+          <el-button type="primary" @click="postModifyStudent">提交</el-button>
+          <el-button type="info" @click="cancelAddTeacher">取消</el-button>
+        </el-main>
+      </el-container>
+
+    
   
 </el-container>
     <el-footer style="background-color: rgb(10, 47, 88);color:rgb(255,255,255);height:100%;">
@@ -138,7 +206,7 @@
 
 <script>
 import axios from 'axios'
-import DbModal from '@/components/DbModal'
+import { fchown } from 'fs';
   export default {
     data() {
       const teacher = {
@@ -164,11 +232,31 @@ import DbModal from '@/components/DbModal'
       return {
         teacherData: Array(20).fill(teacher),
         studentData: Array(20).fill(student),
-        show_teacher:true,
+        showTeacher:true,
+        showStudent:false,
+        showAddTeacher:false,
+        showModifyTeacher:false,
+        showModifyStudent:false,
         footerMessage:'CMS',
         teacherSearchKey:'',
         studentSearchKey:'',
-        addTeacherForm:''
+        baseUrl:'127.0.0.1:8000/api/',
+        addTeacherForm:{
+          name:'',
+          account:'',
+          email:'',
+          password:''
+        },
+        modifyStudentForm:{
+          name:'',
+          account:'',
+          email:''
+        },
+        modifyTeacherForm:{
+          name:'',
+          accout:'',
+          email:''
+        }
       }
     },
     mounted:function(){
@@ -177,16 +265,19 @@ import DbModal from '@/components/DbModal'
     },
     methods:{
         handleStudent:function(){
-            this.show_teacher=false
+            this.showTeacher=false
+            this.showAddTeacher=false
+            this.showStudent=true
+            this.showModifyTeacher=false
+            this.showModifyStudent=false
         },
         handleTeacher:function(){
-            this.show_teacher=true
+            this.showStudent=false
+            this.showAddTeacher=false
+            this.showTeacher=true
+            this.showModifyTeacher=false
+            this.showModifyStudent=false
         },
-
-        dialogVisible: function () {
-            this.dialogFormVisible = false;
-        },
-
 
         searchTeacher:function(){
           if(!this.teacherSearchKey){
@@ -195,8 +286,22 @@ import DbModal from '@/components/DbModal'
           }
           if(!isNaN(this.teacherSearchKey)){
             //搜教工号
+            axios.get(baseUrl+'admin/teachers/nameSearch/'+teacherSearchKey)
+              .then(function(response){
+                this.teacherData=response
+              })
+              .catch(function(error){
+                console.log(error)
+              })
           }else{
             //搜名字
+            axios.get(baseUrl+'admin/teachers/nameSearch/'+teacherSearchKey)
+              .then(function(response){
+                this.teacherData=response
+              })
+              .catch(function(error){
+                console.log(error)
+              })
           }
         },
         searchStudent:function(){
@@ -205,22 +310,52 @@ import DbModal from '@/components/DbModal'
             return
           }
           if(!isNaN(this.studentSearchKey)){
-            //搜教工号
+            //搜学号
+            axios.get(baseUrl+'admin/students/nameSearch/'+studentSearchKey)
+              .then(function(response){
+                this.teacherData=response
+              })
+              .catch(function(error){
+                console.log(error)
+              })
           }else{
             //搜名字
+            axios.get(baseUrl+'admin/students/nameSearch/'+studentSearchKey)
+              .then(function(response){
+                this.teacherData=response
+              })
+              .catch(function(error){
+                console.log(error)
+              })
           }
         },
         editStudent:function(student){
-            this.$prompt('')
+            this.modifyStudentForm.name=student.name
+            this.modifyStudentForm.account=student.account
+            this.modifyStudentForm.email=student.email
+            this.showStudent=false
+            this.showAddTeacher=false
+            this.showTeacher=false
+            this.showModifyTeacher=false
+            this.showModifyStudent=true
         },
         editTeacher:function(teacher){
-            console.log(teacher.id)
+            this.modifyTeacherForm.name=teacher.name
+            this.modifyTeacherForm.account=teacher.account
+            this.modifyTeacherForm.email=teacher.email
+            this.showStudent=false
+            this.showAddTeacher=false
+            this.showTeacher=false
+            this.showModifyTeacher=true
+            this.showModifyStudent=false
         },
         addTeacher:function(){
-            this.dialogFormVisible = true;
+            this.showAddTeacher=true;
+            this.showTeacher=false;
+            this.showStudent=false;
         },
         getAllStudent:function(){
-          axios.get('127.0.0.1:8000/api/admin/students')
+          axios.get(baseUrl+'admin/students')
             .then(function(response){
               this.studentData=response.students
             }).catch(function(error){
@@ -228,7 +363,7 @@ import DbModal from '@/components/DbModal'
             })
         },
         getAllTeacher:function(){
-          axios.get('127.0.0.1:8000/api/admin/teachers')
+          axios.get(baseUrl+'admin/teachers')
             .then(function(response){
               this.teacherData=response.teachers
             }).catch(function(error){
@@ -236,38 +371,42 @@ import DbModal from '@/components/DbModal'
             })
         },
         resetStudent:function(student){
-          this.$confirm('确定重置该学生密码？','重置密码',{
-            confirmButtonText:'确定',
-            cancelButtonText:'取消',
-            type:'warning'
-          }).then(()=>{
-            //确认重置
-            axios.patch('127.0.0.1:8000/api/admin/students/'+student.id,{
-              params:{
-                password:'123456'
-              }
+          this.$prompt('请输入新密码', '修改学生密码', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+        }).then(({ input }) => {
+          axios.put(baseUrl+'admin/students/'+student.id,{
+            password:input
+          })
+            .then(function(response){
+              //process on response
+                  this.$message({
+                type: 'success',
+                message: '修改后的密码为: ' + input
+              });
             })
             .catch(function(error){
               console.log(error)
             })
-          })
+        })
         },
         resetTeacher:function(teacher){
-          this.$confirm('确定重置该学生密码？','重置密码',{
-            confirmButtonText:'确定',
-            cancelButtonText:'取消',
-            type:'warning'
-          }).then(()=>{
-            //确认重置
-            axios.patch('127.0.0.1:8000/api/admin/teachers/'+teacher.id,{
-              params:{
-                password:'123456'
-              }
+          this.$prompt('请输入新密码', '修改老师密码', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+        }).then(({ value }) => {
+          axios.put(baseUrl+'admin/teachers/'+teacher.id)
+            .then(function(response){
+              //process on response
+                  this.$message({
+                type: 'success',
+                message: '修改后的密码为: ' + value
+              });
             })
             .catch(function(error){
               console.log(error)
             })
-          })
+        })
         },
         deleteStudent:function(student){
           this.$confirm('确定删除该学生？','删除账号',{
@@ -276,7 +415,7 @@ import DbModal from '@/components/DbModal'
             type:'warning'
           }).then(()=>{
             //确认删除
-            axios.delete('127.0.0.1:8000/api/admin/students/'+student.id)
+            axios.delete(baseUrl+'admin/students/'+student.id)
             .catch(function(error){
               console.log(error)
             })
@@ -294,7 +433,7 @@ import DbModal from '@/components/DbModal'
             type:'warning'
           }).then(()=>{
             //确认删除
-            axios.delete('127.0.0.1:8000/api/admin/teachers/'+teacher.id)
+            axios.delete(baseUrl+'admin/teachers/'+teacher.id)
             .catch(function(error){
               console.log(error)
             })
@@ -304,6 +443,46 @@ import DbModal from '@/components/DbModal'
               message:'取消删除'
             })
           })
+        },
+        cancelAddTeacher:function(){
+          this.handleTeacher()
+        },
+        postAddTeacher:function(){
+          axios.post(baseUrl+'admin/teachers',{
+            name:addTeacherForm.name,
+            account:addTeacherForm.account,
+            email:addTeacherForm.email,
+            password:addTeacherForm.password
+          }).then(function(response){
+            this.handleTeacher()
+          })
+            .catch(function(error){
+              console.log(error)
+            })
+        },
+        postModifyTeacher:function(){
+          axios.patch(baseUrl+'admin/teachers',{
+            name:postModifyTeacher.name,
+            account:postModifyTeacher.account,
+            email:postModifyTeacher.email,
+          }).then(function(response){
+            this.handleTeacher()
+          })
+            .catch(function(error){
+              console.log(error)
+            })
+        },
+        postModifyStudent:function(){
+          axios.patch(baseUrl+'admin/students',{
+            name:postModifyStudent.name,
+            account:postModifyStudent.account,
+            email:postModifyStudent.email,
+          }).then(function(response){
+            this.handleTeacher()
+          })
+            .catch(function(error){
+              console.log(error)
+            })
         }
     }
   };

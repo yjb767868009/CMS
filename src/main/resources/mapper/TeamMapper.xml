@@ -11,6 +11,6 @@
         FROM team,
              presentation
         WHERE team.team_id = presentation.team_id
-          AND presentation.seminar_id = #{seminar_id}
+          AND presentation.seminar_id = #{seminarId}
     </select>
 </mapper>

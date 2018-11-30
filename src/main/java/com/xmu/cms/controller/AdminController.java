@@ -102,15 +102,15 @@ public class AdminController {
         return studentService.deleteStudentById(studentId);
     }
 
-    @GetMapping(value = "/teachers/nameSearch/{name}")
+    @GetMapping(value = "/teachers/nameSearch")
     @CheckAdminPermission
-    public List<Teacher> getTeacherByName(@PathVariable("name") String name) {
+    public List<Teacher> getTeacherByName(@RequestParam("name") String name) {
         return teacherService.getTeacherByName(name);
     }
 
-    @GetMapping(value = "/students/nameSearch/{name}")
+    @GetMapping(value = "/students/nameSearch")
     @CheckAdminPermission
-    public List<Student> getStudentByName(@PathVariable("name") String name) {
+    public List<Student> getStudentByName(@RequestParam("name") String name) {
         return studentService.getStudentByName(name);
     }
 

@@ -34,6 +34,22 @@
           AND course.course_id = turning_class.course_id
     </select>
 
+    <select id="getAllCoursesByTeacherAccount" resultType="com.xmu.cms.entity.Course">
+        SELECT course_id          as courseId,
+               course.teacher_id  as teacherId,
+               course.name,
+               introduction,
+               presetation_weight as presestationWeight,
+               report_weight      as reportWeight,
+               question_weight    as questionWeight,
+               team_start_time    as teamStartTime,
+               team_end_time      as teamEndTime
+        FROM course,
+             teacher
+        WHERE teacher.account = #{account}
+          AND course.teacher_id = teacher.teacher_id
+    </select>
+
     <delete id="deleteCourseById">
         DELETE *
         FROM course

@@ -1,5 +1,6 @@
 package com.xmu.cms.entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -11,16 +12,21 @@ public class Seminar {
     private Integer turningClassId;
     private Integer roundId;
     private Integer maxTeamNum;
-    private Date signStartTime;
-    private Date signEndTime;
-    private Date reportEndTime;
+    private Timestamp signStartTime;
+    private Timestamp signEndTime;
+    private Timestamp reportEndTime;
     /**
-     * status 0表示未开始，1表示进行中，2表示暂停，4表示结束
+     * status 0表示未开始，1表示进行中，2表示暂停，3表示结束
      */
     private Integer status;
+    /**
+     * presentationNo
+     * 表示第几个展示的组
+     */
+    private Integer presentationNo;
     private Boolean signOrder;
 
-    public Seminar(Integer seminarId, Integer turningClassId, Integer roundId, Integer maxTeamNum, Date signStartTime, Date signEndTime, Date reportEndTime, Integer status, Boolean signOrder) {
+    public Seminar(Integer seminarId, Integer turningClassId, Integer roundId, Integer maxTeamNum, Timestamp signStartTime, Timestamp signEndTime, Timestamp reportEndTime, Integer status, Integer presentationNo, Boolean signOrder) {
         this.seminarId = seminarId;
         this.turningClassId = turningClassId;
         this.roundId = roundId;
@@ -29,6 +35,7 @@ public class Seminar {
         this.signEndTime = signEndTime;
         this.reportEndTime = reportEndTime;
         this.status = status;
+        this.presentationNo = presentationNo;
         this.signOrder = signOrder;
     }
 
@@ -64,27 +71,27 @@ public class Seminar {
         this.maxTeamNum = maxTeamNum;
     }
 
-    public Date getSignStartTime() {
+    public Timestamp getSignStartTime() {
         return signStartTime;
     }
 
-    public void setSignStartTime(Date signStartTime) {
+    public void setSignStartTime(Timestamp signStartTime) {
         this.signStartTime = signStartTime;
     }
 
-    public Date getSignEndTime() {
+    public Timestamp getSignEndTime() {
         return signEndTime;
     }
 
-    public void setSignEndTime(Date signEndTime) {
+    public void setSignEndTime(Timestamp signEndTime) {
         this.signEndTime = signEndTime;
     }
 
-    public Date getReportEndTime() {
+    public Timestamp getReportEndTime() {
         return reportEndTime;
     }
 
-    public void setReportEndTime(Date reportEndTime) {
+    public void setReportEndTime(Timestamp reportEndTime) {
         this.reportEndTime = reportEndTime;
     }
 
@@ -102,5 +109,13 @@ public class Seminar {
 
     public void setSignOrder(Boolean signOrder) {
         this.signOrder = signOrder;
+    }
+
+    public Integer getPresentationNo() {
+        return presentationNo;
+    }
+
+    public void setPresentationNo(Integer presentationNo) {
+        this.presentationNo = presentationNo;
     }
 }

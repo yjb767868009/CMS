@@ -17,4 +17,6 @@ public interface CourseDao {
     List<Course> getAllCourseByStudentId(@Param("studentId") Integer studentId);
 
     Integer deleteCourseById(@Param("courseId") Integer courseId);
+
+    List<Course> getAllCourseByTeacherAccount(@Param("account") String account);
 }

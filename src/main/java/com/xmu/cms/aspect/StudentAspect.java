@@ -21,10 +21,10 @@ import java.util.List;
  */
 @Aspect
 @Component
-public class StudentAspect extends com.xmu.cms.aspect.Aspect {
+public class StudentAspect {
 
     @Around("@annotation(com.xmu.cms.aspect.CheckStudentPermission)")
     public Object checkStudentPermission(ProceedingJoinPoint point) throws Throwable {
-        return checkPermission(point, "student");
+        return Permission.checkPermission(point, "student");
     }
 }

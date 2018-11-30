@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.dao.SeminarDao">
-    <insert id="newSeminarTurningClass">
+    <insert id="newSeminar">
         INSERT seminar (seminar_id,
                         turning_class_id,
                         max_team_num,
@@ -22,7 +22,7 @@
                #{signOrder})
     </insert>
 
-    <update id="modifySeminarTurningClass">
+    <update id="modifySeminar">
         UPDATE seminar
         SET round_id        = #{roundId},
             max_team_num    = #{maxTeamNum},
@@ -32,24 +32,40 @@
           AND turning_class_id = #{turningClassId}
     </update>
 
-    <update id="startSeminarTurningClass">
+    <update id="startSeminar">
         UPDATE seminar
         SET status = 1
         WHERE seminar_id = #{seminarId}
           AND turning_class_id = #{turningClassId}
     </update>
 
-    <update id="stopSeminarTurningClass">
+    <update id="stopSeminar">
         UPDATE seminar
         SET status = 2
         WHERE seminar_id = #{seminarId}
           AND turning_class_id = #{turningClassId}
     </update>
 
-    <update id="endSeminarTurningClass">
+    <update id="endSeminar">
         UPDATE seminar
         SET status = 3
         WHERE seminar_id = #{seminarId}
           AND turning_class_id = #{turningClassId}
     </update>
+
+    <select id="getSeminar" resultType="com.xmu.cms.entity.Seminar">
+        SELECT seminar_id       as seminarId,
+               turning_class_id as turningClassId,
+               round_id         as roundId,
+               max_team_num     as maxTeamNum,
+               sign_start_time  as signStartTime,
+               sign_end_time    as signEndTime,
+               report_end_time  as reportEndTime,
+               status,
+               presentation_no  as presentationNo,
+               sign_order       as signOrder
+        FROM seminar
+        WHERE seminar_id = #{seminarId}
+          AND turning_class_id = #{turningClassId}
+    </select>
 </mapper>

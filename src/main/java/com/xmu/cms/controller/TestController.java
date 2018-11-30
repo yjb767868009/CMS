@@ -45,4 +45,14 @@ public class TestController {
         HttpSession session = request.getSession();
         return session.getAttribute("userType").toString();
     }
+
+    @GetMapping(value = "/getUserType")
+    public Object getUserType(HttpSession session) {
+        return session.getAttribute("userType");
+    }
+
+    @GetMapping(value = "/getUserId")
+    public Object getUserId(HttpSession session) {
+        return session.getAttribute("userId");
+    }
 }

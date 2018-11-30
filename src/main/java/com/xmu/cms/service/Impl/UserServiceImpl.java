@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
             } else {
                 if (findStudentPassword.equals(password)) {
                     session.setAttribute("userType", "student");
-                    session.setAttribute("userId", account);
+                    session.setAttribute("userId", studentDao.getIdByAccount(account).toString());
                     return "Student";
                 } else {
                     return "Account or password error";
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
         } else {
             if (findTeacherPassword.equals(password)) {
                 session.setAttribute("userType", "teacher");
-                session.setAttribute("userId", account);
+                session.setAttribute("userId", teacherDao.getIdByAccount(account).toString());
                 return "Teacher";
             } else {
                 return "Account or password error";

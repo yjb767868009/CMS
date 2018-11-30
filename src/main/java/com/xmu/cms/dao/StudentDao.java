@@ -76,4 +76,6 @@ public interface StudentDao {
      * @return List<Student>
      */
     List<Student> getStudentByName(@Param("name") String name);
+
+    Integer getIdByAccount(@Param("account") String account);
 }

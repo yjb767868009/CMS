@@ -15,5 +15,5 @@ public interface SeminarInfoService {
 
     String newSeminar(Integer courseId, String topic, String introduction, Boolean visible);
 
-    String modifySeminar(Integer courseId, Integer seminarId, String topic, String introduction, Boolean visible);
+    String modifySeminarInfo(Integer courseId, Integer seminarId, String topic, String introduction, Boolean visible);
 }

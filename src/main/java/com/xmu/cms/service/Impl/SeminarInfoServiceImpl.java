@@ -33,7 +33,7 @@ public class SeminarInfoServiceImpl implements SeminarInfoService {
     }
 
     @Override
-    public String modifySeminar(Integer courseId, Integer seminarId, String topic, String introduction, Boolean visible) {
+    public String modifySeminarInfo(Integer courseId, Integer seminarId, String topic, String introduction, Boolean visible) {
         return seminarInfoDao.modifySeminar(courseId,seminarId, topic, introduction, visible);
     }
 }

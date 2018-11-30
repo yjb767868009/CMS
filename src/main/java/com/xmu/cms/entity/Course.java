@@ -1,5 +1,6 @@
 package com.xmu.cms.entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -14,10 +15,10 @@ public class Course {
     private Float presentationWeight;
     private Float reportWeight;
     private Float questionWeight;
-    private Date teamStartTime;
-    private Date teamEndTime;
+    private Timestamp teamStartTime;
+    private Timestamp teamEndTime;
 
-    public Course(Integer courseId, Integer teacherId, String name, String introduction, Float presentationWeight, Float reportWeight, Float questionWeight, Date teamStartTime, Date teamEndTime) {
+    public Course(Integer courseId, Integer teacherId, String name, String introduction, Float presentationWeight, Float reportWeight, Float questionWeight, Timestamp teamStartTime, Timestamp teamEndTime) {
         this.courseId = courseId;
         this.teacherId = teacherId;
         this.name = name;
@@ -28,6 +29,7 @@ public class Course {
         this.teamStartTime = teamStartTime;
         this.teamEndTime = teamEndTime;
     }
+
 
     public Integer getCourseId() {
         return courseId;
@@ -85,19 +87,19 @@ public class Course {
         this.questionWeight = questionWeight;
     }
 
-    public Date getTeamStartTime() {
+    public Timestamp getTeamStartTime() {
         return teamStartTime;
     }
 
-    public void setTeamStartTime(Date teamStartTime) {
+    public void setTeamStartTime(Timestamp teamStartTime) {
         this.teamStartTime = teamStartTime;
     }
 
-    public Date getTeamEndTime() {
+    public Timestamp getTeamEndTime() {
         return teamEndTime;
     }
 
-    public void setTeamEndTime(Date teamEndTime) {
+    public void setTeamEndTime(Timestamp teamEndTime) {
         this.teamEndTime = teamEndTime;
     }
 }

@@ -84,4 +84,6 @@ public interface TeacherDao {
      * @return List<teacher>
      */
     List<Teacher> getTeacherByName(@Param("name") String name);
+
+    Integer getIdByAccount(@Param("account") String account);
 }

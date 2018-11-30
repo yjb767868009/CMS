@@ -14,4 +14,6 @@ public interface CourseService {
     String deleteCourseById(Integer courseId);
 
     List<Course> getAllCoursesByStudentId(Integer studentId);
+
+    List<Course> getAllCoursesByTeacherAccount(String account);
 }

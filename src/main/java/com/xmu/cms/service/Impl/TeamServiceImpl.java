@@ -18,7 +18,7 @@ public class TeamServiceImpl implements TeamService {
     private TeamDao teamDao;
 
     @Override
-    public List<Team> getAllTeamInSeminar(Integer seminarId) {
+    public List<Team> getAllTeamsInSeminar(Integer seminarId) {
         return teamDao.getAllTeamsInSeminar(seminarId);
     }
 }

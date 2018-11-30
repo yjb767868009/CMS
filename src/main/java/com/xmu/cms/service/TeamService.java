@@ -9,5 +9,5 @@ import java.util.List;
  * @version 1.0
  */
 public interface TeamService {
-    List<Team> getAllTeamInSeminar(Integer seminarId);
+    List<Team> getAllTeamsInSeminar(Integer seminarId);
 }

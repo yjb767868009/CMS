@@ -41,7 +41,7 @@
         WHERE teacher_id = #{teacherId}
     </delete>
 
-    <select id="getPasswordByAccount" parameterType="java.lang.String">
+    <select id="getPasswordByAccount" resultType="java.lang.String">
         SELECT password
         FROM teacher
         WHERE account = #{account}
@@ -60,4 +60,11 @@
         FROM teacher
         WHERE name = #{name}
     </select>
+
+    <select id="getIdByAccount" resultType="java.lang.Integer">
+        SELECT teacher_id as teacherId
+        FROM teacher
+        WHERE account = #{account}
+    </select>
+
 </mapper>

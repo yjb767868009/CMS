@@ -1,9 +1,6 @@
 package com.xmu.cms.aspect;
 
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -13,16 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author JuboYu on 2018/11/29.
+ * @author JuboYu on 2018/11/30.
  * @version 1.0
  */
-@org.aspectj.lang.annotation.Aspect
-@Component
-public class Aspect {
-
-    protected final static Logger logger = LoggerFactory.getLogger(AdminAspect.class);
-
-    Object checkPermission(ProceedingJoinPoint point, String permissionType) throws Throwable {
+class Permission {
+    static Object checkPermission(ProceedingJoinPoint point, String permissionType) throws Throwable {
         Object result = null;
         List<String> noLogIn = new ArrayList<String>();
         noLogIn.add("NoLogIn");
@@ -41,5 +33,4 @@ public class Aspect {
         }
         return result;
     }
-
 }

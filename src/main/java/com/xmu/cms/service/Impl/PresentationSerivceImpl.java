@@ -20,20 +20,7 @@ public class PresentationSerivceImpl implements PresentationService {
 
     @Override
     public List<Presentation> getPresentationsInSeminar(Integer seminarId) {
-        List<Presentation> presentations = presentationDao.getPresentationsInSeminar(seminarId);
-        presentations.sort(new Comparator<Presentation>() {
-            @Override
-            public int compare(Presentation o1, Presentation o2) {
-                if (o1.getTeamOrder() > o2.getTeamOrder()) {
-                    return 1;
-                }
-                if (o1.getTeamOrder() < o2.getTeamOrder()) {
-                    return -1;
-                }
-                return 0;
-            }
-        });
-        return presentations;
+        return presentationDao.getPresentationsInSeminar(seminarId);
     }
 
     @Override
@@ -45,4 +32,5 @@ public class PresentationSerivceImpl implements PresentationService {
             return "Set Score Error";
         }
     }
+
 }

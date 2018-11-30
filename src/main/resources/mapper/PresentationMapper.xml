@@ -13,6 +13,7 @@
                report_score       as reportScore
         FROM presentation
         WHERE seminar_id = #{seminarId}
+        ORDER BY team_order
     </select>
 
     <update id="setPresentationScore">

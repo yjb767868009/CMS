@@ -20,9 +20,11 @@ import java.util.List;
  */
 @Aspect
 @Component
-public class AdminAspect extends com.xmu.cms.aspect.Aspect {
+public class AdminAspect {
+
     @Around("@annotation(com.xmu.cms.aspect.CheckAdminPermission)")
-    public Object checkPermission(ProceedingJoinPoint point) throws Throwable {
-        return checkPermission(point, "admin");
+    public Object checkAdminPermission(ProceedingJoinPoint point) throws Throwable {
+        System.out.println("Check admin permission");
+        return Permission.checkPermission(point, "admin");
     }
 }

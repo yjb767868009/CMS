@@ -57,48 +57,48 @@ public class CourseController {
         return turningClassService.newTurningClass(courseId, name, classTime, classPlace);
     }
 
-    @PostMapping(value = "/newSeminar")
+    @PostMapping(value = "/newSeminarInfo")
     @CheckTeacherPermission
-    public String newSeminar(@PathVariable("courseId") Integer courseId,
-                             @RequestParam("topic") String topic,
-                             @RequestParam("introduction") String introduction,
-                             @RequestParam("visible") Boolean visible) {
+    public String newSeminarInfo(@PathVariable("courseId") Integer courseId,
+                                 @RequestParam("topic") String topic,
+                                 @RequestParam("introduction") String introduction,
+                                 @RequestParam("visible") Boolean visible) {
         return seminarInfoService.newSeminar(courseId, topic, introduction, visible);
     }
 
-    @PutMapping(value = "/modifySeminar/{seminarId}")
+    @PutMapping(value = "/modifySeminarInfo/{seminarId}")
     @CheckTeacherPermission
-    public String modifySeminar(@PathVariable("courseId") Integer courseId,
-                                @PathVariable("seminarId") Integer seminarId,
-                                @RequestParam("topic") String topic,
-                                @RequestParam("introduction") String introduction,
-                                @RequestParam("visible") Boolean visible) {
-        return seminarInfoService.modifySeminar(courseId, seminarId, topic, introduction, visible);
+    public String modifySeminarInfo(@PathVariable("courseId") Integer courseId,
+                                    @PathVariable("seminarId") Integer seminarId,
+                                    @RequestParam("topic") String topic,
+                                    @RequestParam("introduction") String introduction,
+                                    @RequestParam("visible") Boolean visible) {
+        return seminarInfoService.modifySeminarInfo(courseId, seminarId, topic, introduction, visible);
     }
 
-    @PostMapping(value = "/newSeminarTurningClass")
+    @PostMapping(value = "/newSeminar")
     @CheckTeacherPermission
-    public String newSeminarTurningClass(@RequestParam("seminarId") Integer seminarId,
-                                         @RequestParam("turningClassId") Integer turningClassId,
-                                         @RequestParam("roundId") Integer roundId,
-                                         @RequestParam("maxTeamNum") Integer maxTeamNum,
-                                         @RequestParam("signStartTime") Date signStartTime,
-                                         @RequestParam("signEndTime") Date signEndTime,
-                                         @RequestParam("signOrder") Boolean signOrder) {
-        return seminarService.newSeminarTurningClass(seminarId, turningClassId, roundId, maxTeamNum, signStartTime, signEndTime, signOrder);
+    public String newSeminarInfo(@RequestParam("seminarId") Integer seminarId,
+                                 @RequestParam("turningClassId") Integer turningClassId,
+                                 @RequestParam("roundId") Integer roundId,
+                                 @RequestParam("maxTeamNum") Integer maxTeamNum,
+                                 @RequestParam("signStartTime") Date signStartTime,
+                                 @RequestParam("signEndTime") Date signEndTime,
+                                 @RequestParam("signOrder") Boolean signOrder) {
+        return seminarService.newSeminar(seminarId, turningClassId, roundId, maxTeamNum, signStartTime, signEndTime, signOrder);
     }
 
-    @PutMapping(value = "/modifySeminarTurningClass")
+    @PutMapping(value = "/modifySeminar")
     @CheckTeacherPermission
-    public String modifySeminarTurningClass(@RequestParam("seminarId") Integer seminarId,
-                                            @RequestParam("turningClassId") Integer turningClassId,
-                                            @RequestParam("roundId") Integer roundId,
-                                            @RequestParam("maxTeamNum") Integer maxTeamNum,
-                                            @RequestParam("signStartTime") Date signStartTime,
-                                            @RequestParam("signEndTime") Date signEndTime,
-                                            @RequestParam("reportEndTime") Date reportEndTime,
-                                            @RequestParam("status") Integer status,
-                                            @RequestParam("signOrder") Boolean signOrder) {
-        return seminarService.modifySeminarTurningClass(seminarId, turningClassId, roundId, maxTeamNum, signStartTime, signEndTime, reportEndTime, status, signOrder);
+    public String modifySeminarInfo(@RequestParam("seminarId") Integer seminarId,
+                                    @RequestParam("turningClassId") Integer turningClassId,
+                                    @RequestParam("roundId") Integer roundId,
+                                    @RequestParam("maxTeamNum") Integer maxTeamNum,
+                                    @RequestParam("signStartTime") Date signStartTime,
+                                    @RequestParam("signEndTime") Date signEndTime,
+                                    @RequestParam("reportEndTime") Date reportEndTime,
+                                    @RequestParam("status") Integer status,
+                                    @RequestParam("signOrder") Boolean signOrder) {
+        return seminarService.modifySeminar(seminarId, turningClassId, roundId, maxTeamNum, signStartTime, signEndTime, reportEndTime, status, signOrder);
     }
 }

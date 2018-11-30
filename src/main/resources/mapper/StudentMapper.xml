@@ -60,4 +60,10 @@
         FROM student
         WHERE name = #{name}
     </select>
+
+    <select id="getIdByAccount" resultType="java.lang.Integer">
+        SELECT student_id as studentId
+        FROM student
+        WHERE account = #{account}
+    </select>
 </mapper>

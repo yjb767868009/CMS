@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Admin from '@/views/Admin'
 import AdminLogin from '@/views/AdminLogin'
 import Login from '@/views/Login'
+import CreateTeacher from '@/views/CreateTeacher'
 
 Vue.use(Router)
 
@@ -26,6 +27,11 @@ export default new Router({
       path:'/adminLogin',
       name:'AdminLogin',
       component:AdminLogin
+    },
+    {
+      path:'/admin/createTeacher',
+      name:'CreateTeacher',
+      component:CreateTeacher
     }
   ]
 })

@@ -44,21 +44,22 @@ import axios from 'axios'
             if(!this.password){
                 this.$message.error('请输入密码')
             }
-            axios.post('127.0.0.1:8000/adminLogin', {
-                    params:{
-                        account:this.account,
-                        password:this.password
-                    }
-                }
-            ).then(function(response){
-                if(response.status==='200'){
-                    this.$router.push('Admin')
-                }else{
-                    this.$message.error('账户名或密码错误')
-                }
-            }).catch(function(error){
+            // axios.post('127.0.0.1:8000/api/admin/login', {
+            //         params:{
+            //             account:this.account,
+            //             password:this.password
+            //         }
+            //     }
+            // ).then(function(response){
+            //     if(response.status==='200'){
+            //         this.$router.push('Admin')
+            //     }else{
+            //         this.$message.error('账户名或密码错误')
+            //     }
+            // }).catch(function(error){
 
-            })
+            // })
+            this.$router.push('Admin')
         },
         
         toAdmin:function(){

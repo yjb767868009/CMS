@@ -205,8 +205,6 @@
 </style>
 
 <script>
-import axios from 'axios'
-import { fchown } from 'fs';
   export default {
     data() {
       const teacher = {
@@ -240,7 +238,6 @@ import { fchown } from 'fs';
         footerMessage:'CMS',
         teacherSearchKey:'',
         studentSearchKey:'',
-        baseUrl:'127.0.0.1:8000/api/',
         addTeacherForm:{
           name:'',
           account:'',
@@ -286,18 +283,18 @@ import { fchown } from 'fs';
           }
           if(!isNaN(this.teacherSearchKey)){
             //搜教工号
-            axios.get(baseUrl+'admin/teachers/nameSearch/'+teacherSearchKey)
+            this.$axios.get('/api/admin/teachers/nameSearch/'+teacherSearchKey)
               .then(function(response){
-                this.teacherData=response
+                this.teacherData=response.data
               })
               .catch(function(error){
                 console.log(error)
               })
           }else{
             //搜名字
-            axios.get(baseUrl+'admin/teachers/nameSearch/'+teacherSearchKey)
+            this.$axios.get('/api/admin/teachers/nameSearch/'+teacherSearchKey)
               .then(function(response){
-                this.teacherData=response
+                this.teacherData=response.data
               })
               .catch(function(error){
                 console.log(error)
@@ -311,18 +308,18 @@ import { fchown } from 'fs';
           }
           if(!isNaN(this.studentSearchKey)){
             //搜学号
-            axios.get(baseUrl+'admin/students/nameSearch/'+studentSearchKey)
+            this.$axios.get('/api/admin/students/nameSearch/'+studentSearchKey)
               .then(function(response){
-                this.teacherData=response
+                this.teacherData=response.data
               })
               .catch(function(error){
                 console.log(error)
               })
           }else{
             //搜名字
-            axios.get(baseUrl+'admin/students/nameSearch/'+studentSearchKey)
+            this.$axios.get('/api/admin/students/nameSearch/'+studentSearchKey)
               .then(function(response){
-                this.teacherData=response
+                this.teacherData=response.data
               })
               .catch(function(error){
                 console.log(error)
@@ -355,17 +352,17 @@ import { fchown } from 'fs';
             this.showStudent=false;
         },
         getAllStudent:function(){
-          axios.get(baseUrl+'admin/students')
+          this.$axios.get('/api/admin/students')
             .then(function(response){
-              this.studentData=response.students
+              this.studentData=response.data.students
             }).catch(function(error){
               console.log(error)
             })
         },
         getAllTeacher:function(){
-          axios.get(baseUrl+'admin/teachers')
+          this.$axios.get('/api/admin/teachers')
             .then(function(response){
-              this.teacherData=response.teachers
+              this.teacherData=response.data.teachers
             }).catch(function(error){
               console.log(error)
             })
@@ -375,7 +372,7 @@ import { fchown } from 'fs';
           confirmButtonText: '确定',
           cancelButtonText: '取消',
         }).then(({ input }) => {
-          axios.put(baseUrl+'admin/students/'+student.id,{
+          this.$axios.put('/api/admin/students/'+student.id,{
             password:input
           })
             .then(function(response){
@@ -395,7 +392,7 @@ import { fchown } from 'fs';
           confirmButtonText: '确定',
           cancelButtonText: '取消',
         }).then(({ value }) => {
-          axios.put(baseUrl+'admin/teachers/'+teacher.id)
+          this.$axios.put('/api/admin/teachers/'+teacher.id)
             .then(function(response){
               //process on response
                   this.$message({
@@ -415,7 +412,7 @@ import { fchown } from 'fs';
             type:'warning'
           }).then(()=>{
             //确认删除
-            axios.delete(baseUrl+'admin/students/'+student.id)
+            this.$axios.delete('/api/admin/students/'+student.id)
             .catch(function(error){
               console.log(error)
             })
@@ -433,7 +430,7 @@ import { fchown } from 'fs';
             type:'warning'
           }).then(()=>{
             //确认删除
-            axios.delete(baseUrl+'admin/teachers/'+teacher.id)
+            this.$axios.delete('/api/admin/teachers/'+teacher.id)
             .catch(function(error){
               console.log(error)
             })
@@ -448,7 +445,7 @@ import { fchown } from 'fs';
           this.handleTeacher()
         },
         postAddTeacher:function(){
-          axios.post(baseUrl+'admin/teachers',{
+          this.$axios.post('/api/admin/teachers',{
             name:addTeacherForm.name,
             account:addTeacherForm.account,
             email:addTeacherForm.email,
@@ -461,7 +458,7 @@ import { fchown } from 'fs';
             })
         },
         postModifyTeacher:function(){
-          axios.patch(baseUrl+'admin/teachers',{
+          this.$axios.patch('/api/admin/teachers',{
             name:postModifyTeacher.name,
             account:postModifyTeacher.account,
             email:postModifyTeacher.email,
@@ -473,7 +470,7 @@ import { fchown } from 'fs';
             })
         },
         postModifyStudent:function(){
-          axios.patch(baseUrl+'admin/students',{
+          this.$axios.patch('/api/admin/students',{
             name:postModifyStudent.name,
             account:postModifyStudent.account,
             email:postModifyStudent.email,

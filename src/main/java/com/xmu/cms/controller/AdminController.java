@@ -49,7 +49,7 @@ public class AdminController {
         return studentService.getAllStudents();
     }
 
-    @PostMapping(value = "/teacher")
+    @PostMapping(value = "/newTeacher")
     @CheckAdminPermission
     public String newTeacher(@RequestParam(value = "name") String name,
                              @RequestParam(value = "account") String account,
@@ -114,7 +114,4 @@ public class AdminController {
         return studentService.getStudentByName(name);
     }
 
-    public String noLogIn() {
-        return "NoLogIn";
-    }
 }

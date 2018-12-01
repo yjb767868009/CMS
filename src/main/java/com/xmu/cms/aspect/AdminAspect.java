@@ -24,7 +24,6 @@ public class AdminAspect {
 
     @Around("@annotation(com.xmu.cms.aspect.CheckAdminPermission)")
     public Object checkAdminPermission(ProceedingJoinPoint point) throws Throwable {
-        System.out.println("Check admin permission");
         return Permission.checkPermission(point, "admin");
     }
 }

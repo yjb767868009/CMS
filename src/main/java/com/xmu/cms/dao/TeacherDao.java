@@ -35,7 +35,7 @@ public interface TeacherDao {
                        @Param("phone") String phone,
                        @Param("sex") String sex,
                        @Param("messageInterval") Integer messageInterval,
-                       @Param("isActivation") Boolean isActivation);
+                       @Param("activation") Boolean activation);
 
     /**
      * modify teacher by his id

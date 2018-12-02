@@ -5,8 +5,7 @@
         <el-button style="width:100%" type="text">翻转课堂登陆</el-button>
         <el-input v-model="account" placeholder="账户名"></el-input>
         <el-input type="password" v-model="password" placeholder="密码" ></el-input>
-        <el-button style="width:100%" @click="Login(account,password)">登陆</el-button>
-        <el-button style="width:100%" @click="toAdmin">test</el-button>
+        <el-button style="width:100%" @click="login(account,password)">登陆</el-button>
     </el-main>
 </el-container>
 
@@ -26,7 +25,7 @@
 </style>
 
 <script>
-import axios from 'axios'
+import Qs from 'qs'
   export default {
     data() {
       
@@ -36,7 +35,7 @@ import axios from 'axios'
       }
     },
     methods:{
-        Login:function(account,password){
+        login:function(account,password){
             if(!this.account){
                 this.$message.error('请输入账户名')
                 return
@@ -44,31 +43,33 @@ import axios from 'axios'
             if(!this.password){
                 this.$message.error('请输入密码')
             }
-            axios.post('127.0.0.1:8000/api/login', {
-                    params:{
-                        account:this.account,
-                        password:this.password
-                    }
-                }
-            ).then(function(response){
-                if(response.status==='200'){
-                    if(response.identity==='teacher'){
-                        this.$router.push('Teacher')
-                    }
-                    if(response.identity==='student'){
-                        this.$router.push('Student')
-                    }
-                }else{
-                    this.$message.error('账户名或密码错误')
-                }
-            }).catch(function(error){
 
+            this.$axios({
+                method:'post',
+                url:'/api/login',
+                data:Qs.stringify({
+                    account:this.account,
+                    password:this.password
+                })
+            }//我们用配置axios的方式做请求,axios的详细配置见
+            //src/config/axios.js
+
+            ).then((response)=>{
+                let message = response.data.message
+                if(message==='No this account'){
+                    this.$message.error('无此账号')
+                }
+                if(message==='Account or Password error'){
+                    this.$message.error('账号或密码错误')
+                }
+                if(message==='Teacher'){
+                    this.$router.push('MoblieTeacher')
+                }
+                if(message==='Student'){
+                    this.$router.push('StudentSeminarList')
+                }
             })
         },
-        
-        toAdmin:function(){
-            this.$router.push('Admin')
-        }
     }
   };
 </script>

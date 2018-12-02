@@ -1,11 +1,11 @@
 import Vue from 'vue'
+
 import Login from '@/views/Login'
 import Router from 'vue-router'
 
 //Admin
 import Admin from '@/views/Admin/Admin'
 import AdminLogin from '@/views/Admin/AdminLogin'
-import CreateTeacher from '@/views/Admin/CreateTeacher'
 
 //Student
 import SeminarDetail from '@/views/Student/SeminarDetail'
@@ -31,7 +31,8 @@ export default new Router({
   routes: [
     {
       path:'/',
-      redirect:'/login'
+      name:'Login',
+      component:Login
     },
     {
       path:'/login',
@@ -48,11 +49,6 @@ export default new Router({
       path:'/adminLogin',
       name:'AdminLogin',
       component:AdminLogin,
-    },
-    {
-      path:'/admin/createTeacher',
-      name:'CreateTeacher',
-      component:CreateTeacher
     },
 
     //student

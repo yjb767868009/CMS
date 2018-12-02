@@ -2,7 +2,6 @@ package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.StudentDao;
 import com.xmu.cms.dao.TeacherDao;
-import com.xmu.cms.entity.Message;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.service.UserService;

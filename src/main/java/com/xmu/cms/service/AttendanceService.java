@@ -3,6 +3,7 @@ package com.xmu.cms.service;
 import com.xmu.cms.entity.Attendance;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author JuboYu on 2018/11/29.
@@ -11,5 +12,5 @@ import java.util.List;
 public interface AttendanceService {
     List<Attendance> getAttendancesInSeminar(Integer seminarId);
 
-    String setAttendancePresentationScore(Integer attendanceId, Integer presentationScore);
+    Map<String, String> setAttendancePresentationScore(Integer attendanceId, Integer presentationScore);
 }

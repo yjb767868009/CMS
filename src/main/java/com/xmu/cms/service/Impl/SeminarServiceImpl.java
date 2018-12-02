@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author JuboYu on 2018/11/29.
@@ -25,43 +27,51 @@ public class SeminarServiceImpl implements SeminarService {
     private AttendanceDao attendanceDao;
 
     @Override
-    public String newSeminar(Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
+    public Map<String, String> newSeminar(Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
+        Map<String, String> message = new HashMap<String, String>(2);
         Integer count = seminarDao.newSeminar(roundId, maxTeamNum, topic, introduction, signStartTime, signEndTime, signOrder, visible);
         if (count == 1) {
-            return "Success";
+            message.put("message", "Success");
         } else {
-            return "New a seminar error";
+            message.put("message", "Error");
         }
+        return message;
     }
 
     @Override
-    public String startClbumSeminar(Integer seminarId, Integer clbumId) {
+    public Map<String, String> startClbumSeminar(Integer seminarId, Integer clbumId) {
+        Map<String, String> message = new HashMap<String, String>(2);
         Integer count = seminarDao.startClbumSeminar(seminarId, clbumId);
         if (count == 1) {
-            return "Success";
+            message.put("message", "Success");
         } else {
-            return "Start Seminar Error";
+            message.put("message", "Error");
         }
+        return message;
     }
 
     @Override
-    public String stopClbumSeminar(Integer seminarId, Integer clbumId) {
+    public Map<String, String> stopClbumSeminar(Integer seminarId, Integer clbumId) {
+        Map<String, String> message = new HashMap<String, String>(2);
         Integer count = seminarDao.stopClbumSeminar(seminarId, clbumId);
         if (count == 1) {
-            return "Success";
+            message.put("message", "Success");
         } else {
-            return "Stop Seminar Error";
+            message.put("message", "Error");
         }
+        return message;
     }
 
     @Override
-    public String endClbumSeminar(Integer seminarId, Integer clbumId) {
+    public Map<String, String> endClbumSeminar(Integer seminarId, Integer clbumId) {
+        Map<String, String> message = new HashMap<String, String>(2);
         Integer count = seminarDao.endClbumSeminar(seminarId, clbumId);
         if (count == 1) {
-            return "Success";
+            message.put("message", "Success");
         } else {
-            return "End Seminar Error";
+            message.put("message", "Error");
         }
+        return message;
     }
 
     @Override
@@ -82,13 +92,15 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public String modifySeminar(Integer seminarId, Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
+    public Map<String, String> modifySeminar(Integer seminarId, Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
+        Map<String, String> message = new HashMap<String, String>(2);
         Integer count = seminarDao.modifySeminar(seminarId, roundId, maxTeamNum, topic, introduction, signStartTime, signEndTime, signOrder, visible);
         if (count == 1) {
-            return "Success";
+            message.put("message", "Success");
         } else {
-            return "Modify Seminar Error";
+            message.put("message", "Error");
         }
+        return message;
     }
 
     @Override

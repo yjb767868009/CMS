@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author JuboYu on 2018/11/27.
@@ -44,13 +45,13 @@ public class CourseController {
 
     @DeleteMapping(value = "")
     @CheckTeacherPermission
-    public String deleteCourse(@PathVariable("courseId") Integer courseId) {
+    public Map<String,String> deleteCourse(@PathVariable("courseId") Integer courseId) {
         return courseService.deleteCourseById(courseId);
     }
 
     @PostMapping(value = "/clbum")
     @CheckTeacherPermission
-    public String newClbum(@PathVariable("courseId") Integer courseId,
+    public Map<String,String> newClbum(@PathVariable("courseId") Integer courseId,
                            @RequestParam("name") String name,
                            @RequestParam("classTime") String classTime,
                            @RequestParam("classPlace") String classPlace) {

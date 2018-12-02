@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author JuboYu on 2018/11/27.
@@ -63,21 +64,21 @@ public class SeminarController {
 
     @PatchMapping(value = "/clbum/{clbumId}/start")
     @CheckTeacherPermission
-    public String startSeminar(@PathVariable("seminarId") Integer seminarId,
-                               @PathVariable("clbumId") Integer clbumId) {
+    public Map<String, String> startSeminar(@PathVariable("seminarId") Integer seminarId,
+                                            @PathVariable("clbumId") Integer clbumId) {
         return seminarService.startClbumSeminar(seminarId, clbumId);
     }
 
     @PatchMapping(value = "/clbum/{clbumId}/stop")
     @CheckTeacherPermission
-    public String stopSeminar(@PathVariable("seminarId") Integer seminarId,
+    public Map<String,String> stopSeminar(@PathVariable("seminarId") Integer seminarId,
                               @PathVariable("clbumId") Integer clbumId) {
         return seminarService.stopClbumSeminar(seminarId, clbumId);
     }
 
     @PatchMapping(value = "/clbum/{clbumId}/end")
     @CheckTeacherPermission
-    public String endSeminar(@PathVariable("seminarId") Integer seminarId,
+    public Map<String,String> endSeminar(@PathVariable("seminarId") Integer seminarId,
                              @PathVariable("clbumId") Integer clbumId) {
         return seminarService.endClbumSeminar(seminarId, clbumId);
     }

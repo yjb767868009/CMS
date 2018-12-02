@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.Map;
 
 /**
  * @author JuboYu on 2018/12/1.
@@ -31,20 +32,20 @@ public class RoundController {
 
     @PostMapping(value = "/newSeminar")
     @CheckTeacherPermission
-    public String newSeminar(@PathVariable("roundId") Integer roundId,
-                             @RequestParam("maxTeamNum") Integer maxTeamNum,
-                             @RequestParam("topic") String topic,
-                             @RequestParam("introduction") String introduction,
-                             @RequestParam("signStartTime") Timestamp signStartTime,
-                             @RequestParam("signEndTime") Timestamp signEndTime,
-                             @RequestParam("signOrder") Boolean signOrder,
-                             @RequestParam("visible") Boolean visible) {
+    public Map<String,String> newSeminar(@PathVariable("roundId") Integer roundId,
+                          @RequestParam("maxTeamNum") Integer maxTeamNum,
+                          @RequestParam("topic") String topic,
+                          @RequestParam("introduction") String introduction,
+                          @RequestParam("signStartTime") Timestamp signStartTime,
+                          @RequestParam("signEndTime") Timestamp signEndTime,
+                          @RequestParam("signOrder") Boolean signOrder,
+                          @RequestParam("visible") Boolean visible) {
         return seminarService.newSeminar(roundId, maxTeamNum, topic, introduction, signStartTime, signEndTime, signOrder, visible);
     }
 
     @PutMapping(value = "/seminar/{seminarId}/modifySeminar")
     @CheckTeacherPermission
-    public String modifySeminar(@PathVariable("roundId") Integer roundId,
+    public Map<String, String> modifySeminar(@PathVariable("roundId") Integer roundId,
                                 @PathVariable("seminarId") Integer seminarId,
                                 @RequestParam("maxTeamNum") Integer maxTeamNum,
                                 @RequestParam("topic") String topic,

@@ -1,7 +1,6 @@
 package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.AdminDao;
-import com.xmu.cms.entity.Message;
 import com.xmu.cms.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

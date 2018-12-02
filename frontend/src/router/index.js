@@ -36,7 +36,7 @@ export default new Router({
     {
       path:'/login',
       name:'Login',
-      component:Login
+      component:Login,
     },
     //admin
     {
@@ -47,7 +47,7 @@ export default new Router({
     {
       path:'/adminLogin',
       name:'AdminLogin',
-      component:AdminLogin
+      component:AdminLogin,
     },
     {
       path:'/admin/createTeacher',

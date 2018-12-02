@@ -26,7 +26,7 @@
 </style>
 
 <script>
-import axios from 'axios'
+import Qs from 'qs'
   export default {
     data() {
       
@@ -44,22 +44,29 @@ import axios from 'axios'
             if(!this.password){
                 this.$message.error('请输入密码')
             }
-            // axios.post('127.0.0.1:8000/api/admin/login', {
-            //         params:{
-            //             account:this.account,
-            //             password:this.password
-            //         }
-            //     }
-            // ).then(function(response){
-            //     if(response.status==='200'){
-            //         this.$router.push('Admin')
-            //     }else{
-            //         this.$message.error('账户名或密码错误')
-            //     }
-            // }).catch(function(error){
 
-            // })
-            this.$router.push('Admin')
+            this.$axios({
+                method:'post',
+                url:'/api/admin/login',
+                data:Qs.stringify({
+                    account:this.account,
+                    password:this.password
+                })
+            }//我们用配置axios的方式做请求,axios的详细配置见
+            //src/config/axios.js
+
+            ).then((response)=>{
+                let message = response.data
+                if(message==='No this account'){
+                    this.$message.error('无此账号')
+                }
+                if(message==='Account or Password error'){
+                    this.$message.error('账号或密码错误')
+                }
+                if(message==='Success'){
+                    this.$router.push('Admin')
+                }
+            })
         },
         
         toAdmin:function(){

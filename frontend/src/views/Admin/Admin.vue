@@ -12,14 +12,14 @@
           <el-menu-item index="1-2" @click="handleStudent">学生信息管理</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      
     </el-menu>
   </el-aside>
   
   <keep-alive>
-
+    
+    <!-- 老师列表 -->
     <el-container v-if="showTeacher">
-      <el-header style="text-align: left;background-color:rgb(238, 241, 246); font-size: 12px">
+      <el-header style="text-align:left;background-color:rgb(238, 241, 246); font-size: 12px">
         <span style="color:rgb(0,0,0)"><i class="el-icon-search"></i></span>
         <el-input style="width:30%" v-model="teacherSearchKey" placeholder="输入教工号/姓名" @keyup.enter.native="searchTeacher">
         </el-input>
@@ -34,32 +34,33 @@
           </el-table-column>
           <el-table-column prop="name" label="姓名">
           </el-table-column>
-          <!-- <el-table-column prop="sex" label="性别">
-          </el-table-column> -->
           <el-table-column prop="phone" label="电话">
           </el-table-column>
           <el-table-column prop="email" label="电子邮箱">
           </el-table-column>
           <el-table-column prop="operation" label="操作">
-              <template scope="scope">
-                      <el-button @click="editTeacher(scope.row)" type="text" size="small">更改</el-button>
-                      <el-button @click="resetTeacher(scope.row)" type="text" size="small">重置密码</el-button>
-                      <el-button @click="deleteTeacher(scope.row)" type="text" size="small">删除</el-button>
+              <template slot-scope="scope">
+                      <el-button @click="editTeacher(scope.row)" type="text" size="small">
+                        更改
+                      </el-button>
+                      <el-button @click="resetTeacher(scope.row)" type="text" size="small">
+                        重置密码
+                      </el-button>
+                      <el-button @click="deleteTeacher(scope.row)" type="text" size="small">
+                        删除
+                      </el-button>
               </template>
           </el-table-column>
         </el-table>
       </el-main>
     </el-container>
 
+    <!-- 学生列表 -->
     <el-container  v-else-if="showStudent">
       <el-header style="text-align: left;background-color:rgb(238, 241, 246); font-size: 12px">
         <span style="color:rgb(0,0,0)"><i class="el-icon-search"></i></span>
         <el-input style="width:30%" v-model="studentSearchKey" placeholder="输入学号/姓名" @keyup.enter.native="searchStudent">
         </el-input>
-          <!-- <el-dropdown>
-          <i class="el-icon-plus" style="margin-right: 15px" @click="addStudent"></i>
-        </el-dropdown>
-        <span style="color:rgb(0,0,0)">新增学生</span> -->
       </el-header>
       <el-main>
         <el-table :data="studentData">
@@ -67,17 +68,21 @@
           </el-table-column>
           <el-table-column prop="name" label="姓名">
           </el-table-column>
-          <!-- <el-table-column prop="sex" label="性别">
-          </el-table-column> -->
           <el-table-column prop="phone" label="电话">
           </el-table-column>
           <el-table-column prop="email" label="电子邮箱">
           </el-table-column>
           <el-table-column prop="operation" label="操作">
               <template slot-scope="scope">
-                      <el-button @click="editStudent(scope.row)" type="text" size="small">更改</el-button>
-                      <el-button @click="resetStudent(scope.row)" type="text" size="small">重置密码</el-button>
-                      <el-button @click="deleteStudent(scope.row)" type="text" size="small">删除</el-button>
+                      <el-button @click="editStudent(scope.row)" type="text" size="small">
+                        更改
+                      </el-button>
+                      <el-button @click="resetStudent(scope.row)" type="text" size="small">
+                        重置密码
+                      </el-button>
+                      <el-button @click="deleteStudent(scope.row)" type="text" size="small">
+                        删除
+                      </el-button>
               </template>
           </el-table-column>
         </el-table>
@@ -86,7 +91,8 @@
 
     
     </keep-alive>
-
+    
+    <!-- 创建老师用户 -->
     <el-container v-if="showAddTeacher">
       <el-header style="text-align: left;background-color:rgb(238, 241, 246);color:rgb(0,0,0);"> 
       创建教师用户
@@ -110,7 +116,8 @@
           <el-button type="info" @click="cancelAddTeacher">取消</el-button>
         </el-main>
       </el-container>
-
+      
+      <!-- 修改老师信息 -->
       <el-container v-if="showModifyTeacher">
       <el-header style="text-align: left;background-color:rgb(238, 241, 246);color:rgb(0,0,0);"> 
       修改教师信息
@@ -127,11 +134,13 @@
               <el-input v-model="modifyTeacherForm.email" placeholder="请输入电子邮箱"></el-input>
             </el-form-item>
           </el-form>
-          <el-button type="primary" @click="postModifyTeacher">提交</el-button>
-          <el-button type="info" @click="cancelAddTeacher">取消</el-button>
+            <el-button type="primary" @click="postModifyTeacher">提交</el-button>
+            <el-button type="info" @click="cancelModifyTeacher">取消</el-button>
         </el-main>
       </el-container>
 
+
+      <!-- 修改学生信息 -->
       <el-container v-if="showModifyStudent">
       <el-header style="text-align: left;background-color:rgb(238, 241, 246);color:rgb(0,0,0);"> 
       修改学生信息
@@ -148,25 +157,25 @@
               <el-input v-model="modifyStudentForm.email" placeholder="请输入电子邮箱"></el-input>
             </el-form-item>
           </el-form>
-          <el-button type="primary" @click="postModifyStudent">提交</el-button>
-          <el-button type="info" @click="cancelAddTeacher">取消</el-button>
+            <el-button type="primary" @click="postModifyStudent">提交</el-button>
+            <el-button type="info" @click="cancelModifyStudent">取消</el-button>
         </el-main>
       </el-container>
 
     
   
-</el-container>
-    <el-footer style="background-color: rgb(10, 47, 88);color:rgb(255,255,255);height:100%;">
-        <div class="container">
-          <div class="footer-main"><p class="footer-main-title">{{ footerMessage }}</p><a
-                  href="https://git.code.tencent.com/xmu2018/software_221" target="_blank" class="footer-main-link">Github</a><a
-                  href="mailto:99296485@qq.com" class="footer-main-link">Email</a><a
-                  href="https://github.com/ElemeFE/element/blob/master/.github/CONTRIBUTING.en-US.md" target="_blank"
-                  class="footer-main-link">License</a>
+  </el-container>
+      <el-footer style="background-color: rgb(10, 47, 88);color:rgb(255,255,255);height:100%;">
+          <div class="container">
+            <div class="footer-main"><p class="footer-main-title">CMS</p><a
+                    href="https://git.code.tencent.com/xmu2018/software_221" target="_blank" class="footer-main-link">Github</a><a
+                    href="mailto:99296485@qq.com" class="footer-main-link">Email</a><a
+                    href="https://github.com/ElemeFE/element/blob/master/.github/CONTRIBUTING.en-US.md" target="_blank"
+                    class="footer-main-link">License</a>
+            </div>
           </div>
-        </div>
-    </el-footer>
-</el-container>
+      </el-footer>
+  </el-container>
 
 </template>
 
@@ -208,7 +217,7 @@
   export default {
     data() {
       const teacher = {
-        id:'tid',
+        teacherId:'tid',
         account:'taccount',
         password:'tpwd',
         name: 'tname',
@@ -218,7 +227,7 @@
         activation:true
       };
       const student = {
-        id:'sid',
+        studentId:'sid',
         account:'saccount',
         password:'spwd',
         name: 'sname',
@@ -227,15 +236,20 @@
         messageInterval:1,
         activation:true
       };
+      
       return {
-        teacherData: Array(20).fill(teacher),
-        studentData: Array(20).fill(student),
+        teacherData:Array(20).fill(teacher),
+        studentData:Array(20).fill(student),
+
+        navibar:'teacher',
         showTeacher:true,
         showStudent:false,
         showAddTeacher:false,
         showModifyTeacher:false,
         showModifyStudent:false,
-        footerMessage:'CMS',
+
+        currentTeacherId:'',
+        currentStudentId:'',
         teacherSearchKey:'',
         studentSearchKey:'',
         addTeacherForm:{
@@ -262,6 +276,7 @@
     },
     methods:{
         handleStudent:function(){
+            this.navibar='student'
             this.showTeacher=false
             this.showAddTeacher=false
             this.showStudent=true
@@ -269,13 +284,45 @@
             this.showModifyStudent=false
         },
         handleTeacher:function(){
+            this.navibar='teacher'
             this.showStudent=false
             this.showAddTeacher=false
             this.showTeacher=true
             this.showModifyTeacher=false
             this.showModifyStudent=false
         },
-
+        editStudent:function(student){
+            this.currentStudentId=student.studentId
+            this.modifyStudentForm.name=student.name
+            this.modifyStudentForm.account=student.account
+            this.modifyStudentForm.email=student.email
+            this.showStudent=false
+            this.showAddTeacher=false
+            this.showTeacher=false
+            this.showModifyTeacher=false
+            this.showModifyStudent=true
+        },
+        editTeacher:function(teacher){
+            this.currentTeacherId=teacher.teacherId
+            this.modifyTeacherForm.name=teacher.name
+            this.modifyTeacherForm.account=teacher.account
+            this.modifyTeacherForm.email=teacher.email
+            this.showStudent=false
+            this.showAddTeacher=false
+            this.showTeacher=false
+            this.showModifyTeacher=true
+            this.showModifyStudent=false
+        },
+        addTeacher:function(){
+            this.addTeacherForm.name='';
+            this.addTeacherForm.account='';
+            this.addTeacherForm.password='';
+            this.addTeacherForm.email='';
+            this.showAddTeacher=true;
+            this.showTeacher=false;
+            this.showStudent=false;
+        },
+        
         searchTeacher:function(){
           if(!this.teacherSearchKey){
             //空
@@ -283,7 +330,7 @@
           }
           if(!isNaN(this.teacherSearchKey)){
             //搜教工号
-            this.$axios.get('/api/admin/teachers/nameSearch/'+teacherSearchKey)
+            this.$axios.get('/api/admin/teachers/searchByAccount?teacherAccount='+teacherSearchKey)
               .then(function(response){
                 this.teacherData=response.data
               })
@@ -292,7 +339,7 @@
               })
           }else{
             //搜名字
-            this.$axios.get('/api/admin/teachers/nameSearch/'+teacherSearchKey)
+            this.$axios.get('/api/admin/teachers/searchByName?name='+teacherSearchKey)
               .then(function(response){
                 this.teacherData=response.data
               })
@@ -308,7 +355,7 @@
           }
           if(!isNaN(this.studentSearchKey)){
             //搜学号
-            this.$axios.get('/api/admin/students/nameSearch/'+studentSearchKey)
+            this.$axios.get('/api/admin/students/searchByAccount?studentAccount'+studentSearchKey)
               .then(function(response){
                 this.teacherData=response.data
               })
@@ -317,7 +364,7 @@
               })
           }else{
             //搜名字
-            this.$axios.get('/api/admin/students/nameSearch/'+studentSearchKey)
+            this.$axios.get('/api/admin/students/searchByName?name='+studentSearchKey)
               .then(function(response){
                 this.teacherData=response.data
               })
@@ -326,35 +373,11 @@
               })
           }
         },
-        editStudent:function(student){
-            this.modifyStudentForm.name=student.name
-            this.modifyStudentForm.account=student.account
-            this.modifyStudentForm.email=student.email
-            this.showStudent=false
-            this.showAddTeacher=false
-            this.showTeacher=false
-            this.showModifyTeacher=false
-            this.showModifyStudent=true
-        },
-        editTeacher:function(teacher){
-            this.modifyTeacherForm.name=teacher.name
-            this.modifyTeacherForm.account=teacher.account
-            this.modifyTeacherForm.email=teacher.email
-            this.showStudent=false
-            this.showAddTeacher=false
-            this.showTeacher=false
-            this.showModifyTeacher=true
-            this.showModifyStudent=false
-        },
-        addTeacher:function(){
-            this.showAddTeacher=true;
-            this.showTeacher=false;
-            this.showStudent=false;
-        },
+        
         getAllStudent:function(){
           this.$axios.get('/api/admin/students')
             .then(function(response){
-              this.studentData=response.data.students
+              this.studentData=response.data
             }).catch(function(error){
               console.log(error)
             })
@@ -362,17 +385,18 @@
         getAllTeacher:function(){
           this.$axios.get('/api/admin/teachers')
             .then(function(response){
-              this.teacherData=response.data.teachers
+              this.teacherData=response.data
             }).catch(function(error){
               console.log(error)
             })
         },
+
         resetStudent:function(student){
           this.$prompt('请输入新密码', '修改学生密码', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
         }).then(({ input }) => {
-          this.$axios.put('/api/admin/students/'+student.id,{
+          this.$axios.patch('/api/admin/student/'+student.studentId,{
             password:input
           })
             .then(function(response){
@@ -391,13 +415,13 @@
           this.$prompt('请输入新密码', '修改老师密码', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-        }).then(({ value }) => {
-          this.$axios.put('/api/admin/teachers/'+teacher.id)
+        }).then(({ input }) => {
+          this.$axios.patch('/api/admin/teacher/'+teacher.teacherId)
             .then(function(response){
               //process on response
                   this.$message({
                 type: 'success',
-                message: '修改后的密码为: ' + value
+                message: '修改后的密码为: ' + input
               });
             })
             .catch(function(error){
@@ -412,14 +436,9 @@
             type:'warning'
           }).then(()=>{
             //确认删除
-            this.$axios.delete('/api/admin/students/'+student.id)
+            this.$axios.delete('/api/admin/student/'+student.studentId)
             .catch(function(error){
               console.log(error)
-            })
-          }).catch(()=>{
-            this.$message({
-              type:'info',
-              message:'取消删除'
             })
           })
         },
@@ -430,22 +449,34 @@
             type:'warning'
           }).then(()=>{
             //确认删除
-            this.$axios.delete('/api/admin/teachers/'+teacher.id)
+            this.$axios.delete('/api/admin/teacher/'+teacher.teacherId)
             .catch(function(error){
               console.log(error)
             })
-          }).catch(()=>{
-            this.$message({
-              type:'info',
-              message:'取消删除'
-            })
           })
         },
+
         cancelAddTeacher:function(){
+          if(this.navibar==='teacher')
           this.handleTeacher()
+          if(this.navibar==='student')
+          this.handleStudent()
         },
+        cancelModifyTeacher:function(){
+          if(this.navibar==='teacher')
+          this.handleTeacher()
+          if(this.navibar==='student')
+          this.handleStudent()
+        },
+        cancelModifyStudent:function(){
+          if(this.navibar==='teacher')
+          this.handleTeacher()
+          if(this.navibar==='student')
+          this.handleStudent()
+        },
+
         postAddTeacher:function(){
-          this.$axios.post('/api/admin/teachers',{
+          this.$axios.post('/api/admin/teacher',{
             name:addTeacherForm.name,
             account:addTeacherForm.account,
             email:addTeacherForm.email,
@@ -457,8 +488,8 @@
               console.log(error)
             })
         },
-        postModifyTeacher:function(){
-          this.$axios.patch('/api/admin/teachers',{
+        postModifyTeacher:function(teacher){
+          this.$axios.patch('/api/admin/teacher/'+currentTeacherId,{
             name:postModifyTeacher.name,
             account:postModifyTeacher.account,
             email:postModifyTeacher.email,
@@ -469,8 +500,8 @@
               console.log(error)
             })
         },
-        postModifyStudent:function(){
-          this.$axios.patch('/api/admin/students',{
+        postModifyStudent:function(student){
+          this.$axios.patch('/api/admin/student/'+currentStudentId,{
             name:postModifyStudent.name,
             account:postModifyStudent.account,
             email:postModifyStudent.email,

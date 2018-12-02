@@ -1,14 +1,14 @@
 package com.xmu.cms.service.Impl;
 
-import com.xmu.cms.dao.PresentationDao;
+import com.xmu.cms.dao.AttendanceDao;
 import com.xmu.cms.dao.SeminarDao;
-import com.xmu.cms.entity.Presentation;
+import com.xmu.cms.entity.Attendance;
 import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.service.SeminarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -22,72 +22,84 @@ public class SeminarServiceImpl implements SeminarService {
     private SeminarDao seminarDao;
 
     @Autowired
-    private PresentationDao presentationDao;
+    private AttendanceDao attendanceDao;
 
     @Override
-    public String newSeminar(Integer seminarId, Integer turningClassId, Integer roundId, Integer maxTeamNum, Date signStartTime, Date signEndTime, Boolean signOrder) {
-        Integer count = seminarDao.newSeminar(seminarId, turningClassId, roundId, maxTeamNum, signStartTime, signEndTime, signOrder);
-        if (count == 0) {
-            return "Insert Error";
-        } else {
-            return "Success";
-        }
-    }
-
-    @Override
-    public String modifySeminar(Integer seminarId, Integer turningClassId, Integer roundId, Integer maxTeamNum, Date signStartTime, Date signEndTime, Date reportEndTime, Integer status, Boolean signOrder) {
-        Integer count = seminarDao.modifySeminar(seminarId, turningClassId, roundId, maxTeamNum, signStartTime, signEndTime, signOrder);
-        if (count == 0) {
-            return "Update Error";
-        } else {
-            return "Success";
-        }
-    }
-
-    @Override
-    public String startSeminar(Integer seminarId, Integer turningClassId) {
-        Integer count = seminarDao.startSeminar(seminarId, turningClassId);
+    public String newSeminar(Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
+        Integer count = seminarDao.newSeminar(roundId, maxTeamNum, topic, introduction, signStartTime, signEndTime, signOrder, visible);
         if (count == 1) {
             return "Success";
         } else {
-            return "Start SeminarInfo Error";
+            return "New a seminar error";
         }
     }
 
     @Override
-    public String stopSeminar(Integer seminarId, Integer turningClassId) {
-        Integer count = seminarDao.stopSeminar(seminarId, turningClassId);
+    public String startClbumSeminar(Integer seminarId, Integer clbumId) {
+        Integer count = seminarDao.startClbumSeminar(seminarId, clbumId);
         if (count == 1) {
             return "Success";
         } else {
-            return "Stop SeminarInfo Error";
+            return "Start Seminar Error";
         }
     }
 
     @Override
-    public String endSeminar(Integer seminarId, Integer turningClassId) {
-        Integer count = seminarDao.endSeminar(seminarId, turningClassId);
+    public String stopClbumSeminar(Integer seminarId, Integer clbumId) {
+        Integer count = seminarDao.stopClbumSeminar(seminarId, clbumId);
         if (count == 1) {
             return "Success";
         } else {
-            return "End SeminarInfo Error";
+            return "Stop Seminar Error";
         }
     }
 
     @Override
-    public Presentation getNextPresentation(Integer seminarId) {
-        Integer selectNum = seminarDao.getPresentationNo(seminarId);
-        List<Presentation> presentations = presentationDao.getPresentationsInSeminar(seminarId);
-        for(Presentation presentation : presentations){
-            if (presentation.getTeamOrder()>selectNum){
-                return  presentation;
+    public String endClbumSeminar(Integer seminarId, Integer clbumId) {
+        Integer count = seminarDao.endClbumSeminar(seminarId, clbumId);
+        if (count == 1) {
+            return "Success";
+        } else {
+            return "End Seminar Error";
+        }
+    }
+
+    @Override
+    public Attendance getNextAttendance(Integer seminarId) {
+        Integer selectNum = seminarDao.getAttendanceNo(seminarId);
+        List<Attendance> attendances = attendanceDao.getAttendancesInSeminar(seminarId);
+        for (Attendance attendance : attendances) {
+            if (attendance.getTeamOrder() > selectNum) {
+                return attendance;
             }
         }
         return null;
     }
 
     @Override
-    public Seminar getSeminar(Integer seminarId, Integer turningClassId) {
-        return seminarDao.getSeminar(seminarId,turningClassId);
+    public List<Seminar> getSeminarsByCourseId(Integer courseId) {
+        return null;
     }
+
+    @Override
+    public String modifySeminar(Integer seminarId, Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
+        Integer count = seminarDao.modifySeminar(seminarId, roundId, maxTeamNum, topic, introduction, signStartTime, signEndTime, signOrder, visible);
+        if (count == 1) {
+            return "Success";
+        } else {
+            return "Modify Seminar Error";
+        }
+    }
+
+    @Override
+    public Seminar getSeminarBySeminarId(Integer seminarId) {
+        return seminarDao.getSeminarBySeminarId(seminarId);
+    }
+
+    @Override
+    public Seminar getClbumSeminar(Integer seminarId, Integer clbumId) {
+        return null;
+    }
+
+
 }

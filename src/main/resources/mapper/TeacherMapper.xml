@@ -4,41 +4,40 @@
 <mapper namespace="com.xmu.cms.dao.TeacherDao">
 
     <select id="getAllTeachers" resultType="com.xmu.cms.entity.Teacher">
-        SELECT teacher_id       as teacherId,
-               account,
+        SELECT id           as teacherId,
+               teacher_num  as account,
                password,
                email,
                name,
                phone,
-               sex,
-               message_interval as messageInterval,
-               activation
+               msg_interval as messageInterval,
+               is_activated as activation
         FROM teacher
     </select>
 
     <update id="modifyTeacherById">
         UPDATE teacher
-        SET name    = #{name},
-            account = #{account},
-            email   = #{email}
-        WHERE teacher_id = #{teacherId}
+        SET name        = #{name},
+            teacher_num = #{account},
+            email       = #{email}
+        WHERE id = #{teacherId}
     </update>
 
     <update id="modifyTeacherPasswordById">
         UPDATE teacher
         SET password = #{password}
-        WHERE teacher_id = #{teacherId}
+        WHERE id = #{teacherId}
     </update>
 
     <insert id="newTeacher">
-        INSERT INTO teacher (account, password, email, name, phone, sex, message_interval, activation)
-        VALUE (#{account}, #{password}, #{email}, #{name}, #{phone}, #{sex}, #{messageInterval}, #{activation})
+        INSERT INTO teacher (teacher_num, password, email, name, phone, msg_interval, is_activated)
+        VALUE (#{account}, #{password}, #{email}, #{name}, #{phone}, #{messageInterval}, #{activation})
     </insert>
 
     <delete id="deleteTeacherById" parameterType="java.lang.Integer">
         delete
         FROM teacher
-        WHERE teacher_id = #{teacherId}
+        WHERE id = #{teacherId}
     </delete>
 
     <select id="getPasswordByAccount" resultType="java.lang.String">

@@ -2,12 +2,13 @@ package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.StudentDao;
 import com.xmu.cms.dao.TeacherDao;
+import com.xmu.cms.entity.Student;
+import com.xmu.cms.entity.Teacher;
+import com.xmu.cms.entity.Team;
 import com.xmu.cms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -24,24 +25,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String userLogIn(String account, String password, HttpSession session) {
-        String findTeacherPassword = teacherDao.getPasswordByAccount(account);
-        if (findTeacherPassword == null) {
-            String findStudentPassword = studentDao.getPasswordByAccount(account);
-            if (findStudentPassword == null) {
+        Teacher teacher = teacherDao.getTeacherByAccount(account);
+        if (teacher == null) {
+            Student student = studentDao.getStudentByAccount(account);
+            if (student == null) {
                 return "No this account";
             } else {
-                if (findStudentPassword.equals(password)) {
+                String studentPassword = student.getPassword();
+                if (studentPassword.equals(password)) {
                     session.setAttribute("userType", "student");
-                    session.setAttribute("userId", studentDao.getIdByAccount(account).toString());
+                    session.setAttribute("userId", student.getStudentId());
                     return "Student";
                 } else {
                     return "Account or password error";
                 }
             }
         } else {
-            if (findTeacherPassword.equals(password)) {
+            String teacherPassword = teacher.getPassword();
+            if (teacherPassword.equals(password)) {
                 session.setAttribute("userType", "teacher");
-                session.setAttribute("userId", teacherDao.getIdByAccount(account).toString());
+                session.setAttribute("userId", teacher.getTeacherId());
                 return "Teacher";
             } else {
                 return "Account or password error";

@@ -65,9 +65,9 @@ public interface StudentDao {
      * get student's password by account
      *
      * @param account log in account
-     * @return account's password
+     * @return student
      */
-    String getPasswordByAccount(@Param("account") String account);
+    Student getStudentByAccount(@Param("account") String account);
 
     /**
      * search teacher by name
@@ -76,6 +76,4 @@ public interface StudentDao {
      * @return List<Student>
      */
     List<Student> getStudentByName(@Param("name") String name);
-
-    Integer getIdByAccount(@Param("account") String account);
 }

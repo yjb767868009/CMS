@@ -33,8 +33,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public String modifyTeacherById(Integer teacherId, String name, String account, String email) {
-        Integer count = teacherDao.modifyTeacherById(teacherId, name, account, email);
+    public String modifyTeacherById(Integer id, String name, String account, String email) {
+        Integer count = teacherDao.modifyTeacherById(id, name, account, email);
         if (count == 0) {
             return "Update error";
         } else {
@@ -43,8 +43,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public String modifyTeacherPasswordById(Integer teacherId, String password) {
-        Integer count = teacherDao.modifyTeacherPasswordById(teacherId, password);
+    public String modifyTeacherPasswordById(Integer id, String password) {
+        Integer count = teacherDao.modifyTeacherPasswordById(id, password);
         if (count == 0) {
             return "Update error";
         } else {
@@ -53,8 +53,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public String deleteTeacherById(Integer teacherId) {
-        Integer count = teacherDao.deleteTeacherById(teacherId);
+    public String deleteTeacherById(Integer id) {
+        Integer count = teacherDao.deleteTeacherById(id);
         if (count == 0) {
             return "Delete error";
         } else {

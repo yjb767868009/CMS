@@ -1,9 +1,9 @@
 package com.xmu.cms.controller;
 
 import com.xmu.cms.aspect.CheckTeacherPermission;
+import com.xmu.cms.aspect.CheckUserPermission;
 import com.xmu.cms.entity.*;
 import com.xmu.cms.service.*;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +17,6 @@ import java.util.List;
 @RequestMapping(value = "/api/seminar/{seminarId}")
 public class SeminarController {
     @Autowired
-    private SeminarInfoService seminarInfoService;
-
-    @Autowired
     private SeminarService seminarService;
 
     @Autowired
@@ -29,21 +26,23 @@ public class SeminarController {
     private ScoreService scoreService;
 
     @Autowired
-    private PresentationService presentationService;
+    private AttendanceService attendanceService;
 
-    @GetMapping(value = "/info")
-    public SeminarInfo getSeminarById(@PathVariable("seminarId") Integer seminarId) {
-        return seminarInfoService.getSeminarById(seminarId);
+    @GetMapping(value = "")
+    @CheckUserPermission
+    public Seminar getSeminarById(@PathVariable("seminarId") Integer seminarId) {
+        return seminarService.getSeminarBySeminarId(seminarId);
     }
 
     @GetMapping(value = "/teams")
+    @CheckUserPermission
     public List<Team> getTeamsInSeminar(@PathVariable("seminarId") Integer seminarId) {
         return teamService.getAllTeamsInSeminar(seminarId);
     }
 
-    @GetMapping(value = "/presentations")
-    public List<Presentation> getPresentationsInSeminar(@PathVariable("seminarId") Integer seminarId) {
-        return presentationService.getPresentationsInSeminar(seminarId);
+    @GetMapping(value = "/attendances")
+    public List<Attendance> getAttendancesInSeminar(@PathVariable("seminarId") Integer seminarId) {
+        return attendanceService.getAttendancesInSeminar(seminarId);
     }
 
 
@@ -52,44 +51,44 @@ public class SeminarController {
         return teamService.getAllTeamsInSeminar(seminarId).size();
     }
 
-    @GetMapping(value = "/turningClass/{turningClassId}")
+    @GetMapping(value = "/clbum/{clbumId}")
     @CheckTeacherPermission
     public Seminar getSeminar(@PathVariable("seminarId") Integer seminarId,
-                              @PathVariable("turningClassId") Integer turningClassId){
-        return seminarService.getSeminar(seminarId,turningClassId);
+                              @PathVariable("clbumId") Integer clbumId){
+        return seminarService.getClbumSeminar(seminarId,clbumId);
     }
 
 
-    @PatchMapping(value = "/turningClass/{turningClassId}/start")
+    @PatchMapping(value = "/clbum/{clbumId}/start")
     @CheckTeacherPermission
     public String startSeminar(@PathVariable("seminarId") Integer seminarId,
-                               @PathVariable("turningClassId") Integer turningClassId) {
-        return seminarService.startSeminar(seminarId, turningClassId);
+                               @PathVariable("clbumId") Integer clbumId) {
+        return seminarService.startClbumSeminar(seminarId, clbumId);
     }
 
-    @PatchMapping(value = "/turningClass/{turningClassId}/stop")
+    @PatchMapping(value = "/clbum/{clbumId}/stop")
     @CheckTeacherPermission
     public String stopSeminar(@PathVariable("seminarId") Integer seminarId,
-                              @PathVariable("turningClassId") Integer turningClassId) {
-        return seminarService.stopSeminar(seminarId, turningClassId);
+                              @PathVariable("clbumId") Integer clbumId) {
+        return seminarService.stopClbumSeminar(seminarId, clbumId);
     }
 
-    @PatchMapping(value = "/turningClass/{turningClassId}/end")
+    @PatchMapping(value = "/clbum/{clbumId}/end")
     @CheckTeacherPermission
     public String endSeminar(@PathVariable("seminarId") Integer seminarId,
-                             @PathVariable("turningClassId") Integer turningClassId) {
-        return seminarService.endSeminar(seminarId, turningClassId);
+                             @PathVariable("clbumId") Integer clbumId) {
+        return seminarService.endClbumSeminar(seminarId, clbumId);
     }
 
-    @GetMapping(value = "/turningClass/{turningClassId}/scores")
+    @GetMapping(value = "/clbum/{clbumId}/scores")
     @CheckTeacherPermission
     public Score getAllScoreInSeminar(@PathVariable("seminarId") Integer seminarId,
-                                      @PathVariable("turningClassId") Integer turningClassId) {
-        return scoreService.getAllScoresInSeminar(seminarId, turningClassId);
+                                      @PathVariable("clbumId") Integer clbumId) {
+        return scoreService.getAllScoresInClbumSeminar(seminarId, clbumId);
     }
 
     @GetMapping(value = "/")
-    public Presentation getNextPresentation(@PathVariable("seminarId") Integer seminarId) {
-        return seminarService.getNextPresentation(seminarId);
+    public Attendance getNextAttendance(@PathVariable("seminarId") Integer seminarId) {
+        return seminarService.getNextAttendance(seminarId);
     }
 }

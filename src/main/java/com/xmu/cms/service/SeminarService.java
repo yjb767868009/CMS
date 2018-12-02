@@ -1,26 +1,31 @@
 package com.xmu.cms.service;
 
-import com.xmu.cms.entity.Presentation;
+import com.xmu.cms.entity.Attendance;
 import com.xmu.cms.entity.Seminar;
 
-import java.util.Date;
+import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author JuboYu on 2018/11/29.
  * @version 1.0
  */
 public interface SeminarService {
-    String newSeminar(Integer seminarId, Integer turningClassId, Integer roundId, Integer maxTeamNum, Date signStartTime, Date signEndTime, Boolean signOrder);
+    String newSeminar(Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible);
 
-    String modifySeminar(Integer seminarId, Integer turningClassId, Integer roundId, Integer maxTeamNum, Date signStartTime, Date signEndTime, Date reportEndTime, Integer status, Boolean signOrder);
+    String startClbumSeminar(Integer seminarId, Integer clbumId);
 
-    String startSeminar(Integer seminarId, Integer turningClassId);
+    String stopClbumSeminar(Integer seminarId, Integer clbumId);
 
-    String stopSeminar(Integer seminarId, Integer turningClassId);
+    String endClbumSeminar(Integer seminarId, Integer clbumId);
 
-    String endSeminar(Integer seminarId, Integer turningClassId);
+    Attendance getNextAttendance(Integer seminarId);
 
-    Presentation getNextPresentation(Integer seminarId);
+    List<Seminar> getSeminarsByCourseId(Integer courseId);
 
-    Seminar getSeminar(Integer seminarId, Integer turningClassId);
+    String modifySeminar(Integer seminarId, Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible);
+
+    Seminar getSeminarBySeminarId(Integer seminarId);
+
+    Seminar getClbumSeminar(Integer seminarId, Integer clbumId);
 }

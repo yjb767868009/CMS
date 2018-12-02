@@ -8,16 +8,14 @@ public class Question {
     private Integer questionId;
     private Integer studentId;
     private Integer teamId;
-    private Integer presentationId;
-    private boolean selected;
+    private Integer attendanceId;
     private float score;
 
-    public Question(Integer questionId, Integer studentId, Integer teamId, Integer presentationId, boolean selected, float score) {
+    public Question(Integer questionId, Integer studentId, Integer teamId, Integer attendanceId, float score) {
         this.questionId = questionId;
         this.studentId = studentId;
         this.teamId = teamId;
-        this.presentationId = presentationId;
-        this.selected = selected;
+        this.attendanceId = attendanceId;
         this.score = score;
     }
 
@@ -25,16 +23,8 @@ public class Question {
         return questionId;
     }
 
-    public void setQuestionId(Integer questionId) {
-        this.questionId = questionId;
-    }
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
+    public void setQuestionId(Integer id) {
+        this.questionId = id;
     }
 
     public float getScore() {
@@ -53,12 +43,12 @@ public class Question {
         this.studentId = studentId;
     }
 
-    public Integer getPresentationId() {
-        return presentationId;
+    public Integer getAttendanceId() {
+        return attendanceId;
     }
 
-    public void setPresentationId(Integer presentationId) {
-        this.presentationId = presentationId;
+    public void setAttendanceId(Integer attendanceId) {
+        this.attendanceId = attendanceId;
     }
 
     public Integer getTeamId() {

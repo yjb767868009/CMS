@@ -1,6 +1,6 @@
 package com.xmu.cms.dao;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import com.xmu.cms.entity.Seminar;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,33 +12,40 @@ import org.apache.ibatis.annotations.Param;
  */
 @Mapper
 public interface SeminarDao {
-    Integer newSeminar(@Param("seminarId") Integer seminarId,
-                       @Param("turningClassId") Integer turningClassId,
-                       @Param("roundId") Integer roundId,
+    Integer newSeminar(@Param("roundId") Integer roundId,
                        @Param("maxTeamNum") Integer maxTeamNum,
-                       @Param("signStartTime") Date signStartTime,
-                       @Param("signEndTime") Date signEndTime,
-                       @Param("signOrder") Boolean signOrder);
+                       @Param("topic") String topic,
+                       @Param("introduction") String introduction,
+                       @Param("signStartTime") Timestamp signStartTime,
+                       @Param("signEndTime") Timestamp signEndTime,
+                       @Param("signOrder") Boolean signOrder,
+                       @Param("visible") Boolean visible);
 
     Integer modifySeminar(@Param("seminarId") Integer seminarId,
-                          @Param("turningClassId") Integer turningClassId,
                           @Param("roundId") Integer roundId,
                           @Param("maxTeamNum") Integer maxTeamNum,
-                          @Param("signStartTime") Date signStartTime,
-                          @Param("signEndTime") Date signEndTime,
-                          @Param("signOrder") Boolean signOrder);
+                          @Param("topic") String topic,
+                          @Param("introduction") String introduction,
+                          @Param("signStartTime") Timestamp signStartTime,
+                          @Param("signEndTime") Timestamp signEndTime,
+                          @Param("signOrder") Boolean signOrder,
+                          @Param("visible") Boolean visible);
 
-    Integer startSeminar(@Param("seminarId") Integer seminarId,
-                         @Param("turningClassId") Integer turningClassId);
 
-    Integer stopSeminar(@Param("seminarId") Integer seminarId,
-                        @Param("turningClassId") Integer turningClassId);
+    Integer startClbumSeminar(@Param("seminarId") Integer seminarId,
+                              @Param("clbumId") Integer clbumId);
 
-    Integer endSeminar(@Param("seminarId") Integer seminarId,
-                       @Param("turningClassId") Integer turningClassId);
+    Integer stopClbumSeminar(@Param("seminarId") Integer seminarId,
+                             @Param("clbumId") Integer clbumId);
 
-    Integer getPresentationNo(@Param("seminarId") Integer seminarId);
+    Integer endClbumSeminar(@Param("seminarId") Integer seminarId,
+                            @Param("clbumId") Integer clbumId);
 
-    Seminar getSeminar(@Param("seminarId") Integer seminarId,
-                       @Param("turningClassId") Integer turningClassId);
+    Integer getAttendanceNo(@Param("seminarId") Integer seminarId);
+
+    Seminar getSeminarBySeminarId(@Param("seminarId") Integer seminarId);
+
+    Seminar getAllSeminarByRoundId(@Param("roundId") Integer roundId);
+
+
 }

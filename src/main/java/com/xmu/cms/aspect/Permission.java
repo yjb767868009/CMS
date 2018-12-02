@@ -27,8 +27,17 @@ class Permission {
         Object userIdSession = session.getAttribute("userId");
         if (userTypeSession != null && userIdSession != null) {
             String userType = userTypeSession.toString();
-            if (userType.equals(permissionType)) {
-                result = point.proceed();
+            String userPermission = "user";
+            String teacherPermission = "Teacher";
+            String studentPermission = "Student";
+            if (permissionType.equals(userPermission)) {
+                if (userType.equals(teacherPermission) || userType.equals(studentPermission)) {
+                    result = point.proceed();
+                }
+            } else {
+                if (userType.equals(permissionType)) {
+                    result = point.proceed();
+                }
             }
         }
         return result;

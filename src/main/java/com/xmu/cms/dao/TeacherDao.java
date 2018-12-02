@@ -40,13 +40,13 @@ public interface TeacherDao {
     /**
      * modify teacher by his id
      *
-     * @param teacherId teacher's id
-     * @param name      teacher's new name
-     * @param account   teacher's new account
-     * @param email     teacher's new email
+     * @param id      teacher's id
+     * @param name    teacher's new name
+     * @param account teacher's new account
+     * @param email   teacher's new email
      * @return String message
      */
-    Integer modifyTeacherById(@Param("teacherId") Integer teacherId,
+    Integer modifyTeacherById(@Param("id") Integer id,
                               @Param("name") String name,
                               @Param("account") String account,
                               @Param("email") String email);
@@ -54,20 +54,20 @@ public interface TeacherDao {
     /**
      * modify teacher's password by his id
      *
-     * @param teacherId teacher's id
-     * @param password  teacher's new password
+     * @param id       teacher's id
+     * @param password teacher's new password
      * @return String message
      */
-    Integer modifyTeacherPasswordById(@Param("teacherId") Integer teacherId,
+    Integer modifyTeacherPasswordById(@Param("id") Integer id,
                                       @Param("password") String password);
 
     /**
      * delete teacher by his id
      *
-     * @param teacherId teacher's id
+     * @param id teacher's id
      * @return String message
      */
-    Integer deleteTeacherById(Integer teacherId);
+    Integer deleteTeacherById(Integer id);
 
     /**
      * get teacher's password by account
@@ -75,7 +75,7 @@ public interface TeacherDao {
      * @param account log in account
      * @return account's password
      */
-    String getPasswordByAccount(@Param("account") String account);
+    Teacher getTeacherByAccount(@Param("account") String account);
 
     /**
      * search teacher by name
@@ -84,6 +84,4 @@ public interface TeacherDao {
      * @return List<teacher>
      */
     List<Teacher> getTeacherByName(@Param("name") String name);
-
-    Integer getIdByAccount(@Param("account") String account);
 }

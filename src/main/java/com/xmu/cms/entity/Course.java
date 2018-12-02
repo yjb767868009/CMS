@@ -1,7 +1,6 @@
 package com.xmu.cms.entity;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * @author JuboYu on 2018/11/26.
@@ -35,8 +34,8 @@ public class Course {
         return courseId;
     }
 
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
+    public void setCourseId(Integer id) {
+        this.courseId = id;
     }
 
     public Integer getTeacherId() {
@@ -63,11 +62,11 @@ public class Course {
         this.introduction = introduction;
     }
 
-    public Float getPresentationWeight() {
+    public Float getAttendanceWeight() {
         return presentationWeight;
     }
 
-    public void setPresentationWeight(Float presentationWeight) {
+    public void setAttendanceWeight(Float presentationWeight) {
         this.presentationWeight = presentationWeight;
     }
 

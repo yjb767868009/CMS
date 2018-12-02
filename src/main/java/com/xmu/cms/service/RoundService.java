@@ -1,7 +1,9 @@
 package com.xmu.cms.service;
 
 import com.xmu.cms.entity.Round;
+import com.xmu.cms.entity.Seminar;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -10,4 +12,7 @@ import java.util.List;
  */
 public interface RoundService {
     List<Round> getRoundsByCourseId(Integer courseId);
-}
+
+    Seminar getAllSeminarInRound(Integer roundId);
+
+    }

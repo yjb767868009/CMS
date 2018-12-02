@@ -7,14 +7,16 @@ package com.xmu.cms.entity;
 public class Team {
     private Integer teamId;
     private Integer leaderId;
-    private Integer courseId;
+    private Integer clbumId;
+    private Integer teamOrder;
     private String teamName;
     private Boolean valid;
 
-    public Team(Integer teamId, Integer leaderId, Integer courseId, String teamName, Boolean valid) {
+    public Team(Integer teamId, Integer leaderId, Integer clbumId, Integer teamOrder, String teamName, Boolean valid) {
         this.teamId = teamId;
         this.leaderId = leaderId;
-        this.courseId = courseId;
+        this.clbumId = clbumId;
+        this.teamOrder = teamOrder;
         this.teamName = teamName;
         this.valid = valid;
     }
@@ -39,12 +41,12 @@ public class Team {
         return teamName;
     }
 
-    public Integer getCourseId() {
-        return courseId;
+    public Integer getClbumId() {
+        return clbumId;
     }
 
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
+    public void setClbumId(Integer clbumId) {
+        this.clbumId = clbumId;
     }
 
     public void setTeamName(String teamName) {
@@ -57,5 +59,13 @@ public class Team {
 
     public void setValid(Boolean valid) {
         this.valid = valid;
+    }
+
+    public Integer getTeamOrder() {
+        return teamOrder;
+    }
+
+    public void setTeamOrder(Integer teamOrder) {
+        this.teamOrder = teamOrder;
     }
 }

@@ -1,8 +1,9 @@
 package com.xmu.cms.controller;
 
 import com.xmu.cms.aspect.CheckTeacherPermission;
+import com.xmu.cms.aspect.CheckUserPermission;
 import com.xmu.cms.entity.Round;
-import com.xmu.cms.entity.SeminarInfo;
+import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +22,7 @@ public class CourseController {
     private CourseService courseService;
 
     @Autowired
-    private TurningClassService turningClassService;
-
-    @Autowired
-    private SeminarInfoService seminarInfoService;
+    private ClbumService clbumService;
 
     @Autowired
     private SeminarService seminarService;
@@ -33,13 +31,15 @@ public class CourseController {
     private RoundService roundService;
 
     @GetMapping(value = "/rounds")
+    @CheckUserPermission
     public List<Round> getRounds(@PathVariable("courseId") Integer courseId) {
         return roundService.getRoundsByCourseId(courseId);
     }
 
     @GetMapping(value = "/seminars")
-    public List<SeminarInfo> getSeminars(@PathVariable("courseId") Integer courseId) {
-        return seminarInfoService.getSeminarsByCourseId(courseId);
+    @CheckUserPermission
+    public List<Seminar> getSeminarsByCourseId(@PathVariable("courseId") Integer courseId) {
+        return seminarService.getSeminarsByCourseId(courseId);
     }
 
     @DeleteMapping(value = "")
@@ -48,57 +48,12 @@ public class CourseController {
         return courseService.deleteCourseById(courseId);
     }
 
-    @PostMapping(value = "/turningClass")
+    @PostMapping(value = "/clbum")
     @CheckTeacherPermission
-    public String newTurningClass(@PathVariable("courseId") Integer courseId,
-                                  @RequestParam(value = "name") String name,
-                                  @RequestParam(value = "classTime") String classTime,
-                                  @RequestParam(value = "classPlace") String classPlace) {
-        return turningClassService.newTurningClass(courseId, name, classTime, classPlace);
-    }
-
-    @PostMapping(value = "/newSeminarInfo")
-    @CheckTeacherPermission
-    public String newSeminarInfo(@PathVariable("courseId") Integer courseId,
-                                 @RequestParam("topic") String topic,
-                                 @RequestParam("introduction") String introduction,
-                                 @RequestParam("visible") Boolean visible) {
-        return seminarInfoService.newSeminar(courseId, topic, introduction, visible);
-    }
-
-    @PutMapping(value = "/modifySeminarInfo/{seminarId}")
-    @CheckTeacherPermission
-    public String modifySeminarInfo(@PathVariable("courseId") Integer courseId,
-                                    @PathVariable("seminarId") Integer seminarId,
-                                    @RequestParam("topic") String topic,
-                                    @RequestParam("introduction") String introduction,
-                                    @RequestParam("visible") Boolean visible) {
-        return seminarInfoService.modifySeminarInfo(courseId, seminarId, topic, introduction, visible);
-    }
-
-    @PostMapping(value = "/newSeminar")
-    @CheckTeacherPermission
-    public String newSeminarInfo(@RequestParam("seminarId") Integer seminarId,
-                                 @RequestParam("turningClassId") Integer turningClassId,
-                                 @RequestParam("roundId") Integer roundId,
-                                 @RequestParam("maxTeamNum") Integer maxTeamNum,
-                                 @RequestParam("signStartTime") Date signStartTime,
-                                 @RequestParam("signEndTime") Date signEndTime,
-                                 @RequestParam("signOrder") Boolean signOrder) {
-        return seminarService.newSeminar(seminarId, turningClassId, roundId, maxTeamNum, signStartTime, signEndTime, signOrder);
-    }
-
-    @PutMapping(value = "/modifySeminar")
-    @CheckTeacherPermission
-    public String modifySeminarInfo(@RequestParam("seminarId") Integer seminarId,
-                                    @RequestParam("turningClassId") Integer turningClassId,
-                                    @RequestParam("roundId") Integer roundId,
-                                    @RequestParam("maxTeamNum") Integer maxTeamNum,
-                                    @RequestParam("signStartTime") Date signStartTime,
-                                    @RequestParam("signEndTime") Date signEndTime,
-                                    @RequestParam("reportEndTime") Date reportEndTime,
-                                    @RequestParam("status") Integer status,
-                                    @RequestParam("signOrder") Boolean signOrder) {
-        return seminarService.modifySeminar(seminarId, turningClassId, roundId, maxTeamNum, signStartTime, signEndTime, reportEndTime, status, signOrder);
+    public String newClbum(@PathVariable("courseId") Integer courseId,
+                           @RequestParam("name") String name,
+                           @RequestParam("classTime") String classTime,
+                           @RequestParam("classPlace") String classPlace) {
+        return clbumService.newClbum(courseId, name, classTime, classPlace);
     }
 }

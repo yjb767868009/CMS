@@ -4,27 +4,27 @@ package com.xmu.cms.entity;
  * @author JuboYu on 2018/11/26.
  * @version 1.0
  */
-public class TurningClass {
-    private Integer turningClassId;
+public class Clbum {
+    private Integer clbumId;
     private Integer courseId;
     private String name;
     private String classTime;
     private String classPlace;
 
-    public TurningClass(Integer turningClassId, Integer courseId, String name, String classPlace, String classTime) {
-        this.turningClassId = turningClassId;
+    public Clbum(Integer clbumId, Integer courseId, String name, String classPlace, String classTime) {
+        this.clbumId = clbumId;
         this.courseId = courseId;
         this.name = name;
         this.classPlace = classPlace;
         this.classTime = classTime;
     }
 
-    public Integer getTurningClassId() {
-        return turningClassId;
+    public Integer getClbumId() {
+        return clbumId;
     }
 
-    public void setTurningClassId(Integer turningClassId) {
-        this.turningClassId = turningClassId;
+    public void setClbumId(Integer id) {
+        this.clbumId = id;
     }
 
     public String getName() {

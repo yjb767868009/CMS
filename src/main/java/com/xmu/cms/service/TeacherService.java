@@ -14,12 +14,11 @@ public interface TeacherService {
 
     String newTeacher(String name, String account, String password, String email);
 
-    String modifyTeacherById(Integer teacherId, String name, String account, String email);
+    String modifyTeacherById(Integer id, String name, String account, String email);
 
-    String modifyTeacherPasswordById(Integer teacherId, String password);
+    String modifyTeacherPasswordById(Integer id, String password);
 
-    String deleteTeacherById(Integer teacherId);
+    String deleteTeacherById(Integer id);
 
     List<Teacher> getTeacherByName(String name);
-
 }

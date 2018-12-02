@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface ScoreDao {
     Score getAllScoresInSeminar(@Param("seminarId") Integer seminarId,
-                                @Param("turningClassId") Integer turningClassId);
+                                @Param("clbumId") Integer clbumId);
 
     Score getAllScoresInRound(@Param("roundId") Integer roundId);
 }

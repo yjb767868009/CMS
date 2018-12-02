@@ -1,7 +1,6 @@
 package com.xmu.cms.entity;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * @author JuboYu on 2018/11/29.
@@ -9,34 +8,25 @@ import java.util.Date;
  */
 public class Seminar {
     private Integer seminarId;
-    private Integer turningClassId;
     private Integer roundId;
     private Integer maxTeamNum;
+    private String topic;
+    private String introduction;
     private Timestamp signStartTime;
     private Timestamp signEndTime;
-    private Timestamp reportEndTime;
-    /**
-     * status 0表示未开始，1表示进行中，2表示暂停，3表示结束
-     */
-    private Integer status;
-    /**
-     * presentationNo
-     * 表示第几个展示的组
-     */
-    private Integer presentationNo;
     private Boolean signOrder;
+    private Boolean visible;
 
-    public Seminar(Integer seminarId, Integer turningClassId, Integer roundId, Integer maxTeamNum, Timestamp signStartTime, Timestamp signEndTime, Timestamp reportEndTime, Integer status, Integer presentationNo, Boolean signOrder) {
+    public Seminar(Integer seminarId, Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
         this.seminarId = seminarId;
-        this.turningClassId = turningClassId;
         this.roundId = roundId;
         this.maxTeamNum = maxTeamNum;
+        this.topic = topic;
+        this.introduction = introduction;
         this.signStartTime = signStartTime;
         this.signEndTime = signEndTime;
-        this.reportEndTime = reportEndTime;
-        this.status = status;
-        this.presentationNo = presentationNo;
         this.signOrder = signOrder;
+        this.visible = visible;
     }
 
     public Integer getSeminarId() {
@@ -45,14 +35,6 @@ public class Seminar {
 
     public void setSeminarId(Integer seminarId) {
         this.seminarId = seminarId;
-    }
-
-    public Integer getTurningClassId() {
-        return turningClassId;
-    }
-
-    public void setTurningClassId(Integer turningClassId) {
-        this.turningClassId = turningClassId;
     }
 
     public Integer getRoundId() {
@@ -71,6 +53,22 @@ public class Seminar {
         this.maxTeamNum = maxTeamNum;
     }
 
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
     public Timestamp getSignStartTime() {
         return signStartTime;
     }
@@ -87,23 +85,7 @@ public class Seminar {
         this.signEndTime = signEndTime;
     }
 
-    public Timestamp getReportEndTime() {
-        return reportEndTime;
-    }
-
-    public void setReportEndTime(Timestamp reportEndTime) {
-        this.reportEndTime = reportEndTime;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Boolean isSignOrder() {
+    public Boolean getSignOrder() {
         return signOrder;
     }
 
@@ -111,11 +93,11 @@ public class Seminar {
         this.signOrder = signOrder;
     }
 
-    public Integer getPresentationNo() {
-        return presentationNo;
+    public Boolean getVisible() {
+        return visible;
     }
 
-    public void setPresentationNo(Integer presentationNo) {
-        this.presentationNo = presentationNo;
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
     }
 }

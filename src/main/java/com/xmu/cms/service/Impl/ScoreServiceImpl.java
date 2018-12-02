@@ -16,8 +16,8 @@ public class ScoreServiceImpl implements ScoreService {
     private ScoreDao scoreDao;
 
     @Override
-    public Score getAllScoresInSeminar(Integer seminarId,Integer turningClassId) {
-        return scoreDao.getAllScoresInSeminar(seminarId,turningClassId);
+    public Score getAllScoresInClbumSeminar(Integer seminarId, Integer clbumId) {
+        return scoreDao.getAllScoresInSeminar(seminarId,clbumId);
     }
 
     @Override

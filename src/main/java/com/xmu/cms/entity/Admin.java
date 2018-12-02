@@ -5,8 +5,23 @@ package com.xmu.cms.entity;
  * @version 1.0
  */
 public class Admin {
+    private String adminId;
     private String account;
     private String password;
+
+    public Admin(String adminId, String account, String password) {
+        this.adminId = adminId;
+        this.account = account;
+        this.password = password;
+    }
+
+    public String getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(String adminId) {
+        this.adminId = adminId;
+    }
 
     public String getAccount() {
         return account;

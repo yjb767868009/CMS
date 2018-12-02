@@ -40,34 +40,34 @@ public interface TeacherDao {
     /**
      * modify teacher by his id
      *
-     * @param id      teacher's id
+     * @param teacherId      teacher's id
      * @param name    teacher's new name
      * @param account teacher's new account
      * @param email   teacher's new email
      * @return String message
      */
-    Integer modifyTeacherById(@Param("id") Integer id,
-                              @Param("name") String name,
-                              @Param("account") String account,
-                              @Param("email") String email);
+    Integer modifyTeacherByTeacherId(@Param("teacherId") Integer teacherId,
+                                     @Param("name") String name,
+                                     @Param("account") String account,
+                                     @Param("email") String email);
 
     /**
      * modify teacher's password by his id
      *
-     * @param id       teacher's id
+     * @param teacherId       teacher's id
      * @param password teacher's new password
      * @return String message
      */
-    Integer modifyTeacherPasswordById(@Param("id") Integer id,
-                                      @Param("password") String password);
+    Integer modifyTeacherPasswordByTeacherId(@Param("teacherId") Integer teacherId,
+                                             @Param("password") String password);
 
     /**
      * delete teacher by his id
      *
-     * @param id teacher's id
+     * @param teacherId teacher's id
      * @return String message
      */
-    Integer deleteTeacherById(Integer id);
+    Integer deleteTeacherByTeacherId(@Param("teacherId") Integer teacherId);
 
     /**
      * get teacher's password by account

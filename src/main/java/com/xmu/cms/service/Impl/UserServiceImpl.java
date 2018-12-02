@@ -2,14 +2,16 @@ package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.StudentDao;
 import com.xmu.cms.dao.TeacherDao;
+import com.xmu.cms.entity.Message;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Teacher;
-import com.xmu.cms.entity.Team;
 import com.xmu.cms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author JuboYu on 2018/11/26.
@@ -24,20 +26,22 @@ public class UserServiceImpl implements UserService {
     private TeacherDao teacherDao;
 
     @Override
-    public String userLogIn(String account, String password, HttpSession session) {
+    public Map<String, String> userLogIn(String account, String password, HttpSession session) {
+        Map<String, String> message = new HashMap<String, String>(2);
         Teacher teacher = teacherDao.getTeacherByAccount(account);
         if (teacher == null) {
             Student student = studentDao.getStudentByAccount(account);
             if (student == null) {
-                return "No this account";
+                message.put("message","No this account");
             } else {
                 String studentPassword = student.getPassword();
                 if (studentPassword.equals(password)) {
                     session.setAttribute("userType", "student");
                     session.setAttribute("userId", student.getStudentId());
-                    return "Student";
+                    message.put("message","student");
+                    message.put("activation","false");
                 } else {
-                    return "Account or password error";
+                    message.put("message","Account or password error");
                 }
             }
         } else {
@@ -45,10 +49,12 @@ public class UserServiceImpl implements UserService {
             if (teacherPassword.equals(password)) {
                 session.setAttribute("userType", "teacher");
                 session.setAttribute("userId", teacher.getTeacherId());
-                return "Teacher";
+                message.put("message","teacher");
+                message.put("activation","false");
             } else {
-                return "Account or password error";
+                message.put("message","Account or password error");
             }
         }
+        return message;
     }
 }

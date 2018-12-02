@@ -41,12 +41,14 @@ public class SeminarController {
     }
 
     @GetMapping(value = "/attendances")
+    @CheckUserPermission
     public List<Attendance> getAttendancesInSeminar(@PathVariable("seminarId") Integer seminarId) {
         return attendanceService.getAttendancesInSeminar(seminarId);
     }
 
 
     @GetMapping(value = "/teamNum")
+    @CheckUserPermission
     public Integer geTeamNumInSeminar(@PathVariable("seminarId") Integer seminarId) {
         return teamService.getAllTeamsInSeminar(seminarId).size();
     }

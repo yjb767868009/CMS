@@ -6,7 +6,10 @@ import com.xmu.cms.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author JuboYu on 2018/11/26.
@@ -23,38 +26,51 @@ public class StudentSerivceImpl implements StudentService {
     }
 
     @Override
-    public String modifyStudentById(Integer studentId, String name, String account, String email) {
-        Integer count = studentDao.modifyStudentById(studentId, name, account, email);
-        if (count == 0) {
-            return "Update error";
+    public Map<String, String> modifyStudentById(Integer studentId, String name, String account, String email) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        Integer count = studentDao.modifyStudentByStudentId(studentId, name, account, email);
+        if (count == 1) {
+            message.put("message", "Success");
         } else {
-            return "Success";
+            message.put("message", "Update error");
         }
+        return message;
     }
 
     @Override
-    public String modifyStudentPasswordById(Integer studentId, String password) {
-        Integer count = studentDao.modifyStudentPasswordById(studentId, password);
-        if (count == 0) {
-            return "Update error";
+    public Map<String, String> modifyStudentPasswordById(Integer studentId, String password) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        Integer count = studentDao.modifyStudentPasswordByStudentId(studentId, password);
+        if (count == 1) {
+            message.put("message", "Success");
         } else {
-            return "Success";
+            message.put("message", "Update error");
         }
+        return message;
     }
 
     @Override
-    public String deleteStudentById(Integer studentId) {
-        Integer count = studentDao.deleteStudentById(studentId);
-        if (count == 0) {
-            return "Delete error";
+    public Map<String, String> deleteStudentById(Integer studentId) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        Integer count = studentDao.deleteStudentByStudentId(studentId);
+        if (count == 1) {
+            message.put("message", "Success");
         } else {
-            return "Success";
+            message.put("message", "Delete error");
         }
+        return message;
     }
 
     @Override
     public List<Student> getStudentByName(String name) {
         return studentDao.getStudentByName(name);
+    }
+
+    @Override
+    public List<Student> getStudentByAccount(String account) {
+        List<Student> students = new ArrayList<Student>();
+        students.add(studentDao.getStudentByAccount(account));
+        return students;
     }
 
 }

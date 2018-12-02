@@ -15,7 +15,7 @@
         FROM teacher
     </select>
 
-    <update id="modifyTeacherById">
+    <update id="modifyTeacherByTeacherId">
         UPDATE teacher
         SET name        = #{name},
             teacher_num = #{account},
@@ -23,7 +23,7 @@
         WHERE id = #{teacherId}
     </update>
 
-    <update id="modifyTeacherPasswordById">
+    <update id="modifyTeacherPasswordByTeacherId">
         UPDATE teacher
         SET password = #{password}
         WHERE id = #{teacherId}
@@ -34,14 +34,21 @@
         VALUE (#{account}, #{password}, #{email}, #{name}, #{phone}, #{messageInterval}, #{activation})
     </insert>
 
-    <delete id="deleteTeacherById" parameterType="java.lang.Integer">
+    <delete id="deleteTeacherByTeacherId" parameterType="java.lang.Integer">
         delete
         FROM teacher
         WHERE id = #{teacherId}
     </delete>
 
-    <select id="getPasswordByAccount" resultType="java.lang.String">
-        SELECT password
+    <select id="getTeacherByAccount" resultType="com.xmu.cms.entity.Teacher">
+        SELECT id           as teacherId,
+               teacher_num  as account,
+               password,
+               email,
+               name,
+               phone,
+               msg_interval as messageInterval,
+               is_activated as activation
         FROM teacher
         WHERE teacher_num = #{account}
     </select>

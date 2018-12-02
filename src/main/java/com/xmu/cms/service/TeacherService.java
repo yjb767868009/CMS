@@ -3,6 +3,7 @@ package com.xmu.cms.service;
 import com.xmu.cms.entity.Teacher;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author JuboYu on 2018/11/26.
@@ -12,13 +13,15 @@ import java.util.List;
 public interface TeacherService {
     List<Teacher> getAllTeachers();
 
-    String newTeacher(String name, String account, String password, String email);
+    Map<String, String> newTeacher(String name, String account, String password, String email);
 
-    String modifyTeacherById(Integer id, String name, String account, String email);
+    Map<String, String> modifyTeacherByTeacherId(Integer teacherId, String name, String account, String email);
 
-    String modifyTeacherPasswordById(Integer id, String password);
+    Map<String, String> modifyTeacherPasswordByTeacherId(Integer teacherId, String password);
 
-    String deleteTeacherById(Integer id);
+    Map<String, String> deleteTeacherByTeacherId(Integer teacherId);
+
+    List<Teacher> getTeacherByAccount(String account);
 
     List<Teacher> getTeacherByName(String name);
 }

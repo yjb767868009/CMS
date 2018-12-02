@@ -1,16 +1,11 @@
 package com.xmu.cms.controller;
 
-import com.xmu.cms.dao.StudentDao;
-import com.xmu.cms.dao.TeacherDao;
-import com.xmu.cms.entity.Student;
-import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.service.UserService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author JuboYu on 2018/11/25.
@@ -24,9 +19,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(value = "/login")
-    public String userLogIn(@RequestParam(value = "account") String account,
-                            @RequestParam(value = "password") String password,
-                            HttpSession session) {
+    public Map<String, String> userLogIn(@RequestParam(value = "account") String account,
+                                         @RequestParam(value = "password") String password,
+                                         HttpSession session) {
         return userService.userLogIn(account, password, session);
     }
 

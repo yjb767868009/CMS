@@ -30,8 +30,9 @@ class Permission {
             String userPermission = "user";
             String teacherPermission = "Teacher";
             String studentPermission = "Student";
+            String adminPersmission = "admin";
             if (permissionType.equals(userPermission)) {
-                if (userType.equals(teacherPermission) || userType.equals(studentPermission)) {
+                if (userType.equals(teacherPermission) || userType.equals(studentPermission) || userType.equals(adminPersmission)) {
                     result = point.proceed();
                 }
             } else {

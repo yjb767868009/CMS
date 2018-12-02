@@ -4,66 +4,71 @@
 <mapper namespace="com.xmu.cms.dao.StudentDao">
 
     <select id="getAllStudents" resultType="com.xmu.cms.entity.Student">
-        SELECT student_id       as studentId,
-               account,
+        SELECT id       as studentId,
+               student_num as account,
                password,
                email,
                name,
                phone,
-               sex,
                message_interval as messageInterval,
-               activation
+               is_activated as activation
         FROM student
     </select>
 
     <insert id="newStudent" parameterType="com.xmu.cms.entity.Student">
-        INSERT INTO student (student_id, account, password, email, name, message_interval, activation)
+        INSERT INTO student (id, student_num, password, email, name, message_interval, is_activated)
         VALUE (#{studentId}, #{account}, #{password}, #{email}, #{name}, #{messageInterval}, #{activation})
     </insert>
 
-    <update id="modifyStudentById">
+    <update id="modifyStudentByStudentId">
         UPDATE student
         SET name    = #{name},
-            account = #{account},
+            student_num = #{account},
             email   = #{email}
-        WHERE student_id = #{studentId}
+        WHERE id = #{studentId}
     </update>
 
-    <update id="modifyStudentPasswordById">
+    <update id="modifyStudentPasswordByStudentId">
         UPDATE student
         SET password = #{password}
-        WHERE student_id = #{studentId}
+        WHERE id = #{studentId}
     </update>
 
-    <delete id="deleteStudentById" parameterType="java.lang.Integer">
+    <delete id="deleteStudentByStudentId" parameterType="java.lang.Integer">
         DELETE
         FROM student
-        WHERE student_id = #{studentId}
+        WHERE id = #{studentId}
     </delete>
 
-    <select id="getPasswordByAccount" parameterType="java.lang.String">
-        SELECT password
-        FROM student
-        WHERE account = #{account}
-    </select>
-
-    <select id="getStudentByName" resultType="com.xmu.cms.entity.Student">
-        SELECT student_id       as studentId,
-               account,
+    <select id="getStudentByAccount" parameterType="com.xmu.cms.entity.Student">
+        SELECT id       as studentId,
+               student_num as account,
                password,
                email,
                name,
                phone,
-               sex,
                message_interval as messageInterval,
-               activation
+               is_activated as activation
+        FROM student
+        WHERE student_num = #{account}
+    </select>
+
+    <select id="getStudentByName" resultType="com.xmu.cms.entity.Student">
+        SELECT id       as studentId,
+               student_num as account,
+               password,
+               email,
+               name,
+               phone,
+               message_interval as messageInterval,
+               is_activated as activation
         FROM student
         WHERE name = #{name}
     </select>
 
     <select id="getIdByAccount" resultType="java.lang.Integer">
-        SELECT student_id as studentId
+        SELECT id as studentId
         FROM student
-        WHERE account = #{account}
+        WHERE student_num = #{account}
     </select>
 </mapper>

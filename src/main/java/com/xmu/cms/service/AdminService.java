@@ -1,10 +1,7 @@
 package com.xmu.cms.service;
 
-import com.xmu.cms.dao.AdminDao;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 /**
  * @author JuboYu on 2018/11/26.
@@ -12,5 +9,5 @@ import javax.servlet.http.HttpSession;
  */
 
 public interface AdminService {
-    String adminLogIn(String account, String password, HttpSession session);
+    Map<String, String> adminLogIn(String account, String password, HttpSession session);
 }

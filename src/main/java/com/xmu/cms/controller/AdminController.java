@@ -12,6 +12,7 @@ import com.xmu.cms.entity.Teacher;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author JuboYu on 2018/11/23.
@@ -31,9 +32,9 @@ public class AdminController {
     private TeacherService teacherService;
 
     @PostMapping(value = "/login")
-    public String adminLogIn(@RequestParam(value = "account") String account,
-                             @RequestParam(value = "password") String password,
-                             HttpSession session) {
+    public Map<String, String> adminLogIn(@RequestParam(value = "account") String account,
+                                          @RequestParam(value = "password") String password,
+                                          HttpSession session) {
         return adminService.adminLogIn(account, password, session);
     }
 
@@ -49,69 +50,81 @@ public class AdminController {
         return studentService.getAllStudents();
     }
 
-    @PostMapping(value = "/newTeacher")
+    @PostMapping(value = "/teacher")
     @CheckAdminPermission
-    public String newTeacher(@RequestParam(value = "name") String name,
-                             @RequestParam(value = "account") String account,
-                             @RequestParam(value = "password") String password,
-                             @RequestParam(value = "email") String email) {
+    public Map<String, String> newTeacher(@RequestParam(value = "name") String name,
+                                          @RequestParam(value = "account") String account,
+                                          @RequestParam(value = "password") String password,
+                                          @RequestParam(value = "email") String email) {
         return teacherService.newTeacher(name, account, password, email);
     }
 
     @PutMapping(value = "/teacher/{teacherId}")
     @CheckAdminPermission
-    public String modifyTeacherById(@PathVariable("teacherId") Integer teacherId,
-                                    @RequestParam(value = "name") String name,
-                                    @RequestParam(value = "account") String account,
-                                    @RequestParam(value = "email") String email) {
-        return teacherService.modifyTeacherById(teacherId, name, account, email);
+    public Map<String, String> modifyTeacherById(@PathVariable("teacherId") Integer teacherId,
+                                                 @RequestParam(value = "name") String name,
+                                                 @RequestParam(value = "account") String account,
+                                                 @RequestParam(value = "email") String email) {
+        return teacherService.modifyTeacherByTeacherId(teacherId, name, account, email);
     }
 
     @PatchMapping(value = "/teacher/{teacherId}/modifyPassword")
     @CheckAdminPermission
-    public String modifyTeacherPasswordById(@PathVariable("teacherId") Integer teacherId,
-                                            @RequestParam(value = "password") String password) {
-        return teacherService.modifyTeacherPasswordById(teacherId, password);
+    public Map<String, String> modifyTeacherPasswordById(@PathVariable("teacherId") Integer teacherId,
+                                                         @RequestParam(value = "password") String password) {
+        return teacherService.modifyTeacherPasswordByTeacherId(teacherId, password);
     }
 
     @DeleteMapping(value = "/teacher/{teacherId}")
     @CheckAdminPermission
-    public String deleteTeacher(@PathVariable("teacherId") Integer teacherId) {
-        return teacherService.deleteTeacherById(teacherId);
+    public Map<String, String> deleteTeacher(@PathVariable("teacherId") Integer teacherId) {
+        return teacherService.deleteTeacherByTeacherId(teacherId);
     }
 
     @PutMapping(value = "/student/{studentId}")
     @CheckAdminPermission
-    public String modifyStudent(@PathVariable("studentId") Integer studentId,
-                                @RequestParam("name") String name,
-                                @RequestParam("account") String account,
-                                @RequestParam("email") String email) {
+    public Map<String, String> modifyStudent(@PathVariable("studentId") Integer studentId,
+                                             @RequestParam("name") String name,
+                                             @RequestParam("account") String account,
+                                             @RequestParam("email") String email) {
         return studentService.modifyStudentById(studentId, name, account, email);
     }
 
     @PatchMapping(value = "student/{studentId}/modifyPassword")
     @CheckAdminPermission
-    public String modifyStudentPasswordById(@PathVariable("studentId") Integer studentId,
-                                            @RequestParam(value = "password") String password) {
+    public Map<String, String> modifyStudentPasswordById(@PathVariable("studentId") Integer studentId,
+                                                         @RequestParam(value = "password") String password) {
         return studentService.modifyStudentPasswordById(studentId, password);
     }
 
     @DeleteMapping(value = "/student/{studentId}")
     @CheckAdminPermission
-    public String deleteStudent(@PathVariable("studentId") Integer studentId) {
+    public Map<String, String> deleteStudent(@PathVariable("studentId") Integer studentId) {
         return studentService.deleteStudentById(studentId);
     }
 
-    @GetMapping(value = "/teachers/nameSearch")
+    @GetMapping(value = "/teachers/searchByName")
     @CheckAdminPermission
     public List<Teacher> getTeacherByName(@RequestParam("name") String name) {
         return teacherService.getTeacherByName(name);
     }
 
-    @GetMapping(value = "/students/nameSearch")
+    @GetMapping(value = "/teachers/searchByAccount")
+    @CheckAdminPermission
+    public List<Teacher> getTeacherByAccount(@RequestParam("account") String account) {
+        return teacherService.getTeacherByAccount(account);
+    }
+
+    @GetMapping(value = "/students/searchByName")
     @CheckAdminPermission
     public List<Student> getStudentByName(@RequestParam("name") String name) {
         return studentService.getStudentByName(name);
+    }
+
+    @GetMapping(value = "/students/searchByAccount")
+    @CheckAdminPermission
+    public List<Student> getStudentByAccount(@RequestParam("account") String account) {
+        return studentService.getStudentByAccount(account);
     }
 
 }

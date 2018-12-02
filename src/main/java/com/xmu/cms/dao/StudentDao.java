@@ -38,10 +38,10 @@ public interface StudentDao {
      * @param email     student's new email
      * @return String message
      */
-    Integer modifyStudentById(@Param("studentId") Integer studentId,
-                              @Param("name") String name,
-                              @Param("account") String account,
-                              @Param("email") String email);
+    Integer modifyStudentByStudentId(@Param("studentId") Integer studentId,
+                                     @Param("name") String name,
+                                     @Param("account") String account,
+                                     @Param("email") String email);
 
     /**
      * modify student's password by his id
@@ -50,8 +50,8 @@ public interface StudentDao {
      * @param password  student's new password
      * @return String message
      */
-    Integer modifyStudentPasswordById(@Param("studentId") Integer studentId,
-                                      @Param("password") String password);
+    Integer modifyStudentPasswordByStudentId(@Param("studentId") Integer studentId,
+                                             @Param("password") String password);
 
     /**
      * delete student by his id
@@ -59,7 +59,7 @@ public interface StudentDao {
      * @param studentId student's id
      * @return String message
      */
-    Integer deleteStudentById(Integer studentId);
+    Integer deleteStudentByStudentId(Integer studentId);
 
     /**
      * get student's password by account

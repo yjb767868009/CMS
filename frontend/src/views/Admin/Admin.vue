@@ -1,19 +1,19 @@
 <template>
-<el-container style="height:100%;margin:0 auto">
-    <el-header>Admin</el-header>
+  <el-container style="height:100%;margin:0 auto">
+      <el-header>Admin</el-header>
 
-<el-container style="height:100%;border: 1px solid #eee">
-  <el-aside width="200px" style="background-color: rgb(255,255,255);height:100%">
-    <el-menu :default-openeds="['1']">
-      <el-submenu index="1">
-        <template slot="title"><i class="el-icon-message"></i>信息管理</template>
-        <el-menu-item-group>
-          <el-menu-item index="1-1" @click="handleTeacher">教师信息管理</el-menu-item>
-          <el-menu-item index="1-2" @click="handleStudent">学生信息管理</el-menu-item>
-        </el-menu-item-group>
-      </el-submenu>
-    </el-menu>
-  </el-aside>
+  <el-container style="height:100%;border: 1px solid #eee">
+    <el-aside width="200px" style="background-color: rgb(255,255,255);height:100%">
+      <el-menu :default-openeds="['1']">
+        <el-submenu index="1">
+          <template slot="title"><i class="el-icon-message"></i>信息管理</template>
+          <el-menu-item-group>
+            <el-menu-item index="1-1" @click="handleTeacher">教师信息管理</el-menu-item>
+            <el-menu-item index="1-2" @click="handleStudent">学生信息管理</el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
+      </el-menu>
+    </el-aside>
   
   <keep-alive>
     
@@ -24,9 +24,9 @@
         <el-input style="width:30%" v-model="teacherSearchKey" placeholder="输入教工号/姓名" @keyup.enter.native="searchTeacher">
         </el-input>
         <el-dropdown>
-          <i class="el-icon-plus" style="margin-right: 15px" @click="addTeacher"></i>
+          <i class="el-icon-plus" style="margin-right: 15px" @click="$store.state.admin.showAddTeacher=true"></i>
         </el-dropdown>
-        <span style="color:rgb(0,0,0)">新增教师</span>
+        <a style="color:rgb(0,0,0)" @click="$store.state.admin.showAddTeacher=true">新增教师</a>
       </el-header>
       <el-main>
         <el-table :data="teacherData">
@@ -91,88 +91,21 @@
 
     
     </keep-alive>
-    
-    <!-- 创建老师用户 -->
-    <el-container v-if="showAddTeacher">
-      <el-header style="text-align: left;background-color:rgb(238, 241, 246);color:rgb(0,0,0);"> 
-      创建教师用户
-      </el-header>
-        <el-main>
-          <el-form ref="form" :model="addTeacherForm" style="width:40%">
-            <el-form-item label="教师姓名">
-              <el-input v-model="addTeacherForm.name" placeholder="请输入老师姓名"></el-input>
-            </el-form-item>
-            <el-form-item label="教工号">
-              <el-input v-model="addTeacherForm.account" placeholder="请输入教工号"></el-input>
-            </el-form-item>
-            <el-form-item label="电子邮箱">
-              <el-input v-model="addTeacherForm.email" placeholder="请输入电子邮箱"></el-input>
-            </el-form-item>
-            <el-form-item label="初始密码">
-              <el-input v-model="addTeacherForm.password" placeholder="请输入初始密码"></el-input>
-            </el-form-item>
-          </el-form>
-          <el-button type="primary" @click="postAddTeacher">提交</el-button>
-          <el-button type="info" @click="cancelAddTeacher">取消</el-button>
-        </el-main>
-      </el-container>
-      
-      <!-- 修改老师信息 -->
-      <el-container v-if="showModifyTeacher">
-      <el-header style="text-align: left;background-color:rgb(238, 241, 246);color:rgb(0,0,0);"> 
-      修改教师信息
-      </el-header>
-        <el-main>
-          <el-form ref="form" :model="modifyTeacherForm" style="width:40%">
-            <el-form-item label="教师姓名">
-              <el-input v-model="modifyTeacherForm.name" placeholder="请输入老师姓名"></el-input>
-            </el-form-item>
-            <el-form-item label="教工号">
-              <el-input v-model="modifyTeacherForm.account" placeholder="请输入教工号"></el-input>
-            </el-form-item>
-            <el-form-item label="电子邮箱">
-              <el-input v-model="modifyTeacherForm.email" placeholder="请输入电子邮箱"></el-input>
-            </el-form-item>
-          </el-form>
-            <el-button type="primary" @click="postModifyTeacher">提交</el-button>
-            <el-button type="info" @click="cancelModifyTeacher">取消</el-button>
-        </el-main>
-      </el-container>
 
-
-      <!-- 修改学生信息 -->
-      <el-container v-if="showModifyStudent">
-      <el-header style="text-align: left;background-color:rgb(238, 241, 246);color:rgb(0,0,0);"> 
-      修改学生信息
-      </el-header>
-        <el-main>
-          <el-form ref="form" :model="modifyStudentForm" style="width:40%">
-            <el-form-item label="学生姓名">
-              <el-input v-model="modifyStudentForm.name" placeholder="请输入学生姓名"></el-input>
-            </el-form-item>
-            <el-form-item label="学号">
-              <el-input v-model="modifyStudentForm.account" placeholder="请输入学号"></el-input>
-            </el-form-item>
-            <el-form-item label="电子邮箱">
-              <el-input v-model="modifyStudentForm.email" placeholder="请输入电子邮箱"></el-input>
-            </el-form-item>
-          </el-form>
-            <el-button type="primary" @click="postModifyStudent">提交</el-button>
-            <el-button type="info" @click="cancelModifyStudent">取消</el-button>
-        </el-main>
-      </el-container>
-
-    
+      <modify-teacher-dialog></modify-teacher-dialog>
+      <modify-student-dialog></modify-student-dialog>
+      <add-teacher-dialog></add-teacher-dialog>
   
   </el-container>
       <el-footer style="background-color: rgb(10, 47, 88);color:rgb(255,255,255);height:100%;">
           <div class="container">
-            <div class="footer-main"><p class="footer-main-title">CMS</p><a
-                    href="https://git.code.tencent.com/xmu2018/software_221" target="_blank" class="footer-main-link">Github</a><a
-                    href="mailto:99296485@qq.com" class="footer-main-link">Email</a><a
-                    href="https://github.com/ElemeFE/element/blob/master/.github/CONTRIBUTING.en-US.md" target="_blank"
+            <div class="footer-main"><p class="footer-main-title">CMS</p>
+            <a href="https://git.code.tencent.com/xmu2018/software_221" target="_blank" class="footer-main-link">Github</a>
+            <a href="mailto:99296485@qq.com" class="footer-main-link">Email</a>
+            <a href="https://github.com/ElemeFE/element/blob/master/.github/CONTRIBUTING.en-US.md" target="_blank"
                     class="footer-main-link">License</a>
             </div>
+            <span>&nbsp;</span>
           </div>
       </el-footer>
   </el-container>
@@ -195,7 +128,7 @@
   .footer-main {
         font-size: 0;
         padding-top: 40px;
-        display: inline-block;
+        /* display: inline-block; */
     }
 
     .footer-main .footer-main-title {
@@ -205,7 +138,7 @@
     }
 
     .footer-main .footer-main-link {
-        display: inline-block;
+        /* display: inline-block; */
         margin: 12px 18px 0 0;
         line-height: 1;
         font-size: 12px;
@@ -214,60 +147,27 @@
 </style>
 
 <script>
+import AddTeacherDialog from './AddTeacherDialog'
+import ModifyStudentDialog from './ModifyStudentDialog'
+import ModifyTeacherDialog from './ModifyTeacherDialog'
+
   export default {
+    components:{
+      "add-teacher-dialog":AddTeacherDialog,
+      "modify-student-dialog":ModifyStudentDialog,
+      "modify-teacher-dialog":ModifyTeacherDialog,
+    },
     data() {
-      const teacher = {
-        teacherId:'tid',
-        account:'taccount',
-        password:'tpwd',
-        name: 'tname',
-        phone:'tphone',
-        email:'example@email.com',
-        messageInterval:1,
-        activation:true
-      };
-      const student = {
-        studentId:'sid',
-        account:'saccount',
-        password:'spwd',
-        name: 'sname',
-        phone:'sphone',
-        email:'example@stu.com',
-        messageInterval:1,
-        activation:true
-      };
-      
       return {
-        teacherData:Array(20).fill(teacher),
-        studentData:Array(20).fill(student),
+        teacherData:[1,2,3,4],
+        studentData:[1,2,3,4],
 
         navibar:'teacher',
         showTeacher:true,
         showStudent:false,
-        showAddTeacher:false,
-        showModifyTeacher:false,
-        showModifyStudent:false,
 
-        currentTeacherId:'',
-        currentStudentId:'',
         teacherSearchKey:'',
         studentSearchKey:'',
-        addTeacherForm:{
-          name:'',
-          account:'',
-          email:'',
-          password:''
-        },
-        modifyStudentForm:{
-          name:'',
-          account:'',
-          email:''
-        },
-        modifyTeacherForm:{
-          name:'',
-          accout:'',
-          email:''
-        }
       }
     },
     mounted:function(){
@@ -278,49 +178,20 @@
         handleStudent:function(){
             this.navibar='student'
             this.showTeacher=false
-            this.showAddTeacher=false
             this.showStudent=true
-            this.showModifyTeacher=false
-            this.showModifyStudent=false
         },
         handleTeacher:function(){
             this.navibar='teacher'
             this.showStudent=false
-            this.showAddTeacher=false
             this.showTeacher=true
-            this.showModifyTeacher=false
-            this.showModifyStudent=false
         },
         editStudent:function(student){
-            this.currentStudentId=student.studentId
-            this.modifyStudentForm.name=student.name
-            this.modifyStudentForm.account=student.account
-            this.modifyStudentForm.email=student.email
-            this.showStudent=false
-            this.showAddTeacher=false
-            this.showTeacher=false
-            this.showModifyTeacher=false
-            this.showModifyStudent=true
+            this.$store.state.admin.showModifyStudent=true
+            this.$store.state.admin.currentStudent=student
         },
         editTeacher:function(teacher){
-            this.currentTeacherId=teacher.teacherId
-            this.modifyTeacherForm.name=teacher.name
-            this.modifyTeacherForm.account=teacher.account
-            this.modifyTeacherForm.email=teacher.email
-            this.showStudent=false
-            this.showAddTeacher=false
-            this.showTeacher=false
-            this.showModifyTeacher=true
-            this.showModifyStudent=false
-        },
-        addTeacher:function(){
-            this.addTeacherForm.name='';
-            this.addTeacherForm.account='';
-            this.addTeacherForm.password='';
-            this.addTeacherForm.email='';
-            this.showAddTeacher=true;
-            this.showTeacher=false;
-            this.showStudent=false;
+            this.$store.state.admin.showModifyTeacher=true
+            this.$store.state.admin.currentTeacher=teacher
         },
         
         searchTeacher:function(){
@@ -331,7 +202,7 @@
           if(!isNaN(this.teacherSearchKey)){
             //搜教工号
             this.$axios.get('/api/admin/teachers/searchByAccount?teacherAccount='+teacherSearchKey)
-              .then(function(response){
+              .then((response)=>{
                 this.teacherData=response.data
               })
               .catch(function(error){
@@ -340,7 +211,7 @@
           }else{
             //搜名字
             this.$axios.get('/api/admin/teachers/searchByName?name='+teacherSearchKey)
-              .then(function(response){
+              .then((response)=>{
                 this.teacherData=response.data
               })
               .catch(function(error){
@@ -348,6 +219,7 @@
               })
           }
         },
+
         searchStudent:function(){
           if(!this.studentSearchKey){
             //空
@@ -356,7 +228,7 @@
           if(!isNaN(this.studentSearchKey)){
             //搜学号
             this.$axios.get('/api/admin/students/searchByAccount?studentAccount'+studentSearchKey)
-              .then(function(response){
+              .then((response)=>{
                 this.teacherData=response.data
               })
               .catch(function(error){
@@ -365,7 +237,7 @@
           }else{
             //搜名字
             this.$axios.get('/api/admin/students/searchByName?name='+studentSearchKey)
-              .then(function(response){
+              .then((response)=>{
                 this.teacherData=response.data
               })
               .catch(function(error){
@@ -376,7 +248,7 @@
         
         getAllStudent:function(){
           this.$axios.get('/api/admin/students')
-            .then(function(response){
+            .then((response)=>{
               this.studentData=response.data
             }).catch(function(error){
               console.log(error)
@@ -384,7 +256,7 @@
         },
         getAllTeacher:function(){
           this.$axios.get('/api/admin/teachers')
-            .then(function(response){
+            .then((response)=>{
               this.teacherData=response.data
             }).catch(function(error){
               console.log(error)
@@ -395,8 +267,8 @@
           this.$prompt('请输入新密码', '修改学生密码', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-        }).then(({ input }) => {
-          this.$axios.patch('/api/admin/student/'+student.studentId,{
+            }).then(({ input }) => {
+            this.$axios.patch('/api/admin/student/'+student.studentId,{
             password:input
           })
             .then(function(response){
@@ -411,6 +283,7 @@
             })
         })
         },
+
         resetTeacher:function(teacher){
           this.$prompt('请输入新密码', '修改老师密码', {
           confirmButtonText: '确定',
@@ -429,6 +302,7 @@
             })
         })
         },
+
         deleteStudent:function(student){
           this.$confirm('确定删除该学生？','删除账号',{
             confirmButtonText:'确定',
@@ -437,6 +311,7 @@
           }).then(()=>{
             //确认删除
             this.$axios.delete('/api/admin/student/'+student.studentId)
+            this.getAllStudent()
             .catch(function(error){
               console.log(error)
             })
@@ -450,68 +325,12 @@
           }).then(()=>{
             //确认删除
             this.$axios.delete('/api/admin/teacher/'+teacher.teacherId)
+            this.getAllTeacher()
             .catch(function(error){
               console.log(error)
             })
           })
         },
-
-        cancelAddTeacher:function(){
-          if(this.navibar==='teacher')
-          this.handleTeacher()
-          if(this.navibar==='student')
-          this.handleStudent()
-        },
-        cancelModifyTeacher:function(){
-          if(this.navibar==='teacher')
-          this.handleTeacher()
-          if(this.navibar==='student')
-          this.handleStudent()
-        },
-        cancelModifyStudent:function(){
-          if(this.navibar==='teacher')
-          this.handleTeacher()
-          if(this.navibar==='student')
-          this.handleStudent()
-        },
-
-        postAddTeacher:function(){
-          this.$axios.post('/api/admin/teacher',{
-            name:addTeacherForm.name,
-            account:addTeacherForm.account,
-            email:addTeacherForm.email,
-            password:addTeacherForm.password
-          }).then(function(response){
-            this.handleTeacher()
-          })
-            .catch(function(error){
-              console.log(error)
-            })
-        },
-        postModifyTeacher:function(teacher){
-          this.$axios.patch('/api/admin/teacher/'+currentTeacherId,{
-            name:postModifyTeacher.name,
-            account:postModifyTeacher.account,
-            email:postModifyTeacher.email,
-          }).then(function(response){
-            this.handleTeacher()
-          })
-            .catch(function(error){
-              console.log(error)
-            })
-        },
-        postModifyStudent:function(student){
-          this.$axios.patch('/api/admin/student/'+currentStudentId,{
-            name:postModifyStudent.name,
-            account:postModifyStudent.account,
-            email:postModifyStudent.email,
-          }).then(function(response){
-            this.handleTeacher()
-          })
-            .catch(function(error){
-              console.log(error)
-            })
-        }
     }
   };
 </script>

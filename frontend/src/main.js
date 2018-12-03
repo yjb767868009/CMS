@@ -11,6 +11,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 //vuex
 import store from './store/store'
 
+//vue-cookie
+import VueCookie from 'vue-cookie'
+
 //axios
 import axios from 'axios'
 import '../config/axios'
@@ -19,6 +22,7 @@ Object.defineProperty(Vue.prototype,'$axios',{value:axios})
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.use(VueCookie)
 
 /* eslint-disable no-new */
 new Vue({

@@ -32,9 +32,9 @@ export default {
     methods:{
         postModifyTeacher:function(){
           this.$axios.patch('/api/admin/teacher/'+this.$store.state.admin.currentTeacher.teacherId,{
-            name:modifyStudentForm.name,
-            account:modifyStudentForm.account,
-            email:modifyStudentForm.email,
+            name:this.modifyTeacherForm.name,
+            account:this.modifyTeacherForm.account,
+            email:this.modifyTeacherForm.email,
           }).then((response)=>{
             console.log(response)
           })

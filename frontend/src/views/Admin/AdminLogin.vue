@@ -61,7 +61,7 @@ import Qs from 'qs'
                     this.$message.error('登陆失败')
                 }
                 if(message[0].authority==='ROLE_ADMIN'){
-                    this.$router.push('Admin')
+                    this.$router.push('AdminTeacher')
                 }
             }).catch((error)=>{
                 console.log(error)

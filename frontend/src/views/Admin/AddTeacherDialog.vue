@@ -36,10 +36,10 @@ export default {
     methods:{
         postAddTeacher:function(){
           this.$axios.post('/api/admin/teacher',{
-            name:addTeacherForm.name,
-            account:addTeacherForm.account,
-            email:addTeacherForm.email,
-            password:addTeacherForm.password
+            name:this.addTeacherForm.name,
+            account:this.addTeacherForm.account,
+            email:this.addTeacherForm.email,
+            password:this.addTeacherForm.password
           }).then((response)=>{
             console.log(response)
           })

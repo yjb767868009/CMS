@@ -9,5 +9,5 @@ import java.util.Map;
  */
 
 public interface AdminService {
-    Map<String, String> adminLogIn(String account, String password, HttpSession session);
+    Map<String, String> adminLogIn(String account, String password);
 }

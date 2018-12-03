@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.dao.AdminDao">
-    <select id="getPasswordByAccount" parameterType="java.lang.String" resultType="java.lang.String">
-        SELECT password
+    <select id="getAdminByAccount" parameterType="java.lang.String" resultType="com.xmu.cms.entity.Admin">
+        SELECT admin_id as adminId, account, password
         FROM admin
-        WHERE account=#{account}
+        WHERE account = #{account}
     </select>
 </mapper>

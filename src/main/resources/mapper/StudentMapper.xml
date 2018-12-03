@@ -8,21 +8,21 @@
                student_num as account,
                password,
                email,
-               name,
+               student_name as name,
                phone,
-               message_interval as messageInterval,
+               msg_interval as messageInterval,
                is_activated as activation
         FROM student
     </select>
 
     <insert id="newStudent" parameterType="com.xmu.cms.entity.Student">
-        INSERT INTO student (id, student_num, password, email, name, message_interval, is_activated)
+        INSERT INTO student (id, student_num, password, email, student_name, msg_interval, is_activated)
         VALUE (#{studentId}, #{account}, #{password}, #{email}, #{name}, #{messageInterval}, #{activation})
     </insert>
 
     <update id="modifyStudentByStudentId">
         UPDATE student
-        SET name    = #{name},
+        SET student_name    = #{name},
             student_num = #{account},
             email   = #{email}
         WHERE id = #{studentId}
@@ -40,14 +40,14 @@
         WHERE id = #{studentId}
     </delete>
 
-    <select id="getStudentByAccount" parameterType="com.xmu.cms.entity.Student">
+    <select id="getStudentByAccount" resultType="com.xmu.cms.entity.Student">
         SELECT id       as studentId,
                student_num as account,
                password,
                email,
-               name,
+               student_name as name,
                phone,
-               message_interval as messageInterval,
+               msg_interval as messageInterval,
                is_activated as activation
         FROM student
         WHERE student_num = #{account}
@@ -58,12 +58,12 @@
                student_num as account,
                password,
                email,
-               name,
+               student_name as name,
                phone,
-               message_interval as messageInterval,
+               msg_interval as messageInterval,
                is_activated as activation
         FROM student
-        WHERE name = #{name}
+        WHERE student_name = #{name}
     </select>
 
     <select id="getIdByAccount" resultType="java.lang.Integer">

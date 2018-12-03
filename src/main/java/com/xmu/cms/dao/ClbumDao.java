@@ -17,5 +17,6 @@ public interface ClbumDao {
                      @Param("classTime") String classTime,
                      @Param("classPlace") String classPlace);
 
-    List<Seminar> getStudentClbumByCourseId(Integer studentId, Integer courseId);
+    List<Seminar> getStudentClbumByCourseId(@Param("studentId") Integer studentId,
+                                            @Param("courseId") Integer courseId);
 }

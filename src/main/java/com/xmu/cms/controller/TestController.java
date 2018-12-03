@@ -1,9 +1,10 @@
 package com.xmu.cms.controller;
 
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -20,6 +21,13 @@ import java.io.IOException;
 @RestController
 @RequestMapping(value = "/test")
 public class TestController {
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Value("${spring.mail.username}")
+    private String sender;
+
     @GetMapping(value = "/testSession")
     public String testSession(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         HttpSession session = httpServletRequest.getSession();
@@ -55,4 +63,5 @@ public class TestController {
     public Object getUserId(HttpSession session) {
         return session.getAttribute("userId");
     }
+
 }

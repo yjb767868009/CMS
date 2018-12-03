@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @version 1.0
  */
 @Configuration
-public class MyConfiguration extends WebMvcConfigurerAdapter {
+public class MvcConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")

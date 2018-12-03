@@ -3,6 +3,9 @@ import Vue from 'vue'
 import Login from '@/views/Login'
 import Router from 'vue-router'
 
+//test
+import Test from '@/views/Test'
+
 //Admin
 import Admin from '@/views/Admin/Admin'
 import AdminLogin from '@/views/Admin/AdminLogin'
@@ -38,6 +41,11 @@ export default new Router({
       path:'/login',
       name:'Login',
       component:Login,
+    },
+    {
+      path:'/test',
+      name:'Test',
+      component:Test
     },
     //admin
     {

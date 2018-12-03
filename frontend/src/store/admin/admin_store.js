@@ -5,7 +5,9 @@ Vue.use(vuex)
 
 export default new vuex.Store({
     state:{
-        showTeacher:true,
+        currentStudent:'',
+        currentTeacher:'',
+        showTeacher:false,
         showStudent:false,
         showAddTeacher:false,
         showModifyTeacher:false,

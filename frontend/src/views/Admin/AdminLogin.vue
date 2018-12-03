@@ -47,30 +47,34 @@ import Qs from 'qs'
 
             this.$axios({
                 method:'post',
-                url:'/api/admin/login',
-                data:Qs.stringify({
+                url:'/api/admin/login?'+Qs.stringify({
                     account:this.account,
                     password:this.password
-                })
+                }),
             }//我们用配置axios的方式做请求,axios的详细配置见
-            //src/config/axios.js
+            //骚扰c/config/axios.js
 
             ).then((response)=>{
+				consle.log(response)
                 let message = response.data
-                if(message==='No this account'){
-                    this.$message.error('无此账号')
+                if(message==='Bad credentials'){
+                    this.$message.error('登陆失败')
                 }
-                if(message==='Account or Password error'){
-                    this.$message.error('账号或密码错误')
-                }
-                if(message==='Success'){
+                if(message[0].authority==='ROLE_ADMIN'){
                     this.$router.push('Admin')
                 }
+            }).catch((error)=>{
+                console.log(error)
+                this.$message.error('登陆失败')
             })
         },
         
         toAdmin:function(){
-            this.$router.push('Admin')
+            // this.$router.push('Admin')
+            console.log(Qs.stringify({
+                account:this.account,
+                password:this.password
+            }))
         }
     }
   };

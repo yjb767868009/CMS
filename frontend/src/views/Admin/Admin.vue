@@ -171,11 +171,11 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
       }
     },
     mounted:function(){
-      this.getAllStudent()
       this.getAllTeacher()
     },
     methods:{
         handleStudent:function(){
+            this.getAllStudent()
             this.navibar='student'
             this.showTeacher=false
             this.showStudent=true
@@ -311,7 +311,10 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
           }).then(()=>{
             //确认删除
             this.$axios.delete('/api/admin/student/'+student.studentId)
-            this.getAllStudent()
+            .then((response)=>{
+              console.log(response)
+              this.getAllStudent()
+            })
             .catch(function(error){
               console.log(error)
             })
@@ -325,7 +328,10 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
           }).then(()=>{
             //确认删除
             this.$axios.delete('/api/admin/teacher/'+teacher.teacherId)
-            this.getAllTeacher()
+            .then((response)=>{
+              console.log(response)
+              this.getAllTeacher()
+            })
             .catch(function(error){
               console.log(error)
             })

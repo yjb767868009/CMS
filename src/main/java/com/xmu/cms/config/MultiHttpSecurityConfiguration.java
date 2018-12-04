@@ -81,7 +81,9 @@ public class MultiHttpSecurityConfiguration {
             http.antMatcher("/api/**")
                     .authorizeRequests()
                     .antMatchers("/api/test/**").permitAll()
-                    .antMatchers("/api/user/**").hasAnyRole("TEACHER", "STUDENT");
+                    .antMatchers("/api/user/**").hasAnyRole("TEACHER", "STUDENT")
+                    .antMatchers("/api/teacher/**").hasRole("TEACHER")
+                    .antMatchers("/api/student/**").hasRole("STUDENT");
             http.formLogin()
                     .loginPage("/api/user/login").loginProcessingUrl("/api/user/login")
                     .usernameParameter("account").passwordParameter("password")

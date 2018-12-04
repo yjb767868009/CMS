@@ -74,10 +74,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<Teacher> getTeacherByAccount(String account) {
-        List<Teacher> teachers = new ArrayList<Teacher>();
-        teachers.add(teacherDao.getTeacherByAccount(account));
-        return teachers;
+    public Teacher getTeacherByAccount(String account) {
+        return teacherDao.getTeacherByAccount(account);
     }
 
     @Override

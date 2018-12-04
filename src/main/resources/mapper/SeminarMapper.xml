@@ -2,70 +2,73 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.dao.SeminarDao">
-    <insert id="newSeminar">
-        INSERT seminar (seminar_id,
-                        turning_class_id,
-                        max_team_num,
-                        round_id,
-                        sign_start_time,
-                        sign_end_time,
-                        # report_end_time,
-                        status,
-                        sign_order)
-        VALUE (#{seminrId},
-               #{turningClassId},
-               #{roundId},
+    <insert id="newSeminar" parameterType="com.xmu.cms.entity.Seminar">
+        INSERT seminar (round_id, theme, content, max_team, is_ordered, is_visible, enroll_start_date, enroll_end_date)
+        VALUE (#{roundId},
+               #{topic},
+               #{introduction},
                #{maxTeamNum},
+               #{signOrder},
+               #{visible},
                #{signStartTime},
-               #{signEndTime},
-               0,
-               #{signOrder})
+               #{signEndTime})
     </insert>
 
     <update id="modifySeminar">
         UPDATE seminar
-        SET round_id        = #{roundId},
-            max_team_num    = #{maxTeamNum},
-            sign_start_time = #{signStartTime},
-            sign_end_time   = #{signEndTime}
-        WHERE seminar_id = #{seminarId}
-          AND turning_class_id = #{turningClassId}
+        SET round_id          = #{roundId},
+            max_team          = #{maxTeamNum},
+            enroll_start_date = #{signStartTime},
+            enroll_end_date   = #{signEndTime}
+        WHERE id = #{seminarId}
     </update>
 
     <update id="startSeminar">
-        UPDATE seminar
-        SET status = 1
+        UPDATE clbum_seminar
+        SET state = 1
         WHERE seminar_id = #{seminarId}
-          AND turning_class_id = #{turningClassId}
+          AND clbum_id = #{clbumId}
     </update>
 
     <update id="stopSeminar">
-        UPDATE seminar
-        SET status = 2
+        UPDATE clbum_seminar
+        SET state = 2
         WHERE seminar_id = #{seminarId}
-          AND turning_class_id = #{turningClassId}
+          AND clbum_id = #{clbumId}
     </update>
 
     <update id="endSeminar">
-        UPDATE seminar
-        SET status = 3
+        UPDATE clbum_seminar
+        SET state = 3
         WHERE seminar_id = #{seminarId}
-          AND turning_class_id = #{turningClassId}
+          AND clbum_id = #{clbumId}
     </update>
 
     <select id="getSeminar" resultType="com.xmu.cms.entity.Seminar">
-        SELECT seminar_id       as seminarId,
-               turning_class_id as turningClassId,
-               round_id         as roundId,
-               max_team_num     as maxTeamNum,
-               sign_start_time  as signStartTime,
-               sign_end_time    as signEndTime,
-               report_end_time  as reportEndTime,
-               status,
-               presentation_no  as presentationNo,
-               sign_order       as signOrder
+        SELECT id                as seminarId,
+               round_id          as roundId,
+               theme             as topic,
+               content           as introduction,
+               max_team          as maxTeamNum,
+               is_ordered        as signOrder,
+               is_visible        as visible,
+               enroll_start_date as signStartTime,
+               enroll_end_date   as signEndTime
         FROM seminar
-        WHERE seminar_id = #{seminarId}
-          AND turning_class_id = #{turningClassId}
+        WHERE id = #{seminarId}
+    </select>
+
+    <select id="getAllSeminarByRoundId" resultType="com.xmu.cms.entity.Seminar">
+        SELECT id                as seminarId,
+               round_id          as roundId,
+               max_team          as maxTeamNum,
+               theme             as topic,
+               content           as introduction,
+               enroll_start_date as signStartTime,
+               enroll_end_date   as signEndTime,
+               is_ordered        as signOrder,
+               is_visible        as visible
+        FROM seminar
+        WHERE round_id = #{roundId}
     </select>
 </mapper>

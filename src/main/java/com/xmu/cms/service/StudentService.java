@@ -21,5 +21,5 @@ public interface StudentService {
 
     List<Student> getStudentByName(String name);
 
-    List<Student> getStudentByAccount(String account);
+    Student getStudentByAccount(String account);
 }

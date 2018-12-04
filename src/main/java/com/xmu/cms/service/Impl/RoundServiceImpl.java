@@ -8,7 +8,6 @@ import com.xmu.cms.service.RoundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -29,7 +28,7 @@ public class RoundServiceImpl implements RoundService {
     }
 
     @Override
-    public Seminar getAllSeminarInRound(Integer roundId) {
+    public List<Seminar> getAllSeminarInRound(Integer roundId) {
         return seminarDao.getAllSeminarByRoundId(roundId);
     }
 }

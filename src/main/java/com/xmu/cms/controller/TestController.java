@@ -68,7 +68,7 @@ public class TestController {
     @GetMapping(value = "/getUser")
     public Object getUserId(HttpSession session) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        System.out.println(authentication.toString());
+        System.out.println(authentication.toString());
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             return authentication.getName();
         }

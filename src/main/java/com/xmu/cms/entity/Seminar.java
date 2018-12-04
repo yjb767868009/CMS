@@ -29,6 +29,9 @@ public class Seminar {
         this.visible = visible;
     }
 
+    public Seminar() {
+    }
+
     public Integer getSeminarId() {
         return seminarId;
     }

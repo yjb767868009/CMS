@@ -67,10 +67,8 @@ public class StudentSerivceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> getStudentByAccount(String account) {
-        List<Student> students = new ArrayList<Student>();
-        students.add(studentDao.getStudentByAccount(account));
-        return students;
+    public Student getStudentByAccount(String account) {
+        return studentDao.getStudentByAccount(account);
     }
 
 }

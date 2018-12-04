@@ -29,12 +29,12 @@ public class SeminarServiceImpl implements SeminarService {
     @Override
     public Map<String, String> newSeminar(Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarDao.newSeminar(roundId, maxTeamNum, topic, introduction, signStartTime, signEndTime, signOrder, visible);
-        if (count == 1) {
-            message.put("message", "Success");
-        } else {
-            message.put("message", "Error");
-        }
+//        Integer count = seminarDao.newSeminar(roundId, maxTeamNum, topic, introduction, signStartTime, signEndTime, signOrder, visible);
+//        if (count == 1) {
+//            message.put("message", "Success");
+//        } else {
+//            message.put("message", "Error");
+//        }
         return message;
     }
 
@@ -107,11 +107,5 @@ public class SeminarServiceImpl implements SeminarService {
     public Seminar getSeminarBySeminarId(Integer seminarId) {
         return seminarDao.getSeminarBySeminarId(seminarId);
     }
-
-    @Override
-    public Seminar getClbumSeminar(Integer seminarId, Integer clbumId) {
-        return null;
-    }
-
 
 }

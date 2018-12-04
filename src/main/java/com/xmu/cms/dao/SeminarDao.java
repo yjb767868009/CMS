@@ -1,6 +1,7 @@
 package com.xmu.cms.dao;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import com.xmu.cms.entity.Seminar;
 import org.apache.ibatis.annotations.Mapper;
@@ -45,7 +46,6 @@ public interface SeminarDao {
 
     Seminar getSeminarBySeminarId(@Param("seminarId") Integer seminarId);
 
-    Seminar getAllSeminarByRoundId(@Param("roundId") Integer roundId);
-
+    List<Seminar> getAllSeminarByRoundId(@Param("roundId") Integer roundId);
 
 }

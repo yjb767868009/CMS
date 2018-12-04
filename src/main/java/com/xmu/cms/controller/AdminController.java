@@ -98,7 +98,7 @@ public class AdminController {
     }
 
     @GetMapping(value = "/teachers/searchByAccount")
-    public List<Teacher> getTeacherByAccount(@RequestParam("account") String account) {
+    public Teacher getTeacherByAccount(@RequestParam("account") String account) {
         return teacherService.getTeacherByAccount(account);
     }
 
@@ -108,7 +108,7 @@ public class AdminController {
     }
 
     @GetMapping(value = "/students/searchByAccount")
-    public List<Student> getStudentByAccount(@RequestParam("account") String account) {
+    public Student getStudentByAccount(@RequestParam("account") String account) {
         return studentService.getStudentByAccount(account);
     }
 

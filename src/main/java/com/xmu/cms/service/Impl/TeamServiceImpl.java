@@ -21,4 +21,9 @@ public class TeamServiceImpl implements TeamService {
     public List<Team> getAllTeamsInSeminar(Integer seminarId) {
         return teamDao.getAllTeamsInSeminar(seminarId);
     }
+
+    @Override
+    public List<Team> getAllTeamsInClbumSeminar(Integer seminarId, Integer clbumId) {
+        return teamDao.getAllTeamsInClbumSeminar(seminarId, clbumId);
+    }
 }

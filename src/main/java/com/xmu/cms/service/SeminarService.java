@@ -28,5 +28,4 @@ public interface SeminarService {
 
     Seminar getSeminarBySeminarId(Integer seminarId);
 
-    Seminar getClbumSeminar(Integer seminarId, Integer clbumId);
 }

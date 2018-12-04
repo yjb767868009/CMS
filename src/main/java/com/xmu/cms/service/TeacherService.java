@@ -21,7 +21,7 @@ public interface TeacherService {
 
     Map<String, String> deleteTeacherByTeacherId(Integer teacherId);
 
-    List<Teacher> getTeacherByAccount(String account);
+    Teacher getTeacherByAccount(String account);
 
     List<Teacher> getTeacherByName(String name);
 }

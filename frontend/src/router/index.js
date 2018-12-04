@@ -7,8 +7,9 @@ import Router from 'vue-router'
 import Test from '@/views/Test'
 
 //Admin
-import Admin from '@/views/Admin/Admin'
 import AdminLogin from '@/views/Admin/AdminLogin'
+import AdminStudent from '@/views/Admin/AdminStudent'
+import AdminTeacher from '@/views/Admin/AdminTeacher'
 
 //Student
 import SeminarDetail from '@/views/Student/SeminarDetail'
@@ -49,14 +50,19 @@ export default new Router({
     },
     //admin
     {
-      path: '/admin',
-      name: 'Admin',
-      component: Admin
-    },
-    {
       path:'/adminLogin',
       name:'AdminLogin',
       component:AdminLogin,
+    },
+    {
+      path:'/adminStudent',
+      name:'AdminStudent',
+      component:AdminStudent,
+    },
+    {
+      path:'/adminTeacher',
+      name:'AdminTeacher',
+      component:AdminTeacher,
     },
 
     //student

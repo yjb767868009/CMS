@@ -55,7 +55,7 @@ import Qs from 'qs'
             //骚扰c/config/axios.js
 
             ).then((response)=>{
-				consle.log(response)
+				console.log(response)
                 let message = response.data
                 if(message==='Bad credentials'){
                     this.$message.error('登陆失败')

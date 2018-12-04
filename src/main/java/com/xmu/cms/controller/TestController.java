@@ -4,6 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -19,7 +25,7 @@ import java.io.IOException;
  * @version 1.0
  */
 @RestController
-@RequestMapping(value = "/test")
+@RequestMapping(value = "/api/test")
 public class TestController {
 
     @Autowired
@@ -59,9 +65,14 @@ public class TestController {
         return session.getAttribute("userType");
     }
 
-    @GetMapping(value = "/getUserId")
+    @GetMapping(value = "/getUser")
     public Object getUserId(HttpSession session) {
-        return session.getAttribute("userId");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        System.out.println(authentication.toString());
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            return authentication.getName();
+        }
+        return null;
     }
 
 }

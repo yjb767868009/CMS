@@ -15,7 +15,7 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/user")
 public class UserController {
 
     @Autowired
@@ -27,15 +27,10 @@ public class UserController {
     @Value("${spring.mail.username}")
     private String sender;
 
-
     @PostMapping(value = "/login")
     public Map<String, String> userLogIn(@RequestParam(value = "account") String account,
-                                         @RequestParam(value = "password") String password,
-                                         HttpSession session) {
-        Map<String, String> message = userService.userLogIn(account, password);
-        session.setAttribute("userType", message.get("userType"));
-        session.setAttribute("userId", message.get("userId"));
-        return message;
+                                         @RequestParam(value = "password") String password) {
+        return userService.userLogIn(account, password);
     }
 
     @PostMapping(value = "/activation")

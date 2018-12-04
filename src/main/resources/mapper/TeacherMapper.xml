@@ -8,7 +8,7 @@
                teacher_num  as account,
                password,
                email,
-               name,
+               teacher_name,
                phone,
                msg_interval as messageInterval,
                is_activated as activation
@@ -17,7 +17,7 @@
 
     <update id="modifyTeacherByTeacherId">
         UPDATE teacher
-        SET name        = #{name},
+        SET teacher_name        = #{name},
             teacher_num = #{account},
             email       = #{email}
         WHERE id = #{teacherId}
@@ -30,7 +30,7 @@
     </update>
 
     <insert id="newTeacher">
-        INSERT INTO teacher (teacher_num, password, email, name, phone, msg_interval, is_activated)
+        INSERT INTO teacher (teacher_num, password, email, teacher_name, phone, msg_interval, is_activated)
         VALUE (#{account}, #{password}, #{email}, #{name}, #{phone}, #{messageInterval}, #{activation})
     </insert>
 
@@ -45,7 +45,7 @@
                teacher_num  as account,
                password,
                email,
-               name,
+               teacher_name,
                phone,
                msg_interval as messageInterval,
                is_activated as activation
@@ -58,12 +58,12 @@
                teacher_num,
                password,
                email,
-               name,
+               teacher_name,
                phone,
                msg_interval as messageInterval,
                is_activated
         FROM teacher
-        WHERE name = #{name}
+        WHERE teacher_name = #{name}
     </select>
 
     <select id="getIdByAccount" resultType="java.lang.Integer">

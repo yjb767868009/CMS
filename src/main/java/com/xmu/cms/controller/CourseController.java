@@ -39,15 +39,15 @@ public class CourseController {
     }
 
     @DeleteMapping(value = "")
-    public Map<String,String> deleteCourse(@PathVariable("courseId") Integer courseId) {
+    public Map<String, String> deleteCourse(@PathVariable("courseId") Integer courseId) {
         return courseService.deleteCourseById(courseId);
     }
 
     @PostMapping(value = "/clbum")
-    public Map<String,String> newClbum(@PathVariable("courseId") Integer courseId,
-                           @RequestParam("name") String name,
-                           @RequestParam("classTime") String classTime,
-                           @RequestParam("classPlace") String classPlace) {
+    public Map<String, String> newClbum(@PathVariable("courseId") Integer courseId,
+                                        @RequestParam("name") String name,
+                                        @RequestParam("classTime") String classTime,
+                                        @RequestParam("classPlace") String classPlace) {
         return clbumService.newClbum(courseId, name, classTime, classPlace);
     }
 }

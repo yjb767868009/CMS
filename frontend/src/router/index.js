@@ -35,8 +35,7 @@ export default new Router({
   routes: [
     {
       path:'/',
-      name:'Login',
-      component:Login
+      redirect:'/login'
     },
     {
       path:'/login',
@@ -49,6 +48,10 @@ export default new Router({
       component:Test
     },
     //admin
+    {
+      path:'/admin',
+      redirect:'/adminTeacher'
+    },
     {
       path:'/adminLogin',
       name:'AdminLogin',

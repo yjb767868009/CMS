@@ -49,8 +49,8 @@
       </el-main>
     </el-container>
 
-      <modify-student-dialog></modify-student-dialog>
-      <add-teacher-dialog></add-teacher-dialog>
+      <modify-student-dialog @modifySuccess='flash'></modify-student-dialog>
+      <add-teacher-dialog @addSuccess='flash'></add-teacher-dialog>
   
   </el-container>
       <el-footer style="background-color: rgb(10, 47, 88);color:rgb(255,255,255);height:100%;">
@@ -158,7 +158,10 @@ import ModifyStudentDialog from './ModifyStudentDialog'
               })
           }
         },
-        
+        flash:function(){
+          this.getAllStudent()
+        },
+
         getAllStudent:function(){
           this.$axios.get('/api/admin/students')
             .then((response)=>{

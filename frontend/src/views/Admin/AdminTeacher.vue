@@ -53,8 +53,8 @@
       </el-main>
     </el-container>
 
-      <modify-teacher-dialog></modify-teacher-dialog>
-      <add-teacher-dialog></add-teacher-dialog>
+      <modify-teacher-dialog @modifySuccess='flash'></modify-teacher-dialog>
+      <add-teacher-dialog @addSuccess='flash'></add-teacher-dialog>
   
   </el-container>
       <el-footer style="background-color: rgb(10, 47, 88);color:rgb(255,255,255);height:100%;">
@@ -117,11 +117,16 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
     },
     data() {
       return {
-        teacherData:[1,2,3,4],
+        teacherData:[{
+          account:'123',
+          name:'teacher1',
+          email:'e-mail',
+          phone:'j123312313'
+        },],
         teacherSearchKey:'',
       }
     },
-    mounted:function(){
+    created:function(){
       this.getAllTeacher()
     },
     methods:{
@@ -136,7 +141,6 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
             this.$store.state.admin.currentTeacher=teacher
             console.log(this.$store.state.admin.currentTeacher)
         },
-        
         searchTeacher:function(){
           if(!this.teacherSearchKey){
             this.getAllteacher()
@@ -162,6 +166,10 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
               })
           }
         },
+        flash:function(){
+          this.getAllTeacher()
+        },
+
         getAllTeacher:function(){
           this.$axios.get('/api/admin/teachers')
             .then((response)=>{

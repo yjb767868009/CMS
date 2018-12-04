@@ -25,7 +25,7 @@ import java.util.Arrays;
  * @version 1.0
  */
 @EnableWebSecurity
-public class MultiHttpSecurityConfig {
+public class MultiHttpSecurityConfiguration {
 
     @Configuration
     @Order(1)

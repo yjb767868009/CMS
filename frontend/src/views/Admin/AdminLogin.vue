@@ -6,7 +6,6 @@
         <el-input v-model="account" placeholder="账户名"></el-input>
         <el-input type="password" v-model="password" placeholder="密码" ></el-input>
         <el-button style="width:100%" @click="adminLogin(account,password)">登陆</el-button>
-        <el-button style="width:100%" @click="toAdmin">test</el-button>
     </el-main>
 </el-container>
 

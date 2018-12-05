@@ -6,7 +6,9 @@ import com.xmu.cms.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author JuboYu on 2018/11/29.
@@ -23,13 +25,15 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public String setAttendancePresentationScore(Integer attendanceId, Integer presentationScore) {
+    public Map<String, String> setAttendancePresentationScore(Integer attendanceId, Integer presentationScore) {
+        Map<String, String> message = new HashMap<String, String>(2);
         Integer count = attendanceDao.setAttendanceScore(attendanceId, presentationScore);
         if (count == 1) {
-            return "Success";
+            message.put("message", "Success");
         } else {
-            return "Set Score Error";
+            message.put("message", "Error");
         }
+        return message;
     }
 
 }

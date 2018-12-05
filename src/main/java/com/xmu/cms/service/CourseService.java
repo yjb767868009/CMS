@@ -3,6 +3,7 @@ package com.xmu.cms.service;
 import com.xmu.cms.entity.Course;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author JuboYu on 2018/11/27.
@@ -11,7 +12,7 @@ import java.util.List;
 public interface CourseService {
     List<Course> getAllCoursesByTeacherId(Integer teacherId);
 
-    String deleteCourseById(Integer courseId);
+    Map<String, String> deleteCourseById(Integer courseId);
 
     List<Course> getAllCoursesByStudentId(Integer studentId);
 

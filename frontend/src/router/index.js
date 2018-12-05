@@ -86,6 +86,16 @@ export default new Router({
       name:'AdminLogin',
       component:AdminLogin,
     },
+    {
+      path:'/adminStudent',
+      name:'AdminStudent',
+      component:AdminStudent,
+    },
+    {
+      path:'/adminTeacher',
+      name:'AdminTeacher',
+      component:AdminTeacher,
+    },
 
     //admin
     {

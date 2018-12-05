@@ -2,6 +2,9 @@ package com.xmu.cms.controller;
 
 import com.xmu.cms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -12,17 +15,22 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Value("${spring.mail.username}")
+    private String sender;
+
     @PostMapping(value = "/login")
     public Map<String, String> userLogIn(@RequestParam(value = "account") String account,
-                                         @RequestParam(value = "password") String password,
-                                         HttpSession session) {
-        return userService.userLogIn(account, password, session);
+                                         @RequestParam(value = "password") String password) {
+        return userService.userLogIn(account, password);
     }
 
     @PostMapping(value = "/activation")
@@ -32,8 +40,13 @@ public class UserController {
     }
 
     @PostMapping(value = "/findPassword")
-    public String findPassword(@RequestParam(value = "email") String email) {
-        return "Success";
+    public void findPassword(@RequestParam(value = "email") String email) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(sender);
+        message.setTo(email);
+        message.setSubject("主题：简单邮件");
+        message.setText("测试邮件内容");
+        mailSender.send(message);
     }
 
     @PostMapping(value = "/resetPassword")

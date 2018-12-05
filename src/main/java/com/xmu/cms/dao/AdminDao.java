@@ -1,5 +1,6 @@
 package com.xmu.cms.dao;
 
+import com.xmu.cms.entity.Admin;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,5 +17,5 @@ public interface AdminDao {
      * @param account admin's account
      * @return String message
      */
-    String getPasswordByAccount(@Param("account") String account);
+    Admin getAdminByAccount(@Param("account") String account);
 }

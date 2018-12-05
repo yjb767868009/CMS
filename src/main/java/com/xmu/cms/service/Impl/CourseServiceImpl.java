@@ -6,7 +6,9 @@ import com.xmu.cms.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author JuboYu on 2018/11/27.
@@ -23,13 +25,15 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public String deleteCourseById(Integer courseId) {
+    public Map<String, String> deleteCourseById(Integer courseId) {
+        Map<String, String> message = new HashMap<String, String>(2);
         Integer count = courseDao.deleteCourseById(courseId);
-        if (count == 0) {
-            return "Delete no course";
+        if (count == 1) {
+            message.put("message", "Success");
         } else {
-            return "Success";
+            message.put("message", "Error");
         }
+        return message;
     }
 
     @Override

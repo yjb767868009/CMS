@@ -1,6 +1,5 @@
 package com.xmu.cms.controller;
 
-import com.xmu.cms.aspect.CheckTeacherPermission;
 import com.xmu.cms.entity.Course;
 import com.xmu.cms.service.CourseService;
 import com.xmu.cms.service.TeacherService;
@@ -24,7 +23,6 @@ public class TeacherController {
     private CourseService courseService;
 
     @GetMapping(value = "/courses")
-    @CheckTeacherPermission
     public List<Course> getAllCourse(HttpSession session) {
         Integer teacherId = Integer.valueOf(session.getAttribute("userId").toString());
         return courseService.getAllCoursesByTeacherId(teacherId);

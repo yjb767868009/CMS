@@ -1,7 +1,11 @@
 package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.AttendanceDao;
+import com.xmu.cms.dao.ClbumSeminarDao;
+import com.xmu.cms.dao.TeamDao;
 import com.xmu.cms.entity.Attendance;
+import com.xmu.cms.entity.ClbumSeminar;
+import com.xmu.cms.entity.Team;
 import com.xmu.cms.service.AttendanceService;
 import com.xmu.cms.support.Token;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,12 @@ import java.util.Map;
 public class AttendanceServiceImpl implements AttendanceService {
     @Autowired
     private AttendanceDao attendanceDao;
+
+    @Autowired
+    private TeamDao teamDao;
+
+    @Autowired
+    private ClbumSeminarDao clbumSeminarDao;
 
     @Override
     public List<Attendance> getAttendancesInSeminar(Integer seminarId) {
@@ -40,7 +50,9 @@ public class AttendanceServiceImpl implements AttendanceService {
     @Override
     public Map<String, String> newAttendance(Integer clbumSeminarId, Integer teamOrder) {
         Integer studentId = Token.getUserId();
-        return null;
+        ClbumSeminar clbumSeminar = clbumSeminarDao.getClbumSeminarById(clbumSeminarId);
+        Team team = teamDao.getTeamInClbumByStudentId(clbumSeminar.getClbumId(), studentId);
+        return attendanceDao.studentAttendance(team.getTeamId(), clbumSeminarId, teamOrder);
     }
 
 }

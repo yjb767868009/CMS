@@ -98,10 +98,9 @@ public class UserController {
         return teamService.getAllTeamsInSeminar(seminarId);
     }
 
-    @GetMapping(value = "/seminar/{seminarId}/clbum/{clbumId}/teams")
-    public List<Team> getTeamsInClbumSeminar(@PathVariable("seminarId") Integer seminarId,
-                                             @PathVariable("clbumId") Integer clbumId) {
-        return teamService.getAllTeamsInClbumSeminar(seminarId, clbumId);
+    @GetMapping(value = "/clbumSeminar/{clbumSeminarId}/teams")
+    public List<Team> getTeamsInClbumSeminar(@PathVariable("clbumSeminarId") Integer clbumSeminarId) {
+        return teamService.getAllTeamsInClbumSeminar(clbumSeminarId);
     }
 
     @GetMapping(value = "/seminar/{seminarId}/nextAttendance")

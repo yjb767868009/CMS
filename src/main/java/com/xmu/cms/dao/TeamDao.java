@@ -15,8 +15,7 @@ public interface TeamDao {
 
     List<Team> getAllTeamsInSeminar(@Param("seminarId") Integer seminarId);
 
-    List<Team> getAllTeamsInClbumSeminar(@Param("seminarId") Integer seminarId,
-                                         @Param("clbumId") Integer clbumId);
+    List<Team> getAllTeamsInClbumSeminar(@Param("seminarId") Integer clbumSeminarId);
 
     Team getTeamByTeamId(Integer teamId);
 

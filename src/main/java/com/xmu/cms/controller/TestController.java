@@ -5,6 +5,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.xmu.cms.support.Token;
+import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -16,8 +18,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -37,7 +42,7 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = "/api/test")
 public class TestController {
-
+    private static final String SECRET = "JKKLJOoasdlfj";
     @Autowired
     private JavaMailSender mailSender;
 
@@ -57,34 +62,41 @@ public class TestController {
     }
 
     @GetMapping(value = "/getJWT")
-    public String getJWT(HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
-        token = token.substring(7);
-        System.out.println(token);
-        String SECRET = "JKKLJOoasdlfj";
-        DecodedJWT jwt = null;
-        try {
-            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET))
-                    .withIssuer("CMS").build();
-            jwt = verifier.verify(token);
-        } catch (Exception e) {
-            e.printStackTrace();
-            // token 校验失败, 抛出Token验证非法异常
+    public UserInfo getJWT(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("Token")) {
+                String token = cookie.getValue();
+                DecodedJWT jwt = null;
+                try {
+                    JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET))
+                            .withIssuer("CMS").build();
+                    jwt = verifier.verify(token);
+                } catch (Exception e) {
+                    // token 校验失败, 抛出Token验证非法异常
+                    e.printStackTrace();
+                }
+                assert jwt != null;
+                Map<String, Claim> claims = jwt.getClaims();
+                Claim userIdClaim = claims.get("userId");
+                if (null == userIdClaim || userIdClaim.asInt() != 0) {
+                    System.out.println("Token Error");
+                }
+                Claim userTypeClaim = claims.get("userType");
+                if (null == userTypeClaim || StringUtils.isEmpty(userTypeClaim.asString())) {
+                    System.out.println("Token Error");
+                }
+                assert userIdClaim != null;
+                assert userTypeClaim != null;
+
+                return new UserInfo(userIdClaim.asInt(), userTypeClaim.asString());
+            }
         }
-        assert jwt != null;
-        Map<String, Claim> claims = jwt.getClaims();
-        Claim user_id_claim = claims.get("user_id");
-        if (null == user_id_claim || StringUtils.isEmpty(user_id_claim.asString())) {
-            System.out.println("Token Error");
-        }
-        assert user_id_claim != null;
-        return user_id_claim.asString();
+        return null;
     }
 
     @GetMapping(value = "/createJWT")
-    public String testJWT() {
-        String SECRET = "JKKLJOoasdlfj";
-        String userId = "22320162201119";
+    public void testJWT(HttpServletRequest request, HttpServletResponse response) {
         Date iatDate = new Date();
         // expire time
         Calendar nowTime = Calendar.getInstance();
@@ -98,13 +110,16 @@ public class TestController {
 
         // build token
         // param backups {iss:Service, aud:APP}
-        String token = JWT.create()//.withHeader(map) // header
+
+        String token = JWT.create().withHeader(map) // header
                 .withIssuer("CMS")
-                .withClaim("user_id", userId)
-                //.withIssuedAt(iatDate) // sign time
-                //.withExpiresAt(expiresDate) // expire time
-                .sign(Algorithm.HMAC256(SECRET)); // signature
-        return token;
+                .withClaim("userId", 1)
+                .withClaim("userType", "ADMIN")
+                .sign(Algorithm.HMAC256(SECRET));
+
+        Cookie cookie = new Cookie("Token", token);
+        assert response != null;
+        response.addCookie(cookie);
     }
 
     @GetMapping(value = "/getUserType")

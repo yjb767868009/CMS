@@ -134,7 +134,7 @@ public class TeacherController {
 
     @GetMapping(value = "/runningSeminar")
     public Seminar getRunningSeminar() {
-        Integer teacherId = Token.getUserId();
+        Integer teacherId = Token.getToken().getUserId();
         return seminarService.getRunningSeminarByTeacherId(teacherId);
     }
 

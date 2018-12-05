@@ -5,11 +5,14 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,9 +23,9 @@ import java.util.Map;
  * @version 1.0
  */
 public class Token {
-    public static final String SECRET = "JKKLJOoasdlfj";
+    private static final String SECRET = "JKKLJOoasdlfj";
 
-    public static String getToken(Integer userId) {
+    public static String setToken(UserInfo info) {
         Date iatDate = new Date();
         // expire time
         Calendar nowTime = Calendar.getInstance();
@@ -34,36 +37,46 @@ public class Token {
         map.put("alg", "HS256");
         map.put("typ", "JWT");
 
-        // build token
-        // param backups {iss:Service, aud:APP}
         return JWT.create().withHeader(map) // header
                 .withIssuer("CMS")
-                .withClaim("user_id", userId)
+                .withClaim("userId", info.getUserId())
+                .withClaim("userType", info.getUserType())
                 .sign(Algorithm.HMAC256(SECRET));
     }
 
-    public static Integer getUserId() {
+    public static UserInfo getToken() {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert attributes != null;
         HttpServletRequest request = attributes.getRequest();
-        String token = request.getHeader("Authorization");
-        token = token.substring(7);
-        DecodedJWT jwt = null;
-        try {
-            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET))
-                    .withIssuer("CMS").build();
-            jwt = verifier.verify(token);
-        } catch (Exception e) {
-            // token 校验失败, 抛出Token验证非法异常
-            e.printStackTrace();
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("Token")) {
+                String token = cookie.getValue();
+                DecodedJWT jwt = null;
+                try {
+                    JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET))
+                            .withIssuer("CMS").build();
+                    jwt = verifier.verify(token);
+                } catch (Exception e) {
+                    // token 校验失败, 抛出Token验证非法异常
+                    e.printStackTrace();
+                }
+                assert jwt != null;
+                Map<String, Claim> claims = jwt.getClaims();
+                Claim userIdClaim = claims.get("userId");
+                if (null == userIdClaim || userIdClaim.asInt() != 0) {
+                    System.out.println("Token Error");
+                }
+                Claim userTypeClaim = claims.get("userType");
+                if (null == userTypeClaim || StringUtils.isEmpty(userTypeClaim.asString())) {
+                    System.out.println("Token Error");
+                }
+                assert userIdClaim != null;
+                assert userTypeClaim != null;
+
+                return new UserInfo(userIdClaim.asInt(), userTypeClaim.asString());
+            }
         }
-        assert jwt != null;
-        Map<String, Claim> claims = jwt.getClaims();
-        Claim user_id_claim = claims.get("user_id");
-        if (null == user_id_claim || StringUtils.isEmpty(user_id_claim.asString())) {
-            System.out.println("Token Error");
-        }
-        assert user_id_claim != null;
-        return user_id_claim.asInt();
+        return null;
     }
 }

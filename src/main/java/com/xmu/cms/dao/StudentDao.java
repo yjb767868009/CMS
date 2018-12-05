@@ -87,4 +87,6 @@ public interface StudentDao {
     List<Student> getStudentByName(@Param("name") String name);
 
     String getEmailByAccount(@Param("email") String email);
+
+    Student getStudentById(@Param("studentId") Integer studentId);
 }

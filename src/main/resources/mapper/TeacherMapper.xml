@@ -17,9 +17,9 @@
 
     <update id="modifyTeacherByTeacherId">
         UPDATE teacher
-        SET teacher_name        = #{name},
-            teacher_num = #{account},
-            email       = #{email}
+        SET teacher_name = #{name},
+            teacher_num  = #{account},
+            email        = #{email}
         WHERE id = #{teacherId}
     </update>
 
@@ -64,6 +64,19 @@
                is_activated
         FROM teacher
         WHERE teacher_name = #{name}
+    </select>
+
+    <select id="getTeacherById" resultType="com.xmu.cms.entity.Teacher">
+        SELECT id           as teacherId,
+               teacher_num,
+               password,
+               email,
+               teacher_name,
+               phone,
+               msg_interval as messageInterval,
+               is_activated
+        FROM teacher
+        WHERE id = #{teacherId}
     </select>
 
     <select id="getIdByAccount" resultType="java.lang.Integer">

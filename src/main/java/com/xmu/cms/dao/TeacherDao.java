@@ -39,10 +39,10 @@ public interface TeacherDao {
     /**
      * modify teacher by his id
      *
-     * @param teacherId      teacher's id
-     * @param name    teacher's new name
-     * @param account teacher's new account
-     * @param email   teacher's new email
+     * @param teacherId teacher's id
+     * @param name      teacher's new name
+     * @param account   teacher's new account
+     * @param email     teacher's new email
      * @return String message
      */
     Integer modifyTeacherByTeacherId(@Param("teacherId") Integer teacherId,
@@ -53,8 +53,8 @@ public interface TeacherDao {
     /**
      * modify teacher's password by his id
      *
-     * @param teacherId       teacher's id
-     * @param password teacher's new password
+     * @param teacherId teacher's id
+     * @param password  teacher's new password
      * @return String message
      */
     Integer modifyTeacherPasswordByTeacherId(@Param("teacherId") Integer teacherId,
@@ -85,4 +85,6 @@ public interface TeacherDao {
     List<Teacher> getTeacherByName(@Param("name") String name);
 
     String getEmailByAccount(@Param("email") String email);
+
+    Teacher getTeacherById(@Param("teacherId") Integer teacherId);
 }

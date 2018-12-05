@@ -10,4 +10,6 @@ import java.util.Map;
 public interface UserService {
 
     Map<String, String> userLogIn(String account, String password);
+
+    Map<String, String> getMyInfo();
 }

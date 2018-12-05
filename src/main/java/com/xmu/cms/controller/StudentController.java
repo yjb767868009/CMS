@@ -1,21 +1,15 @@
 package com.xmu.cms.controller;
 
-import com.xmu.cms.entity.Attendance;
 import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Seminar;
-import com.xmu.cms.entity.Student;
 import com.xmu.cms.service.AttendanceService;
 import com.xmu.cms.service.ClbumService;
 import com.xmu.cms.service.CourseService;
 import com.xmu.cms.service.StudentService;
 import com.xmu.cms.support.Token;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -41,20 +35,26 @@ public class StudentController {
 
     @GetMapping(value = "/courses")
     public List<Course> getAllCourse() {
-        Integer studentId = Token.getUserId();
+        Integer studentId = Token.getToken().getUserId();
         return courseService.getAllCoursesByStudentId(studentId);
     }
 
     @GetMapping(value = "/course/{courseId}/clbumName")
     public List<Seminar> getStudentClbumNameByCourseId(@PathVariable("courseId") Integer courseId) {
-        Integer studentId = Token.getUserId();
+        Integer studentId = Token.getToken().getUserId();
         return clbumService.getStudentClbumNameByCourseId(studentId, courseId);
     }
 
     @PostMapping(value = "/clbumSeminar/{clbumSeminarId}/attendance")
     public Map<String, String> attendance(@PathVariable("clbumSeminarId") Integer clbumSeminarId,
                                           @RequestParam("teamOrder") Integer teamOrder) {
-        return attendanceService.newAttendance(clbumSeminarId,teamOrder);
+        return attendanceService.newAttendance(clbumSeminarId, teamOrder);
+    }
+
+    @PostMapping(value = "/clbumSeminar/{clbumSeminarId}/score")
+    public Map<String, String> getScoreInClbumSeminar(@PathVariable("clbumSeminarId") Integer clbumSeminarId,
+                                                      @RequestParam("teamOrder") Integer teamOrder) {
+        return attendanceService.newAttendance(clbumSeminarId, teamOrder);
     }
 
 }

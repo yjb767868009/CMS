@@ -33,7 +33,6 @@ public interface TeacherDao {
                        @Param("password") String password,
                        @Param("email") String email,
                        @Param("phone") String phone,
-                       @Param("sex") String sex,
                        @Param("messageInterval") Integer messageInterval,
                        @Param("activation") Boolean activation);
 
@@ -84,4 +83,6 @@ public interface TeacherDao {
      * @return List<teacher>
      */
     List<Teacher> getTeacherByName(@Param("name") String name);
+
+    String getEmailByAccount(@Param("email") String email);
 }

@@ -72,4 +72,9 @@
         WHERE teacher_num = #{account}
     </select>
 
+    <select id="getEmailByAccount" resultType="java.lang.String">
+        select email
+        from teacher
+        where teacher_num = #(account)
+    </select>
 </mapper>

@@ -7,11 +7,11 @@
                teacher_id         as teacherId,
                name,
                introduction,
-               presetation_weight as presestationWeight,
+               pre_weight as presentationWeight,
                report_weight      as reportWeight,
-               question_weight    as questionWeight,
-               team_start_time    as teamStartTime,
-               team_end_time      as teamEndTime
+               ques_weight    as questionWeight,
+               team_start_date    as teamStartDate,
+               team_end_date      as teamEndDate
         FROM course
         WHERE teacher_id = #{teacherId}
     </select>
@@ -21,11 +21,11 @@
                teacher_id         as teacherId,
                course.name,
                introduction,
-               presetation_weight as presestationWeight,
+               pre_weight as presentationWeight,
                report_weight      as reportWeight,
-               question_weight    as questionWeight,
-               team_start_time    as teamStartTime,
-               team_end_time      as teamEndTime
+               ques_weight    as questionWeight,
+               team_start_date    as teamStartDate,
+               team_end_date      as teamEndDate
         FROM course,
              turning_class_student,
              turning_class
@@ -39,11 +39,11 @@
                course.teacher_id  as teacherId,
                course.name,
                introduction,
-               presetation_weight as presestationWeight,
+               pre_weight as presentationWeight,
                report_weight      as reportWeight,
-               question_weight    as questionWeight,
-               team_start_time    as teamStartTime,
-               team_end_time      as teamEndTime
+               ques_weight    as questionWeight,
+               team_start_date    as teamStartDate,
+               team_end_date      as teamEndDate
         FROM course,
              teacher
         WHERE teacher.account = #{account}
@@ -55,4 +55,9 @@
         FROM course
         WHERE course_id = #{courseId}
     </delete>
+
+    <insert id="newCourse" parameterType="com.xmu.cms.entity.Course">
+        insert into course (course_Id ,teacher_id ,name ,introduction ,pre_weight ,report_weight ,ques_weight , team_start_date ,team_end_date)
+        values (#(courseId), #(teacherId), #(name), #(introduction), #(presentationWeight), #(reportWeight), #(questionWeight), #(teamStartDate), #(teamEndDate))
+    </insert>
 </mapper>

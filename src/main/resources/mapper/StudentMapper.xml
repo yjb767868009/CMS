@@ -8,7 +8,7 @@
                student_num as account,
                password,
                email,
-               student_name as name,
+               name,
                phone,
                msg_interval as messageInterval,
                is_activated as activation
@@ -16,13 +16,13 @@
     </select>
 
     <insert id="newStudent" parameterType="com.xmu.cms.entity.Student">
-        INSERT INTO student (id, student_num, password, email, student_name, msg_interval, is_activated)
-        VALUE (#{studentId}, #{account}, #{password}, #{email}, #{name}, #{messageInterval}, #{activation})
+        INSERT INTO student (student_num, password, email, name, message_interval, is_activated)
+        VALUE (#{account}, #{password}, #{email}, #{name}, #{messageInterval}, #{activation})
     </insert>
 
     <update id="modifyStudentByStudentId">
         UPDATE student
-        SET student_name    = #{name},
+        SET name    = #{name},
             student_num = #{account},
             email   = #{email}
         WHERE id = #{studentId}
@@ -40,12 +40,12 @@
         WHERE id = #{studentId}
     </delete>
 
-    <select id="getStudentByAccount" resultType="com.xmu.cms.entity.Student">
+    <select id="getStudentByAccount" parameterType="com.xmu.cms.entity.Student">
         SELECT id       as studentId,
                student_num as account,
                password,
                email,
-               student_name as name,
+               name,
                phone,
                msg_interval as messageInterval,
                is_activated as activation
@@ -58,17 +58,23 @@
                student_num as account,
                password,
                email,
-               student_name as name,
+               name,
                phone,
                msg_interval as messageInterval,
                is_activated as activation
         FROM student
-        WHERE student_name = #{name}
+        WHERE name = #{name}
     </select>
 
     <select id="getIdByAccount" resultType="java.lang.Integer">
         SELECT id as studentId
         FROM student
         WHERE student_num = #{account}
+    </select>
+
+    <select id="getEmailByAccount" resultType="java.lang.String">
+        select email
+        from student
+        where student_num = #(account)
     </select>
 </mapper>

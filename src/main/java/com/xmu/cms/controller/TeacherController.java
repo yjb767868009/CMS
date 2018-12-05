@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -44,6 +45,9 @@ public class TeacherController {
 
     @Autowired
     private ClbumService clbumService;
+
+    @Autowired
+    private FileService fileService;
 
     private Teacher getTeacherInSecurity() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -78,7 +82,13 @@ public class TeacherController {
                                         @RequestParam("presentationScoreType") Integer presentationScoreType,
                                         @RequestParam("reportScoreType") Integer reportScoreType,
                                         @RequestParam("questionScoreType") Integer questionScoreType) {
-        return roundService.newRound(courseId,roundNum,presentationScoreType,reportScoreType,questionScoreType);
+        return roundService.newRound(courseId, roundNum, presentationScoreType, reportScoreType, questionScoreType);
+    }
+
+    @PostMapping(value = "/clbum/{clbumId}/uploadClbumFile")
+    public Map<String, String> uploadClbumFile(@PathVariable("clbumId") Integer clbumId,
+                                               @RequestParam("file") MultipartFile file) {
+        return fileService.uploadClbumFile(clbumId, file);
     }
 
     @PutMapping(value = "/seminar/{seminarId}/modifySeminar")
@@ -135,4 +145,5 @@ public class TeacherController {
         Integer teacherId = Token.getUserId();
         return seminarService.getRunningSeminarByTeacherId(teacherId);
     }
+
 }

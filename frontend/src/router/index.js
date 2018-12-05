@@ -1,10 +1,18 @@
 import Vue from 'vue'
 
-import Login from '@/views/Login'
+
 import Router from 'vue-router'
 
 //test
 import Test from '@/views/Test'
+
+//user
+import Login from '@/views/User/Login'
+import MobileLogin from '@/views/User/MobileLogin'
+import Activation from '@/views/User/Activation'
+import FindPassword from '@/views/User/FindPassword'
+import ModifyPassword from '@/views/User/ModifyPassword'
+import ModifyEmail from '@/views/User/ModifyEmail'
 
 //Admin
 import AdminLogin from '@/views/Admin/AdminLogin'
@@ -28,32 +36,27 @@ import AdminTeacher from '@/views/Admin/AdminTeacher'
 // import StudentSeminarList from '@/views/Student/StudentSeminarList'
 
 //Teacher
-import MobileLogin from '@/views/Teacher/MobileLogin'
-// import MobileTeacher from '@/views/Teacher/MobileTeacher'
-// import TeacherSetAccount from '@/views/Teacher/SetAccount'
-// import ManageCourse from '@/views/Teacher/ManageCourse'
-// import SetSeminar from '@/views/Teacher/SetSeminar'
-// import SetRound from '@/views/Teacher/SetRound'
-// import CreateSeminar from '@/views/Teacher/CreateSeminar'
-// import CreateRound from '@/views/Teacher/CreateRound'
-// import TeacherSeminars from '@/views/Teacher/TeacherSeminars'
-// import Seminar from '@/views/Teacher/Seminar'
-// import Report from '@/views/Teacher/Report'
-// import SeminarGrade from '@/views/Teacher/SeminarGrade'
-// import ManageSeminar from '@/views/Teacher/ManageSeminar'
-// import Activation from '@/views/Teacher/Activation'
-// import FindPassword from '@/views/Teacher/FindPassword'
-// import ModifyPassword from '@/views/Teacher/ModifyPassword'
-// import ModifyEmail from '@/views/Teacher/ModifyEmail'
-// import GradeList from '@/views/Teacher/GradeList'
-// import TeamList from '@/views/Teacher/TeamList'
-// import CourseInfo from '@/views/Teacher/CourseInfo'
-// import ClassInfo from '@/views/Teacher/ClassInfo'
-// import CreateClass from '@/views/Teacher/CreateClass'
-// import Notify from '@/views/Teacher/Notify'
-// import CreateCourse from '@/views/Teacher/CreateCourse'
-// import Share from '@/views/Teacher/Share'
-// import CreateShare from '@/views/Teacher/CreateShare'
+import MobileTeacher from '@/views/Teacher/MobileTeacher'
+import TeacherSetAccount from '@/views/Teacher/SetAccount'
+import ManageCourse from '@/views/Teacher/ManageCourse'
+import SetSeminar from '@/views/Teacher/SetSeminar'
+import SetRound from '@/views/Teacher/SetRound'
+import CreateSeminar from '@/views/Teacher/CreateSeminar'
+import CreateRound from '@/views/Teacher/CreateRound'
+import TeacherSeminars from '@/views/Teacher/TeacherSeminars'
+import Seminar from '@/views/Teacher/Seminar'
+import Report from '@/views/Teacher/Report'
+import SeminarGrade from '@/views/Teacher/SeminarGrade'
+import ManageSeminar from '@/views/Teacher/ManageSeminar'
+import GradeList from '@/views/Teacher/GradeList'
+import TeamList from '@/views/Teacher/TeamList'
+import CourseInfo from '@/views/Teacher/CourseInfo'
+import ClassInfo from '@/views/Teacher/ClassInfo'
+import CreateClass from '@/views/Teacher/CreateClass'
+import Notify from '@/views/Teacher/Notify'
+import CreateCourse from '@/views/Teacher/CreateCourse'
+import Share from '@/views/Teacher/Share'
+import CreateShare from '@/views/Teacher/CreateShare'
 
 
 Vue.use(Router)
@@ -86,17 +89,28 @@ export default new Router({
       name:'AdminLogin',
       component:AdminLogin,
     },
-    {
-      path:'/adminStudent',
-      name:'AdminStudent',
-      component:AdminStudent,
-    },
-    {
-      path:'/adminTeacher',
-      name:'AdminTeacher',
-      component:AdminTeacher,
-    },
 
+    //user
+    {
+      path:'/mobile/findpw',
+      name:'FindPassword',
+      component:FindPassword,
+    },
+    {
+      path:'/mobile/activation',
+      name:'Activation',
+      component:Activation
+    },
+    {
+      path:'/mobile/modifypw',
+      name:ModifyPassword,
+      component:ModifyPassword
+    },
+    {
+      path:'/mobile/modifyEmail',
+      name:'ModifyEmail',
+      component:ModifyEmail
+    },
     //admin
     {
       path:'/admin',
@@ -114,7 +128,6 @@ export default new Router({
     },
 
     //student
-    
     // {
     //   path:'/mobile/student/studentInfo',
     //   name:'StudentInfo',
@@ -186,134 +199,113 @@ export default new Router({
     //   component:SeminarSigned
     // },
 
-
     //teacher
 
-    // {
-    //   path:'/mobile/activation',
-    //   name:'Activation',
-    //   component:Activation
-    // },
-    // {
-    //   path:'/mobile/findpw',
-    //   name:'FindPassword',
-    //   component:FindPassword
-    // },
-    // {
-    //   path:'/mobile/modifypw',
-    //   name:ModifyPassword,
-    //   component:ModifyPassword
-    // },
-    // {
-    //   path:'/mobile/modifyemail',
-    //   name:'ModifyEmail',
-    //   component:ModifyEmail
-    // },
-    // {
-    //   path: '/mobile/teacher',
-    //   name: 'MobileTeacher',
-    //   component: MobileTeacher
-    // },
-    // {
-    //   path: '/mobile/teacher/account',
-    //   name: 'TeacherSetAccount',
-    //   component: TeacherSetAccount
-    // },
-    // {
-    //   path: '/mobile/teacher/course',
-    //   name: 'ManageCourse',
-    //   component: ManageCourse
-    // },
-    // {
-    //   path:'/mobile/teacher/setseminar',
-    //   name:'SetSeminar',
-    //   component:SetSeminar
-    // },
-    // {
-    //   path:'/mobile/teacher/setround',
-    //   name:'SetRound',
-    //   component:SetRound
-    // },
-    // {
-    //   path:'/mobile/teacher/createround',
-    //   name:'CreateRound',
-    //   component:CreateRound
-    // },
-    // {
-    //   path:'/mobile/teacher/createseminar',
-    //   name:'CreateSeminar',
-    //   component:CreateSeminar
-    // },
-    // {
-    //   path:'/mobile/teacher/seminars',
-    //   name:'TeacherSeminars',
-    //   component:TeacherSeminars
-    // },
-    // {
-    //   path:'/mobile/teacher/seminar',
-    //   name:'Seminar',
-    //   component:Seminar
-    // },
-    // {
-    //   path:'/mobile/teacher/report',
-    //   name:'Report',
-    //   component:Report
-    // },
-    // {
-    //   path:'/mobile/teacher/seminargrade',
-    //   name:'SeminarGrade',
-    //   component:SeminarGrade
-    // },
-    // {
-    //   path:'/mobile/teacher/manageseminar',
-    //   name:'ManageSeminar',
-    //   component:ManageSeminar
-    // },
-    // {
-    //   path:'/mobile/teacher/teamlist',
-    //   name:'TeamList',
-    //   component:TeamList
-    // },
-    // {
-    //   path:'/mobile/teacher/gradelist',
-    //   name:'GradeList',
-    //   component:GradeList
-    // },
-    // {
-    //   path:'/mobile/teacher/courseinfo',
-    //   name:'CourseInfo',
-    //   component:CourseInfo
-    // },
-    // {
-    //   path:'/mobile/teacher/classinfo',
-    //   name:'ClassInfo',
-    //   component:ClassInfo
-    // },
-    // {
-    //   path:'/mobile/teacher/createclass',
-    //   name:'CreateClass',
-    //   component:CreateClass
-    // },
-    // {
-    //   path:'/mobile/teacher/notify',
-    //   name:'Notify',
-    //   component:Notify
-    // },
-    // {
-    //   path:'/mobile/teacher/createcourse',
-    //   name:'CreateCourse',
-    //   component:CreateCourse
-    // },
-    // {
-    //   path:'/mobile/teacher/share',
-    //   name:'Share',
-    //   component:Share
-    // },
-    // {
-    //   path:'/mobile/teacher/createshare',
-    //   name:'CreateShare',
-    //   component:CreateShare
-    // }
+    {
+      path: '/mobile/teacher',
+      name: 'MobileTeacher',
+      component: MobileTeacher
+    },
+    {
+      path: '/mobile/teacher/account',
+      name: 'TeacherSetAccount',
+      component: TeacherSetAccount
+    },
+    {
+      path: '/mobile/teacher/course',
+      name: 'ManageCourse',
+      component: ManageCourse
+    },
+    {
+      path:'/mobile/teacher/setseminar',
+      name:'SetSeminar',
+      component:SetSeminar
+    },
+    {
+      path:'/mobile/teacher/setround',
+      name:'SetRound',
+      component:SetRound
+    },
+    {
+      path:'/mobile/teacher/createround',
+      name:'CreateRound',
+      component:CreateRound
+    },
+    {
+      path:'/mobile/teacher/createseminar',
+      name:'CreateSeminar',
+      component:CreateSeminar
+    },
+    {
+      path:'/mobile/teacher/seminars',
+      name:'TeacherSeminars',
+      component:TeacherSeminars
+    },
+    {
+      path:'/mobile/teacher/seminar',
+      name:'Seminar',
+      component:Seminar
+    },
+    {
+      path:'/mobile/teacher/report',
+      name:'Report',
+      component:Report
+    },
+    {
+      path:'/mobile/teacher/seminargrade',
+      name:'SeminarGrade',
+      component:SeminarGrade
+    },
+    {
+      path:'/mobile/teacher/manageseminar',
+      name:'ManageSeminar',
+      component:ManageSeminar
+    },
+    {
+      path:'/mobile/teacher/teamlist',
+      name:'TeamList',
+      component:TeamList
+    },
+    {
+      path:'/mobile/teacher/gradelist',
+      name:'GradeList',
+      component:GradeList
+    },
+    {
+      path:'/mobile/teacher/courseinfo',
+      name:'CourseInfo',
+      component:CourseInfo
+    },
+    {
+      path:'/mobile/teacher/classinfo',
+      name:'ClassInfo',
+      component:ClassInfo
+    },
+    {
+      path:'/mobile/teacher/createclass',
+      name:'CreateClass',
+      component:CreateClass
+    },
+    {
+      path:'/mobile/teacher/notify',
+      name:'Notify',
+      component:Notify
+    },
+    {
+      path:'/mobile/teacher/createcourse',
+      name:'CreateCourse',
+      component:CreateCourse
+    },
+    {
+      path:'/mobile/teacher/share',
+      name:'Share',
+      component:Share
+    },
+    {
+      path:'/mobile/teacher/createshare',
+      name:'CreateShare',
+      component:CreateShare
+    }
     
   ]
 })

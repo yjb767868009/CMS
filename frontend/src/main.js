@@ -8,6 +8,10 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 
+//mint-ui
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
+
 //vuex
 import store from './store/store'
 
@@ -19,10 +23,10 @@ import axios from 'axios'
 import '../config/axios'
 Object.defineProperty(Vue.prototype,'$axios',{value:axios})
 
-
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VueCookie)
+Vue.use(MintUI)
 
 /* eslint-disable no-new */
 new Vue({

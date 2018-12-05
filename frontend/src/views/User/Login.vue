@@ -34,7 +34,20 @@ import Qs from 'qs'
         password:''
       }
     },
+    mounted(){
+        if(this.isMobile()){
+            console.log('userAgent:',navigator.userAgent)
+            this.$router.replace('/mobileLogin')
+        }else{
+            console.log('pc')
+        }
+    },
     methods:{
+        isMobile:function(){
+            let flag=
+                navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+            return flag
+        },
         login:function(account,password){
             if(!this.account){
                 this.$message.error('请输入账户名')
@@ -46,8 +59,7 @@ import Qs from 'qs'
 
             this.$axios({
                 method:'post',
-                url:'/api/login',
-                data:Qs.stringify({
+                url:'/api/user/login?'+Qs.stringify({
                     account:this.account,
                     password:this.password
                 })
@@ -55,18 +67,17 @@ import Qs from 'qs'
             //src/config/axios.js
 
             ).then((response)=>{
-                let message = response.data.message
-                if(message==='No this account'){
-                    this.$message.error('无此账号')
+                let data = response.data
+                let authority = data[0].authority
+                if(message==='Bad credentials'){
+                    this.$message.error('登陆失败')
                 }
-                if(message==='Account or Password error'){
-                    this.$message.error('账号或密码错误')
+                //activation
+                if(authority==='ROLE_TEACHER'){
+                    this.$router.push('/pc/teacher')
                 }
-                if(message==='Teacher'){
-                    this.$router.push('MoblieTeacher')
-                }
-                if(message==='Student'){
-                    this.$router.push('StudentSeminarList')
+                if(authority==='ROLE_STUDENT'){
+                    this.$router.push('/pc/student')
                 }
             })
         },

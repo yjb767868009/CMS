@@ -54,7 +54,7 @@
     </el-container>
 
       <modify-teacher-dialog @modifySuccess='flash'></modify-teacher-dialog>
-      <add-teacher-dialog @addSuccess='flash'></add-teacher-dialog>
+      <add-teacher-dialog @addFail='addFail' @addSuccess='flash'></add-teacher-dialog>
   
   </el-container>
       <el-footer style="background-color: rgb(10, 47, 88);color:rgb(255,255,255);height:100%;">
@@ -130,6 +130,10 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
       this.getAllTeacher()
     },
     methods:{
+        addFail:function(){
+          this.$message.error('insert error')
+        }
+        ,
         handleStudent:function(){
             this.$router.push('AdminStudent')
         },

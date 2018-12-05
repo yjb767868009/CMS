@@ -49,7 +49,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public Map<String, String> newAttendance(Integer clbumSeminarId, Integer teamOrder) {
-        Integer studentId = Token.getUserId();
+        Integer studentId = Token.getToken().getUserId();
         ClbumSeminar clbumSeminar = clbumSeminarDao.getClbumSeminarById(clbumSeminarId);
         Team team = teamDao.getTeamInClbumByStudentId(clbumSeminar.getClbumId(), studentId);
         return attendanceDao.studentAttendance(team.getTeamId(), clbumSeminarId, teamOrder);

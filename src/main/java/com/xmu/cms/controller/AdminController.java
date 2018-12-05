@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.xmu.cms.entity.Teacher;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -32,8 +34,22 @@ public class AdminController {
 
     @PostMapping(value = "/login")
     public Map<String, String> adminLogIn(@RequestParam(value = "account") String account,
-                                          @RequestParam(value = "password") String password) {
-        return adminService.adminLogIn(account, password);
+                                          @RequestParam(value = "password") String password,
+                                          HttpServletResponse response) {
+        Map<String, String> messages = adminService.adminLogIn(account, password);
+        Cookie cookie = new Cookie("Token", messages.get("token"));
+        response.addCookie(cookie);
+        return messages;
+    }
+
+    @PostMapping(value = "/setJWT")
+    public Map<String, String> setJWT(@RequestParam(value = "account") String account,
+                                      @RequestParam(value = "password") String password,
+                                      HttpServletResponse response) {
+        Map<String, String> messages = adminService.adminLogIn(account, password);
+        Cookie cookie = new Cookie("Token", messages.get("token"));
+        response.addCookie(cookie);
+        return messages;
     }
 
     @GetMapping(value = "/teachers")

@@ -5,10 +5,11 @@ import com.xmu.cms.dao.TeacherDao;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.service.UserService;
+import com.xmu.cms.support.Token;
+import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,8 +35,7 @@ public class UserServiceImpl implements UserService {
                 message.put("message", "No this account");
             } else {
                 if (password.equals(student.getPassword())) {
-                    message.put("userType", "student");
-                    message.put("userId", student.getStudentId().toString());
+                    message.put("token", Token.setToken(new UserInfo(student.getStudentId(), "student")));
                     message.put("message", "student");
                     message.put("activation", "false");
                 } else {
@@ -44,8 +44,7 @@ public class UserServiceImpl implements UserService {
             }
         } else {
             if (password.equals(teacher.getPassword())) {
-                message.put("userType", "teacher");
-                message.put("userId", teacher.getTeacherId().toString());
+                message.put("token", Token.setToken(new UserInfo(teacher.getTeacherId(), "teacher")));
                 message.put("message", "teacher");
                 message.put("activation", "false");
             } else {
@@ -53,5 +52,28 @@ public class UserServiceImpl implements UserService {
             }
         }
         return message;
+    }
+
+    @Override
+    public Map<String, String> getMyInfo() {
+        Map<String, String> messages = new HashMap<String, String>(2);
+        UserInfo info = Token.getToken();
+        assert info != null;
+        if (info.getUserType().equals("teacher")) {
+            Teacher teacher = teacherDao.getTeacherById(info.getUserId());
+            messages.put("name", teacher.getName());
+            messages.put("account", teacher.getAccount());
+            messages.put("message", "Success");
+            return messages;
+        }
+        if (info.getUserType().equals("student")) {
+            Student student = studentDao.getStudentById(info.getUserId());
+            messages.put("name", student.getName());
+            messages.put("account", student.getAccount());
+            messages.put("message", "Success");
+            return messages;
+        }
+        messages.put("message", "Error");
+        return messages;
     }
 }

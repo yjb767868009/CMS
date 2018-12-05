@@ -3,9 +3,6 @@ package com.xmu.cms.controller;
 import com.xmu.cms.entity.*;
 import com.xmu.cms.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -118,16 +115,14 @@ public class UserController {
         return attendanceService.getAttendancesInSeminar(seminarId);
     }
 
-    @GetMapping(value = "/seminar/{seminarId}/clbum/{clbumId}/scores")
-    public Score getAllScoreInSeminar(@PathVariable("seminarId") Integer seminarId,
-                                      @PathVariable("clbumId") Integer clbumId) {
-        return scoreService.getAllScoresInClbumSeminar(seminarId, clbumId);
+    @GetMapping(value = "/clbumSeminar/{clbumSeminarId}/scores")
+    public Score getAllScoreInSeminar(@PathVariable("clbumSeminarId") Integer clbumSeminarId) {
+        return scoreService.getAllScoresInClbumSeminar(clbumSeminarId);
     }
 
-    @GetMapping(value = "/seminar/{seminarId}/clbum/{clbumId}")
-    public String getStateInClbumSeminar(@PathVariable("seminarId") Integer seminarId,
-                                         @PathVariable("clbumId") Integer clbumId) {
-        return seminarService.getStateInClbumSeminar(seminarId, clbumId);
+    @GetMapping(value = "/clbumSeminar/{clbumSeminarId}")
+    public String getStateInClbumSeminar(@PathVariable("clbumSeminarId") Integer clbumSeminarId) {
+        return seminarService.getStateInClbumSeminar(clbumSeminarId);
     }
 
     @GetMapping(value = "/seminar/{seminarId}/clbum/{clbumId}/presentationFile")

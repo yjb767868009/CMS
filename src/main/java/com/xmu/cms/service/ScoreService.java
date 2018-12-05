@@ -7,7 +7,7 @@ import com.xmu.cms.entity.Score;
  * @version 1.0
  */
 public interface ScoreService {
-    Score getAllScoresInClbumSeminar(Integer seminarId, Integer clbumId);
+    Score getAllScoresInClbumSeminar(Integer clbumSeminarId);
 
     Score getAllScoresInRound(Integer roundId);
 }

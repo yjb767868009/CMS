@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.util.Map;
  * @author JuboYu on 2018/12/5.
  * @version 1.0
  */
+@Service
 public class FileServiceImpl implements FileService {
 
     @Value("${file.folder}")

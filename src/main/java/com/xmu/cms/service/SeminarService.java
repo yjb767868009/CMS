@@ -14,11 +14,11 @@ import java.util.Map;
 public interface SeminarService {
     Map<String, String> newSeminar(Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible);
 
-    Map<String, String> startClbumSeminar(Integer seminarId, Integer clbumId);
+    Map<String, String> startClbumSeminar(Integer clbumSeminarId);
 
-    Map<String, String> stopClbumSeminar(Integer seminarId, Integer clbumId);
+    Map<String, String> stopClbumSeminar(Integer clbumSeminarId);
 
-    Map<String, String> endClbumSeminar(Integer seminarId, Integer clbumId);
+    Map<String, String> endClbumSeminar(Integer clbumSeminarId);
 
     Attendance getNextAttendance(Integer seminarId);
 
@@ -28,7 +28,7 @@ public interface SeminarService {
 
     Seminar getSeminarBySeminarId(Integer seminarId);
 
-    String getStateInClbumSeminar(Integer seminarId, Integer clbumId);
+    String getStateInClbumSeminar(Integer clbumSeminarId);
 
     Map<String, String> getPresentationFileInClbumSeminar(Integer clbumSeminarId);
 

@@ -3,6 +3,7 @@ package com.xmu.cms.dao;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.xmu.cms.entity.ClbumSeminar;
 import com.xmu.cms.entity.Seminar;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -33,14 +34,11 @@ public interface SeminarDao {
                           @Param("visible") Boolean visible);
 
 
-    Integer startClbumSeminar(@Param("seminarId") Integer seminarId,
-                              @Param("clbumId") Integer clbumId);
+    Integer startClbumSeminar(@Param("clbumSeminarId") Integer clbumSeminarId);
 
-    Integer stopClbumSeminar(@Param("seminarId") Integer seminarId,
-                             @Param("clbumId") Integer clbumId);
+    Integer stopClbumSeminar(@Param("clbumSeminarId") Integer clbumSeminarId);
 
-    Integer endClbumSeminar(@Param("seminarId") Integer seminarId,
-                            @Param("clbumId") Integer clbumId);
+    Integer endClbumSeminar(@Param("clbumSeminarId") Integer clbumSeminarId);
 
     Integer getAttendanceNo(@Param("seminarId") Integer seminarId);
 
@@ -48,8 +46,7 @@ public interface SeminarDao {
 
     List<Seminar> getAllSeminarByRoundId(@Param("roundId") Integer roundId);
 
-    String getStateInClbumSeminar(@Param("seminarId") Integer seminarId,
-                                  @Param("clbumId") Integer clbumId);
+    ClbumSeminar getClbumSeminarById(@Param("clbumSeminarId") Integer clbumSeminarId);
 
     Seminar getRunningSeminarByTeacherId(@Param("teacherId") Integer teacherId);
 }

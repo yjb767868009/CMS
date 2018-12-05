@@ -42,15 +42,14 @@ public class StudentController {
     }
 
     @GetMapping(value = "/courses")
-    public List<Course> getAllCourse(HttpSession session) {
-        Integer studentId = Integer.valueOf(session.getAttribute("userId").toString());
+    public List<Course> getAllCourse() {
+        Integer studentId = getStudentInSecurity().getStudentId();
         return courseService.getAllCoursesByStudentId(studentId);
     }
 
     @GetMapping(value = "/course/{courseId}/clbumName")
-    public List<Seminar> getStudentClbumNameByCourseId(@PathVariable("courseId") Integer courseId,
-                                                       HttpSession session) {
-        Integer studentId = Integer.valueOf(session.getAttribute("userId").toString());
+    public List<Seminar> getStudentClbumNameByCourseId(@PathVariable("courseId") Integer courseId) {
+        Integer studentId = getStudentInSecurity().getStudentId();
         return clbumService.getStudentClbumNameByCourseId(studentId, courseId);
     }
 

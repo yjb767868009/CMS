@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -107,7 +105,7 @@ public class UserController {
         return teamService.getAllTeamsInClbumSeminar(seminarId, clbumId);
     }
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "/seminar/{seminarId}/nextAttendance")
     public Attendance getNextAttendance(@PathVariable("seminarId") Integer seminarId) {
         return seminarService.getNextAttendance(seminarId);
     }
@@ -127,4 +125,17 @@ public class UserController {
                                       @PathVariable("clbumId") Integer clbumId) {
         return scoreService.getAllScoresInClbumSeminar(seminarId, clbumId);
     }
+
+    @GetMapping(value = "/seminar/{seminarId}/clbum/{clbumId}")
+    public String getStateInClbumSeminar(@PathVariable("seminarId") Integer seminarId,
+                                         @PathVariable("clbumId") Integer clbumId) {
+        return seminarService.getStateInClbumSeminar(seminarId, clbumId);
+    }
+
+    @GetMapping(value = "/seminar/{seminarId}/clbum/{clbumId}/presentationFile")
+    public Map<String, String> getPresentationFileInClbumSeminar(@PathVariable("seminarId") Integer seminarId,
+                                                                 @PathVariable("clbumId") Integer clbumId) {
+        return seminarService.getPresentationFileInClbumSeminar(seminarId);
+    }
+
 }

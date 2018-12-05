@@ -2,6 +2,7 @@ package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.AttendanceDao;
 import com.xmu.cms.dao.SeminarDao;
+import com.xmu.cms.dao.TeamDao;
 import com.xmu.cms.entity.Attendance;
 import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.service.SeminarService;
@@ -25,6 +26,9 @@ public class SeminarServiceImpl implements SeminarService {
 
     @Autowired
     private AttendanceDao attendanceDao;
+
+    @Autowired
+    private TeamDao teamDao;
 
     @Override
     public Map<String, String> newSeminar(Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
@@ -106,6 +110,27 @@ public class SeminarServiceImpl implements SeminarService {
     @Override
     public Seminar getSeminarBySeminarId(Integer seminarId) {
         return seminarDao.getSeminarBySeminarId(seminarId);
+    }
+
+    @Override
+    public String getStateInClbumSeminar(Integer seminarId, Integer clbumId) {
+        return seminarDao.getStateInClbumSeminar(seminarId, clbumId);
+    }
+
+    @Override
+    public Map<String, String> getPresentationFileInClbumSeminar(Integer clbumSeminarId) {
+        Map<String, String> presentationFileMap = new HashMap<String, String>();
+        List<Attendance> attendances = attendanceDao.getAttendancesInClbumSeminar(clbumSeminarId);
+        for (Attendance attendance : attendances) {
+            String attendancePreFile = attendance.getPreFile();
+            if (!attendancePreFile.equals("")){
+                presentationFileMap.put(attendance.getTeamOrder().toString(), attendancePreFile);
+            }else {
+                String noFileMessage = teamDao.getTeamByTeamId(attendance.getTeamId()).getTeamName()+"未提交";
+                presentationFileMap.put(attendance.getTeamOrder().toString(),noFileMessage);
+            }
+        }
+        return presentationFileMap;
     }
 
 }

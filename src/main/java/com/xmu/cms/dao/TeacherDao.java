@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * @author JuboYu on 2018/11/24.
- * @version 1.0
+ * @author BiqunZhou on 2018/12/5.
+ * @version 2.0
  */
 @Mapper
 public interface TeacherDao {
@@ -33,7 +33,6 @@ public interface TeacherDao {
                        @Param("password") String password,
                        @Param("email") String email,
                        @Param("phone") String phone,
-                       @Param("sex") String sex,
                        @Param("messageInterval") Integer messageInterval,
                        @Param("activation") Boolean activation);
 
@@ -84,4 +83,6 @@ public interface TeacherDao {
      * @return List<teacher>
      */
     List<Teacher> getTeacherByName(@Param("name") String name);
+
+    String getEmailByAccount(@Param("email") String email);
 }

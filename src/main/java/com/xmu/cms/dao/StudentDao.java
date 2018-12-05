@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * @author JuboYu on 2018/11/23.
- * @version 1.0
+ * @author BiqunZhou on 2018/12/5.
+ * @version 2.0
  */
 
 
@@ -24,10 +24,19 @@ public interface StudentDao {
     /**
      * create a new student
      *
-     * @param student student entity
+     * @param name     student's name
+     * @param account  student's account
+     * @param password student's password
+     * @param email    student's email
      * @return String message
      */
-    String newStudent(Student student);
+    Integer newStudent(@Param("name") String name,
+                       @Param("account") String account,
+                       @Param("password") String password,
+                       @Param("email") String email,
+                       @Param("phone") String phone,
+                       @Param("messageInterval") Integer messageInterval,
+                       @Param("activation") Boolean activation);
 
     /**
      * modify student by his id
@@ -59,13 +68,13 @@ public interface StudentDao {
      * @param studentId student's id
      * @return String message
      */
-    Integer deleteStudentByStudentId(Integer studentId);
+    Integer deleteStudentByStudentId(@Param("studentId") Integer studentId);
 
     /**
      * get student's password by account
      *
      * @param account log in account
-     * @return student
+     * @return account's password
      */
     Student getStudentByAccount(@Param("account") String account);
 
@@ -76,4 +85,6 @@ public interface StudentDao {
      * @return List<Student>
      */
     List<Student> getStudentByName(@Param("name") String name);
+
+    String getEmailByAccount(@Param("email") String email);
 }

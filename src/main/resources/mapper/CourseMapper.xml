@@ -5,7 +5,7 @@
     <select id="getAllCourseByTeacherId" resultType="com.xmu.cms.entity.Course">
         SELECT course_id          as courseId,
                teacher_id         as teacherId,
-               name,
+               course_name,
                introduction,
                pre_weight as presentationWeight,
                report_weight      as reportWeight,
@@ -19,7 +19,7 @@
     <select id="getAllCourseByStudentId" resultType="com.xmu.cms.entity.Course">
         SELECT course.course_id   as courseId,
                teacher_id         as teacherId,
-               course.name,
+               course.course_name,
                introduction,
                pre_weight as presentationWeight,
                report_weight      as reportWeight,
@@ -37,7 +37,7 @@
     <select id="getAllCoursesByTeacherAccount" resultType="com.xmu.cms.entity.Course">
         SELECT course_id          as courseId,
                course.teacher_id  as teacherId,
-               course.name,
+               course.course_name,
                introduction,
                pre_weight as presentationWeight,
                report_weight      as reportWeight,
@@ -57,7 +57,7 @@
     </delete>
 
     <insert id="newCourse" parameterType="com.xmu.cms.entity.Course">
-        insert into course (course_Id ,teacher_id ,name ,introduction ,pre_weight ,report_weight ,ques_weight , team_start_date ,team_end_date)
-        values (#(courseId), #(teacherId), #(name), #(introduction), #(presentationWeight), #(reportWeight), #(questionWeight), #(teamStartDate), #(teamEndDate))
+        insert into course (course_Id ,teacher_id ,course.course_name ,introduction ,pre_weight ,report_weight ,ques_weight , team_start_date ,team_end_date)
+        values (#{courseId}, #{teacherId}, #{name}, #{introduction}, #{presentationWeight}, #{reportWeight}, #{questionWeight}, #{teamStartDate}, #{teamEndDate})
     </insert>
 </mapper>

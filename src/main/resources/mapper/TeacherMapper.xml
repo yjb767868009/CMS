@@ -75,6 +75,6 @@
     <select id="getEmailByAccount" resultType="java.lang.String">
         select email
         from teacher
-        where teacher_num = #(account)
+        where teacher_num = #{account}
     </select>
 </mapper>

@@ -8,7 +8,7 @@
                student_num as account,
                password,
                email,
-               name,
+               student_name,
                phone,
                msg_interval as messageInterval,
                is_activated as activation
@@ -16,7 +16,7 @@
     </select>
 
     <insert id="newStudent" parameterType="com.xmu.cms.entity.Student">
-        INSERT INTO student (student_num, password, email, name, message_interval, is_activated)
+        INSERT INTO student (student_num, password, email, student_name, message_interval, is_activated)
         VALUE (#{account}, #{password}, #{email}, #{name}, #{messageInterval}, #{activation})
     </insert>
 
@@ -45,7 +45,7 @@
                student_num as account,
                password,
                email,
-               name,
+               student_name,
                phone,
                msg_interval as messageInterval,
                is_activated as activation
@@ -58,12 +58,12 @@
                student_num as account,
                password,
                email,
-               name,
+               student_name,
                phone,
                msg_interval as messageInterval,
                is_activated as activation
         FROM student
-        WHERE name = #{name}
+        WHERE student_name = #{name}
     </select>
 
     <select id="getIdByAccount" resultType="java.lang.Integer">
@@ -75,6 +75,6 @@
     <select id="getEmailByAccount" resultType="java.lang.String">
         select email
         from student
-        where student_num = #(account)
+        where student_num = #{account}
     </select>
 </mapper>

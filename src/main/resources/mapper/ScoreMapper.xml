@@ -27,24 +27,30 @@
 
     <update id="modifyScoreInRound">
         update round_score
-        set presetation_score = #(presentationScore),
-            question_score = #(questionScore),
-            report_score = #(reportScore)
+        set presetation_score = #{presentationScore},
+            question_score = #{questionScore},
+            report_score = #{reportScore}
         where round_score.round_id = #{roundId}
         and team.team_id = round_score.team_id
     </update>
 
     <update id="modifyScoreInSeminar">
         update seminar_score
-        set presetation_score = #(presentationScore),
-            question_score = #(questionScore),
-            report_score = #(reportScore)
+        set presetation_score = #{presentationScore},
+            question_score = #{questionScore},
+            report_score = #{reportScore}
         WHERE seminar_id = #{seminarId}
           AND turning_class_id = #{turningClassId}
           AND team.team_id = seminar_score.team_id
     </update>
 
-    <insert id="newScoreInRound" parameterType="com.xmu.cms.entity.Score">
-        insert into round_score
+    <insert id="newScoreInRound">
+        insert into round_score (team_id, turning_class_id, round_id, presetation_score, report_score, question_score, total_score)
+        values (#{teamId}, #{turningClassId}, #{roundId}, #{presentationScore}, #{reportScore}, #{questionScore}, #{totalScore})
+    </insert>
+
+    <insert id="newScoreInSeminar">
+        insert into seminar_score (team_id, turning_class_id, seminar_id, presetation_score, report_score, question_score, total_score)
+        values (#{teamId}, #{turningClassId}, #{seminarId}, #{presentationScore}, #{reportScore}, #{questionScore}, #{totalScore})
     </insert>
 </mapper>

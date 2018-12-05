@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * @author JuboYu on 2018/11/24.
- * @version 1.0
+ * @author BiqunZhou on 2018/12/5.
+ * @version 2.0
  */
 @Mapper
 public interface TeacherDao {

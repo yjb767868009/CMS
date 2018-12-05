@@ -60,14 +60,15 @@ import Qs from 'qs'
                     this.$message.error('登陆失败')
                     return
                 }
-
+                
+                //JWT
                 this.$axios({
                     method:'post',
                     url:'/api/admin/setJWT?'+Qs.stringify({
                         account:this.account,
                         password:this.password
                     }).then((res)=>{
-                        if(res.data[0].authority==='ROLE_ADMIN'){
+                        if(res.data==='success'){
                             this.$store.state.token='token'
                             this.$store.state.userType='admin'
                             this.$router.push('AdminTeacher')

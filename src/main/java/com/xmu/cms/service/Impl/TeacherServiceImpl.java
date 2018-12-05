@@ -28,7 +28,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Map<String, String> newTeacher(String name, String account, String password, String email) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = teacherDao.newTeacher(name, account, password, email, "", "", 1, false);
+        Integer count = teacherDao.newTeacher(name, account, password, email, "", 1, false);
         if (count == 1) {
             message.put("message", "Success");
         } else {

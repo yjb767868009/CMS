@@ -23,7 +23,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public List<Team> getAllTeamsInClbumSeminar(Integer seminarId, Integer clbumId) {
-        return teamDao.getAllTeamsInClbumSeminar(seminarId, clbumId);
+    public List<Team> getAllTeamsInClbumSeminar(Integer clbumSeminarId) {
+        return teamDao.getAllTeamsInClbumSeminar(clbumSeminarId);
     }
 }

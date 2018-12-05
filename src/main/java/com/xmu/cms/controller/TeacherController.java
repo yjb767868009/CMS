@@ -1,21 +1,17 @@
 package com.xmu.cms.controller;
 
 import com.xmu.cms.entity.Course;
-import com.xmu.cms.entity.Round;
 import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.service.*;
-import com.xmu.cms.support.JsonResult;
 import com.xmu.cms.support.Token;
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +40,9 @@ public class TeacherController {
 
     @Autowired
     private ClbumService clbumService;
+
+    @Autowired
+    private FileService fileService;
 
     private Teacher getTeacherInSecurity() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -78,7 +77,13 @@ public class TeacherController {
                                         @RequestParam("presentationScoreType") Integer presentationScoreType,
                                         @RequestParam("reportScoreType") Integer reportScoreType,
                                         @RequestParam("questionScoreType") Integer questionScoreType) {
-        return roundService.newRound(courseId,roundNum,presentationScoreType,reportScoreType,questionScoreType);
+        return roundService.newRound(courseId, roundNum, presentationScoreType, reportScoreType, questionScoreType);
+    }
+
+    @PostMapping(value = "/clbum/{clbumId}/uploadClbumFile")
+    public Map<String, String> uploadClbumFile(@PathVariable("clbumId") Integer clbumId,
+                                               @RequestParam("file") MultipartFile file) {
+        return fileService.uploadClbumFile(clbumId, file);
     }
 
     @PutMapping(value = "/seminar/{seminarId}/modifySeminar")
@@ -106,22 +111,19 @@ public class TeacherController {
         return seminarService.newSeminar(roundId, maxTeamNum, topic, introduction, signStartTime, signEndTime, signOrder, visible);
     }
 
-    @PatchMapping(value = "/seminar/{seminarId}/clbum/{clbumId}/start")
-    public Map<String, String> startSeminar(@PathVariable("seminarId") Integer seminarId,
-                                            @PathVariable("clbumId") Integer clbumId) {
-        return seminarService.startClbumSeminar(seminarId, clbumId);
+    @PatchMapping(value = "/clbumSeminar/{clbumSeminarId}/start")
+    public Map<String, String> startSeminar(@PathVariable("clbumSeminarId") Integer clbumSeminarId) {
+        return seminarService.startClbumSeminar(clbumSeminarId);
     }
 
-    @PatchMapping(value = "/seminar/{seminarId}/clbum/{clbumId}/stop")
-    public Map<String, String> stopSeminar(@PathVariable("seminarId") Integer seminarId,
-                                           @PathVariable("clbumId") Integer clbumId) {
-        return seminarService.stopClbumSeminar(seminarId, clbumId);
+    @PatchMapping(value = "/clbumSeminar/{clbumSeminarId}/stop")
+    public Map<String, String> stopSeminar(@PathVariable("clbumSeminarId") Integer clbumSeminarId) {
+        return seminarService.stopClbumSeminar(clbumSeminarId);
     }
 
-    @PatchMapping(value = "/seminar/{seminarId}/clbum/{clbumId}/end")
-    public Map<String, String> endSeminar(@PathVariable("seminarId") Integer seminarId,
-                                          @PathVariable("clbumId") Integer clbumId) {
-        return seminarService.endClbumSeminar(seminarId, clbumId);
+    @PatchMapping(value = "/clbumSeminar/{clbumSeminarId}/end")
+    public Map<String, String> endSeminar(@PathVariable("clbumSeminarId") Integer clbumSeminarId) {
+        return seminarService.endClbumSeminar(clbumSeminarId);
     }
 
     @PatchMapping(value = "/attendance/{attendanceId}/setScore")
@@ -135,4 +137,5 @@ public class TeacherController {
         Integer teacherId = Token.getUserId();
         return seminarService.getRunningSeminarByTeacherId(teacherId);
     }
+
 }

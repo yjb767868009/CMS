@@ -1,10 +1,12 @@
 package com.xmu.cms.controller;
 
 import com.xmu.cms.entity.Course;
+import com.xmu.cms.entity.Round;
 import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.service.*;
 import com.xmu.cms.support.JsonResult;
+import com.xmu.cms.support.Token;
 import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -12,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.util.List;
@@ -29,6 +32,9 @@ public class TeacherController {
 
     @Autowired
     private CourseService courseService;
+
+    @Autowired
+    private RoundService roundService;
 
     @Autowired
     private SeminarService seminarService;
@@ -66,9 +72,18 @@ public class TeacherController {
         return clbumService.newClbum(courseId, name, classTime, classPlace);
     }
 
-    @PutMapping(value = "/round/{roundId}/seminar/{seminarId}/modifySeminar")
-    public Map<String, String> modifySeminar(@PathVariable("roundId") Integer roundId,
-                                             @PathVariable("seminarId") Integer seminarId,
+    @PostMapping(value = "/course/{courseId}/round")
+    public Map<String, String> newRound(@PathVariable("courseId") Integer courseId,
+                                        @RequestParam("roundNum") Integer roundNum,
+                                        @RequestParam("presentationScoreType") Integer presentationScoreType,
+                                        @RequestParam("reportScoreType") Integer reportScoreType,
+                                        @RequestParam("questionScoreType") Integer questionScoreType) {
+        return roundService.newRound(courseId,roundNum,presentationScoreType,reportScoreType,questionScoreType);
+    }
+
+    @PutMapping(value = "/seminar/{seminarId}/modifySeminar")
+    public Map<String, String> modifySeminar(@PathVariable("seminarId") Integer seminarId,
+                                             @RequestParam("roundId") Integer roundId,
                                              @RequestParam("maxTeamNum") Integer maxTeamNum,
                                              @RequestParam("topic") String topic,
                                              @RequestParam("introduction") String introduction,
@@ -113,5 +128,11 @@ public class TeacherController {
     public Map<String, String> setAttendancePresentationScore(@PathVariable("attendanceId") Integer attendanceId,
                                                               @RequestParam("presentationScore") Integer presentationScore) {
         return attendanceService.setAttendancePresentationScore(attendanceId, presentationScore);
+    }
+
+    @GetMapping(value = "/runningSeminar")
+    public Seminar getRunningSeminar() {
+        Integer teacherId = Token.getUserId();
+        return seminarService.getRunningSeminarByTeacherId(teacherId);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author JuboYu on 2018/11/29.
@@ -30,5 +31,10 @@ public class RoundServiceImpl implements RoundService {
     @Override
     public List<Seminar> getAllSeminarInRound(Integer roundId) {
         return seminarDao.getAllSeminarByRoundId(roundId);
+    }
+
+    @Override
+    public Map<String, String> newRound(Integer courseId, Integer roundNum, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType) {
+        return roundDao.newRound(courseId, roundNum, presentationScoreType, reportScoreType, questionScoreType);
     }
 }

@@ -19,4 +19,6 @@ public interface TeamDao {
                                          @Param("clbumId") Integer clbumId);
 
     Team getTeamByTeamId(Integer teamId);
+
+    Team getTeamInClbumByStudentId(Integer clbumId, Integer studentId);
 }

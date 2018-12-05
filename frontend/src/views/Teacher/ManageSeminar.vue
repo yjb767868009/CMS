@@ -11,7 +11,7 @@
 
     <cell title="业务流程分析" style="background-color:#fff">
         <button style="color:#000;background:0;border:0" @click="pause">
-            <img slot="right" src="../assets/暂停.png" style="display:block;margin-right:10px;" width="20px" height="20px"/>
+            <img slot="right" src="@/assets/pause.png" style="display:block;margin-right:10px;" width="20px" height="20px"/>
         </button>
         <confirm v-model="pause" :title="确认暂停" :content="OOAD业务流程讨论课"></confirm>
     </cell>
@@ -22,7 +22,7 @@
         </group>
         <div style="margin-top:20px">
             展示分数
-            <input slot="right" style="margin-left:40%;width:50px;height:30px" placeholder="成绩"></input>
+            <input slot="right" style="margin-left:40%;width:50px;height:30px" placeholder="成绩">
         </div>
 
         <group title="1.1组提问">

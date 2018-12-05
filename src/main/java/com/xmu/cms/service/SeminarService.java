@@ -31,4 +31,6 @@ public interface SeminarService {
     String getStateInClbumSeminar(Integer seminarId, Integer clbumId);
 
     Map<String, String> getPresentationFileInClbumSeminar(Integer clbumSeminarId);
+
+    Seminar getRunningSeminarByTeacherId(Integer userId);
 }

@@ -14,7 +14,7 @@
     </x-input>
   </group>
     <div style="text-align:left;margin-top:100px;font-size:10px">可包含数字、字母、下划线，长度不少于六位</div>
-    <x-button @click="post1" style="margin-top:10px">确认提交</x-button>
+    <x-button @click.native="post1" style="margin-top:10px">确认提交</x-button>
   </div>
 </template>
 
@@ -39,7 +39,7 @@ export default {
 
     },
     post1:function(){
-
+      console.log('fdaffd')
     }
   }
 }

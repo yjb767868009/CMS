@@ -7,19 +7,19 @@
     </x-header>
     <group style="text-align:left">
       <cell is-link title="xxxxx分组邀请">
-        <img slot="icon" src="../assets/感叹号.png" style="display:block;margin-right:12px;margin-left:3px" width="20px" height="20px"/>
+        <img slot="icon" src="@/assets/exclamation.png" style="display:block;margin-right:12px;margin-left:3px" width="20px" height="20px"/>
       </cell>
       <cell is-link title="xxxx特殊组队申请">
-        <img slot="icon" src="../assets/感叹号.png" style="display:block;margin-right:12px;margin-left:3px" width="20px" height="20px"/>
+        <img slot="icon" src="@/assets/exclamation.png" style="display:block;margin-right:12px;margin-left:3px" width="20px" height="20px"/>
       </cell>
     </group>
 
     <group style="text-align:left">历史消息：
       <cell is-link title="xxxx特殊组队申请">
-        <img slot="icon" src="../assets/对.png" style="display:block;margin-right:12px;margin-left:3px" width="20px" height="20px"/>
+        <img slot="icon" src="@/assets/correct.png" style="display:block;margin-right:12px;margin-left:3px" width="20px" height="20px"/>
       </cell>
       <cell is-link title="aaaa特殊组队申请">
-        <img slot="icon" src="../assets/错误.png" style="display:block;margin-right:12px;margin-left:3px" width="20px" height="20px"/>
+        <img slot="icon" src="@/assets/wrong.png" style="display:block;margin-right:12px;margin-left:3px" width="20px" height="20px"/>
       </cell>
     </group>
 

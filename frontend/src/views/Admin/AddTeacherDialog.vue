@@ -52,6 +52,10 @@ export default {
               this.$store.state.admin.showAddTeacher=false
               this.$emit('addSuccess')
             }
+            if(response.data.message==='Insert error'){
+              this.$store.state.admim.showAddTeacher=false
+              this.$emit('addFail')
+            }
           })
             .catch(function(error){
               console.log(error)

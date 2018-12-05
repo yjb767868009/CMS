@@ -2,7 +2,10 @@ package com.xmu.cms.config;
 
 import com.xmu.cms.handler.AuthenticationFailureHandler;
 import com.xmu.cms.handler.AuthenticationSuccessHandler;
-import com.xmu.cms.service.Impl.AuthUserServiceImpl;
+import com.xmu.cms.service.Impl.AdminUserDetailsServiceImpl;
+import com.xmu.cms.service.Impl.UserUserDetailsServiceImpl;
+import com.xmu.cms.support.AdminAuthorizedEntryPoint;
+import com.xmu.cms.support.UserAuthorizedEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +34,7 @@ public class MultiHttpSecurityConfiguration {
     @Order(1)
     public static class AdminConfigurationAdapter extends WebSecurityConfigurerAdapter {
         @Autowired
-        private AuthUserServiceImpl authUserService;
+        private AdminUserDetailsServiceImpl adminUserDetailsService;
 
         @Autowired
         private AuthenticationSuccessHandler authenticationSuccessHandler;
@@ -41,6 +44,8 @@ public class MultiHttpSecurityConfiguration {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+            http.exceptionHandling().
+                    authenticationEntryPoint(new AdminAuthorizedEntryPoint());
             http.antMatcher("/api/admin/**")
                     .authorizeRequests()
                     .anyRequest().hasRole("ADMIN");
@@ -55,7 +60,7 @@ public class MultiHttpSecurityConfiguration {
 
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(authUserService).passwordEncoder(passwordEncoder());
+            auth.userDetailsService(adminUserDetailsService).passwordEncoder(passwordEncoder());
         }
 
         @Override
@@ -68,7 +73,7 @@ public class MultiHttpSecurityConfiguration {
     @Configuration
     public static class UserConfigurationAdapter extends WebSecurityConfigurerAdapter {
         @Autowired
-        private AuthUserServiceImpl authUserService;
+        private UserUserDetailsServiceImpl userUserDetailsService;
 
         @Autowired
         private AuthenticationSuccessHandler authenticationSuccessHandler;
@@ -78,6 +83,8 @@ public class MultiHttpSecurityConfiguration {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+            http.exceptionHandling().
+                    authenticationEntryPoint(new UserAuthorizedEntryPoint());
             http.antMatcher("/api/**")
                     .authorizeRequests()
                     .antMatchers("/api/test/**").permitAll()
@@ -95,7 +102,7 @@ public class MultiHttpSecurityConfiguration {
 
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(authUserService).passwordEncoder(passwordEncoder());
+            auth.userDetailsService(userUserDetailsService).passwordEncoder(passwordEncoder());
         }
 
         @Override

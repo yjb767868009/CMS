@@ -24,16 +24,10 @@ import java.util.List;
  * @version 1.0
  */
 @Service
-public class AuthUserServiceImpl implements UserDetailsService {
+public class AdminUserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private AdminDao adminDao;
-
-    @Autowired
-    private TeacherDao teacherDao;
-
-    @Autowired
-    private StudentDao studentDao;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -45,16 +39,6 @@ public class AuthUserServiceImpl implements UserDetailsService {
         if (null != admin) {
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
             return new User(admin.getAccount(), passwordEncoder.encode(admin.getPassword()), authorities);
-        }
-        Teacher teacher = teacherDao.getTeacherByAccount(username);
-        if (null != teacher) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_TEACHER"));
-            return new User(teacher.getAccount(), passwordEncoder.encode(teacher.getPassword()), authorities);
-        }
-        Student student = studentDao.getStudentByAccount(username);
-        if (null != student) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_STUDENT"));
-            return new User(student.getAccount(), passwordEncoder.encode(student.getPassword()), authorities);
         }
         throw new UsernameNotFoundException("No this account");
     }

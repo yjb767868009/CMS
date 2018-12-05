@@ -6,10 +6,10 @@
     <x-input v-model="account" style="margin-top:40px;background-color:#fff" placeholder="学号/教工号" ></x-input>
     <x-input type="password" v-model="password" style="margin-top:20px;background-color:#fff" placeholder="登录密码"></x-input>
   </group>
-    <x-button @click="login" style="margin-top:100px">
+    <x-button @click.native="login" style="margin-top:100px">
       登陆
       </x-button>
-    <button @click="forget" style="background:0;height:0px;border:0;margin-left:80%;margin-top:10px">
+    <button @click.native="forget" style="background:0;height:0px;border:0;margin-left:80%;margin-top:10px">
       忘记密码
     </button>
     <div style="color:green;margin-top:50%">
@@ -51,10 +51,13 @@ export default {
       this.$router.push('/mobile/modifypw')
     },
     login:function(){
-      this.$axios.post('/api/user/login?',Qs.stringify({
-        acoount:username,
-        password:password
-      }))
+      this.$axios({
+        method:'post',
+        url:'/api/user/login?'+Qs.stringify({
+          account:this.account,
+          password:this.password
+        })
+      })
         .then((response)=>{
                 let data = response.data
                 let authority = data[0].authority

@@ -49,7 +49,7 @@ export default {
             password:this.addTeacherForm.password
           })).then((response)=>{
             if(response.data.message==='Success'){
-              $store.state.admin.showAddTeacher=false
+              this.$store.state.admin.showAddTeacher=false
               this.$emit('addSuccess')
             }
           })

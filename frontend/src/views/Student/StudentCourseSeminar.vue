@@ -16,7 +16,7 @@
         </cell>
 
             <template v-if="showContent002">
-                <cell-box :border-intent="false" class="sub-item" is-link link="/seminarInfo" style="padding-left:130px">业务流程分析</cell-box>
+                <cell-box :border-intent="false" class="sub-item" is-link link="/seminarDetail" style="padding-left:130px">业务流程分析</cell-box>
                 <cell-box class="sub-item" is-link style="padding-left:130px">领域模型</cell-box>
             </template>
         

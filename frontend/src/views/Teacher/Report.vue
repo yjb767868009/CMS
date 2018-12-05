@@ -13,25 +13,25 @@
     <cell style="background:#fff" title="第一组：" value-align="left">
          <div style="text-decoration:underline" @click="look">
             <span style="color: green">1.1.dox</span>
-            <input slot="right" style="margin-left:40%;width:50px;height:30px" placeholder="成绩"></input>
+            <input slot="right" style="margin-left:40%;width:50px;height:30px" placeholder="成绩">
         </div>
     </cell>
     <cell style="background:#eee" title="第二组：" value-align="left">
          <div style="text-decoration:underline" @click="look"> 
             <span style="color: green">1.2.dox</span>
-            <input slot="right" style="margin-left:40%;width:50px;height:30px" placeholder="成绩"></input>
+            <input slot="right" style="margin-left:40%;width:50px;height:30px" placeholder="成绩">
          </div>
     </cell>
     <cell style="background:#fff" title="第三组：" value-align="left">
          <div style="text-decoration:underline" @click="look">
             <span style="color: green">1.3.dox</span>
-            <input slot="right" style="margin-left:40%;width:50px;height:30px" placeholder="成绩"></input>
+            <input slot="right" style="margin-left:40%;width:50px;height:30px" placeholder="成绩">
          </div>
     </cell>
     <cell style="background:#eee" title="第四组：" value-align="left">
          <div style="text-decoration:underline" @click="look">
             <span style="color: green">1.4.dox</span>
-            <input slot="right" style="margin-left:40%;width:50px;height:30px" placeholder="成绩"></input>
+            <input slot="right" style="margin-left:40%;width:50px;height:30px" placeholder="成绩">
          </div>
 
     </cell>

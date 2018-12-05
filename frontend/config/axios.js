@@ -8,14 +8,10 @@ axios.defaults.withCredentials=true
 
 axios.interceptors.request.use(
     config=>{
-        // const token = getCookie('session')
         config.data=JSON.stringify(config.data)
         config.headers={
             'Content-type':'application/x-www-form-urlencoded'
         };
-        // if(token){
-        //     config.params={'token':token}
-        // }
         return config
     },
     err=>{

@@ -10,6 +10,11 @@
     <x-input type="password" v-model="password" style="margin-top:20px;background-color:#fff" placeholder="登录密码"></x-input>
   </group>
     <x-button @click="login" style="margin-top:100px">登陆</x-button>
+    <button @click="forget" style="background:0;height:0px;border:0;margin-left:60%;margin-top:10px">忘记密码
+    </button>
+    <div style="color:green;margin-top:50%">
+      初次登录默认密码为123456
+    </div>
   </div>
 </template>
 

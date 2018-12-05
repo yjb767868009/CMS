@@ -148,7 +148,7 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
           }
           if(!isNaN(this.teacherSearchKey)){
             //搜教工号
-            this.$axios.get('/api/admin/teachers/searchByAccount?teacherAccount='+teacherSearchKey)
+            this.$axios.get('/api/admin/teachers/searchByAccount?teacherAccount='+this.teacherSearchKey)
               .then((response)=>{
                 this.teacherData=response.data
               })
@@ -157,8 +157,12 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
               })
           }else{
             //搜名字
-            this.$axios.get('/api/admin/teachers/searchByName?name='+teacherSearchKey)
+            this.$axios.get('/api/admin/teachers/searchByName?name='+this.teacherSearchKey)
               .then((response)=>{
+                if(response.data[0]===null){
+                  this.$message.error('找不到该老师')
+                  return
+                }
                 this.teacherData=response.data
               })
               .catch(function(error){
@@ -184,10 +188,10 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
           confirmButtonText: '确定',
           cancelButtonText: '取消',
         }).then(({ input }) => {
-          this.$axios.patch('/api/admin/teacher/'+teacher.teacherId)
+          this.$axios.patch('/api/admin/teacher/'+teacher.teacherId+'/modifyPassword?password='+input)
             .then(function(response){
               //process on response
-                  this.$message({
+                this.$message({
                 type: 'success',
                 message: '修改后的密码为: ' + input
               });

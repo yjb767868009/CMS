@@ -66,9 +66,13 @@ export default {
                 }
                 //activation
                 if(authority==='ROLE_TEACHER'){
+                    this.$store.state.token='token'
+                    this.$store.state.userType='teacher'
                     this.$router.push('/mobile/teacher')
                 }
                 if(authority==='ROLE_STUDENT'){
+                    this.$store.state.token='token'
+                    this.$store.state.userType='student'
                     this.$router.push('/mobile/student')
                 }
             })

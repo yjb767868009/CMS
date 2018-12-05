@@ -58,10 +58,27 @@ import Qs from 'qs'
                 let message = response.data
                 if(message==='Bad credentials'){
                     this.$message.error('登陆失败')
+                    return
                 }
-                if(message[0].authority==='ROLE_ADMIN'){
-                    this.$router.push('AdminTeacher')
-                }
+                
+                //JWT
+                this.$axios({
+                    method:'post',
+                    url:'/api/admin/setJWT?'+Qs.stringify({
+                        account:this.account,
+                        password:this.password
+                    }).then((res)=>{
+                        if(res.data==='success'){
+                            this.$store.state.token='token'
+                            this.$store.state.userType='admin'
+                            this.$router.push('AdminTeacher')
+                        }
+                        else{
+                            this.$message.error('登陆失败')
+                        }
+                    })
+                })
+                
             }).catch((error)=>{
                 console.log(error)
                 this.$message.error('登陆失败')

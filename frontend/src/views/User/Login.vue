@@ -72,13 +72,29 @@ import Qs from 'qs'
                 if(data==='Bad credentials'){
                     this.$message.error('登陆失败')
                 }
-                //activation
-                if(authority==='ROLE_TEACHER'){
-                    this.$router.push('/pc/teacher')
+
+                //JWT
+                if(authority==='ROLE_TEACHER'||authority==='ROLE_STUDENT'){
+                    this.$axios({
+                        method:'post',
+                        url:'/api/user/setJWT?'+Qs.stringify({
+                            account:this.account,
+                            password:this.password
+                        })
+                    }).then((res)=>{
+                        if(res.data==='teacher'){
+                            this.$store.state.token='token'
+                            this.$store.state.userType='teacher'
+                            this.$router.push('/pc/teacher')
+                        }
+                        if(res.data==='stduent'){
+                            this.$store.state.token='token'
+                            this.$store.state.userType='student'
+                            this.$router.push('/pc/student')
+                        }
+                    })
                 }
-                if(authority==='ROLE_STUDENT'){
-                    this.$router.push('/pc/student')
-                }
+
             })
         },
     }

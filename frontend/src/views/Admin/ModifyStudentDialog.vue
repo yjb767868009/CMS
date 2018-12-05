@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import Qs from 'qs'
 export default {
     data(){
         return{
@@ -31,15 +32,20 @@ export default {
     },
     methods:{
         postModifyStudent:function(){
-          this.$axios.patch('/api/admin/student/'+this.$store.state.admin.currentStudent.studentId,{
+          this.$axios.put('/api/admin/student/'+this.$store.state.admin.currentStudent.studentId+'?'+
+          Qs.stringify({
             name:this.modifyStudentForm.name,
             account:this.modifyStudentForm.account,
             email:this.modifyStudentForm.email,
-          }).then((response)=>{
-            console.log(response)
+          })).then((response)=>{
+            if(response.data.message==='Success'){
+              this.$store.state.admin.showModifyStudent=false
+              this.$emit('modifySuccess')
+            }
           })
             .catch(function(error){
               console.log(error)
+              this.$store.state.admin.showModifyStudent=false
             })
         },
     }

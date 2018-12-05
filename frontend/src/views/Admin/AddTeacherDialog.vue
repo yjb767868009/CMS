@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import Qs from 'qs'
 export default {
     data(){
         return{
@@ -35,13 +36,22 @@ export default {
     },
     methods:{
         postAddTeacher:function(){
-          this.$axios.post('/api/admin/teacher',{
+          if(this.addTeacherForm.name===''||
+             this.addTeacherForm.account===''||
+             this.addTeacherForm.email===''||
+             this.addTeacherForm.password==='')
+             this.$message.error('请完整填写老师信息')
+
+          this.$axios.post('/api/admin/teacher?'+Qs.stringify({
             name:this.addTeacherForm.name,
             account:this.addTeacherForm.account,
             email:this.addTeacherForm.email,
             password:this.addTeacherForm.password
-          }).then((response)=>{
-            console.log(response)
+          })).then((response)=>{
+            if(response.data.message==='Success'){
+              this.$store.state.admin.showAddTeacher=false
+              this.$emit('addSuccess')
+            }
           })
             .catch(function(error){
               console.log(error)

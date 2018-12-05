@@ -53,8 +53,8 @@
       </el-main>
     </el-container>
 
-      <modify-teacher-dialog></modify-teacher-dialog>
-      <add-teacher-dialog></add-teacher-dialog>
+      <modify-teacher-dialog @modifySuccess='flash'></modify-teacher-dialog>
+      <add-teacher-dialog @addSuccess='flash'></add-teacher-dialog>
   
   </el-container>
       <el-footer style="background-color: rgb(10, 47, 88);color:rgb(255,255,255);height:100%;">
@@ -117,11 +117,16 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
     },
     data() {
       return {
-        teacherData:[1,2,3,4],
+        teacherData:[{
+          account:'123',
+          name:'teacher1',
+          email:'e-mail',
+          phone:'j123312313'
+        },],
         teacherSearchKey:'',
       }
     },
-    mounted:function(){
+    created:function(){
       this.getAllTeacher()
     },
     methods:{
@@ -136,7 +141,6 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
             this.$store.state.admin.currentTeacher=teacher
             console.log(this.$store.state.admin.currentTeacher)
         },
-        
         searchTeacher:function(){
           if(!this.teacherSearchKey){
             this.getAllteacher()
@@ -144,7 +148,7 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
           }
           if(!isNaN(this.teacherSearchKey)){
             //搜教工号
-            this.$axios.get('/api/admin/teachers/searchByAccount?teacherAccount='+teacherSearchKey)
+            this.$axios.get('/api/admin/teachers/searchByAccount?teacherAccount='+this.teacherSearchKey)
               .then((response)=>{
                 this.teacherData=response.data
               })
@@ -153,8 +157,12 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
               })
           }else{
             //搜名字
-            this.$axios.get('/api/admin/teachers/searchByName?name='+teacherSearchKey)
+            this.$axios.get('/api/admin/teachers/searchByName?name='+this.teacherSearchKey)
               .then((response)=>{
+                if(response.data[0]===null){
+                  this.$message.error('找不到该老师')
+                  return
+                }
                 this.teacherData=response.data
               })
               .catch(function(error){
@@ -162,6 +170,10 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
               })
           }
         },
+        flash:function(){
+          this.getAllTeacher()
+        },
+
         getAllTeacher:function(){
           this.$axios.get('/api/admin/teachers')
             .then((response)=>{
@@ -176,10 +188,10 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
           confirmButtonText: '确定',
           cancelButtonText: '取消',
         }).then(({ input }) => {
-          this.$axios.patch('/api/admin/teacher/'+teacher.teacherId)
+          this.$axios.patch('/api/admin/teacher/'+teacher.teacherId+'/modifyPassword?password='+input)
             .then(function(response){
               //process on response
-                  this.$message({
+                this.$message({
                 type: 'success',
                 message: '修改后的密码为: ' + input
               });

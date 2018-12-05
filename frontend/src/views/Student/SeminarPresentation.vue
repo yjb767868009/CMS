@@ -1,24 +1,16 @@
 <template>
 <div class="student" style="height:800px;background:#eee;">
-    <x-header title="OOAD-讨论课" style="height:60px;padding-top:12px;font-size:20px"  :right-options="{showMore: true}"  @on-click-more="showMenus = true">
+    <x-header title="讨论课PPT" style="height:60px;padding-top:12px;font-size:20px"  :right-options="{showMore: true}"  @on-click-more="showMenus = true">
     </x-header>
-    <div style="font-size:18px;background:#fff;margin-top:7px;margin-bottom:5px"><cell primary="content" value-align="left">
-        <div style="text-align:center;color:#000;height:45px;"><span style="font-size:1.2em">业务流程分析</span>
-        <p style="margin-top:5px;text-align:right;font-size:0.8em;color:#000">第二组&emsp;展示</p>
-        </div>
-        </cell></div>
+    <div style="font-size:18px;background:#fff"><cell primary="content" title="第一组：" value-align="left">
+        <div style="text-decoration:underline;padding-left:40px;color:#005AB5;">1-1&emsp;业务流程.ppt</div></cell></div>
+    <div style="font-size:18px;background:#eee"><cell primary="content" title="第二组：" value-align="left">
+        <div style="text-decoration:underline;padding-left:40px;color:#005AB5;">1-2&emsp;业务流程.ppt</div></cell></div>
+    <div style="font-size:18px;background:#fff"><cell primary="content" title="第三组：" value-align="left">
+        <div style="text-decoration:underline;padding-left:40px;color:#005AB5;">1-3&emsp;业务流程.ppt</div></cell></div>
+    <div style="font-size:18px;background:#eee"><cell primary="content" title="第四组：" value-align="left">
+        <div style="text-decoration:underline;padding-left:40px;color:#005AB5;">1-4&emsp;业务流程.ppt</div></cell></div>
     
-    <div style="font-size:18px;background:#fff"><cell primary="content" title="第一组：" value-align="left"><div style="padding-left:30px;color:#000;">&emsp;&emsp;&emsp;&emsp;1-1</div></cell></div>
-    <div style="font-size:18px;background:#eee"><cell primary="content" title="第二组：" value-align="left"><div style="padding-left:30px;color:#000;">&emsp;&emsp;&emsp;&emsp;1-2</div></cell></div>
-    <div style="font-size:18px;background:#fff"><cell primary="content" title="第三组：" value-align="left"><div style="padding-left:30px;color:#000;">&emsp;&emsp;&emsp;&emsp;<span style="font-weight:bold;color:#FF3333">1-3</span></div></cell></div>
-    <div style="font-size:18px;background:#eee"><cell primary="content" title="第四组：" value-align="left"><div style="padding-left:30px;color:#000;">&emsp;&emsp;&emsp;&emsp;1-4</div></cell></div>
-    
-    <group style="font-size:18px;margin-top:50px;background:#fff;">
-      <x-switch title="提问：" v-model="show2" style="background:#fff;"></x-switch>
-    </group>
-    <div v-transfer-dom>
-      <alert v-model="show2" title="提问成功"><p>等待老师抽选</p></alert>
-    </div>
 
     <div v-transfer-dom>
       <actionsheet :menus="menus" v-model="showMenus"></actionsheet>
@@ -42,25 +34,18 @@
 
 <script>
 import axios from 'axios'
-import {AlertModule,XHeader,Cell,Actionsheet,
-        Alert,Group,
-        XSwitch,TransferDomDirective as TransferDom 
-        } from 'vux'
+import {XHeader,
+        XButton,Group,Cell,Actionsheet,} from 'vux'
   export default {
-    directives:{
-        TransferDom
-    },
     components:{
-        Alert,
-        XSwitch,
-        Group,
         XHeader,
+        XButton,
+        Group,
         Cell,
         Actionsheet,
     },
     data() {
        return{ 
-        show2:false,
         menus: {
         menu1: '待办',
         menu2: '个人页',
@@ -71,11 +56,15 @@ import {AlertModule,XHeader,Cell,Actionsheet,
     },
     methods:{
         toast:function(){
-            Toast(this.name);
+            Toast(this.name)
         },
         onClick:function(){
             console.log("sss");
         },
-    }  
-  }
+        edit:function(){
+            this.$router.push('/StudentInfo')
+        }
+    }
+     
+  };
 </script>

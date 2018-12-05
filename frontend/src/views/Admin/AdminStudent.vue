@@ -49,8 +49,8 @@
       </el-main>
     </el-container>
 
-      <modify-student-dialog></modify-student-dialog>
-      <add-teacher-dialog></add-teacher-dialog>
+      <modify-student-dialog @modifySuccess='flash'></modify-student-dialog>
+      <add-teacher-dialog @addSuccess='flash'></add-teacher-dialog>
   
   </el-container>
       <el-footer style="background-color: rgb(10, 47, 88);color:rgb(255,255,255);height:100%;">
@@ -140,7 +140,7 @@ import ModifyStudentDialog from './ModifyStudentDialog'
           }
           if(!isNaN(this.studentSearchKey)){
             //搜学号
-            this.$axios.get('/api/admin/students/seatrchByAccount?studentAccount'+studentSearchKey)
+            this.$axios.get('/api/admin/students/seatrchByAccount?studentAccount='+this.studentSearchKey)
               .then((response)=>{
                 this.teacherData=response.data
               })
@@ -149,8 +149,12 @@ import ModifyStudentDialog from './ModifyStudentDialog'
               })
           }else{
             //搜名字
-            this.$axios.get('/api/admin/students/searchByName?name='+studentSearchKey)
+            this.$axios.get('/api/admin/students/searchByName?name='+this.studentSearchKey)
               .then((response)=>{
+                if(response.data[0]===null){
+                  this.$message.error('找不到该学生')
+                  return
+                }
                 this.teacherData=response.data
               })
               .catch(function(error){
@@ -158,7 +162,10 @@ import ModifyStudentDialog from './ModifyStudentDialog'
               })
           }
         },
-        
+        flash:function(){
+          this.getAllStudent()
+        },
+
         getAllStudent:function(){
           this.$axios.get('/api/admin/students')
             .then((response)=>{
@@ -173,9 +180,7 @@ import ModifyStudentDialog from './ModifyStudentDialog'
           confirmButtonText: '确定',
           cancelButtonText: '取消',
             }).then(({ input }) => {
-            this.$axios.patch('/api/admin/student/'+student.studentId,{
-            password:input
-          })
+            this.$axios.patch('/api/admin/student/'+student.studentId+'/modifyPassword?password='+input)
             .then((response)=>{
               //process on response
                   this.$message({

@@ -1,10 +1,10 @@
 <template>
 <div class="student" style="height:800px;background:#eee;">
-    <x-header title="OOAD-讨论课" style="height:60px;padding-top:12px;font-size:20px"  :right-options="{showMore: true}"  @on-click-more="showMenus = true">
+    <x-header title="讨论课正在进行" style="height:60px;padding-top:12px;font-size:20px"  :right-options="{showMore: true}"  @on-click-more="showMenus = true">
     </x-header>
     <div style="font-size:18px;background:#fff;margin-top:7px;margin-bottom:5px"><cell primary="content" value-align="left">
         <div style="text-align:center;color:#000;height:45px;"><span style="font-size:1.2em">业务流程分析</span>
-        <p style="margin-top:5px;text-align:right;font-size:0.8em;color:#000">第二组&emsp;展示</p>
+        <p style="margin-top:5px;text-align:right;font-size:0.8em;color:#000">第三组&emsp;展示</p>
         </div>
         </cell></div>
     
@@ -20,6 +20,9 @@
       <alert v-model="show2" title="提问成功"><p>等待老师抽选</p></alert>
     </div>
 
+    <group title="ss">
+      <cell title="ss" @click.native="showPlugin" is-link></cell>
+    </group>
     <div v-transfer-dom>
       <actionsheet :menus="menus" v-model="showMenus"></actionsheet>
     </div>
@@ -41,9 +44,9 @@
 
 
 <script>
-import axios from 'axios'
-import {AlertModule,XHeader,Cell,Actionsheet,
-        Alert,Group,
+import Vue from 'vue'
+import {XHeader,Cell,Actionsheet,
+        Alert,Group,AlertPlugin,
         XSwitch,TransferDomDirective as TransferDom 
         } from 'vux'
   export default {
@@ -57,6 +60,7 @@ import {AlertModule,XHeader,Cell,Actionsheet,
         XHeader,
         Cell,
         Actionsheet,
+        AlertPlugin
     },
     data() {
        return{ 
@@ -70,12 +74,26 @@ import {AlertModule,XHeader,Cell,Actionsheet,
     }
     },
     methods:{
+        showPlugin:function() {
+            alert("caonima");        
+        },
+
+     
         toast:function(){
             Toast(this.name);
         },
-        onClick:function(){
-            console.log("sss");
+        showModule () {
+      AlertModule.show({
+        title: 'VUX is Cool',
+        content: this.$t('Do you agree?'),
+        onShow () {
+          console.log('Module: I\'m showing')
         },
-    }  
+        onHide () {
+          console.log('Module: I\'m hiding now')
+        }
+      })
+        },  
+    },
   }
 </script>

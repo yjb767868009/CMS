@@ -8,35 +8,16 @@
     
     
     <cell primary="content" title="要求：" value-align="left"><div style="padding-left:30px">界面导航图和所有界面原型设计课堂讨论每个小组15分钟</div></cell>
-    
     <div style="font-size:18px;background:#fff">
         <cell primary="content" title="课次序号：" value-align="left">
-        <div style="padding-left:30px;color:#000;">
-            &emsp;&emsp;已完成&emsp;
-                <span @click="edit" style="text-decoration:underline;padding-left:6px;font-size:0.8em;color:#00DB00">
-                查看信息
-                </span>
-            </div>
+        <div style="padding-left:65px;color:#000;">正在进行<span @click="edit" style="text-decoration:underline;padding-left:15px;font-size:0.8em;color:#00DB00">查看信息</span></div>
         </cell>
     </div>
     
     <div style="font-size:22px;background:#53FF53;margin-top:120px;height:60px">
-
-    <cell primary="content" title="" value-align="left" v-if="SHOW_RUNNING">
-        <div style="padding-left:78px;padding-top:5px;color:#fff;font-weight:520;" @click="running">
-            &emsp;&emsp;进入讨论课&emsp;
-        </div>
-    </cell>
-
-    <cell primary="content" title="" value-align="left" v-if="SHOW_UNSIGNED">
-        <div style="padding-left:78px;padding-top:5px;color:#fff;font-weight:520;" @click="running">
-            &emsp;&emsp;报名&emsp;
-        </div>
-    </cell>
-
-
-
-        
+    <cell primary="content" title="" value-align="left">
+        <div style="padding-left:120px;padding-top:5px;color:#fff;font-weight:520;" @click="running">进入讨论课</div>
+        </cell>
     </div>
     <div v-transfer-dom>
       <actionsheet :menus="menus" v-model="showMenus"></actionsheet>
@@ -93,7 +74,7 @@ import {XHeader,
             console.log("sss");
         },
         edit:function(){
-            this.$router.push('/seminarSeqFinished')
+            this.$router.push('/seminarPresentation')
         },
         running:function(){
             this.$router.push('/seminarSeqRunning')

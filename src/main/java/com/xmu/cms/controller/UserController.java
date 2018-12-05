@@ -23,9 +23,6 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private JavaMailSender mailSender;
-
-    @Autowired
     private RoundService roundService;
 
     @Autowired
@@ -37,10 +34,11 @@ public class UserController {
     @Autowired
     private AttendanceService attendanceService;
 
+    @Autowired
     private ScoreService scoreService;
 
-    @Value("${spring.mail.username}")
-    private String sender;
+    @Autowired
+    private MailService mailService;
 
     @PostMapping(value = "/login")
     public Map<String, String> userLogIn(@RequestParam(value = "account") String account,
@@ -54,14 +52,15 @@ public class UserController {
         return "Success";
     }
 
-    @PostMapping(value = "/findPassword")
-    public void findPassword(@RequestParam(value = "email") String email) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(sender);
-        message.setTo(email);
-        message.setSubject("主题：简单邮件");
-        message.setText("测试邮件内容");
-        mailSender.send(message);
+    @PostMapping(value = "/getVerificationCode")
+    public Map<String, String> getVerificationCode(@RequestParam(value = "account") String account) {
+        return mailService.sendEmailByAccount(account);
+    }
+
+    @PostMapping(value = "/checkVerificationCode")
+    public Map<String, String> checkVerificationCode(@RequestParam("account") String account,
+                                                     @RequestParam("verificationCode") String verificationCode) {
+        return null;
     }
 
     @PostMapping(value = "/resetPassword")

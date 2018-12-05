@@ -3,6 +3,7 @@ package com.xmu.cms.service.Impl;
 import com.xmu.cms.dao.AttendanceDao;
 import com.xmu.cms.entity.Attendance;
 import com.xmu.cms.service.AttendanceService;
+import com.xmu.cms.support.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,12 @@ public class AttendanceServiceImpl implements AttendanceService {
             message.put("message", "Error");
         }
         return message;
+    }
+
+    @Override
+    public Map<String, String> newAttendance(Integer clbumSeminarId, Integer teamOrder) {
+        Integer studentId = Token.getUserId();
+        return null;
     }
 
 }

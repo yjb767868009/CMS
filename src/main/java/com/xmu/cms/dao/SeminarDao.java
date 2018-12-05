@@ -50,4 +50,6 @@ public interface SeminarDao {
 
     String getStateInClbumSeminar(@Param("seminarId") Integer seminarId,
                                   @Param("clbumId") Integer clbumId);
+
+    Seminar getRunningSeminarByTeacherId(@Param("teacherId") Integer teacherId);
 }

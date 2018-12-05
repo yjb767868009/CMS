@@ -6,7 +6,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,7 +22,7 @@ import java.util.Map;
 public class Token {
     public static final String SECRET = "JKKLJOoasdlfj";
 
-    public static String getToken(String userId) {
+    public static String getToken(Integer userId) {
         Date iatDate = new Date();
         // expire time
         Calendar nowTime = Calendar.getInstance();
@@ -34,22 +37,25 @@ public class Token {
         // build token
         // param backups {iss:Service, aud:APP}
         return JWT.create().withHeader(map) // header
-                .withClaim("iss", "Service") // payload
-                .withClaim("aud", "APP")
-                .withClaim("user_id", userId.toString())
-                .withIssuedAt(iatDate) // sign time
-                .withExpiresAt(expiresDate) // expire time
+                .withIssuer("CMS")
+                .withClaim("user_id", userId)
                 .sign(Algorithm.HMAC256(SECRET));
     }
 
-    public static String getUserId(String token) {
+    public static Integer getUserId() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        assert attributes != null;
+        HttpServletRequest request = attributes.getRequest();
+        String token = request.getHeader("Authorization");
+        token = token.substring(7);
         DecodedJWT jwt = null;
         try {
-            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET)).build();
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET))
+                    .withIssuer("CMS").build();
             jwt = verifier.verify(token);
         } catch (Exception e) {
-            e.printStackTrace();
             // token 校验失败, 抛出Token验证非法异常
+            e.printStackTrace();
         }
         assert jwt != null;
         Map<String, Claim> claims = jwt.getClaims();
@@ -58,6 +64,6 @@ public class Token {
             System.out.println("Token Error");
         }
         assert user_id_claim != null;
-        return user_id_claim.asString();
+        return user_id_claim.asInt();
     }
 }

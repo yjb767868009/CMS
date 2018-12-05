@@ -13,4 +13,6 @@ public interface AttendanceService {
     List<Attendance> getAttendancesInSeminar(Integer seminarId);
 
     Map<String, String> setAttendancePresentationScore(Integer attendanceId, Integer presentationScore);
+
+    Map<String, String> newAttendance(Integer clbumSeminarId, Integer teamOrder);
 }

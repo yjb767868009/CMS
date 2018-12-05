@@ -16,4 +16,6 @@ public interface AttendanceDao {
 
     Integer setAttendanceScore(@Param("attendanceId") Integer attendanceId,
                                @Param("presentationScore") Integer presentationScore);
+
+    List<Attendance> getAttendancesInClbumSeminar(@Param("clbumSeminarId") Integer clbumSeminarId);
 }

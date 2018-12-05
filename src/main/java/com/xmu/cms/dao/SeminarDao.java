@@ -48,4 +48,6 @@ public interface SeminarDao {
 
     List<Seminar> getAllSeminarByRoundId(@Param("roundId") Integer roundId);
 
+    String getStateInClbumSeminar(@Param("seminarId") Integer seminarId,
+                                  @Param("clbumId") Integer clbumId);
 }

@@ -69,7 +69,7 @@ import Qs from 'qs'
             ).then((response)=>{
                 let data = response.data
                 let authority = data[0].authority
-                if(message==='Bad credentials'){
+                if(data==='Bad credentials'){
                     this.$message.error('登陆失败')
                 }
                 //activation

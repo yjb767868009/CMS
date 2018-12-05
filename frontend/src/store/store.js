@@ -9,7 +9,10 @@ export default new Vuex.Store({
         admin:admin_store
     },
     state:{
-        show:false
+        show:false,
+        token:'',
+        userType:'',
+        currentEmail:'',
     },
     mutations:{
         

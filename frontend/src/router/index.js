@@ -78,16 +78,25 @@ export default new Router({
       path:'/login',
       name:'Login',
       component:Login,
+      meta:{
+        requireAuth:false
+      }
     },
     {
       path: '/mobileLogin',
       name: 'MobileLogin',
-      component: MobileLogin
+      component: MobileLogin,
+      meta:{
+        requireAuth:false
+      }
     }, 
     {
       path:'/adminLogin',
       name:'AdminLogin',
       component:AdminLogin,
+      meta:{
+        requireAuth:false
+      }
     },
 
     //user
@@ -202,12 +211,12 @@ export default new Router({
     //teacher
 
     {
-      path: '/mobile/teacher',
+      path: '/mobile/teacher', //教师个人页界面
       name: 'MobileTeacher',
       component: MobileTeacher
     },
     {
-      path: '/mobile/teacher/account',
+      path: '/mobile/teacher/account',//账户与安全界面
       name: 'TeacherSetAccount',
       component: TeacherSetAccount
     },

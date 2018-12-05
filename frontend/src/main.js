@@ -28,6 +28,39 @@ Vue.use(ElementUI)
 Vue.use(VueCookie)
 Vue.use(MintUI)
 
+
+//路由拦截
+// router.beforeEach((to,from,next)=>{
+//   if(to.meta.requireAuth!==false){
+//     if(store.state.token){
+//       if(to.fullPath.indexOf(store.state.userType))
+//         next();
+//       else{
+//         next({path:'/401'})
+//       }
+//     }else{
+//       if(to.fullPath.match(/admin/i)){
+//         next({
+//           path:'/adminLogin',
+//           query:{redirect:to.fullPath}
+//         })
+//       }
+//       else if(to.fullPath.match(/teacher/i)||to.fullPath.match(/student/i)){
+//         next({
+//           path:'/Login',
+//           query:{redirect:to.fullPath}
+//         })
+//       }else{
+//         next({
+//           path:'/401'
+//         })
+//       }
+//     }
+//   }else{
+//     next()
+//   }
+// })
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

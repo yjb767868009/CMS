@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
@@ -43,20 +44,13 @@ public class UserController {
     public Map<String, String> userLogIn(@RequestParam(value = "account") String account,
                                          @RequestParam(value = "password") String password,
                                          HttpServletResponse response) {
-        Map<String, String> messages = userService.userLogIn(account, password);
-        Cookie cookie = new Cookie("Token", messages.get("token"));
-        response.addCookie(cookie);
-        return messages;
+        return userService.userLogIn(account, password);
     }
 
     @PostMapping(value = "/setJWT")
     public Map<String, String> setJWT(@RequestParam(value = "account") String account,
-                                      @RequestParam(value = "password") String password,
-                                      HttpServletResponse response) {
-        Map<String, String> messages = userService.userLogIn(account, password);
-        Cookie cookie = new Cookie("Token", messages.get("token"));
-        response.addCookie(cookie);
-        return messages;
+                                      @RequestParam(value = "password") String password) {
+        return userService.userLogIn(account, password);
     }
 
     @PostMapping(value = "/activation")
@@ -148,7 +142,13 @@ public class UserController {
     }
 
     @GetMapping(value = "/myInfo")
-    public Map<String, String> getMyInfo() {
+    public Map<String, String> getMyInfo(HttpServletRequest request) {
+        Cookie[] cookies= request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("Token")) {
+                String token = cookie.getValue();
+            }
+        }
         return userService.getMyInfo();
     }
 }

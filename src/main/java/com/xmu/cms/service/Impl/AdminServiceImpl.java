@@ -28,7 +28,7 @@ public class AdminServiceImpl implements AdminService {
             message.put("message", "No this account");
         } else {
             if (password.equals(admin.getPassword())) {
-                message.put("token", Token.setToken(new UserInfo(admin.getAdminId(), "admin")));
+                Token.setToken(new UserInfo(admin.getAdminId(), "admin"));
                 message.put("message", "Success");
             } else {
                 message.put("message", "Account or Password error");

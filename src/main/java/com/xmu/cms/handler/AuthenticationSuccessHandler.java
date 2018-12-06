@@ -29,7 +29,7 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         if (LoginType.JSON.equals(securityProperties.getLoginType())) {
-            System.out.println(authentication);
+            //System.out.println(authentication);
             response.getWriter().write(objectMapper.writeValueAsString(authentication.getAuthorities()));
         } else {
             super.onAuthenticationSuccess(request, response, authentication);

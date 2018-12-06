@@ -5,7 +5,6 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -25,7 +24,11 @@ import java.util.Map;
 public class Token {
     private static final String SECRET = "JKKLJOoasdlfj";
 
-    public static String setToken(UserInfo info) {
+    public static void setToken(UserInfo info) {
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        assert requestAttributes != null;
+        HttpServletResponse response = requestAttributes.getResponse();
+
         Date iatDate = new Date();
         // expire time
         Calendar nowTime = Calendar.getInstance();
@@ -37,11 +40,20 @@ public class Token {
         map.put("alg", "HS256");
         map.put("typ", "JWT");
 
-        return JWT.create().withHeader(map) // header
+        // build token
+        // param backups {iss:Service, aud:APP}
+
+        String token = JWT.create().withHeader(map) // header
                 .withIssuer("CMS")
                 .withClaim("userId", info.getUserId())
                 .withClaim("userType", info.getUserType())
                 .sign(Algorithm.HMAC256(SECRET));
+
+        Cookie cookie = new Cookie("Token", token);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        assert response != null;
+        response.addCookie(cookie);
     }
 
     public static UserInfo getToken() {

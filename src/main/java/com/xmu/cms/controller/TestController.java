@@ -96,30 +96,8 @@ public class TestController {
     }
 
     @GetMapping(value = "/createJWT")
-    public void testJWT(HttpServletRequest request, HttpServletResponse response) {
-        Date iatDate = new Date();
-        // expire time
-        Calendar nowTime = Calendar.getInstance();
-        nowTime.add(Calendar.DATE, 1);
-        Date expiresDate = nowTime.getTime();
-
-        // header Map
-        Map<String, Object> map = new HashMap<>();
-        map.put("alg", "HS256");
-        map.put("typ", "JWT");
-
-        // build token
-        // param backups {iss:Service, aud:APP}
-
-        String token = JWT.create().withHeader(map) // header
-                .withIssuer("CMS")
-                .withClaim("userId", 1)
-                .withClaim("userType", "ADMIN")
-                .sign(Algorithm.HMAC256(SECRET));
-
-        Cookie cookie = new Cookie("Token", token);
-        assert response != null;
-        response.addCookie(cookie);
+    public void testJWT() {
+        Token.setToken(new UserInfo(1,"admin"));
     }
 
     @GetMapping(value = "/getUserType")

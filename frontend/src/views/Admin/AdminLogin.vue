@@ -60,16 +60,17 @@ import Qs from 'qs'
                     this.$message.error('登陆失败')
                     return
                 }
-                
-                //JWT
+               	//JWT
                 this.$axios({
                     method:'post',
                     url:'/api/admin/setJWT?'+Qs.stringify({
                         account:this.account,
                         password:this.password
-                    }).then((res)=>{
-                        if(res.data==='success'){
-                            this.$store.state.token='token'
+                    }),
+				}).then((res)=>{
+					console.log(res)
+                        if(res.data.message==='Success'){
+                            this.$store.state.token='Token'
                             this.$store.state.userType='admin'
                             this.$router.push('AdminTeacher')
                         }
@@ -77,12 +78,13 @@ import Qs from 'qs'
                             this.$message.error('登陆失败')
                         }
                     })
-                })
-                
             }).catch((error)=>{
                 console.log(error)
                 this.$message.error('登陆失败')
             })
+			
+
+                
         },
         
     }

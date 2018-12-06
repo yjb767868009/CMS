@@ -36,20 +36,13 @@ public class AdminController {
     public Map<String, String> adminLogIn(@RequestParam(value = "account") String account,
                                           @RequestParam(value = "password") String password,
                                           HttpServletResponse response) {
-        Map<String, String> messages = adminService.adminLogIn(account, password);
-        Cookie cookie = new Cookie("Token", messages.get("token"));
-        response.addCookie(cookie);
-        return messages;
+        return adminService.adminLogIn(account, password);
     }
 
     @PostMapping(value = "/setJWT")
     public Map<String, String> setJWT(@RequestParam(value = "account") String account,
-                                      @RequestParam(value = "password") String password,
-                                      HttpServletResponse response) {
-        Map<String, String> messages = adminService.adminLogIn(account, password);
-        Cookie cookie = new Cookie("Token", messages.get("token"));
-        response.addCookie(cookie);
-        return messages;
+                                      @RequestParam(value = "password") String password) {
+        return adminService.adminLogIn(account, password);
     }
 
     @GetMapping(value = "/teachers")

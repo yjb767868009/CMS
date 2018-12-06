@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
                 message.put("message", "No this account");
             } else {
                 if (password.equals(student.getPassword())) {
-                    message.put("token", Token.setToken(new UserInfo(student.getStudentId(), "student")));
+                    Token.setToken(new UserInfo(student.getStudentId(), "student"));
                     message.put("message", "student");
                     message.put("activation", "false");
                 } else {
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
             }
         } else {
             if (password.equals(teacher.getPassword())) {
-                message.put("token", Token.setToken(new UserInfo(teacher.getTeacherId(), "teacher")));
+                Token.setToken(new UserInfo(teacher.getTeacherId(), "teacher"));
                 message.put("message", "teacher");
                 message.put("activation", "false");
             } else {

@@ -29,9 +29,10 @@ axios.interceptors.response.use(
           query: {redirect: router.currentRoute.fullPath} //从哪个页面跳转
         })
       }
-      if(response.data==='AdminNoLogIn'){
+      if(response.data==='AdminsNoLogIn'){
+		console.log("AdminsNoLogIn")
         this.$router.push({
-            path:'/adminLogin',
+            path:'AdminLogin',
             query:{redirect: router.currentRoute.fullPath}
         })
         }

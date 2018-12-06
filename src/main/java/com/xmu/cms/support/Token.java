@@ -50,6 +50,8 @@ public class Token {
                 .sign(Algorithm.HMAC256(SECRET));
 
         Cookie cookie = new Cookie("Token", token);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
         assert response != null;
         response.addCookie(cookie);
     }

@@ -62,6 +62,7 @@ import CreateShare from '@/views/Teacher/CreateShare'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path:'/test',

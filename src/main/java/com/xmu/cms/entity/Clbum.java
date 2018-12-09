@@ -6,14 +6,14 @@ package com.xmu.cms.entity;
  */
 public class Clbum {
     private Integer clbumId;
-    private Integer courseId;
+    private Course course;
     private String name;
     private String classTime;
     private String classPlace;
 
-    public Clbum(Integer clbumId, Integer courseId, String name, String classPlace, String classTime) {
+    public Clbum(Integer clbumId, Course course, String name, String classPlace, String classTime) {
         this.clbumId = clbumId;
-        this.courseId = courseId;
+        this.course = course;
         this.name = name;
         this.classPlace = classPlace;
         this.classTime = classTime;
@@ -51,11 +51,11 @@ public class Clbum {
         this.classTime = classTime;
     }
 
-    public Integer getCourseId() {
-        return courseId;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }

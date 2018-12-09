@@ -8,7 +8,8 @@ import java.sql.Timestamp;
  */
 public class Seminar {
     private Integer seminarId;
-    private Integer roundId;
+    private Course course;
+    private Round round;
     private Integer maxTeamNum;
     private String topic;
     private String introduction;
@@ -17,9 +18,10 @@ public class Seminar {
     private Boolean signOrder;
     private Boolean visible;
 
-    public Seminar(Integer seminarId, Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
+    public Seminar(Integer seminarId, Course course, Round round, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
         this.seminarId = seminarId;
-        this.roundId = roundId;
+        this.course = course;
+        this.round = round;
         this.maxTeamNum = maxTeamNum;
         this.topic = topic;
         this.introduction = introduction;
@@ -40,12 +42,20 @@ public class Seminar {
         this.seminarId = seminarId;
     }
 
-    public Integer getRoundId() {
-        return roundId;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setRoundId(Integer roundId) {
-        this.roundId = roundId;
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public Round getRound() {
+        return round;
+    }
+
+    public void setRound(Round round) {
+        this.round = round;
     }
 
     public Integer getMaxTeamNum() {

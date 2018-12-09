@@ -6,16 +6,16 @@ package com.xmu.cms.entity;
  */
 public class Question {
     private Integer questionId;
-    private Integer studentId;
-    private Integer teamId;
-    private Integer attendanceId;
+    private Student student;
+    private Team team;
+    private Attendance attendance;
     private float score;
 
-    public Question(Integer questionId, Integer studentId, Integer teamId, Integer attendanceId, float score) {
+    public Question(Integer questionId, Student student, Team team, Attendance attendance, float score) {
         this.questionId = questionId;
-        this.studentId = studentId;
-        this.teamId = teamId;
-        this.attendanceId = attendanceId;
+        this.student = student;
+        this.team = team;
+        this.attendance = attendance;
         this.score = score;
     }
 
@@ -23,8 +23,32 @@ public class Question {
         return questionId;
     }
 
-    public void setQuestionId(Integer id) {
-        this.questionId = id;
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public Attendance getAttendance() {
+        return attendance;
+    }
+
+    public void setAttendance(Attendance attendance) {
+        this.attendance = attendance;
     }
 
     public float getScore() {
@@ -33,29 +57,5 @@ public class Question {
 
     public void setScore(float score) {
         this.score = score;
-    }
-
-    public Integer getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
-    }
-
-    public Integer getAttendanceId() {
-        return attendanceId;
-    }
-
-    public void setAttendanceId(Integer attendanceId) {
-        this.attendanceId = attendanceId;
-    }
-
-    public Integer getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(Integer teamId) {
-        this.teamId = teamId;
     }
 }

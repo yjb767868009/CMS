@@ -1,24 +1,29 @@
 package com.xmu.cms.entity;
 
+import java.util.List;
+
 /**
  * @author JuboYu on 2018/11/27.
  * @version 1.0
  */
 public class Team {
     private Integer teamId;
-    private Integer leaderId;
-    private Integer clbumId;
-    private Integer teamOrder;
+    private Student leader;
+    private List<Student> members;
+    private Clbum clbum;
     private String teamName;
     private Boolean valid;
 
-    public Team(Integer teamId, Integer leaderId, Integer clbumId, Integer teamOrder, String teamName, Boolean valid) {
+    public Team(Integer teamId, Student leader, List<Student> members, Clbum clbum, String teamName, Boolean valid) {
         this.teamId = teamId;
-        this.leaderId = leaderId;
-        this.clbumId = clbumId;
-        this.teamOrder = teamOrder;
+        this.leader = leader;
+        this.members = members;
+        this.clbum = clbum;
         this.teamName = teamName;
         this.valid = valid;
+    }
+
+    public Team() {
     }
 
     public Integer getTeamId() {
@@ -29,24 +34,32 @@ public class Team {
         this.teamId = teamId;
     }
 
-    public Integer getLeaderId() {
-        return leaderId;
+    public Student getLeader() {
+        return leader;
     }
 
-    public void setLeaderId(Integer leaderId) {
-        this.leaderId = leaderId;
+    public void setLeader(Student leader) {
+        this.leader = leader;
+    }
+
+    public List<Student> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<Student> members) {
+        this.members = members;
+    }
+
+    public Clbum getClbum() {
+        return clbum;
+    }
+
+    public void setClbum(Clbum clbum) {
+        this.clbum = clbum;
     }
 
     public String getTeamName() {
         return teamName;
-    }
-
-    public Integer getClbumId() {
-        return clbumId;
-    }
-
-    public void setClbumId(Integer clbumId) {
-        this.clbumId = clbumId;
     }
 
     public void setTeamName(String teamName) {
@@ -59,13 +72,5 @@ public class Team {
 
     public void setValid(Boolean valid) {
         this.valid = valid;
-    }
-
-    public Integer getTeamOrder() {
-        return teamOrder;
-    }
-
-    public void setTeamOrder(Integer teamOrder) {
-        this.teamOrder = teamOrder;
     }
 }

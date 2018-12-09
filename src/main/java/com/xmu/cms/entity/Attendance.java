@@ -6,19 +6,19 @@ package com.xmu.cms.entity;
  */
 public class Attendance {
     private Integer attendanceId;
-    private Integer teamId;
-    private Integer clbumSeminarId;
-    private Integer teamOrder;
+    private Team team;
+    private Clbum clbum;
+    private Seminar seminar;
     private String presentationFile;
     private String reportFile;
     private Float presentationScore;
     private Float reportScore;
 
-    public Attendance(Integer attendanceId, Integer teamId, Integer clbumSeminarId, Integer teamOrder, String presentationFile, String reportFile, Float presentationScore, Float reportScore) {
+    public Attendance(Integer attendanceId, Team team, Clbum clbum, Seminar seminar, String presentationFile, String reportFile, Float presentationScore, Float reportScore) {
         this.attendanceId = attendanceId;
-        this.teamId = teamId;
-        this.clbumSeminarId = clbumSeminarId;
-        this.teamOrder = teamOrder;
+        this.team = team;
+        this.clbum = clbum;
+        this.seminar = seminar;
         this.presentationFile = presentationFile;
         this.reportFile = reportFile;
         this.presentationScore = presentationScore;
@@ -33,35 +33,35 @@ public class Attendance {
         this.attendanceId = attendanceId;
     }
 
-    public Integer getTeamId() {
-        return teamId;
+    public Team getTeam() {
+        return team;
     }
 
-    public void setTeamId(Integer teamId) {
-        this.teamId = teamId;
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
-    public Integer getClbumSeminarId() {
-        return clbumSeminarId;
+    public Clbum getClbum() {
+        return clbum;
     }
 
-    public void setClbumSeminarId(Integer clbumSeminarId) {
-        this.clbumSeminarId = clbumSeminarId;
+    public void setClbum(Clbum clbum) {
+        this.clbum = clbum;
     }
 
-    public Integer getTeamOrder() {
-        return teamOrder;
+    public Seminar getSeminar() {
+        return seminar;
     }
 
-    public void setTeamOrder(Integer teamOrder) {
-        this.teamOrder = teamOrder;
+    public void setSeminar(Seminar seminar) {
+        this.seminar = seminar;
     }
 
-    public String getPreFile() {
+    public String getPresentationFile() {
         return presentationFile;
     }
 
-    public void setPreFile(String presentationFile) {
+    public void setPresentationFile(String presentationFile) {
         this.presentationFile = presentationFile;
     }
 
@@ -73,11 +73,11 @@ public class Attendance {
         this.reportFile = reportFile;
     }
 
-    public Float getAttendanceScore() {
+    public Float getPresentationScore() {
         return presentationScore;
     }
 
-    public void setAttendanceScore(Float presentationScore) {
+    public void setPresentationScore(Float presentationScore) {
         this.presentationScore = presentationScore;
     }
 

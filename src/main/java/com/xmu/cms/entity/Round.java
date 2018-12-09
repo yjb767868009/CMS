@@ -6,16 +6,16 @@ package com.xmu.cms.entity;
  */
 public class Round {
     private Integer roundId;
-    private Integer courseId;
-    private Integer roundNum;
+    private Course course;
+    private Round round;
     private Integer presentationScoreType;
     private Integer reportScoreType;
     private Integer questionScoreType;
 
-    public Round(Integer roundId, Integer courseId, Integer roundNum, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType) {
+    public Round(Integer roundId, Course course, Round round, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType) {
         this.roundId = roundId;
-        this.courseId = courseId;
-        this.roundNum = roundNum;
+        this.course = course;
+        this.round = round;
         this.presentationScoreType = presentationScoreType;
         this.reportScoreType = reportScoreType;
         this.questionScoreType = questionScoreType;
@@ -25,31 +25,31 @@ public class Round {
         return roundId;
     }
 
-    public void setRoundId(Integer id) {
-        this.roundId = id;
+    public void setRoundId(Integer roundId) {
+        this.roundId = roundId;
     }
 
-    public Integer getCourseId() {
-        return courseId;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
-    public Integer getRoundNum() {
-        return roundNum;
+    public Round getRound() {
+        return round;
     }
 
-    public void setRoundNum(Integer roundNum) {
-        this.roundNum = roundNum;
+    public void setRound(Round round) {
+        this.round = round;
     }
 
-    public Integer getAttendanceScoreType() {
+    public Integer getPresentationScoreType() {
         return presentationScoreType;
     }
 
-    public void setAttendanceScoreType(Integer presentationScoreType) {
+    public void setPresentationScoreType(Integer presentationScoreType) {
         this.presentationScoreType = presentationScoreType;
     }
 

@@ -5,33 +5,53 @@ package com.xmu.cms.entity;
  * @version 1.0
  */
 public class Score {
-    private String name;
+    private Integer scoreId;
+    private Team team;
+    private Seminar seminar;
     private Float presentationScore;
     private Float questionScore;
     private Float reportScore;
     private Float totalScore;
 
-    public Score(String name, Float presentationScore, Float questionScore, Float reportScore, Float totalScore) {
-        this.name = name;
+    public Score(Integer scoreId, Team team, Seminar seminar, Float presentationScore, Float questionScore, Float reportScore, Float totalScore) {
+        this.scoreId = scoreId;
+        this.team = team;
+        this.seminar = seminar;
         this.presentationScore = presentationScore;
         this.questionScore = questionScore;
         this.reportScore = reportScore;
         this.totalScore = totalScore;
     }
 
-    public String getName() {
-        return name;
+    public Integer getScoreId() {
+        return scoreId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setScoreId(Integer scoreId) {
+        this.scoreId = scoreId;
     }
 
-    public Float getAttendanceScore() {
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public Seminar getSeminar() {
+        return seminar;
+    }
+
+    public void setSeminar(Seminar seminar) {
+        this.seminar = seminar;
+    }
+
+    public Float getPresentationScore() {
         return presentationScore;
     }
 
-    public void setAttendanceScore(Float presentationScore) {
+    public void setPresentationScore(Float presentationScore) {
         this.presentationScore = presentationScore;
     }
 

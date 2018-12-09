@@ -8,7 +8,7 @@ import java.sql.Timestamp;
  */
 public class Course {
     private Integer courseId;
-    private Integer teacherId;
+    private Teacher teacher;
     private String name;
     private String introduction;
     private Float presentationWeight;
@@ -17,9 +17,9 @@ public class Course {
     private Timestamp teamStartTime;
     private Timestamp teamEndTime;
 
-    public Course(Integer courseId, Integer teacherId, String name, String introduction, Float presentationWeight, Float reportWeight, Float questionWeight, Timestamp teamStartTime, Timestamp teamEndTime) {
+    public Course(Integer courseId, Teacher teacher, String name, String introduction, Float presentationWeight, Float reportWeight, Float questionWeight, Timestamp teamStartTime, Timestamp teamEndTime) {
         this.courseId = courseId;
-        this.teacherId = teacherId;
+        this.teacher = teacher;
         this.name = name;
         this.introduction = introduction;
         this.presentationWeight = presentationWeight;
@@ -38,12 +38,12 @@ public class Course {
         this.courseId = id;
     }
 
-    public Integer getTeacherId() {
-        return teacherId;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public void setTeacherId(Integer teacherId) {
-        this.teacherId = teacherId;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     public String getName() {
@@ -62,11 +62,11 @@ public class Course {
         this.introduction = introduction;
     }
 
-    public Float getAttendanceWeight() {
+    public Float getPresentationWeight() {
         return presentationWeight;
     }
 
-    public void setAttendanceWeight(Float presentationWeight) {
+    public void setPresentationWeight(Float presentationWeight) {
         this.presentationWeight = presentationWeight;
     }
 

@@ -49,46 +49,39 @@ public class Token {
                 .withClaim("userType", info.getUserType())
                 .sign(Algorithm.HMAC256(SECRET));
 
-        Cookie cookie = new Cookie("Token", token);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
         assert response != null;
-        response.addCookie(cookie);
+        response.setHeader("Authorization", "Bearer " + token);
     }
 
     public static UserInfo getToken() {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert attributes != null;
         HttpServletRequest request = attributes.getRequest();
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("Token")) {
-                String token = cookie.getValue();
-                DecodedJWT jwt = null;
-                try {
-                    JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET))
-                            .withIssuer("CMS").build();
-                    jwt = verifier.verify(token);
-                } catch (Exception e) {
-                    // token 校验失败, 抛出Token验证非法异常
-                    e.printStackTrace();
-                }
-                assert jwt != null;
-                Map<String, Claim> claims = jwt.getClaims();
-                Claim userIdClaim = claims.get("userId");
-                if (null == userIdClaim || userIdClaim.asInt() != 0) {
-                    System.out.println("Token Error");
-                }
-                Claim userTypeClaim = claims.get("userType");
-                if (null == userTypeClaim || StringUtils.isEmpty(userTypeClaim.asString())) {
-                    System.out.println("Token Error");
-                }
-                assert userIdClaim != null;
-                assert userTypeClaim != null;
-
-                return new UserInfo(userIdClaim.asInt(), userTypeClaim.asString());
-            }
+        String header = request.getHeader("Authorization");
+        if (header == null) return null;
+        String token = header.replace("Bearer ", "");
+        DecodedJWT jwt = null;
+        try {
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET))
+                    .withIssuer("CMS").build();
+            jwt = verifier.verify(token);
+        } catch (Exception e) {
+            // token 校验失败, 抛出Token验证非法异常
+            e.printStackTrace();
         }
-        return null;
+        assert jwt != null;
+        Map<String, Claim> claims = jwt.getClaims();
+        Claim userIdClaim = claims.get("userId");
+        if (null == userIdClaim || userIdClaim.asInt() != 0) {
+            System.out.println("Token Error");
+        }
+        Claim userTypeClaim = claims.get("userType");
+        if (null == userTypeClaim || StringUtils.isEmpty(userTypeClaim.asString())) {
+            System.out.println("Token Error");
+        }
+        assert userIdClaim != null;
+        assert userTypeClaim != null;
+
+        return new UserInfo(userIdClaim.asInt(), userTypeClaim.asString());
     }
 }

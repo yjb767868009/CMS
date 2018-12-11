@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
         assert info != null;
         if (info.getUserType().equals("teacher")) {
             Teacher teacher = teacherDao.getTeacherById(info.getUserId());
-            messages.put("name", teacher.getName());
+            messages.put("name", teacher.getTeacherName());
             messages.put("account", teacher.getAccount());
             messages.put("message", "Success");
             return messages;

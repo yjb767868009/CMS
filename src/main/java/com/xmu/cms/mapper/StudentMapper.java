@@ -22,45 +22,20 @@ public interface StudentMapper {
     List<Student> getAllStudents();
 
     /**
-     * create a new student
+     * add new student
      *
-     * @param name     student's name
-     * @param account  student's account
-     * @param password student's password
-     * @param email    student's email
-     * @return String message
+     * @param student new student
+     * @return if new student success
      */
-    Integer newStudent(@Param("name") String name,
-                       @Param("account") String account,
-                       @Param("password") String password,
-                       @Param("email") String email,
-                       @Param("phone") String phone,
-                       @Param("messageInterval") Integer messageInterval,
-                       @Param("activation") Boolean activation);
+    Integer insertStudent(Student student);
 
     /**
-     * modify student by his id
+     * update student
      *
-     * @param studentId student's id
-     * @param name      student's new name
-     * @param account   student's new account
-     * @param email     student's new email
-     * @return String message
+     * @param student new student
+     * @return if update student success
      */
-    Integer modifyStudentByStudentId(@Param("studentId") Integer studentId,
-                                     @Param("name") String name,
-                                     @Param("account") String account,
-                                     @Param("email") String email);
-
-    /**
-     * modify student's password by his id
-     *
-     * @param studentId student's id
-     * @param password  student's new password
-     * @return String message
-     */
-    Integer modifyStudentPasswordByStudentId(@Param("studentId") Integer studentId,
-                                             @Param("password") String password);
+    Integer updateStudent(@Param("student") Student student);
 
     /**
      * delete student by his id
@@ -68,7 +43,7 @@ public interface StudentMapper {
      * @param studentId student's id
      * @return String message
      */
-    Integer deleteStudentByStudentId(@Param("studentId") Integer studentId);
+    Integer deleteStudent(@Param("studentId") Integer studentId);
 
     /**
      * get student's password by account
@@ -86,7 +61,11 @@ public interface StudentMapper {
      */
     List<Student> getStudentByName(@Param("name") String name);
 
-    String getEmailByAccount(@Param("email") String email);
-
+    /**
+     * get student by his id
+     *
+     * @param studentId student's id
+     * @return student
+     */
     Student getStudentById(@Param("studentId") Integer studentId);
 }

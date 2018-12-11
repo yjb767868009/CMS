@@ -15,26 +15,30 @@
         FROM student
     </select>
 
-    <insert id="newStudent" parameterType="com.xmu.cms.entity.Student">
+    <insert id="insertStudent" parameterType="com.xmu.cms.entity.Student">
         INSERT INTO student (student_num, password, email, student_name, msg_interval, is_activated)
-        VALUE (#{account}, #{password}, #{email}, #{name}, #{messageInterval}, #{activation})
+        VALUE (#{student.account},
+               #{student.password},
+               #{student.email},
+               #{student.courseName},
+               #{student.messageInterval},
+               #{student.activation})
     </insert>
 
-    <update id="modifyStudentByStudentId">
+    <update id="updateStudent" parameterType="com.xmu.cms.entity.Student">
         UPDATE student
-        SET student_name = #{name},
-            student_num  = #{account},
-            email        = #{email}
-        WHERE id = #{studentId}
+        SET student_num  = #{student.account},
+            password     = #{student.password},
+            email        = #{student.email},
+            student_name = #{student.courseName},
+            phone        = #{student.phone},
+            msg_interval = #{student.messageInterval},
+            is_activated = #{student.activation}
+        WHERE id = #{student.studentId}
     </update>
 
-    <update id="modifyStudentPasswordByStudentId">
-        UPDATE student
-        SET password = #{password}
-        WHERE id = #{studentId}
-    </update>
 
-    <delete id="deleteStudentByStudentId" parameterType="java.lang.Integer">
+    <delete id="deleteStudent" parameterType="java.lang.Integer">
         DELETE
         FROM student
         WHERE id = #{studentId}
@@ -85,9 +89,4 @@
         WHERE student_num = #{account}
     </select>
 
-    <select id="getEmailByAccount" resultType="java.lang.String">
-        select email
-        from student
-        where student_num = #{account}
-    </select>
 </mapper>

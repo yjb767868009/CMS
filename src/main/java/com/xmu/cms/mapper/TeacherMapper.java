@@ -25,7 +25,7 @@ public interface TeacherMapper {
      * @param teacher new teacher
      * @return the num of new teacher
      */
-    Integer createTeacher(@Param("teacher") Teacher teacher);
+    Integer insertTeacher(@Param("teacher") Teacher teacher);
 
     /**
      * delete teacher by his id
@@ -33,7 +33,7 @@ public interface TeacherMapper {
      * @param teacherId teacher's id
      * @return the number of delete teacher
      */
-    Integer deleteTeacherByTeacherId(@Param("teacherId") Integer teacherId);
+    Integer deleteTeacher(@Param("teacherId") Integer teacherId);
 
     /**
      * get teacher's password by account
@@ -66,28 +66,4 @@ public interface TeacherMapper {
      * @return the number of update teacher
      */
     Integer updateTeacher(@Param("teacher") Teacher teacher);
-
-    /**
-     * update teacher's info
-     *
-     * @param teacherId need update teacher's id
-     * @param account   teacher new account
-     * @param name      teacher new name
-     * @param email     teacher new email
-     * @return the num of update teacher
-     */
-    Integer updateTeacherInfo(@Param("teacherId") Integer teacherId,
-                              @Param("account") String account,
-                              @Param("name") String name,
-                              @Param("email") String email);
-
-    /**
-     * update teacher's password
-     *
-     * @param teacherId need update teacher id
-     * @param password  teacher new password
-     * @return the num of update teacher
-     */
-    Integer updateTeacherPassword(@Param("teacherId") Integer teacherId,
-                                  @Param("password") String password);
 }

@@ -13,11 +13,11 @@ import java.util.Map;
 public interface StudentService {
     List<Student> getAllStudents();
 
-    Map<String, String> modifyStudentById(Integer studentId, String name, String account, String email);
+    Map<String, String> modifyStudentInfo(Integer studentId, Student student);
 
-    Map<String, String> modifyStudentPasswordById(Integer studentId, String password);
+    Map<String, String> modifyStudentPassword(Integer studentId, Student student);
 
-    Map<String, String> deleteStudentById(Integer studentId);
+    Map<String, String> deleteStudent(Integer studentId);
 
     List<Student> getStudentByName(String name);
 

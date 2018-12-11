@@ -23,6 +23,9 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private CourseService courseService;
+
+    @Autowired
     private RoundService roundService;
 
     @Autowired
@@ -85,6 +88,16 @@ public class UserController {
         return "Success";
     }
 
+    @GetMapping(value = "/course")
+    public List<Course> getCourses() {
+        return null;
+    }
+
+    @GetMapping(value = "/course/{courseId}")
+    public Course getCourse(@PathVariable("courseId") Integer courseId) {
+        return courseService.getCourse(courseId);
+    }
+
     @GetMapping(value = "/course/{courseId}/rounds")
     public List<Round> getRounds(@PathVariable("courseId") Integer courseId) {
         return roundService.getRoundsByCourseId(courseId);
@@ -133,7 +146,7 @@ public class UserController {
 
     @GetMapping(value = "/myInfo")
     public Map<String, String> getMyInfo(HttpServletRequest request) {
-        Cookie[] cookies= request.getCookies();
+        Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals("Token")) {
                 String token = cookie.getValue();

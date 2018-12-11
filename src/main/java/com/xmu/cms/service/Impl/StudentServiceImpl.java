@@ -1,6 +1,6 @@
 package com.xmu.cms.service.Impl;
 
-import com.xmu.cms.mapper.StudentMapper;
+import com.xmu.cms.dao.StudentDao;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +15,19 @@ import java.util.Map;
  * @version 1.0
  */
 @Service
-public class StudentSerivceImpl implements StudentService {
+public class StudentServiceImpl implements StudentService {
     @Autowired
-    private StudentMapper studentMapper;
+    private StudentDao studentDao;
 
     @Override
     public List<Student> getAllStudents() {
-        return studentMapper.getAllStudents();
+        return studentDao.getAllStudents();
     }
 
     @Override
-    public Map<String, String> modifyStudentById(Integer studentId, String name, String account, String email) {
+    public Map<String, String> modifyStudentInfo(Integer studentId, Student student) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = studentMapper.modifyStudentByStudentId(studentId, name, account, email);
+        Integer count = studentDao.modifyStudentInfo(studentId, student);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -37,9 +37,9 @@ public class StudentSerivceImpl implements StudentService {
     }
 
     @Override
-    public Map<String, String> modifyStudentPasswordById(Integer studentId, String password) {
+    public Map<String, String> modifyStudentPassword(Integer studentId, Student student) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = studentMapper.modifyStudentPasswordByStudentId(studentId, password);
+        Integer count = studentDao.modifyStudentPassword(studentId, student);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -49,9 +49,9 @@ public class StudentSerivceImpl implements StudentService {
     }
 
     @Override
-    public Map<String, String> deleteStudentById(Integer studentId) {
+    public Map<String, String> deleteStudent(Integer studentId) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = studentMapper.deleteStudentByStudentId(studentId);
+        Integer count = studentDao.deleteStudent(studentId);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -62,12 +62,12 @@ public class StudentSerivceImpl implements StudentService {
 
     @Override
     public List<Student> getStudentByName(String name) {
-        return studentMapper.getStudentByName(name);
+        return studentDao.getStudentByName(name);
     }
 
     @Override
     public Student getStudentByAccount(String account) {
-        return studentMapper.getStudentByAccount(account);
+        return studentDao.getStudentByAccount(account);
     }
 
 }

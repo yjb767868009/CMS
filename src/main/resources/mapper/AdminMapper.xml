@@ -2,8 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.AdminMapper">
-    <select id="getAdminByAccount" parameterType="java.lang.String" resultType="com.xmu.cms.entity.Admin">
-        SELECT id as adminId, account, password
+    <resultMap id="Admin" type="com.xmu.cms.entity.Admin">
+        <id property="adminId" column="id" javaType="java.lang.Integer"/>
+        <result property="account" column="account"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+    <select id="getAdminByAccount" parameterType="java.lang.String" resultMap="Admin">
+        SELECT *
         FROM admin
         WHERE account = #{account}
     </select>

@@ -2,62 +2,122 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.CourseMapper">
-    <select id="getAllCourseByTeacherId" resultType="com.xmu.cms.entity.Course">
-        SELECT course_id          as courseId,
-               teacher_id         as teacherId,
-               course_name,
+    <resultMap id="CourseResultMap" type="com.xmu.cms.entity.Course">
+        <id property="courseId" column="courseId" javaType="java.lang.Integer"/>
+        <result property="courseName" column="courseName"/>
+        <result property="introduction" column="introduction"/>
+        <result property="presentationWeight" column="presentationWeight"/>
+        <result property="reportWeight" column="reportWeight"/>
+        <result property="questionWeight" column="questionWeight"/>
+        <result property="teamStartTime" column="teamStartDate"/>
+        <result property="teamEndTime" column="teamEndDate"/>
+        <association property="teacher" javaType="com.xmu.cms.entity.Teacher">
+            <id property="teacherId" column="teacherId"/>
+            <result property="teacherName" column="teacherName"/>
+            <result property="account" column="account"/>
+            <result property="email" column="email"/>
+            <result property="teacherName" column="teacher_name"/>
+            <result property="phone" column="phone"/>
+        </association>
+    </resultMap>
+
+    <select id="getAllCourseByTeacherId" resultMap="CourseResultMap">
+        SELECT course.id            as courseId,
+               teacher.id           as teacherId,
+               teacher.teacher_num  as account,
+               teacher.password,
+               teacher.email,
+               teacher.teacher_name as teacherName,
+               teacher.phone,
+               teacher.msg_interval as messageInterval,
+               teacher.is_activated as activation,
+               course.name          as courseName,
                introduction,
-               pre_weight as presentationWeight,
-               report_weight      as reportWeight,
-               ques_weight    as questionWeight,
-               team_start_date    as teamStartDate,
-               team_end_date      as teamEndDate
-        FROM course
-        WHERE teacher_id = #{teacherId}
+               pre_weight           as presentationWeight,
+               report_weight        as reportWeight,
+               ques_weight          as questionWeight,
+               team_start_date      as teamStartDate,
+               team_end_date        as teamEndDate
+        FROM course,
+             teacher
+        WHERE teacher.id = #{teacherId}
+          AND teacher.id = course.teacher_id
     </select>
 
     <select id="getAllCourseByStudentId" resultType="com.xmu.cms.entity.Course">
-        SELECT course.course_id   as courseId,
-               teacher_id         as teacherId,
-               course.course_name,
+        SELECT course.id            as courseId,
+               teacher.id           as teacherId,
+               teacher.teacher_num  as account,
+               teacher.password,
+               teacher.email,
+               teacher.teacher_name as teacherName,
+               teacher.phone,
+               teacher.msg_interval as messageInterval,
+               teacher.is_activated as activation,
+               course.name          as courseName,
                introduction,
-               pre_weight as presentationWeight,
-               report_weight      as reportWeight,
-               ques_weight    as questionWeight,
-               team_start_date    as teamStartDate,
-               team_end_date      as teamEndDate
+               pre_weight           as presentationWeight,
+               report_weight        as reportWeight,
+               ques_weight          as questionWeight,
+               team_start_date      as teamStartDate,
+               team_end_date        as teamEndDate
         FROM course,
-             turning_class_student,
-             turning_class
-        WHERE student_id = #{studentId}
-          AND turning_class.turning_class_id = turning_class_student.turning_class_id
-          AND course.course_id = turning_class.course_id
+             teacher,
+             clbum,
+             clbum_student
+        WHERE clbum_student.student_id = #{studentId}
+          AND clbum_student.clbum_id = clbum.id
+          AND clbum.course_id = course.id
+          AND course.teacher_id = teacher.id
     </select>
 
-    <select id="getAllCoursesByTeacherAccount" resultType="com.xmu.cms.entity.Course">
-        SELECT course_id          as courseId,
-               course.teacher_id  as teacherId,
-               course.course_name,
+    <select id="getCourseById" resultMap="CourseResultMap">
+        SELECT course.id            as courseId,
+               teacher.id           as teacherId,
+               teacher.teacher_num  as account,
+               teacher.password,
+               teacher.email,
+               teacher.teacher_name as teacherName,
+               teacher.phone,
+               teacher.msg_interval as messageInterval,
+               teacher.is_activated as activation,
+               course.name          as courseName,
                introduction,
-               pre_weight as presentationWeight,
-               report_weight      as reportWeight,
-               ques_weight    as questionWeight,
-               team_start_date    as teamStartDate,
-               team_end_date      as teamEndDate
+               pre_weight           as presentationWeight,
+               report_weight        as reportWeight,
+               ques_weight          as questionWeight,
+               team_start_date      as teamStartDate,
+               team_end_date        as teamEndDate
         FROM course,
              teacher
-        WHERE teacher.account = #{account}
-          AND course.teacher_id = teacher.teacher_id
+        WHERE course.id = #{courseId}
+          AND teacher.id = course.teacher_id
     </select>
 
     <delete id="deleteCourseById">
         DELETE *
         FROM course
-        WHERE course_id = #{courseId}
+        WHERE id = #{courseId}
     </delete>
 
     <insert id="newCourse" parameterType="com.xmu.cms.entity.Course">
-        insert into course (course_Id ,teacher_id ,course.course_name ,introduction ,pre_weight ,report_weight ,ques_weight , team_start_date ,team_end_date)
-        values (#{courseId}, #{teacherId}, #{name}, #{introduction}, #{presentationWeight}, #{reportWeight}, #{questionWeight}, #{teamStartDate}, #{teamEndDate})
+        insert into course (id,
+                            teacher_id,
+                            name,
+                            introduction,
+                            pre_weight,
+                            report_weight,
+                            ques_weight,
+                            team_start_date,
+                            team_end_date)
+        values (#{courseId},
+                #{teacherId},
+                #{courseName},
+                #{introduction},
+                #{presentationWeight},
+                #{reportWeight},
+                #{questionWeight},
+                #{teamStartDate},
+                #{teamEndDate})
     </insert>
 </mapper>

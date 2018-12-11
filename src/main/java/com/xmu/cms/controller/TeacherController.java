@@ -44,18 +44,9 @@ public class TeacherController {
     @Autowired
     private FileService fileService;
 
-    private Teacher getTeacherInSecurity() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(authentication.toString());
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            return teacherService.getTeacherByAccount(authentication.getName());
-        }
-        return null;
-    }
-
-    @GetMapping(value = "/courses")
-    public List<Course> getAllCourse() {
-        return courseService.getAllCoursesByTeacherId(getTeacherInSecurity().getTeacherId());
+    @PostMapping(value = "/course")
+    public Map<String, String> createCourse(Course course) {
+        return courseService.createCourse(course);
     }
 
     @DeleteMapping(value = "/course/{courseId}")

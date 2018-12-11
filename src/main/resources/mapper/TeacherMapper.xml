@@ -4,37 +4,41 @@
 <mapper namespace="com.xmu.cms.mapper.TeacherMapper">
 
     <select id="getAllTeachers" resultType="com.xmu.cms.entity.Teacher">
-        SELECT id           as teacherId,
-               teacher_num  as account,
-               password,
-               email,
-               teacher_name,
-               phone,
-               msg_interval as messageInterval,
-               is_activated as activation
+        SELECT teacher.id           as teacherId,
+               teacher.teacher_num  as account,
+               teacher.password,
+               teacher.email,
+               teacher.teacher_name as teacherName,
+               teacher.phone,
+               teacher.msg_interval as messageInterval,
+               teacher.is_activated as activation
         FROM teacher
     </select>
 
-    <update id="modifyTeacherByTeacherId">
+    <update id="updateTeacher">
         UPDATE teacher
-        SET teacher_name = #{name},
-            teacher_num  = #{account},
-            email        = #{email}
-        WHERE id = #{teacherId}
+        SET teacher_num  = #{teacher.account},
+            password     = #{teacher.password},
+            email        = #{teacher.email},
+            teacher_name = #{teacher.courseName},
+            phone        = #{teacher.phone},
+            msg_interval = #{teacher.messageInterval},
+            is_activated = #{teacher.activation}
+        WHERE id = #{teacher.teacherId}
     </update>
 
-    <update id="modifyTeacherPasswordByTeacherId">
-        UPDATE teacher
-        SET password = #{password}
-        WHERE id = #{teacherId}
-    </update>
-
-    <insert id="newTeacher">
+    <insert id="insertTeacher">
         INSERT INTO teacher (teacher_num, password, email, teacher_name, phone, msg_interval, is_activated)
-        VALUE (#{account}, #{password}, #{email}, #{name}, #{phone}, #{messageInterval}, #{activation})
+        VALUE (#{teacher.account},
+               #{teacher.password},
+               #{teacher.email},
+               #{teacher.courseName},
+               #{teacher.phone},
+               #{teacher.messageInterval},
+               #{teacher.activation})
     </insert>
 
-    <delete id="deleteTeacherByTeacherId" parameterType="java.lang.Integer">
+    <delete id="deleteTeacher" parameterType="java.lang.Integer">
         delete
         FROM teacher
         WHERE id = #{teacherId}

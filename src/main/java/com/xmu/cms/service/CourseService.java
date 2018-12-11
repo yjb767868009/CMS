@@ -16,5 +16,7 @@ public interface CourseService {
 
     List<Course> getAllCoursesByStudentId(Integer studentId);
 
-    List<Course> getAllCoursesByTeacherAccount(String account);
+    Map<String, String> createCourse(Course course);
+
+    Course getCourse(Integer courseId);
 }

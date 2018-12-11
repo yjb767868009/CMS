@@ -72,23 +72,21 @@ public class AdminController {
         return teacherService.deleteTeacher(teacherId);
     }
 
-    @PutMapping(value = "/student/{studentId}")
-    public Map<String, String> modifyStudent(@PathVariable("studentId") Integer studentId,
-                                             @RequestParam("name") String name,
-                                             @RequestParam("account") String account,
-                                             @RequestParam("email") String email) {
-        return studentService.modifyStudentById(studentId, name, account, email);
+    @PutMapping(value = "/student/{studentId}/information")
+    public Map<String, String> modifyStudentInfo(@PathVariable("studentId") Integer studentId,
+                                                 @RequestBody Student student) {
+        return studentService.modifyStudentInfo(studentId, student);
     }
 
-    @PatchMapping(value = "student/{studentId}/modifyPassword")
+    @PatchMapping(value = "student/{studentId}/password")
     public Map<String, String> modifyStudentPasswordById(@PathVariable("studentId") Integer studentId,
-                                                         @RequestParam(value = "password") String password) {
-        return studentService.modifyStudentPasswordById(studentId, password);
+                                                         @RequestBody Student student) {
+        return studentService.modifyStudentPassword(studentId, student);
     }
 
     @DeleteMapping(value = "/student/{studentId}")
     public Map<String, String> deleteStudent(@PathVariable("studentId") Integer studentId) {
-        return studentService.deleteStudentById(studentId);
+        return studentService.deleteStudent(studentId);
     }
 
     @GetMapping(value = "/teachers/searchByName")

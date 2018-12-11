@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 public class Course {
     private Integer courseId;
     private Teacher teacher;
-    private String name;
+    private String CourseName;
     private String introduction;
     private Float presentationWeight;
     private Float reportWeight;
@@ -17,10 +17,10 @@ public class Course {
     private Timestamp teamStartTime;
     private Timestamp teamEndTime;
 
-    public Course(Integer courseId, Teacher teacher, String name, String introduction, Float presentationWeight, Float reportWeight, Float questionWeight, Timestamp teamStartTime, Timestamp teamEndTime) {
+    public Course(Integer courseId, Teacher teacher, String CourseName, String introduction, Float presentationWeight, Float reportWeight, Float questionWeight, Timestamp teamStartTime, Timestamp teamEndTime) {
         this.courseId = courseId;
         this.teacher = teacher;
-        this.name = name;
+        this.CourseName = CourseName;
         this.introduction = introduction;
         this.presentationWeight = presentationWeight;
         this.reportWeight = reportWeight;
@@ -48,12 +48,12 @@ public class Course {
         this.teacher = teacher;
     }
 
-    public String getName() {
-        return name;
+    public String getCourseName() {
+        return CourseName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCourseName(String courseName) {
+        this.CourseName = courseName;
     }
 
     public String getIntroduction() {

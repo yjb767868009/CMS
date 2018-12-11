@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -97,7 +98,7 @@ public class TestController {
 
     @GetMapping(value = "/createJWT")
     public void testJWT() {
-        Token.setToken(new UserInfo(1,"admin"));
+        Token.setToken(new UserInfo(1, "admin"));
     }
 
     @GetMapping(value = "/getUserType")
@@ -131,6 +132,13 @@ public class TestController {
         }
         return new ResponseEntity<>("Successfully uploaded - " +
                 file.getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getSecurity")
+    public Object getSecurity() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication auth = securityContext.getAuthentication();
+        return auth;
     }
 
 

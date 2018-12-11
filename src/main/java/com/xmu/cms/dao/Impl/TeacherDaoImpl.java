@@ -42,7 +42,7 @@ public class TeacherDaoImpl implements TeacherDao {
     public Integer updateTeacherInfo(Integer teacherId, Teacher teacher) {
         Teacher modifyTeacher = teacherMapper.getTeacherById(teacherId);
         modifyTeacher.setAccount(teacher.getAccount());
-        modifyTeacher.setName(teacher.getName());
+        modifyTeacher.setTeacherName(teacher.getTeacherName());
         modifyTeacher.setEmail(teacher.getEmail());
         return teacherMapper.updateTeacher(modifyTeacher);
     }
@@ -56,11 +56,11 @@ public class TeacherDaoImpl implements TeacherDao {
 
     @Override
     public Integer deleteTeacherByTeacherId(Integer teacherId) {
-        return teacherMapper.deleteTeacherByTeacherId(teacherId);
+        return teacherMapper.deleteTeacher(teacherId);
     }
 
     @Override
     public Integer createTeacher(Teacher teacher) {
-        return teacherMapper.createTeacher(teacher);
+        return teacherMapper.insertTeacher(teacher);
     }
 }

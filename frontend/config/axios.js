@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from 'vue-router'
 
 //axios 配置文件以及拦截器
 
@@ -22,16 +23,15 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
     response => {
-  //response.status为401时，去跳转到login
-      if((response.data ==='NoLogIn')||(response.status==='401')) {
-        this.$router.push({
+      if(response.data ==='NoLogIn') {
+        router.push({
           path: '/login',
           query: {redirect: router.currentRoute.fullPath} //从哪个页面跳转
         })
       }
       if(response.data==='AdminsNoLogIn'){
 		console.log("AdminsNoLogIn")
-        this.$router.push({
+        router.push({
             path:'AdminLogin',
             query:{redirect: router.currentRoute.fullPath}
         })

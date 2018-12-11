@@ -6,4 +6,19 @@
         INSERT turning_class (course_id, name, class_time, class_place)
         VALUE (#{courseId}, #{name}, #{classTime}, #{classPlace})
     </insert>
+
+    <select id="getAllClbumsByCourseId" resultType="com.xmu.cms.entity.Clbum">
+        SELECT id as clbumId,
+                clbum_name,
+                class_time as classTime,
+                class_place as classPlace
+        from clbum
+        where course_id = #{courseId}
+    </select>
+
+    <delete id="deleteClbumByClbumId" parameterType="java.lang.Integer">
+        delete
+        from clbum
+        where id = #{clbumId}
+    </delete>
 </mapper>

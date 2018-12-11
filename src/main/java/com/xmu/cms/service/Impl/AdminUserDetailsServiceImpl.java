@@ -2,6 +2,7 @@ package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.AdminDao;
 import com.xmu.cms.entity.Admin;
+import com.xmu.cms.mapper.AdminMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -22,7 +23,7 @@ import java.util.List;
 public class AdminUserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private AdminDao adminDao;
+    private AdminMapper adminMapper;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -30,7 +31,7 @@ public class AdminUserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        Admin admin = adminDao.getAdminByAccount(username);
+        Admin admin = adminMapper.getAdminByAccount(username);
         if (null != admin) {
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
             return new User(admin.getAccount(), passwordEncoder.encode(admin.getPassword()), authorities);

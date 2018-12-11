@@ -24,7 +24,7 @@ import java.util.List;
 public class UserUserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private TeacherMapper teacherDao;
+    private TeacherMapper teacherMapper;
 
     @Autowired
     private StudentMapper studentMapper;
@@ -35,7 +35,7 @@ public class UserUserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        Teacher teacher = teacherDao.getTeacherByAccount(username);
+        Teacher teacher = teacherMapper.getTeacherByAccount(username);
         if (null != teacher) {
             authorities.add(new SimpleGrantedAuthority("ROLE_TEACHER"));
             return new User(teacher.getAccount(), passwordEncoder.encode(teacher.getPassword()), authorities);

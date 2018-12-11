@@ -110,11 +110,6 @@ public class UserController {
         return teamService.getAllTeamsInClbumSeminar(clbumSeminarId);
     }
 
-    @GetMapping(value = "/seminar/{seminarId}/nextAttendance")
-    public Attendance getNextAttendance(@PathVariable("seminarId") Integer seminarId) {
-        return seminarService.getNextAttendance(seminarId);
-    }
-
     @GetMapping(value = "/seminar/{seminarId}")
     public Seminar getSeminarById(@PathVariable("seminarId") Integer seminarId) {
         return seminarService.getSeminarBySeminarId(seminarId);
@@ -128,11 +123,6 @@ public class UserController {
     @GetMapping(value = "/clbumSeminar/{clbumSeminarId}/scores")
     public Score getAllScoreInSeminar(@PathVariable("clbumSeminarId") Integer clbumSeminarId) {
         return scoreService.getAllScoresInClbumSeminar(clbumSeminarId);
-    }
-
-    @GetMapping(value = "/clbumSeminar/{clbumSeminarId}")
-    public String getStateInClbumSeminar(@PathVariable("clbumSeminarId") Integer clbumSeminarId) {
-        return seminarService.getStateInClbumSeminar(clbumSeminarId);
     }
 
     @GetMapping(value = "/seminar/{seminarId}/clbum/{clbumId}/presentationFile")

@@ -1,9 +1,7 @@
 package com.xmu.cms.service.Impl;
 
-import com.xmu.cms.dao.AdminDao;
-import com.xmu.cms.dao.StudentDao;
-import com.xmu.cms.dao.TeacherDao;
-import com.xmu.cms.entity.Admin;
+import com.xmu.cms.mapper.StudentMapper;
+import com.xmu.cms.mapper.TeacherMapper;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +24,10 @@ import java.util.List;
 public class UserUserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private TeacherDao teacherDao;
+    private TeacherMapper teacherDao;
 
     @Autowired
-    private StudentDao studentDao;
+    private StudentMapper studentMapper;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -42,7 +40,7 @@ public class UserUserDetailsServiceImpl implements UserDetailsService {
             authorities.add(new SimpleGrantedAuthority("ROLE_TEACHER"));
             return new User(teacher.getAccount(), passwordEncoder.encode(teacher.getPassword()), authorities);
         }
-        Student student = studentDao.getStudentByAccount(username);
+        Student student = studentMapper.getStudentByAccount(username);
         if (null != student) {
             authorities.add(new SimpleGrantedAuthority("ROLE_STUDENT"));
             return new User(student.getAccount(), passwordEncoder.encode(student.getPassword()), authorities);

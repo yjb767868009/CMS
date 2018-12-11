@@ -1,4 +1,4 @@
-package com.xmu.cms.dao;
+package com.xmu.cms.mapper;
 
 import com.xmu.cms.entity.Score;
 import org.apache.ibatis.annotations.Mapper;
@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
  * @version 2.0
  */
 @Mapper
-public interface ScoreDao {
+public interface ScoreMapper {
     Score getAllScoresInSeminar(@Param("clbumSeminarId") Integer clbumSeminarId);
 
     Score getAllScoresInRound(@Param("roundId") Integer roundId);

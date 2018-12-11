@@ -1,9 +1,8 @@
-package com.xmu.cms.dao;
+package com.xmu.cms.mapper;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.xmu.cms.entity.ClbumSeminar;
 import com.xmu.cms.entity.Seminar;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -13,7 +12,7 @@ import org.apache.ibatis.annotations.Param;
  * @version 1.0
  */
 @Mapper
-public interface SeminarDao {
+public interface SeminarMapper {
     Integer newSeminar(@Param("roundId") Integer roundId,
                        @Param("maxTeamNum") Integer maxTeamNum,
                        @Param("topic") String topic,
@@ -45,8 +44,6 @@ public interface SeminarDao {
     Seminar getSeminarBySeminarId(@Param("seminarId") Integer seminarId);
 
     List<Seminar> getAllSeminarByRoundId(@Param("roundId") Integer roundId);
-
-    ClbumSeminar getClbumSeminarById(@Param("clbumSeminarId") Integer clbumSeminarId);
 
     Seminar getRunningSeminarByTeacherId(@Param("teacherId") Integer teacherId);
 }

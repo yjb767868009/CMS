@@ -1,4 +1,4 @@
-package com.xmu.cms.dao;
+package com.xmu.cms.mapper;
 
 import com.xmu.cms.entity.Student;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @Mapper
-public interface StudentDao {
+public interface StudentMapper {
     /**
      * get all students
      *

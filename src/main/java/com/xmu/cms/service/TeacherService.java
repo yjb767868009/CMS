@@ -13,15 +13,17 @@ import java.util.Map;
 public interface TeacherService {
     List<Teacher> getAllTeachers();
 
-    Map<String, String> newTeacher(String name, String account, String password, String email);
+    Map<String, String> createTeacher(Teacher teacher);
 
-    Map<String, String> modifyTeacherByTeacherId(Integer teacherId, String name, String account, String email);
-
-    Map<String, String> modifyTeacherPasswordByTeacherId(Integer teacherId, String password);
-
-    Map<String, String> deleteTeacherByTeacherId(Integer teacherId);
+    Map<String, String> deleteTeacher(Integer teacherId);
 
     Teacher getTeacherByAccount(String account);
 
     List<Teacher> getTeacherByName(String name);
+
+    Teacher getTeacherById(Integer teacherId);
+
+    Map<String, String> updateTeacherInfo(Integer teacherId, Teacher teacher);
+
+    Map<String, String> updateTeacherPassword(Integer teacherId, Teacher teacher);
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.xmu.cms.dao.TeamDao">
+<mapper namespace="com.xmu.cms.mapper.TeamMapper">
     <select id="getAllTeamsInSeminar" parameterType="java.lang.Integer" resultType="com.xmu.cms.entity.Team">
         SELECT team.team_id as teamId,
                leader_id    as leaderId,

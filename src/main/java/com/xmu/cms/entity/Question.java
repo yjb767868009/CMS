@@ -19,6 +19,9 @@ public class Question {
         this.score = score;
     }
 
+    public Question() {
+    }
+
     public Integer getQuestionId() {
         return questionId;
     }

@@ -1,6 +1,7 @@
 package com.xmu.cms.service;
 
-import javax.servlet.http.HttpSession;
+import com.xmu.cms.entity.Admin;
+
 import java.util.Map;
 
 /**
@@ -9,5 +10,5 @@ import java.util.Map;
  */
 
 public interface AdminService {
-    Map<String, String> adminLogIn(String account, String password);
+    Map<String, String> adminLogIn(Admin admin);
 }

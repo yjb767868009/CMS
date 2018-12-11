@@ -1,4 +1,4 @@
-package com.xmu.cms.dao;
+package com.xmu.cms.mapper;
 
 import com.xmu.cms.entity.Attendance;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,7 +13,7 @@ import java.util.Map;
  * @version 1.0
  */
 @Mapper
-public interface AttendanceDao {
+public interface AttendanceMapper {
     List<Attendance> getAttendancesInSeminar(@Param("seminarId") Integer seminarId);
 
     Integer setAttendanceScore(@Param("attendanceId") Integer attendanceId,

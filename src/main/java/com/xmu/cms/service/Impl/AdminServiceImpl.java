@@ -21,14 +21,14 @@ public class AdminServiceImpl implements AdminService {
     private AdminDao adminDao;
 
     @Override
-    public Map<String, String> adminLogIn(String account, String password) {
+    public Map<String, String> adminLogIn(Admin admin) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Admin admin = adminDao.getAdminByAccount(account);
-        if (admin == null) {
+        Admin findAdmin = adminDao.getAdminByAccount(admin.getAccount());
+        if (findAdmin == null) {
             message.put("message", "No this account");
         } else {
-            if (password.equals(admin.getPassword())) {
-                Token.setToken(new UserInfo(admin.getAdminId(), "admin"));
+            if (findAdmin.getPassword().equals(admin.getPassword())) {
+                message.put("jwt", Token.setToken(new UserInfo(admin.getAdminId(), "admin")));
                 message.put("message", "Success");
             } else {
                 message.put("message", "Account or Password error");

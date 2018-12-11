@@ -29,6 +29,8 @@ public class Course {
         this.teamEndTime = teamEndTime;
     }
 
+    public Course() {
+    }
 
     public Integer getCourseId() {
         return courseId;

@@ -1,6 +1,6 @@
 package com.xmu.cms.service.Impl;
 
-import com.xmu.cms.dao.ClbumDao;
+import com.xmu.cms.mapper.ClbumMapper;
 import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.service.ClbumService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.Map;
 @Service
 public class ClbumServiceImpl implements ClbumService {
     @Autowired
-    private ClbumDao clbumDao;
+    private ClbumMapper clbumDao;
 
     @Override
     public Map<String, String> newClbum(Integer courseId, String name, String classTime, String classPlace) {

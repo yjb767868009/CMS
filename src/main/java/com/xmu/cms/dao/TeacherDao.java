@@ -1,90 +1,28 @@
 package com.xmu.cms.dao;
 
 import com.xmu.cms.entity.Teacher;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 /**
- * @author BiqunZhou on 2018/12/5.
- * @version 2.0
+ * @author JuboYu on 2018/12/11.
+ * @version 1.0
  */
-@Mapper
 public interface TeacherDao {
-    /**
-     * get all teachers in system
-     *
-     * @return List<Teacher> the list of teacher
-     */
+
     List<Teacher> getAllTeachers();
 
-    /**
-     * create a new teacher
-     *
-     * @param name     teacher's name
-     * @param account  teacher's account
-     * @param password teacher's password
-     * @param email    teacher's email
-     * @return String message
-     */
-    Integer newTeacher(@Param("name") String name,
-                       @Param("account") String account,
-                       @Param("password") String password,
-                       @Param("email") String email,
-                       @Param("phone") String phone,
-                       @Param("messageInterval") Integer messageInterval,
-                       @Param("activation") Boolean activation);
+    Teacher getTeacherByAccount(String account);
 
-    /**
-     * modify teacher by his id
-     *
-     * @param teacherId teacher's id
-     * @param name      teacher's new name
-     * @param account   teacher's new account
-     * @param email     teacher's new email
-     * @return String message
-     */
-    Integer modifyTeacherByTeacherId(@Param("teacherId") Integer teacherId,
-                                     @Param("name") String name,
-                                     @Param("account") String account,
-                                     @Param("email") String email);
+    List<Teacher> getTeacherByName(String name);
 
-    /**
-     * modify teacher's password by his id
-     *
-     * @param teacherId teacher's id
-     * @param password  teacher's new password
-     * @return String message
-     */
-    Integer modifyTeacherPasswordByTeacherId(@Param("teacherId") Integer teacherId,
-                                             @Param("password") String password);
+    Teacher getTeacherById(Integer teacherId);
 
-    /**
-     * delete teacher by his id
-     *
-     * @param teacherId teacher's id
-     * @return String message
-     */
-    Integer deleteTeacherByTeacherId(@Param("teacherId") Integer teacherId);
+    Integer updateTeacherInfo(Integer teacherId, Teacher teacher);
 
-    /**
-     * get teacher's password by account
-     *
-     * @param account log in account
-     * @return account's password
-     */
-    Teacher getTeacherByAccount(@Param("account") String account);
+    Integer updateTeacherPassword(Integer teacherId, Teacher teacher);
 
-    /**
-     * search teacher by name
-     *
-     * @param name teacher's name
-     * @return List<teacher>
-     */
-    List<Teacher> getTeacherByName(@Param("name") String name);
+    Integer deleteTeacherByTeacherId(Integer teacherId);
 
-    String getEmailByAccount(@Param("email") String email);
-
-    Teacher getTeacherById(@Param("teacherId") Integer teacherId);
+    Integer createTeacher(Teacher teacher);
 }

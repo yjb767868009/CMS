@@ -25,6 +25,9 @@ public class Teacher {
         this.activation = activation;
     }
 
+    public Teacher() {
+    }
+
     public Integer getTeacherId() {
         return teacherId;
     }

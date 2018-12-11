@@ -1,4 +1,4 @@
-package com.xmu.cms.dao;
+package com.xmu.cms.mapper;
 
 import com.xmu.cms.entity.Round;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,7 +12,7 @@ import java.util.Map;
  * @version 1.0
  */
 @Mapper
-public interface RoundDao {
+public interface RoundMapper {
     List<Round> getRoundsByCourseId(@Param("courseId") Integer courseId);
 
     Map<String, String> newRound(Integer courseId, Integer roundNum, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType);

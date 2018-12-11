@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.xmu.cms.dao.CourseDao">
+<mapper namespace="com.xmu.cms.mapper.CourseMapper">
     <select id="getAllCourseByTeacherId" resultType="com.xmu.cms.entity.Course">
         SELECT course_id          as courseId,
                teacher_id         as teacherId,

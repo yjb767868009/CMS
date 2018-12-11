@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.xmu.cms.dao.SeminarDao">
+<mapper namespace="com.xmu.cms.mapper.SeminarMapper">
     <insert id="newSeminar" parameterType="com.xmu.cms.entity.Seminar">
         INSERT seminar (round_id, theme, content, max_team, is_ordered, is_visible, enroll_start_date, enroll_end_date)
         VALUE (#{roundId},

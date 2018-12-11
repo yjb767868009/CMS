@@ -19,6 +19,9 @@ public class Clbum {
         this.classTime = classTime;
     }
 
+    public Clbum() {
+    }
+
     public Integer getClbumId() {
         return clbumId;
     }

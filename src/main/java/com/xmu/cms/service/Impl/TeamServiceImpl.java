@@ -1,6 +1,6 @@
 package com.xmu.cms.service.Impl;
 
-import com.xmu.cms.dao.TeamDao;
+import com.xmu.cms.mapper.TeamMapper;
 import com.xmu.cms.entity.Team;
 import com.xmu.cms.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +15,15 @@ import java.util.List;
 @Service
 public class TeamServiceImpl implements TeamService {
     @Autowired
-    private TeamDao teamDao;
+    private TeamMapper teamMapper;
 
     @Override
     public List<Team> getAllTeamsInSeminar(Integer seminarId) {
-        return teamDao.getAllTeamsInSeminar(seminarId);
+        return teamMapper.getAllTeamsInSeminar(seminarId);
     }
 
     @Override
     public List<Team> getAllTeamsInClbumSeminar(Integer clbumSeminarId) {
-        return teamDao.getAllTeamsInClbumSeminar(clbumSeminarId);
+        return teamMapper.getAllTeamsInClbumSeminar(clbumSeminarId);
     }
 }

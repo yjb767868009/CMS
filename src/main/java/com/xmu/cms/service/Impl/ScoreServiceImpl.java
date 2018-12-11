@@ -1,6 +1,6 @@
 package com.xmu.cms.service.Impl;
 
-import com.xmu.cms.dao.ScoreDao;
+import com.xmu.cms.mapper.ScoreMapper;
 import com.xmu.cms.entity.Score;
 import com.xmu.cms.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ScoreServiceImpl implements ScoreService {
     @Autowired
-    private ScoreDao scoreDao;
+    private ScoreMapper scoreDao;
 
     @Override
     public Score getAllScoresInClbumSeminar(Integer clbumSeminarId) {

@@ -1,4 +1,4 @@
-package com.xmu.cms.dao;
+package com.xmu.cms.mapper;
 
 import com.xmu.cms.entity.Course;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,7 +13,7 @@ import java.util.List;
  * @version 2.0
  */
 @Mapper
-public interface CourseDao {
+public interface CourseMapper {
     List<Course> getAllCourseByTeacherId(@Param("teacherId") Integer teacherId);
 
     List<Course> getAllCourseByStudentId(@Param("studentId") Integer studentId);

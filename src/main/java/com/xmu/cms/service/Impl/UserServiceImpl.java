@@ -1,7 +1,7 @@
 package com.xmu.cms.service.Impl;
 
-import com.xmu.cms.dao.StudentDao;
-import com.xmu.cms.dao.TeacherDao;
+import com.xmu.cms.mapper.StudentMapper;
+import com.xmu.cms.mapper.TeacherMapper;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.service.UserService;
@@ -20,17 +20,17 @@ import java.util.Map;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    private StudentDao studentDao;
+    private StudentMapper studentMapper;
 
     @Autowired
-    private TeacherDao teacherDao;
+    private TeacherMapper teacherDao;
 
     @Override
     public Map<String, String> userLogIn(String account, String password) {
         Map<String, String> message = new HashMap<String, String>(2);
         Teacher teacher = teacherDao.getTeacherByAccount(account);
         if (teacher == null) {
-            Student student = studentDao.getStudentByAccount(account);
+            Student student = studentMapper.getStudentByAccount(account);
             if (student == null) {
                 message.put("message", "No this account");
             } else {
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
             return messages;
         }
         if (info.getUserType().equals("student")) {
-            Student student = studentDao.getStudentById(info.getUserId());
+            Student student = studentMapper.getStudentById(info.getUserId());
             messages.put("name", student.getName());
             messages.put("account", student.getAccount());
             messages.put("message", "Success");

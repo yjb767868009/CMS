@@ -1,4 +1,4 @@
-package com.xmu.cms.dao;
+package com.xmu.cms.mapper;
 
 import com.xmu.cms.entity.Seminar;
 import org.apache.ibatis.annotations.Mapper;
@@ -11,7 +11,7 @@ import java.util.List;
  * @version 1.0
  */
 @Mapper
-public interface ClbumDao {
+public interface ClbumMapper {
     Integer newClbum(@Param("courseId") Integer courseId,
                      @Param("name") String name,
                      @Param("classTime") String classTime,

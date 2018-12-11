@@ -1,7 +1,7 @@
 package com.xmu.cms.service.Impl;
 
-import com.xmu.cms.dao.StudentDao;
-import com.xmu.cms.dao.TeacherDao;
+import com.xmu.cms.mapper.StudentMapper;
+import com.xmu.cms.mapper.TeacherMapper;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.service.MailService;
@@ -25,10 +25,10 @@ public class MailServiceImpl implements MailService {
     private JavaMailSender mailSender;
 
     @Autowired
-    private TeacherDao teacherDao;
+    private TeacherMapper teacherDao;
 
     @Autowired
-    private StudentDao studentDao;
+    private StudentMapper studentMapper;
 
     @Value("${spring.mail.username}")
     private String sender;
@@ -42,7 +42,7 @@ public class MailServiceImpl implements MailService {
             email = teacher.getEmail();
             return messages;
         }
-        Student student = studentDao.getStudentByAccount(account);
+        Student student = studentMapper.getStudentByAccount(account);
         if (student != null) {
             email = student.getEmail();
             messages.put("message", "Success");

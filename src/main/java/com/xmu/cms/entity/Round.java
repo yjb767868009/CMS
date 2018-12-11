@@ -21,6 +21,9 @@ public class Round {
         this.questionScoreType = questionScoreType;
     }
 
+    public Round() {
+    }
+
     public Integer getRoundId() {
         return roundId;
     }

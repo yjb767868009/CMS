@@ -1,10 +1,8 @@
 package com.xmu.cms.service.Impl;
 
-import com.xmu.cms.dao.AttendanceDao;
-import com.xmu.cms.dao.ClbumSeminarDao;
-import com.xmu.cms.dao.TeamDao;
+import com.xmu.cms.mapper.AttendanceMapper;
+import com.xmu.cms.mapper.TeamMapper;
 import com.xmu.cms.entity.Attendance;
-import com.xmu.cms.entity.ClbumSeminar;
 import com.xmu.cms.entity.Team;
 import com.xmu.cms.service.AttendanceService;
 import com.xmu.cms.support.Token;
@@ -22,13 +20,10 @@ import java.util.Map;
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
     @Autowired
-    private AttendanceDao attendanceDao;
+    private AttendanceMapper attendanceDao;
 
     @Autowired
-    private TeamDao teamDao;
-
-    @Autowired
-    private ClbumSeminarDao clbumSeminarDao;
+    private TeamMapper teamMapper;
 
     @Override
     public List<Attendance> getAttendancesInSeminar(Integer seminarId) {
@@ -49,10 +44,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public Map<String, String> newAttendance(Integer clbumSeminarId, Integer teamOrder) {
-        Integer studentId = Token.getToken().getUserId();
-        ClbumSeminar clbumSeminar = clbumSeminarDao.getClbumSeminarById(clbumSeminarId);
-        Team team = teamDao.getTeamInClbumByStudentId(clbumSeminar.getClbumId(), studentId);
-        return attendanceDao.studentAttendance(team.getTeamId(), clbumSeminarId, teamOrder);
+        return null;
     }
 
 }

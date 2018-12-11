@@ -1,7 +1,7 @@
 package com.xmu.cms.service.Impl;
 
-import com.xmu.cms.dao.RoundDao;
-import com.xmu.cms.dao.SeminarDao;
+import com.xmu.cms.mapper.RoundMapper;
+import com.xmu.cms.mapper.SeminarMapper;
 import com.xmu.cms.entity.Round;
 import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.service.RoundService;
@@ -18,23 +18,23 @@ import java.util.Map;
 @Service
 public class RoundServiceImpl implements RoundService {
     @Autowired
-    private RoundDao roundDao;
+    private RoundMapper roundMapper;
 
     @Autowired
-    private SeminarDao seminarDao;
+    private SeminarMapper seminarMapper;
 
     @Override
     public List<Round> getRoundsByCourseId(Integer courseId) {
-        return roundDao.getRoundsByCourseId(courseId);
+        return roundMapper.getRoundsByCourseId(courseId);
     }
 
     @Override
     public List<Seminar> getAllSeminarInRound(Integer roundId) {
-        return seminarDao.getAllSeminarByRoundId(roundId);
+        return seminarMapper.getAllSeminarByRoundId(roundId);
     }
 
     @Override
     public Map<String, String> newRound(Integer courseId, Integer roundNum, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType) {
-        return roundDao.newRound(courseId, roundNum, presentationScoreType, reportScoreType, questionScoreType);
+        return roundMapper.newRound(courseId, roundNum, presentationScoreType, reportScoreType, questionScoreType);
     }
 }

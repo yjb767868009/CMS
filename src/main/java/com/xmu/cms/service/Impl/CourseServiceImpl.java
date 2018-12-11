@@ -1,6 +1,6 @@
 package com.xmu.cms.service.Impl;
 
-import com.xmu.cms.dao.CourseDao;
+import com.xmu.cms.mapper.CourseMapper;
 import com.xmu.cms.entity.Course;
 import com.xmu.cms.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.Map;
 @Service
 public class CourseServiceImpl implements CourseService {
     @Autowired
-    private CourseDao courseDao;
+    private CourseMapper courseDao;
 
     @Override
     public List<Course> getAllCoursesByTeacherId(Integer teacherId) {

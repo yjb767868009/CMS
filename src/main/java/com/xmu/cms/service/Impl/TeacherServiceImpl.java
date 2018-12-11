@@ -1,12 +1,12 @@
 package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.TeacherDao;
+import com.xmu.cms.mapper.TeacherMapper;
 import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,9 +26,9 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Map<String, String> newTeacher(String name, String account, String password, String email) {
+    public Map<String, String> createTeacher(Teacher teacher) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = teacherDao.newTeacher(name, account, password, email, "", 1, false);
+        Integer count = teacherDao.createTeacher(teacher);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -38,31 +38,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Map<String, String> modifyTeacherByTeacherId(Integer teacherId, String name, String account, String email) {
-        Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = teacherDao.modifyTeacherByTeacherId(teacherId, name, account, email);
-        if (count == 1) {
-            message.put("message", "Success");
-        } else {
-            message.put("message", "Update error");
-        }
-        return message;
-    }
-
-    @Override
-    public Map<String, String> modifyTeacherPasswordByTeacherId(Integer teacherId, String password) {
-        Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = teacherDao.modifyTeacherPasswordByTeacherId(teacherId, password);
-        if (count == 1) {
-            message.put("message", "Success");
-        } else {
-            message.put("message", "Update error");
-        }
-        return message;
-    }
-
-    @Override
-    public Map<String, String> deleteTeacherByTeacherId(Integer teacherId) {
+    public Map<String, String> deleteTeacher(Integer teacherId) {
         Map<String, String> message = new HashMap<String, String>(2);
         Integer count = teacherDao.deleteTeacherByTeacherId(teacherId);
         if (count == 1) {
@@ -81,5 +57,34 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<Teacher> getTeacherByName(String name) {
         return teacherDao.getTeacherByName(name);
+    }
+
+    @Override
+    public Teacher getTeacherById(Integer teacherId) {
+        return teacherDao.getTeacherById(teacherId);
+    }
+
+    @Override
+    public Map<String, String> updateTeacherInfo(Integer teacherId, Teacher teacher) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        Integer count = teacherDao.updateTeacherInfo(teacherId, teacher);
+        if (count == 1) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
+    }
+
+    @Override
+    public Map<String, String> updateTeacherPassword(Integer teacherId, Teacher teacher) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        Integer count = teacherDao.updateTeacherPassword(teacherId, teacher);
+        if (count == 1) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
     }
 }

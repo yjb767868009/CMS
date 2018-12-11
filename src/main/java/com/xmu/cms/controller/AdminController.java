@@ -1,17 +1,15 @@
 package com.xmu.cms.controller;
 
+import com.xmu.cms.entity.Admin;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.service.AdminService;
 import com.xmu.cms.service.StudentService;
 import com.xmu.cms.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import com.xmu.cms.entity.Teacher;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -33,16 +31,13 @@ public class AdminController {
     private TeacherService teacherService;
 
     @PostMapping(value = "/login")
-    public Map<String, String> adminLogIn(@RequestParam(value = "account") String account,
-                                          @RequestParam(value = "password") String password,
-                                          HttpServletResponse response) {
-        return adminService.adminLogIn(account, password);
+    public Map<String, String> adminLogIn(@RequestBody Admin admin) {
+        return adminService.adminLogIn(admin);
     }
 
     @PostMapping(value = "/setJWT")
-    public Map<String, String> setJWT(@RequestParam(value = "account") String account,
-                                      @RequestParam(value = "password") String password) {
-        return adminService.adminLogIn(account, password);
+    public Map<String, String> setJWT(@RequestBody Admin admin) {
+        return adminService.adminLogIn(admin);
     }
 
     @GetMapping(value = "/teachers")
@@ -56,30 +51,25 @@ public class AdminController {
     }
 
     @PostMapping(value = "/teacher")
-    public Map<String, String> newTeacher(@RequestParam(value = "name") String name,
-                                          @RequestParam(value = "account") String account,
-                                          @RequestParam(value = "password") String password,
-                                          @RequestParam(value = "email") String email) {
-        return teacherService.newTeacher(name, account, password, email);
+    public Map<String, String> newTeacher(@RequestBody Teacher teacher) {
+        return teacherService.createTeacher(teacher);
     }
 
-    @PutMapping(value = "/teacher/{teacherId}")
-    public Map<String, String> modifyTeacherById(@PathVariable("teacherId") Integer teacherId,
-                                                 @RequestParam(value = "name") String name,
-                                                 @RequestParam(value = "account") String account,
-                                                 @RequestParam(value = "email") String email) {
-        return teacherService.modifyTeacherByTeacherId(teacherId, name, account, email);
+    @PutMapping(value = "/teacher/{teacherId}/information")
+    public Map<String, String> modifyTeacherInfo(@PathVariable("teacherId") Integer teacherId,
+                                                 @RequestBody Teacher teacher) {
+        return teacherService.updateTeacherInfo(teacherId, teacher);
     }
 
-    @PatchMapping(value = "/teacher/{teacherId}/modifyPassword")
-    public Map<String, String> modifyTeacherPasswordById(@PathVariable("teacherId") Integer teacherId,
-                                                         @RequestParam(value = "password") String password) {
-        return teacherService.modifyTeacherPasswordByTeacherId(teacherId, password);
+    @PutMapping(value = "/teacher/{teacherId}/password")
+    public Map<String, String> modifyTeacherPassword(@PathVariable("teacherId") Integer teacherId,
+                                                     @RequestBody Teacher teacher) {
+        return teacherService.updateTeacherPassword(teacherId, teacher);
     }
 
     @DeleteMapping(value = "/teacher/{teacherId}")
     public Map<String, String> deleteTeacher(@PathVariable("teacherId") Integer teacherId) {
-        return teacherService.deleteTeacherByTeacherId(teacherId);
+        return teacherService.deleteTeacher(teacherId);
     }
 
     @PutMapping(value = "/student/{studentId}")

@@ -25,6 +25,9 @@ public class Attendance {
         this.reportScore = reportScore;
     }
 
+    public Attendance() {
+    }
+
     public Integer getAttendanceId() {
         return attendanceId;
     }

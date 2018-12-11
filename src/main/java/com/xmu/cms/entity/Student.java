@@ -25,6 +25,9 @@ public class Student {
         this.activation = activation;
     }
 
+    public Student() {
+    }
+
     public Integer getStudentId() {
         return studentId;
     }

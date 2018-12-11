@@ -20,15 +20,11 @@ public interface SeminarService {
 
     Map<String, String> endClbumSeminar(Integer clbumSeminarId);
 
-    Attendance getNextAttendance(Integer seminarId);
-
     List<Seminar> getSeminarsByCourseId(Integer courseId);
 
     Map<String, String> modifySeminar(Integer seminarId, Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible);
 
     Seminar getSeminarBySeminarId(Integer seminarId);
-
-    String getStateInClbumSeminar(Integer clbumSeminarId);
 
     Map<String, String> getPresentationFileInClbumSeminar(Integer clbumSeminarId);
 

@@ -1,11 +1,10 @@
 package com.xmu.cms.service.Impl;
 
-import com.xmu.cms.dao.AttendanceDao;
-import com.xmu.cms.dao.SeminarDao;
-import com.xmu.cms.dao.TeamDao;
+import com.xmu.cms.mapper.AttendanceMapper;
+import com.xmu.cms.mapper.SeminarMapper;
+import com.xmu.cms.mapper.TeamMapper;
 import com.xmu.cms.entity.Attendance;
 import com.xmu.cms.entity.Seminar;
-import com.xmu.cms.entity.ClbumSeminar;
 import com.xmu.cms.service.SeminarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,18 +22,18 @@ import java.util.Map;
 public class SeminarServiceImpl implements SeminarService {
 
     @Autowired
-    private SeminarDao seminarDao;
+    private SeminarMapper seminarMapper;
 
     @Autowired
-    private AttendanceDao attendanceDao;
+    private AttendanceMapper attendanceDao;
 
     @Autowired
-    private TeamDao teamDao;
+    private TeamMapper teamMapper;
 
     @Override
     public Map<String, String> newSeminar(Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarDao.newSeminar(roundId, maxTeamNum, topic, introduction, signStartTime, signEndTime, signOrder, visible);
+        Integer count = seminarMapper.newSeminar(roundId, maxTeamNum, topic, introduction, signStartTime, signEndTime, signOrder, visible);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -46,7 +45,7 @@ public class SeminarServiceImpl implements SeminarService {
     @Override
     public Map<String, String> startClbumSeminar(Integer clbumSeminarId) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarDao.startClbumSeminar(clbumSeminarId);
+        Integer count = seminarMapper.startClbumSeminar(clbumSeminarId);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -58,7 +57,7 @@ public class SeminarServiceImpl implements SeminarService {
     @Override
     public Map<String, String> stopClbumSeminar(Integer clbumSeminarId) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarDao.stopClbumSeminar(clbumSeminarId);
+        Integer count = seminarMapper.stopClbumSeminar(clbumSeminarId);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -70,25 +69,13 @@ public class SeminarServiceImpl implements SeminarService {
     @Override
     public Map<String, String> endClbumSeminar(Integer clbumSeminarId) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarDao.endClbumSeminar(clbumSeminarId);
+        Integer count = seminarMapper.endClbumSeminar(clbumSeminarId);
         if (count == 1) {
             message.put("message", "Success");
         } else {
             message.put("message", "Error");
         }
         return message;
-    }
-
-    @Override
-    public Attendance getNextAttendance(Integer seminarId) {
-        Integer selectNum = seminarDao.getAttendanceNo(seminarId);
-        List<Attendance> attendances = attendanceDao.getAttendancesInSeminar(seminarId);
-        for (Attendance attendance : attendances) {
-            if (attendance.getTeamOrder() > selectNum) {
-                return attendance;
-            }
-        }
-        return null;
     }
 
     @Override
@@ -99,7 +86,7 @@ public class SeminarServiceImpl implements SeminarService {
     @Override
     public Map<String, String> modifySeminar(Integer seminarId, Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarDao.modifySeminar(seminarId, roundId, maxTeamNum, topic, introduction, signStartTime, signEndTime, signOrder, visible);
+        Integer count = seminarMapper.modifySeminar(seminarId, roundId, maxTeamNum, topic, introduction, signStartTime, signEndTime, signOrder, visible);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -110,24 +97,7 @@ public class SeminarServiceImpl implements SeminarService {
 
     @Override
     public Seminar getSeminarBySeminarId(Integer seminarId) {
-        return seminarDao.getSeminarBySeminarId(seminarId);
-    }
-
-    @Override
-    public String getStateInClbumSeminar(Integer clbumSeminarId) {
-        Integer state = seminarDao.getClbumSeminarById(clbumSeminarId).getState();
-        switch (state) {
-            case 0:
-                return "Ready";
-            case 1:
-                return "Run";
-            case 2:
-                return "Stop";
-            case 3:
-                return "End";
-            default:
-                return "Error";
-        }
+        return seminarMapper.getSeminarBySeminarId(seminarId);
     }
 
     @Override
@@ -135,12 +105,12 @@ public class SeminarServiceImpl implements SeminarService {
         Map<String, String> presentationFileMap = new HashMap<String, String>();
         List<Attendance> attendances = attendanceDao.getAttendancesInClbumSeminar(clbumSeminarId);
         for (Attendance attendance : attendances) {
-            String attendancePreFile = attendance.getPreFile();
-            if (!attendancePreFile.equals("")) {
-                presentationFileMap.put(attendance.getTeamOrder().toString(), attendancePreFile);
+            String attendancePresentationFile = attendance.getPresentationFile();
+            if (!attendancePresentationFile.equals("")) {
+                presentationFileMap.put(attendance.getTeam().getTeamName(), attendancePresentationFile);
             } else {
-                String noFileMessage = teamDao.getTeamByTeamId(attendance.getTeamId()).getTeamName() + "未提交";
-                presentationFileMap.put(attendance.getTeamOrder().toString(), noFileMessage);
+                String noFileMessage = attendance.getTeam().getTeamName() + "未提交";
+                presentationFileMap.put(attendance.getTeam().getTeamName(), noFileMessage);
             }
         }
         return presentationFileMap;
@@ -148,7 +118,7 @@ public class SeminarServiceImpl implements SeminarService {
 
     @Override
     public Seminar getRunningSeminarByTeacherId(Integer teacherId) {
-        return seminarDao.getRunningSeminarByTeacherId(teacherId);
+        return seminarMapper.getRunningSeminarByTeacherId(teacherId);
     }
 
 }

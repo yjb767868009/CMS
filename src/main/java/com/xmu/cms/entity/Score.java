@@ -23,6 +23,9 @@ public class Score {
         this.totalScore = totalScore;
     }
 
+    public Score() {
+    }
+
     public Integer getScoreId() {
         return scoreId;
     }

@@ -2,16 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.TeacherMapper">
+    <resultMap id="TeacherResultMap" type="com.xmu.cms.entity.Teacher">
+        <id property="teacherId" column="id"/>
+        <result property="account" column="teacher_num"/>
+        <result property="password" column="password"/>
+        <result property="teacherName" column="teacher_name"/>
+        <result property="phone" column="phone"/>
+        <result property="msg_interval" column="messageInterval"/>
+        <result property="activation" column="is_activated"/>
+    </resultMap>
 
-    <select id="getAllTeachers" resultType="com.xmu.cms.entity.Teacher">
-        SELECT teacher.id           as teacherId,
-               teacher.teacher_num  as account,
-               teacher.password,
-               teacher.email,
-               teacher.teacher_name as teacherName,
-               teacher.phone,
-               teacher.msg_interval as messageInterval,
-               teacher.is_activated as activation
+
+    <select id="getAllTeachers" resultMap="TeacherResultMap">
+        SELECT *
         FROM teacher
     </select>
 

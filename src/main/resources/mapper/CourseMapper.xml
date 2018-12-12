@@ -14,10 +14,6 @@
         <association property="teacher" javaType="com.xmu.cms.entity.Teacher">
             <id property="teacherId" column="teacherId"/>
             <result property="teacherName" column="teacherName"/>
-            <result property="account" column="account"/>
-            <result property="email" column="email"/>
-            <result property="teacherName" column="teacher_name"/>
-            <result property="phone" column="phone"/>
         </association>
     </resultMap>
 

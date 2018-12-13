@@ -2,6 +2,7 @@ package com.xmu.cms.config;
 
 import com.xmu.cms.handler.AuthenticationFailureHandler;
 import com.xmu.cms.handler.AuthenticationSuccessHandler;
+import com.xmu.cms.mapper.AdminMapper;
 import com.xmu.cms.service.Impl.AdminUserDetailsServiceImpl;
 import com.xmu.cms.service.Impl.UserUserDetailsServiceImpl;
 import com.xmu.cms.support.AdminAuthorizedEntryPoint;
@@ -10,13 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -37,22 +42,27 @@ public class MultiHttpSecurityConfiguration {
         private AdminUserDetailsServiceImpl adminUserDetailsService;
 
         @Autowired
-        private AuthenticationSuccessHandler authenticationSuccessHandler;
+        private AdminMapper adminMapper;
 
         @Autowired
-        private AuthenticationFailureHandler authenticationFailureHandler;
+        private AuthenticationSuccessHandler successHandler;
+
+        @Autowired
+        private AuthenticationFailureHandler failureHandler;
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.exceptionHandling().
                     authenticationEntryPoint(new AdminAuthorizedEntryPoint());
+            http.addFilter(jwtLoginFilter())
+                    .addFilterBefore(jwtAuthenticationFilter(), JWTLoginFilter.class);
             http.antMatcher("/api/admin/**")
                     .authorizeRequests()
                     .anyRequest().hasRole("ADMIN");
             http.formLogin()
                     .loginPage("/api/admin/login").loginProcessingUrl("/api/admin/login")
                     .usernameParameter("account").passwordParameter("password")
-                    .successHandler(authenticationSuccessHandler).failureHandler(authenticationFailureHandler)
+                    .successHandler(successHandler).failureHandler(failureHandler)
                     .permitAll();
             http.csrf().disable();
             http.cors();
@@ -60,7 +70,8 @@ public class MultiHttpSecurityConfiguration {
 
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(adminUserDetailsService).passwordEncoder(passwordEncoder());
+            //auth.userDetailsService(adminUserDetailsService).passwordEncoder(passwordEncoder());
+            auth.authenticationProvider(new AdminAuthenticationProvider(adminMapper, passwordEncoder()));
         }
 
         @Override
@@ -68,6 +79,24 @@ public class MultiHttpSecurityConfiguration {
             web.ignoring().antMatchers("/resources/**");
         }
 
+        @Bean
+        @Override
+        public AuthenticationManager authenticationManagerBean() throws Exception {
+            return super.authenticationManagerBean();
+        }
+
+        @Bean
+        public JWTLoginFilter jwtLoginFilter() throws Exception {
+            JWTLoginFilter loginFilter = new JWTLoginFilter();
+            loginFilter.setAuthenticationManager(authenticationManager());
+            return loginFilter;
+        }
+
+
+        @Bean
+        public JWTAuthenticationFilter jwtAuthenticationFilter() throws Exception {
+            return new JWTAuthenticationFilter(authenticationManager());
+        }
     }
 
     @Configuration
@@ -75,16 +104,12 @@ public class MultiHttpSecurityConfiguration {
         @Autowired
         private UserUserDetailsServiceImpl userUserDetailsService;
 
-        @Autowired
-        private AuthenticationSuccessHandler authenticationSuccessHandler;
-
-        @Autowired
-        private AuthenticationFailureHandler authenticationFailureHandler;
-
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.exceptionHandling().
                     authenticationEntryPoint(new UserAuthorizedEntryPoint());
+            //http.addFilter(jwtLoginFilter())
+            //        .addFilter(new JWTAuthenticationFilter(authenticationManager()));
             http.antMatcher("/api/**")
                     .authorizeRequests()
                     .antMatchers("/api/test/**").permitAll()
@@ -94,7 +119,6 @@ public class MultiHttpSecurityConfiguration {
             http.formLogin()
                     .loginPage("/api/user/login").loginProcessingUrl("/api/user/login")
                     .usernameParameter("account").passwordParameter("password")
-                    .successHandler(authenticationSuccessHandler).failureHandler(authenticationFailureHandler)
                     .permitAll();
             http.csrf().disable();
             http.cors();
@@ -109,12 +133,20 @@ public class MultiHttpSecurityConfiguration {
         public void configure(WebSecurity web) throws Exception {
             web.ignoring().antMatchers("/resources/**");
         }
+
+//        @Bean
+//        public JWTLoginFilter jwtLoginFilter() throws Exception {
+//            JWTLoginFilter loginFilter = new JWTLoginFilter();
+//            loginFilter.setAuthenticationManager(authenticationManager());
+//            return loginFilter;
+//        }
     }
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
     @Bean
     public static CorsConfigurationSource corsConfigurationSource() {

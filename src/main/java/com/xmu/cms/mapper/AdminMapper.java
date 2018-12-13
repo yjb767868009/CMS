@@ -14,7 +14,7 @@ public interface AdminMapper {
      * search password by account
      *
      * @param account admin's account
-     * @return String message
+     * @return find admin
      */
     Admin getAdminByAccount(@Param("account") String account);
 }

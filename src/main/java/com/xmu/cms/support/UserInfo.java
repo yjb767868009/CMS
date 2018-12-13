@@ -6,10 +6,12 @@ package com.xmu.cms.support;
  */
 public class UserInfo {
     private Integer userId;
+    private String userName;
     private String userType;
 
-    public UserInfo(Integer userId, String userType) {
+    public UserInfo(Integer userId, String userName, String userType) {
         this.userId = userId;
+        this.userName = userName;
         this.userType = userType;
     }
 
@@ -27,5 +29,13 @@ public class UserInfo {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

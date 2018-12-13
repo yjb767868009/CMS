@@ -19,8 +19,6 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
@@ -31,9 +29,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -64,41 +59,11 @@ public class TestController {
 
     @GetMapping(value = "/getJWT")
     public UserInfo getJWT(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("Token")) {
-                String token = cookie.getValue();
-                DecodedJWT jwt = null;
-                try {
-                    JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET))
-                            .withIssuer("CMS").build();
-                    jwt = verifier.verify(token);
-                } catch (Exception e) {
-                    // token 校验失败, 抛出Token验证非法异常
-                    e.printStackTrace();
-                }
-                assert jwt != null;
-                Map<String, Claim> claims = jwt.getClaims();
-                Claim userIdClaim = claims.get("userId");
-                if (null == userIdClaim || userIdClaim.asInt() != 0) {
-                    System.out.println("Token Error");
-                }
-                Claim userTypeClaim = claims.get("userType");
-                if (null == userTypeClaim || StringUtils.isEmpty(userTypeClaim.asString())) {
-                    System.out.println("Token Error");
-                }
-                assert userIdClaim != null;
-                assert userTypeClaim != null;
-
-                return new UserInfo(userIdClaim.asInt(), userTypeClaim.asString());
-            }
-        }
         return null;
     }
 
     @GetMapping(value = "/createJWT")
     public void testJWT() {
-        Token.setToken(new UserInfo(1, "admin"));
     }
 
     @GetMapping(value = "/getUserType")

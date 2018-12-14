@@ -26,22 +26,19 @@
     <update id="startSeminar">
         UPDATE clbum_seminar
         SET state = 1
-        WHERE seminar_id = #{seminarId}
-          AND clbum_id = #{clbumId}
+        WHERE id = # {clbumSeminarId}
     </update>
 
     <update id="stopSeminar">
         UPDATE clbum_seminar
         SET state = 2
-        WHERE seminar_id = #{seminarId}
-          AND clbum_id = #{clbumId}
+        WHERE id = # {clbumSeminarId}
     </update>
 
     <update id="endSeminar">
         UPDATE clbum_seminar
         SET state = 3
-        WHERE seminar_id = #{seminarId}
-          AND clbum_id = #{clbumId}
+        WHERE id = # {clbumSeminarId}
     </update>
 
     <select id="getSeminar" resultType="com.xmu.cms.entity.Seminar">

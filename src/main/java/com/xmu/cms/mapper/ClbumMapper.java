@@ -19,4 +19,8 @@ public interface ClbumMapper {
 
     List<Seminar> getStudentClbumByCourseId(@Param("studentId") Integer studentId,
                                             @Param("courseId") Integer courseId);
+                                            
+    Integer deleteClbumByClbumId(@Param("clbumId") Integer clbumId);
+
+    List<Clbum> getAllClbums(@Param("courseId") Integer courseId);
 }

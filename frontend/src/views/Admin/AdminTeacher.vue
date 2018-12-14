@@ -27,7 +27,7 @@
         <a style="color:rgb(0,0,0)" @click="$store.state.admin.showAddTeacher=true">新增教师</a>
       </el-header>
       <el-main>
-        <el-table :data="teacherData">
+        <el-table :data="teacherDataPagination">
           <el-table-column prop="account" label="教工号">
           </el-table-column>
           <el-table-column prop="name" label="姓名">
@@ -50,6 +50,14 @@
               </template>
           </el-table-column>
         </el-table>
+          <el-pagination
+          background
+          layout="->,prev, pager, next"
+          :page-size="20"
+          :total="currentTotal"
+          @current-change="handleCurrentChange"
+          >
+          </el-pagination>
       </el-main>
     </el-container>
 
@@ -123,7 +131,9 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
           email:'e-mail',
           phone:'j123312313'
         },],
+        teacherDataPagination:[1,2,3,4],
         teacherSearchKey:'',
+        currentPage:1,
       }
     },
     created:function(){
@@ -134,6 +144,11 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
           this.$message.error('insert error')
         }
         ,
+        handleCurrentChange:function(val){
+            console.log('change page to '+val)
+            this.currentPage=val
+            this.teacherDataPagination=teacherData.slice((currentPage-1)*20,currentPage*20+1)
+        },
         handleStudent:function(){
             this.$router.push('AdminStudent')
         },
@@ -182,6 +197,8 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
           this.$axios.get('/api/admin/teachers')
             .then((response)=>{
               this.teacherData=response.data
+              this.currentTotal=this.teacherData.length
+              this.teacherDataPagination=teacherData.slice((currentPage-1)*20,currentPage*20+1)
             }).catch(function(error){
               console.log(error)
             })

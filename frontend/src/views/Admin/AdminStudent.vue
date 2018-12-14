@@ -22,8 +22,9 @@
         <el-input style="width:30%" v-model="studentSearchKey" placeholder="输入学号/姓名" @keyup.enter.native="searchStudent">
         </el-input>
       </el-header>
+
       <el-main>
-        <el-table :data="studentData">
+        <el-table :data="studentDataPagination">
           <el-table-column prop="account" label="学号">
           </el-table-column>
           <el-table-column prop="name" label="姓名">
@@ -46,7 +47,16 @@
               </template>
           </el-table-column>
         </el-table>
+          <el-pagination
+          background
+          layout="->,prev, pager, next"
+          :page-size="20"
+          :total="currentTotal"
+          @current-change="handleCurrentChange"
+          >
+          </el-pagination>
       </el-main>
+
     </el-container>
 
       <modify-student-dialog @modifySuccess='flash'></modify-student-dialog>
@@ -114,13 +124,21 @@ import ModifyStudentDialog from './ModifyStudentDialog'
     data() {
       return {
         studentData:[1,2,3,4],
+        studentDataPagination:[1,2,3,4],
         studentSearchKey:'',
+        currentPage:1,
+        currentTotal:80,
       }
     },
     mounted:function(){
       this.getAllStudent()
     },
     methods:{
+        handleCurrentChange:function(val){
+            console.log('change page to '+val)
+            this.currentPage=val
+            this.studentDataPagination=studentData.slice((currentPage-1)*20,currentPage*20+1)
+        },
         handleStudent:function(){
             console.log('student info')
         },
@@ -170,6 +188,8 @@ import ModifyStudentDialog from './ModifyStudentDialog'
           this.$axios.get('/api/admin/students')
             .then((response)=>{
               this.studentData=response.data
+              this.currentTotal=this.studentData.length
+              this.studentDataPagination=studentData.slice((currentPage-1)*20,currentPage*20+1)
             }).catch(function(error){
               console.log(error)
             })

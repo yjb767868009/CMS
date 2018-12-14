@@ -63,10 +63,10 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
      */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (null != authentication) {
-            return authentication;
-        }
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (null != authentication) {
+//            return authentication;
+//        }
 
         String username = this.obtainUsername(request);
         String password = this.obtainPassword(request);
@@ -102,7 +102,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         String url = request.getServletPath();
-        if (!url.equals("/api/admin/login")) {
+        if (!url.equals("/api/admin/login") && !url.equals("/api/user/login")) {
             chain.doFilter(request, response);
         } else {
             if (this.logger.isDebugEnabled()) {

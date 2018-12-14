@@ -1,7 +1,11 @@
 package com.xmu.cms.config;
 
 import com.xmu.cms.entity.Admin;
+import com.xmu.cms.entity.Student;
+import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.mapper.AdminMapper;
+import com.xmu.cms.mapper.StudentMapper;
+import com.xmu.cms.mapper.TeacherMapper;
 import com.xmu.cms.service.Impl.AdminUserDetailsServiceImpl;
 import com.xmu.cms.support.UserInfo;
 import com.xmu.cms.support.UsernameIsExitedException;
@@ -21,16 +25,19 @@ import java.util.List;
  * @author JuboYu on 2018/12/12.
  * @version 1.0
  */
-public class AdminAuthenticationProvider implements AuthenticationProvider {
-
+@Component
+public class JWTAuthenticationProvider implements AuthenticationProvider {
+    @Autowired
     private AdminMapper adminMapper;
 
-    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private TeacherMapper teacherMapper;
 
-    public AdminAuthenticationProvider(AdminMapper adminMapper, PasswordEncoder passwordEncoder) {
-        this.adminMapper = adminMapper;
-        this.passwordEncoder = passwordEncoder;
-    }
+    @Autowired
+    private StudentMapper studentMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * 验证登录信息,若登陆成功,设置 Authentication
@@ -46,22 +53,41 @@ public class AdminAuthenticationProvider implements AuthenticationProvider {
         // 获取认证的用户名 & 密码
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
         Admin admin = adminMapper.getAdminByAccount(username);
-
         if (null != admin) {
-            List<SimpleGrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-
             if (!password.equals(admin.getPassword())) {
                 throw new UsernameIsExitedException("密码错误");
             }
-
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password, authorities);
-
             authenticationToken.setDetails(new UserInfo(admin.getAdminId(), admin.getAccount(), "admin"));
             return authenticationToken;
         }
+
+        Teacher teacher = teacherMapper.getTeacherByAccount(username);
+        if (null != teacher) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_TEACHER"));
+            if (!password.equals(teacher.getPassword())) {
+                throw new UsernameIsExitedException("密码错误");
+            }
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(teacher.getAccount(), teacher.getPassword(), authorities);
+            authenticationToken.setDetails(new UserInfo(teacher.getTeacherId(), teacher.getAccount(), "teacher"));
+            return authenticationToken;
+        }
+
+        Student student = studentMapper.getStudentByAccount(username);
+        if (null != student) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_STUDENT"));
+            if (!password.equals(student.getPassword())) {
+                throw new UsernameIsExitedException("密码错误");
+            }
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(student.getAccount(), student.getPassword(), authorities);
+            authenticationToken.setDetails(new UserInfo(student.getStudentId(), student.getAccount(), "student"));
+            return authenticationToken;
+        }
+
         throw new UsernameIsExitedException("无此用户");
     }
 

@@ -1,4 +1,4 @@
-package com.xmu.cms.config;
+package com.xmu.cms.config.Filter;
 
 import com.auth0.jwt.JWT;
 import com.xmu.cms.support.Token;

@@ -6,6 +6,7 @@ import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.service.*;
 import com.xmu.cms.support.Token;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,6 +44,50 @@ public class TeacherController {
 
     @Autowired
     private FileService fileService;
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping(value = "/")
+    public List<Teacher> getAllTeachers() {
+        return teacherService.getAllTeachers();
+    }
+
+    @Secured("ROLE_ADMIN")
+    @PostMapping(value = "/")
+    public Map<String, String> newTeacher(@RequestBody Teacher teacher) {
+        return teacherService.createTeacher(teacher);
+    }
+
+    @Secured("ROLE_ADMIN")
+    @PutMapping(value = "/{teacherId}/information")
+    public Map<String, String> modifyTeacherInfo(@PathVariable("teacherId") Integer teacherId,
+                                                 @RequestBody Teacher teacher) {
+        return teacherService.updateTeacherInfo(teacherId, teacher);
+    }
+
+    @Secured("ROLE_ADMIN")
+    @PutMapping(value = "/{teacherId}/password")
+    public Map<String, String> modifyTeacherPassword(@PathVariable("teacherId") Integer teacherId,
+                                                     @RequestBody Teacher teacher) {
+        return teacherService.updateTeacherPassword(teacherId, teacher);
+    }
+
+    @Secured("ROLE_ADMIN")
+    @DeleteMapping(value = "/{teacherId}")
+    public Map<String, String> deleteTeacher(@PathVariable("teacherId") Integer teacherId) {
+        return teacherService.deleteTeacher(teacherId);
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping(value = "/searchByName")
+    public List<Teacher> getTeacherByName(@RequestParam("name") String name) {
+        return teacherService.getTeacherByName(name);
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping(value = "/searchByAccount")
+    public Teacher getTeacherByAccount(@RequestParam("account") String account) {
+        return teacherService.getTeacherByAccount(account);
+    }
 
     @PostMapping(value = "/course")
     public Map<String, String> createCourse(Course course) {

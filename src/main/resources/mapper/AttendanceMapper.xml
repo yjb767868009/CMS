@@ -2,25 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.AttendanceMapper">
-    <select id="getPresentationsInSeminar" resultType="com.xmu.cms.entity.Attendance">
+    <resultMap id="AttendanceResultMap" type="com.xmu.cms.entity.Attendance">
+        <id property="attendanceId" column="attendanceId" javaType="java.lang.Integer"/>
+        <result property="presentationFile" column="pptUrl"/>
+        <result property="reportFile" column="reportUrl"/>
+        <association property="team" javaType="com.xmu.cms.entity.Team">
+            <id property="teamId" column="teamId"/>
+        </association>
+        <association property="klass" javaType="com.xmu.cms.entity.Clbum">
+            <id property="klassId" column="klassId"/>
+        </association>
+        <association property="seminar" javaType="com.xmu.cms.entity.Seminar">
+            <id property="seminarId" column="seminarId"/>
+        </association>
+    </resultMap>
+
+    <select id="getPresentationsInSeminar" resultMap="AttendanceResultMap">
         SELECT attendance.id as attendanceId,
                team_id       as teamId,
                seminar_id    as seminarId,
                team_order    as teamOrder,
-               pre_file      as ppt,
-               report_file   as report,
-               pre_score     as presentationScore,
-               report_score  as reportScore
+               ppt_name      as ppt,
+               report_name   as report,
+               ppt_url     as presentationScore,
+               reprot_url  as reportScore
         FROM attendance,
-             clbum_seminar
-        WHERE clbum_seminar.seminar_id = #{seminarId}
-          AND clbum_seminar.id = attendance.clbum_seminar_id
+             klass_seminar
+        WHERE klass_seminar.seminar_id = #{seminarId}
+          AND klass_seminar.id = attendance.klass_seminar_id
         ORDER BY team_order
     </select>
 
-    <update id="setPresentationScore">
-        UPDATE attendance
-        SET pre_score = #{presentationScore}
-        WHERE id = #{attendanceId}
-    </update>
 </mapper>

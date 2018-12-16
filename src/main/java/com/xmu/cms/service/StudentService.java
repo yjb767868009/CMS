@@ -22,4 +22,6 @@ public interface StudentService {
     List<Student> getStudentByName(String name);
 
     Student getStudentByAccount(String account);
+
+    Map<String, String> activateStudent(Integer userId, Student student);
 }

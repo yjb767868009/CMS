@@ -2,15 +2,86 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.TeamMapper">
-    <select id="getAllTeamsInSeminar" parameterType="java.lang.Integer" resultType="com.xmu.cms.entity.Team">
-        SELECT team.team_id as teamId,
-               leader_id    as leaderId,
-               course_id    as courseId,
-               team_name    as teamName,
-               valid
+    <resultMap id="teamResultMap" type="com.xmu.cms.entity.Team">
+        <id property="teamId" column="id" javaType="java.lang.Integer"/>
+        <result property="classId" column="klass_id" javaType="java.lang.Integer"/>
+        <result property="courseId" column="course_id" javaType="java.lang.Integer"/>
+        <result property="leaderId" column="leader_id" javaType="java.lang.Integer"/>
+        <result property="teamName" column="team_name" javaType="java.lang.String"/>
+        <result property="teamSerial" column="team_serial" javaType="java.lang.Integer"/>
+        <result property="status" column="status" javaType="java.lang.Integer"/>
+    </resultMap>
+
+    <select id="getAllTeamsInSeminar" resultType="com.xmu.cms.entity.Team">
+        SELECT team.id      as teamId,
+                klass_id    as classId,
+                course_id   as courseId,
+                leader_id   as leaderId,
+                team_name   as teamName,
+                team_serial as teamSerial,
+                status      as status
         FROM team,
-             presentation
-        WHERE team.team_id = presentation.team_id
-          AND presentation.seminar_id = #{seminarId}
+             attendance
+        WHERE team.id = attendance.team_id
+          AND attendance.klass_seminar_id = #{clbumSeminarId}
     </select>
+
+    <insert id="newTeam">
+        insert team (klass_id, course_id, leader_id, team_name, team_serial, status)
+        values (#{classId}, #{courseId}, #{leaderId}, #{teamName}, #{teamSerial}, #{status})
+    </insert>
+
+    <update id="setValid">
+        update team
+        set status = #{status}
+        where id = #{teamId}
+    </update>
+
+    <select id="getValid" parameterType="java.lang.String">
+        select status
+        from team
+        where id = #{teamId}
+    </select>
+
+    <update id="setTeamName">
+        update team
+        set team_name = #{teamName}
+        where id = #{teamId}
+    </update>
+
+    <select id="getTeamName" parameterType="java.lang.String">
+        select team_name
+        from team
+        where id = #{teamId}
+    </select>
+
+    <update id="setClbum">
+        update team
+        set klass_id
+        where id = #{teamId}
+    </update>
+
+    <select id="getClbum" parameterType="java.lang.String">
+        select klass_id
+        from team
+        where id = #{teamId}
+    </select>
+
+    <update id="setMembers">
+        update klass_student
+        set team_id = #{teamId}
+        where student_id = #{studentId}
+    </update>
+
+    <select id="getMembers" parameterType="java.lang.String">
+        select student_id
+        from klass_student
+        where team_id = #{teamId}
+    </select>
+
+    <delete id="deleteTeam" parameterType="java.lang.Integer">
+        delete
+        from team
+        where id = #{teamId}
+    </delete>
 </mapper>

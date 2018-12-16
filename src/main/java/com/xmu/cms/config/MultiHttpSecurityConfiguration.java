@@ -1,9 +1,9 @@
 package com.xmu.cms.config;
 
-import com.xmu.cms.handler.AuthenticationFailureHandler;
-import com.xmu.cms.handler.AuthenticationSuccessHandler;
-import com.xmu.cms.mapper.AdminMapper;
-import com.xmu.cms.service.Impl.AdminUserDetailsServiceImpl;
+import com.xmu.cms.config.Filter.JWTAuthenticationFilter;
+import com.xmu.cms.config.Filter.JWTLoginFilter;
+import com.xmu.cms.config.handler.AuthenticationFailureHandler;
+import com.xmu.cms.config.handler.AuthenticationSuccessHandler;
 import com.xmu.cms.support.AdminAuthorizedEntryPoint;
 import com.xmu.cms.support.UserAuthorizedEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +34,6 @@ public class MultiHttpSecurityConfiguration {
     @Configuration
     @Order(1)
     public static class AdminConfigurationAdapter extends WebSecurityConfigurerAdapter {
-        @Autowired
-        private AdminUserDetailsServiceImpl adminUserDetailsService;
 
         @Autowired
         private JWTAuthenticationProvider jwtAuthenticationProvider;
@@ -87,7 +85,6 @@ public class MultiHttpSecurityConfiguration {
             loginFilter.setAuthenticationManager(authenticationManager());
             return loginFilter;
         }
-
 
         @Bean
         public JWTAuthenticationFilter jwtAuthenticationFilter() throws Exception {

@@ -4,26 +4,26 @@ package com.xmu.cms.entity;
  * @author JuboYu on 2018/11/29.
  * @version 1.0
  */
-public class Score {
+public class RoundScore {
     private Integer scoreId;
     private Team team;
-    private Seminar seminar;
+    private Round round;
     private Float presentationScore;
     private Float questionScore;
     private Float reportScore;
     private Float totalScore;
 
-    public Score(Integer scoreId, Team team, Seminar seminar, Float presentationScore, Float questionScore, Float reportScore, Float totalScore) {
+    public RoundScore(Integer scoreId, Team team, Round round, Float presentationScore, Float questionScore, Float reportScore, Float totalScore) {
         this.scoreId = scoreId;
         this.team = team;
-        this.seminar = seminar;
+        this.round = round;
         this.presentationScore = presentationScore;
         this.questionScore = questionScore;
         this.reportScore = reportScore;
         this.totalScore = totalScore;
     }
 
-    public Score() {
+    public RoundScore() {
     }
 
     public Integer getScoreId() {
@@ -40,14 +40,6 @@ public class Score {
 
     public void setTeam(Team team) {
         this.team = team;
-    }
-
-    public Seminar getSeminar() {
-        return seminar;
-    }
-
-    public void setSeminar(Seminar seminar) {
-        this.seminar = seminar;
     }
 
     public Float getPresentationScore() {
@@ -80,5 +72,13 @@ public class Score {
 
     public void setTotalScore(Float totalScore) {
         this.totalScore = totalScore;
+    }
+
+    public Round getRound() {
+        return round;
+    }
+
+    public void setRound(Round round) {
+        this.round = round;
     }
 }

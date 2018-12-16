@@ -1,4 +1,4 @@
-package com.xmu.cms.handler;
+package com.xmu.cms.config.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xmu.cms.support.LoginType;

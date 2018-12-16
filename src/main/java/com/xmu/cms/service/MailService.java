@@ -8,4 +8,6 @@ import java.util.Map;
  */
 public interface MailService {
     Map<String,String> sendEmailByAccount(String account);
+
+    Map<String, String> sendPassword(String account);
 }

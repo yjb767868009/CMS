@@ -2,7 +2,10 @@ package com.xmu.cms.controller;
 
 import com.xmu.cms.entity.*;
 import com.xmu.cms.service.*;
+import com.xmu.cms.support.MyUser;
+import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -16,7 +19,7 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping(value = "/api/user")
+@RequestMapping(value = "/user")
 public class UserController {
 
     @Autowired
@@ -45,47 +48,27 @@ public class UserController {
 
     @PostMapping(value = "/login")
     public Map<String, String> userLogIn(@RequestParam(value = "account") String account,
-                                         @RequestParam(value = "password") String password,
-                                         HttpServletResponse response) {
+                                         @RequestParam(value = "password") String password) {
         return userService.userLogIn(account, password);
     }
 
-    @PostMapping(value = "/setJWT")
-    public Map<String, String> setJWT(@RequestParam(value = "account") String account,
-                                      @RequestParam(value = "password") String password) {
-        return userService.userLogIn(account, password);
+    @GetMapping(value = "/password")
+    public Map<String, String> getPassword(@RequestParam(value = "account") String account) {
+        return mailService.sendPassword(account);
     }
 
-    @PostMapping(value = "/activation")
-    public String userActivation(@RequestParam(value = "password") String password,
-                                 @RequestParam(value = "email") String email) {
-        return "Success";
+    @PutMapping(value = "/password")
+    public Map<String, String> modifyPassword(@RequestParam("userId") Integer userId,
+                                              @RequestParam("userType") String userType,
+                                              @RequestBody MyUser user) {
+        return userService.modifyPassword(userId, userType, user);
     }
 
-    @PostMapping(value = "/getVerificationCode")
-    public Map<String, String> getVerificationCode(@RequestParam(value = "account") String account) {
-        return mailService.sendEmailByAccount(account);
-    }
-
-    @PostMapping(value = "/checkVerificationCode")
-    public Map<String, String> checkVerificationCode(@RequestParam("account") String account,
-                                                     @RequestParam("verificationCode") String verificationCode) {
-        return null;
-    }
-
-    @PostMapping(value = "/resetPassword")
-    public String resetPassword(@RequestParam(value = "password") String password) {
-        return "Success";
-    }
-
-    @PostMapping(value = "/modifyEmail")
-    public String modifyEmail(@RequestParam(value = "email") String email) {
-        return "Success";
-    }
-
-    @PatchMapping(value = "/modifyMessageInterval")
-    public String modifyMessageInterval(@RequestParam(value = "messageInterval") Integer messageInterval) {
-        return "Success";
+    @PutMapping(value = "/email")
+    public Map<String, String> modifyEmail(@RequestParam("userId") Integer userId,
+                                           @RequestParam("userType") String userType,
+                                           @RequestBody MyUser user) {
+        return userService.modifyEmail(userId, userType, user);
     }
 
     @GetMapping(value = "/course")
@@ -144,14 +127,9 @@ public class UserController {
         return seminarService.getPresentationFileInClbumSeminar(seminarId);
     }
 
-    @GetMapping(value = "/myInfo")
-    public Map<String, String> getMyInfo(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("Token")) {
-                String token = cookie.getValue();
-            }
-        }
-        return userService.getMyInfo();
+    @GetMapping(value = "/information")
+    public Map<String, String> getMyInfo(@RequestParam("userId") Integer userId,
+                                         @RequestParam("userType") String userType) {
+        return userService.getMyInfo(userId, userType);
     }
 }

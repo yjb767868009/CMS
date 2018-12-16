@@ -1,6 +1,7 @@
 package com.xmu.cms.service;
 
-import javax.servlet.http.HttpSession;
+import com.xmu.cms.support.MyUser;
+
 import java.util.Map;
 
 /**
@@ -11,5 +12,9 @@ public interface UserService {
 
     Map<String, String> userLogIn(String account, String password);
 
-    Map<String, String> getMyInfo();
+    Map<String, String> getMyInfo(Integer userId, String userType);
+
+    Map<String, String> modifyEmail(Integer userId, String userType, MyUser user);
+
+    Map<String, String> modifyPassword(Integer userId, String userType, MyUser user);
 }

@@ -6,9 +6,9 @@
         SELECT round_id                as roundId,
                course_id               as couseId,
                name,
-               presentation_score_type as presentationScoreType,
-               report_score_type       as reportScoreType,
-               question_score_type     as questionScoreType
+               presentation_score_method as presentationScoreType,
+               report_score_method       as reportScoreType,
+               question_score_method     as questionScoreType
         FROM round
         WHERE course_id = #{courseId}
     </select>

@@ -6,7 +6,6 @@ import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.mapper.AdminMapper;
 import com.xmu.cms.mapper.StudentMapper;
 import com.xmu.cms.mapper.TeacherMapper;
-import com.xmu.cms.service.Impl.AdminUserDetailsServiceImpl;
 import com.xmu.cms.support.UserInfo;
 import com.xmu.cms.support.UsernameIsExitedException;
 import org.springframework.beans.factory.annotation.Autowired;

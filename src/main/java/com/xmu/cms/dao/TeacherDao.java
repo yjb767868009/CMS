@@ -25,4 +25,8 @@ public interface TeacherDao {
     Integer deleteTeacherByTeacherId(Integer teacherId);
 
     Integer createTeacher(Teacher teacher);
+
+    Integer modifyTeacherEmail(Integer teacherId, Teacher teacher);
+
+    Integer modifyTeacherPassword(Integer teacherId, Teacher teacher);
 }

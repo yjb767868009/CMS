@@ -2,23 +2,53 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.dao.TurningClassDao">
+    <resultMap id="classResultMap" type="com.xmu.cms.entity.Clbum">
+        <id property="classId" column="id" javaType="java.lang.Integer"/>
+        <result property="courseId" column="course_id" javaType="java.lang.Integer"/>
+        <result property="grade" column="grade" javaType="java.lang.Integer"/>
+        <result property="classSerial" column="klass_serial" javaType="java.lang.Integer"/>
+        <result property="classTime" column="klass_time" javaType="java.lang.String"/>
+        <result property="location" column="klass_location" javaType="java.lang.String"/>
+    </resultMap>
+
     <insert id="newTurningClass">
-        INSERT turning_class (course_id, name, class_time, class_place)
-        VALUE (#{courseId}, #{name}, #{classTime}, #{classPlace})
+        INSERT klass (course_id, grade, klass_serial, klass_time, klass_location)
+        VALUE (#{courseId}, #{grade}, #{classSerial}, #{classTime}, #{classPlace})
     </insert>
 
-    <select id="getAllClbumsByCourseId" resultType="com.xmu.cms.entity.Clbum">
-        SELECT id as clbumId,
-                clbum_name,
-                class_time as classTime,
-                class_place as classPlace
-        from clbum
+    <select id="getAllClbumsByCourseId" parameterType="java.lang.String" resultMap="classResultMap">
+        SELECT *
+        from klass
         where course_id = #{courseId}
     </select>
 
     <delete id="deleteClbumByClbumId" parameterType="java.lang.Integer">
         delete
-        from clbum
-        where id = #{clbumId}
+        from klass
+        where id = #{classId}
     </delete>
+
+    <update id="setClassTime">
+        update klass
+        set klass_time = #{classTime}
+        where id = #{classId}
+    </update>
+
+    <select id="getClassTime" parameterType="java.lang.String">
+        select klass_time
+        from klass
+        where id = #{classId}
+    </select>
+
+    <update id="setClassPlace">
+        update klass
+        set klass_location = #{classPlace}
+        where id = #{classId}
+    </update>
+
+    <select id="getClassPlace" parameterType="java.lang.String">
+        select klass_location
+        from klass
+        where id = #{classId}
+    </select>
 </mapper>

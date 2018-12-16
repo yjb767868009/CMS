@@ -7,7 +7,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://119.23.49.112:3306/cms?characterEncoding=utf8&useSSL=true
+    url: jdbc:mysql://119.23.49.112:3306/standard_seminar_system?characterEncoding=utf8&useSSL=true
     username: dbuser
     password: dbuser
   redis:

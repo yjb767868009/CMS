@@ -22,4 +22,10 @@ public interface StudentDao {
     List<Student> getStudentByName(String name);
 
     Student getStudentByAccount(String account);
+
+    Integer activateStudent(Integer studentId, Student student);
+
+    Student getStudentById(Integer userId);
+
+    Integer modifyStudentEmail(Integer studentId, Student student);
 }

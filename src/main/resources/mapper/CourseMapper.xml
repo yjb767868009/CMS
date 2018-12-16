@@ -13,7 +13,7 @@
         <result property="teamEndTime" column="teamEndDate"/>
         <association property="teacher" javaType="com.xmu.cms.entity.Teacher">
             <id property="teacherId" column="teacherId"/>
-            <result property="teacherName" column="teacherName"/>
+            <result property="name" column="name"/>
         </association>
     </resultMap>
 
@@ -23,7 +23,7 @@
                teacher.teacher_num  as account,
                teacher.password,
                teacher.email,
-               teacher.teacher_name as teacherName,
+               teacher.teacher_name as name,
                teacher.phone,
                teacher.msg_interval as messageInterval,
                teacher.is_activated as activation,
@@ -46,7 +46,7 @@
                teacher.teacher_num  as account,
                teacher.password,
                teacher.email,
-               teacher.teacher_name as teacherName,
+               teacher.teacher_name as name,
                teacher.phone,
                teacher.msg_interval as messageInterval,
                teacher.is_activated as activation,
@@ -73,7 +73,7 @@
                teacher.teacher_num  as account,
                teacher.password,
                teacher.email,
-               teacher.teacher_name as teacherName,
+               teacher.teacher_name as name,
                teacher.phone,
                teacher.msg_interval as messageInterval,
                teacher.is_activated as activation,

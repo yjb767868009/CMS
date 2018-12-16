@@ -1,19 +1,22 @@
-package com.xmu.cms.entity;
+package com.xmu.cms.support;
+
+import com.xmu.cms.entity.Student;
+import com.xmu.cms.entity.Teacher;
 
 /**
- * @author JuboYu on 2018/11/23.
+ * @author JuboYu on 2018/12/15.
  * @version 1.0
  */
-public class Student {
-    private Integer studentId;
+public class MyUser {
+    private Integer id;
     private String account;
     private String password;
     private String email;
     private String name;
     private Boolean activation;
 
-    public Student(Integer studentId, String account, String password, String email, String name, Boolean activation) {
-        this.studentId = studentId;
+    public MyUser(Integer id, String account, String password, String email, String name, Boolean activation) {
+        this.id = id;
         this.account = account;
         this.password = password;
         this.email = email;
@@ -21,15 +24,15 @@ public class Student {
         this.activation = activation;
     }
 
-    public Student() {
+    public MyUser() {
     }
 
-    public Integer getStudentId() {
-        return studentId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getAccount() {
@@ -70,5 +73,13 @@ public class Student {
 
     public void setActivation(Boolean activation) {
         this.activation = activation;
+    }
+
+    public Student toStudent() {
+        return new Student(id, account, password, email, name, activation);
+    }
+
+    public Teacher toTeacher() {
+        return new Teacher(id, account, password, email, name, activation);
     }
 }

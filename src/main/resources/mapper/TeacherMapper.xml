@@ -4,14 +4,11 @@
 <mapper namespace="com.xmu.cms.mapper.TeacherMapper">
     <resultMap id="TeacherResultMap" type="com.xmu.cms.entity.Teacher">
         <id property="teacherId" column="id"/>
-        <result property="account" column="teacher_num"/>
+        <result property="account" column="account"/>
         <result property="password" column="password"/>
-        <result property="teacherName" column="teacher_name"/>
-        <result property="phone" column="phone"/>
-        <result property="msg_interval" column="messageInterval"/>
-        <result property="activation" column="is_activated"/>
+        <result property="name" column="teacher_name"/>
+        <result property="activation" column="is_active"/>
     </resultMap>
-
 
     <select id="getAllTeachers" resultMap="TeacherResultMap">
         SELECT *
@@ -20,25 +17,17 @@
 
     <update id="updateTeacher">
         UPDATE teacher
-        SET teacher_num  = #{teacher.account},
+        SET account  = #{teacher.account},
             password     = #{teacher.password},
             email        = #{teacher.email},
             teacher_name = #{teacher.courseName},
-            phone        = #{teacher.phone},
-            msg_interval = #{teacher.messageInterval},
-            is_activated = #{teacher.activation}
+            is_active    = #{teacher.activation}
         WHERE id = #{teacher.teacherId}
     </update>
 
     <insert id="insertTeacher">
-        INSERT INTO teacher (teacher_num, password, email, teacher_name, phone, msg_interval, is_activated)
-        VALUE (#{teacher.account},
-               #{teacher.password},
-               #{teacher.email},
-               #{teacher.courseName},
-               #{teacher.phone},
-               #{teacher.messageInterval},
-               #{teacher.activation})
+        INSERT INTO teacher (account, password, email, teacher_name, is_active)
+        VALUE (#{teacher.account}, #{teacher.password}, #{teacher.email}, #{teacher.courseName}, #{teacher.activation})
     </insert>
 
     <delete id="deleteTeacher" parameterType="java.lang.Integer">
@@ -47,54 +36,22 @@
         WHERE id = #{teacherId}
     </delete>
 
-    <select id="getTeacherByAccount" resultType="com.xmu.cms.entity.Teacher">
-        SELECT id           as teacherId,
-               teacher_num  as account,
-               password,
-               email,
-               teacher_name,
-               phone,
-               msg_interval as messageInterval,
-               is_activated as activation
+    <select id="getTeacherByAccount" resultMap="TeacherResultMap">
+        SELECT *
         FROM teacher
-        WHERE teacher_num = #{account}
+        WHERE account = #{account}
     </select>
 
-    <select id="getTeacherByName" resultType="com.xmu.cms.entity.Teacher">
-        SELECT id           as teacherId,
-               teacher_num,
-               password,
-               email,
-               teacher_name,
-               phone,
-               msg_interval as messageInterval,
-               is_activated
+    <select id="getTeacherByName" resultMap="TeacherResultMap">
+        SELECT *
         FROM teacher
         WHERE teacher_name = #{name}
     </select>
 
-    <select id="getTeacherById" resultType="com.xmu.cms.entity.Teacher">
-        SELECT id           as teacherId,
-               teacher_num,
-               password,
-               email,
-               teacher_name,
-               phone,
-               msg_interval as messageInterval,
-               is_activated
+    <select id="getTeacherById" resultMap="TeacherResultMap">
+        SELECT *
         FROM teacher
         WHERE id = #{teacherId}
     </select>
 
-    <select id="getIdByAccount" resultType="java.lang.Integer">
-        SELECT id as teacherId
-        FROM teacher
-        WHERE teacher_num = #{account}
-    </select>
-
-    <select id="getEmailByAccount" resultType="java.lang.String">
-        select email
-        from teacher
-        where teacher_num = #{account}
-    </select>
 </mapper>

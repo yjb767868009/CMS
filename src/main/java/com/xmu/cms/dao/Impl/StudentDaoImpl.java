@@ -57,4 +57,24 @@ public class StudentDaoImpl implements StudentDao {
     public Student getStudentByAccount(String account) {
         return studentMapper.getStudentByAccount(account);
     }
+
+    @Override
+    public Integer activateStudent(Integer studentId, Student student) {
+        Student modifyStudent = studentMapper.getStudentById(studentId);
+        modifyStudent.setPassword(student.getPassword());
+        modifyStudent.setPassword(student.getEmail());
+        return studentMapper.updateStudent(student);
+    }
+
+    @Override
+    public Student getStudentById(Integer userId) {
+        return studentMapper.getStudentById(userId);
+    }
+
+    @Override
+    public Integer modifyStudentEmail(Integer studentId, Student student) {
+        Student modifyStudent = studentMapper.getStudentById(studentId);
+        modifyStudent.setEmail(student.getEmail());
+        return studentMapper.updateStudent(modifyStudent);
+    }
 }

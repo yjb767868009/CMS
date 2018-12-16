@@ -70,4 +70,16 @@ public class StudentServiceImpl implements StudentService {
         return studentDao.getStudentByAccount(account);
     }
 
+    @Override
+    public Map<String, String> activateStudent(Integer studentId, Student student) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        Integer count = studentDao.activateStudent(studentId, student);
+        if (count == 1) {
+            message.put("message", "成功");
+        } else {
+            message.put("message", "信息不合法");
+        }
+        return message;
+    }
+
 }

@@ -86,7 +86,6 @@ public class MultiHttpSecurityConfiguration {
             return loginFilter;
         }
 
-
         @Bean
         public JWTAuthenticationFilter jwtAuthenticationFilter() throws Exception {
             return new JWTAuthenticationFilter(authenticationManager());

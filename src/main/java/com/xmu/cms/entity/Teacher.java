@@ -9,19 +9,15 @@ public class Teacher {
     private String account;
     private String password;
     private String email;
-    private String teacherName;
-    private String phone;
-    private Integer messageInterval;
+    private String name;
     private Boolean activation;
 
-    public Teacher(Integer teacherId, String account, String password, String email, String teacherName, String phone, Integer messageInterval, Boolean activation) {
+    public Teacher(Integer teacherId, String account, String password, String email, String name, Boolean activation) {
         this.teacherId = teacherId;
         this.account = account;
         this.password = password;
         this.email = email;
-        this.teacherName = teacherName;
-        this.phone = phone;
-        this.messageInterval = messageInterval;
+        this.name = name;
         this.activation = activation;
     }
 
@@ -60,28 +56,12 @@ public class Teacher {
         this.email = email;
     }
 
-    public String getTeacherName() {
-        return teacherName;
+    public String getName() {
+        return name;
     }
 
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Integer getMessageInterval() {
-        return messageInterval;
-    }
-
-    public void setMessageInterval(Integer messageInterval) {
-        this.messageInterval = messageInterval;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Boolean getActivation() {

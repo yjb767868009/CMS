@@ -8,13 +8,13 @@
                seminar_id    as seminarId,
                team_order    as teamOrder,
                pre_file      as ppt,
-               report_file   as report,
+               report_name   as report,
                pre_score     as presentationScore,
                report_score  as reportScore
         FROM attendance,
-             clbum_seminar
-        WHERE clbum_seminar.seminar_id = #{seminarId}
-          AND clbum_seminar.id = attendance.clbum_seminar_id
+             klass_seminar
+        WHERE klass_seminar.seminar_id = #{seminarId}
+          AND klass_seminar.id = attendance.klass_seminar_id
         ORDER BY team_order
     </select>
 

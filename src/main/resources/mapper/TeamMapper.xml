@@ -7,9 +7,9 @@
                leader_id    as leaderId,
                course_id    as courseId,
                team_name    as teamName,
-               valid
+               status
         FROM team,
-             presentation
+             attendance
         WHERE team.team_id = presentation.team_id
           AND presentation.seminar_id = #{seminarId}
     </select>

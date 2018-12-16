@@ -12,35 +12,30 @@
 
     <select id="getAllStudents" resultType="com.xmu.cms.entity.Student">
         SELECT id           as studentId,
-               student_num  as account,
+               account,
                password,
                email,
                student_name,
-               phone,
-               msg_interval as messageInterval,
-               is_activated as activation
+               is_active as activation
         FROM student
     </select>
 
     <insert id="insertStudent" parameterType="com.xmu.cms.entity.Student">
-        INSERT INTO student (student_num, password, email, student_name, msg_interval, is_activated)
+        INSERT INTO student (account, password, email, student_name, is_active)
         VALUE (#{student.account},
                #{student.password},
                #{student.email},
-               #{student.courseName},
-               #{student.messageInterval},
+               #{student.name},
                #{student.activation})
     </insert>
 
     <update id="updateStudent" parameterType="com.xmu.cms.entity.Student">
         UPDATE student
-        SET student_num  = #{student.account},
+        SET account  = #{student.account},
             password     = #{student.password},
             email        = #{student.email},
-            student_name = #{student.courseName},
-            phone        = #{student.phone},
-            msg_interval = #{student.messageInterval},
-            is_activated = #{student.activation}
+            student_name = #{student.name},
+            is_active = #{student.activation}
         WHERE id = #{student.studentId}
     </update>
 
@@ -53,39 +48,33 @@
 
     <select id="getStudentByAccount" resultType="com.xmu.cms.entity.Student">
         SELECT id           as studentId,
-               student_num  as account,
+               account,
                password,
                email,
                student_name,
-               phone,
-               msg_interval as messageInterval,
-               is_activated as activation
+               is_active as activation
         FROM student
-        WHERE student_num = #{account}
+        WHERE account = #{account}
     </select>
 
     <select id="getStudentById" resultType="com.xmu.cms.entity.Student">
         SELECT id           as studentId,
-               student_num  as account,
+               account,
                password,
                email,
                student_name,
-               phone,
-               msg_interval as messageInterval,
-               is_activated as activation
+               is_active as activation
         FROM student
         WHERE id = #{studentId}
     </select>
 
     <select id="getStudentByName" resultType="com.xmu.cms.entity.Student">
         SELECT id           as studentId,
-               student_num  as account,
+               account,
                password,
                email,
                student_name,
-               phone,
-               msg_interval as messageInterval,
-               is_activated as activation
+               is_active as activation
         FROM student
         WHERE student_name = #{name}
     </select>
@@ -93,7 +82,7 @@
     <select id="getIdByAccount" resultType="java.lang.Integer">
         SELECT id as studentId
         FROM student
-        WHERE student_num = #{account}
+        WHERE account = #{account}
     </select>
 
 </mapper>

@@ -12,8 +12,14 @@
         <result property="status" column="status" javaType="java.lang.Integer"/>
     </resultMap>
 
-    <select id="getAllTeamsInSeminar" parameterType="java.lang.Integer" resultType="com.xmu.cms.entity.Team">
-        SELECT *
+    <select id="getAllTeamsInSeminar" resultType="com.xmu.cms.entity.Team">
+        SELECT team.id      as teamId,
+                klass_id    as classId,
+                course_id   as courseId,
+                leader_id   as leaderId,
+                team_name   as teamName,
+                team_serial as teamSerial,
+                status      as status
         FROM team,
              attendance
         WHERE team.id = attendance.team_id

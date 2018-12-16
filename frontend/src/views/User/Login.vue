@@ -83,12 +83,12 @@ import Qs from 'qs'
                         })
                     }).then((res)=>{
                         if(res.data==='teacher'){
-                            this.$store.state.token='token'
+                            // this.$store.state.token='token'
                             this.$store.state.userType='teacher'
                             this.$router.push('/pc/teacher')
                         }
                         if(res.data==='stduent'){
-                            this.$store.state.token='token'
+                            // this.$store.state.token='token'
                             this.$store.state.userType='student'
                             this.$router.push('/pc/student')
                         }

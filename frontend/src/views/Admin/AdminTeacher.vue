@@ -167,7 +167,7 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
           }
           if(!isNaN(this.teacherSearchKey)){
             //搜教工号
-            this.$axios.get('/api/admin/teachers/searchByAccount?teacherAccount='+this.teacherSearchKey)
+            this.$axios.get('/admin/teachers/searchByAccount?teacherAccount='+this.teacherSearchKey)
               .then((response)=>{
                 this.teacherData=response.data
               })
@@ -176,7 +176,7 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
               })
           }else{
             //搜名字
-            this.$axios.get('/api/admin/teachers/searchByName?name='+this.teacherSearchKey)
+            this.$axios.get('/admin/teachers/searchByName?name='+this.teacherSearchKey)
               .then((response)=>{
                 if(response.data[0]===null){
                   this.$message.error('找不到该老师')
@@ -194,7 +194,7 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
         },
 
         getAllTeacher:function(){
-          this.$axios.get('/api/admin/teachers')
+          this.$axios.get('/admin/teachers')
             .then((response)=>{
               this.teacherData=response.data
               this.currentTotal=this.teacherData.length
@@ -209,7 +209,7 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
           confirmButtonText: '确定',
           cancelButtonText: '取消',
         }).then(({ input }) => {
-          this.$axios.patch('/api/admin/teacher/'+teacher.teacherId+'/modifyPassword?password='+input)
+          this.$axios.patch('/admin/teacher/'+teacher.teacherId+'/modifyPassword?password='+input)
             .then(function(response){
               //process on response
                 this.$message({
@@ -230,7 +230,7 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
             type:'warning'
           }).then(()=>{
             //确认删除
-            this.$axios.delete('/api/admin/teacher/'+teacher.teacherId)
+            this.$axios.delete('/admin/teacher/'+teacher.teacherId)
             .then((response)=>{
               console.log(response)
               this.getAllTeacher()

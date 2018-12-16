@@ -158,7 +158,7 @@ import ModifyStudentDialog from './ModifyStudentDialog'
           }
           if(!isNaN(this.studentSearchKey)){
             //搜学号
-            this.$axios.get('/api/admin/students/seatrchByAccount?studentAccount='+this.studentSearchKey)
+            this.$axios.get('/admin/students/seatrchByAccount?studentAccount='+this.studentSearchKey)
               .then((response)=>{
                 this.teacherData=response.data
               })
@@ -167,7 +167,7 @@ import ModifyStudentDialog from './ModifyStudentDialog'
               })
           }else{
             //搜名字
-            this.$axios.get('/api/admin/students/searchByName?name='+this.studentSearchKey)
+            this.$axios.get('/admin/students/searchByName?name='+this.studentSearchKey)
               .then((response)=>{
                 if(response.data[0]===null){
                   this.$message.error('找不到该学生')
@@ -185,7 +185,7 @@ import ModifyStudentDialog from './ModifyStudentDialog'
         },
 
         getAllStudent:function(){
-          this.$axios.get('/api/admin/students')
+          this.$axios.get('/admin/students')
             .then((response)=>{
               this.studentData=response.data
               this.currentTotal=this.studentData.length
@@ -200,7 +200,7 @@ import ModifyStudentDialog from './ModifyStudentDialog'
           confirmButtonText: '确定',
           cancelButtonText: '取消',
             }).then(({ input }) => {
-            this.$axios.patch('/api/admin/student/'+student.studentId+'/modifyPassword?password='+input)
+            this.$axios.patch('/admin/student/'+student.studentId+'/modifyPassword?password='+input)
             .then((response)=>{
               //process on response
                   this.$message({
@@ -221,7 +221,7 @@ import ModifyStudentDialog from './ModifyStudentDialog'
             type:'warning'
           }).then(()=>{
             //确认删除
-            this.$axios.delete('/api/admin/student/'+student.studentId)
+            this.$axios.delete('/admin/student/'+student.studentId)
             .then((response)=>{
               console.log(response)
               this.getAllStudent()

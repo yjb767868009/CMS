@@ -42,7 +42,7 @@ export default {
              this.addTeacherForm.password==='')
              this.$message.error('请完整填写老师信息')
 
-          this.$axios.post('/api/admin/teacher?'+Qs.stringify({
+          this.$axios.post('/admin/teacher?'+Qs.stringify({
             name:this.addTeacherForm.name,
             account:this.addTeacherForm.account,
             email:this.addTeacherForm.email,

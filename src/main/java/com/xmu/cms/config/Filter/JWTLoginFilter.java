@@ -95,7 +95,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         String url = request.getServletPath();
-        if (!url.equals("/api/admin/login") && !url.equals("/api/user/login")) {
+        if (!url.equals("/admin/login") && !url.equals("/user/login")) {
             chain.doFilter(request, response);
         } else {
             if (this.logger.isDebugEnabled()) {

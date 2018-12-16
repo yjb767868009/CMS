@@ -5,6 +5,7 @@ import com.xmu.cms.mapper.TeacherMapper;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.service.MailService;
+import com.xmu.cms.support.MyUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -40,11 +41,12 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public Map<String, String> sendPassword(String account) {
+    public Map<String, String> sendPassword(MyUser user) {
         Map<String, String> messages = new HashMap<String, String>(2);
         String name = null;
         String email = null;
         String password = null;
+        String account = user.getAccount();
         Teacher teacher = teacherDao.getTeacherByAccount(account);
         if (teacher != null) {
             name = teacher.getName();
@@ -67,7 +69,7 @@ public class MailServiceImpl implements MailService {
         mail.setFrom(sender);
         mail.setTo(email);
         mail.setSubject("主题：忘记密码邮件");
-        mail.setText("用户" + name+"您好\n"+"您刚刚申请的忘记密码\n"+"您的密码是："+password+"\n如果您不需要获取密码，或者您从未点击过“忘记密码”按钮，请忽略本邮件。\n");
+        mail.setText("用户 " + name + ",您好\n" + "您刚刚申请的忘记密码\n" + "您的密码是：" + password + "\n如果您不需要获取密码，或者您从未点击过“忘记密码”按钮，请忽略本邮件。\n");
         mailSender.send(mail);
         return messages;
     }

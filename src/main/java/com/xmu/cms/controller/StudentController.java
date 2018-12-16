@@ -4,7 +4,7 @@ import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.service.AttendanceService;
-import com.xmu.cms.service.ClbumService;
+import com.xmu.cms.service.KlassService;
 import com.xmu.cms.service.CourseService;
 import com.xmu.cms.service.StudentService;
 import com.xmu.cms.support.Token;
@@ -27,7 +27,7 @@ public class StudentController {
     private CourseService courseService;
 
     @Autowired
-    private ClbumService clbumService;
+    private KlassService klassService;
 
     @Autowired
     private StudentService studentService;
@@ -81,28 +81,16 @@ public class StudentController {
         return studentService.getStudentByAccount(account);
     }
 
-    @GetMapping(value = "/courses")
-    public List<Course> getAllCourse() {
-        Integer studentId = Token.getToken().getUserId();
-        return courseService.getAllCoursesByStudentId(studentId);
-    }
-
-    @GetMapping(value = "/course/{courseId}/clbumName")
-    public List<Seminar> getStudentClbumNameByCourseId(@PathVariable("courseId") Integer courseId) {
-        Integer studentId = Token.getToken().getUserId();
-        return clbumService.getStudentClbumNameByCourseId(studentId, courseId);
-    }
-
-    @PostMapping(value = "/clbumSeminar/{clbumSeminarId}/attendance")
-    public Map<String, String> attendance(@PathVariable("clbumSeminarId") Integer clbumSeminarId,
+    @PostMapping(value = "/klassSeminar/{klassSeminarId}/attendance")
+    public Map<String, String> attendance(@PathVariable("klassSeminarId") Integer klassSeminarId,
                                           @RequestParam("teamOrder") Integer teamOrder) {
-        return attendanceService.newAttendance(clbumSeminarId, teamOrder);
+        return attendanceService.newAttendance(klassSeminarId, teamOrder);
     }
 
-    @PostMapping(value = "/clbumSeminar/{clbumSeminarId}/score")
-    public Map<String, String> getScoreInClbumSeminar(@PathVariable("clbumSeminarId") Integer clbumSeminarId,
+    @PostMapping(value = "/klassSeminar/{klassSeminarId}/score")
+    public Map<String, String> getScoreInKlassSeminar(@PathVariable("klassSeminarId") Integer klassSeminarId,
                                                       @RequestParam("teamOrder") Integer teamOrder) {
-        return attendanceService.newAttendance(clbumSeminarId, teamOrder);
+        return attendanceService.newAttendance(klassSeminarId, teamOrder);
     }
 
 }

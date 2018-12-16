@@ -43,7 +43,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public Map<String, String> newAttendance(Integer clbumSeminarId, Integer teamOrder) {
+    public Map<String, String> newAttendance(Integer klassSeminarId, Integer teamOrder) {
         return null;
     }
 

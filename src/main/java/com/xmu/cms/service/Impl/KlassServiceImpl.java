@@ -1,8 +1,8 @@
 package com.xmu.cms.service.Impl;
 
-import com.xmu.cms.mapper.ClbumMapper;
-import com.xmu.cms.entity.Seminar;
-import com.xmu.cms.service.ClbumService;
+import com.xmu.cms.dao.KlassDao;
+import com.xmu.cms.entity.Klass;
+import com.xmu.cms.service.KlassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +15,14 @@ import java.util.Map;
  * @version 1.0
  */
 @Service
-public class ClbumServiceImpl implements ClbumService {
+public class KlassServiceImpl implements KlassService {
     @Autowired
-    private ClbumMapper clbumDao;
+    private KlassDao klassDao;
 
     @Override
-    public Map<String, String> newClbum(Integer courseId, String name, String classTime, String classPlace) {
+    public Map<String, String> newKlass(Integer courseId, Klass klass) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = clbumDao.newClbum(courseId, name, classTime, classPlace);
+        Integer count = klassDao.newKlass(courseId, klass);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -32,7 +32,7 @@ public class ClbumServiceImpl implements ClbumService {
     }
 
     @Override
-    public List<Seminar> getStudentClbumNameByCourseId(Integer studentId, Integer courseId) {
-        return clbumDao.getStudentClbumByCourseId(studentId, courseId);
+    public List<Klass> getKlassInCourse(Integer courseId) {
+        return klassDao.getAllKlass(courseId);
     }
 }

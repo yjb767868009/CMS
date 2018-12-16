@@ -10,15 +10,15 @@ public class Team {
     private Integer teamId;
     private Student leader;
     private List<Student> members;
-    private Clbum clbum;
+    private Klass klass;
     private String teamName;
     private Boolean valid;
 
-    public Team(Integer teamId, Student leader, List<Student> members, Clbum clbum, String teamName, Boolean valid) {
+    public Team(Integer teamId, Student leader, List<Student> members, Klass klass, String teamName, Boolean valid) {
         this.teamId = teamId;
         this.leader = leader;
         this.members = members;
-        this.clbum = clbum;
+        this.klass = klass;
         this.teamName = teamName;
         this.valid = valid;
     }
@@ -50,12 +50,12 @@ public class Team {
         this.members = members;
     }
 
-    public Clbum getClbum() {
-        return clbum;
+    public Klass getKlass() {
+        return klass;
     }
 
-    public void setClbum(Clbum clbum) {
-        this.clbum = clbum;
+    public void setKlass(Klass klass) {
+        this.klass = klass;
     }
 
     public String getTeamName() {

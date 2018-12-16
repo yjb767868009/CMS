@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.ScoreMapper">
-    <select id="getAllScoreInSeminar" resultType="com.xmu.cms.entity.Score">
+    <select id="getAllScoreInSeminar" resultType="com.xmu.cms.entity.SeminarScore">
         SELECT team.team_name    as name,
                presetation_score as presentationScore,
                question_score    as questionScore,
@@ -14,7 +14,7 @@
           AND team.team_id = seminar_score.team_id
     </select>
 
-    <select id="getAllScoresInRound" resultType="com.xmu.cms.entity.Score">
+    <select id="getAllScoresInRound" resultType="com.xmu.cms.entity.SeminarScore">
         SELECT team_name         as name,
                presetation_score as presentationScore,
                question_score    as questionScore,

@@ -1,13 +1,13 @@
 package com.xmu.cms.service;
 
-import com.xmu.cms.entity.Score;
+import com.xmu.cms.entity.SeminarScore;
 
 /**
  * @author JuboYu on 2018/11/29.
  * @version 1.0
  */
 public interface ScoreService {
-    Score getAllScoresInClbumSeminar(Integer clbumSeminarId);
+    SeminarScore getAllScoresInKlassSeminar(Integer klassSeminarId);
 
-    Score getAllScoresInRound(Integer roundId);
+    SeminarScore getAllScoresInRound(Integer roundId);
 }

@@ -1,11 +1,16 @@
 package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.CourseDao;
+import com.xmu.cms.dao.TeamDao;
 import com.xmu.cms.entity.Course;
+import com.xmu.cms.entity.Student;
+import com.xmu.cms.entity.Teacher;
+import com.xmu.cms.entity.Team;
 import com.xmu.cms.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +24,12 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private CourseDao courseDao;
 
+    @Autowired
+    private TeamDao teamDao;
+
     @Override
-    public List<Course> getAllCoursesByTeacherId(Integer teacherId) {
-        return courseDao.getAllCoursesByTeacherId(teacherId);
+    public List<Course> getAllCoursesByTeacher(Teacher teacher) {
+        return courseDao.getAllCoursesByTeacherId(teacher.getTeacherId());
     }
 
     @Override
@@ -37,8 +45,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getAllCoursesByStudentId(Integer studentId) {
-        return courseDao.getAllCourseByStudentId(studentId);
+    public List<Course> getAllCoursesByStudent(Student student) {
+        return courseDao.getAllCourseByStudentId(student.getStudentId());
     }
 
     @Override
@@ -56,5 +64,17 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course getCourse(Integer courseId) {
         return courseDao.getCourse(courseId);
+    }
+
+    @Override
+    public List<Team> getTeamInCourse(Course course) {
+        return teamDao.getTeamInCourse(course);
+    }
+
+    @Override
+    public List<Team> getTeamInCourseByStudent(Course course, Student student) {
+        List<Team> teams = new ArrayList<Team>();
+        teams.add(teamDao.getTeamInCourseByStudent(course, student));
+        return teams;
     }
 }

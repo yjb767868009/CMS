@@ -7,18 +7,18 @@
         VALUE (#{courseId}, #{name}, #{classTime}, #{classPlace})
     </insert>
 
-    <select id="getAllClbumsByCourseId" resultType="com.xmu.cms.entity.Clbum">
+    <select id="getAllClbumsByCourseId" resultType="com.xmu.cms.entity.Klass">
         SELECT id as clbumId,
                 clbum_name,
                 class_time as classTime,
                 class_place as classPlace
-        from clbum
+        from klass
         where course_id = #{courseId}
     </select>
 
     <delete id="deleteClbumByClbumId" parameterType="java.lang.Integer">
         delete
-        from clbum
+        from klass
         where id = #{clbumId}
     </delete>
 </mapper>

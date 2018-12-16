@@ -82,4 +82,14 @@ public class StudentServiceImpl implements StudentService {
         return message;
     }
 
+    @Override
+    public Student getStudentById(Integer studentId) {
+        return studentDao.getStudentById(studentId);
+    }
+
+    @Override
+    public List<Student> getNoTeamStudent(Integer courseId) {
+        return studentDao.getNoTeamStudentInCourse(courseId);
+    }
+
 }

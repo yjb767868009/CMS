@@ -14,5 +14,5 @@ public interface AttendanceService {
 
     Map<String, String> setAttendancePresentationScore(Integer attendanceId, Integer presentationScore);
 
-    Map<String, String> newAttendance(Integer clbumSeminarId, Integer teamOrder);
+    Map<String, String> newAttendance(Integer klassSeminarId, Integer teamOrder);
 }

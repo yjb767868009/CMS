@@ -59,11 +59,11 @@
                team_end_date        as teamEndDate
         FROM course,
              teacher,
-             clbum,
+             klass,
              clbum_student
         WHERE clbum_student.student_id = #{studentId}
-          AND clbum_student.clbum_id = clbum.id
-          AND clbum.course_id = course.id
+          AND clbum_student.clbum_id = klass.id
+          AND klass.course_id = course.id
           AND course.teacher_id = teacher.id
     </select>
 

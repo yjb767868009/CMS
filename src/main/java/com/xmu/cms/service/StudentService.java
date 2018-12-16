@@ -24,4 +24,8 @@ public interface StudentService {
     Student getStudentByAccount(String account);
 
     Map<String, String> activateStudent(Integer userId, Student student);
+
+    Student getStudentById(Integer studentId);
+
+    List<Student> getNoTeamStudent(Integer courseId);
 }

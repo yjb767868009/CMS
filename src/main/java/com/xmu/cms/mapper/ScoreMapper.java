@@ -1,6 +1,6 @@
 package com.xmu.cms.mapper;
 
-import com.xmu.cms.entity.Score;
+import com.xmu.cms.entity.SeminarScore;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,9 +10,9 @@ import org.apache.ibatis.annotations.Param;
  */
 @Mapper
 public interface ScoreMapper {
-    Score getAllScoresInSeminar(@Param("clbumSeminarId") Integer clbumSeminarId);
+    SeminarScore getAllScoresInSeminar(@Param("klassSeminarId") Integer klassSeminarId);
 
-    Score getAllScoresInRound(@Param("roundId") Integer roundId);
+    SeminarScore getAllScoresInRound(@Param("roundId") Integer roundId);
 
     Integer modifyScoreInRound(@Param("roundId") Integer roundId,
                                @Param("presentationScore") Integer presentationScore,

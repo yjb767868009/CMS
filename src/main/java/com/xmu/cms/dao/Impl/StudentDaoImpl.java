@@ -77,4 +77,9 @@ public class StudentDaoImpl implements StudentDao {
         modifyStudent.setEmail(student.getEmail());
         return studentMapper.updateStudent(modifyStudent);
     }
+
+    @Override
+    public List<Student> getNoTeamStudentInCourse(Integer courseId) {
+        return studentMapper.getNoTeamStudentInCourse(courseId);
+    }
 }

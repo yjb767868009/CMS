@@ -43,9 +43,9 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Map<String, String> startClbumSeminar(Integer clbumSeminarId) {
+    public Map<String, String> startKlassSeminar(Integer klassSeminarId) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarMapper.startClbumSeminar(clbumSeminarId);
+        Integer count = seminarMapper.startKlassSeminar(klassSeminarId);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -55,9 +55,9 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Map<String, String> stopClbumSeminar(Integer clbumSeminarId) {
+    public Map<String, String> stopKlassSeminar(Integer klassSeminarId) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarMapper.stopClbumSeminar(clbumSeminarId);
+        Integer count = seminarMapper.stopKlassSeminar(klassSeminarId);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -67,9 +67,9 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Map<String, String> endClbumSeminar(Integer clbumSeminarId) {
+    public Map<String, String> endKlassSeminar(Integer klassSeminarId) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarMapper.endClbumSeminar(clbumSeminarId);
+        Integer count = seminarMapper.endKlassSeminar(klassSeminarId);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -101,9 +101,9 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Map<String, String> getPresentationFileInClbumSeminar(Integer clbumSeminarId) {
+    public Map<String, String> getPresentationFileInKlassSeminar(Integer klassSeminarId) {
         Map<String, String> presentationFileMap = new HashMap<String, String>();
-        List<Attendance> attendances = attendanceDao.getAttendancesInClbumSeminar(clbumSeminarId);
+        List<Attendance> attendances = attendanceDao.getAttendancesInKlassSeminar(klassSeminarId);
         for (Attendance attendance : attendances) {
             String attendancePresentationFile = attendance.getPresentationFile();
             if (!attendancePresentationFile.equals("")) {

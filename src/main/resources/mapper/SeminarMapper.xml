@@ -11,8 +11,8 @@
         <result property="maxTeam" column="max_team" javaType="java.lang.Integer"/>
         <result property="isVisible" column="is_visible" javaType="java.lang.Integer"/>
         <result property="seminarSerial" column="seminar_serial" javaType="java.lang.Integer"/>
-        <result property="enrollStartTime" column="enroll_start_time" javaType="java.lang.Timestamp"/>
-        <result property="enrollEndTime" column="enroll_end_time" javaType="java.lang.Timestamp"/>
+        <result property="enrollStartTime" column="enroll_start_time" javaType="java.sql.Timestamp"/>
+        <result property="enrollEndTime" column="enroll_end_time" javaType="java.sql.Timestamp"/>
     </resultMap>
 
     <insert id="newSeminar" parameterType="com.xmu.cms.entity.Seminar">
@@ -32,27 +32,9 @@
         UPDATE seminar
         SET round_id          = #{roundId},
             max_team          = #{maxTeamNum},
-            enroll_start_date = #{signStartTime},
-            enroll_end_date   = #{signEndTime}
+            enroll_start_time = #{signStartTime},
+            enroll_end_time   = #{signEndTime}
         WHERE id = #{seminarId}
-    </update>
-
-    <update id="startSeminar">
-        UPDATE klass_seminar
-        SET seminar_status = 1
-        WHERE id = # {clbumSeminarId}
-    </update>
-
-    <update id="stopSeminar">
-        UPDATE klass_seminar
-        SET seminar_status = 2
-        WHERE id = # {clbumSeminarId}
-    </update>
-
-    <update id="endSeminar">
-        UPDATE klass_seminar
-        SET seminar_status = 3
-        WHERE id = # {clbumSeminarId}
     </update>
 
     <select id="getSeminar" resultType="com.xmu.cms.entity.Seminar">

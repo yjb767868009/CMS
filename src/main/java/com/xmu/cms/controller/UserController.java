@@ -3,14 +3,9 @@ package com.xmu.cms.controller;
 import com.xmu.cms.entity.*;
 import com.xmu.cms.service.*;
 import com.xmu.cms.support.MyUser;
-import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -53,8 +48,8 @@ public class UserController {
     }
 
     @GetMapping(value = "/password")
-    public Map<String, String> getPassword(@RequestParam(value = "account") String account) {
-        return mailService.sendPassword(account);
+    public Map<String, String> getPassword(@RequestBody MyUser user) {
+        return mailService.sendPassword(user);
     }
 
     @PutMapping(value = "/password")
@@ -71,15 +66,6 @@ public class UserController {
         return userService.modifyEmail(userId, userType, user);
     }
 
-    @GetMapping(value = "/course")
-    public List<Course> getCourses() {
-        return null;
-    }
-
-    @GetMapping(value = "/course/{courseId}")
-    public Course getCourse(@PathVariable("courseId") Integer courseId) {
-        return courseService.getCourse(courseId);
-    }
 
     @GetMapping(value = "/course/{courseId}/rounds")
     public List<Round> getRounds(@PathVariable("courseId") Integer courseId) {
@@ -101,9 +87,9 @@ public class UserController {
         return teamService.getAllTeamsInSeminar(seminarId);
     }
 
-    @GetMapping(value = "/clbumSeminar/{clbumSeminarId}/teams")
-    public List<Team> getTeamsInClbumSeminar(@PathVariable("clbumSeminarId") Integer clbumSeminarId) {
-        return teamService.getAllTeamsInClbumSeminar(clbumSeminarId);
+    @GetMapping(value = "/klassSeminar/{klassSeminarId}/teams")
+    public List<Team> getTeamsInKlassSeminar(@PathVariable("klassSeminarId") Integer klassSeminarId) {
+        return teamService.getAllTeamsInKlassSeminar(klassSeminarId);
     }
 
     @GetMapping(value = "/seminar/{seminarId}")
@@ -116,15 +102,15 @@ public class UserController {
         return attendanceService.getAttendancesInSeminar(seminarId);
     }
 
-    @GetMapping(value = "/clbumSeminar/{clbumSeminarId}/scores")
-    public Score getAllScoreInSeminar(@PathVariable("clbumSeminarId") Integer clbumSeminarId) {
-        return scoreService.getAllScoresInClbumSeminar(clbumSeminarId);
+    @GetMapping(value = "/klassSeminar/{klassSeminarId}/scores")
+    public SeminarScore getAllScoreInSeminar(@PathVariable("klassSeminarId") Integer klassSeminarId) {
+        return scoreService.getAllScoresInKlassSeminar(klassSeminarId);
     }
 
-    @GetMapping(value = "/seminar/{seminarId}/clbum/{clbumId}/presentationFile")
-    public Map<String, String> getPresentationFileInClbumSeminar(@PathVariable("seminarId") Integer seminarId,
-                                                                 @PathVariable("clbumId") Integer clbumId) {
-        return seminarService.getPresentationFileInClbumSeminar(seminarId);
+    @GetMapping(value = "/seminar/{seminarId}/klass/{klassId}/presentationFile")
+    public Map<String, String> getPresentationFileInKlassSeminar(@PathVariable("seminarId") Integer seminarId,
+                                                                 @PathVariable("klassId") Integer klassId) {
+        return seminarService.getPresentationFileInKlassSeminar(seminarId);
     }
 
     @GetMapping(value = "/information")

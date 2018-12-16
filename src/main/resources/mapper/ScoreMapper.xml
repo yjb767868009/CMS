@@ -2,55 +2,83 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.ScoreMapper">
-    <select id="getAllScoreInSeminar" resultType="com.xmu.cms.entity.SeminarScore">
+    <resultMap id="RoundScoreResultMap" type="com.xmu.cms.entity.RoundScore">
+        <id property="scoreId" column="scoreId" javaType="java.lang.Integer"/>
+        <result property="presentationScore" column="presentationScore"/>
+        <result property="reportScore" column="reportScore"/>
+        <result property="questionScore" column="questionScore"/>
+        <result property="totalScore" column="totalScore"/>
+        <association property="team" javaType="com.xmu.cms.entity.Team">
+            <id property="teamName" column="teamName"/>
+        </association>
+        <association property="round" javaType="com.xmu.cms.entity.Round">
+            <id property="roundId" column="roundId"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="SeminarScoreResultMap" type="com.xmu.cms.entity.SeminarScore">
+        <id property="scoreId" column="scoreId" javaType="java.lang.Integer"/>
+        <result property="presentationScore" column="presentationScore"/>
+        <result property="reportScore" column="reportScore"/>
+        <result property="questionScore" column="questionScore"/>
+        <result property="totalScore" column="totalScore"/>
+        <association property="team" javaType="com.xmu.cms.entity.Team">
+            <id property="teamName" column="teamName"/>
+        </association>
+        <association property="seminar" javaType="com.xmu.cms.entity.Seminar">
+            <id property="seminarId" column="seminarId"/>
+        </association>
+    </resultMap>
+
+    <select id="getAllScoreInSeminar" resultMap="com.xmu.cms.entity.SeminarScore">
         SELECT team.team_name    as name,
-               presetation_score as presentationScore,
+               presentaton_score as presentationScore,
                question_score    as questionScore,
-               report_score      as reportScore
+               report_score      as reportScore,
+               total_score       as totalScore
         FROM seminar_score,
              team
-        WHERE seminar_id = #{seminarId}
-          AND turning_class_id = #{turningClassId}
-          AND team.team_id = seminar_score.team_id
+        WHERE klass_seminar_id = #{classSeminarId}
+          AND team.id = seminar_score.team_id
     </select>
 
-    <select id="getAllScoresInRound" resultType="com.xmu.cms.entity.SeminarScore">
+    <select id="getAllScoresInRound" resultMap="com.xmu.cms.entity.RoundScore">
         SELECT team_name         as name,
-               presetation_score as presentationScore,
+               presentation_score as presentationScore,
                question_score    as questionScore,
-               report_score      as reportScore
+               report_score      as reportScore,
+               total_score       as totalScore
         FROM round_score,
              team
         WHERE round_score.round_id = #{roundId}
-          AND team.team_id = round_score.team_id
+          AND team.id = round_score.team_id
     </select>
 
     <update id="modifyScoreInRound">
-        update round_score
-        set presetation_score = #{presentationScore},
+        update round_score,team
+        set presentation_score = #{presentationScore},
             question_score = #{questionScore},
             report_score = #{reportScore}
         where round_score.round_id = #{roundId}
-        and team.team_id = round_score.team_id
+        and team.id = round_score.team_id
     </update>
 
     <update id="modifyScoreInSeminar">
-        update seminar_score
-        set presetation_score = #{presentationScore},
+        update seminar_score,team
+        set presentaton_score = #{presentationScore},
             question_score = #{questionScore},
             report_score = #{reportScore}
-        WHERE seminar_id = #{seminarId}
-          AND turning_class_id = #{turningClassId}
-          AND team.team_id = seminar_score.team_id
+        WHERE klass_seminar_id = #{classSeminarId}
+          AND team.id = seminar_score.team_id
     </update>
 
     <insert id="newScoreInRound">
-        insert into round_score (team_id, turning_class_id, round_id, presetation_score, report_score, question_score, total_score)
-        values (#{teamId}, #{turningClassId}, #{roundId}, #{presentationScore}, #{reportScore}, #{questionScore}, #{totalScore})
+        insert into round_score (team_id, round_id, presentation_score, report_score, question_score, total_score)
+        values (#{teamId}, #{roundId}, #{presentationScore}, #{reportScore}, #{questionScore}, #{totalScore})
     </insert>
 
     <insert id="newScoreInSeminar">
-        insert into seminar_score (team_id, turning_class_id, seminar_id, presetation_score, report_score, question_score, total_score)
-        values (#{teamId}, #{turningClassId}, #{seminarId}, #{presentationScore}, #{reportScore}, #{questionScore}, #{totalScore})
+        insert into seminar_score (team_id, klass_seminar_id, presentaton_score, report_score, question_score, total_score)
+        values (#{teamId}, #{classSeminarId}, #{presentationScore}, #{reportScore}, #{questionScore}, #{totalScore})
     </insert>
 </mapper>

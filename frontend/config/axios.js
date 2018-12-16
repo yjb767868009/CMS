@@ -1,5 +1,6 @@
 import axios from 'axios'
 import router from 'vue-router'
+import store from '../src/store/store'
 
 //axios 配置文件以及拦截器
 
@@ -11,7 +12,8 @@ axios.interceptors.request.use(
     config=>{
         config.data=JSON.stringify(config.data)
         config.headers={
-            'Content-type':'application/x-www-form-urlencoded'
+            'Content-type':'application/x-www-form-urlencoded',
+            'Authorization':store.state.Authorization
         };
         return config
     },

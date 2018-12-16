@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.SeminarMapper">
-    <resultMap id="SeminarResultMap" type="com.xmu.cms.entity.Seminar">
+    <resultMap id="seminarResultMap" type="com.xmu.cms.entity.Seminar">
         <id property="seminarId" column="id" javaType="java.lang.Integer"/>
         <result property="courseId" column="course_id" javaType="java.lang.Integer"/>
         <result property="roundId" column="round_id" javaType="java.lang.Integer"/>
@@ -11,8 +11,8 @@
         <result property="maxTeam" column="max_team" javaType="java.lang.Integer"/>
         <result property="isVisible" column="is_visible" javaType="java.lang.Integer"/>
         <result property="seminarSerial" column="seminar_serial" javaType="java.lang.Integer"/>
-        <result property="enrollStartTime" column="enroll_start_time" javaType="java.sql.Timestamp"/>
-        <result property="enrollEndTime" column="enroll_end_time" javaType="java.sql.Timestamp"/>
+        <result property="enrollStartTime" column="enroll_start_time" javaType="java.lang.Timestamp"/>
+        <result property="enrollEndTime" column="enroll_end_time" javaType="java.lang.Timestamp"/>
     </resultMap>
 
     <insert id="newSeminar" parameterType="com.xmu.cms.entity.Seminar">
@@ -22,45 +22,51 @@
                #{topic},
                #{introduction},
                #{maxTeamNum},
-               #{signOrder},
                #{visible},
+               #{seminarSerial},
                #{signStartTime},
                #{signEndTime})
     </insert>
 
     <update id="modifySeminar">
         UPDATE seminar
-        SET round_id          = #{roundId},
+        SET course_id         = #{courseId},
+            round_id          = #{roundId},
+            seminar_name      = #{topic},
+            introduction      = #{introduction},
             max_team          = #{maxTeamNum},
+            is_visible        = #{visible},
+            seminar_serial    = #{seminarSerial},
             enroll_start_time = #{signStartTime},
             enroll_end_time   = #{signEndTime}
         WHERE id = #{seminarId}
     </update>
 
-    <select id="getSeminar" resultType="com.xmu.cms.entity.Seminar">
-        SELECT id                as seminarId,
-               round_id          as roundId,
-               seminar_name             as topic,
-               introduction           as introduction,
-               max_team          as maxTeamNum,
-               is_ordered        as signOrder,
-               is_visible        as visible,
-               enroll_start_date as signStartTime,
-               enroll_end_date   as signEndTime
+    <update id="startSeminar">
+        UPDATE klass_seminar
+        SET seminar_status = 1
+        WHERE id = # {clbumSeminarId}
+    </update>
+
+    <update id="stopSeminar">
+        UPDATE klass_seminar
+        SET seminar_status = 2
+        WHERE id = # {clbumSeminarId}
+    </update>
+
+    <update id="endSeminar">
+        UPDATE klass_seminar
+        SET seminar_status = 3
+        WHERE id = # {clbumSeminarId}
+    </update>
+
+    <select id="getSeminar" parameterType="java.lang.String" resultMap="seminarResultMap">
+        SELECT *
         FROM seminar
-        WHERE id = #{seminarId}
     </select>
 
-    <select id="getAllSeminarByRoundId" resultType="com.xmu.cms.entity.Seminar">
-        SELECT id                as seminarId,
-               round_id          as roundId,
-               max_team          as maxTeamNum,
-               seminar_name             as topic,
-               introduction           as introduction,
-               enroll_start_date as signStartTime,
-               enroll_end_date   as signEndTime,
-               is_ordered        as signOrder,
-               is_visible        as visible
+    <select id="getAllSeminarByRoundId" parameterType="java.lang.String" resultMap="seminarResultMap">
+        SELECT *
         FROM seminar
         WHERE round_id = #{roundId}
     </select>

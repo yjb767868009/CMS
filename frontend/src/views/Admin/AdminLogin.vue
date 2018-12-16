@@ -46,7 +46,7 @@ import Qs from 'qs'
 
             this.$axios({
                 method:'post',
-                url:'/api/admin/login?'+Qs.stringify({
+                url:'/admin/login?'+Qs.stringify({
                     account:this.account,
                     password:this.password
                 }),
@@ -60,24 +60,12 @@ import Qs from 'qs'
                     this.$message.error('登陆失败')
                     return
                 }
-               	//JWT
-                this.$axios({
-                    method:'post',
-                    url:'/api/admin/setJWT?'+Qs.stringify({
-                        account:this.account,
-                        password:this.password
-                    }),
-				}).then((res)=>{
-					console.log(res)
-                        if(res.data.message==='Success'){
-                            this.$store.state.token='Token'
-                            this.$store.state.userType='admin'
-                            this.$router.push('AdminTeacher')
-                        }
-                        else{
-                            this.$message.error('登陆失败')
-                        }
-                    })
+
+                if(message=='Success'){
+                    this.$store.state.Authorization=response.headers.Authorization
+                    this.$store.state.userType='admin'
+                    this.$router.push('AdminTeacher')
+                }
             }).catch((error)=>{
                 console.log(error)
                 this.$message.error('登陆失败')

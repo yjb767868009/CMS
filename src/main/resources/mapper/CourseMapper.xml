@@ -20,20 +20,15 @@
     <select id="getAllCourseByTeacherId" resultMap="CourseResultMap">
         SELECT course.id            as courseId,
                teacher.id           as teacherId,
-               teacher.teacher_num  as account,
-               teacher.password,
                teacher.email,
                teacher.teacher_name as name,
-               teacher.phone,
-               teacher.msg_interval as messageInterval,
-               teacher.is_activated as activation,
-               course.name          as courseName,
+               course_name          as courseName,
                introduction,
-               pre_weight           as presentationWeight,
-               report_weight        as reportWeight,
-               ques_weight          as questionWeight,
-               team_start_date      as teamStartDate,
-               team_end_date        as teamEndDate
+               presentation_percentage       as presentationWeight,
+               report_percentage             as reportWeight,
+               question_percentage           as questionWeight,
+               team_start_time      as teamStartDate,
+               team_end_time        as teamEndDate
         FROM course,
              teacher
         WHERE teacher.id = #{teacherId}
@@ -43,26 +38,21 @@
     <select id="getAllCourseByStudentId" resultType="com.xmu.cms.entity.Course">
         SELECT course.id            as courseId,
                teacher.id           as teacherId,
-               teacher.teacher_num  as account,
-               teacher.password,
                teacher.email,
                teacher.teacher_name as name,
-               teacher.phone,
-               teacher.msg_interval as messageInterval,
-               teacher.is_activated as activation,
-               course.name          as courseName,
+               course_name          as courseName,
                introduction,
-               pre_weight           as presentationWeight,
-               report_weight        as reportWeight,
-               ques_weight          as questionWeight,
-               team_start_date      as teamStartDate,
-               team_end_date        as teamEndDate
+               presentation_percentage       as presentationWeight,
+               report_percentage             as reportWeight,
+               question_percentage           as questionWeight,
+               team_start_time      as teamStartDate,
+               team_end_time        as teamEndDate
         FROM course,
              teacher,
              klass,
-             clbum_student
-        WHERE clbum_student.student_id = #{studentId}
-          AND clbum_student.clbum_id = klass.id
+             klass_student
+        WHERE klass_student.student_id = #{studentId}
+          AND klass_student.klass_id = klass.id
           AND klass.course_id = course.id
           AND course.teacher_id = teacher.id
     </select>
@@ -70,20 +60,15 @@
     <select id="getCourseById" resultMap="CourseResultMap">
         SELECT course.id            as courseId,
                teacher.id           as teacherId,
-               teacher.teacher_num  as account,
-               teacher.password,
                teacher.email,
                teacher.teacher_name as name,
-               teacher.phone,
-               teacher.msg_interval as messageInterval,
-               teacher.is_activated as activation,
-               course.name          as courseName,
+               course_name          as courseName,
                introduction,
-               pre_weight           as presentationWeight,
-               report_weight        as reportWeight,
-               ques_weight          as questionWeight,
-               team_start_date      as teamStartDate,
-               team_end_date        as teamEndDate
+               presentation_percentage       as presentationWeight,
+               report_percentage             as reportWeight,
+               question_percentage           as questionWeight,
+               team_start_time      as teamStartDate,
+               team_end_time        as teamEndDate
         FROM course,
              teacher
         WHERE course.id = #{courseId}
@@ -99,13 +84,13 @@
     <insert id="newCourse" parameterType="com.xmu.cms.entity.Course">
         insert into course (id,
                             teacher_id,
-                            name,
+                            course_name,
                             introduction,
-                            pre_weight,
-                            report_weight,
-                            ques_weight,
-                            team_start_date,
-                            team_end_date)
+                            presentation_percentage,
+                            report_percentage,
+                            question_percentage,
+                            team_start_time,
+                            team_end_time)
         values (#{courseId},
                 #{teacherId},
                 #{courseName},

@@ -9,7 +9,6 @@ import Test from '@/views/Test'
 //user
 import Login from '@/views/User/Login'
 import MobileLogin from '@/views/User/MobileLogin'
-import Activation from '@/views/User/Activation'
 import FindPassword from '@/views/User/FindPassword'
 import ModifyPassword from '@/views/User/ModifyPassword'
 import ModifyEmail from '@/views/User/ModifyEmail'
@@ -20,43 +19,44 @@ import AdminStudent from '@/views/Admin/AdminStudent'
 import AdminTeacher from '@/views/Admin/AdminTeacher'
 
 //Student
-// import SeminarDetail from '@/views/Student/SeminarDetail'
-// import SeminarPresentation from '@/views/Student/SeminarPresentation'
-// import SeminarPPT from '@/views/Student/SeminarPPT'
-// import SeminarRegistration from '@/views/Student/SeminarRegistration'
-// import SeminarRegistrationModification from '@/views/Student/SeminarRegistrationModification'
-// import SeminarScore from '@/views/Student/SeminarScore'
-// import SeminarSeqFinished from '@/views/Student/SeminarSeqFinished'
-// import SeminarSeqRunning from '@/views/Student/SeminarSeqRunning'
-// import SeminarSeqUnsigned from '@/views/Student/SeminarSeqUnsigned'
-// import SeminarSigned from '@/views/Student/SeminarSigned'
-// import StudentSetAccount from '@/views/Student/SetAccount'
-// import StudentCourseSeminar from '@/views/Student/StudentCourseSeminar'
-// import StudentInfo from '@/views/Student/StudentInfo'
-// import StudentSeminarList from '@/views/Student/StudentSeminarList'
+// import SeminarDetail from '@/views/Student/mobile/SeminarDetail'
+// import SeminarPresentation from '@/views/Student/mobile/SeminarPresentation'
+// import SeminarPPT from '@/views/Student/mobile/SeminarPPT'
+// import SeminarRegistration from '@/views/Student/mobile/SeminarRegistration'
+// import SeminarRegistrationModification from '@/views/Student/mobile/SeminarRegistrationModification'
+// import SeminarScore from '@/views/Student/mobile/SeminarScore'
+// import SeminarSeqFinished from '@/views/Student/mobile/SeminarSeqFinished'
+// import SeminarSeqRunning from '@/views/Student/mobile/SeminarSeqRunning'
+// import SeminarSeqUnsigned from '@/views/Student/mobile/SeminarSeqUnsigned'
+// import SeminarSigned from '@/views/Student/mobile/SeminarSigned'
+// import StudentSetAccount from '@/views/Student/mobile/SetAccount'
+// import StudentCourseSeminar from '@/views/Student/mobile/StudentCourseSeminar'
+// import StudentInfo from '@/views/Student/mobile/StudentInfo'
+// import StudentSeminarList from '@/views/Student/mobile/StudentSeminarList'
 
 //Teacher
-import MobileTeacher from '@/views/Teacher/MobileTeacher'
-import TeacherSetAccount from '@/views/Teacher/SetAccount'
-import ManageCourse from '@/views/Teacher/ManageCourse'
-import SetSeminar from '@/views/Teacher/SetSeminar'
-import SetRound from '@/views/Teacher/SetRound'
-import CreateSeminar from '@/views/Teacher/CreateSeminar'
-import CreateRound from '@/views/Teacher/CreateRound'
-import TeacherSeminars from '@/views/Teacher/TeacherSeminars'
-import Seminar from '@/views/Teacher/Seminar'
-import Report from '@/views/Teacher/Report'
-import SeminarGrade from '@/views/Teacher/SeminarGrade'
-import ManageSeminar from '@/views/Teacher/ManageSeminar'
-import GradeList from '@/views/Teacher/GradeList'
-import TeamList from '@/views/Teacher/TeamList'
-import CourseInfo from '@/views/Teacher/CourseInfo'
-import ClassInfo from '@/views/Teacher/ClassInfo'
-import CreateClass from '@/views/Teacher/CreateClass'
-import Notify from '@/views/Teacher/Notify'
-import CreateCourse from '@/views/Teacher/CreateCourse'
-import Share from '@/views/Teacher/Share'
-import CreateShare from '@/views/Teacher/CreateShare'
+import TeacherActivation from '@/views/Teacher/mobile/TeacherActivation'
+import MobileTeacher from '@/views/Teacher/mobile/MobileTeacher'
+import TeacherSetAccount from '@/views/Teacher/mobile/SetAccount'
+import ManageCourse from '@/views/Teacher/mobile/ManageCourse'
+import SetSeminar from '@/views/Teacher/mobile/SetSeminar'
+import SetRound from '@/views/Teacher/mobile/SetRound'
+import CreateSeminar from '@/views/Teacher/mobile/CreateSeminar'
+import CreateRound from '@/views/Teacher/mobile/CreateRound'
+import TeacherSeminars from '@/views/Teacher/mobile/TeacherSeminars'
+import Seminar from '@/views/Teacher/mobile/Seminar'
+import Report from '@/views/Teacher/mobile/Report'
+import SeminarGrade from '@/views/Teacher/mobile/SeminarGrade'
+import ManageSeminar from '@/views/Teacher/mobile/ManageSeminar'
+import GradeList from '@/views/Teacher/mobile/GradeList'
+import TeamList from '@/views/Teacher/mobile/TeamList'
+import CourseInfo from '@/views/Teacher/mobile/CourseInfo'
+import ClassInfo from '@/views/Teacher/mobile/ClassInfo'
+import CreateClass from '@/views/Teacher/mobile/CreateClass'
+import Notify from '@/views/Teacher/mobile/Notify'
+import CreateCourse from '@/views/Teacher/mobile/CreateCourse'
+import Share from '@/views/Teacher/mobile/Share'
+import CreateShare from '@/views/Teacher/mobile/CreateShare'
 
 
 Vue.use(Router)
@@ -105,11 +105,6 @@ export default new Router({
       path:'/mobile/findpw',
       name:'FindPassword',
       component:FindPassword,
-    },
-    {
-      path:'/mobile/activation',
-      name:'Activation',
-      component:Activation
     },
     {
       path:'/mobile/modifypw',
@@ -210,17 +205,22 @@ export default new Router({
     // },
 
     //teacher
-
     {
       path: '/mobile/teacher', //教师个人页界面
       name: 'MobileTeacher',
       component: MobileTeacher
     },
     {
+      path:'/mobile/teacher/activation',
+      name:'TeacherActivation',
+      component:TeacherActivation
+    },
+    {
       path: '/mobile/teacher/account',//账户与安全界面
       name: 'TeacherSetAccount',
       component: TeacherSetAccount
     },
+    
     {
       path: '/mobile/teacher/course',
       name: 'ManageCourse',

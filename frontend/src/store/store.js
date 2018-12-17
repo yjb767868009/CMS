@@ -10,7 +10,7 @@ export default new Vuex.Store({
     },
     state:{
         show:false,
-        token:'',
+        Authorization:'',
         userType:'',
         currentEmail:'',
     },

@@ -102,4 +102,10 @@ public class CourseController {
     }
 
 
+    @Secured("ROLE_TEACHER")
+    @GetMapping(value = "/{courseId}/share")
+    public List<Share> listAllShareByCourseId(@PathVariable("courseId") Integer courseId) {
+        return courseService.getShareInCourse(courseId);
+    }
+
 }

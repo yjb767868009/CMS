@@ -36,32 +36,6 @@
           and klass_seminar.id = seminar_score.klass_seminar_id
         ORDER BY team_order
     </select>
-
-    <update id="setReportFile" parameterType="java.lang.Integer">
-        update attendance
-        set reprot_url = #{report}
-        and report_name = #{reportName}
-        where id = #{attendanceId}
-    </update>
-
-    <select id="setReportFile" parameterType="java.lang.Integer">
-        select report_name,reprot_url
-        from attendance
-        where id = #{attendanceId}
-    </select>
-
-    <update id="setPresentationFile" parameterType="java.lang.Integer">
-        update attendance
-        set ppt_url = #{ppt}
-        and ppt_name = #{pptName}
-        where id = #{attendanceId}
-    </update>
-
-    <select id="setPresentationFile" parameterType="java.lang.String">
-        select ppt_name,ppt_url
-        from attendance
-        where id = #{attendanceId}
-    </select>
     
     <insert id="newAttendance">
         insert attendance (klass_seminar_id, team_id, team_order, is_present, report_name, reprot_url, ppt_name, ppt_url)
@@ -73,10 +47,4 @@
         from attendance
         where id = #{attendanceId}
     </delete>
-    
-    <update id="setPresent" parameterType="java.lang.Integer">
-        update attendance
-        set is_present = #{present}
-        where id = #{attendanceId}
-    </update>
 </mapper>

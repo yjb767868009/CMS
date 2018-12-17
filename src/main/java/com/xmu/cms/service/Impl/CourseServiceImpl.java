@@ -2,6 +2,7 @@ package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.CourseDao;
 import com.xmu.cms.dao.KlassDao;
+import com.xmu.cms.dao.ShareDao;
 import com.xmu.cms.dao.TeamDao;
 import com.xmu.cms.entity.*;
 import com.xmu.cms.service.CourseService;
@@ -27,6 +28,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private KlassDao klassDao;
+
+    @Autowired
+    private ShareDao shareDao;
 
     @Override
     public List<Course> getAllCoursesByTeacher(Teacher teacher) {
@@ -100,5 +104,10 @@ public class CourseServiceImpl implements CourseService {
     public Map<String, String> deleteKlass(Integer classId) {
         //TODO
         return null;
+    }
+
+    @Override
+    public List<Share> getShareInCourse(Integer courseId) {
+        return shareDao.getShareInCourse(courseId);
     }
 }

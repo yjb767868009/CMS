@@ -52,6 +52,7 @@ public class MultiHttpSecurityConfiguration {
                     .addFilterBefore(jwtAuthenticationFilter(), JWTLoginFilter.class);
             http.antMatcher("/admin/**")
                     .authorizeRequests()
+                    .antMatchers("/admin/login").permitAll()
                     .anyRequest().hasRole("ADMIN");
             http.formLogin()
                     .loginPage("/admin/login").loginProcessingUrl("/admin/login")
@@ -109,12 +110,10 @@ public class MultiHttpSecurityConfiguration {
                     authenticationEntryPoint(new UserAuthorizedEntryPoint());
             http.addFilter(userJWTLoginFilter())
                     .addFilterBefore(userJWTAuthenticationFilter(), JWTLoginFilter.class);
-            http.antMatcher("/**")
-                    .authorizeRequests()
-                    .antMatchers("/**").permitAll()
-                    .antMatchers("/user/**").hasAnyRole("TEACHER", "STUDENT")
-                    .antMatchers("/teacher/**").hasRole("TEACHER")
-                    .antMatchers("/student/**").hasRole("STUDENT");
+            http.authorizeRequests()
+                    .antMatchers("/user/login").permitAll()
+                    .antMatchers("/test/**").permitAll()
+                    .anyRequest().authenticated();
             http.formLogin()
                     .loginPage("/user/login").loginProcessingUrl("/user/login")
                     .usernameParameter("account").passwordParameter("password")

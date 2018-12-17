@@ -29,4 +29,6 @@ public interface CourseService {
     List<Klass> getKlassInCourse(Integer courseId);
 
     Map<String, String> deleteKlass(Integer classId);
+
+    List<Share> getShareInCourse(Integer courseId);
 }

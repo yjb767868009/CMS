@@ -16,19 +16,7 @@
         </association>
     </resultMap>
 
-    <select id="getAllScoreInSeminar" resultMap="com.xmu.cms.entity.SeminarScore">
-        SELECT team.team_name    as name,
-               presentaton_score as presentationScore,
-               question_score    as questionScore,
-               report_score      as reportScore,
-               total_score       as totalScore
-        FROM seminar_score,
-             team
-        WHERE klass_seminar_id = #{classSeminarId}
-          AND team.id = seminar_score.team_id
-    </select>
-
-    <select id="getAllScoresInRound" resultMap="com.xmu.cms.entity.RoundScore">
+    <select id="getAllScoresInRound" resultMap="RoundScoreResultMap">
         SELECT team_name         as name,
                presentation_score as presentationScore,
                question_score    as questionScore,

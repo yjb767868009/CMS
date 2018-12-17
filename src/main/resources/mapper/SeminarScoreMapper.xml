@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.xmu.cms.mapper.ScoreMapper">
-    <resultMap id="RoundScoreResultMap" type="com.xmu.cms.entity.RoundScore">
-        <id property="scoreId" column="scoreId" javaType="java.lang.Integer"/>
-        <result property="presentationScore" column="presentationScore"/>
-        <result property="reportScore" column="reportScore"/>
-        <result property="questionScore" column="questionScore"/>
-        <result property="totalScore" column="totalScore"/>
-        <association property="team" javaType="com.xmu.cms.entity.Team">
-            <id property="teamName" column="teamName"/>
-        </association>
-        <association property="round" javaType="com.xmu.cms.entity.Round">
-            <id property="roundId" column="roundId"/>
-        </association>
-    </resultMap>
-
+<mapper namespace="com.xmu.cms.mapper.SeminarScoreMapper">
     <resultMap id="SeminarScoreResultMap" type="com.xmu.cms.entity.SeminarScore">
         <id property="scoreId" column="scoreId" javaType="java.lang.Integer"/>
         <result property="presentationScore" column="presentationScore"/>
@@ -60,7 +46,7 @@
             question_score = #{questionScore},
             report_score = #{reportScore}
         where round_score.round_id = #{roundId}
-        and team.id = round_score.team_id
+          and team.id = round_score.team_id
     </update>
 
     <update id="modifyScoreInSeminar">

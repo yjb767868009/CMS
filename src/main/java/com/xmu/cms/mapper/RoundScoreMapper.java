@@ -1,6 +1,6 @@
 package com.xmu.cms.mapper;
 
-import com.xmu.cms.entity.Score;
+import com.xmu.cms.entity.RoundScore;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -9,10 +9,10 @@ import org.apache.ibatis.annotations.Param;
  * @version 2.0
  */
 @Mapper
-public interface ScoreMapper {
-    Score getAllScoresInSeminar(@Param("clbumSeminarId") Integer clbumSeminarId);
+public interface RoundScoreMapper {
+    RoundScore getAllScoresInSeminar(@Param("clbumSeminarId") Integer clbumSeminarId);
 
-    Score getAllScoresInRound(@Param("roundId") Integer roundId);
+    RoundScore getAllScoresInRound(@Param("roundId") Integer roundId);
 
     Integer modifyScoreInRound(@Param("roundId") Integer roundId,
                                @Param("presentationScore") Integer presentationScore,
@@ -20,9 +20,9 @@ public interface ScoreMapper {
                                @Param("questionScore") Integer questionScore);
 
     Integer modifyScoreInSeminar(@Param("seminarId") Integer seminarId,
-                               @Param("presentationScore") Integer presentationScore,
-                               @Param("reportScore") Integer reportScore,
-                               @Param("questionScore") Integer questionScore);
+                                 @Param("presentationScore") Integer presentationScore,
+                                 @Param("reportScore") Integer reportScore,
+                                 @Param("questionScore") Integer questionScore);
 
     Integer newScoreInRound(@Param("teamId") Integer teamId,
                             @Param("turningClassId") Integer turningClassId,
@@ -33,10 +33,10 @@ public interface ScoreMapper {
                             @Param("totalScore") Integer totalScore);
 
     Integer newScoreInSeminar(@Param("teamId") Integer teamId,
-                            @Param("turningClassId") Integer turningClassId,
-                            @Param("seminarId") Integer semianrId,
-                            @Param("presentationScore") Integer presentationScore,
-                            @Param("reportScore") Integer reportScore,
-                            @Param("questionScore") Integer questionScore,
-                            @Param("totalScore") Integer totalScore);
+                              @Param("turningClassId") Integer turningClassId,
+                              @Param("seminarId") Integer semianrId,
+                              @Param("presentationScore") Integer presentationScore,
+                              @Param("reportScore") Integer reportScore,
+                              @Param("questionScore") Integer questionScore,
+                              @Param("totalScore") Integer totalScore);
 }

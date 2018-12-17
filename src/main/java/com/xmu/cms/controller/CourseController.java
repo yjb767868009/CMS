@@ -108,4 +108,11 @@ public class CourseController {
         return courseService.getShareInCourse(courseId);
     }
 
+    @Secured("ROLE_TEACHER")
+    @GetMapping(value = "/{courseId}/share/{shareId}")
+    public Map<String, String> deleteShare(@PathVariable("courseId") Integer courseId,
+                                           @PathVariable("shareId") Integer shareId) {
+        return courseService.deleteShare(courseId, shareId);
+    }
+
 }

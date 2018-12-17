@@ -110,4 +110,16 @@ public class CourseServiceImpl implements CourseService {
     public List<Share> getShareInCourse(Integer courseId) {
         return shareDao.getShareInCourse(courseId);
     }
+
+    @Override
+    public Map<String, String> deleteShare(Integer courseId, Integer shareId) {
+        Map<String, String> message = new HashMap<String, String>(1);
+        Integer count = shareDao.deleteShare(courseId, shareId);
+        if (count == 1) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
+    }
 }

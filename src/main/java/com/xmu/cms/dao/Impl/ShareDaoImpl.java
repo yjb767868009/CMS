@@ -22,4 +22,10 @@ public class ShareDaoImpl implements ShareDao {
     public List<Share> getShareInCourse(Integer courseId) {
         return shareMapper.getShareInCourse(courseId);
     }
+
+    @Override
+    public Integer deleteShare(Integer courseId, Integer shareId) {
+        //todo
+        return null;
+    }
 }

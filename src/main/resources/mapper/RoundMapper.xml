@@ -2,10 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.RoundMapper">
+
     <select id="getRoundsByCourseId" resultType="com.xmu.cms.entity.Round">
-        SELECT round_id                as roundId,
+        SELECT id                as roundId,
                course_id               as couseId,
-               name,
+               round_serial,
                presentation_score_method as presentationScoreType,
                report_score_method       as reportScoreType,
                question_score_method     as questionScoreType

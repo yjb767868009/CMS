@@ -1,9 +1,6 @@
 package com.xmu.cms.service;
 
-import com.xmu.cms.entity.Course;
-import com.xmu.cms.entity.Student;
-import com.xmu.cms.entity.Teacher;
-import com.xmu.cms.entity.Team;
+import com.xmu.cms.entity.*;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +20,13 @@ public interface CourseService {
 
     Course getCourse(Integer courseId);
 
-    List<Team> getTeamInCourse(Course course);
+    List<Team> getTeamInCourse(Integer courseId);
 
-    List<Team> getTeamInCourseByStudent(Course course, Student student);
+    List<Team> getTeamInCourseByStudent(Integer courseId, Integer studentId);
+
+    Map<String, String> newKlass(Integer courseId, Klass klass);
+
+    List<Klass> getKlassInCourse(Integer courseId);
+
+    Map<String, String> deleteKlass(Integer classId);
 }

@@ -9,7 +9,7 @@
         <association property="team" javaType="com.xmu.cms.entity.Team">
             <id property="teamId" column="teamId"/>
         </association>
-        <association property="klass" javaType="com.xmu.cms.entity.Clbum">
+        <association property="klass" javaType="com.xmu.cms.entity.Klass">
             <id property="klassId" column="klassId"/>
         </association>
         <association property="seminar" javaType="com.xmu.cms.entity.Seminar">

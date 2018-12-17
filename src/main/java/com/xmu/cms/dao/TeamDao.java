@@ -1,7 +1,5 @@
 package com.xmu.cms.dao;
 
-import com.xmu.cms.entity.Course;
-import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Team;
 
 import java.util.List;
@@ -11,7 +9,7 @@ import java.util.List;
  * @version 1.0
  */
 public interface TeamDao {
-    List<Team> getTeamInCourse(Course course);
+    List<Team> getTeamInCourse(Integer courseId);
 
-    Team getTeamInCourseByStudent(Course course, Student student);
+    Team getTeamInCourseByStudent(Integer courseId, Integer studentId);
 }

@@ -50,11 +50,11 @@ public class MultiHttpSecurityConfiguration {
                     authenticationEntryPoint(new AdminAuthorizedEntryPoint());
             http.addFilter(jwtLoginFilter())
                     .addFilterBefore(jwtAuthenticationFilter(), JWTLoginFilter.class);
-            http.antMatcher("/api/admin/**")
+            http.antMatcher("/admin/**")
                     .authorizeRequests()
                     .anyRequest().hasRole("ADMIN");
             http.formLogin()
-                    .loginPage("/api/admin/login").loginProcessingUrl("/api/admin/login")
+                    .loginPage("/admin/login").loginProcessingUrl("/admin/login")
                     .usernameParameter("account").passwordParameter("password")
                     .successHandler(successHandler).failureHandler(failureHandler)
                     .permitAll();
@@ -109,14 +109,14 @@ public class MultiHttpSecurityConfiguration {
                     authenticationEntryPoint(new UserAuthorizedEntryPoint());
             http.addFilter(userJWTLoginFilter())
                     .addFilterBefore(userJWTAuthenticationFilter(), JWTLoginFilter.class);
-            http.antMatcher("/api/**")
+            http.antMatcher("/**")
                     .authorizeRequests()
-                    .antMatchers("/api/test/**").permitAll()
-                    .antMatchers("/api/user/**").hasAnyRole("TEACHER", "STUDENT")
-                    .antMatchers("/api/teacher/**").hasRole("TEACHER")
-                    .antMatchers("/api/student/**").hasRole("STUDENT");
+                    .antMatchers("/**").permitAll()
+                    .antMatchers("/user/**").hasAnyRole("TEACHER", "STUDENT")
+                    .antMatchers("/teacher/**").hasRole("TEACHER")
+                    .antMatchers("/student/**").hasRole("STUDENT");
             http.formLogin()
-                    .loginPage("/api/user/login").loginProcessingUrl("/api/user/login")
+                    .loginPage("/user/login").loginProcessingUrl("/user/login")
                     .usernameParameter("account").passwordParameter("password")
                     .successHandler(successHandler).failureHandler(failureHandler)
                     .permitAll();

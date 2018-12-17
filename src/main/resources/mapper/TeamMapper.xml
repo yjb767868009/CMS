@@ -23,7 +23,7 @@
         FROM team,
              attendance
         WHERE team.id = attendance.team_id
-          AND attendance.klass_seminar_id = #{clbumSeminarId}
+          AND attendance.klass_seminar_id = #{klassSeminarId}
     </select>
 
     <insert id="newTeam">
@@ -55,13 +55,13 @@
         where id = #{teamId}
     </select>
 
-    <update id="setClbum">
+    <update id="setKlass">
         update team
         set klass_id
         where id = #{teamId}
     </update>
 
-    <select id="getClbum" parameterType="java.lang.String">
+    <select id="getKlass" parameterType="java.lang.String">
         select klass_id
         from team
         where id = #{teamId}

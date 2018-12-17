@@ -1,6 +1,5 @@
 package com.xmu.cms.mapper;
 
-import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Team;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -22,7 +21,7 @@ public interface TeamMapper {
 
     Team getTeamInKlassByStudentId(Integer klassId, Integer studentId);
 
-    List<Team> getTeamInCourse(Course course);
+    List<Team> getTeamInCourse(Integer courseId);
 
-    Team getTeamInCourseByStudent(Course course, Integer studentId);
+    Team getTeamInCourseByStudent(Integer courseId, Integer studentId);
 }

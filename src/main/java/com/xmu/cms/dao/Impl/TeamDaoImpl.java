@@ -1,8 +1,6 @@
 package com.xmu.cms.dao.Impl;
 
 import com.xmu.cms.dao.TeamDao;
-import com.xmu.cms.entity.Course;
-import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Team;
 import com.xmu.cms.mapper.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +19,12 @@ public class TeamDaoImpl implements TeamDao {
     private TeamMapper teamMapper;
 
     @Override
-    public List<Team> getTeamInCourse(Course course) {
-        return teamMapper.getTeamInCourse(course);
+    public List<Team> getTeamInCourse(Integer courseId) {
+        return teamMapper.getTeamInCourse(courseId);
     }
 
     @Override
-    public Team getTeamInCourseByStudent(Course course, Student student) {
-        return teamMapper.getTeamInCourseByStudent(course, student.getStudentId());
+    public Team getTeamInCourseByStudent(Integer courseId, Integer studentId) {
+        return teamMapper.getTeamInCourseByStudent(courseId, studentId);
     }
 }

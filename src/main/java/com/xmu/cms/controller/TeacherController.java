@@ -22,22 +22,13 @@ import java.util.Map;
 @RequestMapping(value = "/teacher")
 public class TeacherController {
     @Autowired
-    private TeacherService teacherService;
+    private UserService userService;
 
     @Autowired
     private CourseService courseService;
 
     @Autowired
-    private RoundService roundService;
-
-    @Autowired
     private SeminarService seminarService;
-
-    @Autowired
-    private AttendanceService attendanceService;
-
-    @Autowired
-    private KlassService klassService;
 
     @Autowired
     private FileService fileService;
@@ -45,54 +36,45 @@ public class TeacherController {
     @Secured("ROLE_ADMIN")
     @GetMapping(value = "/")
     public List<Teacher> getAllTeachers() {
-        return teacherService.getAllTeachers();
+        return userService.getAllTeachers();
     }
 
     @Secured("ROLE_ADMIN")
     @PostMapping(value = "/")
     public Map<String, String> newTeacher(@RequestBody Teacher teacher) {
-        return teacherService.createTeacher(teacher);
+        return userService.createTeacher(teacher);
     }
 
     @Secured("ROLE_ADMIN")
     @PutMapping(value = "/{teacherId}/information")
     public Map<String, String> modifyTeacherInfo(@PathVariable("teacherId") Integer teacherId,
                                                  @RequestBody Teacher teacher) {
-        return teacherService.updateTeacherInfo(teacherId, teacher);
+        return userService.updateTeacherInfo(teacherId, teacher);
     }
 
     @Secured("ROLE_ADMIN")
     @PutMapping(value = "/{teacherId}/password")
     public Map<String, String> modifyTeacherPassword(@PathVariable("teacherId") Integer teacherId,
                                                      @RequestBody Teacher teacher) {
-        return teacherService.updateTeacherPassword(teacherId, teacher);
+        return userService.updateTeacherPassword(teacherId, teacher);
     }
 
     @Secured("ROLE_ADMIN")
     @DeleteMapping(value = "/{teacherId}")
     public Map<String, String> deleteTeacher(@PathVariable("teacherId") Integer teacherId) {
-        return teacherService.deleteTeacher(teacherId);
+        return userService.deleteTeacher(teacherId);
     }
 
     @Secured("ROLE_ADMIN")
     @GetMapping(value = "/searchByName")
     public List<Teacher> getTeacherByName(@RequestParam("name") String name) {
-        return teacherService.getTeacherByName(name);
+        return userService.getTeacherByName(name);
     }
 
     @Secured("ROLE_ADMIN")
     @GetMapping(value = "/searchByAccount")
     public Teacher getTeacherByAccount(@RequestParam("account") String account) {
-        return teacherService.getTeacherByAccount(account);
-    }
-
-
-
-
-    @PostMapping(value = "/course/{courseId}/klass")
-    public Map<String, String> newKlass(@PathVariable("courseId") Integer courseId,
-                                        @RequestBody Klass klass) {
-        return klassService.newKlass(courseId,klass);
+        return userService.getTeacherByAccount(account);
     }
 
     @PostMapping(value = "/course/{courseId}/round")
@@ -101,13 +83,7 @@ public class TeacherController {
                                         @RequestParam("presentationScoreType") Integer presentationScoreType,
                                         @RequestParam("reportScoreType") Integer reportScoreType,
                                         @RequestParam("questionScoreType") Integer questionScoreType) {
-        return roundService.newRound(courseId, roundNum, presentationScoreType, reportScoreType, questionScoreType);
-    }
-
-    @PostMapping(value = "/klass/{klassId}/uploadKlassFile")
-    public Map<String, String> uploadKlassFile(@PathVariable("klassId") Integer klassId,
-                                               @RequestParam("file") MultipartFile file) {
-        return fileService.uploadKlassFile(klassId, file);
+        return seminarService.newRound(courseId, roundNum, presentationScoreType, reportScoreType, questionScoreType);
     }
 
     @PutMapping(value = "/seminar/{seminarId}/modifySeminar")
@@ -153,7 +129,7 @@ public class TeacherController {
     @PatchMapping(value = "/attendance/{attendanceId}/setScore")
     public Map<String, String> setAttendancePresentationScore(@PathVariable("attendanceId") Integer attendanceId,
                                                               @RequestParam("presentationScore") Integer presentationScore) {
-        return attendanceService.setAttendancePresentationScore(attendanceId, presentationScore);
+        return seminarService.setAttendancePresentationScore(attendanceId, presentationScore);
     }
 
     @GetMapping(value = "/runningSeminar")

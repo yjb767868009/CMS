@@ -3,10 +3,10 @@ package com.xmu.cms.controller;
 import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.entity.Student;
-import com.xmu.cms.service.AttendanceService;
-import com.xmu.cms.service.KlassService;
+import com.xmu.cms.service.SeminarService;
 import com.xmu.cms.service.CourseService;
-import com.xmu.cms.service.StudentService;
+import com.xmu.cms.service.CourseService;
+import com.xmu.cms.service.UserService;
 import com.xmu.cms.support.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -27,18 +27,15 @@ public class StudentController {
     private CourseService courseService;
 
     @Autowired
-    private KlassService klassService;
+    private UserService userService;
 
     @Autowired
-    private StudentService studentService;
-
-    @Autowired
-    private AttendanceService attendanceService;
+    private SeminarService seminarService;
 
     @Secured("ROLE_ADMIN")
     @GetMapping(value = "/")
     public List<Student> getAllStudents() {
-        return studentService.getAllStudents();
+        return userService.getAllStudents();
     }
 
     @Secured("ROLE_STUDENT")
@@ -46,51 +43,51 @@ public class StudentController {
     public Map<String, String> activateStudent(@RequestParam(value = "userId") Integer userId,
                                                @RequestParam(value = "userType") String userType,
                                                @RequestParam(value = "student") Student student) {
-        return studentService.activateStudent(userId, student);
+        return userService.activateStudent(userId, student);
     }
 
     @Secured("ROLE_ADMIN")
     @PutMapping(value = "/{studentId}/information")
     public Map<String, String> modifyStudentInfo(@PathVariable("studentId") Integer studentId,
                                                  @RequestBody Student student) {
-        return studentService.modifyStudentInfo(studentId, student);
+        return userService.modifyStudentInfo(studentId, student);
     }
 
     @Secured("ROLE_ADMIN")
     @PutMapping(value = "/{studentId}/password")
     public Map<String, String> modifyStudentPasswordById(@PathVariable("studentId") Integer studentId,
                                                          @RequestBody Student student) {
-        return studentService.modifyStudentPassword(studentId, student);
+        return userService.modifyStudentPassword(studentId, student);
     }
 
     @Secured("ROLE_ADMIN")
     @DeleteMapping(value = "/{studentId}")
     public Map<String, String> deleteStudent(@PathVariable("studentId") Integer studentId) {
-        return studentService.deleteStudent(studentId);
+        return userService.deleteStudent(studentId);
     }
 
     @Secured("ROLE_ADMIN")
     @GetMapping(value = "/searchByName")
     public List<Student> getStudentByName(@RequestParam("name") String name) {
-        return studentService.getStudentByName(name);
+        return userService.getStudentByName(name);
     }
 
     @Secured("ROLE_ADMIN")
     @GetMapping(value = "/searchByAccount")
     public Student getStudentByAccount(@RequestParam("account") String account) {
-        return studentService.getStudentByAccount(account);
+        return userService.getStudentByAccount(account);
     }
 
     @PostMapping(value = "/klassSeminar/{klassSeminarId}/attendance")
     public Map<String, String> attendance(@PathVariable("klassSeminarId") Integer klassSeminarId,
                                           @RequestParam("teamOrder") Integer teamOrder) {
-        return attendanceService.newAttendance(klassSeminarId, teamOrder);
+        return seminarService.newAttendance(klassSeminarId, teamOrder);
     }
 
     @PostMapping(value = "/klassSeminar/{klassSeminarId}/score")
     public Map<String, String> getScoreInKlassSeminar(@PathVariable("klassSeminarId") Integer klassSeminarId,
                                                       @RequestParam("teamOrder") Integer teamOrder) {
-        return attendanceService.newAttendance(klassSeminarId, teamOrder);
+        return seminarService.newAttendance(klassSeminarId, teamOrder);
     }
 
 }

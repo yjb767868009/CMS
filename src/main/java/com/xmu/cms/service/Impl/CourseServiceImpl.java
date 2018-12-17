@@ -1,11 +1,9 @@
 package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.CourseDao;
+import com.xmu.cms.dao.KlassDao;
 import com.xmu.cms.dao.TeamDao;
-import com.xmu.cms.entity.Course;
-import com.xmu.cms.entity.Student;
-import com.xmu.cms.entity.Teacher;
-import com.xmu.cms.entity.Team;
+import com.xmu.cms.entity.*;
 import com.xmu.cms.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +24,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private TeamDao teamDao;
+
+    @Autowired
+    private KlassDao klassDao;
 
     @Override
     public List<Course> getAllCoursesByTeacher(Teacher teacher) {
@@ -67,14 +68,37 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Team> getTeamInCourse(Course course) {
-        return teamDao.getTeamInCourse(course);
+    public List<Team> getTeamInCourse(Integer courseId) {
+        return teamDao.getTeamInCourse(courseId);
     }
 
     @Override
-    public List<Team> getTeamInCourseByStudent(Course course, Student student) {
+    public List<Team> getTeamInCourseByStudent(Integer courseId, Integer studentId) {
         List<Team> teams = new ArrayList<Team>();
-        teams.add(teamDao.getTeamInCourseByStudent(course, student));
+        teams.add(teamDao.getTeamInCourseByStudent(courseId, studentId));
         return teams;
+    }
+
+    @Override
+    public Map<String, String> newKlass(Integer courseId, Klass klass) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        Integer count = klassDao.newKlass(courseId, klass);
+        if (count == 1) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
+    }
+
+    @Override
+    public List<Klass> getKlassInCourse(Integer courseId) {
+        return klassDao.getAllKlass(courseId);
+    }
+
+    @Override
+    public Map<String, String> deleteKlass(Integer classId) {
+        //TODO
+        return null;
     }
 }

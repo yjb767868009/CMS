@@ -1,13 +1,11 @@
 package com.xmu.cms.controller;
 
 import com.xmu.cms.entity.*;
-import com.xmu.cms.service.CourseService;
-import com.xmu.cms.service.KlassService;
-import com.xmu.cms.service.StudentService;
-import com.xmu.cms.service.TeacherService;
+import com.xmu.cms.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -23,14 +21,10 @@ public class CourseController {
     private CourseService courseService;
 
     @Autowired
-    private TeacherService teacherService;
+    private UserService userService;
 
     @Autowired
-    private StudentService studentService;
-
-
-    @Autowired
-    private KlassService klassService;
+    private FileService fileService;
 
     @Secured("ROLE_TEACHER")
     @PostMapping(value = "/")
@@ -45,10 +39,10 @@ public class CourseController {
                                    @RequestParam("userType") String userType) {
         switch (userType) {
             case "teacher":
-                Teacher teacher = teacherService.getTeacherById(userId);
+                Teacher teacher = userService.getTeacherById(userId);
                 return courseService.getAllCoursesByTeacher(teacher);
             case "student":
-                Student student = studentService.getStudentById(userId);
+                Student student = userService.getStudentById(userId);
                 return courseService.getAllCoursesByStudent(student);
             default:
                 return null;
@@ -77,13 +71,12 @@ public class CourseController {
     @GetMapping(value = "/{courseId}/team")
     public List<Team> getTeamInCourse(@RequestParam("userId") Integer userId,
                                       @RequestParam("userType") String userType,
-                                      @RequestBody Course course) {
+                                      @PathVariable("courseId") Integer courseId) {
         switch (userType) {
             case "teacher":
-                return courseService.getTeamInCourse(course);
+                return courseService.getTeamInCourse(courseId);
             case "student":
-                Student student = studentService.getStudentById(userId);
-                return courseService.getTeamInCourseByStudent(course, student);
+                return courseService.getTeamInCourseByStudent(courseId, userId);
             default:
                 return null;
         }
@@ -92,12 +85,21 @@ public class CourseController {
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/{courseId}/noteam")
     public List<Student> getNoTeamStudent(@PathVariable("courseId") Integer courseId) {
-        return studentService.getNoTeamStudent(courseId);
+        return userService.getNoTeamStudent(courseId);
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/{courseId}/class")
     public List<Klass> getKlassInCourse(@PathVariable("courseId") Integer courseId) {
-        return klassService.getKlassInCourse(courseId);
+        return courseService.getKlassInCourse(courseId);
     }
+
+    @Secured("ROLE_TEACHER")
+    @PostMapping(value = "/{courseId}/class")
+    public Map<String, String> createClass(@PathVariable("courseId") Integer courseId,
+                                           @RequestBody Klass klass) {
+        return courseService.newKlass(courseId, klass);
+    }
+
+
 }

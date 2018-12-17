@@ -1,6 +1,7 @@
 package com.xmu.cms.service;
 
 import com.xmu.cms.entity.Attendance;
+import com.xmu.cms.entity.Round;
 import com.xmu.cms.entity.Seminar;
 
 import java.sql.Timestamp;
@@ -26,7 +27,19 @@ public interface SeminarService {
 
     Seminar getSeminarBySeminarId(Integer seminarId);
 
+    List<Round> getRoundsByCourseId(Integer courseId);
+
+    List<Seminar> getAllSeminarInRound(Integer roundId);
+
+    Map<String, String> newRound(Integer courseId, Integer roundNum, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType);
+
     Map<String, String> getPresentationFileInKlassSeminar(Integer klassSeminarId);
 
     Seminar getRunningSeminarByTeacherId(Integer userId);
+
+    List<Attendance> getAttendancesInSeminar(Integer seminarId);
+
+    Map<String, String> setAttendancePresentationScore(Integer attendanceId, Integer presentationScore);
+
+    Map<String, String> newAttendance(Integer klassSeminarId, Integer teamOrder);
 }

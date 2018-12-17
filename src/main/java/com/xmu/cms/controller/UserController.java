@@ -24,19 +24,10 @@ public class UserController {
     private CourseService courseService;
 
     @Autowired
-    private RoundService roundService;
-
-    @Autowired
     private SeminarService seminarService;
 
     @Autowired
     private TeamService teamService;
-
-    @Autowired
-    private AttendanceService attendanceService;
-
-    @Autowired
-    private ScoreService scoreService;
 
     @Autowired
     private MailService mailService;
@@ -69,7 +60,7 @@ public class UserController {
 
     @GetMapping(value = "/course/{courseId}/rounds")
     public List<Round> getRounds(@PathVariable("courseId") Integer courseId) {
-        return roundService.getRoundsByCourseId(courseId);
+        return seminarService.getRoundsByCourseId(courseId);
     }
 
     @GetMapping(value = "/course/{courseId}/seminars")
@@ -79,7 +70,7 @@ public class UserController {
 
     @GetMapping(value = "round/{roundId}/seminars")
     public List<Seminar> getAllSeminarInRound(@PathVariable(value = "roundId") Integer roundId) {
-        return roundService.getAllSeminarInRound(roundId);
+        return seminarService.getAllSeminarInRound(roundId);
     }
 
     @GetMapping(value = "/seminar/{seminarId}/teams")
@@ -99,12 +90,7 @@ public class UserController {
 
     @GetMapping(value = "/seminar/{seminarId}/attendances")
     public List<Attendance> getAttendancesInSeminar(@PathVariable("seminarId") Integer seminarId) {
-        return attendanceService.getAttendancesInSeminar(seminarId);
-    }
-
-    @GetMapping(value = "/klassSeminar/{klassSeminarId}/scores")
-    public SeminarScore getAllScoreInSeminar(@PathVariable("klassSeminarId") Integer klassSeminarId) {
-        return scoreService.getAllScoresInKlassSeminar(klassSeminarId);
+        return seminarService.getAttendancesInSeminar(seminarId);
     }
 
     @GetMapping(value = "/seminar/{seminarId}/klass/{klassId}/presentationFile")

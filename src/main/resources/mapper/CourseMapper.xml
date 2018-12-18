@@ -81,7 +81,7 @@
         WHERE id = #{courseId}
     </delete>
 
-    <insert id="newCourse" parameterType="com.xmu.cms.entity.Course">
+    <insert id="newCourse">
         insert into course (id,
                             teacher_id,
                             course_name,

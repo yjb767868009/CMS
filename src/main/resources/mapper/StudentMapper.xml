@@ -55,4 +55,12 @@
         WHERE student_name = #{name}
     </select>
 
+    <select id="getStudentByTeamId">
+        select id as studentId,
+               student_name as studentName
+        from student,
+             klass_student
+        where klass_student.team_id = #{teamId}
+        and student.id = klass_student.student_id
+    </select>
 </mapper>

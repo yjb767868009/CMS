@@ -1,6 +1,6 @@
 <template>
 <div class="student" style="height:800px;background:#eee;">
-    <x-header title="讨论课成绩" style="height:60px;padding-top:12px;font-size:20px"  :right-options="{showMore: true}"  @on-click-more="showMenus = true">
+    <x-header title="讨论课成绩" style="height:60px;padding-top:12px;font-size:20px"  :right-options="{showMore: true}"  @on-click-more="show=!show">
     </x-header>
     <div style="font-size:18px;background:#fff"><cell primary="content" title="第一组：" value-align="left"><div style="padding-left:40px;color:#000;">300</div></cell></div>
     <div style="font-size:18px;background:#eee"><cell primary="content" title="第二组：" value-align="left"><div style="padding-left:40px;color:#000;">200</div></cell></div>
@@ -9,7 +9,12 @@
     
 
     <div v-transfer-dom>
-      <actionsheet :menus="menus" v-model="showMenus"></actionsheet>
+      <popup v-model="show" height="15%">
+          <div>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="StudentInfo">个人页</div></cell>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/book.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="running">讨论课</div></cell>
+          </div>
+      </popup>
     </div>
 </div>
 </template>
@@ -31,23 +36,20 @@
 <script>
 import axios from 'axios'
 import {XHeader,
-        XButton,Group,Cell,Actionsheet,} from 'vux'
+        XButton,Group,Cell,TransferDom,Popup} from 'vux'
   export default {
+    directives:{
+        TransferDom
+    },
     components:{
         XHeader,
         XButton,
         Group,
-        Cell,
-        Actionsheet,
+        Cell,Popup
     },
     data() {
-       return{ 
-        menus: {
-        menu1: '待办',
-        menu2: '个人页',
-        menu3: '讨论课'
-      },
-        showMenus:false,
+       return{
+        show:false,
     }
     },
     methods:{
@@ -57,9 +59,15 @@ import {XHeader,
         onClick:function(){
             console.log("sss");
         },
-        edit:function(){
-            this.$router.push('/StudentInfo')
-        }
+        presentation:function(){
+            this.$router.push('/mobile/student/course/seminar/running/presentation')
+        },
+        running:function(){
+            this.$router.push('/mobile/Student/studentSeminarList')
+        },
+        StudentInfo:function(){
+            this.$router.push('/mobile/student/studentInfo')
+        },
     }
      
   };

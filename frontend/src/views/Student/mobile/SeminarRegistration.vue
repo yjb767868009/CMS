@@ -1,6 +1,6 @@
 <template>
-<div class="student" style="height:800px;background:#eee;">
-    <x-header title="OOAD-讨论课" style="height:60px;padding-top:12px;font-size:20px"  :right-options="{showMore: true}"  @on-click-more="showMenus = true">
+<div class="student" style="height:650px;background:#eee;">
+    <x-header title="OOAD-讨论课" style="height:60px;padding-top:12px;font-size:20px"  :right-options="{showMore: true}"  @on-click-more="show=!show">
     </x-header>
     <div style="font-size:18px;background:#fff"><cell primary="content" title="轮次：" value-align="left"><div style="padding-left:30px;color:#000;">&emsp;&emsp;&emsp;&emsp;第二轮</div></cell></div>
     <div style="font-size:18px;background:#eee"><cell primary="content" title="主题：" value-align="left"><div style="padding-left:30px;color:#000;">&emsp;&emsp;&emsp;业务流程分析</div></cell></div>
@@ -14,20 +14,31 @@
         </cell>
     </div>
 
-    <div style="font-size:15px;background:#fff;margin-top:40px">
-        <cell primary="content" title="开始时间：" value-align="left">
+    <div style="font-size:15px;background:#fff;margin-top:20px">
+        <cell primary="content" title="开始时间：" value-align="left" style="height:20px">
         <div style="padding-left:65px;color:#FF3333;">2018.10.1&emsp;12:00</div></cell>
-        <cell primary="content" title="截止时间：" value-align="left">
+        <cell primary="content" title="截止时间：" value-align="left" style="height:20px">
         <div style="padding-left:65px;color:#FF3333;">2018.10.7&emsp;00:00</div></cell>
     </div>
 
-    <div style="font-size:22px;background:#53FF53;margin-top:30px;height:60px">
-    <cell primary="content" title="" value-align="left">
-        <div style="padding-left:150px;padding-top:5px;color:#fff;font-weight:520;" @click="sign">报名</div>
-        </cell>
-    </div>
+    <flexbox style="margin-top:30px">
+                <x-button type="primary" @click.native="registration=!registration">报名</x-button>
+    </flexbox>
+
     <div v-transfer-dom>
-      <actionsheet :menus="menus" v-model="showMenus"></actionsheet>
+        <confirm v-model="registration"
+        title="提示"
+        @on-cancel="onCancel"
+        @on-confirm="onConfirm"
+        >
+        <p style="text-align:center;">确认报名吗</p>
+      </confirm>
+        <popup v-model="show" height="15%">
+          <div>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="StudentInfo">个人页</div></cell>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/book.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="running">讨论课</div></cell>
+          </div>
+      </popup>
     </div>
 </div>
 </template>
@@ -49,28 +60,20 @@
 <script>
 import axios from 'axios'
 import {XHeader,
-        XButton,GroupTitle,Cell,Picker,Actionsheet,
-        ButtonTab,
-        ButtonTabItem} from 'vux'
+        XButton,Cell,Popup,TransferDom,Flexbox,Confirm} from 'vux'
   export default {
+    directives:{
+        TransferDom
+    },
     components:{
         XHeader,
         XButton,
-        GroupTitle,
-        Cell,
-        Picker,
-        Actionsheet,
-        ButtonTab,
-        ButtonTabItem
+        Cell,Popup,Flexbox,Confirm
     },
     data() {
        return{ 
-        menus: {
-        menu1: '待办',
-        menu2: '个人页',
-        menu3: '讨论课'
-      },
-        showMenus:false,
+        show:false,
+        registration:false,
     }
     },
     methods:{
@@ -85,7 +88,19 @@ import {XHeader,
         },
         sign:function(){
             this.$router.push('/seminarSeqUnsigned')
-        }
+        },
+        running:function(){
+            this.$router.push('/mobile/Student/studentSeminarList')
+        },
+        StudentInfo:function(){
+            this.$router.push('/mobile/student/studentInfo')
+        },
+        onCancel:function(){
+            console.log('取消')
+        },
+        onConfirm:function(){
+            console.log('确认')
+        },
     }
         
   };

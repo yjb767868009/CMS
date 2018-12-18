@@ -11,15 +11,15 @@
 
 
     <div style="height:30px;padding-top:12px;text-align:left;margin-top:20px" class="box">班级名：
-        <input  style="margin-left:20%;width:50px;height:30px" placeholder="年级"/>
-        <input  style="margin-left:5%;width:50px;height:30px" placeholder="班级"/>
+        <input  style="margin-left:20%;width:50px;height:30px" placeholder="">年级</input>
+        <input  style="margin-left:5%;width:50px;height:30px" placeholder="">班级</input>
     </div>
     <div style="height:30px;padding-top:12px;text-align:left;margin-top:20px" class="box">讨论课时间：
-        <input  style="margin-left:20%;width:50px;height:30px" placeholder="星期"/>
-        <input  style="margin-left:5%;width:50px;height:30px" placeholder="节次">/
+        <input  style="margin-left:20%;width:50px;height:30px" placeholder="星期"></input>
+        <input  style="margin-left:5%;width:50px;height:30px" placeholder="节次"></input>
     </div>
     <div style="height:30px;padding-top:12px;text-align:left;margin-top:20px" class="box">讨论课地点：
-        <input  style="margin-left:20%;width:100px;height:30px" placeholder="地点"/>
+        <input  style="margin-left:20%;width:100px;height:30px" placeholder="地点"></input>
     </div>
     <div style="height:30px;padding-top:12px;text-align:left;margin-top:20px" class="box">班级学生名单：
         <x-button @click="post1" style="font-size:5px;height:20px;width:90px" mini plain>选择文件</x-button>

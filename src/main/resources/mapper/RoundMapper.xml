@@ -3,7 +3,7 @@
 
 <mapper namespace="com.xmu.cms.mapper.RoundMapper">
     <resultMap id="RoundResultMap" type="com.xmu.cms.entity.Round">
-        <id property="roundId" javaType="java.lang.Integer"/>
+        <id property="roundId" column="roundId" javaType="java.lang.Integer"/>
         <result property="courseId" column="courseId"/>
         <result property="roundSerial" column="roundSerial"/>
         <result property="presentationScoreMethod" column="presentationScoreMethod"/>

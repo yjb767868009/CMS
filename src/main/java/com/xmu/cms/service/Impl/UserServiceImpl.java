@@ -8,6 +8,7 @@ import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.service.UserService;
 import com.xmu.cms.support.MyUser;
+import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -74,65 +75,66 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, String> getMyInfo(Integer userId, String userType) {
+    public Map<String, String> getMyInfo(UserInfo info) {
+        Map<String, String> messages = new HashMap<String, String>(4);
+        messages.put("name", info.getName());
+        messages.put("account", info.getAccount());
+        messages.put("message", "Success");
+        messages.put("userType", info.getUserType());
+        return messages;
+    }
+
+    @Override
+    public Map<String, String> modifyEmail(UserInfo info, MyUser user) {
         Map<String, String> messages = new HashMap<String, String>(2);
-        if (userType.equals("teacher")) {
-            Teacher teacher = teacherDao.getTeacherById(userId);
-            messages.put("name", teacher.getName());
-            messages.put("account", teacher.getAccount());
-            messages.put("message", "Success");
-            return messages;
-        }
-        if (userType.equals("student")) {
-            Student student = studentDao.getStudentById(userId);
-            messages.put("name", student.getName());
-            messages.put("account", student.getAccount());
-            messages.put("message", "Success");
-            return messages;
+        switch (info.getUserType()) {
+            case "teacher": {
+                Integer count = teacherDao.modifyTeacherEmail(user.getId(), user.toTeacher());
+                if (count == 1) {
+                    messages.put("message", "Success");
+                    return messages;
+                }
+                break;
+            }
+            case "student": {
+                Integer count = studentDao.modifyStudentEmail(user.getId(), user.toStudent());
+                if (count == 1) {
+                    messages.put("message", "Success");
+                    return messages;
+                }
+                break;
+            }
+            default:
+                break;
         }
         messages.put("message", "Error");
         return messages;
     }
 
     @Override
-    public Map<String, String> modifyEmail(Integer userId, String userType, MyUser user) {
+    public Map<String, String> modifyPassword(UserInfo info, MyUser user) {
         Map<String, String> messages = new HashMap<String, String>(2);
-        if (userType.equals("teacher")) {
-            Integer count = teacherDao.modifyTeacherEmail(userId, user.toTeacher());
-            if (count == 1) {
-                messages.put("message", "Success");
-                return messages;
+        switch (info.getUserType()) {
+            case "teacher": {
+                Integer count = teacherDao.modifyTeacherPassword(info.getUserId(), user.toTeacher());
+                if (count == 1) {
+                    messages.put("message", "Success");
+                    return messages;
+                }
+                break;
             }
-        }
-        if (userType.equals("student")) {
-            Integer count = studentDao.modifyStudentEmail(userId, user.toStudent());
-            if (count == 1) {
-                messages.put("message", "Success");
-                return messages;
+            case "student": {
+                Integer count = studentDao.modifyStudentPassword(info.getUserId(), user.toStudent());
+                if (count == 1) {
+                    messages.put("message", "Success");
+                    return messages;
+                }
+                break;
             }
+            default:
+                messages.put("message", "Error");
+                break;
         }
-        messages.put("message", "Error");
-        return messages;
-    }
-
-    @Override
-    public Map<String, String> modifyPassword(Integer userId, String userType, MyUser user) {
-        Map<String, String> messages = new HashMap<String, String>(2);
-        if (userType.equals("teacher")) {
-            Integer count = teacherDao.modifyTeacherPassword(userId, user.toTeacher());
-            if (count == 1) {
-                messages.put("message", "Success");
-                return messages;
-            }
-        }
-        if (userType.equals("student")) {
-            Integer count = studentDao.modifyStudentPassword(userId, user.toStudent());
-            if (count == 1) {
-                messages.put("message", "Success");
-                return messages;
-            }
-        }
-        messages.put("message", "Error");
         return messages;
     }
 

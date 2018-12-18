@@ -17,8 +17,16 @@ public interface KlassMapper {
 
     List<Seminar> getStudentKlassByCourseId(@Param("studentId") Integer studentId,
                                             @Param("courseId") Integer courseId);
-                                            
+
     Integer deleteKlassByKlassId(@Param("klassId") Integer klassId);
 
-    List<Klass> getAllKlasss(@Param("courseId") Integer courseId);
+    List<Klass> getAllKlass(@Param("courseId") Integer courseId);
+
+    /**
+     * 通过班级id获取班级
+     * @param klassId 班级id
+     * @return 班级对象
+     */
+    Klass getKlassByKlassId(@Param("kassId") Integer klassId);
+    //todo
 }

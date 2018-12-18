@@ -1,7 +1,6 @@
 package com.xmu.cms.config.Filter;
 
-import com.auth0.jwt.JWT;
-import com.xmu.cms.support.Token;
+import com.xmu.cms.support.JWTUntil;
 import com.xmu.cms.support.UserInfo;
 import com.xmu.cms.support.UsernameIsExitedException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -64,7 +62,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
      * 解析token中的信息,并判断是否过期
      */
     private UsernamePasswordAuthenticationToken getAuthentication(String token) {
-        UserInfo info = Token.getToken();
+        UserInfo info = JWTUntil.getToken();
         if (null == info) {
             throw new UsernameIsExitedException("失效的令牌");
         }
@@ -83,7 +81,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             default:
                 break;
         }
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(info.getUserName(), null, authorities);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(info.getAccount(), null, authorities);
         authenticationToken.setDetails(info);
         return authenticationToken;
     }

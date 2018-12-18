@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface ShareDao {
     List<Share> getShareInCourse(Integer courseId);
+
+    Integer deleteShare(Integer courseId, Integer shareId);
 }

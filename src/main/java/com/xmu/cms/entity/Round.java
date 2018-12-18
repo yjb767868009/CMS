@@ -11,7 +11,7 @@ public class Round {
     private Integer reportScoreType;
     private Integer questionScoreType;
 
-    public Round(Integer roundId, Course course, Round round, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType) {
+    public Round(Integer roundId, Course course, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType) {
         this.roundId = roundId;
         this.course = course;
         this.presentationScoreType = presentationScoreType;

@@ -1,14 +1,15 @@
 package com.xmu.cms.controller;
 
-import com.xmu.cms.entity.Klass;
 import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.entity.Teacher;
-import com.xmu.cms.service.*;
-import com.xmu.cms.support.Token;
+import com.xmu.cms.service.CourseService;
+import com.xmu.cms.service.FileService;
+import com.xmu.cms.service.SeminarService;
+import com.xmu.cms.service.UserService;
+import com.xmu.cms.support.JWTUntil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -34,13 +35,13 @@ public class TeacherController {
     private FileService fileService;
 
     @Secured("ROLE_ADMIN")
-    @GetMapping(value = "/")
+    @GetMapping(value = "")
     public List<Teacher> getAllTeachers() {
         return userService.getAllTeachers();
     }
 
     @Secured("ROLE_ADMIN")
-    @PostMapping(value = "/")
+    @PostMapping(value = "")
     public Map<String, String> newTeacher(@RequestBody Teacher teacher) {
         return userService.createTeacher(teacher);
     }
@@ -134,7 +135,7 @@ public class TeacherController {
 
     @GetMapping(value = "/runningSeminar")
     public Seminar getRunningSeminar() {
-        Integer teacherId = Token.getToken().getUserId();
+        Integer teacherId = JWTUntil.getToken().getUserId();
         return seminarService.getRunningSeminarByTeacherId(teacherId);
     }
 

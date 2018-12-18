@@ -1,6 +1,6 @@
 package com.xmu.cms.aspect;
 
-import com.xmu.cms.support.Token;
+import com.xmu.cms.support.JWTUntil;
 import com.xmu.cms.support.UserInfo;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -14,14 +14,11 @@ import org.springframework.context.annotation.Configuration;
 @Aspect
 @Configuration
 public class InjectIdentityAspect {
-    @Around(value = "execution(* com.xmu.cms.controller.*.*(Integer,String,..))&&args(userId,userType,..)", argNames = "userId,userType")
-    private Object injectIdentityPointcut(ProceedingJoinPoint point, Integer userId, String userType) throws Throwable {
-        UserInfo userInfo = Token.getToken();
+    @Around(value = "execution(* com.xmu.cms.controller.*.*(com.xmu.cms.support.UserInfo,..))&&args(info,..)")
+    private Object injectUserInfoPointcut(ProceedingJoinPoint point, UserInfo info) throws Throwable {
+        UserInfo userInfo = JWTUntil.getToken();
         Object[] args = point.getArgs();
-        args[0] = userInfo.getUserId();
-        args[1] = userInfo.getUserType();
+        args[0] = userInfo;
         return point.proceed(args);
     }
-
-
 }

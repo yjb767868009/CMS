@@ -1,13 +1,10 @@
 package com.xmu.cms.controller;
 
-import com.xmu.cms.entity.Course;
-import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.entity.Student;
+import com.xmu.cms.service.CourseService;
 import com.xmu.cms.service.SeminarService;
-import com.xmu.cms.service.CourseService;
-import com.xmu.cms.service.CourseService;
 import com.xmu.cms.service.UserService;
-import com.xmu.cms.support.Token;
+import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -40,10 +37,9 @@ public class StudentController {
 
     @Secured("ROLE_STUDENT")
     @PostMapping(value = "/active")
-    public Map<String, String> activateStudent(@RequestParam(value = "userId") Integer userId,
-                                               @RequestParam(value = "userType") String userType,
+    public Map<String, String> activateStudent(UserInfo info,
                                                @RequestParam(value = "student") Student student) {
-        return userService.activateStudent(userId, student);
+        return userService.activateStudent(info.getUserId(), student);
     }
 
     @Secured("ROLE_ADMIN")

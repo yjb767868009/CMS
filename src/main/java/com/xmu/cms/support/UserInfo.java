@@ -6,13 +6,23 @@ package com.xmu.cms.support;
  */
 public class UserInfo {
     private Integer userId;
-    private String userName;
+    private String account;
     private String userType;
+    private String name;
 
-    public UserInfo(Integer userId, String userName, String userType) {
+    public UserInfo(Integer userId, String account, String userType, String name) {
         this.userId = userId;
-        this.userName = userName;
+        this.account = account;
         this.userType = userType;
+        this.name = name;
+    }
+
+    public UserInfo(Integer userId, String userType) {
+        this.userId = userId;
+        this.userType = userType;
+    }
+
+    public UserInfo() {
     }
 
     public Integer getUserId() {
@@ -31,11 +41,23 @@ public class UserInfo {
         this.userType = userType;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getAccount() {
+        return account;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Boolean isEmpty() {
+        return this.userType != null && !this.userType.equals("") && this.userId != null && !(this.userId <= 0);
     }
 }

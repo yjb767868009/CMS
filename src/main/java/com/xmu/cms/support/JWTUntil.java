@@ -19,10 +19,10 @@ import java.util.Map;
  * @author JuboYu on 2018/12/5.
  * @version 1.0
  */
-public class Token {
-    public static final String SECRET = "JKKLJOoasdlfj";
+public class JWTUntil {
+    private static final String SECRET = "JKKLJOoasdlfj";
 
-    public static String setToken(UserInfo info) {
+    public static void setToken(UserInfo info) {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert requestAttributes != null;
         HttpServletResponse response = requestAttributes.getResponse();
@@ -40,12 +40,12 @@ public class Token {
                 .withExpiresAt(new Date(System.currentTimeMillis() + 2 * 60 * 60 * 100))
                 .withClaim("userId", info.getUserId())
                 .withClaim("userType", info.getUserType())
-                .withClaim("userName", info.getUserName())
+                .withClaim("account", info.getAccount())
+                .withClaim("name", info.getName())
                 .sign(Algorithm.HMAC256(SECRET));
 
         assert response != null;
         response.setHeader("Authorization", "Bearer " + token);
-        return token;
     }
 
     public static UserInfo getToken() {
@@ -65,21 +65,36 @@ public class Token {
         }
 
         Map<String, Claim> claims = jwt.getClaims();
-
         Claim userIdClaim = claims.get("userId");
+        Integer userId = null;
         if (null == userIdClaim || userIdClaim.asInt() == 0) {
             throw new UsernameIsExitedException("无效的令牌");
-        }
-        Claim userNameClaim = claims.get("userName");
-        if (null == userNameClaim || StringUtils.isEmpty(userNameClaim.asString())) {
-            throw new UsernameIsExitedException("无效的令牌");
+        } else {
+            userId = userIdClaim.asInt();
         }
 
         Claim userTypeClaim = claims.get("userType");
+        String userType = null;
         if (null == userTypeClaim || StringUtils.isEmpty(userTypeClaim.asString())) {
             throw new UsernameIsExitedException("无效的令牌");
+        } else {
+            userType = userTypeClaim.asString();
         }
 
-        return new UserInfo(userIdClaim.asInt(), userNameClaim.asString(), userTypeClaim.asString());
+        Claim accountClaim = claims.get("account");
+        String account = null;
+        if (null == accountClaim || StringUtils.isEmpty(accountClaim.asString())) {
+        } else {
+            account = accountClaim.asString();
+        }
+
+        Claim nameClaim = claims.get("name");
+        String name = null;
+        if (null == accountClaim || StringUtils.isEmpty(accountClaim.asString())) {
+        } else {
+            name = nameClaim.asString();
+        }
+
+        return new UserInfo(userId, userType, account, name);
     }
 }

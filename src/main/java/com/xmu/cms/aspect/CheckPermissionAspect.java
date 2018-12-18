@@ -6,7 +6,7 @@ import com.xmu.cms.entity.Team;
 import com.xmu.cms.mapper.CourseMapper;
 import com.xmu.cms.mapper.KlassMapper;
 import com.xmu.cms.mapper.TeamMapper;
-import com.xmu.cms.support.JWTUntil;
+import com.xmu.cms.support.JWTUtils;
 import com.xmu.cms.support.UserInfo;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -33,7 +33,7 @@ public class CheckPermissionAspect {
     @Around(value = "@annotation(com.xmu.cms.aspect.annoatation.CheckCoursePermission)&&args(courseId,..)")
     private Object checkCoursePermission(ProceedingJoinPoint point, Integer courseId) throws Throwable {
         Object result = null;
-        UserInfo userInfo = JWTUntil.getToken();
+        UserInfo userInfo = JWTUtils.getToken();
         Course course = courseMapper.getCourseById(courseId);
         if (userInfo.getUserType().equals("teacher") && course.getTeacher().getTeacherId().equals(userInfo.getUserId())) {
             result = point.proceed();
@@ -44,7 +44,7 @@ public class CheckPermissionAspect {
     @Around(value = "@annotation(com.xmu.cms.aspect.annoatation.CheckKlassPermission)&&args(klassId,..)")
     private Object checkKlassPermission(ProceedingJoinPoint point, Integer klassId) throws Throwable {
         Object result = null;
-        UserInfo userInfo = JWTUntil.getToken();
+        UserInfo userInfo = JWTUtils.getToken();
         Klass klass = klassMapper.getKlassByKlassId(klassId);
         if (userInfo.getUserType().equals("teacher") && klass.getCourse().getTeacher().getTeacherId().equals(userInfo.getUserId())) {
             result = point.proceed();
@@ -55,7 +55,7 @@ public class CheckPermissionAspect {
     @Around(value = "@annotation(com.xmu.cms.aspect.annoatation.CheckTeamPermission)&&args(teamId,..)")
     private Object checkTeamPermission(ProceedingJoinPoint point, Integer teamId) throws Throwable {
         Object result = null;
-        UserInfo userInfo = JWTUntil.getToken();
+        UserInfo userInfo = JWTUtils.getToken();
         Team team = teamMapper.getTeamByTeamId(teamId);
         if (userInfo.getUserType().equals("teacher") && team.getLeader().getStudentId().equals(userInfo.getUserId())) {
             result = point.proceed();

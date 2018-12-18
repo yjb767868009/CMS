@@ -31,7 +31,7 @@ public interface SeminarService {
 
     List<Seminar> getAllSeminarInRound(Integer roundId);
 
-    Map<String, String> newRound(Integer courseId, Integer roundNum, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType);
+    Map<String, String> newRound(Round round);
 
     Map<String, String> getPresentationFileInKlassSeminar(Integer klassSeminarId);
 
@@ -42,4 +42,6 @@ public interface SeminarService {
     Map<String, String> setAttendancePresentationScore(Integer attendanceId, Integer presentationScore);
 
     Map<String, String> newAttendance(Integer klassSeminarId, Integer teamOrder);
+
+    Round getRoundByRoundId(Integer roundId);
 }

@@ -2,7 +2,7 @@ package com.xmu.cms.config.Filter;
 
 import com.xmu.cms.config.handler.AuthenticationFailureHandler;
 import com.xmu.cms.config.handler.AuthenticationSuccessHandler;
-import com.xmu.cms.support.JWTUntil;
+import com.xmu.cms.support.JWTUtils;
 import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -130,7 +130,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         UserInfo info = (UserInfo) authResult.getDetails();
-        JWTUntil.setToken(info);
+        JWTUtils.setToken(info);
         successHandler.onAuthenticationSuccess(request, response, authResult);
     }
 

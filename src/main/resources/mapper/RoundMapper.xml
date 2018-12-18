@@ -4,8 +4,8 @@
 <mapper namespace="com.xmu.cms.mapper.RoundMapper">
 
     <select id="getRoundsByCourseId" resultType="com.xmu.cms.entity.Round">
-        SELECT id                as roundId,
-               course_id               as couseId,
+        SELECT id                        as roundId,
+               course_id                 as couseId,
                round_serial,
                presentation_score_method as presentationScoreType,
                report_score_method       as reportScoreType,

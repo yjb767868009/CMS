@@ -1,12 +1,14 @@
 package com.xmu.cms.controller;
 
+import com.xmu.cms.entity.Course;
+import com.xmu.cms.entity.Round;
 import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.service.CourseService;
 import com.xmu.cms.service.FileService;
 import com.xmu.cms.service.SeminarService;
 import com.xmu.cms.service.UserService;
-import com.xmu.cms.support.JWTUntil;
+import com.xmu.cms.support.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -80,11 +82,11 @@ public class TeacherController {
 
     @PostMapping(value = "/course/{courseId}/round")
     public Map<String, String> newRound(@PathVariable("courseId") Integer courseId,
-                                        @RequestParam("roundNum") Integer roundNum,
-                                        @RequestParam("presentationScoreType") Integer presentationScoreType,
-                                        @RequestParam("reportScoreType") Integer reportScoreType,
-                                        @RequestParam("questionScoreType") Integer questionScoreType) {
-        return seminarService.newRound(courseId, roundNum, presentationScoreType, reportScoreType, questionScoreType);
+                                        @RequestBody Round round) {
+        Course course = new Course();
+        course.setCourseId(courseId);
+        round.setCourse(course);
+        return seminarService.newRound(round);
     }
 
     @PutMapping(value = "/seminar/{seminarId}/modifySeminar")
@@ -135,7 +137,7 @@ public class TeacherController {
 
     @GetMapping(value = "/runningSeminar")
     public Seminar getRunningSeminar() {
-        Integer teacherId = JWTUntil.getToken().getUserId();
+        Integer teacherId = JWTUtils.getToken().getUserId();
         return seminarService.getRunningSeminarByTeacherId(teacherId);
     }
 

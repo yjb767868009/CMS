@@ -1,8 +1,8 @@
 package com.xmu.cms.service.Impl;
 
+import com.xmu.cms.dao.RoundDao;
 import com.xmu.cms.entity.Round;
 import com.xmu.cms.mapper.AttendanceMapper;
-import com.xmu.cms.mapper.RoundMapper;
 import com.xmu.cms.mapper.SeminarMapper;
 import com.xmu.cms.mapper.TeamMapper;
 import com.xmu.cms.entity.Attendance;
@@ -33,7 +33,7 @@ public class SeminarServiceImpl implements SeminarService {
     private TeamMapper teamMapper;
 
     @Autowired
-    private RoundMapper roundMapper;
+    private RoundDao roundDao;
 
     @Override
     public Map<String, String> newSeminar(Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
@@ -107,7 +107,7 @@ public class SeminarServiceImpl implements SeminarService {
 
     @Override
     public List<Round> getRoundsByCourseId(Integer courseId) {
-        return roundMapper.getRoundsByCourseId(courseId);
+        return roundDao.getRoundsByCourseId(courseId);
     }
 
     @Override
@@ -116,8 +116,15 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Map<String, String> newRound(Integer courseId, Integer roundNum, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType) {
-        return roundMapper.newRound(courseId, roundNum, presentationScoreType, reportScoreType, questionScoreType);
+    public Map<String, String> newRound(Round round) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        Integer count = roundDao.newRound(round);
+        if (count == 1) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
     }
 
     @Override
@@ -162,6 +169,11 @@ public class SeminarServiceImpl implements SeminarService {
     public Map<String, String> newAttendance(Integer klassSeminarId, Integer teamOrder) {
         //todo
         return null;
+    }
+
+    @Override
+    public Round getRoundByRoundId(Integer roundId) {
+        return roundDao.getRoundById(roundId);
     }
 
 

@@ -134,8 +134,8 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public Map<String, String> uploadClbumFile(Integer clbumId, MultipartFile file) {
-        String filePath = UPLOADED_FOLDER + "class" + File.separator + clbumId.toString() + File.separator + file.getOriginalFilename();
+    public Map<String, String> uploadKlassFile(Integer klassId, MultipartFile file) {
+        String filePath = UPLOADED_FOLDER + "class" + File.separator + klassId.toString() + File.separator + file.getOriginalFilename();
         Map<String, String> messages = new HashMap<String, String>(2);
 
         messages = saveFile(filePath, file);

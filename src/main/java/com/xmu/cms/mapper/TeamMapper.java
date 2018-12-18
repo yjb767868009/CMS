@@ -15,9 +15,13 @@ public interface TeamMapper {
 
     List<Team> getAllTeamsInSeminar(@Param("seminarId") Integer seminarId);
 
-    List<Team> getAllTeamsInClbumSeminar(@Param("seminarId") Integer clbumSeminarId);
+    List<Team> getAllTeamsInKlassSeminar(@Param("seminarId") Integer klassSeminarId);
 
     Team getTeamByTeamId(Integer teamId);
 
-    Team getTeamInClbumByStudentId(Integer clbumId, Integer studentId);
+    Team getTeamInKlassByStudentId(Integer klassId, Integer studentId);
+
+    List<Team> getTeamInCourse(Integer courseId);
+
+    Team getTeamInCourseByStudent(Integer courseId, Integer studentId);
 }

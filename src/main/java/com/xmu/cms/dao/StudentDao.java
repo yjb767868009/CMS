@@ -28,4 +28,6 @@ public interface StudentDao {
     Student getStudentById(Integer userId);
 
     Integer modifyStudentEmail(Integer studentId, Student student);
+
+    List<Student> getNoTeamStudentInCourse(Integer courseId);
 }

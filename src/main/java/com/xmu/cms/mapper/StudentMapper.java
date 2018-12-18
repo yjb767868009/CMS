@@ -68,4 +68,6 @@ public interface StudentMapper {
      * @return student
      */
     Student getStudentById(@Param("studentId") Integer studentId);
+
+    List<Student> getNoTeamStudentInCourse(Integer courseId);
 }

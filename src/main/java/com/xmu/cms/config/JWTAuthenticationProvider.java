@@ -61,7 +61,7 @@ public class JWTAuthenticationProvider implements AuthenticationProvider {
                 throw new UsernameIsExitedException("密码错误");
             }
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password, authorities);
-            authenticationToken.setDetails(new UserInfo(admin.getAdminId(), admin.getAccount(), "admin"));
+            authenticationToken.setDetails(new UserInfo(admin.getAdminId(), "admin", admin.getAccount(), null));
             return authenticationToken;
         }
 
@@ -72,7 +72,7 @@ public class JWTAuthenticationProvider implements AuthenticationProvider {
                 throw new UsernameIsExitedException("密码错误");
             }
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(teacher.getAccount(), teacher.getPassword(), authorities);
-            authenticationToken.setDetails(new UserInfo(teacher.getTeacherId(), teacher.getAccount(), "teacher"));
+            authenticationToken.setDetails(new UserInfo(teacher.getTeacherId(), "teacher", teacher.getAccount(), teacher.getName()));
             return authenticationToken;
         }
 
@@ -83,7 +83,7 @@ public class JWTAuthenticationProvider implements AuthenticationProvider {
                 throw new UsernameIsExitedException("密码错误");
             }
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(student.getAccount(), student.getPassword(), authorities);
-            authenticationToken.setDetails(new UserInfo(student.getStudentId(), student.getAccount(), "student"));
+            authenticationToken.setDetails(new UserInfo(student.getStudentId(), "student", student.getAccount(), student.getName()));
             return authenticationToken;
         }
 

@@ -19,7 +19,7 @@ public interface AttendanceMapper {
     Integer setAttendanceScore(@Param("attendanceId") Integer attendanceId,
                                @Param("presentationScore") Integer presentationScore);
 
-    List<Attendance> getAttendancesInClbumSeminar(@Param("clbumSeminarId") Integer clbumSeminarId);
+    List<Attendance> getAttendancesInKlassSeminar(@Param("klassSeminarId") Integer klassSeminarId);
 
-    Map<String, String> studentAttendance(Integer teamId, Integer clbumSeminarId, Integer teamOrder);
+    Map<String, String> studentAttendance(Integer teamId, Integer klassSeminarId, Integer teamOrder);
 }

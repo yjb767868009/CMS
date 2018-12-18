@@ -4,30 +4,32 @@ package com.xmu.cms.entity;
  * @author JuboYu on 2018/11/26.
  * @version 1.0
  */
-public class Clbum {
-    private Integer clbumId;
+public class Klass {
+    private Integer klassId;
     private Course course;
+    private Integer grade;
     private String name;
     private String classTime;
     private String classPlace;
 
-    public Clbum(Integer clbumId, Course course, String name, String classPlace, String classTime) {
-        this.clbumId = clbumId;
+    public Klass(Integer klassId, Course course, Integer grade, String name, String classPlace, String classTime) {
+        this.klassId = klassId;
         this.course = course;
+        this.grade = grade;
         this.name = name;
         this.classPlace = classPlace;
         this.classTime = classTime;
     }
 
-    public Clbum() {
+    public Klass() {
     }
 
-    public Integer getClbumId() {
-        return clbumId;
+    public Integer getKlassId() {
+        return klassId;
     }
 
-    public void setClbumId(Integer id) {
-        this.clbumId = id;
+    public void setKlassId(Integer id) {
+        this.klassId = id;
     }
 
     public String getName() {
@@ -60,5 +62,13 @@ public class Clbum {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Integer getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Integer grade) {
+        this.grade = grade;
     }
 }

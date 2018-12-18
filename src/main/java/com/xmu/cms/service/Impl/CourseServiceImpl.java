@@ -1,11 +1,15 @@
 package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.CourseDao;
-import com.xmu.cms.entity.Course;
+import com.xmu.cms.dao.KlassDao;
+import com.xmu.cms.dao.ShareDao;
+import com.xmu.cms.dao.TeamDao;
+import com.xmu.cms.entity.*;
 import com.xmu.cms.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +23,18 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private CourseDao courseDao;
 
+    @Autowired
+    private TeamDao teamDao;
+
+    @Autowired
+    private KlassDao klassDao;
+
+    @Autowired
+    private ShareDao shareDao;
+
     @Override
-    public List<Course> getAllCoursesByTeacherId(Integer teacherId) {
-        return courseDao.getAllCoursesByTeacherId(teacherId);
+    public List<Course> getAllCoursesByTeacher(Teacher teacher) {
+        return courseDao.getAllCoursesByTeacherId(teacher.getTeacherId());
     }
 
     @Override
@@ -37,8 +50,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getAllCoursesByStudentId(Integer studentId) {
-        return courseDao.getAllCourseByStudentId(studentId);
+    public List<Course> getAllCoursesByStudent(Student student) {
+        return courseDao.getAllCourseByStudentId(student.getStudentId());
     }
 
     @Override
@@ -56,5 +69,57 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course getCourse(Integer courseId) {
         return courseDao.getCourse(courseId);
+    }
+
+    @Override
+    public List<Team> getTeamInCourse(Integer courseId) {
+        return teamDao.getTeamInCourse(courseId);
+    }
+
+    @Override
+    public List<Team> getTeamInCourseByStudent(Integer courseId, Integer studentId) {
+        List<Team> teams = new ArrayList<Team>();
+        teams.add(teamDao.getTeamInCourseByStudent(courseId, studentId));
+        return teams;
+    }
+
+    @Override
+    public Map<String, String> newKlass(Integer courseId, Klass klass) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        Integer count = klassDao.newKlass(courseId, klass);
+        if (count == 1) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
+    }
+
+    @Override
+    public List<Klass> getKlassInCourse(Integer courseId) {
+        return klassDao.getAllKlass(courseId);
+    }
+
+    @Override
+    public Map<String, String> deleteKlass(Integer classId) {
+        //TODO
+        return null;
+    }
+
+    @Override
+    public List<Share> getShareInCourse(Integer courseId) {
+        return shareDao.getShareInCourse(courseId);
+    }
+
+    @Override
+    public Map<String, String> deleteShare(Integer courseId, Integer shareId) {
+        Map<String, String> message = new HashMap<String, String>(1);
+        Integer count = shareDao.deleteShare(courseId, shareId);
+        if (count == 1) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
     }
 }

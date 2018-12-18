@@ -2,9 +2,9 @@ package com.xmu.cms.controller;
 
 import com.xmu.cms.entity.Admin;
 import com.xmu.cms.entity.Student;
-import com.xmu.cms.service.AdminService;
-import com.xmu.cms.service.StudentService;
-import com.xmu.cms.service.TeacherService;
+import com.xmu.cms.service.UserService;
+import com.xmu.cms.service.UserService;
+import com.xmu.cms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -23,17 +23,11 @@ import java.util.Map;
 public class AdminController {
 
     @Autowired
-    private AdminService adminService;
-
-    @Autowired
-    private StudentService studentService;
-
-    @Autowired
-    private TeacherService teacherService;
+    private UserService userService;
 
     @PostMapping(value = "/login")
     public Map<String, String> adminLogIn(@RequestBody Admin admin) {
-        return adminService.adminLogIn(admin);
+        return userService.adminLogIn(admin);
     }
 
 

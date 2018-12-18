@@ -50,11 +50,17 @@ public class MultiHttpSecurityConfiguration {
                     authenticationEntryPoint(new AdminAuthorizedEntryPoint());
             http.addFilter(jwtLoginFilter())
                     .addFilterBefore(jwtAuthenticationFilter(), JWTLoginFilter.class);
-            http.antMatcher("/api/admin/**")
-                    .authorizeRequests()
-                    .anyRequest().hasRole("ADMIN");
+            http.authorizeRequests()
+                    .antMatchers("/user/login", "/admin/login", "/user/password").permitAll()
+                    .antMatchers("/test/**").permitAll()
+                    .anyRequest().authenticated();
             http.formLogin()
-                    .loginPage("/api/admin/login").loginProcessingUrl("/api/admin/login")
+                    .loginPage("/admin/login").loginProcessingUrl("/admin/login")
+                    .usernameParameter("account").passwordParameter("password")
+                    .successHandler(successHandler).failureHandler(failureHandler)
+                    .permitAll();
+            http.formLogin()
+                    .loginPage("/user/login").loginProcessingUrl("/user/login")
                     .usernameParameter("account").passwordParameter("password")
                     .successHandler(successHandler).failureHandler(failureHandler)
                     .permitAll();
@@ -109,17 +115,10 @@ public class MultiHttpSecurityConfiguration {
                     authenticationEntryPoint(new UserAuthorizedEntryPoint());
             http.addFilter(userJWTLoginFilter())
                     .addFilterBefore(userJWTAuthenticationFilter(), JWTLoginFilter.class);
-            http.antMatcher("/api/**")
-                    .authorizeRequests()
-                    .antMatchers("/api/test/**").permitAll()
-                    .antMatchers("/api/user/**").hasAnyRole("TEACHER", "STUDENT")
-                    .antMatchers("/api/teacher/**").hasRole("TEACHER")
-                    .antMatchers("/api/student/**").hasRole("STUDENT");
-            http.formLogin()
-                    .loginPage("/api/user/login").loginProcessingUrl("/api/user/login")
-                    .usernameParameter("account").passwordParameter("password")
-                    .successHandler(successHandler).failureHandler(failureHandler)
-                    .permitAll();
+            http.authorizeRequests()
+                    .antMatchers("/user/login").permitAll()
+                    .antMatchers("/test/**").permitAll()
+                    .anyRequest().authenticated();
             http.csrf().disable();
             http.cors();
         }

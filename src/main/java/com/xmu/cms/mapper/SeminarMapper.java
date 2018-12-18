@@ -33,11 +33,11 @@ public interface SeminarMapper {
                           @Param("visible") Boolean visible);
 
 
-    Integer startClbumSeminar(@Param("clbumSeminarId") Integer clbumSeminarId);
+    Integer startKlassSeminar(@Param("klassSeminarId") Integer klassSeminarId);
 
-    Integer stopClbumSeminar(@Param("clbumSeminarId") Integer clbumSeminarId);
+    Integer stopKlassSeminar(@Param("klassSeminarId") Integer klassSeminarId);
 
-    Integer endClbumSeminar(@Param("clbumSeminarId") Integer clbumSeminarId);
+    Integer endKlassSeminar(@Param("klassSeminarId") Integer klassSeminarId);
 
     Integer getAttendanceNo(@Param("seminarId") Integer seminarId);
 

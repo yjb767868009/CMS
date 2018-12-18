@@ -5,12 +5,8 @@ import com.xmu.cms.service.*;
 import com.xmu.cms.support.MyUser;
 import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -29,19 +25,10 @@ public class UserController {
     private CourseService courseService;
 
     @Autowired
-    private RoundService roundService;
-
-    @Autowired
     private SeminarService seminarService;
 
     @Autowired
     private TeamService teamService;
-
-    @Autowired
-    private AttendanceService attendanceService;
-
-    @Autowired
-    private ScoreService scoreService;
 
     @Autowired
     private MailService mailService;
@@ -53,37 +40,26 @@ public class UserController {
     }
 
     @GetMapping(value = "/password")
-    public Map<String, String> getPassword(@RequestParam(value = "account") String account) {
-        return mailService.sendPassword(account);
+    public Map<String, String> getPassword(@RequestBody MyUser user) {
+        return mailService.sendPassword(user);
     }
 
     @PutMapping(value = "/password")
-    public Map<String, String> modifyPassword(@RequestParam("userId") Integer userId,
-                                              @RequestParam("userType") String userType,
+    public Map<String, String> modifyPassword(UserInfo info,
                                               @RequestBody MyUser user) {
-        return userService.modifyPassword(userId, userType, user);
+        return userService.modifyPassword(info, user);
     }
 
     @PutMapping(value = "/email")
-    public Map<String, String> modifyEmail(@RequestParam("userId") Integer userId,
-                                           @RequestParam("userType") String userType,
+    public Map<String, String> modifyEmail(UserInfo info,
                                            @RequestBody MyUser user) {
-        return userService.modifyEmail(userId, userType, user);
+        return userService.modifyEmail(info, user);
     }
 
-    @GetMapping(value = "/course")
-    public List<Course> getCourses() {
-        return null;
-    }
-
-    @GetMapping(value = "/course/{courseId}")
-    public Course getCourse(@PathVariable("courseId") Integer courseId) {
-        return courseService.getCourse(courseId);
-    }
 
     @GetMapping(value = "/course/{courseId}/rounds")
     public List<Round> getRounds(@PathVariable("courseId") Integer courseId) {
-        return roundService.getRoundsByCourseId(courseId);
+        return seminarService.getRoundsByCourseId(courseId);
     }
 
     @GetMapping(value = "/course/{courseId}/seminars")
@@ -93,7 +69,7 @@ public class UserController {
 
     @GetMapping(value = "round/{roundId}/seminars")
     public List<Seminar> getAllSeminarInRound(@PathVariable(value = "roundId") Integer roundId) {
-        return roundService.getAllSeminarInRound(roundId);
+        return seminarService.getAllSeminarInRound(roundId);
     }
 
     @GetMapping(value = "/seminar/{seminarId}/teams")
@@ -101,9 +77,9 @@ public class UserController {
         return teamService.getAllTeamsInSeminar(seminarId);
     }
 
-    @GetMapping(value = "/clbumSeminar/{clbumSeminarId}/teams")
-    public List<Team> getTeamsInClbumSeminar(@PathVariable("clbumSeminarId") Integer clbumSeminarId) {
-        return teamService.getAllTeamsInClbumSeminar(clbumSeminarId);
+    @GetMapping(value = "/klassSeminar/{klassSeminarId}/teams")
+    public List<Team> getTeamsInKlassSeminar(@PathVariable("klassSeminarId") Integer klassSeminarId) {
+        return teamService.getAllTeamsInKlassSeminar(klassSeminarId);
     }
 
     @GetMapping(value = "/seminar/{seminarId}")
@@ -113,23 +89,17 @@ public class UserController {
 
     @GetMapping(value = "/seminar/{seminarId}/attendances")
     public List<Attendance> getAttendancesInSeminar(@PathVariable("seminarId") Integer seminarId) {
-        return attendanceService.getAttendancesInSeminar(seminarId);
+        return seminarService.getAttendancesInSeminar(seminarId);
     }
 
-    @GetMapping(value = "/clbumSeminar/{clbumSeminarId}/scores")
-    public Score getAllScoreInSeminar(@PathVariable("clbumSeminarId") Integer clbumSeminarId) {
-        return scoreService.getAllScoresInClbumSeminar(clbumSeminarId);
-    }
-
-    @GetMapping(value = "/seminar/{seminarId}/clbum/{clbumId}/presentationFile")
-    public Map<String, String> getPresentationFileInClbumSeminar(@PathVariable("seminarId") Integer seminarId,
-                                                                 @PathVariable("clbumId") Integer clbumId) {
-        return seminarService.getPresentationFileInClbumSeminar(seminarId);
+    @GetMapping(value = "/seminar/{seminarId}/klass/{klassId}/presentationFile")
+    public Map<String, String> getPresentationFileInKlassSeminar(@PathVariable("seminarId") Integer seminarId,
+                                                                 @PathVariable("klassId") Integer klassId) {
+        return seminarService.getPresentationFileInKlassSeminar(seminarId);
     }
 
     @GetMapping(value = "/information")
-    public Map<String, String> getMyInfo(@RequestParam("userId") Integer userId,
-                                         @RequestParam("userType") String userType) {
-        return userService.getMyInfo(userId, userType);
+    public Map<String, String> getMyInfo(UserInfo info) {
+        return userService.getMyInfo(info);
     }
 }

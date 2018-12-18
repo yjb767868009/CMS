@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public interface FileService {
 
-    Map<String, String> uploadClbumFile(Integer clbumId, MultipartFile file);
+    Map<String, String> uploadKlassFile(Integer klassId, MultipartFile file);
 
     Map<String, String> uploadAttendanceFile(Integer attendanceId, MultipartFile file);
 }

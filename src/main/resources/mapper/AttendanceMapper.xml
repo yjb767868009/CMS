@@ -9,7 +9,7 @@
         <association property="team" javaType="com.xmu.cms.entity.Team">
             <id property="teamId" column="teamId"/>
         </association>
-        <association property="klass" javaType="com.xmu.cms.entity.Clbum">
+        <association property="klass" javaType="com.xmu.cms.entity.Klass">
             <id property="klassId" column="klassId"/>
         </association>
         <association property="seminar" javaType="com.xmu.cms.entity.Seminar">
@@ -19,18 +19,32 @@
 
     <select id="getPresentationsInSeminar" resultMap="AttendanceResultMap">
         SELECT attendance.id as attendanceId,
-               team_id       as teamId,
+               attendance.team_id       as teamId,
                seminar_id    as seminarId,
                team_order    as teamOrder,
                ppt_name      as ppt,
                report_name   as report,
-               ppt_url     as presentationScore,
-               reprot_url  as reportScore
+               ppt_url     as ppt,
+               reprot_url  as report,
+               presentaton_score  as presentationScore,
+               report_score       as reportScore
         FROM attendance,
-             klass_seminar
+             klass_seminar,
+             seminar_score
         WHERE klass_seminar.seminar_id = #{seminarId}
           AND klass_seminar.id = attendance.klass_seminar_id
+          and klass_seminar.id = seminar_score.klass_seminar_id
         ORDER BY team_order
     </select>
-
+    
+    <insert id="newAttendance">
+        insert attendance (klass_seminar_id, team_id, team_order, is_present, report_name, reprot_url, ppt_name, ppt_url)
+        values (#{klassSeminarId}, #{teamId}, #{teamOrder}, #{present}, #{reportName}, #{reportUrl}, #{pptName}, #{pptUrl})
+    </insert>
+    
+    <delete id="deleteAttendance" parameterType="java.lang.Integer">
+        delete 
+        from attendance
+        where id = #{attendanceId}
+    </delete>
 </mapper>

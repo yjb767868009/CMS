@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xmu.cms.dao.KlassDao">
+    <resultMap id="KlassResultMap" type="com.xmu.cms.entity.Klass">
+        <id property="klassId" column="id" javaType="java.lang.Integer"/>
+        <result property="grade" column="grade" javaType="java.lang.Integer"/>
+        <result property="klassSerial" column="klass_serial" javaType="java.lang.Integer"/>
+        <result property="klassTime" column="klass_time" javaType="java.lang.String"/>
+        <result property="location" column="klass_location" javaType="java.lang.String"/>
+        <association property="course" javaType="com.xmu.cms.entity.Course">
+            <id property="courseId" column="courseId"/>
+            <result property="courseName" column="courseName"/>
+        </association>
+    </resultMap>
+
+    <insert id="newKlass">
+        INSERT klass (course_id, grade, klass_serial, klass_time, klass_location)
+        VALUE (#{courseId}, #{grade}, #{klassSerial}, #{klassTime}, #{klassPlace})
+    </insert>
+
+    <delete id="deleteKlassByKlassId" parameterType="java.lang.Integer">
+        delete
+        from klass
+        where id = #{klassId}
+    </delete>
+
+    <update id="setKlassTime">
+        update klass
+        set klass_time = #{klassTime}
+        where id = #{klassId}
+    </update>
+
+    <update id="setKlassPlace">
+        update klass
+        set klass_location = #{klassPlace}
+        where id = #{klassId}
+    </update>
+    
+    <select id="getKlass" resultMap="KlassResultMap">
+        select klass.id as klassId,
+               grade,
+               klass_serial as klassSerial,
+               klass_time as klassTime,
+               klass_location as klassLocation,
+               course.id  as courseId,
+               course_name  as courseName
+        from klass,
+             course
+        where klass.id = #{klassId}
+        and course.id = klass.course_id
+    </select>
+</mapper>

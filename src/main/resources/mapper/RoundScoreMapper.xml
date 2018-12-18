@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.xmu.cms.mapper.ScoreMapper">
+<mapper namespace="com.xmu.cms.mapper.RoundScoreMapper">
     <resultMap id="RoundScoreResultMap" type="com.xmu.cms.entity.RoundScore">
         <id property="scoreId" column="scoreId" javaType="java.lang.Integer"/>
         <result property="presentationScore" column="presentationScore"/>
@@ -16,33 +16,7 @@
         </association>
     </resultMap>
 
-    <resultMap id="SeminarScoreResultMap" type="com.xmu.cms.entity.SeminarScore">
-        <id property="scoreId" column="scoreId" javaType="java.lang.Integer"/>
-        <result property="presentationScore" column="presentationScore"/>
-        <result property="reportScore" column="reportScore"/>
-        <result property="questionScore" column="questionScore"/>
-        <result property="totalScore" column="totalScore"/>
-        <association property="team" javaType="com.xmu.cms.entity.Team">
-            <id property="teamName" column="teamName"/>
-        </association>
-        <association property="seminar" javaType="com.xmu.cms.entity.Seminar">
-            <id property="seminarId" column="seminarId"/>
-        </association>
-    </resultMap>
-
-    <select id="getAllScoreInSeminar" resultMap="com.xmu.cms.entity.SeminarScore">
-        SELECT team.team_name    as name,
-               presentaton_score as presentationScore,
-               question_score    as questionScore,
-               report_score      as reportScore,
-               total_score       as totalScore
-        FROM seminar_score,
-             team
-        WHERE klass_seminar_id = #{classSeminarId}
-          AND team.id = seminar_score.team_id
-    </select>
-
-    <select id="getAllScoresInRound" resultMap="com.xmu.cms.entity.RoundScore">
+    <select id="getAllScoresInRound" resultMap="RoundScoreResultMap">
         SELECT team_name         as name,
                presentation_score as presentationScore,
                question_score    as questionScore,

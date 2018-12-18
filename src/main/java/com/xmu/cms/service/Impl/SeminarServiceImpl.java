@@ -1,6 +1,8 @@
 package com.xmu.cms.service.Impl;
 
+import com.xmu.cms.entity.Round;
 import com.xmu.cms.mapper.AttendanceMapper;
+import com.xmu.cms.mapper.RoundMapper;
 import com.xmu.cms.mapper.SeminarMapper;
 import com.xmu.cms.mapper.TeamMapper;
 import com.xmu.cms.entity.Attendance;
@@ -30,6 +32,9 @@ public class SeminarServiceImpl implements SeminarService {
     @Autowired
     private TeamMapper teamMapper;
 
+    @Autowired
+    private RoundMapper roundMapper;
+
     @Override
     public Map<String, String> newSeminar(Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
         Map<String, String> message = new HashMap<String, String>(2);
@@ -43,9 +48,9 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Map<String, String> startClbumSeminar(Integer clbumSeminarId) {
+    public Map<String, String> startKlassSeminar(Integer klassSeminarId) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarMapper.startClbumSeminar(clbumSeminarId);
+        Integer count = seminarMapper.startKlassSeminar(klassSeminarId);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -55,9 +60,9 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Map<String, String> stopClbumSeminar(Integer clbumSeminarId) {
+    public Map<String, String> stopKlassSeminar(Integer klassSeminarId) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarMapper.stopClbumSeminar(clbumSeminarId);
+        Integer count = seminarMapper.stopKlassSeminar(klassSeminarId);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -67,9 +72,9 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Map<String, String> endClbumSeminar(Integer clbumSeminarId) {
+    public Map<String, String> endKlassSeminar(Integer klassSeminarId) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarMapper.endClbumSeminar(clbumSeminarId);
+        Integer count = seminarMapper.endKlassSeminar(klassSeminarId);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -101,9 +106,24 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Map<String, String> getPresentationFileInClbumSeminar(Integer clbumSeminarId) {
+    public List<Round> getRoundsByCourseId(Integer courseId) {
+        return roundMapper.getRoundsByCourseId(courseId);
+    }
+
+    @Override
+    public List<Seminar> getAllSeminarInRound(Integer roundId) {
+        return seminarMapper.getAllSeminarByRoundId(roundId);
+    }
+
+    @Override
+    public Map<String, String> newRound(Integer courseId, Integer roundNum, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType) {
+        return roundMapper.newRound(courseId, roundNum, presentationScoreType, reportScoreType, questionScoreType);
+    }
+
+    @Override
+    public Map<String, String> getPresentationFileInKlassSeminar(Integer klassSeminarId) {
         Map<String, String> presentationFileMap = new HashMap<String, String>();
-        List<Attendance> attendances = attendanceDao.getAttendancesInClbumSeminar(clbumSeminarId);
+        List<Attendance> attendances = attendanceDao.getAttendancesInKlassSeminar(klassSeminarId);
         for (Attendance attendance : attendances) {
             String attendancePresentationFile = attendance.getPresentationFile();
             if (!attendancePresentationFile.equals("")) {
@@ -120,5 +140,29 @@ public class SeminarServiceImpl implements SeminarService {
     public Seminar getRunningSeminarByTeacherId(Integer teacherId) {
         return seminarMapper.getRunningSeminarByTeacherId(teacherId);
     }
+
+    @Override
+    public List<Attendance> getAttendancesInSeminar(Integer seminarId) {
+        return attendanceDao.getAttendancesInSeminar(seminarId);
+    }
+
+    @Override
+    public Map<String, String> setAttendancePresentationScore(Integer attendanceId, Integer presentationScore) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        Integer count = attendanceDao.setAttendanceScore(attendanceId, presentationScore);
+        if (count == 1) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
+    }
+
+    @Override
+    public Map<String, String> newAttendance(Integer klassSeminarId, Integer teamOrder) {
+        //todo
+        return null;
+    }
+
 
 }

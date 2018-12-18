@@ -24,8 +24,8 @@
 
     <group label-width="6em" style="margin-top:140px;padding-top:12px;text-align:left">
         <div style="height:40px;padding-top:12px;text-align:left;margin-top:20px" class="box">小组人数：
-            <input  style="margin-left:20%;width:50px;height:30px" placeholder="上限">
-            <input  style="margin-left:5%;width:50px;height:30px" placeholder="下限">
+            <input  style="margin-left:20%;width:50px;height:30px" placeholder="">上限</input>
+            <input  style="margin-left:5%;width:50px;height:30px" placeholder="">下限</input>
         </div>
         <datetime v-model="limitHourValue" :start-date="startDate" :end-date="endDate" format="YYYY-MM-DD HH:mm" @on-change="change" title="组队开始时间"></datetime>
         <datetime v-model="limitHourValue" :start-date="startDate" :end-date="endDate" format="YYYY-MM-DD HH:mm" @on-change="change" title="组队截止时间"></datetime>

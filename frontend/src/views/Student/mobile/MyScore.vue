@@ -2,65 +2,83 @@
 <div class="student" style="height:20px;background:#fff">
     <x-header title="OOAD 2016-1" style="height:60px;padding-top:12px" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
-    <group title="我的讨论课">
+    <group>
       <cell is-link :border-intent="false" :arrow-direction="showContent001 ? 'up' : 'down'"
       @click.native="showContent001 = !showContent001" value-align="left">
-      <span>讨论课信息</span>
+      <span>第一轮</span>
       </cell>
 
         <template v-if="showContent001">
       
         <cell is-link :border-intent="false" :arrow-direction="showContent002 ? 'up' : 'down'"
-         @click.native="showContent002 = !showContent002" value-align="left" style="padding-left:150px">
-        <span>第一轮</span>
+         @click.native="showContent002 = !showContent002" value-align="left" style="padding-left:130px">
+        <span>业务流程分析</span>
         </cell>
 
             <template v-if="showContent002">
-                <cell-box :border-intent="false" class="sub-item" is-link link="/mobile/student/course/seminar" style="padding-left:130px">业务流程分析(正在进行)</cell-box>
-                <cell-box class="sub-item" is-link style="padding-left:130px" link="/mobile/student/course/seminar/signed">领域模型(尚未开始已报名)</cell-box>
+                <cell primary="content" :border-intent="false" value-align="left">
+                    <div style="padding-left:10px;color:#000;font-size:0.8em">
+                    展示：&emsp;&emsp;&emsp;提问：&emsp;&emsp;&emsp;书面报告：
+                    <p>本次总成绩：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;本轮总成绩：</p>
+                    </div>
+                </cell>
             </template>
         
       
         <cell is-link :border-intent="false" :arrow-direction="showContent003 ? 'up' : 'down'"
-         @click.native="showContent003 = !showContent003" value-align="left" style="padding-left:150px">
-        <span>第二轮</span>
+         @click.native="showContent003 = !showContent003" value-align="left" style="padding-left:130px">
+        <span>领域模型</span>
         </cell>
 
             <template v-if="showContent003">
-                <cell-box :border-intent="false" class="sub-item" is-link link="/mobile/student/course/seminar/signed" style="padding-left:130px">代码检查(已经结束)</cell-box>
-                <cell-box class="sub-item" is-link style="padding-left:130px" link="/mobile/student/course/seminar/unsigned/registration">对象模型设计(尚未开始未报名)</cell-box>
+                <cell primary="content" :border-intent="false" value-align="left">
+                    <div style="padding-left:10px;color:#000;font-size:0.8em">
+                    展示：&emsp;&emsp;&emsp;提问：&emsp;&emsp;&emsp;书面报告：
+                    <p>本次总成绩：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;本轮总成绩：</p>
+                    </div>
+                </cell>
             </template>
         </template>
         
         <cell is-link :border-intent="false" :arrow-direction="showContent004 ? 'up' : 'down'"
       @click.native="showContent004 = !showContent004" value-align="left" style="margin-top:10px">
-      <span>已报名的讨论课</span>
+      <span>第二轮</span>
       </cell>
 
       <template v-if="showContent004">
       
         <cell is-link :border-intent="false" :arrow-direction="showContent005 ? 'up' : 'down'"
-         @click.native="showContent005 = !showContent005" value-align="left" style="padding-left:150px">
-        <span>第一轮</span>
+         @click.native="showContent005 = !showContent005" value-align="left" style="padding-left:130px">
+        <span>代码检查</span>
         </cell>
 
             <template v-if="showContent005">
-                <cell-box class="sub-item" is-link style="padding-left:130px" link="/mobile/student/course/seminar/signed">领域模型</cell-box>
+                <cell primary="content" :border-intent="false" value-align="left">
+                    <div style="padding-left:10px;color:#000;font-size:0.8em">
+                    展示：&emsp;&emsp;&emsp;提问：&emsp;&emsp;&emsp;书面报告：
+                    <p>本次总成绩：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;本轮总成绩：</p>
+                    </div>
+                </cell>
             </template>
       
         <cell is-link :border-intent="false" :arrow-direction="showContent006 ? 'up' : 'down'"
-         @click.native="showContent006 = !showContent006" value-align="left" style="padding-left:150px;">
-        <span>第二轮</span>
+         @click.native="showContent006 = !showContent006" value-align="left" style="padding-left:130px;">
+        <span>对象模型设计</span>
         </cell>
 
             <template v-if="showContent006">
-                <cell-box :border-intent="false" class="sub-item" is-link style="padding-left:130px">代码检查</cell-box>
-                <cell-box class="sub-item" is-link style="padding-left:130px">对象模型设计</cell-box>
+                <cell primary="content" :border-intent="false" value-align="left">
+                    <div style="padding-left:10px;color:#000;font-size:0.8em">
+                    展示：&emsp;&emsp;&emsp;提问：&emsp;&emsp;&emsp;书面报告：
+                    <p>本次总成绩：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;本轮总成绩：</p>
+                    </div>
+                </cell>
             </template>
       </template>
     </group>
 
-     <div v-transfer-dom>
+
+    <div v-transfer-dom>
       <popup v-model="show" height="15%">
           <div>
               <cell value-align="left" title=""><img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="StudentInfo">个人页</div></cell>
@@ -68,6 +86,7 @@
           </div>
       </popup>
     </div>
+
 </div>
 </template>
 
@@ -82,17 +101,27 @@
 
 <script>
 import axios from 'axios'
-import {XHeader,Cell,CellBox, TransferDom,Popup,Group} from 'vux'
+import {TransferDom,XHeader,
+        XButton,Group,Cell,Actionsheet,
+        ButtonTab,
+        ButtonTabItem, CellBox, CellFormPreview,Popup} from 'vux'
   export default {
     directives:{
         TransferDom
     },
     components:{
         XHeader,
-        Cell, CellBox,Popup,Group
+        XButton,
+        Group,
+        Cell,
+        Actionsheet,
+        ButtonTab,
+        ButtonTabItem, CellBox, CellFormPreview,Popup
     },
     data() {
         return{
+        name:'name',
+        newItem:'newItem',
         show:false,
         showContent001: false,
         showContent002:false,

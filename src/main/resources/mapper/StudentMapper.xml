@@ -3,10 +3,11 @@
 
 <mapper namespace="com.xmu.cms.mapper.StudentMapper">
     <resultMap id="StudentResultMap" type="com.xmu.cms.entity.Student">
-        <id property="studentId" column="id"/>
+        <id property="studentId" column="id" javaType="java.lang.Integer"/>
         <result property="account" column="account"/>
         <result property="password" column="password"/>
         <result property="name" column="student_name"/>
+        <result property="email" column="email"/>
         <result property="activation" column="is_active"/>
     </resultMap>
 
@@ -15,12 +16,12 @@
         FROM student
     </select>
 
-    <insert id="insertStudent" parameterType="com.xmu.cms.entity.Student">
+    <insert id="insertStudent">
         INSERT INTO student (account, password, email, student_name, is_active)
         VALUE (#{student.account}, #{student.password}, #{student.email}, #{student.name}, #{student.activation})
     </insert>
 
-    <update id="updateStudent" parameterType="com.xmu.cms.entity.Student">
+    <update id="updateStudent">
         UPDATE student
         SET account      = #{student.account},
             password     = #{student.password},
@@ -31,7 +32,7 @@
     </update>
 
 
-    <delete id="deleteStudent" parameterType="java.lang.Integer">
+    <delete id="deleteStudent">
         DELETE
         FROM student
         WHERE id = #{studentId}

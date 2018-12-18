@@ -3,6 +3,7 @@ package com.xmu.cms.controller;
 import com.xmu.cms.entity.*;
 import com.xmu.cms.service.*;
 import com.xmu.cms.support.MyUser;
+import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,17 +45,15 @@ public class UserController {
     }
 
     @PutMapping(value = "/password")
-    public Map<String, String> modifyPassword(@RequestParam("userId") Integer userId,
-                                              @RequestParam("userType") String userType,
+    public Map<String, String> modifyPassword(UserInfo info,
                                               @RequestBody MyUser user) {
-        return userService.modifyPassword(userId, userType, user);
+        return userService.modifyPassword(info, user);
     }
 
     @PutMapping(value = "/email")
-    public Map<String, String> modifyEmail(@RequestParam("userId") Integer userId,
-                                           @RequestParam("userType") String userType,
+    public Map<String, String> modifyEmail(UserInfo info,
                                            @RequestBody MyUser user) {
-        return userService.modifyEmail(userId, userType, user);
+        return userService.modifyEmail(info, user);
     }
 
 
@@ -100,8 +99,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/information")
-    public Map<String, String> getMyInfo(@RequestParam("userId") Integer userId,
-                                         @RequestParam("userType") String userType) {
-        return userService.getMyInfo(userId, userType);
+    public Map<String, String> getMyInfo(UserInfo info) {
+        return userService.getMyInfo(info);
     }
 }

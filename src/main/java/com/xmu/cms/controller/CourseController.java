@@ -1,11 +1,14 @@
 package com.xmu.cms.controller;
 
+import com.xmu.cms.aspect.annoatation.CheckCoursePermission;
 import com.xmu.cms.entity.*;
-import com.xmu.cms.service.*;
+import com.xmu.cms.service.CourseService;
+import com.xmu.cms.service.FileService;
+import com.xmu.cms.service.UserService;
+import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -35,14 +38,13 @@ public class CourseController {
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/")
-    public List<Course> getCourses(@RequestParam("userId") Integer userId,
-                                   @RequestParam("userType") String userType) {
-        switch (userType) {
+    public List<Course> getCourses(UserInfo info) {
+        switch (info.getUserType()) {
             case "teacher":
-                Teacher teacher = userService.getTeacherById(userId);
+                Teacher teacher = userService.getTeacherById(info.getUserId());
                 return courseService.getAllCoursesByTeacher(teacher);
             case "student":
-                Student student = userService.getStudentById(userId);
+                Student student = userService.getStudentById(info.getUserId());
                 return courseService.getAllCoursesByStudent(student);
             default:
                 return null;
@@ -56,6 +58,7 @@ public class CourseController {
     }
 
     @Secured("ROLE_TEACHER")
+    @CheckCoursePermission
     @DeleteMapping(value = "/{courseId}")
     public Map<String, String> deleteCourse(@PathVariable("courseId") Integer courseId) {
         return courseService.deleteCourseById(courseId);
@@ -69,14 +72,13 @@ public class CourseController {
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/{courseId}/team")
-    public List<Team> getTeamInCourse(@RequestParam("userId") Integer userId,
-                                      @RequestParam("userType") String userType,
+    public List<Team> getTeamInCourse(UserInfo info,
                                       @PathVariable("courseId") Integer courseId) {
-        switch (userType) {
+        switch (info.getUserType()) {
             case "teacher":
                 return courseService.getTeamInCourse(courseId);
             case "student":
-                return courseService.getTeamInCourseByStudent(courseId, userId);
+                return courseService.getTeamInCourseByStudent(courseId, info.getUserId());
             default:
                 return null;
         }
@@ -95,6 +97,7 @@ public class CourseController {
     }
 
     @Secured("ROLE_TEACHER")
+    @CheckCoursePermission
     @PostMapping(value = "/{courseId}/class")
     public Map<String, String> createClass(@PathVariable("courseId") Integer courseId,
                                            @RequestBody Klass klass) {
@@ -103,12 +106,14 @@ public class CourseController {
 
 
     @Secured("ROLE_TEACHER")
+    @CheckCoursePermission
     @GetMapping(value = "/{courseId}/share")
     public List<Share> listAllShareByCourseId(@PathVariable("courseId") Integer courseId) {
         return courseService.getShareInCourse(courseId);
     }
 
     @Secured("ROLE_TEACHER")
+    @CheckCoursePermission
     @GetMapping(value = "/{courseId}/share/{shareId}")
     public Map<String, String> deleteShare(@PathVariable("courseId") Integer courseId,
                                            @PathVariable("shareId") Integer shareId) {

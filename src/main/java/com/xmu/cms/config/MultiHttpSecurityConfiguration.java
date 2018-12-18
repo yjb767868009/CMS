@@ -50,12 +50,17 @@ public class MultiHttpSecurityConfiguration {
                     authenticationEntryPoint(new AdminAuthorizedEntryPoint());
             http.addFilter(jwtLoginFilter())
                     .addFilterBefore(jwtAuthenticationFilter(), JWTLoginFilter.class);
-            http.antMatcher("/admin/**")
-                    .authorizeRequests()
-                    .antMatchers("/admin/login").permitAll()
-                    .anyRequest().hasRole("ADMIN");
+            http.authorizeRequests()
+                    .antMatchers("/user/login", "/admin/login", "/user/password").permitAll()
+                    .antMatchers("/test/**").permitAll()
+                    .anyRequest().authenticated();
             http.formLogin()
                     .loginPage("/admin/login").loginProcessingUrl("/admin/login")
+                    .usernameParameter("account").passwordParameter("password")
+                    .successHandler(successHandler).failureHandler(failureHandler)
+                    .permitAll();
+            http.formLogin()
+                    .loginPage("/user/login").loginProcessingUrl("/user/login")
                     .usernameParameter("account").passwordParameter("password")
                     .successHandler(successHandler).failureHandler(failureHandler)
                     .permitAll();
@@ -114,11 +119,6 @@ public class MultiHttpSecurityConfiguration {
                     .antMatchers("/user/login").permitAll()
                     .antMatchers("/test/**").permitAll()
                     .anyRequest().authenticated();
-            http.formLogin()
-                    .loginPage("/user/login").loginProcessingUrl("/user/login")
-                    .usernameParameter("account").passwordParameter("password")
-                    .successHandler(successHandler).failureHandler(failureHandler)
-                    .permitAll();
             http.csrf().disable();
             http.cors();
         }

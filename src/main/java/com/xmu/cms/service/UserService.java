@@ -4,6 +4,7 @@ import com.xmu.cms.entity.Admin;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.support.MyUser;
+import com.xmu.cms.support.UserInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -17,11 +18,11 @@ public interface UserService {
 
     Map<String, String> userLogIn(String account, String password);
 
-    Map<String, String> getMyInfo(Integer userId, String userType);
+    Map<String, String> getMyInfo(UserInfo info);
 
-    Map<String, String> modifyEmail(Integer userId, String userType, MyUser user);
+    Map<String, String> modifyEmail(UserInfo info, MyUser user);
 
-    Map<String, String> modifyPassword(Integer userId, String userType, MyUser user);
+    Map<String, String> modifyPassword(UserInfo info, MyUser user);
 
     List<Teacher> getAllTeachers();
 

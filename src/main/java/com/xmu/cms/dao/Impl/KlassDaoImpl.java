@@ -31,6 +31,8 @@ public class KlassDaoImpl implements KlassDao {
 
     @Override
     public List<Klass> getAllKlass(Integer courseId) {
-        return klassMapper.getAllKlasss(courseId);
+        //return klassMapper.getAllKlasss(courseId);
+        //todo
+        return null;
     }
 }

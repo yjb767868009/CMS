@@ -1,17 +1,16 @@
 package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.RoundDao;
-import com.xmu.cms.entity.Round;
+import com.xmu.cms.dao.RoundScoreDao;
+import com.xmu.cms.dao.SeminarScoreDao;
+import com.xmu.cms.entity.*;
 import com.xmu.cms.mapper.AttendanceMapper;
 import com.xmu.cms.mapper.SeminarMapper;
 import com.xmu.cms.mapper.TeamMapper;
-import com.xmu.cms.entity.Attendance;
-import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.service.SeminarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,10 +34,28 @@ public class SeminarServiceImpl implements SeminarService {
     @Autowired
     private RoundDao roundDao;
 
+    @Autowired
+    private RoundScoreDao roundScoreDao;
+
+    @Autowired
+    private SeminarScoreDao seminarScoreDao;
+
     @Override
-    public Map<String, String> newSeminar(Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
+    public Map<String, String> newSeminar(Seminar seminar) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarMapper.newSeminar(roundId, maxTeamNum, topic, introduction, signStartTime, signEndTime, signOrder, visible);
+        Integer count = seminarMapper.insertSeminar(seminar);
+        if (count == 1) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
+    }
+
+    @Override
+    public Map<String, String> deleteSeminar(Integer seminarId) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        Integer count = seminarMapper.deleteSeminar(seminarId);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -89,9 +106,21 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Map<String, String> modifySeminar(Integer seminarId, Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
+    public Map<String, String> modifySeminar(Seminar seminar) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarMapper.modifySeminar(seminarId, roundId, maxTeamNum, topic, introduction, signStartTime, signEndTime, signOrder, visible);
+        Integer count = seminarMapper.modifySeminar(seminar);
+        if (count == 1) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
+    }
+
+    @Override
+    public Map<String, String> modifySeminarReportDDL(Seminar seminar) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        Integer count = seminarMapper.modifySeminarReportDDL(seminar);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -174,6 +203,38 @@ public class SeminarServiceImpl implements SeminarService {
     @Override
     public Round getRoundByRoundId(Integer roundId) {
         return roundDao.getRoundById(roundId);
+    }
+
+    @Override
+    public Map<String, String> modifyRound(Round round) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        Integer count = roundDao.updateCalType(round);
+        if (count == 1) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
+    }
+
+    @Override
+    public RoundScore getRoundTeamScore(Integer roundId, Integer teamId) {
+        return roundScoreDao.getRoundTeamScore(roundId, teamId);
+    }
+
+    @Override
+    public List<RoundScore> getRoundScore(Integer roundId) {
+        return roundScoreDao.getRoundScore(roundId);
+    }
+
+    @Override
+    public SeminarScore getSeminarTeamScore(Integer seminarId, Integer teamId) {
+        return null;
+    }
+
+    @Override
+    public List<SeminarScore> getSeminarScore(Integer seminarId) {
+        return null;
     }
 
 

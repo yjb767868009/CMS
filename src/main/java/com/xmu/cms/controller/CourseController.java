@@ -4,6 +4,7 @@ import com.xmu.cms.aspect.annoatation.CheckCoursePermission;
 import com.xmu.cms.entity.*;
 import com.xmu.cms.service.CourseService;
 import com.xmu.cms.service.FileService;
+import com.xmu.cms.service.SeminarService;
 import com.xmu.cms.service.UserService;
 import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +28,20 @@ public class CourseController {
     private UserService userService;
 
     @Autowired
+    private SeminarService seminarService;
+
+    @Autowired
     private FileService fileService;
 
     @Secured("ROLE_TEACHER")
-    @PostMapping(value = "/")
+    @PostMapping(value = "")
     public Map<String, String> createCourse(@RequestBody Course course) {
         return courseService.createCourse(course);
     }
 
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @GetMapping(value = "/")
+    @GetMapping(value = "")
     public List<Course> getCourses(UserInfo info) {
         switch (info.getUserType()) {
             case "teacher":
@@ -62,6 +66,16 @@ public class CourseController {
     @DeleteMapping(value = "/{courseId}")
     public Map<String, String> deleteCourse(@PathVariable("courseId") Integer courseId) {
         return courseService.deleteCourseById(courseId);
+    }
+
+    @Secured("ROLE_TEACHER")
+    @PostMapping(value = "/course/{courseId}/round")
+    public Map<String, String> newRound(@PathVariable("courseId") Integer courseId,
+                                        @RequestBody Round round) {
+        Course course = new Course();
+        course.setCourseId(courseId);
+        round.setCourse(course);
+        return seminarService.newRound(round);
     }
 
     @GetMapping(value = "/{courseId}/score")

@@ -31,4 +31,9 @@ public class RoundDaoImpl implements RoundDao {
     public Integer newRound(Round round) {
         return roundMapper.insertRound(round);
     }
+
+    @Override
+    public Integer updateCalType(Round round) {
+        return roundMapper.updateCalType(round);
+    }
 }

@@ -6,13 +6,15 @@ package com.xmu.cms.entity;
  */
 public class Round {
     private Integer roundId;
+    private Integer order;
     private Course course;
     private Integer presentationScoreType;
     private Integer reportScoreType;
     private Integer questionScoreType;
 
-    public Round(Integer roundId, Course course, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType) {
+    public Round(Integer roundId, Integer order, Course course, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType) {
         this.roundId = roundId;
+        this.order = order;
         this.course = course;
         this.presentationScoreType = presentationScoreType;
         this.reportScoreType = reportScoreType;
@@ -60,5 +62,13 @@ public class Round {
 
     public void setQuestionScoreType(Integer questionScoreType) {
         this.questionScoreType = questionScoreType;
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 }

@@ -60,7 +60,8 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public Integer createTeacher(Teacher teacher) {
+    public Integer createTeacher(Teacher teacher) throws Exception {
+        teacher.setActivation(false);
         return teacherMapper.insertTeacher(teacher);
     }
 

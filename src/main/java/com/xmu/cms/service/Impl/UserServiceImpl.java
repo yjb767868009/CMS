@@ -145,14 +145,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Map<String, String> createTeacher(Teacher teacher) {
-        Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = teacherDao.createTeacher(teacher);
-        if (count == 1) {
-            message.put("message", "Success");
-        } else {
-            message.put("message", "Insert error");
+        Map<String, String> messages = new HashMap<String, String>(2);
+        try {
+            teacherDao.createTeacher(teacher);
+            messages.put("message", "Success");
+        } catch (Exception e) {
+            messages.put("message", "Error");
         }
-        return message;
+        return messages;
     }
 
     @Override

@@ -59,11 +59,6 @@ public class MultiHttpSecurityConfiguration {
                     .usernameParameter("account").passwordParameter("password")
                     .successHandler(successHandler).failureHandler(failureHandler)
                     .permitAll();
-            http.formLogin()
-                    .loginPage("/user/login").loginProcessingUrl("/user/login")
-                    .usernameParameter("account").passwordParameter("password")
-                    .successHandler(successHandler).failureHandler(failureHandler)
-                    .permitAll();
             http.csrf().disable();
             http.cors();
         }
@@ -115,6 +110,11 @@ public class MultiHttpSecurityConfiguration {
                     authenticationEntryPoint(new UserAuthorizedEntryPoint());
             http.addFilter(userJWTLoginFilter())
                     .addFilterBefore(userJWTAuthenticationFilter(), JWTLoginFilter.class);
+            http.formLogin()
+                    .loginPage("/user/login").loginProcessingUrl("/user/login")
+                    .usernameParameter("account").passwordParameter("password")
+                    .successHandler(successHandler).failureHandler(failureHandler)
+                    .permitAll();
             http.authorizeRequests()
                     .antMatchers("/user/login").permitAll()
                     .antMatchers("/test/**").permitAll()

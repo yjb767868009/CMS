@@ -24,7 +24,7 @@ public interface TeacherDao {
 
     Integer deleteTeacherByTeacherId(Integer teacherId);
 
-    Integer createTeacher(Teacher teacher);
+    Integer createTeacher(Teacher teacher) throws Exception;
 
     Integer modifyTeacherEmail(Integer teacherId, Teacher teacher);
 

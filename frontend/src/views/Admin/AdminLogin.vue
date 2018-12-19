@@ -45,22 +45,18 @@ import md5 from 'md5'
                 this.$message.error('请输入密码')
             }
 
-            this.$axios({
-                method:'post',
-                url:'/admin/login?'+Qs.stringify({
+            this.$axios.post(
+                    '/admin/login?'+Qs.stringify({
                     account:this.account,
                     password:this.password
                 })
-            }//我们用配置axios的方式做请求,axios的详细配置见
-            //  src/config/axios.js
-
             ).then((response)=>{
 				console.log(response)
-                let message = response.data
-                let headers = response.headers
-                if(message[0].authority=='ROLE_ADMIN'){
+                let data = response.data
+
+                console.log('author',headers.Authorization)
+                if(data[0].authority=='ROLE_ADMIN'){
                     console.log('admin')
-                    console.log(headers)
                     this.$store.state.Authorization=response.headers.Authorization
                     this.$store.state.userType='admin'
                     this.$router.push('AdminTeacher')

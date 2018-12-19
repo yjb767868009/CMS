@@ -34,9 +34,6 @@ axios.defaults.withCredentials=true
 
 axios.interceptors.request.use(
     config=>{
-        config.headers={
-            'Authorization':store.state.Authorization
-        };
         return config
     },
     err=>{
@@ -48,6 +45,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     response => {
       console.log('response interceptor:',response)
+
       if(response.data ==='NoLogIn') {
         router.push({
           path: '/login',
@@ -56,14 +54,14 @@ axios.interceptors.response.use(
       }
 
       if(response.data==='AdminsNoLogIn'){
-		  console.log("AdminsNoLogIn")
+		  console.log("response interceptor: AdminsNoLogIn")
         router.push({
             path:'AdminLogin',
             query: {redirect: router.currentRoute.fullPath} //从哪个页面跳转
         })
         }
       
-      if(response.headers.Authorization){
+      if(response.data.author){
         console.log('authorization@!!!!!!')
       }
       return response;

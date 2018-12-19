@@ -20,14 +20,14 @@
         SET account  = #{teacher.account},
             password     = #{teacher.password},
             email        = #{teacher.email},
-            teacher_name = #{teacher.courseName},
+            teacher_name = #{teacher.name},
             is_active    = #{teacher.activation}
         WHERE id = #{teacher.teacherId}
     </update>
 
     <insert id="insertTeacher">
         INSERT INTO teacher (account, password, email, teacher_name, is_active)
-        VALUE (#{teacher.account}, #{teacher.password}, #{teacher.email}, #{teacher.courseName}, #{teacher.activation})
+        VALUE (#{teacher.account}, #{teacher.password}, #{teacher.email}, #{teacher.name}, #{teacher.activation})
     </insert>
 
     <delete id="deleteTeacher" parameterType="java.lang.Integer">

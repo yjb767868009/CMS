@@ -28,20 +28,22 @@ Vue.use(VueCookie)
 Vue.use(MintUI)
 
 
-axios.defaults.baseURL='http://127.0.0.1:8000'
+axios.defaults.baseURL='http://localhost:8000'
 axios.defaults.withCredentials=true
 
 
 axios.interceptors.request.use(
-  config=>{
-      if(store.state.token){
-      config.headers.token=store.state.token
-      };
-      return config
-  },
-  err=>{
-      return Promise.reject(err)
-  }
+    config=>{
+        if(store.state.token){
+          config.headers={
+              'Authorization':"Bearer "+store.state.token
+          }
+        }
+        return config
+    },
+    err=>{
+        return Promise.reject(err)
+    }
 )
 // http response 拦截器
 axios.interceptors.response.use(

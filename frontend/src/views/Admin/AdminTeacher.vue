@@ -53,7 +53,7 @@
           <el-pagination
           background
           layout="->,prev, pager, next"
-          :page-size="20"
+          :page-size="pageSize"
           :total="currentTotal"
           @current-change="handleCurrentChange"
           >
@@ -131,7 +131,8 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
           email:'e-mail',
           phone:'j123312313'
         },],
-        teacherDataPagination:[1,2,3,4],
+        pageSize:20,
+        teacherDataPagination:'',
         teacherSearchKey:'',
         currentPage:1,
       }
@@ -147,7 +148,7 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
         handleCurrentChange:function(val){
             console.log('change page to '+val)
             this.currentPage=val
-            this.teacherDataPagination=teacherData.slice((currentPage-1)*20,currentPage*20+1)
+            this.teacherDataPagination=this.teacherData.slice((this.currentPage-1)*20,this.currentPage*20+1)
         },
         handleStudent:function(){
             this.$router.push('AdminStudent')
@@ -199,7 +200,7 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
             .then((response)=>{
               this.teacherData=response.data
               this.currentTotal=this.teacherData.length
-              this.teacherDataPagination=teacherData.slice((currentPage-1)*20,currentPage*20+1)
+              this.teacherDataPagination=this.teacherData.slice((this.currentPage-1)*20,this.currentPage*20+1)
             }).catch(function(error){
               console.log(error)
             })

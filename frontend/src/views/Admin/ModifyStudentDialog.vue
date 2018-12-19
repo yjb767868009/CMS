@@ -32,12 +32,11 @@ export default {
     },
     methods:{
         postModifyStudent:function(){
-          this.$axios.put('/admin/student/'+this.$store.state.admin.currentStudent.studentId+'?'+
-          Qs.stringify({
+          this.$axios.put('/student/'+this.$store.state.admin.currentStudent.studentId+'/information',{
             name:this.modifyStudentForm.name,
             account:this.modifyStudentForm.account,
             email:this.modifyStudentForm.email,
-          })).then((response)=>{
+          }).then((response)=>{
             if(response.data.message==='Success'){
               this.$store.state.admin.showModifyStudent=false
               this.$emit('modifySuccess')

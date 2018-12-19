@@ -134,11 +134,11 @@ export default {
           phone: "j123312313"
         }
       ],
-      pageSize:20,
-      studentDataPagination: '',
+      pageSize: 20,
+      studentDataPagination: "",
       studentSearchKey: "",
       currentPage: 1,
-      currentTotal:1,
+      currentTotal: 1
     };
   },
   mounted: function() {
@@ -173,9 +173,7 @@ export default {
       if (!isNaN(this.studentSearchKey)) {
         //搜学号
         this.$axios
-          .get("/student/searchByAccount", {
-            accout: this.studentSearchKey
-          })
+          .get("/student/searchByAccount/" + this.studentSearchKey)
           .then(response => {
             this.teacherData = response.data;
           })
@@ -185,9 +183,7 @@ export default {
       } else {
         //搜名字
         this.$axios
-          .get("/student/searchByName", {
-            name: this.studentSearchKey
-          })
+          .get("/student/searchByName/" + this.studentSearchKey)
           .then(response => {
             if (response.data[0] === null) {
               this.$message.error("找不到该学生");
@@ -236,11 +232,11 @@ export default {
                 type: "success",
                 message: "修改成功"
               });
-            }else{
+            } else {
               this.$message({
-                type:"error",
-                message:"修改失败"
-              })
+                type: "error",
+                message: "修改失败"
+              });
             }
           })
           .catch(function(error) {
@@ -248,7 +244,6 @@ export default {
           });
       });
     },
-
 
     deleteStudent: function(student) {
       this.$confirm("确定删除该学生？", "删除账号", {

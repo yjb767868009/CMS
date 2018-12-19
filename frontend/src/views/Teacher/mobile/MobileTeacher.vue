@@ -10,8 +10,8 @@
          <p slot="right" style="font-size:1.3em;color:#000">账号&emsp;</p>
     </x-header>
     <group>
-      <cell is-link title="我的课程" link="/mobile/teacher/course"><img slot="icon" src="../assets/lock.png" style="display:block;margin-right:12px;margin-left:3px" width="15px" height="20px"/></cell>
-      <cell is-link title="账户与设置" link="/mobile/teacher/account"><img slot="icon" src="../assets/package.png" style="display:block;margin-right:10px;" width="20px" height="20px"/></cell>
+      <cell is-link title="我的课程" link="/mobile/teacher/course"><img slot="icon" src="@/assets/lock.png" style="display:block;margin-right:12px;margin-left:3px" width="15px" height="20px"/></cell>
+      <cell is-link title="账户与设置" link="/mobile/teacher/account"><img slot="icon" src="@/assets/package.png" style="display:block;margin-right:10px;" width="20px" height="20px"/></cell>
     </group>
 
 </div>

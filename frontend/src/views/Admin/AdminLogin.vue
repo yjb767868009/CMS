@@ -26,6 +26,7 @@
 
 <script>
 import Qs from 'qs'
+import md5 from 'md5'
   export default {
     data() {
       
@@ -49,22 +50,24 @@ import Qs from 'qs'
                 url:'/admin/login?'+Qs.stringify({
                     account:this.account,
                     password:this.password
-                }),
+                })
             }//我们用配置axios的方式做请求,axios的详细配置见
-            //骚扰c/config/axios.js
+            //  src/config/axios.js
 
             ).then((response)=>{
 				console.log(response)
                 let message = response.data
-                if(message==='Bad credentials'){
-                    this.$message.error('登陆失败')
-                    return
-                }
-
-                if(message=='Success'){
+                let headers = response.headers
+                if(message[0].authority=='ROLE_ADMIN'){
+                    console.log('admin')
+                    console.log(headers)
                     this.$store.state.Authorization=response.headers.Authorization
                     this.$store.state.userType='admin'
                     this.$router.push('AdminTeacher')
+                }
+                else{
+                    this.$message.error('登陆失败')
+                    return
                 }
             }).catch((error)=>{
                 console.log(error)

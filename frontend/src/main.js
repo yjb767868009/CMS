@@ -20,7 +20,6 @@ import VueCookie from 'vue-cookie'
 
 //axios
 import axios from 'axios'
-import '../config/axios'
 Object.defineProperty(Vue.prototype,'$axios',{value:axios})
 
 Vue.config.productionTip = false
@@ -29,37 +28,54 @@ Vue.use(VueCookie)
 Vue.use(MintUI)
 
 
-//路由拦截
-// router.beforeEach((to,from,next)=>{
-//   if(to.meta.requireAuth!==false){
-//     if(store.state.token){
-//       if(to.fullPath.indexOf(store.state.userType))
-//         next();
-//       else{
-//         next({path:'/401'})
-//       }
-//     }else{
-//       if(to.fullPath.match(/admin/i)){
-//         next({
-//           path:'/adminLogin',
-//           query:{redirect:to.fullPath}
-//         })
-//       }
-//       else if(to.fullPath.match(/teacher/i)||to.fullPath.match(/student/i)){
-//         next({
-//           path:'/Login',
-//           query:{redirect:to.fullPath}
-//         })
-//       }else{
-//         next({
-//           path:'/401'
-//         })
-//       }
-//     }
-//   }else{
-//     next()
-//   }
-// })
+axios.defaults.baseURL='http://127.0.0.1:8000'
+axios.defaults.withCredentials=true
+
+
+axios.interceptors.request.use(
+    config=>{
+        config.headers={
+            'Authorization':store.state.Authorization
+        };
+        return config
+    },
+    err=>{
+        return Promise.reject(err)
+    }
+)
+
+// http response 拦截器
+axios.interceptors.response.use(
+    response => {
+      console.log('response interceptor:',response)
+      if(response.data ==='NoLogIn') {
+        router.push({
+          path: '/login',
+          query: {redirect: router.currentRoute.fullPath} //从哪个页面跳转
+        })
+      }
+
+      if(response.data==='AdminsNoLogIn'){
+		  console.log("AdminsNoLogIn")
+        router.push({
+            path:'AdminLogin',
+            query: {redirect: router.currentRoute.fullPath} //从哪个页面跳转
+        })
+        }
+      
+      if(response.headers.Authorization){
+        console.log('authorization@!!!!!!')
+      }
+      return response;
+      
+      }
+      
+    
+    ,
+    error => {
+      return Promise.reject(error.response.data)
+});
+
 
 /* eslint-disable no-new */
 new Vue({

@@ -36,10 +36,8 @@ axios.interceptors.request.use(
     config=>{
         console.log(store.state.token)
         if(store.state.token){
-          config={
-            headers:{
+          config.headers={
               'token':store.state.token
-            }
           }
         }
         console.log('request',config)

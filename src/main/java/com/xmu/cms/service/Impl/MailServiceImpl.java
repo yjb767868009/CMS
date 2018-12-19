@@ -1,7 +1,7 @@
 package com.xmu.cms.service.Impl;
 
-import com.xmu.cms.mapper.StudentMapper;
-import com.xmu.cms.mapper.TeacherMapper;
+import com.xmu.cms.dao.StudentDao;
+import com.xmu.cms.dao.TeacherDao;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.service.MailService;
@@ -26,18 +26,21 @@ public class MailServiceImpl implements MailService {
     private JavaMailSender mailSender;
 
     @Autowired
-    private TeacherMapper teacherDao;
+    private TeacherDao teacherDao;
 
     @Autowired
-    private StudentMapper studentMapper;
+    private StudentDao studentDao;
 
     @Value("${spring.mail.username}")
     private String sender;
 
-
-    @Override
-    public Map<String, String> sendEmailByAccount(String account) {
-        return null;
+    public void sendEmailToAccount(String subject, String text, String email) {
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setFrom(sender);
+        mail.setTo(email);
+        mail.setSubject(subject);
+        mail.setText(text);
+        mailSender.send(mail);
     }
 
     @Override
@@ -54,7 +57,7 @@ public class MailServiceImpl implements MailService {
             password = teacher.getPassword();
             return messages;
         }
-        Student student = studentMapper.getStudentByAccount(account);
+        Student student = studentDao.getStudentByAccount(account);
         if (student != null) {
             name = student.getName();
             email = student.getEmail();
@@ -65,12 +68,9 @@ public class MailServiceImpl implements MailService {
             messages.put("message", "Error");
             return messages;
         }
-        SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setFrom(sender);
-        mail.setTo(email);
-        mail.setSubject("主题：忘记密码邮件");
-        mail.setText("用户 " + name + ",您好\n" + "您刚刚申请的忘记密码\n" + "您的密码是：" + password + "\n如果您不需要获取密码，或者您从未点击过“忘记密码”按钮，请忽略本邮件。\n");
-        mailSender.send(mail);
+        String subject = "主题：忘记密码邮件";
+        String text = "用户 " + name + ",您好\n" + "您刚刚申请的忘记密码\n" + "您的密码是：" + password + "\n如果您不需要获取密码，或者您从未点击过“忘记密码”按钮，请忽略本邮件。\n";
+        sendEmailToAccount(subject, text, email);
         return messages;
     }
 }

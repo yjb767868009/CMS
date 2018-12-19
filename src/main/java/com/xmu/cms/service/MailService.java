@@ -9,7 +9,5 @@ import java.util.Map;
  * @version 1.0
  */
 public interface MailService {
-    Map<String,String> sendEmailByAccount(String account);
-
     Map<String, String> sendPassword(MyUser user);
 }

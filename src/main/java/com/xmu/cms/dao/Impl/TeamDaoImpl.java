@@ -27,4 +27,10 @@ public class TeamDaoImpl implements TeamDao {
     public Team getTeamInCourseByStudent(Integer courseId, Integer studentId) {
         return teamMapper.getTeamInCourseByStudent(courseId, studentId);
     }
+
+    @Override
+    public List<Team> getAllTeamsInSeminar(Integer seminarId) {
+        //todo
+        return null;
+    }
 }

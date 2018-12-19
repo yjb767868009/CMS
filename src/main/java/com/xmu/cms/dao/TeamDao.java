@@ -12,4 +12,6 @@ public interface TeamDao {
     List<Team> getTeamInCourse(Integer courseId);
 
     Team getTeamInCourseByStudent(Integer courseId, Integer studentId);
+
+    List<Team> getAllTeamsInSeminar(Integer seminarId);
 }

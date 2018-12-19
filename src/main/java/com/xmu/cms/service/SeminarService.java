@@ -14,12 +14,6 @@ public interface SeminarService {
 
     Map<String, String> deleteSeminar(Integer seminarId);
 
-    Map<String, String> startKlassSeminar(Integer klassSeminarId);
-
-    Map<String, String> stopKlassSeminar(Integer klassSeminarId);
-
-    Map<String, String> endKlassSeminar(Integer klassSeminarId);
-
     List<Seminar> getSeminarsByCourseId(Integer courseId);
 
     Map<String, String> modifySeminar(Seminar seminar);
@@ -33,8 +27,6 @@ public interface SeminarService {
     List<Seminar> getAllSeminarInRound(Integer roundId);
 
     Map<String, String> newRound(Round round);
-
-    Map<String, String> getPresentationFileInKlassSeminar(Integer klassSeminarId);
 
     Seminar getRunningSeminarByTeacherId(Integer userId);
 

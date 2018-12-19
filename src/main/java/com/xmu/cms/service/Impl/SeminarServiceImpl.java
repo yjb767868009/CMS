@@ -1,12 +1,7 @@
 package com.xmu.cms.service.Impl;
 
-import com.xmu.cms.dao.RoundDao;
-import com.xmu.cms.dao.RoundScoreDao;
-import com.xmu.cms.dao.SeminarScoreDao;
+import com.xmu.cms.dao.*;
 import com.xmu.cms.entity.*;
-import com.xmu.cms.mapper.AttendanceMapper;
-import com.xmu.cms.mapper.SeminarMapper;
-import com.xmu.cms.mapper.TeamMapper;
 import com.xmu.cms.service.SeminarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,13 +18,10 @@ import java.util.Map;
 public class SeminarServiceImpl implements SeminarService {
 
     @Autowired
-    private SeminarMapper seminarMapper;
+    private SeminarDao seminarDao;
 
     @Autowired
-    private AttendanceMapper attendanceDao;
-
-    @Autowired
-    private TeamMapper teamMapper;
+    private AttendanceDao attendanceDao;
 
     @Autowired
     private RoundDao roundDao;
@@ -43,7 +35,7 @@ public class SeminarServiceImpl implements SeminarService {
     @Override
     public Map<String, String> newSeminar(Seminar seminar) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarMapper.insertSeminar(seminar);
+        Integer count = seminarDao.insertSeminar(seminar);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -55,43 +47,7 @@ public class SeminarServiceImpl implements SeminarService {
     @Override
     public Map<String, String> deleteSeminar(Integer seminarId) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarMapper.deleteSeminar(seminarId);
-        if (count == 1) {
-            message.put("message", "Success");
-        } else {
-            message.put("message", "Error");
-        }
-        return message;
-    }
-
-    @Override
-    public Map<String, String> startKlassSeminar(Integer klassSeminarId) {
-        Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarMapper.startKlassSeminar(klassSeminarId);
-        if (count == 1) {
-            message.put("message", "Success");
-        } else {
-            message.put("message", "Error");
-        }
-        return message;
-    }
-
-    @Override
-    public Map<String, String> stopKlassSeminar(Integer klassSeminarId) {
-        Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarMapper.stopKlassSeminar(klassSeminarId);
-        if (count == 1) {
-            message.put("message", "Success");
-        } else {
-            message.put("message", "Error");
-        }
-        return message;
-    }
-
-    @Override
-    public Map<String, String> endKlassSeminar(Integer klassSeminarId) {
-        Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarMapper.endKlassSeminar(klassSeminarId);
+        Integer count = seminarDao.deleteSeminar(seminarId);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -108,7 +64,7 @@ public class SeminarServiceImpl implements SeminarService {
     @Override
     public Map<String, String> modifySeminar(Seminar seminar) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarMapper.modifySeminar(seminar);
+        Integer count = seminarDao.modifySeminar(seminar);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -120,7 +76,7 @@ public class SeminarServiceImpl implements SeminarService {
     @Override
     public Map<String, String> modifySeminarReportDDL(Seminar seminar) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarMapper.modifySeminarReportDDL(seminar);
+        Integer count = seminarDao.modifySeminarReportDDL(seminar);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -131,7 +87,7 @@ public class SeminarServiceImpl implements SeminarService {
 
     @Override
     public Seminar getSeminarBySeminarId(Integer seminarId) {
-        return seminarMapper.getSeminarBySeminarId(seminarId);
+        return seminarDao.getSeminarBySeminarId(seminarId);
     }
 
     @Override
@@ -141,7 +97,7 @@ public class SeminarServiceImpl implements SeminarService {
 
     @Override
     public List<Seminar> getAllSeminarInRound(Integer roundId) {
-        return seminarMapper.getAllSeminarByRoundId(roundId);
+        return seminarDao.getAllSeminarByRoundId(roundId);
     }
 
     @Override
@@ -157,24 +113,8 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Map<String, String> getPresentationFileInKlassSeminar(Integer klassSeminarId) {
-        Map<String, String> presentationFileMap = new HashMap<String, String>();
-        List<Attendance> attendances = attendanceDao.getAttendancesInKlassSeminar(klassSeminarId);
-        for (Attendance attendance : attendances) {
-            String attendancePresentationFile = attendance.getPresentationFile();
-            if (!attendancePresentationFile.equals("")) {
-                presentationFileMap.put(attendance.getTeam().getTeamName(), attendancePresentationFile);
-            } else {
-                String noFileMessage = attendance.getTeam().getTeamName() + "未提交";
-                presentationFileMap.put(attendance.getTeam().getTeamName(), noFileMessage);
-            }
-        }
-        return presentationFileMap;
-    }
-
-    @Override
     public Seminar getRunningSeminarByTeacherId(Integer teacherId) {
-        return seminarMapper.getRunningSeminarByTeacherId(teacherId);
+        return seminarDao.getRunningSeminarByTeacherId(teacherId);
     }
 
     @Override

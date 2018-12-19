@@ -77,11 +77,6 @@ public class UserController {
         return teamService.getAllTeamsInSeminar(seminarId);
     }
 
-    @GetMapping(value = "/klassSeminar/{klassSeminarId}/teams")
-    public List<Team> getTeamsInKlassSeminar(@PathVariable("klassSeminarId") Integer klassSeminarId) {
-        return teamService.getAllTeamsInKlassSeminar(klassSeminarId);
-    }
-
     @GetMapping(value = "/seminar/{seminarId}")
     public Seminar getSeminarById(@PathVariable("seminarId") Integer seminarId) {
         return seminarService.getSeminarBySeminarId(seminarId);
@@ -90,12 +85,6 @@ public class UserController {
     @GetMapping(value = "/seminar/{seminarId}/attendances")
     public List<Attendance> getAttendancesInSeminar(@PathVariable("seminarId") Integer seminarId) {
         return seminarService.getAttendancesInSeminar(seminarId);
-    }
-
-    @GetMapping(value = "/seminar/{seminarId}/klass/{klassId}/presentationFile")
-    public Map<String, String> getPresentationFileInKlassSeminar(@PathVariable("seminarId") Integer seminarId,
-                                                                 @PathVariable("klassId") Integer klassId) {
-        return seminarService.getPresentationFileInKlassSeminar(seminarId);
     }
 
     @GetMapping(value = "/information")

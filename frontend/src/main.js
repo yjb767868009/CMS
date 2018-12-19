@@ -34,7 +34,7 @@ axios.defaults.withCredentials=true
 
 axios.interceptors.request.use(
     config=>{
-        console.log('request interceptor:',store.state.token)
+        console.log(store.state.token)
         if(store.state.token){
           config={
             headers:{
@@ -42,6 +42,7 @@ axios.interceptors.request.use(
             }
           }
         }
+        console.log('request',config)
         return config
     },
     err=>{
@@ -52,28 +53,24 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
     response => {
-      console.log('response interceptor:',response)
+        console.log('response interceptor:',response)
 
-      if(response.data ==='NoLogIn') {
-        router.push({
-          path: '/login',
-          query: {redirect: router.currentRoute.fullPath} //从哪个页面跳转
-        })
-      }
-
-      if(response.data==='AdminsNoLogIn'){
-		  console.log("response interceptor: AdminsNoLogIn")
-        router.push({
-            path:'AdminLogin',
+        if(response.data ==='NoLogIn') {
+          router.push({
+            path: '/login',
             query: {redirect: router.currentRoute.fullPath} //从哪个页面跳转
-        })
-      }
-      
+          })
+        }
+
+        if(response==='AdminsNoLogIn'){
+        console.log("response interceptor: intercepting")
+          router.push({
+              path:'/AdminLogin',
+              query: {redirect: router.currentRoute.fullPath} //从哪个页面跳转
+          })
+        }
       return response;
-      
       }
-      
-    
     ,
     error => {
       return Promise.reject(error.response.data)

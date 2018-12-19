@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,23 +61,10 @@ public class FileServiceImpl implements FileService {
     @Override
     public Map<String, String> uploadKlassFile(Integer klassId, MultipartFile file) {
         String filePath = UPLOADED_FOLDER + "class" + File.separator + klassId.toString() + File.separator + file.getOriginalFilename();
-        Map<String, String> messages = new HashMap<String, String>(2);
 
-        messages = saveFile(filePath, file);
+        Map<String, String> messages = saveFile(filePath, file);
         try {
-            List<List<Object>> studentList = XLSUtils.analysisFile(filePath);
-            List<Student> students = new ArrayList<Student>();
-            for (List<Object> studentMessage : studentList) {
-                String account = (String) studentMessage.get(0);
-                String name = (String) studentMessage.get(1);
-                Student student = new Student();
-                student.setAccount(account);
-                student.setName(name);
-                student.setEmail("");
-                student.setPassword("123456");
-                student.setActivation(false);
-                students.add(student);
-            }
+            List<Student> students = XLSUtils.analysisFile(filePath);
             studentDao.newStudent(students);
             klassDao.addStudentInKlass(klassId, students);
         } catch (Exception e) {

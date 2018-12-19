@@ -1,4 +1,4 @@
-package com.xmu.cms.support;
+package com.xmu.cms.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

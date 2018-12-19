@@ -1,6 +1,5 @@
 package com.xmu.cms.config;
 
-import com.xmu.cms.support.SecurityProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 

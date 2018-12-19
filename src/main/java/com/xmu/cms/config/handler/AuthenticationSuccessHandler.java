@@ -2,8 +2,8 @@ package com.xmu.cms.config.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xmu.cms.support.JWTUtils;
-import com.xmu.cms.support.LoginType;
-import com.xmu.cms.support.SecurityProperties;
+import com.xmu.cms.config.LoginType;
+import com.xmu.cms.config.SecurityProperties;
 import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

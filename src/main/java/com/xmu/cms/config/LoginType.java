@@ -1,4 +1,4 @@
-package com.xmu.cms.support;
+package com.xmu.cms.config;
 
 /**
  * @author JuboYu on 2018/12/3.

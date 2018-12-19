@@ -1,4 +1,4 @@
-package com.xmu.cms.support;
+package com.xmu.cms.config.EntryPoint;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -7,14 +7,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author JuboYu on 2018/12/4.
  * @version 1.0
  */
-public class AdminAuthorizedEntryPoint implements AuthenticationEntryPoint {
+public class UserAuthorizedEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         if (isAjaxRequest(request)) {
@@ -22,7 +20,7 @@ public class AdminAuthorizedEntryPoint implements AuthenticationEntryPoint {
         } else {
             response.setCharacterEncoding("utf-8");
             response.setContentType("text/javascript;charset=utf-8");
-            response.getWriter().print("AdminsNoLogIn");
+            response.getWriter().print("UserNoLogIn");
         }
     }
 

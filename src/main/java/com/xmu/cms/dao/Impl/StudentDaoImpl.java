@@ -23,12 +23,13 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public Integer newStudent(List<Student> students) {
-        Integer count = 0;
-        for (Student student : students) {
-            count += studentMapper.insertStudent(student);
+    public void newStudent(List<Student> students) {
+        for (Student newStudent : students) {
+            Student student = studentMapper.getStudentByAccount(newStudent.getAccount());
+            if (student == null) {
+                studentMapper.insertStudent(newStudent);
+            }
         }
-        return count;
     }
 
     @Override

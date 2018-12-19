@@ -34,6 +34,14 @@ axios.defaults.withCredentials=true
 
 axios.interceptors.request.use(
     config=>{
+        console.log('request interceptor:',store.state.token)
+        if(store.state.token){
+          config={
+            headers:{
+              'token':store.state.token
+            }
+          }
+        }
         return config
     },
     err=>{
@@ -59,11 +67,8 @@ axios.interceptors.response.use(
             path:'AdminLogin',
             query: {redirect: router.currentRoute.fullPath} //从哪个页面跳转
         })
-        }
-      
-      if(response.data.author){
-        console.log('authorization@!!!!!!')
       }
+      
       return response;
       
       }

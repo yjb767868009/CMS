@@ -54,10 +54,9 @@ import md5 from 'md5'
 				console.log(response)
                 let data = response.data
 
-                console.log('author',headers.Authorization)
-                if(data[0].authority=='ROLE_ADMIN'){
+                if(data.role=='admin'){
                     console.log('admin')
-                    this.$store.state.Authorization=response.headers.Authorization
+                    this.$store.state.token=data.token
                     this.$store.state.userType='admin'
                     this.$router.push('AdminTeacher')
                 }

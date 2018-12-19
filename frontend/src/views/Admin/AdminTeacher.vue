@@ -211,7 +211,10 @@ import ModifyTeacherDialog from './ModifyTeacherDialog'
           confirmButtonText: '确定',
           cancelButtonText: '取消',
         }).then(({ input }) => {
-          this.$axios.patch('/teacher/'+teacher.teacherId+'/password',input)
+          this.$axios.put('/teacher/'+teacher.teacherId+'/password',
+            {
+            password:'pasw'
+            })
             .then(function(response){
               //process on response
                 this.$message({

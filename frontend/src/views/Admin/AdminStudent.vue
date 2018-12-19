@@ -228,7 +228,7 @@ import md5 from 'md5'
             type:'warning'
           }).then(()=>{
             //确认删除
-            this.$axios.delete('/admin/student/'+student.studentId)
+            this.$axios.delete('/student/'+student.studentId)
             .then((response)=>{
               console.log(response)
               this.getAllStudent()

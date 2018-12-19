@@ -32,12 +32,12 @@ export default {
     },
     methods:{
         postModifyTeacher:function(){
-          this.$axios.put('/admin/teacher/'+this.$store.state.admin.currentTeacher.teacherId+'?'+
-          Qs.stringify({
+          this.$axios.put('/teacher/'+this.$store.state.admin.currentTeacher.teacherId+'/information',{
             name:this.modifyTeacherForm.name,
             account:this.modifyTeacherForm.account,
             email:this.modifyTeacherForm.email,
-          })).then((response)=>{
+          }
+          ).then((response)=>{
             if(response.data.message==='Success'){
               this.$store.state.admin.showModifyTeacher=false
               this.$emit('modifySuccess')

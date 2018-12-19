@@ -1,31 +1,20 @@
 package com.xmu.cms.service.Impl;
 
+import com.xmu.cms.dao.KlassDao;
 import com.xmu.cms.dao.StudentDao;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.service.FileService;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import com.xmu.cms.support.XLSUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +32,9 @@ public class FileServiceImpl implements FileService {
 
     @Autowired
     private StudentDao studentDao;
+
+    @Autowired
+    private KlassDao klassDao;
 
     private Map<String, String> saveFile(String filePath, MultipartFile file) {
         Map<String, String> messages = new HashMap<String, String>(2);
@@ -67,72 +59,6 @@ public class FileServiceImpl implements FileService {
         return messages;
     }
 
-    private void readXLS(String filePath) throws Exception {
-        InputStream input = new FileInputStream(filePath);
-        Workbook workbook = null;
-        String fileType = filePath.substring(filePath.lastIndexOf("."));
-        switch (fileType) {
-            case ".xls":
-                workbook = new HSSFWorkbook(input);
-                break;
-            case ".xlsx":
-                workbook = new XSSFWorkbook(input);
-                break;
-            default:
-                throw new Exception("解析文件格式错误");
-        }
-        Sheet sheet = null;
-        Row row = null;
-        Cell cell = null;
-        List<List<Object>> list = new ArrayList<List<Object>>();
-        for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
-            sheet = workbook.getSheetAt(i);
-            if (sheet == null) {
-                continue;
-            }
-            for (int j = sheet.getFirstRowNum(); j <= sheet.getLastRowNum(); j++) {
-                row = sheet.getRow(j);
-                if (row == null || row.getFirstCellNum() == j) {
-                    continue;
-                }
-                List<Object> li = new ArrayList<Object>();
-                for (int y = row.getFirstCellNum(); y < row.getLastCellNum(); y++) {
-                    Object value = null;
-                    DecimalFormat df = new DecimalFormat("0");
-                    cell = row.getCell(y);
-                    switch (cell.getCellType()) {
-                        case Cell.CELL_TYPE_STRING:
-                            value = cell.getRichStringCellValue().getString();
-                            break;
-                        case Cell.CELL_TYPE_NUMERIC:
-                            value = df.format(cell.getNumericCellValue());
-                            break;
-                        case Cell.CELL_TYPE_BOOLEAN:
-                            value = cell.getBooleanCellValue();
-                            break;
-                        case Cell.CELL_TYPE_BLANK:
-                            value = "";
-                            break;
-                        default:
-                            break;
-                    }
-                    li.add(value);
-                }
-                list.add(li);
-            }
-        }
-        for (List<Object> ob : list) {
-            String account = (String) ob.get(0);
-            String name = (String) ob.get(1);
-            Student student = new Student();
-            student.setAccount(account);
-            student.setName(name);
-            student.setPassword("123456");
-            student.setActivation(false);
-            studentDao.newStudent(student);
-        }
-    }
-
     @Override
     public Map<String, String> uploadKlassFile(Integer klassId, MultipartFile file) {
         String filePath = UPLOADED_FOLDER + "class" + File.separator + klassId.toString() + File.separator + file.getOriginalFilename();
@@ -140,7 +66,21 @@ public class FileServiceImpl implements FileService {
 
         messages = saveFile(filePath, file);
         try {
-            readXLS(filePath);
+            List<List<Object>> studentList = XLSUtils.analysisFile(filePath);
+            List<Student> students = new ArrayList<Student>();
+            for (List<Object> studentMessage : studentList) {
+                String account = (String) studentMessage.get(0);
+                String name = (String) studentMessage.get(1);
+                Student student = new Student();
+                student.setAccount(account);
+                student.setName(name);
+                student.setEmail("");
+                student.setPassword("123456");
+                student.setActivation(false);
+                students.add(student);
+            }
+            studentDao.newStudent(students);
+            klassDao.addStudentInKlass(klassId, students);
         } catch (Exception e) {
             messages.put("message", e.getMessage());
         }

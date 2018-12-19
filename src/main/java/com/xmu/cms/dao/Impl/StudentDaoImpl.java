@@ -23,8 +23,12 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public Integer newStudent(Student student) {
-        return studentMapper.insertStudent(student);
+    public Integer newStudent(List<Student> students) {
+        Integer count = 0;
+        for (Student student : students) {
+            count += studentMapper.insertStudent(student);
+        }
+        return count;
     }
 
     @Override

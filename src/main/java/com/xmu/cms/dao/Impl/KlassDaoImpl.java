@@ -3,6 +3,7 @@ package com.xmu.cms.dao.Impl;
 import com.xmu.cms.dao.KlassDao;
 import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Klass;
+import com.xmu.cms.entity.Student;
 import com.xmu.cms.mapper.CourseMapper;
 import com.xmu.cms.mapper.KlassMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,18 @@ public class KlassDaoImpl implements KlassDao {
 
     @Override
     public List<Klass> getAllKlass(Integer courseId) {
-        //return klassMapper.getAllKlasss(courseId);
+        //return klassMapper.getAllKlass(courseId);
         //todo
         return null;
+    }
+
+    @Override
+    public Integer addStudentInKlass(Integer klassId, List<Student> students) {
+        Klass klass = klassMapper.getKlassByKlassId(klassId);
+        Integer count = 0;
+        for (Student student : students) {
+            count += klassMapper.addStudent(klass.getCourse().getCourseId(), klassId, student);
+        }
+        return count;
     }
 }

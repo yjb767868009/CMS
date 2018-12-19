@@ -11,7 +11,7 @@ import java.util.List;
 public interface StudentDao {
     List<Student> getAllStudents();
 
-    Integer newStudent(Student student);
+    Integer newStudent(List<Student> students);
 
     Integer modifyStudentInfo(Student student);
 

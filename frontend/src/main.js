@@ -33,21 +33,16 @@ axios.defaults.withCredentials=true
 
 
 axios.interceptors.request.use(
-    config=>{
-        console.log(store.state.token)
-        if(store.state.token){
-          config.headers={
-              'token':store.state.token
-          }
-        }
-        console.log('request',config)
-        return config
-    },
-    err=>{
-        return Promise.reject(err)
-    }
+  config=>{
+      if(store.state.token){
+      config.headers.token=store.state.token
+      };
+      return config
+  },
+  err=>{
+      return Promise.reject(err)
+  }
 )
-
 // http response 拦截器
 axios.interceptors.response.use(
     response => {

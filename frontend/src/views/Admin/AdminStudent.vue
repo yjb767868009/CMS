@@ -148,7 +148,7 @@ export default {
     handleCurrentChange: function(val) {
       console.log("change page to " + val);
       this.currentPage = val;
-      this.studentDataPagination = studentData.slice(
+      this.studentDataPagination = this.studentData.slice(
         (currentPage - 1) * 20,
         currentPage * 20 + 1
       );
@@ -210,9 +210,9 @@ export default {
         .then(response => {
           this.studentData = response.data;
           this.currentTotal = this.studentData.length;
-          this.studentDataPagination = studentData.slice(
-            (currentPage - 1) * 20,
-            currentPage * 20 + 1
+          this.studentDataPagination = this.studentData.slice(
+            (this.currentPage - 1) * 20,
+            this.currentPage * 20 + 1
           );
         })
         .catch(function(error) {
@@ -226,17 +226,22 @@ export default {
         cancelButtonText: "取消"
       }).then(({ value }) => {
         let input = value;
-        let message = this.$message;
         this.$axios
           .put("/student/" + student.studentId + "/password", {
             password: input
           })
           .then(response => {
-            //process on response
-            this.$message({
-              type: "success",
-              message: "修改后的密码为: " + input
-            });
+            if (response.data.message == "Success") {
+              this.$message({
+                type: "success",
+                message: "修改成功"
+              });
+            }else{
+              this.$message({
+                type:"error",
+                message:"修改失败"
+              })
+            }
           })
           .catch(function(error) {
             console.log(error);

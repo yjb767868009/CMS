@@ -232,17 +232,21 @@ export default {
         cancelButtonText: "取消"
       }).then(({ value }) => {
         let input = value;
-        let message = this.$message;
         this.$axios
           .put("/teacher/" + teacher.teacherId + "/password", {
             password: input
           })
-          .then(function(response) {
+          .then((response)=> {
             if (response.data.message == "Success") {
-              message({
+              this.$message({
                 type: "success",
                 message: "修改成功"
               });
+            }else{
+              this.$message({
+                type:"error",
+                message:"修改失败"
+              })
             }
           })
           .catch(function(error) {

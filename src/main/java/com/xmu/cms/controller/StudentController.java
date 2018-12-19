@@ -30,7 +30,7 @@ public class StudentController {
     private SeminarService seminarService;
 
     @Secured("ROLE_ADMIN")
-    @GetMapping(value = "/")
+    @GetMapping(value = "")
     public List<Student> getAllStudents() {
         return userService.getAllStudents();
     }

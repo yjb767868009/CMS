@@ -144,7 +144,7 @@ export default {
       teacherDataPagination: "",
       teacherSearchKey: "",
       currentPage: 1,
-      currentTotal:1,
+      currentTotal: 1
     };
   },
   created: function() {
@@ -181,9 +181,7 @@ export default {
       if (!isNaN(this.teacherSearchKey)) {
         //搜教工号
         this.$axios
-          .get(
-            "/teacher/searchByAccount?teacherAccount=" + this.teacherSearchKey
-          )
+          .get("/teacher/searchByAccount/" + this.teacherSearchKey)
           .then(response => {
             this.teacherData = response.data;
           })
@@ -193,7 +191,7 @@ export default {
       } else {
         //搜名字
         this.$axios
-          .get("/teacher/searchteacher" + this.teacherSearchKey)
+          .get("/teacher/searchByName/" + this.teacherSearchKey)
           .then(response => {
             if (response.data[0] === null) {
               this.$message.error("找不到该老师");
@@ -236,17 +234,17 @@ export default {
           .put("/teacher/" + teacher.teacherId + "/password", {
             password: input
           })
-          .then((response)=> {
+          .then(response => {
             if (response.data.message == "Success") {
               this.$message({
                 type: "success",
                 message: "修改成功"
               });
-            }else{
+            } else {
               this.$message({
-                type:"error",
-                message:"修改失败"
-              })
+                type: "error",
+                message: "修改失败"
+              });
             }
           })
           .catch(function(error) {

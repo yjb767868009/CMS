@@ -41,12 +41,12 @@ export default {
              this.addTeacherForm.password==='')
              this.$message.error('请完整填写老师信息')
 
-          this.$axios.post('/admin/teacher?'+Qs.stringify({
+          this.$axios.post('/teacher',{
             name:this.addTeacherForm.name,
             account:this.addTeacherForm.account,
             email:this.addTeacherForm.email,
             password:this.addTeacherForm.password
-          })).then((response)=>{
+          }).then((response)=>{
             if(response.data.message==='Success'){
               this.$store.state.admin.showAddTeacher=false
               this.$emit('addSuccess')

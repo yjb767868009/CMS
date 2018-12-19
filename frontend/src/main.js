@@ -57,7 +57,7 @@ axios.interceptors.response.use(
           })
         }
 
-        if(response==='AdminsNoLogIn'){
+        if(response.data==='AdminsNoLogIn'){
         console.log("response interceptor: intercepting")
           router.push({
               path:'/AdminLogin',

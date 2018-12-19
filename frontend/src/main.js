@@ -28,7 +28,7 @@ Vue.use(VueCookie)
 Vue.use(MintUI)
 
 
-axios.defaults.baseURL='http://127.0.0.1:8000'
+axios.defaults.baseURL='http://localhost:8000'
 axios.defaults.withCredentials=true
 
 
@@ -37,7 +37,7 @@ axios.interceptors.request.use(
         console.log(store.state.token)
         if(store.state.token){
           config.headers={
-              'token':store.state.token
+              'Authorization':"Bearer "+store.state.token
           }
         }
         console.log('request',config)

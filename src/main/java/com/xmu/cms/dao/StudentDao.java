@@ -13,9 +13,9 @@ public interface StudentDao {
 
     Integer newStudent(Student student);
 
-    Integer modifyStudentInfo(Integer studentId, Student student);
+    Integer modifyStudentInfo(Student student);
 
-    Integer modifyStudentPassword(Integer studentId, Student student);
+    Integer modifyStudentPassword(Student student);
 
     Integer deleteStudent(Integer studentId);
 

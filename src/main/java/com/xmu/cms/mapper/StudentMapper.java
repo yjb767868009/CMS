@@ -37,6 +37,10 @@ public interface StudentMapper {
      */
     Integer updateStudent(@Param("student") Student student);
 
+    Integer updateStudentPassword(@Param("student") Student student);
+
+    Integer updateStudentInfo(@Param("student") Student student);
+
     /**
      * delete student by his id
      *

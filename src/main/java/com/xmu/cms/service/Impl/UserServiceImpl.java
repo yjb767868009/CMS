@@ -124,7 +124,7 @@ public class UserServiceImpl implements UserService {
                 break;
             }
             case "student": {
-                Integer count = studentDao.modifyStudentPassword(info.getUserId(), user.toStudent());
+                Integer count = studentDao.modifyStudentPassword(user.toStudent());
                 if (count == 1) {
                     messages.put("message", "Success");
                     return messages;
@@ -212,9 +212,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, String> modifyStudentInfo(Integer studentId, Student student) {
+    public Map<String, String> modifyStudentInfo(Student student) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = studentDao.modifyStudentInfo(studentId, student);
+        Integer count = studentDao.modifyStudentInfo(student);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -224,9 +224,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, String> modifyStudentPassword(Integer studentId, Student student) {
+    public Map<String, String> modifyStudentPassword(Student student) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = studentDao.modifyStudentPassword(studentId, student);
+        Integer count = studentDao.modifyStudentPassword(student);
         if (count == 1) {
             message.put("message", "Success");
         } else {

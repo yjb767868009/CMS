@@ -42,9 +42,9 @@ public interface UserService {
 
     List<Student> getAllStudents();
 
-    Map<String, String> modifyStudentInfo(Integer studentId, Student student);
+    Map<String, String> modifyStudentInfo(Student student);
 
-    Map<String, String> modifyStudentPassword(Integer studentId, Student student);
+    Map<String, String> modifyStudentPassword(Student student);
 
     Map<String, String> deleteStudent(Integer studentId);
 

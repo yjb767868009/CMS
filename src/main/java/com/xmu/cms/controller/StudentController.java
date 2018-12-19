@@ -30,7 +30,7 @@ public class StudentController {
     private SeminarService seminarService;
 
     @Secured("ROLE_ADMIN")
-    @GetMapping(value = "/")
+    @GetMapping(value = "")
     public List<Student> getAllStudents() {
         return userService.getAllStudents();
     }
@@ -46,14 +46,16 @@ public class StudentController {
     @PutMapping(value = "/{studentId}/information")
     public Map<String, String> modifyStudentInfo(@PathVariable("studentId") Integer studentId,
                                                  @RequestBody Student student) {
-        return userService.modifyStudentInfo(studentId, student);
+        student.setStudentId(studentId);
+        return userService.modifyStudentInfo(student);
     }
 
     @Secured("ROLE_ADMIN")
     @PutMapping(value = "/{studentId}/password")
     public Map<String, String> modifyStudentPasswordById(@PathVariable("studentId") Integer studentId,
                                                          @RequestBody Student student) {
-        return userService.modifyStudentPassword(studentId, student);
+        student.setStudentId(studentId);
+        return userService.modifyStudentPassword(student);
     }
 
     @Secured("ROLE_ADMIN")

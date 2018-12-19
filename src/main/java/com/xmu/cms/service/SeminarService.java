@@ -1,10 +1,7 @@
 package com.xmu.cms.service;
 
-import com.xmu.cms.entity.Attendance;
-import com.xmu.cms.entity.Round;
-import com.xmu.cms.entity.Seminar;
+import com.xmu.cms.entity.*;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +10,9 @@ import java.util.Map;
  * @version 1.0
  */
 public interface SeminarService {
-    Map<String, String> newSeminar(Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible);
+    Map<String, String> newSeminar(Seminar seminar);
+
+    Map<String, String> deleteSeminar(Integer seminarId);
 
     Map<String, String> startKlassSeminar(Integer klassSeminarId);
 
@@ -23,7 +22,9 @@ public interface SeminarService {
 
     List<Seminar> getSeminarsByCourseId(Integer courseId);
 
-    Map<String, String> modifySeminar(Integer seminarId, Integer roundId, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible);
+    Map<String, String> modifySeminar(Seminar seminar);
+
+    Map<String, String> modifySeminarReportDDL(Seminar seminar);
 
     Seminar getSeminarBySeminarId(Integer seminarId);
 
@@ -44,4 +45,14 @@ public interface SeminarService {
     Map<String, String> newAttendance(Integer klassSeminarId, Integer teamOrder);
 
     Round getRoundByRoundId(Integer roundId);
+
+    Map<String, String> modifyRound(Round round);
+
+    RoundScore getRoundTeamScore(Integer roundId, Integer teamId);
+
+    List<RoundScore> getRoundScore(Integer roundId);
+
+    SeminarScore getSeminarTeamScore(Integer seminarId, Integer teamId);
+
+    List<SeminarScore> getSeminarScore(Integer seminarId);
 }

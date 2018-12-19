@@ -90,7 +90,7 @@ public class JWTUtils {
 
         Claim nameClaim = claims.get("name");
         String name = null;
-        if (null == accountClaim || StringUtils.isEmpty(accountClaim.asString())) {
+        if (null == nameClaim || StringUtils.isEmpty(nameClaim.asString())) {
         } else {
             name = nameClaim.asString();
         }

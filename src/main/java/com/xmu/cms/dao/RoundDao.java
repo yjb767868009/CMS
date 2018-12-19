@@ -14,4 +14,6 @@ public interface RoundDao {
     Round getRoundById(Integer roundId);
 
     Integer newRound(Round round);
+
+    Integer updateCalType(Round round);
 }

@@ -9,6 +9,15 @@ public class UserInfo {
     private String account;
     private String userType;
     private String name;
+    private Boolean active;
+
+    public UserInfo(Integer userId, String account, String userType, String name, Boolean active) {
+        this.userId = userId;
+        this.account = account;
+        this.userType = userType;
+        this.name = name;
+        this.active = active;
+    }
 
     public UserInfo(Integer userId, String account, String userType, String name) {
         this.userId = userId;
@@ -59,5 +68,13 @@ public class UserInfo {
 
     public Boolean isEmpty() {
         return this.userType != null && !this.userType.equals("") && this.userId != null && !(this.userId <= 0);
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

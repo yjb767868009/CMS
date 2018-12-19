@@ -1,19 +1,14 @@
 package com.xmu.cms.controller;
 
-import com.xmu.cms.entity.Course;
-import com.xmu.cms.entity.Round;
-import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.service.CourseService;
 import com.xmu.cms.service.FileService;
 import com.xmu.cms.service.SeminarService;
 import com.xmu.cms.service.UserService;
-import com.xmu.cms.support.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -78,67 +73,6 @@ public class TeacherController {
     @GetMapping(value = "/searchByAccount")
     public Teacher getTeacherByAccount(@RequestParam("account") String account) {
         return userService.getTeacherByAccount(account);
-    }
-
-    @PostMapping(value = "/course/{courseId}/round")
-    public Map<String, String> newRound(@PathVariable("courseId") Integer courseId,
-                                        @RequestBody Round round) {
-        Course course = new Course();
-        course.setCourseId(courseId);
-        round.setCourse(course);
-        return seminarService.newRound(round);
-    }
-
-    @PutMapping(value = "/seminar/{seminarId}/modifySeminar")
-    public Map<String, String> modifySeminar(@PathVariable("seminarId") Integer seminarId,
-                                             @RequestParam("roundId") Integer roundId,
-                                             @RequestParam("maxTeamNum") Integer maxTeamNum,
-                                             @RequestParam("topic") String topic,
-                                             @RequestParam("introduction") String introduction,
-                                             @RequestParam("signStartTime") Timestamp signStartTime,
-                                             @RequestParam("signEndTime") Timestamp signEndTime,
-                                             @RequestParam("signOrder") Boolean signOrder,
-                                             @RequestParam("visible") Boolean visible) {
-        return seminarService.modifySeminar(seminarId, roundId, maxTeamNum, topic, introduction, signStartTime, signEndTime, signOrder, visible);
-    }
-
-    @PostMapping(value = "/seminar")
-    public Map<String, String> newSeminar(@RequestParam("roundId") Integer roundId,
-                                          @RequestParam("maxTeamNum") Integer maxTeamNum,
-                                          @RequestParam("topic") String topic,
-                                          @RequestParam("introduction") String introduction,
-                                          @RequestParam("signStartTime") Timestamp signStartTime,
-                                          @RequestParam("signEndTime") Timestamp signEndTime,
-                                          @RequestParam("signOrder") Boolean signOrder,
-                                          @RequestParam("visible") Boolean visible) {
-        return seminarService.newSeminar(roundId, maxTeamNum, topic, introduction, signStartTime, signEndTime, signOrder, visible);
-    }
-
-    @PatchMapping(value = "/klassSeminar/{klassSeminarId}/start")
-    public Map<String, String> startSeminar(@PathVariable("klassSeminarId") Integer klassSeminarId) {
-        return seminarService.startKlassSeminar(klassSeminarId);
-    }
-
-    @PatchMapping(value = "/klassSeminar/{klassSeminarId}/stop")
-    public Map<String, String> stopSeminar(@PathVariable("klassSeminarId") Integer klassSeminarId) {
-        return seminarService.stopKlassSeminar(klassSeminarId);
-    }
-
-    @PatchMapping(value = "/klassSeminar/{klassSeminarId}/end")
-    public Map<String, String> endSeminar(@PathVariable("klassSeminarId") Integer klassSeminarId) {
-        return seminarService.endKlassSeminar(klassSeminarId);
-    }
-
-    @PatchMapping(value = "/attendance/{attendanceId}/setScore")
-    public Map<String, String> setAttendancePresentationScore(@PathVariable("attendanceId") Integer attendanceId,
-                                                              @RequestParam("presentationScore") Integer presentationScore) {
-        return seminarService.setAttendancePresentationScore(attendanceId, presentationScore);
-    }
-
-    @GetMapping(value = "/runningSeminar")
-    public Seminar getRunningSeminar() {
-        Integer teacherId = JWTUtils.getToken().getUserId();
-        return seminarService.getRunningSeminarByTeacherId(teacherId);
     }
 
 }

@@ -21,6 +21,21 @@
         VALUE (#{student.account}, #{student.password}, #{student.email}, #{student.name}, #{student.activation})
     </insert>
 
+
+    <update id="updateStudentInfo">
+        UPDATE student
+        SET account      = #{student.account},
+            email        = #{student.email},
+            student_name = #{student.name}
+        WHERE id = #{student.studentId}
+    </update>
+
+    <update id="updateStudentPassword">
+        UPDATE student
+        SET password = #{student.password}
+        WHERE id = #{student.studentId}
+    </update>
+
     <update id="updateStudent">
         UPDATE student
         SET account      = #{student.account},
@@ -57,11 +72,10 @@
     </select>
 
     <select id="getStudentByTeamId">
-        select id as studentId,
-               student_name as studentName
+        select id as studentId, student_name as studentName
         from student,
              klass_student
         where klass_student.team_id = #{teamId}
-        and student.id = klass_student.student_id
+          and student.id = klass_student.student_id
     </select>
 </mapper>

@@ -28,19 +28,13 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public Integer modifyStudentInfo(Integer studentId, Student student) {
-        Student modifyStudent = studentMapper.getStudentById(studentId);
-        modifyStudent.setAccount(student.getAccount());
-        modifyStudent.setName(student.getName());
-        modifyStudent.setEmail(student.getEmail());
-        return studentMapper.updateStudent(student);
+    public Integer modifyStudentInfo(Student student) {
+        return studentMapper.updateStudentInfo(student);
     }
 
     @Override
-    public Integer modifyStudentPassword(Integer studentId, Student student) {
-        Student modifyStudent = studentMapper.getStudentById(studentId);
-        modifyStudent.setPassword(student.getPassword());
-        return studentMapper.updateStudent(student);
+    public Integer modifyStudentPassword(Student student) {
+        return studentMapper.updateStudentPassword(student);
     }
 
     @Override

@@ -22,7 +22,7 @@ import java.util.Map;
 public class JWTUtils {
     private static final String SECRET = "JKKLJOoasdlfj";
 
-    public static void setToken(UserInfo info) {
+    public static String setToken(UserInfo info) {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert requestAttributes != null;
         HttpServletResponse response = requestAttributes.getResponse();
@@ -46,6 +46,7 @@ public class JWTUtils {
 
         assert response != null;
         response.setHeader("Authorization", "Bearer " + token);
+        return token;
     }
 
     public static UserInfo getToken() {

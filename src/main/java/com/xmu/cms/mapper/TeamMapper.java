@@ -23,5 +23,12 @@ public interface TeamMapper {
 
     List<Team> getTeamInCourse(Integer courseId);
 
-    Team getTeamInCourseByStudent(Integer courseId, Integer studentId);
+    /**
+     * 获取课程中该学生的队伍
+     * @param courseId 课程id
+     * @param studentId 学生id
+     * @return 队伍信息
+     */
+    Team getTeamInCourseByStudent(@Param("courseId") Integer courseId,
+                                  @Param("studentId") Integer studentId);
 }

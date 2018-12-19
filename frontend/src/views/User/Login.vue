@@ -59,7 +59,7 @@ import Qs from 'qs'
 
             this.$axios({
                 method:'post',
-                url:'/api/user/login?'+Qs.stringify({
+                url:'/user/login?'+Qs.stringify({
                     account:this.account,
                     password:this.password
                 })
@@ -68,33 +68,21 @@ import Qs from 'qs'
 
             ).then((response)=>{
                 let data = response.data
-                let authority = data[0].authority
+                let authority = data.role
                 if(data==='Bad credentials'){
                     this.$message.error('登陆失败')
-                }
-
-                //JWT
-                if(authority==='ROLE_TEACHER'||authority==='ROLE_STUDENT'){
-                    this.$axios({
-                        method:'post',
-                        url:'/api/user/setJWT?'+Qs.stringify({
-                            account:this.account,
-                            password:this.password
-                        })
-                    }).then((res)=>{
-                        if(res.data==='teacher'){
-                            // this.$store.state.token='token'
-                            this.$store.state.userType='teacher'
-                            this.$router.push('/pc/teacher')
-                        }
-                        if(res.data==='stduent'){
-                            // this.$store.state.token='token'
-                            this.$store.state.userType='student'
-                            this.$router.push('/pc/student')
-                        }
-                    })
-                }
-
+                }else{
+					if(data==='teacher'){
+                        this.$store.state.token=data.token
+                        this.$store.state.userType='teacher'
+                        this.$router.push('/pc/teacher')
+                    }
+                    if(data==='stduent'){
+                        this.$store.state.token=data.token
+                        this.$store.state.userType='student'
+                        this.$router.push('/pc/student')
+                    }
+				}
             })
         },
     }

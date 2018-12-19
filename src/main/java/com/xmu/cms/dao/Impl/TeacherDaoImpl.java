@@ -2,6 +2,7 @@ package com.xmu.cms.dao.Impl;
 
 import com.xmu.cms.dao.TeacherDao;
 import com.xmu.cms.entity.Teacher;
+import com.xmu.cms.mapper.CourseMapper;
 import com.xmu.cms.mapper.TeacherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,9 @@ public class TeacherDaoImpl implements TeacherDao {
     @Autowired
     private TeacherMapper teacherMapper;
 
+    @Autowired
+    private CourseMapper courseMapper;
+
     @Override
     public List<Teacher> getAllTeachers() {
         return teacherMapper.getAllTeachers();
@@ -25,7 +29,9 @@ public class TeacherDaoImpl implements TeacherDao {
 
     @Override
     public Teacher getTeacherByAccount(String account) {
-        return teacherMapper.getTeacherByAccount(account);
+        Teacher teacher = teacherMapper.getTeacherByAccount(account);
+        teacher.setCourses(courseMapper.getAllCourseByTeacherId(teacher.getTeacherId()));
+        return teacher;
     }
 
     @Override
@@ -35,7 +41,9 @@ public class TeacherDaoImpl implements TeacherDao {
 
     @Override
     public Teacher getTeacherById(Integer teacherId) {
-        return teacherMapper.getTeacherById(teacherId);
+        Teacher teacher = teacherMapper.getTeacherById(teacherId);
+        teacher.setCourses(courseMapper.getAllCourseByTeacherId(teacher.getTeacherId()));
+        return teacher;
     }
 
     @Override

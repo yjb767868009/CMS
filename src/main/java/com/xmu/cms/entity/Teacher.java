@@ -1,5 +1,7 @@
 package com.xmu.cms.entity;
 
+import java.util.List;
+
 /**
  * @author JuboYu on 2018/11/23.
  * @version 1.0
@@ -11,14 +13,16 @@ public class Teacher {
     private String email;
     private String name;
     private Boolean activation;
+    private List<Course> courses;
 
-    public Teacher(Integer teacherId, String account, String password, String email, String name, Boolean activation) {
+    public Teacher(Integer teacherId, String account, String password, String email, String name, Boolean activation, List<Course> courses) {
         this.teacherId = teacherId;
         this.account = account;
         this.password = password;
         this.email = email;
         this.name = name;
         this.activation = activation;
+        this.courses = courses;
     }
 
     public Teacher() {
@@ -70,5 +74,13 @@ public class Teacher {
 
     public void setActivation(Boolean activation) {
         this.activation = activation;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 }

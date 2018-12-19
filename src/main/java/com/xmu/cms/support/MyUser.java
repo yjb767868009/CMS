@@ -80,6 +80,6 @@ public class MyUser {
     }
 
     public Teacher toTeacher() {
-        return new Teacher(id, account, password, email, name, activation);
+        return new Teacher(id, account, password, email, name, activation, null);
     }
 }

@@ -4,6 +4,7 @@ import com.xmu.cms.entity.Teacher;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -33,7 +34,7 @@ public interface TeacherMapper {
      * @param teacherId teacher's id
      * @return the number of delete teacher
      */
-    Integer deleteTeacher(@Param("teacherId") Integer teacherId);
+    Integer deleteTeacher(@Param("teacherId") BigInteger teacherId);
 
     /**
      * get teacher's password by account
@@ -57,7 +58,7 @@ public interface TeacherMapper {
      * @param teacherId teacher's id
      * @return teacher
      */
-    Teacher getTeacherById(@Param("teacherId") Integer teacherId);
+    Teacher getTeacherById(@Param("teacherId") BigInteger teacherId);
 
     /**
      * use new teacher update old teacher

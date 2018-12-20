@@ -4,6 +4,7 @@ import com.xmu.cms.entity.Round;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
  */
 @Mapper
 public interface RoundMapper {
-    List<Round> getRoundsByCourseId(@Param("courseId") Integer courseId);
+    List<Round> getRoundsByCourseId(@Param("courseId") BigInteger courseId);
 
     /**
      * 新建轮次
@@ -29,7 +30,7 @@ public interface RoundMapper {
      * @param roundId 轮次ID
      * @return Round的信息
      */
-    Round getRoundByRoundId(Integer roundId);//todo
+    Round getRoundByRoundId(BigInteger roundId);//todo
 
     /**
      * 更新轮次成绩计算规则
@@ -45,7 +46,7 @@ public interface RoundMapper {
      * @param roundId 轮次id
      * @return 删除信息
      */
-    Integer deleteRoundByRoundId(Integer roundId);//todo
+    Integer deleteRoundByRoundId(BigInteger roundId);//todo
 
     /**
      * 删除轮次成绩
@@ -53,6 +54,6 @@ public interface RoundMapper {
      * @param roundId 轮次id
      * @return 删除信息
      */
-    Integer deleteRoundScore(Integer roundId);
+    Integer deleteRoundScore(BigInteger roundId);
     //todo
 }

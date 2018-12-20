@@ -6,6 +6,7 @@ import com.xmu.cms.mapper.AttendanceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -18,12 +19,12 @@ public class AttendanceDaoImpl implements AttendanceDao {
     private AttendanceMapper attendanceMapper;
 
     @Override
-    public List<Attendance> getAttendancesInSeminar(Integer seminarId) {
+    public List<Attendance> getAttendancesInSeminar(BigInteger seminarId) {
         return attendanceMapper.getAttendancesInSeminar(seminarId);
     }
 
     @Override
-    public Integer setAttendanceScore(Integer attendanceId, Integer presentationScore) {
+    public Integer setAttendanceScore(BigInteger attendanceId, Float presentationScore) {
         return attendanceMapper.setAttendanceScore(attendanceId, presentationScore);
     }
 }

@@ -6,6 +6,7 @@ import com.xmu.cms.mapper.RoundMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -18,12 +19,12 @@ public class RoundDaoImpl implements RoundDao {
     private RoundMapper roundMapper;
 
     @Override
-    public List<Round> getRoundsByCourseId(Integer courseId) {
+    public List<Round> getRoundsByCourseId(BigInteger courseId) {
         return roundMapper.getRoundsByCourseId(courseId);
     }
 
     @Override
-    public Round getRoundById(Integer roundId) {
+    public Round getRoundById(BigInteger roundId) {
         return roundMapper.getRoundByRoundId(roundId);
     }
 

@@ -12,6 +12,7 @@ import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -156,7 +157,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, String> deleteTeacher(Integer teacherId) {
+    public Map<String, String> deleteTeacher(BigInteger teacherId) {
         Map<String, String> message = new HashMap<String, String>(2);
         Integer count = teacherDao.deleteTeacherByTeacherId(teacherId);
         if (count == 1) {
@@ -178,12 +179,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Teacher getTeacherById(Integer teacherId) {
+    public Teacher getTeacherById(BigInteger teacherId) {
         return teacherDao.getTeacherById(teacherId);
     }
 
     @Override
-    public Map<String, String> updateTeacherInfo(Integer teacherId, Teacher teacher) {
+    public Map<String, String> updateTeacherInfo(BigInteger teacherId, Teacher teacher) {
         Map<String, String> message = new HashMap<String, String>(2);
         Integer count = teacherDao.updateTeacherInfo(teacherId, teacher);
         if (count == 1) {
@@ -195,7 +196,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, String> updateTeacherPassword(Integer teacherId, Teacher teacher) {
+    public Map<String, String> updateTeacherPassword(BigInteger teacherId, Teacher teacher) {
         Map<String, String> message = new HashMap<String, String>(2);
         Integer count = teacherDao.updateTeacherPassword(teacherId, teacher);
         if (count == 1) {
@@ -236,7 +237,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, String> deleteStudent(Integer studentId) {
+    public Map<String, String> deleteStudent(BigInteger studentId) {
         Map<String, String> message = new HashMap<String, String>(2);
         Integer count = studentDao.deleteStudent(studentId);
         if (count == 1) {
@@ -258,7 +259,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, String> activateStudent(Integer studentId, Student student) {
+    public Map<String, String> activateStudent(BigInteger studentId, Student student) {
         Map<String, String> message = new HashMap<String, String>(2);
         Integer count = studentDao.activateStudent(studentId, student);
         if (count == 1) {
@@ -270,12 +271,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Student getStudentById(Integer studentId) {
+    public Student getStudentById(BigInteger studentId) {
         return studentDao.getStudentById(studentId);
     }
 
     @Override
-    public List<Student> getNoTeamStudent(Integer courseId) {
+    public List<Student> getNoTeamStudent(BigInteger courseId) {
         return studentDao.getNoTeamStudentInCourse(courseId);
     }
 }

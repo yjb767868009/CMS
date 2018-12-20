@@ -2,6 +2,7 @@ package com.xmu.cms.service;
 
 import com.xmu.cms.entity.*;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -12,39 +13,45 @@ import java.util.Map;
 public interface SeminarService {
     Map<String, String> newSeminar(Seminar seminar);
 
-    Map<String, String> deleteSeminar(Integer seminarId);
+    Map<String, String> deleteSeminar(BigInteger seminarId);
 
-    List<Seminar> getSeminarsByCourseId(Integer courseId);
+    List<Seminar> getSeminarsByCourseId(BigInteger courseId);
 
     Map<String, String> modifySeminar(Seminar seminar);
 
     Map<String, String> modifySeminarReportDDL(Seminar seminar);
 
-    Seminar getSeminarBySeminarId(Integer seminarId);
+    Seminar getSeminarBySeminarId(BigInteger seminarId);
 
-    List<Round> getRoundsByCourseId(Integer courseId);
+    List<Round> getRoundsByCourseId(BigInteger courseId);
 
-    List<Seminar> getAllSeminarInRound(Integer roundId);
+    List<Seminar> getAllSeminarInRound(BigInteger roundId);
 
     Map<String, String> newRound(Round round);
 
-    Seminar getRunningSeminarByTeacherId(Integer userId);
+    Seminar getRunningSeminarByTeacherId(BigInteger userId);
 
-    List<Attendance> getAttendancesInSeminar(Integer seminarId);
+    List<Attendance> getAttendancesInSeminar(BigInteger seminarId);
 
-    Map<String, String> setAttendancePresentationScore(Integer attendanceId, Integer presentationScore);
+    Map<String, String> setAttendancePresentationScore(BigInteger attendanceId, Float presentationScore);
 
-    Map<String, String> newAttendance(Integer klassSeminarId, Integer teamOrder);
+    Map<String, String> newAttendance(BigInteger klassSeminarId, BigInteger teamOrder);
 
-    Round getRoundByRoundId(Integer roundId);
+    Round getRoundByRoundId(BigInteger roundId);
 
     Map<String, String> modifyRound(Round round);
 
-    RoundScore getRoundTeamScore(Integer roundId, Integer teamId);
+    RoundScore getRoundTeamScore(BigInteger roundId, BigInteger teamId);
 
-    List<RoundScore> getRoundScore(Integer roundId);
+    List<RoundScore> getRoundScore(BigInteger roundId);
 
-    SeminarScore getSeminarTeamScore(Integer seminarId, Integer teamId);
+    SeminarScore getSeminarTeamScore(BigInteger seminarId, BigInteger teamId);
 
-    List<SeminarScore> getSeminarScore(Integer seminarId);
+    List<SeminarScore> getSeminarScore(BigInteger seminarId);
+
+    List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId);
+
+    Question askQuestion(BigInteger userId, BigInteger attendanceId);
+
+    Map<String, String> scoreQuestion(Question question);
 }

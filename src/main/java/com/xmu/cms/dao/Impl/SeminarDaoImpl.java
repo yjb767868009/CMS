@@ -6,6 +6,7 @@ import com.xmu.cms.mapper.SeminarMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -23,7 +24,7 @@ public class SeminarDaoImpl implements SeminarDao {
     }
 
     @Override
-    public Integer deleteSeminar(Integer seminarId) {
+    public Integer deleteSeminar(BigInteger seminarId) {
         return seminarMapper.deleteSeminar(seminarId);
     }
 
@@ -38,17 +39,17 @@ public class SeminarDaoImpl implements SeminarDao {
     }
 
     @Override
-    public Seminar getSeminarBySeminarId(Integer seminarId) {
+    public Seminar getSeminarBySeminarId(BigInteger seminarId) {
         return seminarMapper.getSeminarBySeminarId(seminarId);
     }
 
     @Override
-    public Seminar getRunningSeminarByTeacherId(Integer teacherId) {
+    public Seminar getRunningSeminarByTeacherId(BigInteger teacherId) {
         return seminarMapper.getRunningSeminarByTeacherId(teacherId);
     }
 
     @Override
-    public List<Seminar> getAllSeminarByRoundId(Integer roundId) {
+    public List<Seminar> getAllSeminarByRoundId(BigInteger roundId) {
         return seminarMapper.getAllSeminarByRoundId(roundId);
     }
 }

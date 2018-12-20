@@ -3,19 +3,21 @@ package com.xmu.cms.support;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Teacher;
 
+import java.math.BigInteger;
+
 /**
  * @author JuboYu on 2018/12/15.
  * @version 1.0
  */
 public class MyUser {
-    private Integer id;
+    private BigInteger id;
     private String account;
     private String password;
     private String email;
     private String name;
     private Boolean activation;
 
-    public MyUser(Integer id, String account, String password, String email, String name, Boolean activation) {
+    public MyUser(BigInteger id, String account, String password, String email, String name, Boolean activation) {
         this.id = id;
         this.account = account;
         this.password = password;
@@ -27,11 +29,11 @@ public class MyUser {
     public MyUser() {
     }
 
-    public Integer getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 

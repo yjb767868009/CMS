@@ -2,6 +2,7 @@ package com.xmu.cms.dao;
 
 import com.xmu.cms.entity.Round;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -9,9 +10,9 @@ import java.util.List;
  * @version 1.0
  */
 public interface RoundDao {
-    List<Round> getRoundsByCourseId(Integer courseId);
+    List<Round> getRoundsByCourseId(BigInteger courseId);
 
-    Round getRoundById(Integer roundId);
+    Round getRoundById(BigInteger roundId);
 
     Integer newRound(Round round);
 

@@ -2,6 +2,7 @@ package com.xmu.cms.dao;
 
 import com.xmu.cms.entity.Attendance;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * @version 1.0
  */
 public interface AttendanceDao {
-    List<Attendance> getAttendancesInSeminar(Integer seminarId);
+    List<Attendance> getAttendancesInSeminar(BigInteger seminarId);
 
-    Integer setAttendanceScore(Integer attendanceId, Integer presentationScore);
+    Integer setAttendanceScore(BigInteger attendanceId, Float presentationScore);
 }

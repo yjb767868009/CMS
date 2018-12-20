@@ -2,6 +2,7 @@ package com.xmu.cms.dao;
 
 import com.xmu.cms.entity.Seminar;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -11,15 +12,15 @@ import java.util.List;
 public interface SeminarDao {
     Integer insertSeminar(Seminar seminar);
 
-    Integer deleteSeminar(Integer seminarId);
+    Integer deleteSeminar(BigInteger seminarId);
 
     Integer modifySeminar(Seminar seminar);
 
     Integer modifySeminarReportDDL(Seminar seminar);
 
-    Seminar getSeminarBySeminarId(Integer seminarId);
+    Seminar getSeminarBySeminarId(BigInteger seminarId);
 
-    Seminar getRunningSeminarByTeacherId(Integer teacherId);
+    Seminar getRunningSeminarByTeacherId(BigInteger teacherId);
 
-    List<Seminar> getAllSeminarByRoundId(Integer roundId);
+    List<Seminar> getAllSeminarByRoundId(BigInteger roundId);
 }

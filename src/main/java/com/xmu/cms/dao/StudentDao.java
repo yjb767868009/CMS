@@ -2,6 +2,7 @@ package com.xmu.cms.dao;
 
 import com.xmu.cms.entity.Student;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -17,17 +18,17 @@ public interface StudentDao {
 
     Integer modifyStudentPassword(Student student);
 
-    Integer deleteStudent(Integer studentId);
+    Integer deleteStudent(BigInteger studentId);
 
     List<Student> getStudentByName(String name);
 
     Student getStudentByAccount(String account);
 
-    Integer activateStudent(Integer studentId, Student student);
+    Integer activateStudent(BigInteger studentId, Student student);
 
-    Student getStudentById(Integer userId);
+    Student getStudentById(BigInteger userId);
 
-    Integer modifyStudentEmail(Integer studentId, Student student);
+    Integer modifyStudentEmail(BigInteger studentId, Student student);
 
-    List<Student> getNoTeamStudentInCourse(Integer courseId);
+    List<Student> getNoTeamStudentInCourse(BigInteger courseId);
 }

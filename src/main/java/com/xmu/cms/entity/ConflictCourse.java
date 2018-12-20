@@ -1,15 +1,17 @@
 package com.xmu.cms.entity;
 
+import java.math.BigInteger;
+
 /**
  * @author JuboYu on 2018/12/20.
  * @version 1.0
  */
 public class ConflictCourse {
-    private Integer conflictCourseId;
+    private BigInteger conflictCourseId;
     private Course course1;
     private Course course2;
 
-    public ConflictCourse(Integer conflictCourseId, Course course1, Course course2) {
+    public ConflictCourse(BigInteger conflictCourseId, Course course1, Course course2) {
         this.conflictCourseId = conflictCourseId;
         this.course1 = course1;
         this.course2 = course2;
@@ -18,11 +20,11 @@ public class ConflictCourse {
     public ConflictCourse() {
     }
 
-    public Integer getConflictCourseId() {
+    public BigInteger getConflictCourseId() {
         return conflictCourseId;
     }
 
-    public void setConflictCourseId(Integer conflictCourseId) {
+    public void setConflictCourseId(BigInteger conflictCourseId) {
         this.conflictCourseId = conflictCourseId;
     }
 

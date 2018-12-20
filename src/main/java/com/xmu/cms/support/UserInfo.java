@@ -1,17 +1,19 @@
 package com.xmu.cms.support;
 
+import java.math.BigInteger;
+
 /**
  * @author JuboYu on 2018/12/5.
  * @version 1.0
  */
 public class UserInfo {
-    private Integer userId;
+    private BigInteger userId;
     private String account;
     private String userType;
     private String name;
     private Boolean active;
 
-    public UserInfo(Integer userId, String account, String userType, String name, Boolean active) {
+    public UserInfo(BigInteger userId, String account, String userType, String name, Boolean active) {
         this.userId = userId;
         this.account = account;
         this.userType = userType;
@@ -19,14 +21,14 @@ public class UserInfo {
         this.active = active;
     }
 
-    public UserInfo(Integer userId, String account, String userType, String name) {
+    public UserInfo(BigInteger userId, String account, String userType, String name) {
         this.userId = userId;
         this.account = account;
         this.userType = userType;
         this.name = name;
     }
 
-    public UserInfo(Integer userId, String userType) {
+    public UserInfo(BigInteger userId, String userType) {
         this.userId = userId;
         this.userType = userType;
     }
@@ -34,11 +36,11 @@ public class UserInfo {
     public UserInfo() {
     }
 
-    public Integer getUserId() {
+    public BigInteger getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
 
@@ -67,7 +69,7 @@ public class UserInfo {
     }
 
     public Boolean isEmpty() {
-        return this.userType != null && !this.userType.equals("") && this.userId != null && !(this.userId <= 0);
+        return this.userType != null && !this.userType.equals("") && this.userId != null;
     }
 
     public Boolean getActive() {

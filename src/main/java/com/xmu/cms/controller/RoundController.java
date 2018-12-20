@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -24,13 +25,13 @@ public class RoundController {
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/{roundId}/seminar")
-    public List<Seminar> getSeminarInRound(@PathVariable("roundId") Integer roundId) {
+    public List<Seminar> getSeminarInRound(@PathVariable("roundId") BigInteger roundId) {
         return seminarService.getAllSeminarInRound(roundId);
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/{roundId}")
-    public Round getRoundById(@PathVariable("roundId") Integer roundId) {
+    public Round getRoundById(@PathVariable("roundId") BigInteger roundId) {
         return seminarService.getRoundByRoundId(roundId);
     }
 
@@ -42,14 +43,14 @@ public class RoundController {
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/round/{roundId}/roundscore")
-    public List<RoundScore> getRoundScore(@PathVariable("roundId") Integer roundId) {
+    public List<RoundScore> getRoundScore(@PathVariable("roundId") BigInteger roundId) {
         return seminarService.getRoundScore(roundId);
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/round/{roundId}/team/{teamId}/roundscore")
-    public RoundScore getRoundTeamScore(@PathVariable("roundId") Integer roundId,
-                                        @PathVariable("teamId") Integer teamId) {
+    public RoundScore getRoundTeamScore(@PathVariable("roundId") BigInteger roundId,
+                                        @PathVariable("teamId") BigInteger teamId) {
         return seminarService.getRoundTeamScore(roundId, teamId);
     }
 }

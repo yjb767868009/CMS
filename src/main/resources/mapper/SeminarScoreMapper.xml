@@ -3,7 +3,6 @@
 
 <mapper namespace="com.xmu.cms.mapper.SeminarScoreMapper">
     <resultMap id="SeminarScoreResultMap" type="com.xmu.cms.entity.SeminarScore">
-        <id property="scoreId" column="scoreId" javaType="java.lang.Integer"/>
         <result property="presentationScore" column="presentationScore"/>
         <result property="reportScore" column="reportScore"/>
         <result property="questionScore" column="questionScore"/>

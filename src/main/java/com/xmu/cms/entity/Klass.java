@@ -1,18 +1,20 @@
 package com.xmu.cms.entity;
 
+import java.math.BigInteger;
+
 /**
  * @author JuboYu on 2018/11/26.
  * @version 1.0
  */
 public class Klass {
-    private Integer klassId;
+    private BigInteger klassId;
     private Course course;
     private Integer grade;
     private String name;
     private String classTime;
     private String classPlace;
 
-    public Klass(Integer klassId, Course course, Integer grade, String name, String classPlace, String classTime) {
+    public Klass(BigInteger klassId, Course course, Integer grade, String name, String classPlace, String classTime) {
         this.klassId = klassId;
         this.course = course;
         this.grade = grade;
@@ -24,11 +26,11 @@ public class Klass {
     public Klass() {
     }
 
-    public Integer getKlassId() {
+    public BigInteger getKlassId() {
         return klassId;
     }
 
-    public void setKlassId(Integer id) {
+    public void setKlassId(BigInteger id) {
         this.klassId = id;
     }
 

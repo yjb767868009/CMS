@@ -4,6 +4,7 @@ import com.xmu.cms.entity.Course;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -12,13 +13,13 @@ import java.util.List;
  */
 @Mapper
 public interface CourseMapper {
-    List<Course> getAllCourseByTeacherId(@Param("teacherId") Integer teacherId);
+    List<Course> getAllCourseByTeacherId(@Param("teacherId") BigInteger teacherId);
 
-    List<Course> getAllCourseByStudentId(@Param("studentId") Integer studentId);
+    List<Course> getAllCourseByStudentId(@Param("studentId") BigInteger studentId);
 
     Integer createCourse(@Param("course") Course course);
 
-    Integer deleteCourseById(@Param("courseId") Integer courseId);
+    Integer deleteCourseById(@Param("courseId") BigInteger courseId);
 
-    Course getCourseById(@Param("courseId") Integer courseId);
+    Course getCourseById(@Param("courseId") BigInteger courseId);
 }

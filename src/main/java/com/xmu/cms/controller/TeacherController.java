@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -45,21 +46,21 @@ public class TeacherController {
 
     @Secured("ROLE_ADMIN")
     @PutMapping(value = "/{teacherId}/information")
-    public Map<String, String> modifyTeacherInfo(@PathVariable("teacherId") Integer teacherId,
+    public Map<String, String> modifyTeacherInfo(@PathVariable("teacherId") BigInteger teacherId,
                                                  @RequestBody Teacher teacher) {
         return userService.updateTeacherInfo(teacherId, teacher);
     }
 
     @Secured("ROLE_ADMIN")
     @PutMapping(value = "/{teacherId}/password")
-    public Map<String, String> modifyTeacherPassword(@PathVariable("teacherId") Integer teacherId,
+    public Map<String, String> modifyTeacherPassword(@PathVariable("teacherId") BigInteger teacherId,
                                                      @RequestBody Teacher teacher) {
         return userService.updateTeacherPassword(teacherId, teacher);
     }
 
     @Secured("ROLE_ADMIN")
     @DeleteMapping(value = "/{teacherId}")
-    public Map<String, String> deleteTeacher(@PathVariable("teacherId") Integer teacherId) {
+    public Map<String, String> deleteTeacher(@PathVariable("teacherId") BigInteger teacherId) {
         return userService.deleteTeacher(teacherId);
     }
 

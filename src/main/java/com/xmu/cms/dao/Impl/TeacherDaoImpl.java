@@ -7,6 +7,7 @@ import com.xmu.cms.mapper.TeacherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -40,14 +41,14 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public Teacher getTeacherById(Integer teacherId) {
+    public Teacher getTeacherById(BigInteger teacherId) {
         Teacher teacher = teacherMapper.getTeacherById(teacherId);
         teacher.setCourses(courseMapper.getAllCourseByTeacherId(teacher.getTeacherId()));
         return teacher;
     }
 
     @Override
-    public Integer updateTeacherInfo(Integer teacherId, Teacher teacher) {
+    public Integer updateTeacherInfo(BigInteger teacherId, Teacher teacher) {
         Teacher modifyTeacher = teacherMapper.getTeacherById(teacherId);
         modifyTeacher.setAccount(teacher.getAccount());
         modifyTeacher.setName(teacher.getName());
@@ -56,14 +57,14 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public Integer updateTeacherPassword(Integer teacherId, Teacher teacher) {
+    public Integer updateTeacherPassword(BigInteger teacherId, Teacher teacher) {
         Teacher modifyTeacher = teacherMapper.getTeacherById(teacherId);
         modifyTeacher.setPassword(teacher.getPassword());
         return teacherMapper.updateTeacher(modifyTeacher);
     }
 
     @Override
-    public Integer deleteTeacherByTeacherId(Integer teacherId) {
+    public Integer deleteTeacherByTeacherId(BigInteger teacherId) {
         return teacherMapper.deleteTeacher(teacherId);
     }
 
@@ -74,14 +75,14 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public Integer modifyTeacherEmail(Integer teacherId, Teacher teacher) {
+    public Integer modifyTeacherEmail(BigInteger teacherId, Teacher teacher) {
         Teacher modifyTeacher = teacherMapper.getTeacherById(teacherId);
         modifyTeacher.setEmail(teacher.getEmail());
         return teacherMapper.updateTeacher(modifyTeacher);
     }
 
     @Override
-    public Integer modifyTeacherPassword(Integer teacherId, Teacher teacher) {
+    public Integer modifyTeacherPassword(BigInteger teacherId, Teacher teacher) {
         Teacher modifyTeacher = teacherMapper.getTeacherById(teacherId);
         modifyTeacher.setPassword(teacher.getPassword());
         return teacherMapper.updateTeacher(modifyTeacher);

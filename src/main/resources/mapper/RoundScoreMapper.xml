@@ -3,7 +3,6 @@
 
 <mapper namespace="com.xmu.cms.mapper.RoundScoreMapper">
     <resultMap id="RoundScoreResultMap" type="com.xmu.cms.entity.RoundScore">
-        <id property="scoreId" column="scoreId" javaType="java.lang.Integer"/>
         <result property="presentationScore" column="presentationScore"/>
         <result property="reportScore" column="reportScore"/>
         <result property="questionScore" column="questionScore"/>

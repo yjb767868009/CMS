@@ -6,6 +6,7 @@ import com.xmu.cms.mapper.RoundScoreMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -19,12 +20,12 @@ public class RoundScoreDaoImpl implements RoundScoreDao {
     private RoundScoreMapper roundScoreMapper;
 
     @Override
-    public RoundScore getRoundTeamScore(Integer roundId, Integer teamId) {
+    public RoundScore getRoundTeamScore(BigInteger roundId, BigInteger teamId) {
         return roundScoreMapper.getScoreInRound(roundId, teamId);
     }
 
     @Override
-    public List<RoundScore> getRoundScore(Integer roundId) {
+    public List<RoundScore> getRoundScore(BigInteger roundId) {
         return roundScoreMapper.getAllScoresInRound(roundId);
     }
 }

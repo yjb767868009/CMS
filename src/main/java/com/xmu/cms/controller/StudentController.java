@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +45,7 @@ public class StudentController {
 
     @Secured("ROLE_ADMIN")
     @PutMapping(value = "/{studentId}/information")
-    public Map<String, String> modifyStudentInfo(@PathVariable("studentId") Integer studentId,
+    public Map<String, String> modifyStudentInfo(@PathVariable("studentId") BigInteger studentId,
                                                  @RequestBody Student student) {
         student.setStudentId(studentId);
         return userService.modifyStudentInfo(student);
@@ -52,7 +53,7 @@ public class StudentController {
 
     @Secured("ROLE_ADMIN")
     @PutMapping(value = "/{studentId}/password")
-    public Map<String, String> modifyStudentPasswordById(@PathVariable("studentId") Integer studentId,
+    public Map<String, String> modifyStudentPasswordById(@PathVariable("studentId") BigInteger studentId,
                                                          @RequestBody Student student) {
         student.setStudentId(studentId);
         return userService.modifyStudentPassword(student);
@@ -60,7 +61,7 @@ public class StudentController {
 
     @Secured("ROLE_ADMIN")
     @DeleteMapping(value = "/{studentId}")
-    public Map<String, String> deleteStudent(@PathVariable("studentId") Integer studentId) {
+    public Map<String, String> deleteStudent(@PathVariable("studentId") BigInteger studentId) {
         return userService.deleteStudent(studentId);
     }
 
@@ -77,14 +78,14 @@ public class StudentController {
     }
 
     @PostMapping(value = "/klassSeminar/{klassSeminarId}/attendance")
-    public Map<String, String> attendance(@PathVariable("klassSeminarId") Integer klassSeminarId,
-                                          @RequestParam("teamOrder") Integer teamOrder) {
+    public Map<String, String> attendance(@PathVariable("klassSeminarId") BigInteger klassSeminarId,
+                                          @RequestParam("teamOrder") BigInteger teamOrder) {
         return seminarService.newAttendance(klassSeminarId, teamOrder);
     }
 
     @PostMapping(value = "/klassSeminar/{klassSeminarId}/score")
-    public Map<String, String> getScoreInKlassSeminar(@PathVariable("klassSeminarId") Integer klassSeminarId,
-                                                      @RequestParam("teamOrder") Integer teamOrder) {
+    public Map<String, String> getScoreInKlassSeminar(@PathVariable("klassSeminarId") BigInteger klassSeminarId,
+                                                      @RequestParam("teamOrder") BigInteger teamOrder) {
         return seminarService.newAttendance(klassSeminarId, teamOrder);
     }
 

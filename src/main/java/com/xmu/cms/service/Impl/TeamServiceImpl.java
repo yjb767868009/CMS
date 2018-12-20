@@ -6,6 +6,7 @@ import com.xmu.cms.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class TeamServiceImpl implements TeamService {
     private TeamDao teamDao;
 
     @Override
-    public List<Team> getAllTeamsInSeminar(Integer seminarId) {
+    public List<Team> getAllTeamsInSeminar(BigInteger seminarId) {
         return teamDao.getAllTeamsInSeminar(seminarId);
     }
 }

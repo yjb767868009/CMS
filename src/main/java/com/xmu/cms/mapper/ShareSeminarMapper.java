@@ -2,6 +2,8 @@ package com.xmu.cms.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import java.math.BigInteger;
+
 /**
  * @author JuboYu on 2018/12/20.
  * @version 1.0
@@ -14,5 +16,5 @@ public interface ShareSeminarMapper {
      * @param courseId 课程id
      * @return 删除信息
      */
-    Integer deleteShareSeminarByCourseId(Integer courseId);
+    Integer deleteShareSeminarByCourseId(BigInteger courseId);
 }

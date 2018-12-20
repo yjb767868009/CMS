@@ -3,9 +3,9 @@
 
 <mapper namespace="com.xmu.cms.mapper.SeminarMapper">
     <resultMap id="seminarResultMap" type="com.xmu.cms.entity.Seminar">
-        <id property="seminarId" column="id" javaType="java.lang.Integer"/>
-        <result property="courseId" column="course_id" javaType="java.lang.Integer"/>
-        <result property="roundId" column="round_id" javaType="java.lang.Integer"/>
+        <id property="seminarId" column="id" javaType="java.math.BigInteger"/>
+        <result property="courseId" column="course_id" javaType="java.math.BigInteger"/>
+        <result property="roundId" column="round_id" javaType="java.math.BigInteger"/>
         <result property="seminarName" column="seminar_name" javaType="java.lang.String"/>
         <result property="introduction" column="introduction" javaType="java.lang.String"/>
         <result property="maxTeam" column="max_team" javaType="java.lang.Integer"/>

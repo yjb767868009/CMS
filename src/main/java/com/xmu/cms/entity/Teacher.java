@@ -1,5 +1,6 @@
 package com.xmu.cms.entity;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * @version 1.0
  */
 public class Teacher {
-    private Integer teacherId;
+    private BigInteger teacherId;
     private String account;
     private String password;
     private String email;
@@ -15,7 +16,7 @@ public class Teacher {
     private Boolean activation;
     private List<Course> courses;
 
-    public Teacher(Integer teacherId, String account, String password, String email, String name, Boolean activation, List<Course> courses) {
+    public Teacher(BigInteger teacherId, String account, String password, String email, String name, Boolean activation, List<Course> courses) {
         this.teacherId = teacherId;
         this.account = account;
         this.password = password;
@@ -28,11 +29,11 @@ public class Teacher {
     public Teacher() {
     }
 
-    public Integer getTeacherId() {
+    public BigInteger getTeacherId() {
         return teacherId;
     }
 
-    public void setTeacherId(Integer teacherId) {
+    public void setTeacherId(BigInteger teacherId) {
         this.teacherId = teacherId;
     }
 

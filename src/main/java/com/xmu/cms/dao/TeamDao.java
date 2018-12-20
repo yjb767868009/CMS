@@ -1,7 +1,9 @@
 package com.xmu.cms.dao;
 
+import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Team;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -9,9 +11,17 @@ import java.util.List;
  * @version 1.0
  */
 public interface TeamDao {
-    List<Team> getTeamInCourse(Integer courseId);
+    List<Team> getTeamInCourse(BigInteger courseId);
 
-    Team getTeamInCourseByStudent(Integer courseId, Integer studentId);
+    Team getTeamInCourseByStudent(BigInteger courseId, BigInteger studentId);
 
-    List<Team> getAllTeamsInSeminar(Integer seminarId);
+    List<Team> getAllTeamsInSeminar(BigInteger seminarId);
+
+    Team newTeam(BigInteger courseId, BigInteger classId, BigInteger studentId, Team team);
+
+    Team getTeamByTeamId(BigInteger teamId);
+
+    Integer deleteTeam(BigInteger teamId);
+
+    Integer addMembers(BigInteger teamId, List<Student> students);
 }

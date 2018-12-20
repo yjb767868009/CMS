@@ -6,6 +6,7 @@ import com.xmu.cms.service.SeminarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,9 @@ public class SeminarServiceImpl implements SeminarService {
     @Autowired
     private SeminarScoreDao seminarScoreDao;
 
+    @Autowired
+    private QuestionDao questionDao;
+
     @Override
     public Map<String, String> newSeminar(Seminar seminar) {
         Map<String, String> message = new HashMap<String, String>(2);
@@ -45,7 +49,7 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Map<String, String> deleteSeminar(Integer seminarId) {
+    public Map<String, String> deleteSeminar(BigInteger seminarId) {
         Map<String, String> message = new HashMap<String, String>(2);
         Integer count = seminarDao.deleteSeminar(seminarId);
         if (count == 1) {
@@ -57,7 +61,7 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public List<Seminar> getSeminarsByCourseId(Integer courseId) {
+    public List<Seminar> getSeminarsByCourseId(BigInteger courseId) {
         return null;
     }
 
@@ -86,17 +90,17 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Seminar getSeminarBySeminarId(Integer seminarId) {
+    public Seminar getSeminarBySeminarId(BigInteger seminarId) {
         return seminarDao.getSeminarBySeminarId(seminarId);
     }
 
     @Override
-    public List<Round> getRoundsByCourseId(Integer courseId) {
+    public List<Round> getRoundsByCourseId(BigInteger courseId) {
         return roundDao.getRoundsByCourseId(courseId);
     }
 
     @Override
-    public List<Seminar> getAllSeminarInRound(Integer roundId) {
+    public List<Seminar> getAllSeminarInRound(BigInteger roundId) {
         return seminarDao.getAllSeminarByRoundId(roundId);
     }
 
@@ -113,17 +117,17 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Seminar getRunningSeminarByTeacherId(Integer teacherId) {
+    public Seminar getRunningSeminarByTeacherId(BigInteger teacherId) {
         return seminarDao.getRunningSeminarByTeacherId(teacherId);
     }
 
     @Override
-    public List<Attendance> getAttendancesInSeminar(Integer seminarId) {
+    public List<Attendance> getAttendancesInSeminar(BigInteger seminarId) {
         return attendanceDao.getAttendancesInSeminar(seminarId);
     }
 
     @Override
-    public Map<String, String> setAttendancePresentationScore(Integer attendanceId, Integer presentationScore) {
+    public Map<String, String> setAttendancePresentationScore(BigInteger attendanceId, Float presentationScore) {
         Map<String, String> message = new HashMap<String, String>(2);
         Integer count = attendanceDao.setAttendanceScore(attendanceId, presentationScore);
         if (count == 1) {
@@ -135,13 +139,13 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Map<String, String> newAttendance(Integer klassSeminarId, Integer teamOrder) {
+    public Map<String, String> newAttendance(BigInteger klassSeminarId, BigInteger teamOrder) {
         //todo
         return null;
     }
 
     @Override
-    public Round getRoundByRoundId(Integer roundId) {
+    public Round getRoundByRoundId(BigInteger roundId) {
         return roundDao.getRoundById(roundId);
     }
 
@@ -158,23 +162,46 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public RoundScore getRoundTeamScore(Integer roundId, Integer teamId) {
+    public RoundScore getRoundTeamScore(BigInteger roundId, BigInteger teamId) {
         return roundScoreDao.getRoundTeamScore(roundId, teamId);
     }
 
     @Override
-    public List<RoundScore> getRoundScore(Integer roundId) {
+    public List<RoundScore> getRoundScore(BigInteger roundId) {
         return roundScoreDao.getRoundScore(roundId);
     }
 
     @Override
-    public SeminarScore getSeminarTeamScore(Integer seminarId, Integer teamId) {
+    public SeminarScore getSeminarTeamScore(BigInteger seminarId, BigInteger teamId) {
         return null;
     }
 
     @Override
-    public List<SeminarScore> getSeminarScore(Integer seminarId) {
+    public List<SeminarScore> getSeminarScore(BigInteger seminarId) {
         return null;
+    }
+
+    @Override
+    public List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId) {
+        return questionDao.getQuestionInKlassSeminar(klassSeminarId);
+    }
+
+    @Override
+    public Question askQuestion(BigInteger userId, BigInteger attendanceId) {
+        //todo
+        return null;
+    }
+
+    @Override
+    public Map<String, String> scoreQuestion(Question question) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        Integer count = questionDao.scoreQuestion(question);
+        if (count == 1) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
     }
 
 

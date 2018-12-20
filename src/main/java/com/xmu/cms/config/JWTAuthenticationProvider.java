@@ -1,11 +1,11 @@
 package com.xmu.cms.config;
 
+import com.xmu.cms.dao.AdminDao;
+import com.xmu.cms.dao.StudentDao;
+import com.xmu.cms.dao.TeacherDao;
 import com.xmu.cms.entity.Admin;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Teacher;
-import com.xmu.cms.mapper.AdminMapper;
-import com.xmu.cms.mapper.StudentMapper;
-import com.xmu.cms.mapper.TeacherMapper;
 import com.xmu.cms.support.UserInfo;
 import com.xmu.cms.support.UsernameIsExitedException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -27,16 +26,13 @@ import java.util.List;
 @Component
 public class JWTAuthenticationProvider implements AuthenticationProvider {
     @Autowired
-    private AdminMapper adminMapper;
+    private AdminDao adminDao;
 
     @Autowired
-    private TeacherMapper teacherMapper;
+    private TeacherDao teacherDao;
 
     @Autowired
-    private StudentMapper studentMapper;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private StudentDao studentDao;
 
     /**
      * 验证登录信息,若登陆成功,设置 Authentication
@@ -54,7 +50,7 @@ public class JWTAuthenticationProvider implements AuthenticationProvider {
         String password = authentication.getCredentials().toString();
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-        Admin admin = adminMapper.getAdminByAccount(username);
+        Admin admin = adminDao.getAdminByAccount(username);
         if (null != admin) {
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
             if (!password.equals(admin.getPassword())) {
@@ -66,7 +62,7 @@ public class JWTAuthenticationProvider implements AuthenticationProvider {
             return authenticationToken;
         }
 
-        Teacher teacher = teacherMapper.getTeacherByAccount(username);
+        Teacher teacher = teacherDao.getTeacherByAccount(username);
         if (null != teacher) {
             authorities.add(new SimpleGrantedAuthority("ROLE_TEACHER"));
             if (!password.equals(teacher.getPassword())) {
@@ -77,7 +73,7 @@ public class JWTAuthenticationProvider implements AuthenticationProvider {
             return authenticationToken;
         }
 
-        Student student = studentMapper.getStudentByAccount(username);
+        Student student = studentDao.getStudentByAccount(username);
         if (null != student) {
             authorities.add(new SimpleGrantedAuthority("ROLE_STUDENT"));
             if (!password.equals(student.getPassword())) {

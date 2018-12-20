@@ -1,17 +1,19 @@
 package com.xmu.cms.entity;
 
+import java.math.BigInteger;
+
 /**
  * @author JuboYu on 2018/12/20.
  * @version 1.0
  */
 public class ShareSeminar {
-    private Integer shareSeminarId;
+    private BigInteger shareSeminarId;
     private Course masterCourse;
     private Course receiveCourse;
     private Teacher receiveTeacher;
     private Integer status;
 
-    public ShareSeminar(Integer shareSeminarId, Course masterCourse, Course receiveCourse, Teacher receiveTeacher, Integer status) {
+    public ShareSeminar(BigInteger shareSeminarId, Course masterCourse, Course receiveCourse, Teacher receiveTeacher, Integer status) {
         this.shareSeminarId = shareSeminarId;
         this.masterCourse = masterCourse;
         this.receiveCourse = receiveCourse;
@@ -22,11 +24,11 @@ public class ShareSeminar {
     public ShareSeminar() {
     }
 
-    public Integer getShareSeminarId() {
+    public BigInteger getShareSeminarId() {
         return shareSeminarId;
     }
 
-    public void setShareSeminarId(Integer shareSeminarId) {
+    public void setShareSeminarId(BigInteger shareSeminarId) {
         this.shareSeminarId = shareSeminarId;
     }
 

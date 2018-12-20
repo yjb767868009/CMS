@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -57,20 +58,20 @@ public class CourseController {
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/{courseId}")
-    public Course getCourse(@PathVariable("courseId") Integer courseId) {
+    public Course getCourse(@PathVariable("courseId") BigInteger courseId) {
         return courseService.getCourse(courseId);
     }
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
     @DeleteMapping(value = "/{courseId}")
-    public Map<String, String> deleteCourse(@PathVariable("courseId") Integer courseId) {
+    public Map<String, String> deleteCourse(@PathVariable("courseId") BigInteger courseId) {
         return courseService.deleteCourseById(courseId);
     }
 
     @Secured("ROLE_TEACHER")
     @PostMapping(value = "/course/{courseId}/round")
-    public Map<String, String> newRound(@PathVariable("courseId") Integer courseId,
+    public Map<String, String> newRound(@PathVariable("courseId") BigInteger courseId,
                                         @RequestBody Round round) {
         Course course = new Course();
         course.setCourseId(courseId);
@@ -87,7 +88,7 @@ public class CourseController {
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/{courseId}/team")
     public List<Team> getTeamInCourse(UserInfo info,
-                                      @PathVariable("courseId") Integer courseId) {
+                                      @PathVariable("courseId") BigInteger courseId) {
         switch (info.getUserType()) {
             case "teacher":
                 return courseService.getTeamInCourse(courseId);
@@ -100,20 +101,20 @@ public class CourseController {
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/{courseId}/noteam")
-    public List<Student> getNoTeamStudent(@PathVariable("courseId") Integer courseId) {
+    public List<Student> getNoTeamStudent(@PathVariable("courseId") BigInteger courseId) {
         return userService.getNoTeamStudent(courseId);
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/{courseId}/class")
-    public List<Klass> getKlassInCourse(@PathVariable("courseId") Integer courseId) {
+    public List<Klass> getKlassInCourse(@PathVariable("courseId") BigInteger courseId) {
         return courseService.getKlassInCourse(courseId);
     }
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
     @PostMapping(value = "/{courseId}/class")
-    public Map<String, String> createClass(@PathVariable("courseId") Integer courseId,
+    public Map<String, String> createClass(@PathVariable("courseId") BigInteger courseId,
                                            @RequestBody Klass klass) {
         return courseService.newKlass(courseId, klass);
     }
@@ -122,15 +123,15 @@ public class CourseController {
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
     @GetMapping(value = "/{courseId}/share")
-    public List<ShareTeam> listAllShareByCourseId(@PathVariable("courseId") Integer courseId) {
+    public List<ShareTeam> listAllShareByCourseId(@PathVariable("courseId") BigInteger courseId) {
         return courseService.getShareInCourse(courseId);
     }
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
     @GetMapping(value = "/{courseId}/share/{shareId}")
-    public Map<String, String> deleteShare(@PathVariable("courseId") Integer courseId,
-                                           @PathVariable("shareId") Integer shareId) {
+    public Map<String, String> deleteShare(@PathVariable("courseId") BigInteger courseId,
+                                           @PathVariable("shareId") BigInteger shareId) {
         return courseService.deleteShare(courseId, shareId);
     }
 

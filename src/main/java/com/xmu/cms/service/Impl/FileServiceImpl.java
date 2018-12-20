@@ -4,20 +4,12 @@ import com.xmu.cms.dao.KlassDao;
 import com.xmu.cms.dao.StudentDao;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.service.FileService;
-import com.xmu.cms.support.XLSUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
+import java.math.BigInteger;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author JuboYu on 2018/12/5.
@@ -26,8 +18,6 @@ import java.util.Map;
 @Service
 public class FileServiceImpl implements FileService {
 
-    @Value("${file.folder}")
-    private String UPLOADED_FOLDER;
 
     @Autowired
     private StudentDao studentDao;
@@ -35,47 +25,16 @@ public class FileServiceImpl implements FileService {
     @Autowired
     private KlassDao klassDao;
 
-    private Map<String, String> saveFile(String filePath, MultipartFile file) {
-        Map<String, String> messages = new HashMap<String, String>(2);
-        if (file.isEmpty()) {
-            messages.put("message", "Please select a file");
-            return messages;
-        }
-        String fatherPath = filePath.substring(0, filePath.lastIndexOf("\\"));
-        File fatherFile = new File(fatherPath);
-        if (!fatherFile.exists()) {
-            fatherFile.mkdirs();
-        }
-        try {
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(filePath);
-            Files.write(path, bytes);
-            messages.put("message", "Success");
-        } catch (IOException e) {
-            messages.put("message", "Error");
-            return messages;
-        }
-        return messages;
+
+    @Override
+    public void uploadKlassFile(BigInteger klassId, List<Student> students) throws Exception {
+        studentDao.newStudent(students);
+        klassDao.addStudentInKlass(klassId, students);
     }
 
     @Override
-    public Map<String, String> uploadKlassFile(Integer klassId, MultipartFile file) {
-        String filePath = UPLOADED_FOLDER + "class" + File.separator + klassId.toString() + File.separator + file.getOriginalFilename();
-
-        Map<String, String> messages = saveFile(filePath, file);
-        try {
-            List<Student> students = XLSUtils.analysisFile(filePath);
-            studentDao.newStudent(students);
-            klassDao.addStudentInKlass(klassId, students);
-        } catch (Exception e) {
-            messages.put("message", e.getMessage());
-        }
-        return messages;
-    }
-
-    @Override
-    public Map<String, String> uploadAttendanceFile(Integer attendanceId, MultipartFile file) {
-        String filePath = UPLOADED_FOLDER + "attendance" + File.separator + attendanceId.toString() + File.separator + file.getOriginalFilename();
-        return saveFile(filePath, file);
+    public void uploadAttendanceFile(BigInteger attendanceId, MultipartFile file) {
+        //String filePath = UPLOADED_FOLDER + "attendance" + File.separator + attendanceId.toString() + File.separator + file.getOriginalFilename();
+        //return saveFile(filePath, file);
     }
 }

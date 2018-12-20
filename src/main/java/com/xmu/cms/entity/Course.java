@@ -1,5 +1,6 @@
 package com.xmu.cms.entity;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * @version 1.0
  */
 public class Course {
-    private Integer courseId;
+    private BigInteger courseId;
     private Teacher teacher;
     private String CourseName;
     private String introduction;
@@ -19,7 +20,7 @@ public class Course {
     private Timestamp teamEndTime;
     private List<Klass> klasses;
 
-    public Course(Integer courseId, Teacher teacher, String CourseName, String introduction, Float presentationWeight, Float reportWeight, Float questionWeight, Timestamp teamStartTime, Timestamp teamEndTime, List<Klass> klasses) {
+    public Course(BigInteger courseId, Teacher teacher, String CourseName, String introduction, Float presentationWeight, Float reportWeight, Float questionWeight, Timestamp teamStartTime, Timestamp teamEndTime, List<Klass> klasses) {
         this.courseId = courseId;
         this.teacher = teacher;
         this.CourseName = CourseName;
@@ -35,11 +36,11 @@ public class Course {
     public Course() {
     }
 
-    public Integer getCourseId() {
+    public BigInteger getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(Integer id) {
+    public void setCourseId(BigInteger id) {
         this.courseId = id;
     }
 

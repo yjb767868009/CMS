@@ -4,6 +4,7 @@ import com.xmu.cms.entity.Student;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -47,7 +48,7 @@ public interface StudentMapper {
      * @param studentId student's id
      * @return String message
      */
-    Integer deleteStudent(@Param("studentId") Integer studentId);
+    Integer deleteStudent(@Param("studentId") BigInteger studentId);
 
     /**
      * get student's password by account
@@ -71,15 +72,15 @@ public interface StudentMapper {
      * @param studentId student's id
      * @return student
      */
-    Student getStudentById(@Param("studentId") Integer studentId);
+    Student getStudentById(@Param("studentId") BigInteger studentId);
 
-    List<Student> getNoTeamStudentInCourse(Integer courseId);
+    List<Student> getNoTeamStudentInCourse(BigInteger courseId);
 
     /**
      * 获取队伍中的成员信息
      * @param teamId 队伍id
      * @return 成员列表
      */
-    List<Student> getMembersInTeam(@Param("teamId") Integer teamId);//todo
+    List<Student> getMembersInTeam(@Param("teamId") BigInteger teamId);//todo
 
 }

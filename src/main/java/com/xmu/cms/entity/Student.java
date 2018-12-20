@@ -1,18 +1,20 @@
 package com.xmu.cms.entity;
 
+import java.math.BigInteger;
+
 /**
  * @author JuboYu on 2018/11/23.
  * @version 1.0
  */
 public class Student {
-    private Integer studentId;
+    private BigInteger studentId;
     private String account;
     private String password;
     private String email;
     private String name;
     private Boolean activation;
 
-    public Student(Integer studentId, String account, String password, String email, String name, Boolean activation) {
+    public Student(BigInteger studentId, String account, String password, String email, String name, Boolean activation) {
         this.studentId = studentId;
         this.account = account;
         this.password = password;
@@ -24,11 +26,11 @@ public class Student {
     public Student() {
     }
 
-    public Integer getStudentId() {
+    public BigInteger getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(Integer studentId) {
+    public void setStudentId(BigInteger studentId) {
         this.studentId = studentId;
     }
 

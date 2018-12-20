@@ -9,6 +9,7 @@ import com.xmu.cms.mapper.KlassMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -24,21 +25,21 @@ public class KlassDaoImpl implements KlassDao {
     private CourseMapper courseMapper;
 
     @Override
-    public Integer newKlass(Integer courseId, Klass klass) {
+    public Integer newKlass(BigInteger courseId, Klass klass) {
         Course course = courseMapper.getCourseById(courseId);
         klass.setCourse(course);
         return klassMapper.insertKlass(klass);
     }
 
     @Override
-    public List<Klass> getAllKlass(Integer courseId) {
+    public List<Klass> getAllKlass(BigInteger courseId) {
         //return klassMapper.getAllKlass(courseId);
         //todo
         return null;
     }
 
     @Override
-    public Integer addStudentInKlass(Integer klassId, List<Student> students) {
+    public Integer addStudentInKlass(BigInteger klassId, List<Student> students) {
         Klass klass = klassMapper.getKlassByKlassId(klassId);
         Integer count = 0;
         for (Student student : students) {

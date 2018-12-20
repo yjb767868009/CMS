@@ -1,15 +1,17 @@
 package com.xmu.cms.entity;
 
+import java.math.BigInteger;
+
 /**
  * @author JuboYu on 2018/11/23.
  * @version 1.0
  */
 public class Admin {
-    private Integer adminId;
+    private BigInteger adminId;
     private String account;
     private String password;
 
-    public Admin(Integer adminId, String account, String password) {
+    public Admin(BigInteger adminId, String account, String password) {
         this.adminId = adminId;
         this.account = account;
         this.password = password;
@@ -18,11 +20,11 @@ public class Admin {
     public Admin() {
     }
 
-    public Integer getAdminId() {
+    public BigInteger getAdminId() {
         return adminId;
     }
 
-    public void setAdminId(Integer adminId) {
+    public void setAdminId(BigInteger adminId) {
         this.adminId = adminId;
     }
 

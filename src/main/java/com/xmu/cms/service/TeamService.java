@@ -2,6 +2,7 @@ package com.xmu.cms.service;
 
 import com.xmu.cms.entity.Team;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -9,5 +10,5 @@ import java.util.List;
  * @version 1.0
  */
 public interface TeamService {
-    List<Team> getAllTeamsInSeminar(Integer seminarId);
+    List<Team> getAllTeamsInSeminar(BigInteger seminarId);
 }

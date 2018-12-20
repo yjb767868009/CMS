@@ -2,6 +2,7 @@ package com.xmu.cms.dao;
 
 import com.xmu.cms.entity.Teacher;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -16,17 +17,17 @@ public interface TeacherDao {
 
     List<Teacher> getTeacherByName(String name);
 
-    Teacher getTeacherById(Integer teacherId);
+    Teacher getTeacherById(BigInteger teacherId);
 
-    Integer updateTeacherInfo(Integer teacherId, Teacher teacher);
+    Integer updateTeacherInfo(BigInteger teacherId, Teacher teacher);
 
-    Integer updateTeacherPassword(Integer teacherId, Teacher teacher);
+    Integer updateTeacherPassword(BigInteger teacherId, Teacher teacher);
 
-    Integer deleteTeacherByTeacherId(Integer teacherId);
+    Integer deleteTeacherByTeacherId(BigInteger teacherId);
 
     Integer createTeacher(Teacher teacher) throws Exception;
 
-    Integer modifyTeacherEmail(Integer teacherId, Teacher teacher);
+    Integer modifyTeacherEmail(BigInteger teacherId, Teacher teacher);
 
-    Integer modifyTeacherPassword(Integer teacherId, Teacher teacher);
+    Integer modifyTeacherPassword(BigInteger teacherId, Teacher teacher);
 }

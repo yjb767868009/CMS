@@ -1,8 +1,10 @@
 package com.xmu.cms.service;
 
+import com.xmu.cms.entity.Student;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Map;
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  * @author JuboYu on 2018/12/5.
@@ -10,7 +12,7 @@ import java.util.Map;
  */
 public interface FileService {
 
-    Map<String, String> uploadKlassFile(Integer klassId, MultipartFile file);
+    void uploadKlassFile(BigInteger klassId, List<Student> students) throws Exception;
 
-    Map<String, String> uploadAttendanceFile(Integer attendanceId, MultipartFile file);
+    void uploadAttendanceFile(BigInteger attendanceId, MultipartFile file);
 }

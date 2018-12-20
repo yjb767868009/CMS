@@ -2,6 +2,7 @@ package com.xmu.cms.dao;
 
 import com.xmu.cms.entity.RoundScore;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * @version 1.0
  */
 public interface RoundScoreDao {
-    RoundScore getRoundTeamScore(Integer roundId, Integer teamId);
+    RoundScore getRoundTeamScore(BigInteger roundId, BigInteger teamId);
 
-    List<RoundScore> getRoundScore(Integer roundId);
+    List<RoundScore> getRoundScore(BigInteger roundId);
 }

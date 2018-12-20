@@ -11,6 +11,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +39,7 @@ public class JWTUtils {
         String token = JWT.create().withHeader(map) // header
                 .withIssuer("CMS")
                 .withExpiresAt(new Date(System.currentTimeMillis() + 2 * 60 * 60 * 100))
-                .withClaim("userId", info.getUserId())
+                .withClaim("userId", info.getUserId().toString())
                 .withClaim("userType", info.getUserType())
                 .withClaim("account", info.getAccount())
                 .withClaim("name", info.getName())
@@ -67,11 +68,11 @@ public class JWTUtils {
 
         Map<String, Claim> claims = jwt.getClaims();
         Claim userIdClaim = claims.get("userId");
-        Integer userId = null;
+        BigInteger userId = null;
         if (null == userIdClaim || userIdClaim.asInt() == 0) {
             throw new UsernameIsExitedException("无效的令牌");
         } else {
-            userId = userIdClaim.asInt();
+            userId = BigInteger.valueOf(userIdClaim.asInt());
         }
 
         Claim userTypeClaim = claims.get("userType");

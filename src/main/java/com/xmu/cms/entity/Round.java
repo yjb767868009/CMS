@@ -1,18 +1,20 @@
 package com.xmu.cms.entity;
 
+import java.math.BigInteger;
+
 /**
  * @author JuboYu on 2018/11/27.
  * @version 1.0
  */
 public class Round {
-    private Integer roundId;
+    private BigInteger roundId;
     private Integer order;
     private Course course;
     private Integer presentationScoreType;
     private Integer reportScoreType;
     private Integer questionScoreType;
 
-    public Round(Integer roundId, Integer order, Course course, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType) {
+    public Round(BigInteger roundId, Integer order, Course course, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType) {
         this.roundId = roundId;
         this.order = order;
         this.course = course;
@@ -24,11 +26,11 @@ public class Round {
     public Round() {
     }
 
-    public Integer getRoundId() {
+    public BigInteger getRoundId() {
         return roundId;
     }
 
-    public void setRoundId(Integer roundId) {
+    public void setRoundId(BigInteger roundId) {
         this.roundId = roundId;
     }
 

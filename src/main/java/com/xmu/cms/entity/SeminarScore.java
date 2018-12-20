@@ -5,7 +5,6 @@ package com.xmu.cms.entity;
  * @version 1.0
  */
 public class SeminarScore {
-    private Integer scoreId;
     private Team team;
     private Seminar seminar;
     private Float presentationScore;
@@ -13,8 +12,7 @@ public class SeminarScore {
     private Float reportScore;
     private Float totalScore;
 
-    public SeminarScore(Integer scoreId, Team team, Seminar seminar, Float presentationScore, Float questionScore, Float reportScore, Float totalScore) {
-        this.scoreId = scoreId;
+    public SeminarScore(Team team, Seminar seminar, Float presentationScore, Float questionScore, Float reportScore, Float totalScore) {
         this.team = team;
         this.seminar = seminar;
         this.presentationScore = presentationScore;
@@ -24,14 +22,6 @@ public class SeminarScore {
     }
 
     public SeminarScore() {
-    }
-
-    public Integer getScoreId() {
-        return scoreId;
-    }
-
-    public void setScoreId(Integer scoreId) {
-        this.scoreId = scoreId;
     }
 
     public Team getTeam() {

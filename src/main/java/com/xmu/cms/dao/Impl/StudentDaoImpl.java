@@ -6,6 +6,7 @@ import com.xmu.cms.mapper.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -43,7 +44,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public Integer deleteStudent(Integer studentId) {
+    public Integer deleteStudent(BigInteger studentId) {
         return studentMapper.deleteStudent(studentId);
     }
 
@@ -58,7 +59,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public Integer activateStudent(Integer studentId, Student student) {
+    public Integer activateStudent(BigInteger studentId, Student student) {
         Student modifyStudent = studentMapper.getStudentById(studentId);
         modifyStudent.setPassword(student.getPassword());
         modifyStudent.setPassword(student.getEmail());
@@ -66,19 +67,19 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public Student getStudentById(Integer userId) {
+    public Student getStudentById(BigInteger userId) {
         return studentMapper.getStudentById(userId);
     }
 
     @Override
-    public Integer modifyStudentEmail(Integer studentId, Student student) {
+    public Integer modifyStudentEmail(BigInteger studentId, Student student) {
         Student modifyStudent = studentMapper.getStudentById(studentId);
         modifyStudent.setEmail(student.getEmail());
         return studentMapper.updateStudent(modifyStudent);
     }
 
     @Override
-    public List<Student> getNoTeamStudentInCourse(Integer courseId) {
+    public List<Student> getNoTeamStudentInCourse(BigInteger courseId) {
         return studentMapper.getNoTeamStudentInCourse(courseId);
     }
 }

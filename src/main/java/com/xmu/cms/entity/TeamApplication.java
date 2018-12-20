@@ -1,17 +1,19 @@
 package com.xmu.cms.entity;
 
+import java.math.BigInteger;
+
 /**
  * @author JuboYu on 2018/12/20.
  * @version 1.0
  */
 public class TeamApplication {
-    private Integer teamApplicationId;
+    private BigInteger teamApplicationId;
     private Team team;
     private Teacher teacher;
     private String reason;
     private Integer status;
 
-    public TeamApplication(Integer teamApplicationId, Team team, Teacher teacher, String reason, Integer status) {
+    public TeamApplication(BigInteger teamApplicationId, Team team, Teacher teacher, String reason, Integer status) {
         this.teamApplicationId = teamApplicationId;
         this.team = team;
         this.teacher = teacher;
@@ -22,11 +24,11 @@ public class TeamApplication {
     public TeamApplication() {
     }
 
-    public Integer getTeamApplicationId() {
+    public BigInteger getTeamApplicationId() {
         return teamApplicationId;
     }
 
-    public void setTeamApplicationId(Integer teamApplicationId) {
+    public void setTeamApplicationId(BigInteger teamApplicationId) {
         this.teamApplicationId = teamApplicationId;
     }
 

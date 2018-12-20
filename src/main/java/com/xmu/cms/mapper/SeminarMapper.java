@@ -4,6 +4,7 @@ import com.xmu.cms.entity.Seminar;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -29,19 +30,19 @@ public interface SeminarMapper {
     Integer modifySeminar(Seminar seminar);//todo
 
 
-    Integer startKlassSeminar(@Param("klassSeminarId") Integer klassSeminarId);
+    Integer startKlassSeminar(@Param("klassSeminarId") BigInteger klassSeminarId);
 
-    Integer stopKlassSeminar(@Param("klassSeminarId") Integer klassSeminarId);
+    Integer stopKlassSeminar(@Param("klassSeminarId") BigInteger klassSeminarId);
 
-    Integer endKlassSeminar(@Param("klassSeminarId") Integer klassSeminarId);
+    Integer endKlassSeminar(@Param("klassSeminarId") BigInteger klassSeminarId);
 
-    Integer getAttendanceNo(@Param("seminarId") Integer seminarId);
+    Integer getAttendanceNo(@Param("seminarId") BigInteger seminarId);
 
-    Seminar getSeminarBySeminarId(@Param("seminarId") Integer seminarId);
+    Seminar getSeminarBySeminarId(@Param("seminarId") BigInteger seminarId);
 
-    List<Seminar> getAllSeminarByRoundId(@Param("roundId") Integer roundId);
+    List<Seminar> getAllSeminarByRoundId(@Param("roundId") BigInteger roundId);
 
-    Seminar getRunningSeminarByTeacherId(@Param("teacherId") Integer teacherId);
+    Seminar getRunningSeminarByTeacherId(@Param("teacherId") BigInteger teacherId);
 
     /**
      * 删除讨论课
@@ -49,7 +50,7 @@ public interface SeminarMapper {
      * @param seminarId 讨论课id
      * @return 删除讨论课信息
      */
-    Integer deleteSeminar(@Param("seminarId") Integer seminarId);//todo
+    Integer deleteSeminar(@Param("seminarId") BigInteger seminarId);//todo
 
     /**
      * 修改讨论课的报告截止时间
@@ -65,7 +66,7 @@ public interface SeminarMapper {
      * @param courseId 课程id
      * @return 讨论课列表
      */
-    List<Seminar> getAllSeminarByCourseId(Integer courseId);//todo
+    List<Seminar> getAllSeminarByCourseId(BigInteger courseId);//todo
 
     /**
      * 删除讨论课成绩
@@ -73,5 +74,5 @@ public interface SeminarMapper {
      * @param seminarId 讨论课id
      * @return 删除信息
      */
-    Integer deleteSeminarScore(Integer seminarId);//todo
+    Integer deleteSeminarScore(BigInteger seminarId);//todo
 }

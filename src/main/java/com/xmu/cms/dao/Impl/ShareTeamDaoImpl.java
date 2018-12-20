@@ -6,6 +6,7 @@ import com.xmu.cms.mapper.ShareTeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -19,12 +20,12 @@ public class ShareTeamDaoImpl implements ShareTeamDao {
     private ShareTeamMapper shareTeamMapper;
 
     @Override
-    public List<ShareTeam> getShareInCourse(Integer courseId) {
+    public List<ShareTeam> getShareInCourse(BigInteger courseId) {
         return shareTeamMapper.getShareInCourse(courseId);
     }
 
     @Override
-    public Integer deleteShare(Integer courseId, Integer shareId) {
+    public Integer deleteShare(BigInteger courseId, BigInteger shareId) {
         //todo
         return null;
     }

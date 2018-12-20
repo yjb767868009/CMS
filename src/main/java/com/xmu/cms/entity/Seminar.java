@@ -1,5 +1,6 @@
 package com.xmu.cms.entity;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 
 /**
@@ -7,7 +8,7 @@ import java.sql.Timestamp;
  * @version 1.0
  */
 public class Seminar {
-    private Integer seminarId;
+    private BigInteger seminarId;
     private Course course;
     private Round round;
     private Integer maxTeamNum;
@@ -18,7 +19,7 @@ public class Seminar {
     private Boolean signOrder;
     private Boolean visible;
 
-    public Seminar(Integer seminarId, Course course, Round round, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
+    public Seminar(BigInteger seminarId, Course course, Round round, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
         this.seminarId = seminarId;
         this.course = course;
         this.round = round;
@@ -34,11 +35,11 @@ public class Seminar {
     public Seminar() {
     }
 
-    public Integer getSeminarId() {
+    public BigInteger getSeminarId() {
         return seminarId;
     }
 
-    public void setSeminarId(Integer seminarId) {
+    public void setSeminarId(BigInteger seminarId) {
         this.seminarId = seminarId;
     }
 

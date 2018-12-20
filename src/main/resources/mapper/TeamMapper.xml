@@ -3,7 +3,7 @@
 
 <mapper namespace="com.xmu.cms.mapper.TeamMapper">
     <resultMap id="TeamResultMap" type="com.xmu.cms.entity.Team">
-        <id property="teamId" column="id" javaType="java.lang.Integer"/>
+        <id property="teamId" column="id" javaType="java.math.BigInteger"/>
         <result property="teamName" column="team_name" javaType="java.lang.String"/>
         <result property="teamSerial" column="team_serial" javaType="java.lang.Integer"/>
         <result property="status" column="status" javaType="java.lang.Integer"/>
@@ -18,22 +18,22 @@
     </resultMap>
 
     <select id="getAllTeamsInSeminar" resultMap="TeamResultMap">
-        SELECT team.id      as teamId,
-              team_name   as teamName,
-              team_serial as teamSerial,
-              status      as status,
-              klass.id    as klassId,
-              klass.grade as grade,
-              leader_id   as leaderId,
-              student.student_name  as leaderName
+        SELECT team.id              as teamId,
+               team_name            as teamName,
+               team_serial          as teamSerial,
+               status               as status,
+               klass.id             as klassId,
+               klass.grade          as grade,
+               leader_id            as leaderId,
+               student.student_name as leaderName
         FROM team,
              attendance,
              klass,
              student
         WHERE team.id = attendance.team_id
-        AND attendance.klass_seminar_id = #{klassSeminarId}
-        and team.klass_id = klass.id
-        and team.leader_id = student.id
+          AND attendance.klass_seminar_id = #{klassSeminarId}
+          and team.klass_id = klass.id
+          and team.leader_id = student.id
     </select>
 
     <insert id="newTeam">

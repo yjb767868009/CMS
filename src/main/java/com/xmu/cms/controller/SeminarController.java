@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -29,13 +30,13 @@ public class SeminarController {
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/{seminarId}")
-    public Seminar getSeminar(@PathVariable("seminarId") Integer seminarId) {
+    public Seminar getSeminar(@PathVariable("seminarId") BigInteger seminarId) {
         return seminarService.getSeminarBySeminarId(seminarId);
     }
 
     @Secured("ROLE_TEACHER")
     @PutMapping(value = "/{seminarId}")
-    public Map<String, String> modifySeminar(@PathVariable("seminarId") Integer seminarId,
+    public Map<String, String> modifySeminar(@PathVariable("seminarId") BigInteger seminarId,
                                              @RequestBody Seminar seminar) {
         seminar.setSeminarId(seminarId);
         return seminarService.modifySeminar(seminar);
@@ -43,13 +44,13 @@ public class SeminarController {
 
     @Secured("ROLE_TEACHER")
     @DeleteMapping(value = "/{seminarId}")
-    public Map<String, String> deleteSeminar(@PathVariable("seminarId") Integer seminarId) {
+    public Map<String, String> deleteSeminar(@PathVariable("seminarId") BigInteger seminarId) {
         return seminarService.deleteSeminar(seminarId);
     }
 
     @Secured("ROLE_TEACHER")
     @PutMapping(value = "{seminarId}/reportddl")
-    public Map<String, String> modifySeminarReportDDL(@PathVariable("seminarId") Integer seminarId,
+    public Map<String, String> modifySeminarReportDDL(@PathVariable("seminarId") BigInteger seminarId,
                                                       @RequestBody Seminar seminar) {
         seminar.setSeminarId(seminarId);
         return seminarService.modifySeminarReportDDL(seminar);
@@ -57,14 +58,14 @@ public class SeminarController {
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/seminar/{seminarId}/team/{teamId}/seminarscore")
-    public SeminarScore getSeminarTeamScore(@PathVariable("seminarId") Integer seminarId,
-                                            @PathVariable("teamId") Integer teamId) {
+    public SeminarScore getSeminarTeamScore(@PathVariable("seminarId") BigInteger seminarId,
+                                            @PathVariable("teamId") BigInteger teamId) {
         return seminarService.getSeminarTeamScore(seminarId, teamId);
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/seminar/{seminarId}/seminarscore")
-    public List<SeminarScore> getSeminarScore(@PathVariable("seminarId") Integer seminarId) {
+    public List<SeminarScore> getSeminarScore(@PathVariable("seminarId") BigInteger seminarId) {
         return seminarService.getSeminarScore(seminarId);
     }
 }

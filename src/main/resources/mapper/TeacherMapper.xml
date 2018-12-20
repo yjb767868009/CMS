@@ -30,7 +30,7 @@
         VALUE (#{teacher.account}, #{teacher.password}, #{teacher.email}, #{teacher.name}, #{teacher.activation})
     </insert>
 
-    <delete id="deleteTeacher" parameterType="java.lang.Integer">
+    <delete id="deleteTeacher" parameterType="java.math.BigInteger">
         delete
         FROM teacher
         WHERE id = #{teacherId}

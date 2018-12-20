@@ -2,6 +2,7 @@ package com.xmu.cms.dao;
 
 import com.xmu.cms.entity.Course;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -10,13 +11,13 @@ import java.util.List;
  */
 public interface CourseDao {
 
-    List<Course> getAllCoursesByTeacherId(Integer teacherId);
+    List<Course> getAllCoursesByTeacherId(BigInteger teacherId);
 
-    Integer deleteCourse(Integer courseId);
+    Integer deleteCourse(BigInteger courseId);
 
-    List<Course> getAllCourseByStudentId(Integer studentId);
+    List<Course> getAllCourseByStudentId(BigInteger studentId);
 
     Integer createCourse(Course course);
 
-    Course getCourse(Integer courseId);
+    Course getCourse(BigInteger courseId);
 }

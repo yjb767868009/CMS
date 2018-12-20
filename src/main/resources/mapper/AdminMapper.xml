@@ -3,7 +3,7 @@
 
 <mapper namespace="com.xmu.cms.mapper.AdminMapper">
     <resultMap id="Admin" type="com.xmu.cms.entity.Admin">
-        <id property="adminId" column="id" javaType="java.lang.Integer"/>
+        <id property="adminId" column="id" javaType="java.math.BigInteger"/>
         <result property="account" column="account"/>
         <result property="password" column="password"/>
     </resultMap>

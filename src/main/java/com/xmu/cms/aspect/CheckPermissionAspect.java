@@ -14,6 +14,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
+import java.math.BigInteger;
+
 /**
  * @author JuboYu on 2018/12/17.
  * @version 1.0
@@ -31,7 +33,7 @@ public class CheckPermissionAspect {
     private KlassMapper klassMapper;
 
     @Around(value = "@annotation(com.xmu.cms.aspect.annoatation.CheckCoursePermission)&&args(courseId,..)")
-    private Object checkCoursePermission(ProceedingJoinPoint point, Integer courseId) throws Throwable {
+    private Object checkCoursePermission(ProceedingJoinPoint point, BigInteger courseId) throws Throwable {
         Object result = null;
         UserInfo userInfo = JWTUtils.getToken();
         Course course = courseMapper.getCourseById(courseId);
@@ -42,7 +44,7 @@ public class CheckPermissionAspect {
     }
 
     @Around(value = "@annotation(com.xmu.cms.aspect.annoatation.CheckKlassPermission)&&args(klassId,..)")
-    private Object checkKlassPermission(ProceedingJoinPoint point, Integer klassId) throws Throwable {
+    private Object checkKlassPermission(ProceedingJoinPoint point, BigInteger klassId) throws Throwable {
         Object result = null;
         UserInfo userInfo = JWTUtils.getToken();
         Klass klass = klassMapper.getKlassByKlassId(klassId);
@@ -53,7 +55,7 @@ public class CheckPermissionAspect {
     }
 
     @Around(value = "@annotation(com.xmu.cms.aspect.annoatation.CheckTeamPermission)&&args(teamId,..)")
-    private Object checkTeamPermission(ProceedingJoinPoint point, Integer teamId) throws Throwable {
+    private Object checkTeamPermission(ProceedingJoinPoint point, BigInteger teamId) throws Throwable {
         Object result = null;
         UserInfo userInfo = JWTUtils.getToken();
         Team team = teamMapper.getTeamByTeamId(teamId);

@@ -1,5 +1,6 @@
 package com.xmu.cms.entity;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 
 /**
@@ -7,13 +8,13 @@ import java.sql.Timestamp;
  * @version 1.0
  */
 public class KlassSeminar {
-    private Integer klassSeminarId;
+    private BigInteger klassSeminarId;
     private Klass klass;
     private Seminar seminar;
     private Timestamp reportDDL;
     private Integer status;
 
-    public KlassSeminar(Integer klassSeminarId, Klass klass, Seminar seminar, Timestamp reportDDL, Integer status) {
+    public KlassSeminar(BigInteger klassSeminarId, Klass klass, Seminar seminar, Timestamp reportDDL, Integer status) {
         this.klassSeminarId = klassSeminarId;
         this.klass = klass;
         this.seminar = seminar;
@@ -24,11 +25,11 @@ public class KlassSeminar {
     public KlassSeminar() {
     }
 
-    public Integer getKlassSeminarId() {
+    public BigInteger getKlassSeminarId() {
         return klassSeminarId;
     }
 
-    public void setKlassSeminarId(Integer klassSeminarId) {
+    public void setKlassSeminarId(BigInteger klassSeminarId) {
         this.klassSeminarId = klassSeminarId;
     }
 

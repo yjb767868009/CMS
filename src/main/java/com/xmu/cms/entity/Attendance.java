@@ -1,18 +1,20 @@
 package com.xmu.cms.entity;
 
+import java.math.BigInteger;
+
 /**
  * @author JuboYu on 2018/11/25.
  * @version 1.0
  */
 public class Attendance {
-    private Integer attendanceId;
+    private BigInteger attendanceId;
     private Team team;
     private Klass klass;
     private Seminar seminar;
     private String presentationFile;
     private String reportFile;
 
-    public Attendance(Integer attendanceId, Team team, Klass klass, Seminar seminar, String presentationFile, String reportFile) {
+    public Attendance(BigInteger attendanceId, Team team, Klass klass, Seminar seminar, String presentationFile, String reportFile) {
         this.attendanceId = attendanceId;
         this.team = team;
         this.klass = klass;
@@ -24,11 +26,11 @@ public class Attendance {
     public Attendance() {
     }
 
-    public Integer getAttendanceId() {
+    public BigInteger getAttendanceId() {
         return attendanceId;
     }
 
-    public void setAttendanceId(Integer attendanceId) {
+    public void setAttendanceId(BigInteger attendanceId) {
         this.attendanceId = attendanceId;
     }
 

@@ -6,6 +6,7 @@ import com.xmu.cms.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,12 +41,12 @@ public class CourseDaoImpl implements CourseDao {
     private ShareTeamMapper shareTeamMapper;
 
     @Override
-    public List<Course> getAllCoursesByTeacherId(Integer teacherId) {
+    public List<Course> getAllCoursesByTeacherId(BigInteger teacherId) {
         return courseMapper.getAllCourseByTeacherId(teacherId);
     }
 
     @Override
-    public Integer deleteCourse(Integer courseId) {
+    public Integer deleteCourse(BigInteger courseId) {
         courseMapper.deleteCourseById(courseId);
         List<Klass> klasses = klassMapper.getKlassesInCourse(courseId);
         for (Klass klass : klasses) {
@@ -92,7 +93,7 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public List<Course> getAllCourseByStudentId(Integer studentId) {
+    public List<Course> getAllCourseByStudentId(BigInteger studentId) {
         return null;
     }
 
@@ -102,7 +103,7 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public Course getCourse(Integer courseId) {
+    public Course getCourse(BigInteger courseId) {
         return courseMapper.getCourseById(courseId);
     }
 }

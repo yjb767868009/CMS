@@ -6,6 +6,7 @@ import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.support.MyUser;
 import com.xmu.cms.support.UserInfo;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -28,17 +29,17 @@ public interface UserService {
 
     Map<String, String> createTeacher(Teacher teacher);
 
-    Map<String, String> deleteTeacher(Integer teacherId);
+    Map<String, String> deleteTeacher(BigInteger teacherId);
 
     Teacher getTeacherByAccount(String account);
 
     List<Teacher> getTeacherByName(String name);
 
-    Teacher getTeacherById(Integer teacherId);
+    Teacher getTeacherById(BigInteger teacherId);
 
-    Map<String, String> updateTeacherInfo(Integer teacherId, Teacher teacher);
+    Map<String, String> updateTeacherInfo(BigInteger teacherId, Teacher teacher);
 
-    Map<String, String> updateTeacherPassword(Integer teacherId, Teacher teacher);
+    Map<String, String> updateTeacherPassword(BigInteger teacherId, Teacher teacher);
 
     List<Student> getAllStudents();
 
@@ -46,15 +47,15 @@ public interface UserService {
 
     Map<String, String> modifyStudentPassword(Student student);
 
-    Map<String, String> deleteStudent(Integer studentId);
+    Map<String, String> deleteStudent(BigInteger studentId);
 
     List<Student> getStudentByName(String name);
 
     Student getStudentByAccount(String account);
 
-    Map<String, String> activateStudent(Integer userId, Student student);
+    Map<String, String> activateStudent(BigInteger studentId, Student student);
 
-    Student getStudentById(Integer studentId);
+    Student getStudentById(BigInteger studentId);
 
-    List<Student> getNoTeamStudent(Integer courseId);
+    List<Student> getNoTeamStudent(BigInteger courseId);
 }

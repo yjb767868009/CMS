@@ -3,6 +3,7 @@ package com.xmu.cms.dao;
 import com.xmu.cms.entity.Klass;
 import com.xmu.cms.entity.Student;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -10,9 +11,9 @@ import java.util.List;
  * @version 1.0
  */
 public interface KlassDao {
-    Integer newKlass(Integer courseId, Klass klass);
+    Integer newKlass(BigInteger courseId, Klass klass);
 
-    List<Klass> getAllKlass(Integer courseId);
+    List<Klass> getAllKlass(BigInteger courseId);
 
-    Integer addStudentInKlass(Integer klassId, List<Student> students);
+    Integer addStudentInKlass(BigInteger klassId, List<Student> students);
 }

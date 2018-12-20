@@ -1,5 +1,6 @@
 package com.xmu.cms.entity;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -7,14 +8,14 @@ import java.util.List;
  * @version 1.0
  */
 public class Team {
-    private Integer teamId;
+    private BigInteger teamId;
     private Student leader;
     private List<Student> members;
     private Klass klass;
     private String teamName;
     private Boolean valid;
 
-    public Team(Integer teamId, Student leader, List<Student> members, Klass klass, String teamName, Boolean valid) {
+    public Team(BigInteger teamId, Student leader, List<Student> members, Klass klass, String teamName, Boolean valid) {
         this.teamId = teamId;
         this.leader = leader;
         this.members = members;
@@ -26,11 +27,11 @@ public class Team {
     public Team() {
     }
 
-    public Integer getTeamId() {
+    public BigInteger getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(Integer teamId) {
+    public void setTeamId(BigInteger teamId) {
         this.teamId = teamId;
     }
 

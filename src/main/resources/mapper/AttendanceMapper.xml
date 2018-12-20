@@ -3,7 +3,7 @@
 
 <mapper namespace="com.xmu.cms.mapper.AttendanceMapper">
     <resultMap id="AttendanceResultMap" type="com.xmu.cms.entity.Attendance">
-        <id property="attendanceId" column="attendanceId" javaType="java.lang.Integer"/>
+        <id property="attendanceId" column="attendanceId" javaType="java.math.BigInteger"/>
         <result property="presentationFile" column="pptUrl"/>
         <result property="reportFile" column="reportUrl"/>
         <association property="team" javaType="com.xmu.cms.entity.Team">

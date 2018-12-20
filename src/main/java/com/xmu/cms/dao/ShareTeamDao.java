@@ -2,6 +2,7 @@ package com.xmu.cms.dao;
 
 import com.xmu.cms.entity.ShareTeam;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * @version 1.0
  */
 public interface ShareTeamDao {
-    List<ShareTeam> getShareInCourse(Integer courseId);
+    List<ShareTeam> getShareInCourse(BigInteger courseId);
 
-    Integer deleteShare(Integer courseId, Integer shareId);
+    Integer deleteShare(BigInteger courseId, BigInteger shareId);
 }

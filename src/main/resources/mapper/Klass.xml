@@ -3,7 +3,7 @@
 
 <mapper namespace="com.xmu.cms.dao.KlassDao">
     <resultMap id="KlassResultMap" type="com.xmu.cms.entity.Klass">
-        <id property="klassId" column="id" javaType="java.lang.Integer"/>
+        <id property="klassId" column="id" javaType="java.math.BigInteger"/>
         <result property="grade" column="grade" javaType="java.lang.Integer"/>
         <result property="klassSerial" column="klass_serial" javaType="java.lang.Integer"/>
         <result property="klassTime" column="klass_time" javaType="java.lang.String"/>

@@ -58,4 +58,20 @@ public interface SeminarMapper {
      * @return 修改讨论课的信息
      */
     Integer modifySeminarReportDDL(Seminar seminar);
+
+    /**
+     * 获取课程中的所有讨论课
+     *
+     * @param courseId 课程id
+     * @return 讨论课列表
+     */
+    List<Seminar> getAllSeminarByCourseId(Integer courseId);//todo
+
+    /**
+     * 删除讨论课成绩
+     *
+     * @param seminarId 讨论课id
+     * @return 删除信息
+     */
+    Integer deleteSeminarScore(Integer seminarId);//todo
 }

@@ -1,8 +1,8 @@
 package com.xmu.cms.dao.Impl;
 
-import com.xmu.cms.dao.ShareDao;
-import com.xmu.cms.entity.Share;
-import com.xmu.cms.mapper.ShareMapper;
+import com.xmu.cms.dao.ShareTeamDao;
+import com.xmu.cms.entity.ShareTeam;
+import com.xmu.cms.mapper.ShareTeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,14 +13,14 @@ import java.util.List;
  * @version 1.0
  */
 @Component
-public class ShareDaoImpl implements ShareDao {
+public class ShareTeamDaoImpl implements ShareTeamDao {
 
     @Autowired
-    private ShareMapper shareMapper;
+    private ShareTeamMapper shareTeamMapper;
 
     @Override
-    public List<Share> getShareInCourse(Integer courseId) {
-        return shareMapper.getShareInCourse(courseId);
+    public List<ShareTeam> getShareInCourse(Integer courseId) {
+        return shareTeamMapper.getShareInCourse(courseId);
     }
 
     @Override

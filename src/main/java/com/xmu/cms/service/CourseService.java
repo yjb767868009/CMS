@@ -30,7 +30,7 @@ public interface CourseService {
 
     Map<String, String> deleteKlass(Integer classId);
 
-    List<Share> getShareInCourse(Integer courseId);
+    List<ShareTeam> getShareInCourse(Integer courseId);
 
     Map<String, String> deleteShare(Integer courseId, Integer shareId);
 }

@@ -1,7 +1,6 @@
 package com.xmu.cms.dao.Impl;
 
 import com.xmu.cms.dao.TeamDao;
-import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Team;
 import com.xmu.cms.mapper.StudentMapper;
 import com.xmu.cms.mapper.TeamMapper;
@@ -25,20 +24,26 @@ public class TeamDaoImpl implements TeamDao {
 
     @Override
     public List<Team> getTeamInCourse(Integer courseId) {
-        return teamMapper.getTeamInCourse(courseId);
+        List<Team> teams = teamMapper.getTeamInCourse(courseId);
+        for (Team team : teams) {
+            team.setMembers(studentMapper.getMembersInTeam(team.getTeamId()));
+        }
+        return teams;
     }
 
     @Override
     public Team getTeamInCourseByStudent(Integer courseId, Integer studentId) {
         Team team = teamMapper.getTeamInCourseByStudent(courseId, studentId);
-        List<Student> members = studentMapper.getMembersInTeam(team.getTeamId());
-        team.setMembers(members);
+        team.setMembers(studentMapper.getMembersInTeam(team.getTeamId()));
         return team;
     }
 
     @Override
     public List<Team> getAllTeamsInSeminar(Integer seminarId) {
-        //todo
-        return null;
+        List<Team> teams = teamMapper.getAllTeamsInSeminar(seminarId);
+        for (Team team : teams) {
+            team.setMembers(studentMapper.getMembersInTeam(team.getTeamId()));
+        }
+        return teams;
     }
 }

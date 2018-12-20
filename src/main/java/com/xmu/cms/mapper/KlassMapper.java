@@ -40,4 +40,26 @@ public interface KlassMapper {
      * @return 插入学生成功信息
      */
     Integer addStudent(Integer courseId, Integer klassId, Student student);//todo
+
+    /**
+     * 获取班级里的所有课程
+     * @param courseId 课程id
+     * @return 班级列表
+     */
+    List<Klass> getKlassesInCourse(Integer courseId);//todo
+
+    /**
+     * 删除班级轮次信息
+     * @param klassId 班级信息
+     * @param roundId 轮次信息
+     * @return 删除信息
+     */
+    Integer deleteKlassRound(Integer klassId, Integer roundId);//todo
+
+    /**
+     * 删除班级与学生的关系
+     * @param klassId 班级id
+     * @return 删除信息
+     */
+    Integer deleteKlassStudent(Integer klassId);
 }

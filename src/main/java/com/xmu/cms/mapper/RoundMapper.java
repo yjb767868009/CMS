@@ -16,6 +16,7 @@ public interface RoundMapper {
 
     /**
      * 新建轮次
+     *
      * @param round Round信息
      * @return 新建round成功信息
      */
@@ -32,9 +33,26 @@ public interface RoundMapper {
 
     /**
      * 更新轮次成绩计算规则
+     *
      * @param round 修改的轮次信息
      * @return 修改轮次的信息
      */
-    Integer updateCalType(Round round);
+    Integer updateCalType(Round round);//todo
+
+    /**
+     * 删除轮次
+     *
+     * @param roundId 轮次id
+     * @return 删除信息
+     */
+    Integer deleteRoundByRoundId(Integer roundId);//todo
+
+    /**
+     * 删除轮次成绩
+     *
+     * @param roundId 轮次id
+     * @return 删除信息
+     */
+    Integer deleteRoundScore(Integer roundId);
     //todo
 }

@@ -18,26 +18,35 @@ import AdminLogin from '@/views/Admin/AdminLogin'
 import AdminStudent from '@/views/Admin/AdminStudent'
 import AdminTeacher from '@/views/Admin/AdminTeacher'
 
-//Student
-// import SeminarDetail from '@/views/Student/mobile/SeminarDetail'
-// import SeminarPresentation from '@/views/Student/mobile/SeminarPresentation'
+
+//Student mobile
+import SeminarDetail from '@/views/Student/mobile/SeminarDetail'
+import StudentActivation from '@/views/Student/mobile/StudentActivation'
+import SeminarPresentation from '@/views/Student/mobile/SeminarPresentation'
 // import SeminarPPT from '@/views/Student/mobile/SeminarPPT'
-// import SeminarRegistration from '@/views/Student/mobile/SeminarRegistration'
-// import SeminarRegistrationModification from '@/views/Student/mobile/SeminarRegistrationModification'
-// import SeminarScore from '@/views/Student/mobile/SeminarScore'
-// import SeminarSeqFinished from '@/views/Student/mobile/SeminarSeqFinished'
-// import SeminarSeqRunning from '@/views/Student/mobile/SeminarSeqRunning'
+import SeminarRegistration from '@/views/Student/mobile/SeminarRegistration'
+import SeminarRegistrationModification from '@/views/Student/mobile/SeminarRegistrationModification'
+import SeminarScore from '@/views/Student/mobile/SeminarScore'
+import SeminarSeqFinished from '@/views/Student/mobile/SeminarSeqFinished'
+import SeminarSeqRunning from '@/views/Student/mobile/SeminarSeqRunning'
 // import SeminarSeqUnsigned from '@/views/Student/mobile/SeminarSeqUnsigned'
-// import SeminarSigned from '@/views/Student/mobile/SeminarSigned'
-// import StudentSetAccount from '@/views/Student/mobile/SetAccount'
-// import StudentCourseSeminar from '@/views/Student/mobile/StudentCourseSeminar'
-// import StudentInfo from '@/views/Student/mobile/StudentInfo'
-// import StudentSeminarList from '@/views/Student/mobile/StudentSeminarList'
+import SeminarSigned from '@/views/Student/mobile/SeminarSigned'
+import StudentCourseSeminar from '@/views/Student/mobile/StudentCourseSeminar'
+import StudentInfo from '@/views/Student/mobile/StudentInfo'
+import StudentSeminarList from '@/views/Student/mobile/StudentSeminarList'
+import StuSetAccount from '@/views/Student/mobile/StuSetAccount'
+import MyClass from '@/views/Student/mobile/MyClass'
+import MyScore from '@/views/Student/mobile/MyScore'
+import StudentCourseInfo from '@/views/Student/mobile/StudentCourseInfo'
+import TeamFreedom from '@/views/Student/mobile/TeamFreedom'
+import NewTeam from '@/views/Student/mobile/NewTeam'
+import TeamLeader from '@/views/Student/mobile/TeamLeader'
+import TeamMember from '@/views/Student/mobile/TeamMember'
+
+
 
 //Teacher
-import TeacherActivation from '@/views/Teacher/mobile/TeacherActivation'
-import MobileTeacher from '@/views/Teacher/mobile/MobileTeacher'
-import TeacherSetAccount from '@/views/Teacher/mobile/SetAccount'
+import SetAccount from '@/views/Teacher/mobile/SetAccount'
 import ManageCourse from '@/views/Teacher/mobile/ManageCourse'
 import SetSeminar from '@/views/Teacher/mobile/SetSeminar'
 import SetRound from '@/views/Teacher/mobile/SetRound'
@@ -48,6 +57,7 @@ import Seminar from '@/views/Teacher/mobile/Seminar'
 import Report from '@/views/Teacher/mobile/Report'
 import SeminarGrade from '@/views/Teacher/mobile/SeminarGrade'
 import ManageSeminar from '@/views/Teacher/mobile/ManageSeminar'
+import TeacherActivation from '@/views/Teacher/mobile/TeacherActivation'
 import GradeList from '@/views/Teacher/mobile/GradeList'
 import TeamList from '@/views/Teacher/mobile/TeamList'
 import CourseInfo from '@/views/Teacher/mobile/CourseInfo'
@@ -62,7 +72,7 @@ import CreateShare from '@/views/Teacher/mobile/CreateShare'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path:'/test',
@@ -84,7 +94,7 @@ export default new Router({
       }
     },
     {
-      path: '/mobileLogin',
+      path: '/mobile/login',
       name: 'MobileLogin',
       component: MobileLogin,
       meta:{
@@ -132,95 +142,125 @@ export default new Router({
       component:AdminTeacher,
     },
 
-    //student
-    // {
-    //   path:'/mobile/student/studentInfo',
-    //   name:'StudentInfo',
-    //   component:StudentInfo
-    // },
-    // {
-    //   path:'/mobile/Student/studentSeminarList',
-    //   name:'StudentSeminarList',
-    //   component:StudentSeminarList
-    // },
-    // {
-    //   path:'/mobile/student/course',
-    //   name:'StudentCourseSeminar',
-    //   component:StudentCourseSeminar
-    // },
-    // {
-    //   path:'/mobile/student/course/seminar',
-    //   name:'SeminarDetail',
-    //   component:SeminarDetail
-    // },
-    // {
-    //   path:'/mobile/student/course/seminar/finished',
-    //   name:'SeminarSeqFinished',
-    //   component:SeminarSeqFinished
-    // },
-    // {
-    //   path:'/mobile/student/course/seminar/finished/ppt',
-    //   name:'SeminarPPT',
-    //   component:SeminarPPT
-    // },
-    // {
-    //   path:'/mobile/student/course/seminar/running',
-    //   name:'SeminarSeqRunning',
-    //   component:SeminarSeqRunning
-    // },
-    // {
-    //   path:'/mobile/student/course/seminar/running/presentation',
-    //   name:'SeminarPresentation',
-    //   component:SeminarPresentation
-    // },
-    // {
-    //   path:'/mobile/student/course/seminar/running/ppt',
-    //   name:'SeminarPPT',
-    //   component:SeminarPPT
-    // },
-    // {
-    //   path:'/mobile/student/course/seminar/unsigned',
-    //   name:'SeminarSeqUnsigned',
-    //   component:SeminarSeqUnsigned
-    // },
-    // {
-    //   path:'/mobile/student/course/seminar/unsigned/ppt',
-    //   name:'SeminarPPT',
-    //   component:SeminarPPT
-    // },
-    // {
-    //   path:'/mobile/student/course/seminar/unsigned/registration',
-    //   name:'SeminarRegistration',
-    //   component:SeminarRegistration
-    // },
-    // {
-    //   path:'/mobile/student/course/seminar/signed',
-    //   name:'SeminarSigned', //截止和没截止
-    //   component:SeminarSigned
-    // },
-    // {
-    //   path:'/mobile/student/course/seminar/signed',
-    //   name:'SeminarSigned',
-    //   component:SeminarSigned
-    // },
+    //student mobile
+    {
+      path:'/mobile/student/studentInfo',
+      name:'StudentInfo',
+      component:StudentInfo
+    },
+    {
+      path:'/mobile/student/activation',
+      name:'StudentActivation',
+      component:StudentActivation
+    },
+    {
+      path:'/mobile/Student/studentSeminarList',
+      name:'StudentSeminarList',
+      component:StudentSeminarList
+    },
+    {
+      path:'/mobile/Student/stuSetAccount',
+      name:'StuSetAccount',
+      component:StuSetAccount
+    },
+    {
+      path:'/mobile/Student/myClass',
+      name:'MyClass',
+      component:MyClass
+    },
+    {
+      path:'/mobile/Student/myScore',
+      name:'MyScore',
+      component:MyScore
+    },
+    {
+      path:'/mobile/Student/studentCourseInfo',
+      name:'StudentCourseInfo',
+      component:StudentCourseInfo
+    },
+    {
+      path:'/mobile/Student/teamFreedom',
+      name:'TeamFreedom',
+      component:TeamFreedom
+    },
+    {
+      path:'/mobile/Student/teamLeader',
+      name:'TeamLeader',
+      component:TeamLeader
+    },
+    {
+      path:'/mobile/Student/teamMember',
+      name:'TeamMember',
+      component:TeamMember
+    },
+    {
+      path:'/mobile/Student/newTeam',
+      name:'NewTeam',
+      component:NewTeam
+    },
+    {
+      path:'/mobile/student/course',
+      name:'StudentCourseSeminar',
+      component:StudentCourseSeminar
+    },
+    {
+      path:'/mobile/student/course/seminar',
+      name:'SeminarDetail',
+      component:SeminarDetail
+    },
+    {
+      path:'/mobile/student/course/seminar/finished',
+      name:'SeminarSeqFinished',
+      component:SeminarSeqFinished
+    },
+    {
+      path:'/mobile/student/course/seminar/running',
+      name:'SeminarSeqRunning',
+      component:SeminarSeqRunning
+    },
+    {
+      path:'/mobile/student/course/seminar/running/presentation',
+      name:'SeminarPresentation',
+      component:SeminarPresentation
+    },
+    {
+      path:'/mobile/student/course/seminar/unsigned/registration',
+      name:'SeminarRegistration',
+      component:SeminarRegistration
+    },
+    {
+      path:'/mobile/student/course/seminar/signed',
+      name:'SeminarSigned', //截止和没截止
+      component:SeminarSigned
+    },
+    {
+      path:'/mobile/student/course/seminar/seminarScore',
+      name:'SeminarScore',
+      component:SeminarScore
+    },
+    {
+      path:'/mobile/student/course/seminar/seminarRegistrationModification',
+      name:'SeminarRegistrationModification',
+      component:SeminarRegistrationModification
+    },
+
 
     //teacher
+    // {
+    //   path: '/mobile/teacher',
+    //   name: 'MobileTeacher',
+    //   component: MobileTeacher
+    // },
     {
-      path: '/mobile/teacher', //教师个人页界面
-      name: 'MobileTeacher',
-      component: MobileTeacher
+      path: '/mobile/teacher/activation',
+      name: 'TeacherActivation',
+      component: TeacherActivation
     },
     {
-      path:'/mobile/teacher/activation',
-      name:'TeacherActivation',
-      component:TeacherActivation
+      path: '/mobile/teacher/account',
+      name: 'SetAccount',
+      component: SetAccount
     },
-    {
-      path: '/mobile/teacher/account',//账户与安全界面
-      name: 'TeacherSetAccount',
-      component: TeacherSetAccount
-    },
-    
     {
       path: '/mobile/teacher/course',
       name: 'ManageCourse',

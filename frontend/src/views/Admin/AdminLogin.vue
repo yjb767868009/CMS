@@ -54,7 +54,7 @@ import md5 from 'md5'
 				console.log(response)
                 let data = response.data
 
-                if(data.role=='admin'){
+                if(data.role==='admin'){
                     console.log('admin')
                     this.$store.state.token=data.token
                     this.$store.state.userType='admin'

@@ -99,7 +99,7 @@
         WHERE id = #{courseId}
     </delete>
 
-    <insert id="newCourse">
+    <insert id="createCourse" parameterType="com.xmu.cms.entity.Course">
         insert into course (id,
                             teacher_id,
                             course_name,
@@ -109,14 +109,14 @@
                             question_percentage,
                             team_start_time,
                             team_end_time)
-        values (#{courseId},
-                #{teacherId},
-                #{courseName},
-                #{introduction},
-                #{presentationWeight},
-                #{reportWeight},
-                #{questionWeight},
-                #{teamStartDate},
-                #{teamEndDate})
+        values (#{course.courseId},
+                #{course.teacher.teacherId},
+                #{course.courseName},
+                #{course.introduction},
+                #{course.presentationWeight},
+                #{course.reportWeight},
+                #{course.questionWeight},
+                #{course.teamStartDate},
+                #{course.teamEndDate})
     </insert>
 </mapper>

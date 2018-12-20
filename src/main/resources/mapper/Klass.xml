@@ -50,4 +50,36 @@
         where klass.id = #{klassId}
         and course.id = klass.course_id
     </select>
+
+    <insert id="addStudent">
+        insert klass_student(klass_id, student_id, course_id)
+        values (#{klassId}, #{studentId}, #{courseId})
+    </insert>
+
+    <select id="getKlassesInCourse" resultMap="KlassResultMap">
+        select klass.id as klassId,
+               grade,
+               klass_serial as klassSerial,
+               klass_time as klassTime,
+               klass_location as klassLocation,
+               course.id  as courseId,
+               course_name  as courseName
+        from klass,
+             course
+        where klass.course_id = #{courseId}
+          and course.id = klass.course_id
+    </select>
+
+    <delete id="deleteKlassRound">
+        delete
+        from klass_round
+        where klass_id = #{klassId}
+          and round_id = #{roundId}
+    </delete>
+
+    <delete id="deleteKlassStudent">
+        delete
+        from klass_student
+        where klass_id = #{klassId}
+    </delete>
 </mapper>

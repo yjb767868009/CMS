@@ -73,13 +73,13 @@ public interface StudentMapper {
      */
     Student getStudentById(@Param("studentId") Integer studentId);
 
-    List<Student> getNoTeamStudentInCourse(Integer courseId);
+    List<Student> getNoTeamStudentInCourse(@Param("courseId") Integer courseId);
 
     /**
      * 获取队伍中的成员信息
      * @param teamId 队伍id
      * @return 成员列表
      */
-    List<Student> getMembersInTeam(@Param("teamId") Integer teamId);//todo
+    List<Student> getMembersInTeam(@Param("teamId") Integer teamId);
 
 }

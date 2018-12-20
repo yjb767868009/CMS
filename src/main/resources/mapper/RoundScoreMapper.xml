@@ -55,4 +55,6 @@
         insert into seminar_score (team_id, klass_seminar_id, presentaton_score, report_score, question_score, total_score)
         values (#{teamId}, #{classSeminarId}, #{presentationScore}, #{reportScore}, #{questionScore}, #{totalScore})
     </insert>
+
+
 </mapper>

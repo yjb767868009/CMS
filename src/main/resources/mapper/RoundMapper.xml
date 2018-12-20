@@ -4,11 +4,10 @@
 <mapper namespace="com.xmu.cms.mapper.RoundMapper">
     <resultMap id="RoundResultMap" type="com.xmu.cms.entity.Round">
         <id property="roundId" column="roundId" javaType="java.lang.Integer"/>
-        <result property="courseId" column="courseId"/>
         <result property="roundSerial" column="roundSerial"/>
-        <result property="presentationScoreMethod" column="presentationScoreMethod"/>
-        <result property="reportScoreMethod" column="reportScoreMethod"/>
-        <result property="questionScoreMethod" column="questionScoreMethod"/>
+        <result property="presentationScoreType" column="presentationScoreType"/>
+        <result property="reportScoreType" column="reportScoreType"/>
+        <result property="questionScoreType" column="questionScoreType"/>
         <association property="course" javaType="com.xmu.cms.entity.Course">
             <id property="courseId" column="courseId"/>
             <result property="courseName" column="courseName"/>
@@ -29,22 +28,42 @@
         and course.id = course_id
     </select>
 
-    <insert id="newRound">
+    <select id="getRoundByRoundId" resultMap="RoundResultMap">
+        SELECT round.id                as roundId,
+               course_id               as couseId,
+               course.course_name    as courseName,
+               round_serial,
+               presentation_score_method as presentationScoreType,
+               report_score_method       as reportScoreType,
+               question_score_method     as questionScoreType
+        FROM round,
+             course
+        WHERE round.id = #{roundId}
+          and course.id = round.course_id
+    </select>
+
+    <insert id="insertRound" parameterType="com.xmu.cms.entity.Round">
         insert round (course_id, round_serial, presentation_score_method, report_score_method, question_score_method)
-        values (#{courseId}, #{roundSerial}, #{presentationScoreMethod}, #{reportScoreMethod}, #{questionScoreMethod})
+        values (#{round.course.courseId}, #{round.roundSerial}, #{round.presentationScoreType}, #{round.reportScoreType}, #{round.questionScoreType})
     </insert>
 
-    <delete id="deleteRound">
+    <delete id="deleteRoundByRoundId">
         delete
         from round
         where id = #{roundId}
     </delete>
 
-    <update id="modifyScoreMethod">
+    <update id="updateCalType" parameterType="com.xmu.cms.entity.Round">
         update round
-        set presentation_score_method = #{presentationScoreMethod},
-            report_score_method = #{reportScoreMethod},
-            question_score_method = #{questionScoreMethod}
-        where id = #{roundId}
+        set presentation_score_method = #{round.presentationScoreType},
+            report_score_method = #{round.reportScoreType},
+            question_score_method = #{round.questionScoreType}
+        where id = #{round.id}
     </update>
+
+    <delete id="deleteRoundScore">
+        delete
+        from round_score
+        where round_id = #{roundId}
+    </delete>
 </mapper>

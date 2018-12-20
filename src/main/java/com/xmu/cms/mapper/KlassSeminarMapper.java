@@ -1,6 +1,7 @@
 package com.xmu.cms.mapper;
 
 import com.xmu.cms.entity.KlassSeminar;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author JuboYu on 2018/12/20.
@@ -14,7 +15,8 @@ public interface KlassSeminarMapper {
      * @param seminarId 讨论课id
      * @return 班级讨论课
      */
-    KlassSeminar getKlassSeminarByKlassAndSeminar(Integer klassId, Integer seminarId);//todo
+    KlassSeminar getKlassSeminarByKlassAndSeminar(@Param("klassId") Integer klassId,
+                                                  @Param("seminarId") Integer seminarId);
 
     /**
      * 删除班级讨论课
@@ -22,5 +24,14 @@ public interface KlassSeminarMapper {
      * @param klassSeminarId 班级讨论课id
      * @return 删除信息
      */
-    Integer deleteKlassSeminar(Integer klassSeminarId);//todo
+    Integer deleteKlassSeminar(@Param("klassSeminarId") Integer klassSeminarId);
+
+
+    /**
+     * 删除讨论课成绩
+     *
+     * @param klassSeminarId 讨论课id
+     * @return 删除信息
+     */
+    Integer deleteKlassSeminarScore(@Param("klassSeminarId") Integer klassSeminarId);
 }

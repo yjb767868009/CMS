@@ -4,20 +4,22 @@ package com.xmu.cms.entity;
  * @author JuboYu on 2018/12/17.
  * @version 1.0
  */
-public class Share {
+public class ShareTeam {
     private Integer shareId;
-    private String shareType;
     private Course masterCourse;
     private Course receiveCourse;
+    private Teacher receiveTeacher;
+    private Integer status;
 
-    public Share(Integer shareId, String shareType, Course masterCourse, Course receiveCourse) {
+    public ShareTeam(Integer shareId, Course masterCourse, Course receiveCourse, Teacher receiveTeacher, Integer status) {
         this.shareId = shareId;
-        this.shareType = shareType;
         this.masterCourse = masterCourse;
         this.receiveCourse = receiveCourse;
+        this.receiveTeacher = receiveTeacher;
+        this.status = status;
     }
 
-    public Share() {
+    public ShareTeam() {
     }
 
     public Integer getShareId() {
@@ -26,14 +28,6 @@ public class Share {
 
     public void setShareId(Integer shareId) {
         this.shareId = shareId;
-    }
-
-    public String getShareType() {
-        return shareType;
-    }
-
-    public void setShareType(String shareType) {
-        this.shareType = shareType;
     }
 
     public Course getMasterCourse() {
@@ -50,5 +44,21 @@ public class Share {
 
     public void setReceiveCourse(Course receiveCourse) {
         this.receiveCourse = receiveCourse;
+    }
+
+    public Teacher getReceiveTeacher() {
+        return receiveTeacher;
+    }
+
+    public void setReceiveTeacher(Teacher receiveTeacher) {
+        this.receiveTeacher = receiveTeacher;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

@@ -25,10 +25,19 @@ public interface TeamMapper {
 
     /**
      * 获取课程中该学生的队伍
-     * @param courseId 课程id
+     *
+     * @param courseId  课程id
      * @param studentId 学生id
      * @return 队伍信息
      */
     Team getTeamInCourseByStudent(@Param("courseId") Integer courseId,
                                   @Param("studentId") Integer studentId);
+
+    /**
+     * 删除队伍
+     *
+     * @param teamId 队伍id
+     * @return 删除信息
+     */
+    Integer deleteTeamByTeamId(Integer teamId);
 }

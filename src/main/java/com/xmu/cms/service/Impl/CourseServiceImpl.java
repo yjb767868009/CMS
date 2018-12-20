@@ -2,7 +2,7 @@ package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.CourseDao;
 import com.xmu.cms.dao.KlassDao;
-import com.xmu.cms.dao.ShareDao;
+import com.xmu.cms.dao.ShareTeamDao;
 import com.xmu.cms.dao.TeamDao;
 import com.xmu.cms.entity.*;
 import com.xmu.cms.service.CourseService;
@@ -30,7 +30,7 @@ public class CourseServiceImpl implements CourseService {
     private KlassDao klassDao;
 
     @Autowired
-    private ShareDao shareDao;
+    private ShareTeamDao shareTeamDao;
 
     @Override
     public List<Course> getAllCoursesByTeacher(Teacher teacher) {
@@ -107,14 +107,14 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Share> getShareInCourse(Integer courseId) {
-        return shareDao.getShareInCourse(courseId);
+    public List<ShareTeam> getShareInCourse(Integer courseId) {
+        return shareTeamDao.getShareInCourse(courseId);
     }
 
     @Override
     public Map<String, String> deleteShare(Integer courseId, Integer shareId) {
         Map<String, String> message = new HashMap<String, String>(1);
-        Integer count = shareDao.deleteShare(courseId, shareId);
+        Integer count = shareTeamDao.deleteShare(courseId, shareId);
         if (count == 1) {
             message.put("message", "Success");
         } else {

@@ -1,6 +1,7 @@
 package com.xmu.cms.entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author JuboYu on 2018/11/26.
@@ -16,8 +17,9 @@ public class Course {
     private Float questionWeight;
     private Timestamp teamStartTime;
     private Timestamp teamEndTime;
+    private List<Klass> klasses;
 
-    public Course(Integer courseId, Teacher teacher, String CourseName, String introduction, Float presentationWeight, Float reportWeight, Float questionWeight, Timestamp teamStartTime, Timestamp teamEndTime) {
+    public Course(Integer courseId, Teacher teacher, String CourseName, String introduction, Float presentationWeight, Float reportWeight, Float questionWeight, Timestamp teamStartTime, Timestamp teamEndTime, List<Klass> klasses) {
         this.courseId = courseId;
         this.teacher = teacher;
         this.CourseName = CourseName;
@@ -27,6 +29,7 @@ public class Course {
         this.questionWeight = questionWeight;
         this.teamStartTime = teamStartTime;
         this.teamEndTime = teamEndTime;
+        this.klasses = klasses;
     }
 
     public Course() {
@@ -102,5 +105,13 @@ public class Course {
 
     public void setTeamEndTime(Timestamp teamEndTime) {
         this.teamEndTime = teamEndTime;
+    }
+
+    public List<Klass> getKlasses() {
+        return klasses;
+    }
+
+    public void setKlasses(List<Klass> klasses) {
+        this.klasses = klasses;
     }
 }

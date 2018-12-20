@@ -21,5 +21,18 @@ public interface AttendanceMapper {
 
     List<Attendance> getAttendancesInKlassSeminar(@Param("klassSeminarId") Integer klassSeminarId);
 
-    Map<String, String> studentAttendance(Integer teamId, Integer klassSeminarId, Integer teamOrder);
+    Map<String, String> studentAttendance(@Param("teamId") Integer teamId,
+                                          @Param("klassSeminarId") Integer klassSeminarId,
+                                          @Param("teamOrder") Integer teamOrder);
+
+    Integer newAttendance(@Param("klassSeminarId") Integer klassSeminarId,
+                          @Param("teamId") Integer teamId,
+                          @Param("teamOrder") Integer teamOrder,
+                          @Param("present") Integer present,
+                          @Param("reportName") String reportName,
+                          @Param("reportUrl") String reportUrl,
+                          @Param("pptName") String pptName,
+                          @Param("pptUrl") String pptUrl);
+
+    Integer deleteAttendance(@Param("attendanceId") Integer attendanceId);
 }

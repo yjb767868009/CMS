@@ -21,4 +21,6 @@ public interface CourseMapper {
     Integer deleteCourseById(@Param("courseId") Integer courseId);
 
     Course getCourseById(@Param("courseId") Integer courseId);
+
+
 }

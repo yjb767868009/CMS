@@ -2,6 +2,59 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.QuestionMapper">
+    <resultMap id="QuestionResultMap" type="com.xmu.cms.entity.Question">
+        <id property="questionId" column="questionId" javaType="java.lang.Integer"/>
+        <result property="score" column="score"/>
+        <association property="student" javaType="com.xmu.cms.entity.Student">
+            <id property="studentId" column="studentId"/>
+            <result property="studentName" column="studentName"/>
+        </association>
+        <association property="team" javaType="com.xmu.cms.entity.Team">
+            <id property="teamId" column="teamId"/>
+            <result property="teamName" column="teamName"/>
+        </association>
+        <association property="attendance" javaType="com.xmu.cms.entity.Attendance">
+            <id property="attendanceId" column="attendanceId"/>
+        </association>
+    </resultMap>
 
+    <select id="getQuestionByQuestionId" resultMap="QuestionResultMap">
+        select question.id as questionId,
+               score,
+               student.id as studentId,
+               student.student_name as studentName,
+               team.id as teamId,
+               team.team_name as teamName,
+               attendance.id  as attendanceId
+        from student,
+             question,
+             team,
+             attendance
+        where question.id = #{questionId}
+          and question.team_id = team.id
+          and question.student_id = student.id
+    </select>
 
+    <insert id="newQuestion">
+        insert question (klass_seminar_id, attendance_id, team_id, student_id, is_selected, score)
+        values (#{klassSeminarId}, #{attendanceId}, #{teamId}, #{studentId}, #{isSelected}, #{score})
+    </insert>
+
+    <delete id="deleteQuestion">
+        delete
+        from question
+        where id = #{questionId}
+    </delete>
+
+    <update id="selectQuestionByQuestionId">
+        update question
+        set is_selected = 1
+        where id = #{questionId}
+    </update>
+
+    <update id="setScore">
+        update question
+        set score = 1
+        where id = #{questionId}
+    </update>
 </mapper>

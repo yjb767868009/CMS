@@ -36,7 +36,7 @@ public class StudentController {
     }
 
     @Secured("ROLE_STUDENT")
-    @PostMapping(value = "/active")
+    @PutMapping(value = "/active")
     public Map<String, String> activateStudent(UserInfo info,
                                                @RequestParam(value = "student") Student student) {
         return userService.activateStudent(info.getUserId(), student);

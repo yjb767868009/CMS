@@ -30,8 +30,4 @@ public class AdminController {
         return userService.adminLogIn(admin);
     }
 
-
-
-
-
 }

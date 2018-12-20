@@ -5,6 +5,7 @@ import com.xmu.cms.service.CourseService;
 import com.xmu.cms.service.FileService;
 import com.xmu.cms.service.SeminarService;
 import com.xmu.cms.service.UserService;
+import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -73,6 +74,14 @@ public class TeacherController {
     @GetMapping(value = "/searchByAccount")
     public Teacher getTeacherByAccount(@RequestParam("account") String account) {
         return userService.getTeacherByAccount(account);
+    }
+
+    @Secured("ROLE_TEACHER")
+    @PutMapping(value="/active")
+    public Map<String,String> acticeTeacher(UserInfo info,
+    @RequestParam(value = "student") Teacher teacher){
+        //TODO 教师激活账号
+        return null;
     }
 
 }

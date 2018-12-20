@@ -18,7 +18,7 @@ public interface SeminarMapper {
      * @param seminar 新建的讨论课
      * @return 新建讨论课信息
      */
-    Integer insertSeminar(Seminar seminar);//todo
+    Integer insertSeminar(@Param("seminar") Seminar seminar);
 
     /**
      * 修改讨论课
@@ -26,7 +26,7 @@ public interface SeminarMapper {
      * @param seminar 修改的讨论课
      * @return 修改讨论课的信息
      */
-    Integer modifySeminar(Seminar seminar);//todo
+    Integer modifySeminar(@Param("seminar") Seminar seminar);
 
 
     Integer startKlassSeminar(@Param("klassSeminarId") Integer klassSeminarId);
@@ -49,15 +49,7 @@ public interface SeminarMapper {
      * @param seminarId 讨论课id
      * @return 删除讨论课信息
      */
-    Integer deleteSeminar(@Param("seminarId") Integer seminarId);//todo
-
-    /**
-     * 修改讨论课的报告截止时间
-     *
-     * @param seminar 修改的后的讨论课
-     * @return 修改讨论课的信息
-     */
-    Integer modifySeminarReportDDL(Seminar seminar);
+    Integer deleteSeminar(@Param("seminarId") Integer seminarId);
 
     /**
      * 获取课程中的所有讨论课
@@ -65,13 +57,5 @@ public interface SeminarMapper {
      * @param courseId 课程id
      * @return 讨论课列表
      */
-    List<Seminar> getAllSeminarByCourseId(Integer courseId);//todo
-
-    /**
-     * 删除讨论课成绩
-     *
-     * @param seminarId 讨论课id
-     * @return 删除信息
-     */
-    Integer deleteSeminarScore(Integer seminarId);//todo
+    List<Seminar> getAllSeminarByCourseId(@Param("courseId") Integer courseId);
 }

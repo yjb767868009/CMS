@@ -15,6 +15,11 @@
             <id property="teacherId" column="teacherId"/>
             <result property="name" column="name"/>
         </association>
+        <collection property="klasses" javaType="com.xmu.cms.entity.Klass">
+            <id property="klassId" column="klassId"/>
+            <result property="grade" column="grade"/>
+            <result property="klassSerial" column="klassSerial"/>
+        </collection>
     </resultMap>
 
     <select id="getAllCourseByTeacherId" resultMap="CourseResultMap">
@@ -28,11 +33,16 @@
                report_percentage             as reportWeight,
                question_percentage           as questionWeight,
                team_start_time      as teamStartDate,
-               team_end_time        as teamEndDate
+               team_end_time        as teamEndDate,
+               klass.id             as klassId,
+               klass.grade          as grade,
+               klass.klass_serial   as klassSerial
         FROM course,
-             teacher
+             teacher,
+             klass
         WHERE teacher.id = #{teacherId}
           AND teacher.id = course.teacher_id
+          and klass.course_id = course.id
     </select>
 
     <select id="getAllCourseByStudentId" resultType="com.xmu.cms.entity.Course">
@@ -46,7 +56,10 @@
                report_percentage             as reportWeight,
                question_percentage           as questionWeight,
                team_start_time      as teamStartDate,
-               team_end_time        as teamEndDate
+               team_end_time        as teamEndDate,
+               klass.id             as klassId,
+               klass.grade          as grade,
+               klass.klass_serial   as klassSerial
         FROM course,
              teacher,
              klass,
@@ -68,11 +81,16 @@
                report_percentage             as reportWeight,
                question_percentage           as questionWeight,
                team_start_time      as teamStartDate,
-               team_end_time        as teamEndDate
+               team_end_time        as teamEndDate,
+               klass.id             as klassId,
+               klass.grade          as grade,
+               klass.klass_serial   as klassSerial
         FROM course,
-             teacher
+             teacher,
+             klass
         WHERE course.id = #{courseId}
           AND teacher.id = course.teacher_id
+          and klass.course_id = course.id
     </select>
 
     <delete id="deleteCourseById">

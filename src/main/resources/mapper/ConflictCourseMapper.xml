@@ -2,6 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.ConflictCourseMapper">
+    <resultMap id="ConflictCourseResultMap" type="com.xmu.cms.entity.ConflictCourse">
+        <id property="conflictCourseId" column="conflictCourseId" javaType="java.lang.Integer"/>
+        <association property="course1" javaType="com.xmu.cms.entity.Course">
+            <id property="course1Id" column="course1Id"/>
+            <result property="course1Name" column="course1Name"/>
+        </association>
+        <association property="course2" javaType="com.xmu.cms.entity.Course">
+            <id property="course2Id" column="course2Id"/>
+            <result property="course2Name" column="course2Name"/>
+        </association>
+    </resultMap>
+    
+    <select id="getConflictCourse" resultMap="ConflictCourseResultMap">
+        select conflict_course_strategy.id as conflictCourseId,
+               course1.id as course1Id,
+               course1.course_name as course1Name,
+               course2.id as course2Id,
+               course2.course_name as course2Name
+        from conflict_course_strategy,
+             course course1,
+             course course2
+        where conflict_course_strategy.id = #{conflictCourseId}
+          and course1.id = course_1_id
+          and course2.id = course_2_id
+    </select>
 
+    <insert id="newConflictCourse">
+        insert conflict_course_strategy (course_1_id, course_2_id)
+        values (#{course1Id}, #{course2Id})
+    </insert>
 
+    <delete id="deleteConflictCourse">
+        delete
+        from conflict_course_strategy
+        where id = #{conflictCourseId}
+    </delete>
 </mapper>

@@ -154,7 +154,7 @@ export default new Router({
       component:StudentActivation
     },
     {
-      path:'/mobile/Student/studentSeminarList',
+      path:'/mobile/Student/studentSeminarList',//2.学生讨论课
       name:'StudentSeminarList',
       component:StudentSeminarList
     },
@@ -199,7 +199,7 @@ export default new Router({
       component:NewTeam
     },
     {
-      path:'/mobile/student/course',
+      path:'/mobile/student/course', //2-1讨论课
       name:'StudentCourseSeminar',
       component:StudentCourseSeminar
     },

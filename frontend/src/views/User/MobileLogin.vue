@@ -16,8 +16,8 @@
     </group>
     <x-button @click.native="login" style="margin-top:100px">登陆</x-button>
     <button
-      @click.native="forget"
-      style="background:0;height:0px;border:0;margin-left:80%;margin-top:10px"
+      @click="forget"
+      style="background:0;height:10px;border:0;margin-left:80%;margin-top:10px"
     >忘记密码</button>
     <div style="color:green;margin-top:50%">初次登录默认密码为123456</div>
   </div>
@@ -54,7 +54,7 @@ export default {
       return flag;
     },
     forget: function() {
-      this.$router.push("/mobile/modifypw");
+      this.$router.push("/mobile/findpw");
     },
     login: function() {
       this.$axios({
@@ -87,7 +87,7 @@ export default {
             this.$router.push('mobile/student/activation')
           }
           else{
-            this.$router.push('')
+            this.$router.push('/mobile/Student/studentSeminarList')
           }
         }
 

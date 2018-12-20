@@ -53,11 +53,11 @@ export default {
     ButtonTabItem
   },
   mounted: function() {
-    this.$axios.get("/course").then(response => {
-      this.courses = repsonse.data;
-    }).catch((error)=>{
-        console.log(error)
-    });
+    // this.$axios.get("/course").then(response => {
+    //   this.courses = repsonse.data;
+    // }).catch((error)=>{
+    //     console.log(error)
+    // });
   },
   data() {
     return {
@@ -86,8 +86,10 @@ export default {
     };
   },
   methods: {
+    // /mobile/Student/studentSeminarList
     click: function(course) {
-      this.$router.push('/')
+      this.$store.state.currentCourse=course
+      this.$router.push({ name: 'StudentCourseSeminar'})
     }
   }
 };

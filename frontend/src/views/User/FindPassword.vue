@@ -25,7 +25,9 @@ export default {
   methods: {
     next: function() {
       this.$axios
-        .get("/user/password")
+        .post("/user/password",{
+          account:this.account
+        })
         .then(response => {
           this.$router.push("/mobile/modifypw", {
               account: this.account

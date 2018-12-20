@@ -2,6 +2,48 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.KlassSeminarMapper">
+    <resultMap id="KlassSeminarResultMap" type="com.xmu.cms.entity.KlassSeminar">
+        <id property="klassSeminarId" column="klassSeminarId" javaType="java.lang.Integer"/>
+        <result property="reportDDL" column="reportDDL"/>
+        <result property="status" column="status"/>
+        <association property="klass" javaType="com.xmu.cms.entity.Klass">
+            <id property="klassId" column="klassId"/>
+            <result property="grade" column="grade"/>
+            <result property="klassSerial" column="klassSerial"/>
+        </association>
+        <association property="seminar" javaType="com.xmu.cms.entity.Seminar">
+            <id property="seminarId" column="seminarId"/>
+            <result property="seminarName" column="seminarName"/>
+        </association>
+    </resultMap>
 
+    <select id="getKlassSeminarByKlassAndSeminar" resultMap="KlassSeminarResultMap">
+        SELECT klass_seminar.id as klassSeminarId,
+               klass_seminar.report_ddl as reportDDL,
+               seminar_status as status,
+               klass.id as klassId,
+               grade,
+               klass_serial,
+               seminar.id as seminarId,
+               seminar_name as seminarName
+        FROM klass_seminar,
+             klass,
+             seminar
+        WHERE klass_seminar.klass_id = #{klassId}
+          and klass_seminar.seminar_id = #{seminarId}
+          and klass.id = #{klassId}
+          and seminar.id = #{seminarId}
+    </select>
 
+    <delete id="deleteKlassSeminar">
+        delete
+        from klass_seminar
+        where id = #{klassSeminarId}
+    </delete>
+
+    <delete id="deleteKlassSeminarScore">
+        delete
+        from seminar_score
+        where klass_seminar_id = #{klassSeminarId}
+    </delete>
 </mapper>

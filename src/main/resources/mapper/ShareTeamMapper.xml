@@ -2,6 +2,58 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.ShareTeamMapper">
+    <resultMap id="ShareTeamResultMap" type="com.xmu.cms.entity.Share">
+        <id property="shareId" column="shareId" javaType="java.lang.Integer"/>
+        <result property="status" column="status"/>
+        <association property="masterCourse" javaType="com.xmu.cms.entity.Course">
+            <id property="masterCourseId" column="masterCourseId"/>
+            <result property="masterCourseName" column="masterCourseName"/>
+        </association>
+        <association property="receiveCourse" javaType="com.xmu.cms.entity.Course">
+            <id property="receiveCourseId" column="receiveCourseId"/>
+            <result property="receiveCourseName" column="receiveCourseName"/>
+        </association>
+        <association property="receiveTeacher" javaType="com.xmu.cms.entity.Teacher">
+            <id property="receiveTeacherId" column="receiveTeacherId"/>
+            <result property="receiveTeacherName" column="receiveTeacherName"/>
+            <result property="receiveTeacherEmail" column="receiveTeacherEmail"/>
+        </association>
+    </resultMap>
 
+    <select id="getTeamShare" resultMap="ShareTeamResultMap">
+        select share_team_application.id as shareId,
+               course1.id as masterCourseId,
+               course1.course_name as masterCourseName,
+               course2.id as receiveCourseId,
+               course2.course_name as receiveCourseName,
+               teacher.id as receiveTeacherId,
+               teacher.teacher_name as receiveTeacherName,
+               teacher.email as receiveTeacherEmail,
+               status
+        from share_team_application,
+             course course1,
+             course course2,
+             teacher
+        where share_team_application.id = #{shareId}
+          and course1.id = share_team_application.main_course_id
+          and course2.id = share_team_application.sub_course_id
+          and teacher.id = course2.teacher_id
+    </select>
 
+    <insert id="newTeamShare">
+        insert share_team_application (main_course_id, sub_course_id, sub_course_teacher_id, status)
+        values (#{mainCourseId}, #{subCourseId}, #{subCourseTeacherId}, #{status})
+    </insert>
+
+    <delete id="deleteTeamShare">
+        delete
+        from share_team_application
+        where id = #{shareId}
+    </delete>
+
+    <update id="setTeamShareStatus">
+        update share_seminar_application
+        set status= #{status}
+        where id = #{shareId}
+    </update>
 </mapper>

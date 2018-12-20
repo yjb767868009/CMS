@@ -13,6 +13,9 @@ export default new Vuex.Store({
         token:'',
         userType:'',
         currentEmail:'',
+        currentCourse:'',
+        showContent:'',
+        currentSeminar:''
     },
     mutations:{
         

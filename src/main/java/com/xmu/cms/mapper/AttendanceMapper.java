@@ -19,4 +19,8 @@ public interface AttendanceMapper {
                                @Param("presentationScore") Float presentationScore);
 
     List<Attendance> getAttendancesInKlassSeminar(@Param("klassSeminarId") BigInteger klassSeminarId);
+
+    Integer newAttendance(@Param("attendance") Attendance attendance);
+
+    Integer deleteAttendance(@Param("attendanceId") BigInteger attendanceId);
 }

@@ -74,13 +74,13 @@ public interface StudentMapper {
      */
     Student getStudentById(@Param("studentId") BigInteger studentId);
 
-    List<Student> getNoTeamStudentInCourse(BigInteger courseId);
+    List<Student> getNoTeamStudentInCourse(@Param("courseId") BigInteger courseId);
 
     /**
      * 获取队伍中的成员信息
      * @param teamId 队伍id
      * @return 成员列表
      */
-    List<Student> getMembersInTeam(@Param("teamId") BigInteger teamId);//todo
+    List<Student> getMembersInTeam(@Param("teamId") BigInteger teamId);
 
 }

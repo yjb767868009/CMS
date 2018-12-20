@@ -2,44 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.SeminarMapper">
-    <resultMap id="seminarResultMap" type="com.xmu.cms.entity.Seminar">
-        <id property="seminarId" column="id" javaType="java.math.BigInteger"/>
-        <result property="courseId" column="course_id" javaType="java.math.BigInteger"/>
-        <result property="roundId" column="round_id" javaType="java.math.BigInteger"/>
-        <result property="seminarName" column="seminar_name" javaType="java.lang.String"/>
-        <result property="introduction" column="introduction" javaType="java.lang.String"/>
-        <result property="maxTeam" column="max_team" javaType="java.lang.Integer"/>
-        <result property="isVisible" column="is_visible" javaType="java.lang.Integer"/>
-        <result property="seminarSerial" column="seminar_serial" javaType="java.lang.Integer"/>
-        <result property="enrollStartTime" column="enroll_start_time" javaType="java.sql.Timestamp"/>
-        <result property="enrollEndTime" column="enroll_end_time" javaType="java.sql.Timestamp"/>
+    <resultMap id="SeminarResultMap" type="com.xmu.cms.entity.Seminar">
+        <id property="seminarId" column="seminarId" javaType="java.lang.Integer"/>
+        <result property="topic" column="topic"/>
+        <result property="introduction" column="introduction"/>
+        <result property="maxTeamNum" column="maxTeamNum"/>
+        <result property="visible" column="visible"/>
+        <result property="seminarSerial" column="signOrder"/>
+        <result property="signStartTime" column="signStartTime"/>
+        <result property="signEndTime" column="signEndTime"/>
+        <association property="course" javaType="com.xmu.cms.entity.Course">
+            <id property="courseId" column="courseId"/>
+            <result property="courseName" column="courseName"/>
+        </association>
+        <association property="round" javaType="com.xmu.cms.entity.Round">
+            <id property="roundId" column="roundId"/>
+        </association>
     </resultMap>
 
-    <insert id="newSeminar" parameterType="com.xmu.cms.entity.Seminar">
+    <insert id="insertSeminar" parameterType="com.xmu.cms.entity.Seminar">
         INSERT seminar (course_id, round_id, seminar_name, introduction, max_team, is_visible, seminar_serial, enroll_start_time, enroll_end_time)
-        VALUE (#{courseId},
-               #{roundId},
-               #{topic},
-               #{introduction},
-               #{maxTeamNum},
-               #{visible},
-               #{seminarSerial},
-               #{signStartTime},
-               #{signEndTime})
+        VALUE (#{seminar.course.courseId},
+               #{seminar.round.roundId},
+               #{seminar.topic},
+               #{seminar.introduction},
+               #{seminar.maxTeamNum},
+               #{seminar.visible},
+               #{seminar.signOrder},
+               #{seminar.signStartTime},
+               #{seminar.signEndTime})
     </insert>
 
-    <update id="modifySeminar">
+    <update id="modifySeminar" parameterType="com.xmu.cms.entity.Seminar">
         UPDATE seminar
-        SET course_id         = #{courseId},
-            round_id          = #{roundId},
-            seminar_name      = #{topic},
-            introduction      = #{introduction},
-            max_team          = #{maxTeamNum},
-            is_visible        = #{visible},
-            seminar_serial    = #{seminarSerial},
-            enroll_start_time = #{signStartTime},
-            enroll_end_time   = #{signEndTime}
-        WHERE id = #{seminarId}
+        SET course_id         = #{seminar.course.courseId},
+            round_id          = #{seminar.round.roundId},
+            seminar_name      = #{seminar.topic},
+            introduction      = #{seminar.introduction},
+            max_team          = #{seminar.maxTeamNum},
+            is_visible        = #{seminar.visible},
+            seminar_serial    = #{seminar.signOrder},
+            enroll_start_time = #{seminar.signStartTime},
+            enroll_end_time   = #{seminar.signEndTime}
+        WHERE id = #{seminar.seminarId}
     </update>
 
     <update id="startSeminar">
@@ -60,14 +65,60 @@
         WHERE id = #{klassSeminarId}
     </update>
 
-    <select id="getSeminar" parameterType="java.lang.String" resultMap="seminarResultMap">
-        SELECT *
-        FROM seminar
+    <select id="getSeminarBySeminarId" resultMap="SeminarResultMap">
+        SELECT seminar.id as seminarId,
+               seminar_name as topic,
+               seminar.introduction as introduction,
+               max_team as maxTeamNum,
+               is_visible as visible,
+               seminar_serial as signOrder,
+               enroll_end_time as signEndTime,
+               enroll_start_time as signStartTime,
+               course.id as courseId,
+               course_name as courseName,
+               round_id
+        FROM seminar,
+             course
+        where seminar.id = #{seminarId}
     </select>
 
-    <select id="getAllSeminarByRoundId" parameterType="java.lang.String" resultMap="seminarResultMap">
-        SELECT *
-        FROM seminar
-        WHERE round_id = #{roundId}
+    <select id="getAllSeminarByRoundId" resultMap="SeminarResultMap">
+        SELECT seminar.id as seminarId,
+               seminar_name as topic,
+               seminar.introduction as introduction,
+               max_team as maxTeamNum,
+               is_visible as visible,
+               seminar_serial as signOrder,
+               enroll_end_time as signEndTime,
+               enroll_start_time as signStartTime,
+               course.id as courseId,
+               course_name as courseName,
+               round_id
+        FROM seminar,
+             course
+        where seminar.round_id = #{roundId}
     </select>
+
+    <select id="getAllSeminarByCourseId" resultMap="SeminarResultMap">
+        SELECT seminar.id as seminarId,
+               seminar_name as topic,
+               seminar.introduction as introduction,
+               max_team as maxTeamNum,
+               is_visible as visible,
+               seminar_serial as signOrder,
+               enroll_end_time as signEndTime,
+               enroll_start_time as signStartTime,
+               course.id as courseId,
+               course_name as courseName,
+               round_id
+        FROM seminar,
+             course
+        where seminar.course_id = #{courseId}
+    </select>
+
+    <delete id="deleteSeminar">
+        delete
+        from seminar
+        where id = #{seminarId}
+    </delete>
 </mapper>

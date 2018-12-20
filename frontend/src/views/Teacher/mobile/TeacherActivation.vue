@@ -6,40 +6,63 @@
         </button>
     </x-header>
   <group>
-    <x-input v-model="account" style="margin-top:40px;background-color:#fff" placeholder="输入密码" ></x-input>
-    <x-input type="password" v-model="password" style="margin-top:20px;background-color:#fff" placeholder="确认密码"></x-input>
-    <div style="text-align:left;margin-top:20px">发送验证码邮箱1111@qq.com</div>
-    <x-input class="weui-vcode" style="margin-top:20px;background-color:#fff" placeholder="验证码">
-        <x-button slot="right" type="warn" mini plain>发送验证码</x-button>
-    </x-input>
+    <el-input type="password" v-model="password1" style="margin-top:40px;" placeholder="输入密码"></el-input>
+    <el-input type="password" v-model="password2" style="margin-top:40px;" placeholder="确认密码"></el-input>
   </group>
-    <div style="text-align:left;margin-top:100px;font-size:10px">可包含数字、字母、下划线，长度不少于六位</div>
-    <x-button @click="post1" style="margin-top:10px">确认提交</x-button>
+    <button @click="post">确认提交</button>
   </div>
 </template>
+
+<style>
+button {
+    color: #444444;
+    background: #F3F3F3;
+    border: 1px #DADADA solid;
+    padding: 5px 10px;
+    border-radius: 2px;
+    font-weight: bold;
+    font-size: 15pt;
+    outline: none;
+    margin-top:100%;
+    height:50px;
+    width:100%
+}
+
+</style>
+
 
 <script>
 import {XHeader,XButton,XInput} from 'vux'
 import axios from 'axios'
+import Toast from 'mint-ui'
 
 export default {
   data () {
     return {
-      account:'',
-      password:''
+      password1:'',
+      password2:'',
     }
   },
   components:{
     XHeader,
     XButton,
-    XInput
   },
   methods:{
-    close:function(){
-
-    },
-    post1:function(){
-
+    post:function(){
+      if(this.password1!==this.password2){
+        console.log(this.password1)
+        this.$message.error('两次密码不一致')
+      }else{
+        axios.put('/teacher/active',{
+          password:this.password1
+        }).then((response)=>{
+          if(response.status='200'){//成功
+            this.$router.push('')
+          }else{
+            return
+          }
+        })
+      }
     }
   }
 }

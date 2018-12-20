@@ -1,121 +1,146 @@
 <template>
-<div class="student" style="height:20px;background:#fff">
-    <x-header title="OOAD 2016-1" style="height:60px;padding-top:12px" :right-options="{showMore: true}" @on-click-more="show=!show">
-    </x-header>
-    <group title="我的讨论课">
-      <cell is-link :border-intent="false" :arrow-direction="showContent001 ? 'up' : 'down'"
-      @click.native="showContent001 = !showContent001" value-align="left">
-      <span>讨论课信息</span>
+  <div class="student" style="height:20px;background:#fff">
+    <x-header
+      v-bind:title="this.$store.state.currentCourse.name"
+      style="height:60px;padding-top:12px"
+      :right-options="{showMore: true}"
+      @on-click-more="show=!show"
+    ></x-header>
+
+    <group>
+      <cell
+        is-link
+        :border-intent="false"
+        :arrow-direction="showContent1?'down':'up'"
+        @click.native="showContent1=!showContent1"
+        value-align="left"
+      >
+        <span>第{{rounds[0].order}}轮</span>
       </cell>
-
-        <template v-if="showContent001">
+      <template v-if="showContent1">
+          <cell-box v-for="seminar in rounds[0].seminar" :key="seminar.id" @click.native="click(seminar)" is-link>
+              {{seminar.topic}}
+          </cell-box>
+      </template>
       
-        <cell is-link :border-intent="false" :arrow-direction="showContent002 ? 'up' : 'down'"
-         @click.native="showContent002 = !showContent002" value-align="left" style="padding-left:150px">
-        <span>第一轮</span>
-        </cell>
 
-            <template v-if="showContent002">
-                <cell-box :border-intent="false" class="sub-item" is-link link="/mobile/student/course/seminar" style="padding-left:130px">业务流程分析(正在进行)</cell-box>
-                <cell-box class="sub-item" is-link style="padding-left:130px" link="/mobile/student/course/seminar/signed">领域模型(尚未开始已报名)</cell-box>
-            </template>
-        
-      
-        <cell is-link :border-intent="false" :arrow-direction="showContent003 ? 'up' : 'down'"
-         @click.native="showContent003 = !showContent003" value-align="left" style="padding-left:150px">
-        <span>第二轮</span>
-        </cell>
-
-            <template v-if="showContent003">
-                <cell-box :border-intent="false" class="sub-item" is-link link="/mobile/student/course/seminar/signed" style="padding-left:130px">代码检查(已经结束)</cell-box>
-                <cell-box class="sub-item" is-link style="padding-left:130px" link="/mobile/student/course/seminar/unsigned/registration">对象模型设计(尚未开始未报名)</cell-box>
-            </template>
-        </template>
-        
-        <cell is-link :border-intent="false" :arrow-direction="showContent004 ? 'up' : 'down'"
-      @click.native="showContent004 = !showContent004" value-align="left" style="margin-top:10px">
-      <span>已报名的讨论课</span>
+      <cell
+        is-link
+        :border-intent="false"
+        :arrow-direction="showContent2?'down':'up'"
+        @click.native="showContent2=!showContent2"
+        value-align="left"
+      >
+        <span>第{{rounds[1].order}}轮</span>
       </cell>
-
-      <template v-if="showContent004">
-      
-        <cell is-link :border-intent="false" :arrow-direction="showContent005 ? 'up' : 'down'"
-         @click.native="showContent005 = !showContent005" value-align="left" style="padding-left:150px">
-        <span>第一轮</span>
-        </cell>
-
-            <template v-if="showContent005">
-                <cell-box class="sub-item" is-link style="padding-left:130px" link="/mobile/student/course/seminar/signed">领域模型</cell-box>
-            </template>
-      
-        <cell is-link :border-intent="false" :arrow-direction="showContent006 ? 'up' : 'down'"
-         @click.native="showContent006 = !showContent006" value-align="left" style="padding-left:150px;">
-        <span>第二轮</span>
-        </cell>
-
-            <template v-if="showContent006">
-                <cell-box :border-intent="false" class="sub-item" is-link style="padding-left:130px">代码检查</cell-box>
-                <cell-box class="sub-item" is-link style="padding-left:130px">对象模型设计</cell-box>
-            </template>
+      <template v-if="showContent2">
+          <cell-box v-for="seminar in rounds[1].seminar" :key="seminar.id" is-link></cell-box>
       </template>
     </group>
 
-     <div v-transfer-dom>
+    <div v-transfer-dom>
       <popup v-model="show" height="15%">
-          <div>
-              <cell value-align="left" title=""><img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="StudentInfo">个人页</div></cell>
-              <cell value-align="left" title=""><img slot="icon" src="@/assets/book.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="running">讨论课</div></cell>
-          </div>
+        <div>
+          <cell value-align="left" title>
+            <img
+              slot="icon"
+              src="@/assets/man.png"
+              style="display:block;margin-right:10px;"
+              width="30px"
+              height="30px"
+            >
+            <div style="padding-left:110px;font-size:1.3em;color:#000" @click="StudentInfo">个人页</div>
+          </cell>
+          <cell value-align="left" title>
+            <img
+              slot="icon"
+              src="@/assets/book.png"
+              style="display:block;margin-right:10px;"
+              width="30px"
+              height="30px"
+            >
+            <div style="padding-left:110px;font-size:1.3em;color:#000" @click="running">讨论课</div>
+          </cell>
+        </div>
       </popup>
     </div>
-</div>
+  </div>
 </template>
 
 <style>
-    .vux-header-more{
-        padding-top:9px;
-    }
-    .weui-cells{
-        color:#000;
-    }
+.vux-header-more {
+  padding-top: 9px;
+}
+.weui-cells {
+  color: #000;
+}
 </style>
 
 <script>
-import axios from 'axios'
-import {XHeader,Cell,CellBox, TransferDom,Popup,Group} from 'vux'
-  export default {
-    directives:{
-        TransferDom
-    },
-    components:{
-        XHeader,
-        Cell, CellBox,Popup,Group
-    },
-    data() {
-        return{
-        show:false,
-        showContent001: false,
-        showContent002:false,
-        showContent003:false,
-        showContent004: false,
-        showContent005:false,
-        showContent006:false,
+import axios from "axios";
+import { XHeader, Cell, CellBox, TransferDom, Popup, Group } from "vux";
+export default {
+  directives: {
+    TransferDom
+  },
+  components: {
+    XHeader,
+    Cell,
+    CellBox,
+    Popup,
+    Group
+  },
+  data() {
+    return {
+      rounds: [
+        {
+          id: 1,
+          order: 2
+        },
+        {
+          id: 2,
+          order: 3
         }
-    },
-    methods:{
-        toast:function(){
-            Toast(this.name)
-        },
-        onClick:function(){
-            console.log("sss");
-        },
-        running:function(){
-            this.$router.push('/mobile/Student/studentSeminarList')
-        },
-        StudentInfo:function(){
-            this.$router.push('/mobile/student/studentInfo')
+      ],
+      seminars: [
+        {
+          id: 45,
+          topic: "业务流程分析",
+          order: 2
         }
+      ],
+      show: false,
+      showContent:{},
+      showContent1:false,
+      showContent2:false
+    };
+  },
+  mounted: function() {
+    // this.$axios
+    //   .get("/course/" + this.$store.state.currentCourse.id + "/round")
+    //   .then(response => {
+    //     this.rounds = respnose.data;
+    //   });
+    // for (var i = 0; i < this.rounds.length; i++) {
+    //     this.$axios.get("/round/"+this.rounds[i].id+'/seminar').then(response=>{
+    //         this.rounds[i].seminars=response.data
+    //     })
+    // }
+    for(var i=0;i<this.rounds.length;i++){
+        this.rounds[i].seminar=this.seminars
     }
-        
-  };
+  },
+  methods: {
+    click: function(seminar) {
+      this.$store.state.currentSeminar=seminar
+      this.$router.push({name:''})
+    },
+    running: function() {
+      this.$router.push("/mobile/Student/studentSeminarList");
+    },
+    StudentInfo: function() {
+      this.$router.push("/mobile/student/studentInfo");
+    }
+  }
+};
 </script>

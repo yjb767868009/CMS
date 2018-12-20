@@ -14,7 +14,7 @@
     <x-button style="margin-left:60%;margin-top:10px" type="warn" mini plain>立即验证</x-button>
   </group>
         <div style="text-align:left;margin-top:100px;font-size:10px">邮箱格式如：useremail@host.domainnames</div>
-    <x-button @click="post1" style="margin-top:10px">确认提交</x-button>
+    <x-button @click="post" style="margin-top:10px">确认提交</x-button>
   </div>
 </template>
 
@@ -35,10 +35,7 @@ export default {
     XInput
   },
   methods:{
-    close:function(){
-
-    },
-    post1:function(){
+    post:function(){
 
     }
   }

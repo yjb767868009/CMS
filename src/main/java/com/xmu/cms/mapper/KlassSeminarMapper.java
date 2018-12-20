@@ -2,8 +2,9 @@ package com.xmu.cms.mapper;
 
 import com.xmu.cms.entity.KlassSeminar;
 import org.apache.ibatis.annotations.Mapper;
-
+import org.apache.ibatis.annotations.Param;
 import java.math.BigInteger;
+
 
 /**
  * @author JuboYu on 2018/12/20.
@@ -18,7 +19,8 @@ public interface KlassSeminarMapper {
      * @param seminarId 讨论课id
      * @return 班级讨论课
      */
-    KlassSeminar getKlassSeminarByKlassAndSeminar(BigInteger klassId, BigInteger seminarId);//todo
+    KlassSeminar getKlassSeminarByKlassAndSeminar(@Param("klassId") BigInteger klassId,
+                                                  @Param("seminarId") BigInteger seminarId);
 
     /**
      * 删除班级讨论课
@@ -26,5 +28,14 @@ public interface KlassSeminarMapper {
      * @param klassSeminarId 班级讨论课id
      * @return 删除信息
      */
-    Integer deleteKlassSeminar(BigInteger klassSeminarId);//todo
+    Integer deleteKlassSeminar(@Param("klassSeminarId") BigInteger klassSeminarId);
+
+
+    /**
+     * 删除讨论课成绩
+     *
+     * @param klassSeminarId 讨论课id
+     * @return 删除信息
+     */
+    Integer deleteKlassSeminarScore(@Param("klassSeminarId") BigInteger klassSeminarId);
 }

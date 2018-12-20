@@ -6,9 +6,9 @@
         <id property="studentId" column="id" javaType="java.math.BigInteger"/>
         <result property="account" column="account"/>
         <result property="password" column="password"/>
-        <result property="name" column="student_name"/>
+        <result property="name" column="studentName"/>
         <result property="email" column="email"/>
-        <result property="activation" column="is_active"/>
+        <result property="activation" column="activation"/>
     </resultMap>
 
     <select id="getAllStudents" resultMap="StudentResultMap">
@@ -16,7 +16,7 @@
         FROM student
     </select>
 
-    <insert id="insertStudent">
+    <insert id="insertStudent" parameterType="com.xmu.cms.entity.Student">
         INSERT INTO student (account, password, email, student_name, is_active)
         VALUE (#{student.account}, #{student.password}, #{student.email}, #{student.name}, #{student.activation})
     </insert>
@@ -71,8 +71,9 @@
         WHERE student_name = #{name}
     </select>
 
-    <select id="getStudentByTeamId">
-        select id as studentId, student_name as studentName
+    <select id="getMembersInTeam">
+        select student.id as studentId,
+               student_name as studentName
         from student,
              klass_student
         where klass_student.team_id = #{teamId}

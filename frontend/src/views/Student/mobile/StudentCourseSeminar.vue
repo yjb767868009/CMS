@@ -9,20 +9,33 @@
 
     <group>
       <cell
-        v-for="round in rounds"
-        :key="round.id"
         is-link
         :border-intent="false"
-        :arrow-direction="showContent[''+round.id]?'down':'up'"
-        @click.native="click(round.id)"
+        :arrow-direction="showContent1?'down':'up'"
+        @click.native="showContent1=!showContent1"
         value-align="left"
       >
-        <span>第{{round.order}}轮</span>
+        <span>第{{rounds[0].order}}轮</span>
       </cell>
-      <template v-if="showContent">
-
+      <template v-if="showContent1">
+          <cell-box v-for="seminar in rounds[0].seminar" :key="seminar.id" @click.native="click(seminar)" is-link>
+              {{seminar.topic}}
+          </cell-box>
       </template>
+      
 
+      <cell
+        is-link
+        :border-intent="false"
+        :arrow-direction="showContent2?'down':'up'"
+        @click.native="showContent2=!showContent2"
+        value-align="left"
+      >
+        <span>第{{rounds[1].order}}轮</span>
+      </cell>
+      <template v-if="showContent2">
+          <cell-box v-for="seminar in rounds[1].seminar" :key="seminar.id" is-link></cell-box>
+      </template>
     </group>
 
     <div v-transfer-dom>
@@ -99,6 +112,7 @@ export default {
       show: false,
       showContent:{},
       showContent1:false,
+      showContent2:false
     };
   },
   mounted: function() {
@@ -115,16 +129,11 @@ export default {
     for(var i=0;i<this.rounds.length;i++){
         this.rounds[i].seminar=this.seminars
     }
-    console.log(this.rounds[0].id)
-    this.showContent[''+this.rounds[0].id]=false
-    this.showContent[''+this.rounds[1].id]=false
-    console.log(this.showContent)
   },
   methods: {
-    click: function(value) {
-      console.log(value);
-      this.showContent[''+value]=!this.showContent[''+value]
-      console.log(this.showContent)
+    click: function(seminar) {
+      this.$store.state.currentSeminar=seminar
+      this.$router.push({name:''})
     },
     running: function() {
       this.$router.push("/mobile/Student/studentSeminarList");

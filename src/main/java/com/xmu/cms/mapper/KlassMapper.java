@@ -102,9 +102,20 @@ public interface KlassMapper {
 
     /**
      * 删除单个学生和队伍的关系
-     * @param teamId 队伍id
+     *
+     * @param teamId  队伍id
      * @param student 学生id
      * @return 修改信息
      */
     Integer removeTeamStudent(BigInteger teamId, Student student);// TODO: 2018/12/21  
+
+    /**
+     * 增加班级与轮次的关系
+     *
+     * @param klassId      班级id
+     * @param roundId      轮次id
+     * @param enrollNumber 最大报名数
+     * @return 新建信息
+     */
+    Integer insertKlassRound(Integer klassId, BigInteger roundId, Integer enrollNumber);// TODO: 2018/12/21
 }

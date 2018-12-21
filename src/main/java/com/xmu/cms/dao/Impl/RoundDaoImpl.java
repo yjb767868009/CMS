@@ -2,12 +2,14 @@ package com.xmu.cms.dao.Impl;
 
 import com.xmu.cms.dao.RoundDao;
 import com.xmu.cms.entity.Round;
+import com.xmu.cms.mapper.KlassMapper;
 import com.xmu.cms.mapper.RoundMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author JuboYu on 2018/12/18.
@@ -17,6 +19,9 @@ import java.util.List;
 public class RoundDaoImpl implements RoundDao {
     @Autowired
     private RoundMapper roundMapper;
+
+    @Autowired
+    private KlassMapper klassMapper;
 
     @Override
     public List<Round> getRoundsByCourseId(BigInteger courseId) {
@@ -30,6 +35,11 @@ public class RoundDaoImpl implements RoundDao {
 
     @Override
     public Integer newRound(Round round) {
+        Map<Integer, Integer> klassEnrollNumber = round.getKlassEnrollNumber();
+        for (Integer klassId : klassEnrollNumber.keySet()) {
+            Integer enrollNumber = klassEnrollNumber.get(klassId);
+            klassMapper.insertKlassRound(klassId, round.getRoundId(), enrollNumber);
+        }
         return roundMapper.insertRound(round);
     }
 

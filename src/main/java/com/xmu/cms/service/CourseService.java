@@ -31,7 +31,7 @@ public interface CourseService {
 
     Map<String, String> deleteKlass(BigInteger classId);
 
-    List<ShareTeam> getShareInCourse(BigInteger courseId);
+    List<Object> getShareInCourse(BigInteger courseId);
 
     Map<String, String> deleteShare(BigInteger courseId, BigInteger shareId);
 
@@ -43,5 +43,9 @@ public interface CourseService {
 
     Map<String, String> teamAddMembers(BigInteger  teamId, List<Student> students);
 
-    Map<String, String> teamRemoveMember(BigInteger  teamId);
+    Map<String, String> teamRemoveMember(BigInteger teamId, Student student);
+
+    List<ShareTeam> getShareTeamInCourse(BigInteger courseId);
+
+    List<ShareSeminar> getShareSeminarInCourse(BigInteger courseId);
 }

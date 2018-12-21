@@ -20,7 +20,7 @@ public class ShareTeamDaoImpl implements ShareTeamDao {
     private ShareTeamMapper shareTeamMapper;
 
     @Override
-    public List<ShareTeam> getShareInCourse(BigInteger courseId) {
+    public List<ShareTeam> getShareTeamInCourse(BigInteger courseId) {
         return shareTeamMapper.getShareInCourse(courseId);
     }
 

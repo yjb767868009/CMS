@@ -1,7 +1,9 @@
 package com.xmu.cms.dao.Impl;
 
 import com.xmu.cms.dao.SeminarDao;
+import com.xmu.cms.entity.KlassSeminar;
 import com.xmu.cms.entity.Seminar;
+import com.xmu.cms.mapper.KlassSeminarMapper;
 import com.xmu.cms.mapper.SeminarMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,6 +20,9 @@ public class SeminarDaoImpl implements SeminarDao {
     @Autowired
     private SeminarMapper seminarMapper;
 
+    @Autowired
+    private KlassSeminarMapper klassSeminarMapper;
+
     @Override
     public Integer insertSeminar(Seminar seminar) {
         return seminarMapper.insertSeminar(seminar);
@@ -30,17 +35,19 @@ public class SeminarDaoImpl implements SeminarDao {
 
     @Override
     public Integer modifySeminar(Seminar seminar) {
+        List<KlassSeminar> klassSeminars = seminar.getKlassSeminars();
+        for (KlassSeminar klassSeminar : klassSeminars) {
+            klassSeminarMapper.updateKlassSeminar(klassSeminar);
+        }
         return seminarMapper.modifySeminar(seminar);
     }
 
     @Override
-    public Integer modifySeminarReportDDL(Seminar seminar) {
-        return seminarMapper.modifySeminarReportDDL(seminar);
-    }
-
-    @Override
     public Seminar getSeminarBySeminarId(BigInteger seminarId) {
-        return seminarMapper.getSeminarBySeminarId(seminarId);
+        Seminar seminar = seminarMapper.getSeminarBySeminarId(seminarId);
+        List<KlassSeminar> klassSeminars = klassSeminarMapper.getKlassSeminarBySeminarId(seminarId);
+        seminar.setKlassSeminars(klassSeminars);
+        return seminar;
     }
 
     @Override

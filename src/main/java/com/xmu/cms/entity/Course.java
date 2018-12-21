@@ -11,7 +11,7 @@ import java.util.List;
 public class Course {
     private BigInteger courseId;
     private Teacher teacher;
-    private String CourseName;
+    private String courseName;
     private String introduction;
     private Float presentationWeight;
     private Float reportWeight;
@@ -23,7 +23,7 @@ public class Course {
     public Course(BigInteger courseId, Teacher teacher, String CourseName, String introduction, Float presentationWeight, Float reportWeight, Float questionWeight, Timestamp teamStartTime, Timestamp teamEndTime, List<Klass> klasses) {
         this.courseId = courseId;
         this.teacher = teacher;
-        this.CourseName = CourseName;
+        this.courseName = CourseName;
         this.introduction = introduction;
         this.presentationWeight = presentationWeight;
         this.reportWeight = reportWeight;
@@ -53,11 +53,11 @@ public class Course {
     }
 
     public String getCourseName() {
-        return CourseName;
+        return courseName;
     }
 
     public void setCourseName(String courseName) {
-        this.CourseName = courseName;
+        this.courseName = courseName;
     }
 
     public String getIntroduction() {

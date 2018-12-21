@@ -96,4 +96,12 @@ public interface KlassMapper {
      * @return 修改信息
      */
     Integer addMembers(BigInteger klassId, BigInteger studentId);// TODO: 2018/12/20
+
+    /**
+     * 删除单个学生和队伍的关系
+     * @param teamId 队伍id
+     * @param student 学生id
+     * @return 修改信息
+     */
+    Integer removeTeamStudent(BigInteger teamId, Student student);// TODO: 2018/12/21  
 }

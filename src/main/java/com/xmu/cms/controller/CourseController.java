@@ -56,8 +56,8 @@ public class CourseController {
         }
     }
 
-    @GetMapping(value="/{courseId}/round")
-    public Round getRound(@PathVariable("courseId") Integer courseId){
+    @GetMapping(value = "/{courseId}/round")
+    public Round getRound(@PathVariable("courseId") Integer courseId) {
         //TODO
         return null;
     }
@@ -87,12 +87,6 @@ public class CourseController {
         return seminarService.newRound(round);
     }
 
-    @GetMapping(value = "/{courseId}/score")
-    public SeminarScore getScoreInCourse() {
-        //TODO
-        return null;
-    }
-
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/{courseId}/team")
     public List<Team> getTeamInCourse(UserInfo info,
@@ -108,8 +102,8 @@ public class CourseController {
     }
 
     //学生ID通过JWT传入
-    @GetMapping(value="/{courseId}/myTeam")
-    public Team getMyTeam(@PathVariable("courseId") Integer courseId){
+    @GetMapping(value = "/{courseId}/myTeam")
+    public Team getMyTeam(@PathVariable("courseId") Integer courseId) {
         //TODO
         return null;
     }
@@ -137,22 +131,23 @@ public class CourseController {
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
     @GetMapping(value = "/{courseId}/share")
-    public List<ShareTeam> listAllShareByCourseId(@PathVariable("courseId") BigInteger courseId) {
+    public List<Object> listAllShareByCourseId(@PathVariable("courseId") BigInteger courseId) {
         return courseService.getShareInCourse(courseId);
     }
-    /*
-    @Secured("ROLE_TEACHER")
-    @CheckCoursePermission
-    @GetMapping(value = "/{courseId}/teamshare")
-    public List<TeamShare> listAllTeamShareByCourseId(@PathVariable("courseId") Integer courseId) {
-        return courseService.getShareInCourse(courseId);
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
+    @GetMapping(value = "/{courseId}/teamshare")
+    public List<ShareTeam> getShareTeamByCourseId(@PathVariable("courseId") BigInteger courseId) {
+        return courseService.getShareTeamInCourse(courseId);
+    }
+
+    @Secured("ROLE_TEACHER")
     @GetMapping(value = "/{courseId}/seminarshare")
-    public List<SeminarShare> listAllSeminarShareByCourseId(@PathVariable("courseId") Integer courseId) {
-        return courseService.getShareInCourse(courseId);
-    */
+    public List<ShareSeminar> getShareSeminarByCourseId(@PathVariable("courseId") BigInteger courseId) {
+        return courseService.getShareSeminarInCourse(courseId);
+
+    }
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission

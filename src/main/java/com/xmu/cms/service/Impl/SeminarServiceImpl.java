@@ -36,6 +36,9 @@ public class SeminarServiceImpl implements SeminarService {
     @Autowired
     private QuestionDao questionDao;
 
+    @Autowired
+    private KlassSeminarDao klassSeminarDao;
+
     @Override
     public Map<String, String> newSeminar(Seminar seminar) {
         Map<String, String> message = new HashMap<String, String>(2);
@@ -78,10 +81,10 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Map<String, String> modifySeminarReportDDL(Seminar seminar) {
+    public Map<String, String> modifyKlassSeminarReportDDL(KlassSeminar klassSeminar) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarDao.modifySeminarReportDDL(seminar);
-        if (count == 1) {
+        Integer count = klassSeminarDao.updateKlassSeminarReportDDL(klassSeminar);
+        if (count > 0) {
             message.put("message", "Success");
         } else {
             message.put("message", "Error");
@@ -202,6 +205,11 @@ public class SeminarServiceImpl implements SeminarService {
             message.put("message", "Error");
         }
         return message;
+    }
+
+    @Override
+    public List<Klass> getKlassInSeminar(BigInteger seminarId) {
+        return klassSeminarDao.getKlassInSeminar(seminarId);
     }
 
 

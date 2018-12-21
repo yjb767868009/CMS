@@ -85,4 +85,9 @@ public class TeamDaoImpl implements TeamDao {
         }
         return count;
     }
+
+    @Override
+    public Integer removeMember(BigInteger teamId, Student student) {
+        return klassMapper.removeTeamStudent(teamId, student);
+    }
 }

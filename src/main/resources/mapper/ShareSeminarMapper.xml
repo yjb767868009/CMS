@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.xmu.cms.mapper.ShareTeamMapper">
-    <resultMap id="ShareTeamResultMap" type="com.xmu.cms.entity.Share">
-        <id property="shareId" column="shareId" javaType="java.lang.Integer"/>
+<mapper namespace="com.xmu.cms.mapper.ShareSeminarMapper">
+    <resultMap id="ShareTeamResultMap" type="com.xmu.cms.entity.ShareSeminar">
+        <id property="shareSeminarId" column="shareSeminarId" javaType="java.math.BigInteger"/>
         <result property="status" column="status"/>
         <association property="masterCourse" javaType="com.xmu.cms.entity.Course">
-            <id property="masterCourseId" column="masterCourseId"/>
-            <result property="masterCourseName" column="masterCourseName"/>
+            <id property="courseId" column="masterCourseId"/>
+            <result property="courseName" column="masterCourseName"/>
         </association>
         <association property="receiveCourse" javaType="com.xmu.cms.entity.Course">
-            <id property="receiveCourseId" column="receiveCourseId"/>
-            <result property="receiveCourseName" column="receiveCourseName"/>
+            <id property="courseId" column="receiveCourseId"/>
+            <result property="courseName" column="receiveCourseName"/>
         </association>
         <association property="receiveTeacher" javaType="com.xmu.cms.entity.Teacher">
-            <id property="receiveTeacherId" column="receiveTeacherId"/>
-            <result property="receiveTeacherName" column="receiveTeacherName"/>
-            <result property="receiveTeacherEmail" column="receiveTeacherEmail"/>
+            <id property="teacherId" column="receiveTeacherId"/>
+            <result property="name" column="receiveTeacherName"/>
+            <result property="email" column="receiveTeacherEmail"/>
         </association>
     </resultMap>
 

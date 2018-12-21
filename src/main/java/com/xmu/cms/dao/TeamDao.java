@@ -24,4 +24,6 @@ public interface TeamDao {
     Integer deleteTeam(BigInteger teamId);
 
     Integer addMembers(BigInteger teamId, List<Student> students);
+
+    Integer removeMember(BigInteger teamId, Student student);
 }

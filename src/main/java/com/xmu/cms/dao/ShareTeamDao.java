@@ -10,7 +10,7 @@ import java.util.List;
  * @version 1.0
  */
 public interface ShareTeamDao {
-    List<ShareTeam> getShareInCourse(BigInteger courseId);
+    List<ShareTeam> getShareTeamInCourse(BigInteger courseId);
 
     Integer deleteShare(BigInteger courseId, BigInteger shareId);
 }

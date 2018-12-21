@@ -55,6 +55,6 @@ public class TeamController {
     @PutMapping(value = "/team/{teamId}/remove")
     public Map<String, String> removeTeamMember(@PathVariable("teamId") BigInteger teamId,
                                                 @RequestBody Student student) {
-        return courseService.teamRemoveMember(teamId);
+        return courseService.teamRemoveMember(teamId, student);
     }
 }

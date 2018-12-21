@@ -2,6 +2,7 @@ package com.xmu.cms.entity;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author JuboYu on 2018/11/29.
@@ -18,8 +19,9 @@ public class Seminar {
     private Timestamp signEndTime;
     private Boolean signOrder;
     private Boolean visible;
+    private List<KlassSeminar> klassSeminars;
 
-    public Seminar(BigInteger seminarId, Course course, Round round, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible) {
+    public Seminar(BigInteger seminarId, Course course, Round round, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible, List<KlassSeminar> klassSeminars) {
         this.seminarId = seminarId;
         this.course = course;
         this.round = round;
@@ -30,6 +32,7 @@ public class Seminar {
         this.signEndTime = signEndTime;
         this.signOrder = signOrder;
         this.visible = visible;
+        this.klassSeminars = klassSeminars;
     }
 
     public Seminar() {
@@ -113,5 +116,13 @@ public class Seminar {
 
     public void setVisible(Boolean visible) {
         this.visible = visible;
+    }
+
+    public List<KlassSeminar> getKlassSeminars() {
+        return klassSeminars;
+    }
+
+    public void setKlassSeminars(List<KlassSeminar> klassSeminars) {
+        this.klassSeminars = klassSeminars;
     }
 }

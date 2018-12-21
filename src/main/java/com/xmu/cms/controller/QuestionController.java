@@ -40,10 +40,4 @@ public class QuestionController {
         question.setQuestionId(questionId);
         return seminarService.scoreQuestion(question);
     }
-    @PutMapping(value="/question/{questionId}")
-    public Map<String,String> makeScore(@PathVariable(value="questionId") Integer questionId,
-                                        @RequestBody Question questionScore){
-        //TODO 给提问打分，修改提问打分
-        return null;
-    }
 }

@@ -19,7 +19,7 @@ public interface SeminarService {
 
     Map<String, String> modifySeminar(Seminar seminar);
 
-    Map<String, String> modifySeminarReportDDL(Seminar seminar);
+    Map<String, String> modifyKlassSeminarReportDDL(KlassSeminar klassSeminar);
 
     Seminar getSeminarBySeminarId(BigInteger seminarId);
 
@@ -54,4 +54,6 @@ public interface SeminarService {
     Question askQuestion(BigInteger userId, BigInteger attendanceId);
 
     Map<String, String> scoreQuestion(Question question);
+
+    List<Klass> getKlassInSeminar(BigInteger seminarId);
 }

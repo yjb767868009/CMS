@@ -16,8 +16,6 @@ public interface SeminarDao {
 
     Integer modifySeminar(Seminar seminar);
 
-    Integer modifySeminarReportDDL(Seminar seminar);
-
     Seminar getSeminarBySeminarId(BigInteger seminarId);
 
     Seminar getRunningSeminarByTeacherId(BigInteger teacherId);

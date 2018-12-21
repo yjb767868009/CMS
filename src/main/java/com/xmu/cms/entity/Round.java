@@ -1,6 +1,7 @@
 package com.xmu.cms.entity;
 
 import java.math.BigInteger;
+import java.util.Map;
 
 /**
  * @author JuboYu on 2018/11/27.
@@ -13,14 +14,16 @@ public class Round {
     private Integer presentationScoreType;
     private Integer reportScoreType;
     private Integer questionScoreType;
+    private Map<Integer, Integer> klassEnrollNumber;//Map<klassId,enrollNumber>
 
-    public Round(BigInteger roundId, Integer order, Course course, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType) {
+    public Round(BigInteger roundId, Integer order, Course course, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType, Map<Integer, Integer> klassEnrollNumber) {
         this.roundId = roundId;
         this.order = order;
         this.course = course;
         this.presentationScoreType = presentationScoreType;
         this.reportScoreType = reportScoreType;
         this.questionScoreType = questionScoreType;
+        this.klassEnrollNumber = klassEnrollNumber;
     }
 
     public Round() {
@@ -72,5 +75,13 @@ public class Round {
 
     public void setOrder(Integer order) {
         this.order = order;
+    }
+
+    public Map<Integer, Integer> getKlassEnrollNumber() {
+        return klassEnrollNumber;
+    }
+
+    public void setKlassEnrollNumber(Map<Integer, Integer> klassEnrollNumber) {
+        this.klassEnrollNumber = klassEnrollNumber;
     }
 }

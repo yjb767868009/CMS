@@ -1,9 +1,6 @@
 package com.xmu.cms.service.Impl;
 
-import com.xmu.cms.dao.CourseDao;
-import com.xmu.cms.dao.KlassDao;
-import com.xmu.cms.dao.ShareTeamDao;
-import com.xmu.cms.dao.TeamDao;
+import com.xmu.cms.dao.*;
 import com.xmu.cms.entity.*;
 import com.xmu.cms.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +29,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private ShareTeamDao shareTeamDao;
+
+    @Autowired
+    private ShareSeminarDao shareSeminarDao;
 
     @Override
     public List<Course> getAllCoursesByTeacher(Teacher teacher) {
@@ -108,8 +108,11 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<ShareTeam> getShareInCourse(BigInteger courseId) {
-        return shareTeamDao.getShareInCourse(courseId);
+    public List<Object> getShareInCourse(BigInteger courseId) {
+        List<Object> shares = new ArrayList<>();
+        shares.addAll(shareTeamDao.getShareTeamInCourse(courseId));
+        shares.addAll(shareSeminarDao.getShareSeminarInCourse(courseId));
+        return shares;
     }
 
     @Override
@@ -130,12 +133,12 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Team getTeamByTeamId(BigInteger  teamId) {
+    public Team getTeamByTeamId(BigInteger teamId) {
         return teamDao.getTeamByTeamId(teamId);
     }
 
     @Override
-    public Map<String, String> deleteTeam(BigInteger  teamId) {
+    public Map<String, String> deleteTeam(BigInteger teamId) {
         Map<String, String> message = new HashMap<String, String>(1);
         Integer count = teamDao.deleteTeam(teamId);
         if (count > 0) {
@@ -147,7 +150,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Map<String, String> teamAddMembers(BigInteger  teamId, List<Student> students) {
+    public Map<String, String> teamAddMembers(BigInteger teamId, List<Student> students) {
         Map<String, String> message = new HashMap<String, String>(1);
         Integer count = teamDao.addMembers(teamId, students);
         if (count > 0) {
@@ -159,7 +162,24 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Map<String, String> teamRemoveMember(BigInteger  teamId) {
-        return null;
+    public Map<String, String> teamRemoveMember(BigInteger teamId, Student student) {
+        Map<String, String> message = new HashMap<String, String>(1);
+        Integer count = teamDao.removeMember(teamId, student);
+        if (count > 0) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
+    }
+
+    @Override
+    public List<ShareTeam> getShareTeamInCourse(BigInteger courseId) {
+        return shareTeamDao.getShareTeamInCourse(courseId);
+    }
+
+    @Override
+    public List<ShareSeminar> getShareSeminarInCourse(BigInteger courseId) {
+        return shareSeminarDao.getShareSeminarInCourse(courseId);
     }
 }

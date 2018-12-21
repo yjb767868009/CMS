@@ -35,4 +35,9 @@ public class KlassSeminarDaoImpl implements KlassSeminarDao {
     public Integer updateKlassSeminarReportDDL(KlassSeminar klassSeminar) {
         return klassSeminarMapper.updateKlassSeminar(klassSeminar);
     }
+
+    @Override
+    public KlassSeminar getKlassSeminarByKlassAndSeminar(BigInteger klassId, BigInteger seminarId) {
+        return klassSeminarMapper.getKlassSeminarByKlassAndSeminar(klassId, seminarId);
+    }
 }

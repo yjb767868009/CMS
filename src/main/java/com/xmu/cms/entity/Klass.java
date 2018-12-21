@@ -1,24 +1,27 @@
 package com.xmu.cms.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.math.BigInteger;
 
 /**
  * @author JuboYu on 2018/11/26.
  * @version 1.0
  */
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Klass {
     private BigInteger klassId;
     private Course course;
     private Integer grade;
-    private String name;
+    private Integer klassSerial;
     private String classTime;
     private String classPlace;
 
-    public Klass(BigInteger klassId, Course course, Integer grade, String name, String classPlace, String classTime) {
+    public Klass(BigInteger klassId, Course course, Integer grade, Integer klassSerial, String classPlace, String classTime) {
         this.klassId = klassId;
         this.course = course;
         this.grade = grade;
-        this.name = name;
+        this.klassSerial = klassSerial;
         this.classPlace = classPlace;
         this.classTime = classTime;
     }
@@ -34,12 +37,12 @@ public class Klass {
         this.klassId = id;
     }
 
-    public String getName() {
-        return name;
+    public Integer getKlassSerial() {
+        return this.klassSerial;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setKlassSerial(Integer klassSerial) {
+        this.klassSerial = klassSerial;
     }
 
     public String getClassPlace() {

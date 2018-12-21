@@ -2,11 +2,13 @@ package com.xmu.cms.controller;
 
 import com.xmu.cms.entity.*;
 import com.xmu.cms.service.SeminarService;
+import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +32,21 @@ public class SeminarController {
     @GetMapping(value = "/seminar/{seminarId}")
     public Seminar getSeminar(@PathVariable("seminarId") BigInteger seminarId) {
         return seminarService.getSeminarBySeminarId(seminarId);
+    }
+
+
+    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
+    @GetMapping(value = "/seminar/{seminarId}/class/{classId}")
+    public Map<String, Object> getKlassSeminar(UserInfo userInfo,
+                                               @PathVariable("seminarId") BigInteger seminarId,
+                                               @PathVariable("classId") BigInteger klassId) {
+        Map<String, Object> message = new HashMap<String, Object>(2);
+        if (userInfo.getUserType().equals("student")) {
+            message.put("attendance", seminarService.getStudentAttendanceInKlassSeminar(userInfo.getUserId(), klassId, seminarId));
+        }
+        message.put("klassSeminar", seminarService.getKlassSeminarByKlassAndSeminar(klassId, seminarId));
+        message.put("seminar", seminarService.getSeminarBySeminarId(seminarId));
+        return message;
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})

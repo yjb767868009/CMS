@@ -3,7 +3,7 @@
 
 <mapper namespace="com.xmu.cms.mapper.SeminarMapper">
     <resultMap id="SeminarResultMap" type="com.xmu.cms.entity.Seminar">
-        <id property="seminarId" column="seminarId" javaType="java.lang.Integer"/>
+        <id property="seminarId" column="seminarId" javaType="java.math.BigInteger"/>
         <result property="topic" column="topic"/>
         <result property="introduction" column="introduction"/>
         <result property="maxTeamNum" column="maxTeamNum"/>

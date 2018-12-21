@@ -45,8 +45,8 @@ public class SeminarDaoImpl implements SeminarDao {
     @Override
     public Seminar getSeminarBySeminarId(BigInteger seminarId) {
         Seminar seminar = seminarMapper.getSeminarBySeminarId(seminarId);
-        List<KlassSeminar> klassSeminars = klassSeminarMapper.getKlassSeminarBySeminarId(seminarId);
-        seminar.setKlassSeminars(klassSeminars);
+        //List<KlassSeminar> klassSeminars = klassSeminarMapper.getKlassSeminarBySeminarId(seminarId);
+        //seminar.setKlassSeminars(klassSeminars);
         return seminar;
     }
 

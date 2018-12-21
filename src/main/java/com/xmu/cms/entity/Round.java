@@ -1,5 +1,7 @@
 package com.xmu.cms.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.math.BigInteger;
 import java.util.Map;
 
@@ -7,6 +9,7 @@ import java.util.Map;
  * @author JuboYu on 2018/11/27.
  * @version 1.0
  */
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Round {
     private BigInteger roundId;
     private Integer order;

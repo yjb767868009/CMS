@@ -4,8 +4,10 @@
 <mapper namespace="com.xmu.cms.mapper.AttendanceMapper">
     <resultMap id="AttendanceResultMap" type="com.xmu.cms.entity.Attendance">
         <id property="attendanceId" column="attendanceId" javaType="java.math.BigInteger"/>
-        <result property="presentationFile" column="pptUrl"/>
-        <result property="reportFile" column="reportUrl"/>
+        <result property="teamOrder" column="team_order"/>
+        <result property="presentationFile" column="ppt_name"/>
+        <result property="reportFile" column="report_name"/>
+        <result property="present" column="is_present"/>
         <association property="team" javaType="com.xmu.cms.entity.Team">
             <id property="teamId" column="teamId"/>
         </association>
@@ -17,34 +19,61 @@
         </association>
     </resultMap>
 
-    <select id="getPresentationsInSeminar" resultMap="AttendanceResultMap">
-        SELECT attendance.id as attendanceId,
-               attendance.team_id       as teamId,
-               seminar_id    as seminarId,
-               team_order    as teamOrder,
-               ppt_name      as ppt,
-               report_name   as report,
-               ppt_url     as ppt,
-               reprot_url  as report,
-               presentaton_score  as presentationScore,
-               report_score       as reportScore
+    <select id="getAttendancesInSeminar" resultMap="AttendanceResultMap">
+        SELECT attendance.id      as attendanceId,
+               team_order,
+               ppt_name,
+               report_name,
+               is_present,
+               attendance.team_id as teamId,
+               klass_id           as klassId,
+               seminar_id         as seminarId
         FROM attendance,
-             klass_seminar,
-             seminar_score
+             klass_seminar
         WHERE klass_seminar.seminar_id = #{seminarId}
           AND klass_seminar.id = attendance.klass_seminar_id
-          and klass_seminar.id = seminar_score.klass_seminar_id
         ORDER BY team_order
     </select>
-    
+
     <insert id="newAttendance">
-        insert attendance (klass_seminar_id, team_id, team_order, is_present, report_name, reprot_url, ppt_name, ppt_url)
-        values (#{klassSeminarId}, #{teamId}, #{teamOrder}, #{present}, #{reportName}, #{reportUrl}, #{pptName}, #{pptUrl})
+        insert attendance (klass_seminar_id,
+                           team_id,
+                           team_order,
+                           is_present,
+                           report_name,
+                           reprot_url,
+                           ppt_name,
+                           ppt_url)
+        values (#{klassSeminarId},
+                #{teamId},
+                #{teamOrder},
+                #{present},
+                #{reportName},
+                #{reportUrl},
+                #{pptName},
+                #{pptUrl})
     </insert>
-    
+
     <delete id="deleteAttendance" parameterType="java.lang.Integer">
-        delete 
+        delete
         from attendance
         where id = #{attendanceId}
     </delete>
+
+    <select id="getStudentAttendanceInKlassSeminar" resultMap="AttendanceResultMap">
+        SELECT attendance.id          as attendanceId,
+               ppt_name,
+               report_name,
+               attendance.team_id     as teamId,
+               klass_seminar.klass_id as klassId,
+               seminar_id             as seminarId
+        FROM attendance,
+             klass_seminar,
+             klass_student
+        WHERE klass_seminar.seminar_id = #{seminarId}
+          AND klass_seminar.klass_id = #{klassId}
+          AND klass_student.student_id = #{studentId}
+          AND klass_student.team_id = attendance.team_id
+          AND klass_seminar.id = attendance.klass_seminar_id
+    </select>
 </mapper>

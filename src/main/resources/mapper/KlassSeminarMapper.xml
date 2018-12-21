@@ -3,9 +3,9 @@
 
 <mapper namespace="com.xmu.cms.mapper.KlassSeminarMapper">
     <resultMap id="KlassSeminarResultMap" type="com.xmu.cms.entity.KlassSeminar">
-        <id property="klassSeminarId" column="klassSeminarId" javaType="java.lang.Integer"/>
-        <result property="reportDDL" column="reportDDL"/>
-        <result property="status" column="status"/>
+        <id property="klassSeminarId" column="klassSeminarId" javaType="java.math.BigInteger"/>
+        <result property="reportDDL" column="report_ddl"/>
+        <result property="status" column="seminar_status"/>
         <association property="klass" javaType="com.xmu.cms.entity.Klass">
             <id property="klassId" column="klassId"/>
             <result property="grade" column="grade"/>
@@ -13,19 +13,19 @@
         </association>
         <association property="seminar" javaType="com.xmu.cms.entity.Seminar">
             <id property="seminarId" column="seminarId"/>
-            <result property="seminarName" column="seminarName"/>
+            <result property="topic" column="seminarName"/>
         </association>
     </resultMap>
 
     <select id="getKlassSeminarByKlassAndSeminar" resultMap="KlassSeminarResultMap">
         SELECT klass_seminar.id as klassSeminarId,
-               klass_seminar.report_ddl as reportDDL,
-               seminar_status as status,
-               klass.id as klassId,
+               report_ddl,
+               seminar_status,
+               klass.id         as klassId,
                grade,
                klass_serial,
-               seminar.id as seminarId,
-               seminar_name as seminarName
+               seminar.id       as seminarId,
+               seminar_name     as seminarName
         FROM klass_seminar,
              klass,
              seminar
@@ -55,4 +55,19 @@
         from seminar_score
         where klass_seminar_id = #{klassSeminarId}
     </delete>
+
+    <select id="getKlassSeminarBySeminarId" resultMap="KlassSeminarResultMap">
+        SELECT klass_seminar.id as klassSeminarId,
+               report_ddl,
+               seminar_status,
+               klass.id         as klassId,
+               grade,
+               klass_serial,
+               seminar.id       as seminarId,
+               seminar_name     as seminarName
+        FROM klass_seminar,
+             klass,
+             seminar
+        WHERE seminar_id = #{seminarId}
+    </select>
 </mapper>

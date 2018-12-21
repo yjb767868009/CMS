@@ -13,4 +13,6 @@ public interface AttendanceDao {
     List<Attendance> getAttendancesInSeminar(BigInteger seminarId);
 
     Integer setAttendanceScore(BigInteger attendanceId, Float presentationScore);
+
+    Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId);
 }

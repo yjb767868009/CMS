@@ -31,7 +31,7 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public Teacher getTeacherByAccount(String account) {
         Teacher teacher = teacherMapper.getTeacherByAccount(account);
-        teacher.setCourses(courseMapper.getAllCourseByTeacherId(teacher.getTeacherId()));
+        //teacher.setCourses(courseMapper.getAllCourseByTeacherId(teacher.getTeacherId()));
         return teacher;
     }
 

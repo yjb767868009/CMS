@@ -14,4 +14,6 @@ public interface KlassSeminarDao {
     List<Klass> getKlassInSeminar(BigInteger seminarId);
 
     Integer updateKlassSeminarReportDDL(KlassSeminar klassSeminar);
+
+    KlassSeminar getKlassSeminarByKlassAndSeminar(BigInteger klassId, BigInteger seminarId);
 }

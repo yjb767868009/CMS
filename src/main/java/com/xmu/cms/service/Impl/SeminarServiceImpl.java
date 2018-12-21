@@ -212,5 +212,15 @@ public class SeminarServiceImpl implements SeminarService {
         return klassSeminarDao.getKlassInSeminar(seminarId);
     }
 
+    @Override
+    public KlassSeminar getKlassSeminarByKlassAndSeminar(BigInteger klassId, BigInteger seminarId) {
+        return klassSeminarDao.getKlassSeminarByKlassAndSeminar(klassId, seminarId);
+    }
+
+    @Override
+    public Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId) {
+        return attendanceDao.getStudentAttendanceInKlassSeminar(studentId, klassId, seminarId);
+    }
+
 
 }

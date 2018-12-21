@@ -6,6 +6,7 @@
         <id property="teacherId" column="id" javaType="java.math.BigInteger"/>
         <result property="account" column="account"/>
         <result property="password" column="password"/>
+        <result property="email" column="email"/>
         <result property="name" column="teacher_name"/>
         <result property="activation" column="is_active"/>
     </resultMap>

@@ -14,16 +14,16 @@ public class Klass {
     private Course course;
     private Integer grade;
     private Integer klassSerial;
-    private String classTime;
-    private String classPlace;
+    private String klassTime;
+    private String klassPlace;
 
-    public Klass(BigInteger klassId, Course course, Integer grade, Integer klassSerial, String classPlace, String classTime) {
+    public Klass(BigInteger klassId, Course course, Integer grade, Integer klassSerial, String klassPlace, String klassTime) {
         this.klassId = klassId;
         this.course = course;
         this.grade = grade;
         this.klassSerial = klassSerial;
-        this.classPlace = classPlace;
-        this.classTime = classTime;
+        this.klassPlace = klassPlace;
+        this.klassTime = klassTime;
     }
 
     public Klass() {
@@ -45,20 +45,20 @@ public class Klass {
         this.klassSerial = klassSerial;
     }
 
-    public String getClassPlace() {
-        return classPlace;
+    public String getKlassPlace() {
+        return klassPlace;
     }
 
-    public void setClassPlace(String classPlace) {
-        this.classPlace = classPlace;
+    public void setKlassPlace(String classPlace) {
+        this.klassPlace = classPlace;
     }
 
-    public String getClassTime() {
-        return classTime;
+    public String getKlassTime() {
+        return klassTime;
     }
 
-    public void setClassTime(String classTime) {
-        this.classTime = classTime;
+    public void setKlassTime(String classTime) {
+        this.klassTime = classTime;
     }
 
     public Course getCourse() {

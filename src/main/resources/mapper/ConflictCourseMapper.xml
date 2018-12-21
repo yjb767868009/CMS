@@ -3,14 +3,14 @@
 
 <mapper namespace="com.xmu.cms.mapper.ConflictCourseMapper">
     <resultMap id="ConflictCourseResultMap" type="com.xmu.cms.entity.ConflictCourse">
-        <id property="conflictCourseId" column="conflictCourseId" javaType="java.lang.Integer"/>
+        <id property="conflictCourseId" column="conflictCourseId" javaType="java.math.BigInteger"/>
         <association property="course1" javaType="com.xmu.cms.entity.Course">
-            <id property="course1Id" column="course1Id"/>
-            <result property="course1Name" column="course1Name"/>
+            <id property="courseId" column="course1Id"/>
+            <result property="courseName" column="course1Name"/>
         </association>
         <association property="course2" javaType="com.xmu.cms.entity.Course">
-            <id property="course2Id" column="course2Id"/>
-            <result property="course2Name" column="course2Name"/>
+            <id property="courseId" column="course2Id"/>
+            <result property="courseName" column="course2Name"/>
         </association>
     </resultMap>
     

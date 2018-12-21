@@ -13,7 +13,8 @@
         <result property="teamEndTime" column="teamEndDate"/>
         <association property="teacher" javaType="com.xmu.cms.entity.Teacher">
             <id property="teacherId" column="teacherId"/>
-            <result property="name" column="name"/>
+            <result property="name" column="teacherName"/>
+            <result property="email" column="teacherEmail"/>
         </association>
         <collection property="klasses" javaType="com.xmu.cms.entity.Klass">
             <id property="klassId" column="klassId"/>
@@ -25,8 +26,8 @@
     <select id="getAllCourseByTeacherId" resultMap="CourseResultMap">
         SELECT course.id            as courseId,
                teacher.id           as teacherId,
-               teacher.email,
-               teacher.teacher_name as name,
+               teacher.email        as teacherEmail,
+               teacher.teacher_name as teacherName,
                course_name          as courseName,
                introduction,
                presentation_percentage       as presentationWeight,
@@ -48,8 +49,8 @@
     <select id="getAllCourseByStudentId" resultType="com.xmu.cms.entity.Course">
         SELECT course.id            as courseId,
                teacher.id           as teacherId,
-               teacher.email,
-               teacher.teacher_name as name,
+               teacher.email        as teacherEmail,
+               teacher.teacher_name as teacherName,
                course_name          as courseName,
                introduction,
                presentation_percentage       as presentationWeight,
@@ -73,8 +74,8 @@
     <select id="getCourseById" resultMap="CourseResultMap">
         SELECT course.id            as courseId,
                teacher.id           as teacherId,
-               teacher.email,
-               teacher.teacher_name as name,
+               teacher.email        as teacherEmail,
+               teacher.teacher_name as teacherName,
                course_name          as courseName,
                introduction,
                presentation_percentage       as presentationWeight,

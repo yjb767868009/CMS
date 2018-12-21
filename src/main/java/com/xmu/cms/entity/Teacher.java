@@ -1,5 +1,7 @@
 package com.xmu.cms.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.math.BigInteger;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import java.util.List;
  * @author JuboYu on 2018/11/23.
  * @version 1.0
  */
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Teacher {
     private BigInteger teacherId;
     private String account;

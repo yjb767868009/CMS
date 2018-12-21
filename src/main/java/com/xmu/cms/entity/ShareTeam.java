@@ -1,11 +1,14 @@
 package com.xmu.cms.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.math.BigInteger;
 
 /**
  * @author JuboYu on 2018/12/17.
  * @version 1.0
  */
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class ShareTeam {
     private BigInteger shareTeamId;
     private Course masterCourse;

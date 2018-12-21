@@ -35,11 +35,12 @@ public class JWTUtils {
 
         // build token
         // param backups {iss:Service, aud:APP}
+        String userId = info.getUserId().toString();
 
         String token = JWT.create().withHeader(map) // header
                 .withIssuer("CMS")
                 .withExpiresAt(new Date(System.currentTimeMillis() + 2 * 60 * 60 * 100))
-                .withClaim("userId", info.getUserId().toString())
+                .withClaim("userId", userId)
                 .withClaim("userType", info.getUserType())
                 .withClaim("account", info.getAccount())
                 .withClaim("name", info.getName())
@@ -69,10 +70,10 @@ public class JWTUtils {
         Map<String, Claim> claims = jwt.getClaims();
         Claim userIdClaim = claims.get("userId");
         BigInteger userId = null;
-        if (null == userIdClaim || userIdClaim.asInt() == 0) {
+        if (null == userIdClaim || StringUtils.isEmpty(userIdClaim.asString())) {
             throw new UsernameIsExitedException("无效的令牌");
         } else {
-            userId = BigInteger.valueOf(userIdClaim.asInt());
+            userId = new BigInteger(userIdClaim.asString());
         }
 
         Claim userTypeClaim = claims.get("userType");
@@ -97,6 +98,6 @@ public class JWTUtils {
             name = nameClaim.asString();
         }
 
-        return new UserInfo(userId, userType, account, name);
+        return new UserInfo(userId, account, userType, name);
     }
 }

@@ -23,4 +23,16 @@ public interface AttendanceMapper {
     Integer newAttendance(@Param("attendance") Attendance attendance);
 
     Integer deleteAttendance(@Param("attendanceId") BigInteger attendanceId);
+
+    /**
+     * 查找学生在班级讨论课下的展示
+     *
+     * @param studentId 学生id
+     * @param klassId   班级id
+     * @param seminarId 讨论课id
+     * @return 展示
+     */
+    Attendance getStudentAttendanceInKlassSeminar(@Param("studentId") BigInteger studentId,
+                                                  @Param("klassId") BigInteger klassId,
+                                                  @Param("seminarId") BigInteger seminarId);
 }

@@ -56,4 +56,8 @@ public interface SeminarService {
     Map<String, String> scoreQuestion(Question question);
 
     List<Klass> getKlassInSeminar(BigInteger seminarId);
+
+    KlassSeminar getKlassSeminarByKlassAndSeminar(BigInteger klassId, BigInteger seminarId);
+
+    Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId);
 }

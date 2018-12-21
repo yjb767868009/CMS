@@ -3,12 +3,12 @@
 
 <mapper namespace="com.xmu.cms.mapper.SeminarMapper">
     <resultMap id="SeminarResultMap" type="com.xmu.cms.entity.Seminar">
-        <id property="seminarId" column="seminarId" javaType="java.lang.Integer"/>
+        <id property="seminarId" column="seminarId" javaType="java.math.BigInteger"/>
         <result property="topic" column="topic"/>
         <result property="introduction" column="introduction"/>
         <result property="maxTeamNum" column="maxTeamNum"/>
         <result property="visible" column="visible"/>
-        <result property="seminarSerial" column="signOrder"/>
+        <result property="signOrder" column="signOrder"/>
         <result property="signStartTime" column="signStartTime"/>
         <result property="signEndTime" column="signEndTime"/>
         <association property="course" javaType="com.xmu.cms.entity.Course">

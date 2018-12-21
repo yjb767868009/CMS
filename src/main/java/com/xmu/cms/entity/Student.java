@@ -1,11 +1,14 @@
 package com.xmu.cms.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.math.BigInteger;
 
 /**
  * @author JuboYu on 2018/11/23.
  * @version 1.0
  */
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Student {
     private BigInteger studentId;
     private String account;

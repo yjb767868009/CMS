@@ -47,7 +47,7 @@ public interface KlassSeminarMapper {
      * @param seminarId 讨论课id
      * @return 班级讨论课列表
      */
-    List<KlassSeminar> getKlassSeminarBySeminarId(BigInteger seminarId);// TODO: 2018/12/21
+    List<KlassSeminar> getKlassSeminarBySeminarId(BigInteger seminarId);
 
     /**
      * 修改班级讨论课

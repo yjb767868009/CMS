@@ -56,11 +56,19 @@ public class CourseController {
         }
     }
 
+    @GetMapping(value="/{courseId}/round")
+    public Round getRound(@PathVariable("courseId") Integer courseId){
+        //TODO
+        return null;
+    }
+
+
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/{courseId}")
     public Course getCourse(@PathVariable("courseId") BigInteger courseId) {
         return courseService.getCourse(courseId);
     }
+
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
@@ -99,6 +107,13 @@ public class CourseController {
         }
     }
 
+    //学生ID通过JWT传入
+    @GetMapping(value="/{courseId}/myTeam")
+    public Team getMyTeam(@PathVariable("courseId") Integer courseId){
+        //TODO
+        return null;
+    }
+
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/{courseId}/noteam")
     public List<Student> getNoTeamStudent(@PathVariable("courseId") BigInteger courseId) {
@@ -119,20 +134,72 @@ public class CourseController {
         return courseService.newKlass(courseId, klass);
     }
 
-
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
     @GetMapping(value = "/{courseId}/share")
     public List<ShareTeam> listAllShareByCourseId(@PathVariable("courseId") BigInteger courseId) {
         return courseService.getShareInCourse(courseId);
     }
+    /*
+    @Secured("ROLE_TEACHER")
+    @CheckCoursePermission
+    @GetMapping(value = "/{courseId}/teamshare")
+    public List<TeamShare> listAllTeamShareByCourseId(@PathVariable("courseId") Integer courseId) {
+        return courseService.getShareInCourse(courseId);
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
-    @GetMapping(value = "/{courseId}/share/{shareId}")
+    @GetMapping(value = "/{courseId}/seminarshare")
+    public List<SeminarShare> listAllSeminarShareByCourseId(@PathVariable("courseId") Integer courseId) {
+        return courseService.getShareInCourse(courseId);
+    */
+
+    @Secured("ROLE_TEACHER")
+    @CheckCoursePermission
+    @DeleteMapping(value = "/{courseId}/share/{shareId}")
     public Map<String, String> deleteShare(@PathVariable("courseId") BigInteger courseId,
                                            @PathVariable("shareId") BigInteger shareId) {
         return courseService.deleteShare(courseId, shareId);
     }
 
+    /*TODO
+    @Secured("ROLE_TEACHER")
+    @CheckCoursePermission
+    @DeleteMapping(value = "/{courseId}/teamshare/{teamshareId}")
+    public Map<String, String> deleteTeamShare(@PathVariable("courseId") Integer courseId,
+                                           @PathVariable("teamshareId") Integer teamshareId) {
+        return courseService.deleteTeamShare(courseId, teamshareId);
+    }
+
+    @Secured("ROLE_TEACHER")
+    @CheckCoursePermission
+    @DeleteMapping(value = "/{courseId}/seminarshare/{seminarshareId}")
+    public Map<String, String> deleteSeminarShare(@PathVariable("courseId") Integer courseId,
+                                           @PathVariable("seminarshareId") Integer seminarshareId) {
+        return courseService.deleteSeminarShare(courseId, seminarshareId);
+    }
+    */
+
+
+    @GetMapping(value = "/{courseId}/score")
+    public SeminarScore getScoreInCourse() {
+        //TODO
+        return null;
+    }
+
+    /*TODO
+    @Secured("ROLE_TEACHER")
+    @PostMapping(value="/courseId/teamsharerequest")
+    public Map<String, String> sendTeamShareRequest(@PathVariable("courseId") Integer courseId,
+                                                    @RequestBody TeamShare teamShare){
+        return null;
+    }
+
+    @Secured("ROLE_TEACHER")
+    @PostMapping(value="/courseId/seminarsharerequest")
+    public Map<String, String> sendTeamShareRequest(@PathVariable("courseId") Integer courseId,
+                                                    @RequestBody SeminarShare teamShare){
+        return null;
+    }
+    */
 }

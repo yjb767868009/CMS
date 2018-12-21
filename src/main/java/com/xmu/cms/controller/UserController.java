@@ -60,7 +60,12 @@ public class UserController {
         return userService.modifyEmail(info, user);
     }
 
+    /*TODO 获取个人信息，没有USER的ENTITY无法定义该方法
+    @GetMapping(value="/information")
+    public
+    */
 
+    //和标准组不同
     @GetMapping(value = "/course/{courseId}/rounds")
     public List<Round> getRounds(@PathVariable("courseId") BigInteger courseId) {
         return seminarService.getRoundsByCourseId(courseId);

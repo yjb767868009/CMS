@@ -8,7 +8,7 @@
         <result property="introduction" column="introduction"/>
         <result property="maxTeamNum" column="maxTeamNum"/>
         <result property="visible" column="visible"/>
-        <result property="seminarSerial" column="signOrder"/>
+        <result property="signOrder" column="signOrder"/>
         <result property="signStartTime" column="signStartTime"/>
         <result property="signEndTime" column="signEndTime"/>
         <association property="course" javaType="com.xmu.cms.entity.Course">
@@ -76,7 +76,7 @@
                enroll_start_time as signStartTime,
                course.id as courseId,
                course_name as courseName,
-               round_id
+               round_id as roundId
         FROM seminar,
              course
         where seminar.id = #{seminarId}
@@ -93,7 +93,7 @@
                enroll_start_time as signStartTime,
                course.id as courseId,
                course_name as courseName,
-               round_id
+               round_id as roundId
         FROM seminar,
              course
         where seminar.round_id = #{roundId}
@@ -110,7 +110,7 @@
                enroll_start_time as signStartTime,
                course.id as courseId,
                course_name as courseName,
-               round_id
+               round_id as roundId
         FROM seminar,
              course
         where seminar.course_id = #{courseId}

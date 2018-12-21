@@ -9,7 +9,7 @@
         <association property="klass" javaType="com.xmu.cms.entity.Klass">
             <id property="klassId" column="klassId"/>
             <result property="grade" column="grade"/>
-            <result property="klassSerial" column="klassSerial"/>
+            <result property="klassSerial" column="klass_serial"/>
         </association>
         <association property="seminar" javaType="com.xmu.cms.entity.Seminar">
             <id property="seminarId" column="seminarId"/>
@@ -33,6 +33,15 @@
           and klass_seminar.seminar_id = #{seminarId}
           and klass.id = #{klassId}
           and seminar.id = #{seminarId}
+    </select>
+
+    <select id="getKlassSeminarsBySemianrId">
+        select id as klassSemianrId,
+               klass_id as klassId,
+               report_ddl as reportDDL,
+               seminar_status as status
+        from klass_seminar
+        where seminar_id = #{seminarId}
     </select>
 
     <delete id="deleteKlassSeminar">

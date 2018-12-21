@@ -3,7 +3,7 @@
 
 <mapper namespace="com.xmu.cms.mapper.QuestionMapper">
     <resultMap id="QuestionResultMap" type="com.xmu.cms.entity.Question">
-        <id property="questionId" column="questionId" javaType="java.lang.Integer"/>
+        <id property="questionId" column="questionId" javaType="java.math.BigInteger"/>
         <result property="score" column="score"/>
         <association property="student" javaType="com.xmu.cms.entity.Student">
             <id property="studentId" column="studentId"/>

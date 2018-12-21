@@ -76,6 +76,13 @@
         where course_id = #{courseId}
           and student_id = #{studentId}
     </select>
+    
+    <select id="getKlassEnrollNumber">
+        select klass_id as klassId,
+               enroll_number as enrollNumber
+        from klass_round
+        where round_id = #{roundId}
+    </select>
 
     <delete id="deleteKlassRound">
         delete

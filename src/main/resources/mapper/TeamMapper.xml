@@ -3,9 +3,9 @@
 
 <mapper namespace="com.xmu.cms.mapper.TeamMapper">
     <resultMap id="TeamResultMap" type="com.xmu.cms.entity.Team">
-        <id property="teamId" column="id" javaType="java.math.BigInteger"/>
-        <result property="teamName" column="team_name" javaType="java.lang.String"/>
-        <result property="teamSerial" column="team_serial" javaType="java.lang.Integer"/>
+        <id property="teamId" column="teamId" javaType="java.math.BigInteger"/>
+        <result property="teamName" column="teamName" javaType="java.lang.String"/>
+        <result property="teamSerial" column="teamSerial" javaType="java.lang.Integer"/>
         <result property="status" column="status" javaType="java.lang.Integer"/>
         <association property="leader" javaType="com.xmu.cms.entity.Student">
             <id property="leaderId" column="leaderId"/>

@@ -3,7 +3,7 @@
 
 <mapper namespace="com.xmu.cms.mapper.TeacherMapper">
     <resultMap id="TeacherResultMap" type="com.xmu.cms.entity.Teacher">
-        <id property="teacherId" column="id"/>
+        <id property="teacherId" column="id" javaType="java.math.BigInteger"/>
         <result property="account" column="account"/>
         <result property="password" column="password"/>
         <result property="name" column="teacher_name"/>

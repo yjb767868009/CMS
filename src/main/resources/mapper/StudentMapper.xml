@@ -6,9 +6,9 @@
         <id property="studentId" column="id" javaType="java.math.BigInteger"/>
         <result property="account" column="account"/>
         <result property="password" column="password"/>
-        <result property="name" column="studentName"/>
+        <result property="name" column="student_name"/>
         <result property="email" column="email"/>
-        <result property="activation" column="activation"/>
+        <result property="activation" column="is_active"/>
     </resultMap>
 
     <select id="getAllStudents" resultMap="StudentResultMap">

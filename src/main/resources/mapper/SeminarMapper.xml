@@ -76,7 +76,7 @@
                enroll_start_time as signStartTime,
                course.id as courseId,
                course_name as courseName,
-               round_id
+               round_id as roundId
         FROM seminar,
              course
         where seminar.id = #{seminarId}
@@ -93,7 +93,7 @@
                enroll_start_time as signStartTime,
                course.id as courseId,
                course_name as courseName,
-               round_id
+               round_id as roundId
         FROM seminar,
              course
         where seminar.round_id = #{roundId}
@@ -110,7 +110,7 @@
                enroll_start_time as signStartTime,
                course.id as courseId,
                course_name as courseName,
-               round_id
+               round_id as roundId
         FROM seminar,
              course
         where seminar.course_id = #{courseId}

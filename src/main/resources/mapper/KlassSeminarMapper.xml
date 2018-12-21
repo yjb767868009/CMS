@@ -35,6 +35,15 @@
           and seminar.id = #{seminarId}
     </select>
 
+    <select id="getKlassSeminarsBySemianrId">
+        select id as klassSemianrId,
+               klass_id as klassId,
+               report_ddl as reportDDL,
+               seminar_status as status
+        from klass_seminar
+        where seminar_id = #{seminarId}
+    </select>
+
     <delete id="deleteKlassSeminar">
         delete
         from klass_seminar

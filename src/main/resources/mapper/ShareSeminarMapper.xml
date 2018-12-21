@@ -3,7 +3,7 @@
 
 <mapper namespace="com.xmu.cms.mapper.ShareSeminarMapper">
     <resultMap id="ShareTeamResultMap" type="com.xmu.cms.entity.ShareSeminar">
-        <id property="shareSeminarId" column="shareSeminarId" javaType="java.math.BigInteger"/>
+        <id property="shareSeminarId" column="shareId" javaType="java.math.BigInteger"/>
         <result property="status" column="status"/>
         <association property="masterCourse" javaType="com.xmu.cms.entity.Course">
             <id property="courseId" column="masterCourseId"/>

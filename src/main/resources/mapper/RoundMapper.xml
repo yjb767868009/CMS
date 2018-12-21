@@ -4,7 +4,7 @@
 <mapper namespace="com.xmu.cms.mapper.RoundMapper">
     <resultMap id="RoundResultMap" type="com.xmu.cms.entity.Round">
         <id property="roundId" column="roundId" javaType="java.math.BigInteger"/>
-        <result property="roundSerial" column="roundSerial"/>
+        <result property="order" column="round_serial"/>
         <result property="presentationScoreType" column="presentationScoreType"/>
         <result property="reportScoreType" column="reportScoreType"/>
         <result property="questionScoreType" column="questionScoreType"/>

@@ -32,6 +32,9 @@ public interface KlassMapper {
      */
     Klass getKlassByKlassId(@Param("kassId") BigInteger klassId);
 
+    Integer getKlassIdByStudentIdAndCourseId(@Param("studentId") BigInteger studentId,
+                                             @Param("courseId") BigInteger courseId);
+
     /**
      * 在班级学生关系表中加入新学生的信息
      *

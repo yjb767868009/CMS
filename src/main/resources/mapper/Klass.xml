@@ -70,6 +70,13 @@
           and course.id = klass.course_id
     </select>
 
+    <select id="getKlassIdByStudentIdAndCourseId">
+        select klass_id
+        from klass_student
+        where course_id = #{courseId}
+          and student_id = #{studentId}
+    </select>
+
     <delete id="deleteKlassRound">
         delete
         from klass_round

@@ -26,5 +26,4 @@ public interface ShareTeamMapper {
      * @return 删除共享组队的信息
      */
     Integer deleteShareTeamByCourseId(BigInteger courseId);
-    //todo
 }

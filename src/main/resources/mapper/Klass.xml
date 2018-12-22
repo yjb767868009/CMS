@@ -96,4 +96,45 @@
         from klass_student
         where klass_id = #{klassId}
     </delete>
+
+    <update id="addMembers">
+        update klass_student
+        set team_id = #{teamId}
+        where klass_id = #{klassId}
+          and student_id = #{studentId}
+    </update>
+
+    <update id="deleteTeamStudent">
+        update klass_student
+        set team_id = null
+        where team_id = #{teamId}
+    </update>
+
+    <update id="removeTeamStudent">
+        update klass_student
+        set team_id = null
+        where team_id = #{teamId}
+        and student_id = #{studentId}
+    </update>
+
+    <insert id="insertKlassRound">
+        insert klass_round (klass_id, round_id, enroll_number)
+        values (#{klassId}, #{roundId}, #{enrollNumber})
+    </insert>
+
+    <select id="getKlassByStudent" resultMap="KlassResultMap">
+        select klass.id as klassId,
+               grade,
+               klass_serial,
+               klass_time,
+               klass_location,
+               course.id  as courseId,
+               course_name  as courseName
+        from klass,
+             klass_student,
+             course
+        where klass_student.student_id = #{studentId}
+          and klass.id = klass_student.klass_id
+          and course.id = klass.course_id
+    </select>
 </mapper>

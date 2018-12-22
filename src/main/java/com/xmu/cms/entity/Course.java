@@ -22,8 +22,10 @@ public class Course {
     private Timestamp teamStartTime;
     private Timestamp teamEndTime;
     private List<Klass> klasses;
+    private Course teamMainCourse;
+    private Course seminarMainCourse;
 
-    public Course(BigInteger courseId, Teacher teacher, String CourseName, String introduction, Float presentationWeight, Float reportWeight, Float questionWeight, Timestamp teamStartTime, Timestamp teamEndTime, List<Klass> klasses) {
+    public Course(BigInteger courseId, Teacher teacher, String CourseName, String introduction, Float presentationWeight, Float reportWeight, Float questionWeight, Timestamp teamStartTime, Timestamp teamEndTime, List<Klass> klasses, Course teamMainCourse, Course seminarMainCourse) {
         this.courseId = courseId;
         this.teacher = teacher;
         this.courseName = CourseName;
@@ -34,6 +36,8 @@ public class Course {
         this.teamStartTime = teamStartTime;
         this.teamEndTime = teamEndTime;
         this.klasses = klasses;
+        this.teamMainCourse = teamMainCourse;
+        this.seminarMainCourse = seminarMainCourse;
     }
 
     public Course() {
@@ -117,5 +121,21 @@ public class Course {
 
     public void setKlasses(List<Klass> klasses) {
         this.klasses = klasses;
+    }
+
+    public Course getTeamMainCourse() {
+        return teamMainCourse;
+    }
+
+    public void setTeamMainCourse(Course teamMainCourse) {
+        this.teamMainCourse = teamMainCourse;
+    }
+
+    public Course getSeminarMainCourse() {
+        return seminarMainCourse;
+    }
+
+    public void setSeminarMainCourse(Course seminarMainCourse) {
+        this.seminarMainCourse = seminarMainCourse;
     }
 }

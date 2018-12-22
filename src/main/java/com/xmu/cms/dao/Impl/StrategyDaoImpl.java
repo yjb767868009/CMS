@@ -7,6 +7,7 @@ import com.xmu.cms.entity.strategy.TeamOrStrategy;
 import com.xmu.cms.entity.strategy.TeamStrategy;
 import com.xmu.cms.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 
@@ -14,6 +15,7 @@ import java.math.BigInteger;
  * @author JuboYu on 2018/12/22.
  * @version 1.0
  */
+@Component
 public class StrategyDaoImpl implements StrategyDao {
     @Autowired
     private TeamStrategyMapper teamStrategyMapper;

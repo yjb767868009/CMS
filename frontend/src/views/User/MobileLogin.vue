@@ -71,7 +71,7 @@ export default {
           console.log('teacher');
           this.$store.state.token = data.token;
           this.$store.state.userType = "teacher";
-          if(data.is_active===0){//需要激活
+          if(data.active==="false"){//需要激活
             this.$router.push('/mobile/teacher/activation')
           }
           else{
@@ -83,7 +83,7 @@ export default {
           console.log('student');
           this.$store.state.token=data.token;
           this.$store.state.userType='student';
-          if(data.is_active===0){//需要激活
+          if(data.active==="false"){//需要激活
             this.$router.push('mobile/student/activation')
           }
           else{

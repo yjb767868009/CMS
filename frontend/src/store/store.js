@@ -16,7 +16,7 @@ export default new Vuex.Store({
         currentCourse:'',
         showContent:'',
         currentSeminar:'',
-        currentCourseId:'',
+        currentClass:''
     },
     mutations:{
         

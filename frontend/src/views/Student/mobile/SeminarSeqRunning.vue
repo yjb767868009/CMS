@@ -121,9 +121,6 @@ export default {
     };
   },
   methods: {
-    toast: function() {
-      Toast(this.name);
-    },
     onCancel: function() {
       console.log("取消");
     },

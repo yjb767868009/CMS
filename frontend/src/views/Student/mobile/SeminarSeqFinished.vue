@@ -111,11 +111,8 @@ export default {
     StudentInfo: function() {
       this.$router.push("/mobile/student/studentInfo");
     },
-    runningSeminar: function() {
-      this.$router.push("/mobile/student/course/seminar/running");
-    },
     presentation: function() {
-      this.$router.push("/mobile/student/course/seminar/running/presentation");
+      this.$router.push("/mobile/student/course/seminar/finished/status");
     }
   }
 };

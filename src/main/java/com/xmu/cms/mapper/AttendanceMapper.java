@@ -18,7 +18,14 @@ public interface AttendanceMapper {
     Integer setAttendanceScore(@Param("attendanceId") BigInteger attendanceId,
                                @Param("presentationScore") Float presentationScore);
 
-    List<Attendance> getAttendancesInKlassSeminar(@Param("klassSeminarId") BigInteger klassSeminarId);
+    /**
+     * 获取班级讨论课中的展示，按展示顺序排序
+     *
+     * @param seminarId 讨论课id
+     * @param klassId   班级id
+     * @return 展示列表
+     */
+    List<Attendance> getAttendancesInKlassSeminar(@Param("seminarId") BigInteger seminarId, @Param("klassId") BigInteger klassId);// TODO: 2018/12/22
 
     Integer newAttendance(@Param("attendance") Attendance attendance);
 

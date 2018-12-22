@@ -121,8 +121,8 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public List<Attendance> getAttendancesInSeminar(BigInteger seminarId) {
-        return attendanceDao.getAttendancesInSeminar(seminarId);
+    public List<Attendance> getAttendancesInKlassSeminar(BigInteger seminarId, BigInteger klassId) {
+        return attendanceDao.getAttendancesInKlassSeminar(seminarId, klassId);
     }
 
     @Override

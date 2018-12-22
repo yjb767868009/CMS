@@ -30,7 +30,7 @@ public interface SeminarService {
 
     Seminar getRunningSeminarByTeacherId(BigInteger userId);
 
-    List<Attendance> getAttendancesInSeminar(BigInteger seminarId);
+    List<Attendance> getAttendancesInKlassSeminar(BigInteger seminarId, BigInteger klassId);
 
     Map<String, String> setAttendancePresentationScore(BigInteger attendanceId, Float presentationScore);
 

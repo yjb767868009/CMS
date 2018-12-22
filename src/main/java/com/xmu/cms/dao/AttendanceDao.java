@@ -10,7 +10,7 @@ import java.util.List;
  * @version 1.0
  */
 public interface AttendanceDao {
-    List<Attendance> getAttendancesInSeminar(BigInteger seminarId);
+    List<Attendance> getAttendancesInKlassSeminar(BigInteger seminarId, BigInteger klassId);
 
     Integer setAttendanceScore(BigInteger attendanceId, Float presentationScore);
 

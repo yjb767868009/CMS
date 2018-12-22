@@ -23,8 +23,8 @@ public class AttendanceDaoImpl implements AttendanceDao {
     private TeamMapper teamMapper;
 
     @Override
-    public List<Attendance> getAttendancesInSeminar(BigInteger seminarId) {
-        return attendanceMapper.getAttendancesInSeminar(seminarId);
+    public List<Attendance> getAttendancesInKlassSeminar(BigInteger seminarId, BigInteger klassId) {
+        return attendanceMapper.getAttendancesInKlassSeminar(seminarId, klassId);
     }
 
     @Override

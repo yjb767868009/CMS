@@ -58,9 +58,9 @@ public class TeamDaoImpl implements TeamDao {
         teamMapper.insertTeam(klassId, courseId, studentId, newTeam);
         Team team = teamMapper.getTeamByKlass(klassId, studentId);
         List<Student> students = newTeam.getMembers();
-        klassMapper.updateStudent(klassId, studentId, courseId, team.getTeamId());
+        klassMapper.addMembers(klassId, studentId, team.getTeamId());
         for (Student student : students) {
-            klassMapper.updateStudent(klassId, student.getStudentId(), courseId, team.getTeamId());
+            klassMapper.addMembers(klassId, student.getStudentId(), team.getTeamId());
         }
         return team;
     }
@@ -81,7 +81,7 @@ public class TeamDaoImpl implements TeamDao {
         Integer count = 0;
         Team team = teamMapper.getTeamByTeamId(teamId);
         for (Student student : students) {
-            count += klassMapper.addMembers(team.getKlass().getKlassId(), student.getStudentId());
+            count += klassMapper.addMembers(team.getKlass().getKlassId(), team.getTeamId(), student.getStudentId());
         }
         return count;
     }

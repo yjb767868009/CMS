@@ -14,6 +14,7 @@ public class Team {
     private BigInteger teamId;
     private Student leader;
     private List<Student> members;
+    private Course course;
     private Klass klass;
     private String teamName;
     private Boolean valid;

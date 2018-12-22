@@ -54,7 +54,7 @@ public interface KlassSeminarMapper {
      *
      * @param klassSeminar 班级讨论课
      */
-    Integer updateKlassSeminar(KlassSeminar klassSeminar);
+    Integer updateKlassSeminar(@Param("klassSeminar") KlassSeminar klassSeminar);
 
     /**
      * 根据学生和讨论课获取班级讨论课

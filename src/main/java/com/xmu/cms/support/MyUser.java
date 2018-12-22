@@ -78,7 +78,7 @@ public class MyUser {
     }
 
     public Student toStudent() {
-        return new Student(id, account, password, email, name, activation);
+        return new Student(id, account, password, email, name, activation, null);
     }
 
     public Teacher toTeacher() {

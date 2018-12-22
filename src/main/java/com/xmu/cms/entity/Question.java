@@ -14,9 +14,9 @@ public class Question {
     private Student student;
     private Team team;
     private Attendance attendance;
-    private float score;
+    private Float score;
 
-    public Question(BigInteger questionId, Student student, Team team, Attendance attendance, float score) {
+    public Question(BigInteger questionId, Student student, Team team, Attendance attendance, Float score) {
         this.questionId = questionId;
         this.student = student;
         this.team = team;
@@ -59,11 +59,11 @@ public class Question {
         this.attendance = attendance;
     }
 
-    public float getScore() {
+    public Float getScore() {
         return score;
     }
 
-    public void setScore(float score) {
+    public void setScore(Float score) {
         this.score = score;
     }
 }

@@ -3,6 +3,7 @@ package com.xmu.cms.entity;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  * @author JuboYu on 2018/11/23.
@@ -16,14 +17,16 @@ public class Student {
     private String email;
     private String name;
     private Boolean activation;
+    private List<Course> courses;
 
-    public Student(BigInteger studentId, String account, String password, String email, String name, Boolean activation) {
+    public Student(BigInteger studentId, String account, String password, String email, String name, Boolean activation, List<Course> courses) {
         this.studentId = studentId;
         this.account = account;
         this.password = password;
         this.email = email;
         this.name = name;
         this.activation = activation;
+        this.courses = courses;
     }
 
     public Student() {
@@ -75,5 +78,13 @@ public class Student {
 
     public void setActivation(Boolean activation) {
         this.activation = activation;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 }

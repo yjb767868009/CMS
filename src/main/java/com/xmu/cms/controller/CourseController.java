@@ -22,7 +22,6 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping(value = "/course")
 public class CourseController {
     @Autowired
     private CourseService courseService;
@@ -37,14 +36,14 @@ public class CourseController {
     private FileService fileService;
 
     @Secured("ROLE_TEACHER")
-    @PostMapping(value = "")
+    @PostMapping(value = "/course")
     public Map<String, String> createCourse(@RequestBody Course course) {
         return courseService.createCourse(course);
     }
 
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @GetMapping(value = "")
+    @GetMapping(value = "/course")
     public Map<String, Object> getCourses(UserInfo info) {
         Map<String, Object> message = new HashMap<String, Object>(2);
         Map<BigInteger, String> coursePlus = new HashMap<BigInteger, String>();
@@ -77,14 +76,14 @@ public class CourseController {
         return message;
     }
 
-    @GetMapping(value = "/{courseId}/round")
+    @GetMapping(value = "/course/{courseId}/round")
     public List<Round> getRoundInCourse(UserInfo info,
                                         @PathVariable("courseId") BigInteger courseId) {
         return seminarService.getRoundInCourse(info, courseId);
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @GetMapping(value = "/{courseId}")
+    @GetMapping(value = "/course/{courseId}")
     public Course getCourse(@PathVariable("courseId") BigInteger courseId) {
         return courseService.getCourse(courseId);
     }
@@ -92,7 +91,7 @@ public class CourseController {
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
-    @DeleteMapping(value = "/{courseId}")
+    @DeleteMapping(value = "/course/{courseId}")
     public Map<String, String> deleteCourse(@PathVariable("courseId") BigInteger courseId) {
         return courseService.deleteCourseById(courseId);
     }
@@ -108,7 +107,7 @@ public class CourseController {
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @GetMapping(value = "/{courseId}/team")
+    @GetMapping(value = "/course/{courseId}/team")
     public List<Team> getTeamInCourse(UserInfo info,
                                       @PathVariable("courseId") BigInteger courseId) {
         switch (info.getUserType()) {
@@ -122,27 +121,27 @@ public class CourseController {
     }
 
     //学生ID通过JWT传入
-    @GetMapping(value = "/{courseId}/myTeam")
+    @GetMapping(value = "/course/{courseId}/myTeam")
     public Team getMyTeam(@PathVariable("courseId") Integer courseId) {
         //TODO
         return null;
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @GetMapping(value = "/{courseId}/noteam")
+    @GetMapping(value = "/course/{courseId}/noteam")
     public List<Student> getNoTeamStudent(@PathVariable("courseId") BigInteger courseId) {
         return userService.getNoTeamStudent(courseId);
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @GetMapping(value = "/{courseId}/class")
+    @GetMapping(value = "/course/{courseId}/class")
     public List<Klass> getKlassInCourse(@PathVariable("courseId") BigInteger courseId) {
         return courseService.getKlassInCourse(courseId);
     }
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
-    @PostMapping(value = "/{courseId}/class")
+    @PostMapping(value = "/course/{courseId}/class")
     public Map<String, String> createClass(@PathVariable("courseId") BigInteger courseId,
                                            @RequestBody Klass klass) {
         return courseService.newKlass(courseId, klass);
@@ -150,20 +149,20 @@ public class CourseController {
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
-    @GetMapping(value = "/{courseId}/share")
+    @GetMapping(value = "/course/{courseId}/share")
     public List<Object> listAllShareByCourseId(@PathVariable("courseId") BigInteger courseId) {
         return courseService.getShareInCourse(courseId);
     }
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
-    @GetMapping(value = "/{courseId}/teamshare")
+    @GetMapping(value = "/course/{courseId}/teamshare")
     public List<ShareTeam> getShareTeamByCourseId(@PathVariable("courseId") BigInteger courseId) {
         return courseService.getShareTeamInCourse(courseId);
     }
 
     @Secured("ROLE_TEACHER")
-    @GetMapping(value = "/{courseId}/seminarshare")
+    @GetMapping(value = "/course/{courseId}/seminarshare")
     public List<ShareSeminar> getShareSeminarByCourseId(@PathVariable("courseId") BigInteger courseId) {
         return courseService.getShareSeminarInCourse(courseId);
 
@@ -171,7 +170,7 @@ public class CourseController {
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
-    @DeleteMapping(value = "/{courseId}/share/{shareId}")
+    @DeleteMapping(value = "/course/{courseId}/share/{shareId}")
     public Map<String, String> deleteShare(@PathVariable("courseId") BigInteger courseId,
                                            @PathVariable("shareId") BigInteger shareId) {
         return courseService.deleteShare(courseId, shareId);
@@ -196,7 +195,7 @@ public class CourseController {
     */
 
 
-    @GetMapping(value = "/{courseId}/score")
+    @GetMapping(value = "/course/{courseId}/score")
     public SeminarScore getScoreInCourse() {
         //TODO
         return null;

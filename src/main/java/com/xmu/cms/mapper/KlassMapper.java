@@ -75,17 +75,6 @@ public interface KlassMapper {
     Integer deleteKlassStudent(@Param("kassId") BigInteger klassId);
 
     /**
-     * 在班级学生关系加入队伍
-     *
-     * @param klassId   班级id
-     * @param studentId 学生id
-     * @param courseId  课程id
-     * @param teamId    队伍id
-     * @return 新建信息
-     */
-    Integer updateStudent(BigInteger klassId, BigInteger studentId, BigInteger courseId, BigInteger teamId);//todo
-
-    /**
      * 删除班级学生关系中队伍信息
      *
      * @param teamId 队伍id
@@ -96,10 +85,11 @@ public interface KlassMapper {
      * 队伍增加学生
      *
      * @param klassId   班级id
+     * @param teamId    队伍id
      * @param studentId 学生id
      * @return 修改信息
      */
-    Integer addMembers(BigInteger klassId, BigInteger studentId);// TODO: 2018/12/20
+    Integer addMembers(BigInteger klassId, BigInteger teamId, BigInteger studentId);// TODO: 2018/12/20
 
     /**
      * 删除单个学生和队伍的关系

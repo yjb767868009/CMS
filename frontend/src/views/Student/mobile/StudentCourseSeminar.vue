@@ -124,7 +124,6 @@ export default {
     };
   },
   mounted: function() {//挂载:获取round 和 seminar
-
     this.$axios
       .get("/course/" + this.$store.state.currentCourse.id + "/round")
       .then(response => {
@@ -167,15 +166,15 @@ export default {
           }
           else if(response.data.status===0&&response.data.attendance!==null){
             //未开始已报
-            this.$router.push({name:''})
+            this.$router.push({name:'SeminarUnstartSigned'})
           }
           else if(response.data.status===1&&response.data.attendance!==null){
             //正在已报
-            this.$router.push({name:''})
+            this.$router.push({name:'SeminarRunningSigned'})
           }
           else if(response.data.status===2&&response.data.attendance!==null){
-            //已完已报
-            this.$router.push({name:''})
+            //已完已报 -》分成有没有截止的
+            this.$router.push({name:'SeminarSigned'})
           }
         });
     },

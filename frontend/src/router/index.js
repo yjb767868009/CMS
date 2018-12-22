@@ -24,6 +24,7 @@ import SeminarDetail from '@/views/Student/mobile/SeminarDetail'
 import StudentActivation from '@/views/Student/mobile/StudentActivation'
 import SeminarPresentation from '@/views/Student/mobile/SeminarPresentation'
 import SeminarModifyRegistration from '@/views/Student/mobile/SeminarModifyRegistration'
+import SeminarRunningSigned from '@/views/Student/mobile/SeminarRunningSigned'
 
 import SeminarRegistration from '@/views/Student/mobile/SeminarRegistration'
 import SeminarRegistrationModification from '@/views/Student/mobile/SeminarRegistrationModification'
@@ -235,6 +236,11 @@ export default new Router({
       path:'/mobile/student/course/seminar/unstartedSigned/modifyRegistration',//未开始 已报-》修改报名
       name:'SeminarModifyRegistration',
       component:SeminarModifyRegistration
+    },
+    {
+      path:'/mobile/student/course/seminar/RunningSigned',//正在 已报
+      name:'SeminarRunningSigned',
+      component:SeminarRunningSigned
     },
     {
       path:'/mobile/student/course/seminar/running',//正在展示

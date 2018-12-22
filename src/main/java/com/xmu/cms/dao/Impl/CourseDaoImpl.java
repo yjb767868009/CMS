@@ -40,6 +40,9 @@ public class CourseDaoImpl implements CourseDao {
     @Autowired
     private ShareTeamMapper shareTeamMapper;
 
+    @Autowired
+    private SeminarScoreMapper seminarScoreMapper;
+
     @Override
     public List<Course> getAllCoursesByTeacherId(BigInteger teacherId) {
         return courseMapper.getAllCourseByTeacherId(teacherId);
@@ -81,7 +84,7 @@ public class CourseDaoImpl implements CourseDao {
             roundMapper.deleteRoundScore(round.getRoundId());
         }
         for (Seminar seminar : seminars) {
-            seminarMapper.deleteSeminarScore(seminar.getSeminarId());
+            seminarScoreMapper.deleteSeminarScore(seminar.getSeminarId());
         }
         List<Team> teams = teamMapper.getTeamInCourse(courseId);
         for (Team team : teams) {

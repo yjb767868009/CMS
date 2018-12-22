@@ -1,8 +1,10 @@
 package com.xmu.cms.dao.Impl;
 
 import com.xmu.cms.dao.TeamDao;
+import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Team;
+import com.xmu.cms.mapper.CourseMapper;
 import com.xmu.cms.mapper.KlassMapper;
 import com.xmu.cms.mapper.StudentMapper;
 import com.xmu.cms.mapper.TeamMapper;
@@ -27,6 +29,9 @@ public class TeamDaoImpl implements TeamDao {
 
     @Autowired
     private KlassMapper klassMapper;
+
+    @Autowired
+    private CourseMapper courseMapper;
 
     @Override
     public List<Team> getTeamInCourse(BigInteger courseId) {
@@ -77,17 +82,33 @@ public class TeamDaoImpl implements TeamDao {
     }
 
     @Override
-    public Integer addMembers(BigInteger teamId, List<Student> students) {
-        Integer count = 0;
+    public Team addMembers(BigInteger teamId, List<Student> students) {
         Team team = teamMapper.getTeamByTeamId(teamId);
         for (Student student : students) {
-            count += klassMapper.addMembers(team.getKlass().getKlassId(), team.getTeamId(), student.getStudentId());
+            klassMapper.addMembers(team.getKlass().getKlassId(), team.getTeamId(), student.getStudentId());
         }
-        return count;
+        return getFullTeam(teamId);
+    }
+
+    private Team getFullTeam(BigInteger teamId) {
+        Team team = teamMapper.getTeamByTeamId(teamId);
+        List<Student> members = studentMapper.getMembersInTeam(teamId);
+        for (Student student : members) {
+            List<Course> courses = courseMapper.getAllCourseByStudentId(student.getStudentId());
+            student.setCourses(courses);
+        }
+        team.setMembers(members);
+        return team;
     }
 
     @Override
-    public Integer removeMember(BigInteger teamId, Student student) {
-        return klassMapper.removeTeamStudent(teamId, student);
+    public Team removeMember(BigInteger teamId, Student student) {
+        klassMapper.removeTeamStudent(teamId, student);
+        return getFullTeam(teamId);
+    }
+
+    @Override
+    public void updateTeamValid(Team team) {
+        teamMapper.updateTeamValid(team);
     }
 }

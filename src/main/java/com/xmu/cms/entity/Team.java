@@ -19,10 +19,11 @@ public class Team {
     private String teamName;
     private Boolean valid;
 
-    public Team(BigInteger teamId, Student leader, List<Student> members, Klass klass, String teamName, Boolean valid) {
+    public Team(BigInteger teamId, Student leader, List<Student> members, Course course, Klass klass, String teamName, Boolean valid) {
         this.teamId = teamId;
         this.leader = leader;
         this.members = members;
+        this.course = course;
         this.klass = klass;
         this.teamName = teamName;
         this.valid = valid;
@@ -77,5 +78,13 @@ public class Team {
 
     public void setValid(Boolean valid) {
         this.valid = valid;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }

@@ -35,16 +35,6 @@ public interface CourseService {
 
     Map<String, String> deleteShare(BigInteger courseId, BigInteger shareId);
 
-    Team newTeam(BigInteger courseId, BigInteger classId, BigInteger studentId, Team team);
-
-    Team getTeamByTeamId(BigInteger teamId);
-
-    Map<String, String> deleteTeam(BigInteger teamId);
-
-    Map<String, String> teamAddMembers(BigInteger teamId, List<Student> students);
-
-    Map<String, String> teamRemoveMember(BigInteger teamId, Student student);
-
     List<ShareTeam> getShareTeamInCourse(BigInteger courseId);
 
     List<ShareSeminar> getShareSeminarInCourse(BigInteger courseId);

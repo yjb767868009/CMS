@@ -131,52 +131,6 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Team newTeam(BigInteger courseId, BigInteger classId, BigInteger studentId, Team team) {
-        return teamDao.newTeam(courseId, classId, studentId, team);
-    }
-
-    @Override
-    public Team getTeamByTeamId(BigInteger teamId) {
-        return teamDao.getTeamByTeamId(teamId);
-    }
-
-    @Override
-    public Map<String, String> deleteTeam(BigInteger teamId) {
-        Map<String, String> message = new HashMap<String, String>(1);
-        Integer count = teamDao.deleteTeam(teamId);
-        if (count > 0) {
-            message.put("message", "Success");
-        } else {
-            message.put("message", "Error");
-        }
-        return message;
-    }
-
-    @Override
-    public Map<String, String> teamAddMembers(BigInteger teamId, List<Student> students) {
-        Map<String, String> message = new HashMap<String, String>(1);
-        Integer count = teamDao.addMembers(teamId, students);
-        if (count > 0) {
-            message.put("message", "Success");
-        } else {
-            message.put("message", "Error");
-        }
-        return message;
-    }
-
-    @Override
-    public Map<String, String> teamRemoveMember(BigInteger teamId, Student student) {
-        Map<String, String> message = new HashMap<String, String>(1);
-        Integer count = teamDao.removeMember(teamId, student);
-        if (count > 0) {
-            message.put("message", "Success");
-        } else {
-            message.put("message", "Error");
-        }
-        return message;
-    }
-
-    @Override
     public List<ShareTeam> getShareTeamInCourse(BigInteger courseId) {
         return shareTeamDao.getShareTeamInCourse(courseId);
     }

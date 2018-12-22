@@ -55,11 +55,11 @@ public class KlassDaoImpl implements KlassDao {
 
     @Override
     public List<Course> getMainShareCourseByTeacher(BigInteger teacherId) {
-        return klassMapper.getMainShareCourseByTeacher(teacherId);
+        return courseMapper.getMainShareCourseByTeacher(teacherId);
     }
 
     @Override
     public List<Course> getSubShareCourseByTeacher(BigInteger teacherId) {
-        return klassMapper.getSubShareCourseByTeacher(teacherId);
+        return courseMapper.getSubShareCourseByTeacher(teacherId);
     }
 }

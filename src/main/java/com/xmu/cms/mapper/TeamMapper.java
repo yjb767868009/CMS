@@ -61,4 +61,11 @@ public interface TeamMapper {
      * @return 队伍信息
      */
     Team getTeamByKlass(BigInteger klassId, BigInteger studentId);
+
+    /**
+     * 更新队伍合法性
+     *
+     * @param team 队伍信息
+     */
+    void updateTeamValid(Team team);// TODO: 2018/12/22
 }

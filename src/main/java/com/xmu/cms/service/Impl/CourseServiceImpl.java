@@ -34,8 +34,8 @@ public class CourseServiceImpl implements CourseService {
     private ShareSeminarDao shareSeminarDao;
 
     @Override
-    public List<Course> getAllCoursesByTeacher(Teacher teacher) {
-        return courseDao.getAllCoursesByTeacherId(teacher.getTeacherId());
+    public List<Course> getAllCoursesByTeacher(BigInteger teacherId) {
+        return courseDao.getAllCoursesByTeacherId(teacherId);
     }
 
     @Override
@@ -181,5 +181,20 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<ShareSeminar> getShareSeminarInCourse(BigInteger courseId) {
         return shareSeminarDao.getShareSeminarInCourse(courseId);
+    }
+
+    @Override
+    public List<Klass> getKlassByStudent(BigInteger studentId) {
+        return klassDao.getKlassByStudent(studentId);
+    }
+
+    @Override
+    public List<Course> getMainShareCourseByTeacher(BigInteger teacherId) {
+        return klassDao.getMainShareCourseByTeacher(teacherId);
+    }
+
+    @Override
+    public List<Course> getSubShareCourseByTeacher(BigInteger teacherId) {
+        return klassDao.getSubShareCourseByTeacher(teacherId);
     }
 }

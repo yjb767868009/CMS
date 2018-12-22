@@ -11,7 +11,7 @@ import java.util.Map;
  * @version 1.0
  */
 public interface CourseService {
-    List<Course> getAllCoursesByTeacher(Teacher teacher);
+    List<Course> getAllCoursesByTeacher(BigInteger teacherId);
 
     Map<String, String> deleteCourseById(BigInteger courseId);
 
@@ -37,15 +37,21 @@ public interface CourseService {
 
     Team newTeam(BigInteger courseId, BigInteger classId, BigInteger studentId, Team team);
 
-    Team getTeamByTeamId(BigInteger  teamId);
+    Team getTeamByTeamId(BigInteger teamId);
 
-    Map<String, String> deleteTeam(BigInteger  teamId);
+    Map<String, String> deleteTeam(BigInteger teamId);
 
-    Map<String, String> teamAddMembers(BigInteger  teamId, List<Student> students);
+    Map<String, String> teamAddMembers(BigInteger teamId, List<Student> students);
 
     Map<String, String> teamRemoveMember(BigInteger teamId, Student student);
 
     List<ShareTeam> getShareTeamInCourse(BigInteger courseId);
 
     List<ShareSeminar> getShareSeminarInCourse(BigInteger courseId);
+
+    List<Klass> getKlassByStudent(BigInteger studentId);
+
+    List<Course> getMainShareCourseByTeacher(BigInteger teacherId);
+
+    List<Course> getSubShareCourseByTeacher(BigInteger teacherId);
 }

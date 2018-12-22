@@ -76,4 +76,8 @@ public class Klass {
     public void setGrade(Integer grade) {
         this.grade = grade;
     }
+
+    public String getName() {
+        return grade.toString() + "-" + klassSerial.toString();
+    }
 }

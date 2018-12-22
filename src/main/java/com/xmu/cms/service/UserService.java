@@ -39,7 +39,7 @@ public interface UserService {
 
     Map<String, String> updateTeacherInfo(BigInteger teacherId, Teacher teacher);
 
-    Map<String, String> updateTeacherPassword(BigInteger teacherId, Teacher teacher);
+    Map<String, String> updateTeacherPassword(Teacher teacher);
 
     List<Student> getAllStudents();
 
@@ -58,4 +58,6 @@ public interface UserService {
     Student getStudentById(BigInteger studentId);
 
     List<Student> getNoTeamStudent(BigInteger courseId);
+
+    Integer activeTeacher(Teacher teacher);
 }

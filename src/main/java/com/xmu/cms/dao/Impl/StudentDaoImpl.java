@@ -39,7 +39,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public Integer modifyStudentPassword(Student student) {
+    public Integer updateStudentPassword(Student student) {
         return studentMapper.updateStudentPassword(student);
     }
 

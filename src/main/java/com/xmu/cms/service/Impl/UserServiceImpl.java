@@ -117,7 +117,9 @@ public class UserServiceImpl implements UserService {
         Map<String, String> messages = new HashMap<String, String>(2);
         switch (info.getUserType()) {
             case "teacher": {
-                Integer count = teacherDao.modifyTeacherPassword(info.getUserId(), user.toTeacher());
+                Teacher teacher = user.toTeacher();
+                teacher.setTeacherId(info.getUserId());
+                Integer count = teacherDao.updateTeacherPassword(teacher);
                 if (count == 1) {
                     messages.put("message", "Success");
                     return messages;
@@ -125,7 +127,9 @@ public class UserServiceImpl implements UserService {
                 break;
             }
             case "student": {
-                Integer count = studentDao.modifyStudentPassword(user.toStudent());
+                Student student = user.toStudent();
+                student.setStudentId(info.getUserId());
+                Integer count = studentDao.updateStudentPassword(student);
                 if (count == 1) {
                     messages.put("message", "Success");
                     return messages;
@@ -196,9 +200,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, String> updateTeacherPassword(BigInteger teacherId, Teacher teacher) {
+    public Map<String, String> updateTeacherPassword(Teacher teacher) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = teacherDao.updateTeacherPassword(teacherId, teacher);
+        Integer count = teacherDao.updateTeacherPassword(teacher);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -227,7 +231,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, String> modifyStudentPassword(Student student) {
         Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = studentDao.modifyStudentPassword(student);
+        Integer count = studentDao.updateStudentPassword(student);
         if (count == 1) {
             message.put("message", "Success");
         } else {
@@ -278,5 +282,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Student> getNoTeamStudent(BigInteger courseId) {
         return studentDao.getNoTeamStudentInCourse(courseId);
+    }
+
+    @Override
+    public Integer activeTeacher(Teacher teacher) {
+        return teacherDao.updateTeacherPassword(teacher);
     }
 }

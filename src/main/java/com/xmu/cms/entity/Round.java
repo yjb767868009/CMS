@@ -3,6 +3,7 @@ package com.xmu.cms.entity;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,15 +18,17 @@ public class Round {
     private Integer presentationScoreType;
     private Integer reportScoreType;
     private Integer questionScoreType;
+    private List<Seminar> seminars;
     private Map<Integer, Integer> klassEnrollNumber;//Map<klassId,enrollNumber>
 
-    public Round(BigInteger roundId, Integer order, Course course, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType, Map<Integer, Integer> klassEnrollNumber) {
+    public Round(BigInteger roundId, Integer order, Course course, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType, List<Seminar> seminars, Map<Integer, Integer> klassEnrollNumber) {
         this.roundId = roundId;
         this.order = order;
         this.course = course;
         this.presentationScoreType = presentationScoreType;
         this.reportScoreType = reportScoreType;
         this.questionScoreType = questionScoreType;
+        this.seminars = seminars;
         this.klassEnrollNumber = klassEnrollNumber;
     }
 
@@ -86,5 +89,13 @@ public class Round {
 
     public void setKlassEnrollNumber(Map<Integer, Integer> klassEnrollNumber) {
         this.klassEnrollNumber = klassEnrollNumber;
+    }
+
+    public List<Seminar> getSeminars() {
+        return seminars;
+    }
+
+    public void setSeminars(List<Seminar> seminars) {
+        this.seminars = seminars;
     }
 }

@@ -1,5 +1,6 @@
 package com.xmu.cms.mapper;
 
+import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Klass;
 import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.entity.Student;
@@ -73,38 +74,48 @@ public interface KlassMapper {
      */
     Integer deleteKlassStudent(@Param("kassId") BigInteger klassId);
 
-    /**
-     * 在班级学生关系加入队伍
-     *
-     * @param klassId   班级id
-     * @param studentId 学生id
-     * @param courseId  课程id
-     * @param teamId    队伍id
-     * @return 新建信息
-     */
-    Integer updateStudent(BigInteger klassId, BigInteger studentId, BigInteger courseId, BigInteger teamId);//todo
 
     /**
      * 删除班级学生关系中队伍信息
      *
      * @param teamId 队伍id
      */
-    Integer deleteTeamStudent(BigInteger teamId);// TODO: 2018/12/20
+    Integer deleteTeamStudent(BigInteger teamId);
 
     /**
      * 队伍增加学生
      *
      * @param klassId   班级id
      * @param studentId 学生id
+     * @param teamId 队伍id
      * @return 修改信息
      */
-    Integer addMembers(BigInteger klassId, BigInteger studentId);// TODO: 2018/12/20
+    Integer addMembers(BigInteger klassId, BigInteger studentId, BigInteger teamId);
 
     /**
      * 删除单个学生和队伍的关系
-     * @param teamId 队伍id
+     *
+     * @param teamId  队伍id
      * @param student 学生id
      * @return 修改信息
      */
-    Integer removeTeamStudent(BigInteger teamId, Student student);// TODO: 2018/12/21  
+    Integer removeTeamStudent(BigInteger teamId, Student student);
+
+    /**
+     * 增加班级与轮次的关系
+     *
+     * @param klassId      班级id
+     * @param roundId      轮次id
+     * @param enrollNumber 最大报名数
+     * @return 新建信息
+     */
+    Integer insertKlassRound(Integer klassId, BigInteger roundId, Integer enrollNumber);
+
+    /**
+     * 获取学生的所有班级
+     *
+     * @param studentId 学生id
+     * @return 班级列表
+     */
+    List<Klass> getKlassByStudent(BigInteger studentId);
 }

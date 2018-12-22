@@ -11,6 +11,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,7 +57,7 @@ public class TeacherController {
     @PutMapping(value = "/{teacherId}/password")
     public Map<String, String> modifyTeacherPassword(@PathVariable("teacherId") BigInteger teacherId,
                                                      @RequestBody Teacher teacher) {
-        return userService.updateTeacherPassword(teacherId, teacher);
+        return userService.updateTeacherPassword(teacher);
     }
 
     @Secured("ROLE_ADMIN")
@@ -78,11 +79,18 @@ public class TeacherController {
     }
 
     @Secured("ROLE_TEACHER")
-    @PutMapping(value="/active")
-    public Map<String,String> acticeTeacher(UserInfo info,
-    @RequestParam(value = "student") Teacher teacher){
-        //TODO 教师激活账号
-        return null;
+    @PutMapping(value = "/active")
+    public Map<String, String> activeTeacher(UserInfo info,
+                                             @RequestBody Teacher teacher) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        teacher.setTeacherId(info.getUserId());
+        Integer count = userService.activeTeacher(teacher);
+        if (count > 0) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
     }
 
 }

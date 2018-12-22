@@ -56,4 +56,13 @@
         where klass_seminar_id = #{klassSeminarId}
         and team_id = #{teamId}
     </delete>
+
+    <delete id="deleteScoreInSeminar">
+        delete
+        from seminar_score
+        using seminar_score,
+              klass_seminar
+        where klass_seminar.seminar_id = #{seminarId}
+          and seminar_score.klass_seminar_id = klass_seminar.id
+    </delete>
 </mapper>

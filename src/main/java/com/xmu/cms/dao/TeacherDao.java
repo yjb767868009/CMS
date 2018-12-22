@@ -19,15 +19,15 @@ public interface TeacherDao {
 
     Teacher getTeacherById(BigInteger teacherId);
 
+    Teacher getFullTeacherById(BigInteger teacherId);
+
     Integer updateTeacherInfo(BigInteger teacherId, Teacher teacher);
 
-    Integer updateTeacherPassword(BigInteger teacherId, Teacher teacher);
+    Integer updateTeacherPassword(Teacher teacher);
 
     Integer deleteTeacherByTeacherId(BigInteger teacherId);
 
     Integer createTeacher(Teacher teacher) throws Exception;
 
     Integer modifyTeacherEmail(BigInteger teacherId, Teacher teacher);
-
-    Integer modifyTeacherPassword(BigInteger teacherId, Teacher teacher);
 }

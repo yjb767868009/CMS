@@ -36,10 +36,7 @@
     </select>
 
     <select id="getKlassSeminarsBySemianrId">
-        select id as klassSemianrId,
-               klass_id as klassId,
-               report_ddl as reportDDL,
-               seminar_status as status
+        select id as klassSemianrId, klass_id as klassId, report_ddl as reportDDL, seminar_status as status
         from klass_seminar
         where seminar_id = #{seminarId}
     </select>
@@ -57,17 +54,20 @@
     </delete>
 
     <select id="getKlassSeminarBySeminarId" resultMap="KlassSeminarResultMap">
-        SELECT klass_seminar.id as klassSeminarId,
-               report_ddl,
-               seminar_status,
-               klass.id         as klassId,
-               grade,
-               klass_serial,
-               seminar.id       as seminarId,
-               seminar_name     as seminarName
+        SELECT klass_seminar.id as klassSeminarId, report_ddl, seminar_status, klass.id as klassId, grade, klass_serial
         FROM klass_seminar,
-             klass,
-             seminar
-        WHERE seminar_id = #{seminarId}
+             klass
+        WHERE klass_seminar.seminar_id = #{seminarId}
+          AND klass_seminar.klass_id = klass.id
+    </select>
+
+    <select id="getKlassSeminarByStudentAndSeminar" resultMap="KlassSeminarResultMap">
+        SELECT klass_seminar.id as klassSeminarId, report_ddl, seminar_status, klass.id as klassId, grade, klass_serial
+        FROM klass_seminar,
+             klass_student,
+             klass
+        WHERE klass_student.student_id = #{studentId}
+          AND klass_seminar.seminar_id = #{seminarId}
+          AND klass_seminar.klass_id = klass_student.klass_id
     </select>
 </mapper>

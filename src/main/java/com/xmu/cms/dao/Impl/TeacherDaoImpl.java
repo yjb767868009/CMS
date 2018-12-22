@@ -1,6 +1,7 @@
 package com.xmu.cms.dao.Impl;
 
 import com.xmu.cms.dao.TeacherDao;
+import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.mapper.CourseMapper;
 import com.xmu.cms.mapper.TeacherMapper;
@@ -30,9 +31,7 @@ public class TeacherDaoImpl implements TeacherDao {
 
     @Override
     public Teacher getTeacherByAccount(String account) {
-        Teacher teacher = teacherMapper.getTeacherByAccount(account);
-        //teacher.setCourses(courseMapper.getAllCourseByTeacherId(teacher.getTeacherId()));
-        return teacher;
+        return teacherMapper.getTeacherByAccount(account);
     }
 
     @Override
@@ -42,8 +41,14 @@ public class TeacherDaoImpl implements TeacherDao {
 
     @Override
     public Teacher getTeacherById(BigInteger teacherId) {
+        return teacherMapper.getTeacherById(teacherId);
+    }
+
+    @Override
+    public Teacher getFullTeacherById(BigInteger teacherId) {
         Teacher teacher = teacherMapper.getTeacherById(teacherId);
-        teacher.setCourses(courseMapper.getAllCourseByTeacherId(teacher.getTeacherId()));
+        List<Course> courses = courseMapper.getAllCourseByTeacherId(teacher.getTeacherId());
+        teacher.setCourses(courses);
         return teacher;
     }
 
@@ -57,9 +62,10 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public Integer updateTeacherPassword(BigInteger teacherId, Teacher teacher) {
-        Teacher modifyTeacher = teacherMapper.getTeacherById(teacherId);
+    public Integer updateTeacherPassword(Teacher teacher) {
+        Teacher modifyTeacher = teacherMapper.getTeacherById(teacher.getTeacherId());
         modifyTeacher.setPassword(teacher.getPassword());
+        modifyTeacher.setActivation(true);
         return teacherMapper.updateTeacher(modifyTeacher);
     }
 
@@ -78,13 +84,6 @@ public class TeacherDaoImpl implements TeacherDao {
     public Integer modifyTeacherEmail(BigInteger teacherId, Teacher teacher) {
         Teacher modifyTeacher = teacherMapper.getTeacherById(teacherId);
         modifyTeacher.setEmail(teacher.getEmail());
-        return teacherMapper.updateTeacher(modifyTeacher);
-    }
-
-    @Override
-    public Integer modifyTeacherPassword(BigInteger teacherId, Teacher teacher) {
-        Teacher modifyTeacher = teacherMapper.getTeacherById(teacherId);
-        modifyTeacher.setPassword(teacher.getPassword());
         return teacherMapper.updateTeacher(modifyTeacher);
     }
 }

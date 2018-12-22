@@ -68,11 +68,4 @@ public interface SeminarMapper {
      */
     List<Seminar> getAllSeminarByCourseId(@Param("courseId") BigInteger courseId);
 
-    /**
-     * 删除讨论课成绩
-     *
-     * @param seminarId 讨论课id
-     * @return 删除信息
-     */
-    Integer deleteSeminarScore(BigInteger seminarId);//todo
 }

@@ -12,6 +12,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,25 +45,43 @@ public class CourseController {
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "")
-    public List<Course> getCourses(UserInfo info) {
+    public Map<String, Object> getCourses(UserInfo info) {
+        Map<String, Object> message = new HashMap<String, Object>(2);
+        Map<BigInteger, String> coursePlus = new HashMap<BigInteger, String>();
+        List<Course> courses = new ArrayList<Course>();
         switch (info.getUserType()) {
             case "teacher":
-                Teacher teacher = userService.getTeacherById(info.getUserId());
-                return courseService.getAllCoursesByTeacher(teacher);
+                List<Course> mainShareCourses = courseService.getMainShareCourseByTeacher(info.getUserId());
+                for (Course course : mainShareCourses) {
+                    courses.add(course);
+                    coursePlus.put(course.getCourseId(), "主");
+                }
+                List<Course> subShareCourses = courseService.getSubShareCourseByTeacher(info.getUserId());
+                for (Course course : subShareCourses) {
+                    courses.add(course);
+                    coursePlus.put(course.getCourseId(), "从");
+                }
+                break;
             case "student":
-                Student student = userService.getStudentById(info.getUserId());
-                return courseService.getAllCoursesByStudent(student);
+                List<Klass> klasses = courseService.getKlassByStudent(info.getUserId());
+                for (Klass klass : klasses) {
+                    courses.add(klass.getCourse());
+                    coursePlus.put(klass.getCourse().getCourseId(), klass.getName());
+                }
+                break;
             default:
                 return null;
         }
+        message.put("courses", courses);
+        message.put("coursePlus", coursePlus);
+        return message;
     }
 
     @GetMapping(value = "/{courseId}/round")
-    public Round getRound(@PathVariable("courseId") Integer courseId) {
-        //TODO
-        return null;
+    public List<Round> getRoundInCourse(UserInfo info,
+                                        @PathVariable("courseId") BigInteger courseId) {
+        return seminarService.getRoundInCourse(info, courseId);
     }
-
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/{courseId}")

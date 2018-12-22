@@ -1,6 +1,7 @@
 package com.xmu.cms.service;
 
 import com.xmu.cms.entity.*;
+import com.xmu.cms.support.UserInfo;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -22,8 +23,6 @@ public interface SeminarService {
     Map<String, String> modifyKlassSeminarReportDDL(KlassSeminar klassSeminar);
 
     Seminar getSeminarBySeminarId(BigInteger seminarId);
-
-    List<Round> getRoundsByCourseId(BigInteger courseId);
 
     List<Seminar> getAllSeminarInRound(BigInteger roundId);
 
@@ -60,4 +59,6 @@ public interface SeminarService {
     KlassSeminar getKlassSeminarByKlassAndSeminar(BigInteger klassId, BigInteger seminarId);
 
     Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId);
+
+    List<Round> getRoundInCourse(UserInfo info, BigInteger courseId);
 }

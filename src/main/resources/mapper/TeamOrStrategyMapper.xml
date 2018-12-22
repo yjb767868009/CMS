@@ -2,5 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.TeamOrStrategyMapper">
+    <resultMap id="TeamOrResultMap" type="com.xmu.cms.entity.strategy.TeamOrStrategy">
+        <id property="strategyId" column="strategyId" javaType="java.math.BigInteger"/>
+        <result property="subStrategyOneId" column="strategy_1_id"/>
+        <result property="subStrategyOneName" column="strategy_1_name"/>
+        <result property="subStrategyTwoId" column="strategy_2_id"/>
+        <result property="subStrategyTwoName" column="strategy_2_name"/>
+    </resultMap>
 
+    <select id="getTeamOrById" resultMap="TeamOrResultMap">
+        select *
+        from team_or_strategy
+        where team_or_strategy.id = #{strategyId}
+    </select>
 </mapper>

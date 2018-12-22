@@ -2,5 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.MemberLimitStrategyMapper">
+    <resultMap id="MemberLimit" type="com.xmu.cms.entity.strategy.MemberLimitStrategy">
+        <id property="strategyId" column="strategyId" javaType="java.math.BigInteger"/>
+        <result property="minMember" column="min_member"/>
+        <result property="maxMember" column="max_member"/>
+    </resultMap>
 
+    <select id="getCourseMemberLimitById" resultMap="CourseMemberLimitResultMap">
+        select member_limit_strategy.id as strategyId,
+               min_member,
+               max_member
+        from member_limit_strategy
+        where member_limit_strategy.id = #{strategyId}
+    </select>
 </mapper>

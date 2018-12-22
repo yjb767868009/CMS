@@ -14,6 +14,10 @@
             <id property="klassId" column="klassId"/>
             <result property="grade" column="grade"/>
         </association>
+        <association property="course" javaType="com.xmu.cms.entity.Course">
+            <id property="courseId" column="courseId"/>
+            <result property="courseName" column="courseName"/>
+        </association>
     </resultMap>
 
     <select id="getAllTeamsInSeminar" resultMap="TeamResultMap">
@@ -23,15 +27,19 @@
                klass.id             as klassId,
                klass.grade          as grade,
                leader_id            as leaderId,
-               student.student_name as leaderName
+               student.student_name as leaderName,
+               course.id            as courseId,
+               course.course_name   as courseName
         FROM team,
              attendance,
              klass,
-             student
+             student,
+             course
         WHERE team.id = attendance.team_id
           AND attendance.klass_seminar_id = #{klassSeminarId}
           and team.klass_id = klass.id
           and team.leader_id = student.id
+          and team.course_id = course.id
     </select>
 
     <insert id="newTeam">

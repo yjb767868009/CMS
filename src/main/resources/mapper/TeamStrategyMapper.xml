@@ -2,5 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.TeamStrategyMapper">
+    <resultMap id="TeamStrategyResultMap" type="com.xmu.cms.entity.strategy.TeamOrStrategy">
+        <result property="subStrategyId" column="strategy_id"/>
+        <result property="subStrategyName" column="strategy_name"/>
+        <association property="course" javaType="com.xmu.cms.entity.Course">
+            <id property="courseId" column="courseId"/>
+            <result property="courseName" column="courseName"/>
+        </association>
+    </resultMap>
 
+    <select id="getTeamOrByCourseId" resultMap="TeamStrategyResultMap">
+        select course_id as courseId,
+               strategy_id,
+               strategy_name,
+               course.course_name as courseName
+        from team_strategy,
+             course
+        where team_strategy.course_id = #{courseId}
+          and course.id = #{courseId}
+    </select>
 </mapper>

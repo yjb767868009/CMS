@@ -2,5 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.CourseMemberLimitStrategyMapper">
+    <resultMap id="CourseMemberLimitResultMap" type="com.xmu.cms.entity.strategy.CourseMemberLimitStrategy">
+        <id property="strategyId" column="strategyId" javaType="java.math.BigInteger"/>
+        <result property="minMember" column="min_member"/>
+        <result property="maxMember" column="max_member"/>
+        <association property="course" javaType="com.xmu.cms.entity.Course">
+            <id property="courseId" column="courseId"/>
+            <result property="courseName" column="courseName"/>
+        </association>
+    </resultMap>
 
+    <select id="getCourseMemberLimitById" resultMap="CourseMemberLimitResultMap">
+        select course_member_limit_strategy.id as strategyId,
+               min_member,
+               max_member,
+               course.id as courseId,
+               course.course_name as courseName
+        from course_member_limit_strategy,
+             course
+        where course_member_limit_strategy.id = #{strategyId}
+          and course.id = course_member_limit_strategy.course_id
+    </select>
 </mapper>

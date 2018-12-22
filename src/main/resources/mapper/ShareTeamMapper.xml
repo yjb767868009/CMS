@@ -45,10 +45,11 @@
         values (#{mainCourseId}, #{subCourseId}, #{subCourseTeacherId}, #{status})
     </insert>
 
-    <delete id="deleteTeamShare">
+    <delete id="deleteShareTeamByCourseId">
         delete
         from share_team_application
-        where id = #{shareId}
+        where main_course_id = #{courseId}
+          or sub_course_id = #{courseId}
     </delete>
 
     <update id="setTeamShareStatus">

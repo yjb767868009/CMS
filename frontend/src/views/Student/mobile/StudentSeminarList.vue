@@ -52,14 +52,13 @@ export default {
     ButtonTab,
     ButtonTabItem
   },
-  mounted: function() {
-    // this.$axios.get("/course").then(response => {
-    //   this.courses = repsonse.data;
-    //   this.$store.state.currentClassId=repsonse.data.classId
-    // }).catch((error)=>{
-    //     console.log(error)
-    // });
-  },
+  // mounted: function() {
+  //   this.$axios.get("/course").then(response => {
+  //     this.courses = repsonse.data;
+  //   }).catch((error)=>{
+  //       console.log(error)
+  //   });
+  // },
   data() {
     return {
       name: "name",

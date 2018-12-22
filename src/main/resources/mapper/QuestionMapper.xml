@@ -57,4 +57,45 @@
         set score = 1
         where id = #{questionId}
     </update>
+
+    <select id="getQuestionInKlassSeminar" resultMap="QuestionResultMap">
+        select question.id as questionId,
+               score,
+               student.id as studentId,
+               student.student_name as studentName,
+               team.id as teamId,
+               team.team_name as teamName,
+               attendance.id  as attendanceId
+        from student,
+             question,
+             team,
+             attendance
+        where question.klass_seminar_id = #{klassSeminarId}
+          and question.team_id = team.id
+          and question.student_id = student.id
+    </select>
+
+    <select id="getNoSelectedQuestionInKlassSeminar" resultMap="QuestionResultMap">
+        select question.id as questionId,
+               score,
+               student.id as studentId,
+               student.student_name as studentName,
+               team.id as teamId,
+               team.team_name as teamName,
+               attendance.id  as attendanceId
+        from student,
+             question,
+             team,
+             attendance
+        where question.klass_seminar_id = #{klassSeminarId}
+          and question.is_selected = 0
+          and question.team_id = team.id
+          and question.student_id = student.id
+    </select>
+
+    <update id="scoreQuestion" parameterType="com.xmu.cms.entity.Question">
+        update question
+        set score = #{question.score}
+        where id = #{question.questionId}
+    </update>
 </mapper>

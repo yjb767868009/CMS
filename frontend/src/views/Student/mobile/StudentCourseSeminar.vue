@@ -18,11 +18,13 @@
         <span>第{{rounds[0].order}}轮</span>
       </cell>
       <template v-if="showContent1">
-          <cell-box v-for="seminar in rounds[0].seminar" :key="seminar.id" @click.native="click(seminar)" is-link>
-              {{seminar.topic}}
-          </cell-box>
+        <cell-box
+          v-for="seminar in rounds[0].seminar"
+          :key="seminar.id"
+          @click.native="click(seminar)"
+          is-link
+        >{{seminar.topic}}</cell-box>
       </template>
-      
 
       <cell
         is-link
@@ -34,7 +36,12 @@
         <span>第{{rounds[1].order}}轮</span>
       </cell>
       <template v-if="showContent2">
-          <cell-box v-for="seminar in rounds[1].seminar" :key="seminar.id" is-link></cell-box>
+        <cell-box
+          v-for="seminar in rounds[1].seminar"
+          :key="seminar.id"
+          @click.native="click(seminar)"
+          is-link
+        ></cell-box>
       </template>
     </group>
 
@@ -78,6 +85,7 @@
 
 <script>
 import axios from "axios";
+import moment from 'moment'
 import { XHeader, Cell, CellBox, TransferDom, Popup, Group } from "vux";
 export default {
   directives: {
@@ -110,30 +118,65 @@ export default {
         }
       ],
       show: false,
-      showContent:{},
-      showContent1:false,
-      showContent2:false
+      showContent: {},
+      showContent1: false,
+      showContent2: false,
     };
   },
-  mounted: function() {
-    // this.$axios
-    //   .get("/course/" + this.$store.state.currentCourse.id + "/round")
-    //   .then(response => {
-    //     this.rounds = respnose.data;
-    //   });
-    // for (var i = 0; i < this.rounds.length; i++) {
-    //     this.$axios.get("/round/"+this.rounds[i].id+'/seminar').then(response=>{
-    //         this.rounds[i].seminars=response.data
-    //     })
-    // }
-    for(var i=0;i<this.rounds.length;i++){
-        this.rounds[i].seminar=this.seminars
+  mounted: function() {//挂载:获取round 和 seminar
+    this.$axios
+      .get("/course/" + this.$store.state.currentCourse.id + "/round")
+      .then(response => {
+        this.rounds = respnose.data;
+      });
+    for (var i = 0; i < this.rounds.length; i++) {
+      this.$axios
+        .get("/round/" + this.rounds[i].id + "/seminar")
+        .then(response => {
+          this.rounds[i].seminars = response.data;
+        });
+    }
+    for (var i = 0; i < this.rounds.length; i++) {
+      this.rounds[i].seminar = this.seminars;
     }
   },
   methods: {
     click: function(seminar) {
-      this.$store.state.currentSeminar=seminar
-      this.$router.push({name:''})
+      this.$store.state.currentSeminar = seminar;
+      this.$axios
+        .get(
+          "/seminar/" + seminar.seminarId + "/class/" + seminar.class.classId
+        )
+        .then(response => {
+          this.$stoer.state.currentClass=response.data
+          this.$store.state.reportDDL=response.data.klassSeminar.reportDDL
+          this.$store.state.seminarSignEndTime=moment(response.data.seminar.signEndTime)
+          
+          if(response.data.status===0&&response.data.attendance===null){
+            //未开未报
+            this.$router.push({name:'SeminarRegistration'})
+          }
+          else if(response.data.status===1&&response.data.attendance===null){
+            //正在未报
+            this.$router.push({name:'SeminarDetail'})
+          }
+          else if(response.data.status===2&&response.data.attendance===null){
+            //已完未报
+            this.$router.push({name:'SeminarSeqFinished'})
+          }
+          else if(response.data.status===0&&response.data.attendance!==null){
+            //未开始已报
+            this.$router.push({name:'SeminarUnstartSigned'})
+          }
+          else if(response.data.status===1&&response.data.attendance!==null){
+            //正在已报
+            this.$router.push({name:'SeminarRunningSigned'})
+          }
+          else if(response.data.status===2&&response.data.attendance!==null){
+            //已完已报 -》分成有没有截止的
+            this.$router.push({name:'SeminarSigned'})
+          }
+        });
     },
     running: function() {
       this.$router.push("/mobile/Student/studentSeminarList");

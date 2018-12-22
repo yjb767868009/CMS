@@ -120,4 +120,53 @@
                 #{course.teamStartDate},
                 #{course.teamEndDate})
     </insert>
+
+    <select id="getMainShareCourseByTeacher" resultMap="CourseResultMap">
+        SELECT course1.id            as courseId,
+               teacher.id           as teacherId,
+               teacher.email        as teacherEmail,
+               teacher.teacher_name as teacherName,
+               course1.course_name          as courseName,
+               course1.introduction,
+               course1.presentation_percentage       as presentationWeight,
+               course1.report_percentage             as reportWeight,
+               course1.question_percentage           as questionWeight,
+               course1.team_start_time      as teamStartDate,
+               course1.team_end_time        as teamEndDate,
+               klass.id             as klassId,
+               klass.grade          as grade,
+               klass.klass_serial   as klassSerial
+        FROM course course1,
+             teacher,
+             klass,
+             course course2
+        WHERE course1.teacher_id = #{teacherId}
+          AND teacher.id = #{teacherId}
+          and (course2.team_main_course_id = course1.id or course2.seminar_main_course_id = course1.id)
+          and klass.course_id = course1.id
+    </select>
+
+    <select id="getSubShareCourseByTeacher" resultMap="CourseResultMap">
+        SELECT course.id            as courseId,
+               teacher.id           as teacherId,
+               teacher.email        as teacherEmail,
+               teacher.teacher_name as teacherName,
+               course.course_name          as courseName,
+               course.introduction,
+               course.presentation_percentage       as presentationWeight,
+               course.report_percentage             as reportWeight,
+               course.question_percentage           as questionWeight,
+               course.team_start_time      as teamStartDate,
+               course.team_end_time        as teamEndDate,
+               klass.id             as klassId,
+               klass.grade          as grade,
+               klass.klass_serial   as klassSerial
+        FROM course,
+             teacher,
+             klass
+        WHERE course.teacher_id = #{teacherId}
+          AND teacher.id = #{teacherId}
+          and (course.seminar_main_course_id is not null or course.team_main_course_id is not null )
+          and klass.course_id = course.id
+    </select>
 </mapper>

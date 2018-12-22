@@ -74,12 +74,13 @@ public interface KlassMapper {
      */
     Integer deleteKlassStudent(@Param("kassId") BigInteger klassId);
 
+
     /**
      * 删除班级学生关系中队伍信息
      *
      * @param teamId 队伍id
      */
-    Integer deleteTeamStudent(BigInteger teamId);// TODO: 2018/12/20
+    Integer deleteTeamStudent(BigInteger teamId);
 
     /**
      * 队伍增加学生
@@ -89,7 +90,7 @@ public interface KlassMapper {
      * @param studentId 学生id
      * @return 修改信息
      */
-    Integer addMembers(BigInteger klassId, BigInteger teamId, BigInteger studentId);// TODO: 2018/12/20
+    Integer addMembers(BigInteger klassId, BigInteger teamId, BigInteger studentId);
 
     /**
      * 删除单个学生和队伍的关系
@@ -98,7 +99,7 @@ public interface KlassMapper {
      * @param student 学生id
      * @return 修改信息
      */
-    Integer removeTeamStudent(BigInteger teamId, Student student);// TODO: 2018/12/21  
+    Integer removeTeamStudent(BigInteger teamId, Student student);
 
     /**
      * 增加班级与轮次的关系
@@ -108,7 +109,7 @@ public interface KlassMapper {
      * @param enrollNumber 最大报名数
      * @return 新建信息
      */
-    Integer insertKlassRound(Integer klassId, BigInteger roundId, Integer enrollNumber);// TODO: 2018/12/21
+    Integer insertKlassRound(Integer klassId, BigInteger roundId, Integer enrollNumber);
 
     /**
      * 获取学生的所有班级
@@ -116,21 +117,5 @@ public interface KlassMapper {
      * @param studentId 学生id
      * @return 班级列表
      */
-    List<Klass> getKlassByStudent(BigInteger studentId);// TODO: 2018/12/22
-
-    /**
-     * 获得老师的主课程
-     *
-     * @param teacherId 老师id
-     * @return 课程列表
-     */
-    List<Course> getMainShareCourseByTeacher(BigInteger teacherId);// TODO: 2018/12/22  
-
-    /**
-     * 获得老师的从课程
-     *
-     * @param teacherId 老师id
-     * @return 课程列表
-     */
-    List<Course> getSubShareCourseByTeacher(BigInteger teacherId);// TODO: 2018/12/22
+    List<Klass> getKlassByStudent(BigInteger studentId);
 }

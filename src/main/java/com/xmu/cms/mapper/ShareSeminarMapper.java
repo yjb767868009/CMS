@@ -25,5 +25,5 @@ public interface ShareSeminarMapper {
      * @param courseId 课程id
      * @return 共享讨论课列表
      */
-    List<ShareSeminar> getShareSeminar(BigInteger courseId);// TODO: 2018/12/21  
+    List<ShareSeminar> getShareSeminar(BigInteger courseId);
 }

@@ -23,15 +23,16 @@ import AdminTeacher from '@/views/Admin/AdminTeacher'
 import SeminarDetail from '@/views/Student/mobile/SeminarDetail'
 import StudentActivation from '@/views/Student/mobile/StudentActivation'
 import SeminarPresentation from '@/views/Student/mobile/SeminarPresentation'
-// import SeminarPPT from '@/views/Student/mobile/SeminarPPT'
+import SeminarModifyRegistration from '@/views/Student/mobile/SeminarModifyRegistration'
+import SeminarRunningSigned from '@/views/Student/mobile/SeminarRunningSigned'
+
 import SeminarRegistration from '@/views/Student/mobile/SeminarRegistration'
 import SeminarRegistrationModification from '@/views/Student/mobile/SeminarRegistrationModification'
 import SeminarScore from '@/views/Student/mobile/SeminarScore'
 import SeminarSeqFinished from '@/views/Student/mobile/SeminarSeqFinished'
 import SeminarSeqFinishedStatus from '@/views/Student/mobile/SeminarSeqFinishedStatus'
 import SeminarSeqRunning from '@/views/Student/mobile/SeminarSeqRunning'
-
-// import SeminarSeqUnsigned from '@/views/Student/mobile/SeminarSeqUnsigned'
+import SeminarUnstartSigned from '@/views/Student/mobile/SeminarUnstartSigned'
 import SeminarSigned from '@/views/Student/mobile/SeminarSigned'
 import StudentCourseSeminar from '@/views/Student/mobile/StudentCourseSeminar'
 import StudentInfo from '@/views/Student/mobile/StudentInfo'
@@ -155,11 +156,7 @@ export default new Router({
       name:'StudentActivation',
       component:StudentActivation
     },
-    {
-      path:'/mobile/Student/studentSeminarList',//2.学生讨论课
-      name:'StudentSeminarList',
-      component:StudentSeminarList
-    },
+    
     {
       path:'/mobile/Student/stuSetAccount',
       name:'StuSetAccount',
@@ -201,6 +198,11 @@ export default new Router({
       component:NewTeam
     },
     {
+      path:'/mobile/Student/studentSeminarList',//2.学生讨论课
+      name:'StudentSeminarList',
+      component:StudentSeminarList
+    },
+    {
       path:'/mobile/student/course', //2-1讨论课
       name:'StudentCourseSeminar',
       component:StudentCourseSeminar
@@ -209,6 +211,11 @@ export default new Router({
       path:'/mobile/student/course/seminar',//正在 未报
       name:'SeminarDetail',
       component:SeminarDetail
+    },
+    {
+      path:'/mobile/student/course/seminar/running/presentation',//正在 未报 -》讨论课情况
+      name:'SeminarPresentation',
+      component:SeminarPresentation
     },
     {
       path:'/mobile/student/course/seminar/finished',//已完 未报
@@ -221,14 +228,24 @@ export default new Router({
       component:SeminarSeqFinishedStatus
     },
     {
+      path:'/mobile/student/course/seminar/unstartedSigned',//未开始 已报
+      name:'SeminarUnstartSigned',
+      component:SeminarUnstartSigned
+    },
+    {
+      path:'/mobile/student/course/seminar/unstartedSigned/modifyRegistration',//未开始 已报-》修改报名
+      name:'SeminarModifyRegistration',
+      component:SeminarModifyRegistration
+    },
+    {
+      path:'/mobile/student/course/seminar/RunningSigned',//正在 已报
+      name:'SeminarRunningSigned',
+      component:SeminarRunningSigned
+    },
+    {
       path:'/mobile/student/course/seminar/running',//正在展示
       name:'SeminarSeqRunning',
       component:SeminarSeqRunning
-    },
-    {
-      path:'/mobile/student/course/seminar/running/presentation',//正在 未报 -》讨论课情况
-      name:'SeminarPresentation',
-      component:SeminarPresentation
     },
     {
       path:'/mobile/student/course/seminar/unsigned/registration',//未开未报

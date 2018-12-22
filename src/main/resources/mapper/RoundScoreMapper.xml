@@ -16,15 +16,29 @@
     </resultMap>
 
     <select id="getAllScoresInRound" resultMap="RoundScoreResultMap">
-        SELECT team_name         as name,
+        SELECT team_name         as teamName,
                presentation_score as presentationScore,
                question_score    as questionScore,
                report_score      as reportScore,
-               total_score       as totalScore
+               total_score       as totalScore,
+               round_id          as roundId
         FROM round_score,
              team
         WHERE round_score.round_id = #{roundId}
           AND team.id = round_score.team_id
+    </select>
+
+    <select id="getScoreInRound" resultMap="RoundScoreResultMap">
+        SELECT team_name         as teamName,
+               presentation_score as presentationScore,
+               question_score    as questionScore,
+               report_score      as reportScore,
+               total_score       as totalScore,
+               round_id          as roundId
+        FROM round_score,
+             team
+        WHERE round_score.round_id = #{roundId}
+          AND team.id = #{teamId}
     </select>
 
     <update id="modifyScoreInRound">
@@ -38,7 +52,7 @@
 
     <update id="modifyScoreInSeminar">
         update seminar_score,team
-        set presentation_score = #{presentationScore},
+        set presentaton_score = #{presentationScore},
             question_score = #{questionScore},
             report_score = #{reportScore}
         WHERE klass_seminar_id = #{classSeminarId}
@@ -51,7 +65,7 @@
     </insert>
 
     <insert id="newScoreInSeminar">
-        insert into seminar_score (team_id, klass_seminar_id, presentation_score, report_score, question_score, total_score)
+        insert into seminar_score (team_id, klass_seminar_id, presentaton_score, report_score, question_score, total_score)
         values (#{teamId}, #{classSeminarId}, #{presentationScore}, #{reportScore}, #{questionScore}, #{totalScore})
     </insert>
 

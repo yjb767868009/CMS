@@ -21,7 +21,7 @@ public interface RoundScoreMapper {
      * @param roundId 轮次Id
      * @return 轮次成绩列表
      */
-    List<RoundScore> getAllScoresInRound(@Param("roundId") BigInteger roundId);//todo
+    List<RoundScore> getAllScoresInRound(@Param("roundId") BigInteger roundId);
 
     /**
      * 获取队伍轮次的成绩
@@ -31,5 +31,5 @@ public interface RoundScoreMapper {
      * @return 轮次成绩
      */
     RoundScore getScoreInRound(@Param("roundId") BigInteger roundId,
-                               @Param("teamId") BigInteger teamId);//todo
+                               @Param("teamId") BigInteger teamId);
 }

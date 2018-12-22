@@ -54,4 +54,5 @@ public interface CourseService {
     List<Course> getMainShareCourseByTeacher(BigInteger teacherId);
 
     List<Course> getSubShareCourseByTeacher(BigInteger teacherId);
+
 }

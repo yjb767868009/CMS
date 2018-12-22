@@ -3,6 +3,7 @@ package com.xmu.cms.service.Impl;
 import com.xmu.cms.dao.*;
 import com.xmu.cms.entity.*;
 import com.xmu.cms.service.SeminarService;
+import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -95,11 +96,6 @@ public class SeminarServiceImpl implements SeminarService {
     @Override
     public Seminar getSeminarBySeminarId(BigInteger seminarId) {
         return seminarDao.getSeminarBySeminarId(seminarId);
-    }
-
-    @Override
-    public List<Round> getRoundsByCourseId(BigInteger courseId) {
-        return roundDao.getRoundsByCourseId(courseId);
     }
 
     @Override
@@ -220,6 +216,11 @@ public class SeminarServiceImpl implements SeminarService {
     @Override
     public Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId) {
         return attendanceDao.getStudentAttendanceInKlassSeminar(studentId, klassId, seminarId);
+    }
+
+    @Override
+    public List<Round> getRoundInCourse(UserInfo info, BigInteger courseId) {
+        return roundDao.getRoundsByCourseId(info, courseId);
     }
 
 

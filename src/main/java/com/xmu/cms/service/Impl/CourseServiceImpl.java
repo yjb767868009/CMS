@@ -22,6 +22,9 @@ public class CourseServiceImpl implements CourseService {
     private CourseDao courseDao;
 
     @Autowired
+    private RoundDao roundDao;
+
+    @Autowired
     private TeamDao teamDao;
 
     @Autowired
@@ -197,4 +200,5 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> getSubShareCourseByTeacher(BigInteger teacherId) {
         return klassDao.getSubShareCourseByTeacher(teacherId);
     }
+
 }

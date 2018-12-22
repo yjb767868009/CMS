@@ -1,7 +1,6 @@
 package com.xmu.cms.controller;
 
 import com.xmu.cms.entity.Attendance;
-import com.xmu.cms.entity.Round;
 import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.entity.Team;
 import com.xmu.cms.service.*;
@@ -60,11 +59,6 @@ public class UserController {
         return userService.modifyEmail(info, user);
     }
 
-    //和标准组不同
-    @GetMapping(value = "/course/{courseId}/rounds")
-    public List<Round> getRounds(@PathVariable("courseId") BigInteger courseId) {
-        return seminarService.getRoundsByCourseId(courseId);
-    }
 
     @GetMapping(value = "/course/{courseId}/seminars")
     public List<Seminar> getSeminarsByCourseId(@PathVariable("courseId") BigInteger courseId) {

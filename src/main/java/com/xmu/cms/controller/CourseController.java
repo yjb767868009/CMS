@@ -78,11 +78,10 @@ public class CourseController {
     }
 
     @GetMapping(value = "/{courseId}/round")
-    public Round getRound(@PathVariable("courseId") Integer courseId) {
-        //TODO
-        return null;
+    public List<Round> getRoundInCourse(UserInfo info,
+                                        @PathVariable("courseId") BigInteger courseId) {
+        return seminarService.getRoundInCourse(info, courseId);
     }
-
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/{courseId}")

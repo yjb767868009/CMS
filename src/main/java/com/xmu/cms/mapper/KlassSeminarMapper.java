@@ -47,7 +47,7 @@ public interface KlassSeminarMapper {
      * @param seminarId 讨论课id
      * @return 班级讨论课列表
      */
-    List<KlassSeminar> getKlassSeminarBySeminarId(BigInteger seminarId);
+    List<KlassSeminar> getKlassSeminarBySeminarId(@Param("seminarId") BigInteger seminarId);
 
     /**
      * 修改班级讨论课
@@ -55,4 +55,14 @@ public interface KlassSeminarMapper {
      * @param klassSeminar 班级讨论课
      */
     Integer updateKlassSeminar(KlassSeminar klassSeminar);
+
+    /**
+     * 根据学生和讨论课获取班级讨论课
+     *
+     * @param studentId 队伍id
+     * @param seminarId 讨论课id
+     * @return 班级讨论课
+     */
+    KlassSeminar getKlassSeminarByStudentAndSeminar(@Param("studentId") BigInteger studentId,
+                                                    @Param("seminarId") BigInteger seminarId);
 }

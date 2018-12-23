@@ -51,12 +51,15 @@ import TeamMember from '@/views/Student/mobile/TeamMember'
 //Teacher
 import SetAccount from '@/views/Teacher/mobile/SetAccount'
 import ManageCourse from '@/views/Teacher/mobile/ManageCourse'
-import SetSeminar from '@/views/Teacher/mobile/SetSeminar'
+import SeminarPrincipal from '@/views/Teacher/mobile/SeminarPrincipal'
+import SeminarSubordinate from '@/views/Teacher/mobile/SeminarSubordinate'
+
 import SetRound from '@/views/Teacher/mobile/SetRound'
 import CreateSeminar from '@/views/Teacher/mobile/CreateSeminar'
 import CreateRound from '@/views/Teacher/mobile/CreateRound'
 import TeacherSeminars from '@/views/Teacher/mobile/TeacherSeminars'
-import Seminar from '@/views/Teacher/mobile/Seminar'
+import SeminarFinished from '@/views/Teacher/mobile/SeminarFinished'
+import SeminarOngoing from '@/views/Teacher/mobile/SeminarOngoing'
 import Report from '@/views/Teacher/mobile/Report'
 import SeminarGrade from '@/views/Teacher/mobile/SeminarGrade'
 import ManageSeminar from '@/views/Teacher/mobile/ManageSeminar'
@@ -286,15 +289,11 @@ export default new Router({
       component: SetAccount
     },
     {
-      path: '/mobile/teacher/course',
+      path: '/mobile/teacher/course',//课程管理
       name: 'ManageCourse',
       component: ManageCourse
     },
-    {
-      path:'/mobile/teacher/setseminar',
-      name:'SetSeminar',
-      component:SetSeminar
-    },
+    
     {
       path:'/mobile/teacher/setround',
       name:'SetRound',
@@ -311,22 +310,37 @@ export default new Router({
       component:CreateSeminar
     },
     {
-      path:'/mobile/teacher/seminars',
+      path:'/mobile/teacher/seminars',//老师讨论课
       name:'TeacherSeminars',
       component:TeacherSeminars
     },
     {
-      path:'/mobile/teacher/seminar',
-      name:'Seminar',
-      component:Seminar
+      path:'/mobile/teacher/seminarP',//某课程主
+      name:'SeminarPrincipal',
+      component:SeminarPrincipal
     },
     {
-      path:'/mobile/teacher/report',
+      path:'/mobile/teacher/seminarS',//某课程从
+      name:'SeminarSubordinate',
+      component:SeminarSubordinate
+    },
+    {
+      path:'/mobile/teacher/seminarOngoing',//讨论课 正
+      name:'SeminarOngoing',
+      component:SeminarOngoing
+    },
+    {
+      path:'/mobile/teacher/seminarFinished',//讨论课 已
+      name:'SeminarFinished',
+      component:SeminarFinished
+    },
+    {
+      path:'/mobile/teacher/report',//讨论课 已 --》 书面报告打分
       name:'Report',
       component:Report
     },
     {
-      path:'/mobile/teacher/seminargrade',
+      path:'/mobile/teacher/seminargrade',//讨论课 已 --》查看
       name:'SeminarGrade',
       component:SeminarGrade
     },

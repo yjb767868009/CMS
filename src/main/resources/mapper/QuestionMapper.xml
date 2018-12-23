@@ -43,7 +43,7 @@
           and question.klass_seminar_id = klass_seminar.id
     </select>
 
-    <insert id="newQuestion">
+    <insert id="insertQuestion">
         insert question (klass_seminar_id, attendance_id, team_id, student_id, is_selected, score)
         values (#{klassSeminarId}, #{attendanceId}, #{teamId}, #{studentId}, #{isSelected}, #{score})
     </insert>

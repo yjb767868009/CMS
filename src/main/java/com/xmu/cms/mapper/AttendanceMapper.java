@@ -13,10 +13,16 @@ import java.util.List;
  */
 @Mapper
 public interface AttendanceMapper {
+    /**
+     *获取讨论课中的展示
+     *
+     * @param seminarId 讨论课id
+     * @return 展示列表
+     */
     List<Attendance> getAttendancesInSeminar(@Param("seminarId") BigInteger seminarId);
 
     Integer setAttendanceScore(@Param("attendanceId") BigInteger attendanceId,
-                               @Param("presentationScore") Float presentationScore);
+                               @Param("presentationScore") Float presentationScore);//没用了
 
     /**
      * 获取班级讨论课中的展示，按展示顺序排序
@@ -25,10 +31,22 @@ public interface AttendanceMapper {
      * @param klassId   班级id
      * @return 展示列表
      */
-    List<Attendance> getAttendancesInKlassAndSeminar(@Param("seminarId") BigInteger seminarId, @Param("klassId") BigInteger klassId);// TODO: 2018/12/22
+    List<Attendance> getAttendancesInKlassAndSeminar(@Param("seminarId") BigInteger seminarId, @Param("klassId") BigInteger klassId);
 
+    /**
+     * 插入展示信息
+     *
+     * @param attendance 展示
+     * @return 插入成功信息
+     */
     Integer newAttendance(@Param("attendance") Attendance attendance);
 
+    /**
+     * 删除展示信息
+     *
+     * @param attendanceId 展示id
+     * @return 删除成功信息
+     */
     Integer deleteAttendance(@Param("attendanceId") BigInteger attendanceId);
 
     /**

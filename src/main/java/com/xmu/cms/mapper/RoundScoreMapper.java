@@ -13,7 +13,6 @@ import java.util.List;
  */
 @Mapper
 public interface RoundScoreMapper {
-    RoundScore getAllScoresInSeminar(@Param("clbumSeminarId") BigInteger clbumSeminarId);
 
     /**
      * 获取所有队伍轮次成绩

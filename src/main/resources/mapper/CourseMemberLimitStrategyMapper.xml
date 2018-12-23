@@ -12,7 +12,7 @@
         </association>
     </resultMap>
 
-    <select id="getCourseMemberLimitById" resultMap="CourseMemberLimitResultMap">
+    <select id="getCourseMemberLimitStrategyById" resultMap="CourseMemberLimitResultMap">
         select course_member_limit_strategy.id as strategyId,
                min_member,
                max_member,

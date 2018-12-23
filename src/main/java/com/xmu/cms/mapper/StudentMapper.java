@@ -38,8 +38,20 @@ public interface StudentMapper {
      */
     Integer updateStudent(@Param("student") Student student);
 
+    /**
+     * 更新学生密码
+     *
+     * @param student 学生对象
+     * @return 更新成功信息
+     */
     Integer updateStudentPassword(@Param("student") Student student);
 
+    /**
+     * 更新学生信息
+     *
+     * @param student 学生对象
+     * @return 更新成功信息
+     */
     Integer updateStudentInfo(@Param("student") Student student);
 
     /**
@@ -74,6 +86,12 @@ public interface StudentMapper {
      */
     Student getStudentById(@Param("studentId") BigInteger studentId);
 
+    /**
+     * 获取课程中未组队学生
+     *
+     * @param courseId 课程id
+     * @return 学生列表
+     */
     List<Student> getNoTeamStudentInCourse(@Param("courseId") BigInteger courseId);
 
     /**

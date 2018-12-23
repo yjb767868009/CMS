@@ -17,5 +17,5 @@ public interface ConflictCourseStrategyMapper {
      * @param strategyId 规则id
      * @return 冲突课程规则
      */
-    ConflictCourseStrategy getConflictCourseStrategyById(BigInteger strategyId);// TODO: 2018/12/22  
+    ConflictCourseStrategy getConflictCourseStrategyById(BigInteger strategyId);
 }

@@ -18,5 +18,5 @@ public interface TeamOrStrategyMapper {
      * @param strategyId 队伍或规则id
      * @return 队伍或规则id
      */
-    TeamOrStrategy getTeamOrStrategyById(BigInteger strategyId);// TODO: 2018/12/22
+    TeamOrStrategy getTeamOrStrategyById(BigInteger strategyId);
 }

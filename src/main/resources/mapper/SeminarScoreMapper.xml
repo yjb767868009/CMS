@@ -17,7 +17,7 @@
         </association>
     </resultMap>
 
-    <select id="getAllScoreInSeminar" resultMap="SeminarScoreResultMap">
+    <select id="getAllScoresInSeminar" resultMap="SeminarScoreResultMap">
         SELECT team.team_name    as name,
                 team_id          as teamId,
                 presentaton_score as presentationScore,
@@ -46,7 +46,7 @@
         values (#{teamId}, #{classSeminarId}, #{presentationScore}, #{reportScore}, #{questionScore}, #{totalScore})
     </insert>
 
-    <delete id="deleteScoreInSeminar">
+    <delete id="deleteSeminarScore">
         delete
         from seminar_score
         where klass_seminar_id = #{klassSeminarId}

@@ -14,7 +14,7 @@
         </association>
     </resultMap>
 
-    <select id="getConflictCourse" resultMap="ConflictCourseResultMap">
+    <select id="getConflictCourseStrategyById" resultMap="ConflictCourseResultMap">
         select conflict_course_strategy.id as conflictCourseId,
                course1.id as courseOneId,
                course1.course_name as courseOneName,

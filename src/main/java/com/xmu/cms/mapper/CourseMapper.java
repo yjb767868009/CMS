@@ -29,7 +29,7 @@ public interface CourseMapper {
      * @param teacherId 老师id
      * @return 课程列表
      */
-    List<Course> getMainShareCourseByTeacher(BigInteger teacherId);
+    List<Course> getMainShareCourseByTeacher(@Param("teacherId") BigInteger teacherId);
 
     /**
      * 获得老师的从课程
@@ -37,5 +37,5 @@ public interface CourseMapper {
      * @param teacherId 老师id
      * @return 课程列表
      */
-    List<Course> getSubShareCourseByTeacher(BigInteger teacherId);
+    List<Course> getSubShareCourseByTeacher(@Param("teacherId") BigInteger teacherId);
 }

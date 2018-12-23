@@ -1,6 +1,5 @@
 package com.xmu.cms.mapper;
 
-import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Klass;
 import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.entity.Student;
@@ -117,5 +116,5 @@ public interface KlassMapper {
      * @param studentId 学生id
      * @return 班级列表
      */
-    List<Klass> getKlassByStudent(BigInteger studentId);
+    List<Klass> getKlassByStudent(BigInteger studentId);// TODO: 2018/12/23  
 }

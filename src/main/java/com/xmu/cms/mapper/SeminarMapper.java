@@ -1,5 +1,6 @@
 package com.xmu.cms.mapper;
 
+import com.xmu.cms.entity.KlassSeminar;
 import com.xmu.cms.entity.Seminar;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -42,7 +43,7 @@ public interface SeminarMapper {
 
     List<Seminar> getAllSeminarByRoundId(@Param("roundId") BigInteger roundId);
 
-    Seminar getRunningSeminarByTeacherId(@Param("teacherId") BigInteger teacherId);
+    KlassSeminar getRunningKlassSeminarByTeacherId(@Param("teacherId") BigInteger teacherId);
 
     /**
      * 删除讨论课

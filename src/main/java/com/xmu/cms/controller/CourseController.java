@@ -120,13 +120,6 @@ public class CourseController {
         }
     }
 
-    //学生ID通过JWT传入
-    @GetMapping(value = "/course/{courseId}/myTeam")
-    public Team getMyTeam(@PathVariable("courseId") Integer courseId) {
-        //TODO
-        return null;
-    }
-
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/course/{courseId}/noteam")
     public List<Student> getNoTeamStudent(@PathVariable("courseId") BigInteger courseId) {

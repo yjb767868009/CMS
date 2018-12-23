@@ -5,6 +5,10 @@
     <resultMap id="QuestionResultMap" type="com.xmu.cms.entity.Question">
         <id property="questionId" column="questionId" javaType="java.math.BigInteger"/>
         <result property="score" column="score"/>
+        <result property="selected" column="is_selected"/>
+        <association property="klassSeminar" javaType="com.xmu.cms.entity.KlassSeminar">
+            <id property="klassSeminarId" column="klassSeminarId"/>
+        </association>
         <association property="student" javaType="com.xmu.cms.entity.Student">
             <id property="studentId" column="studentId"/>
             <result property="name" column="studentName"/>
@@ -21,21 +25,25 @@
     <select id="getQuestionByQuestionId" resultMap="QuestionResultMap">
         select question.id          as questionId,
                score,
+               is_selected,
                student.id           as studentId,
                student.student_name as studentName,
                team.id              as teamId,
                team.team_name       as teamName,
-               attendance.id        as attendanceId
+               attendance.id        as attendanceId,
+               klass_seminar.id     as klassSeminarId
         from student,
              question,
              team,
-             attendance
+             attendance,
+             klass_seminar
         where question.id = #{questionId}
           and question.team_id = team.id
           and question.student_id = student.id
+          and question.klass_seminar_id = klass_seminar.id
     </select>
 
-    <insert id="newQuestion">
+    <insert id="insertQuestion">
         insert question (klass_seminar_id, attendance_id, team_id, student_id, is_selected, score)
         values (#{klassSeminarId}, #{attendanceId}, #{teamId}, #{studentId}, #{isSelected}, #{score})
     </insert>
@@ -61,6 +69,7 @@
     <select id="getQuestionInKlassSeminar" resultMap="QuestionResultMap">
         select question.id          as questionId,
                score,
+               is_selected,
                student.id           as studentId,
                student.student_name as studentName,
                team.id              as teamId,
@@ -73,7 +82,7 @@
         where question.klass_seminar_id = #{klassSeminarId}
           and question.team_id = team.id
           and question.student_id = student.id
-          and question.is_selected = 0;
+          and question.is_selected = 0
     </select>
 
     <select id="getNoSelectedQuestionInKlassSeminar" resultMap="QuestionResultMap">

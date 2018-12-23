@@ -16,16 +16,12 @@
 
     <select id="getRoundsByCourseId" resultMap="RoundResultMap">
         SELECT round.id                as roundId,
-               course_id               as couseId,
-               course.course_name    as courseName,
                round_serial,
                presentation_score_method as presentationScoreType,
                report_score_method       as reportScoreType,
                question_score_method     as questionScoreType
-        FROM round,
-             course
+        FROM round
         WHERE course_id = #{courseId}
-        and course.id = course_id
     </select>
 
     <select id="getRoundByRoundId" resultMap="RoundResultMap">

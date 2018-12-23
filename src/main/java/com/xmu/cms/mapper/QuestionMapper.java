@@ -41,5 +41,5 @@ public interface QuestionMapper {
      *
      * @param question 新的提问
      */
-    void insertQuestion(Question question);// TODO: 2018/12/23
+    void insertQuestion(Question question);
 }

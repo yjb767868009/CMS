@@ -22,6 +22,7 @@ public interface ShareSeminarMapper {
 
     /**
      * 获取课程中所有共享讨论课
+     *
      * @param courseId 课程id
      * @return 共享讨论课列表
      */

@@ -15,6 +15,9 @@
             <id property="seminarId" column="seminarId"/>
             <result property="topic" column="seminarName"/>
         </association>
+        <association property="selectAttendance" javaType="com.xmu.cms.entity.Attendance">
+            <id property="attendanceId" column="attendanceId"/>
+        </association>
     </resultMap>
 
     <select id="getKlassSeminarByKlassAndSeminar" resultMap="KlassSeminarResultMap">
@@ -25,17 +28,20 @@
                grade,
                klass_serial,
                seminar.id       as seminarId,
-               seminar_name     as seminarName
+               seminar_name     as seminarName,
+               attendance.id    as attendanceId
         FROM klass_seminar,
              klass,
-             seminar
+             seminar,
+             attendance
         WHERE klass_seminar.klass_id = #{klassId}
           and klass_seminar.seminar_id = #{seminarId}
           and klass.id = #{klassId}
           and seminar.id = #{seminarId}
+          and attendance.klass_seminar_id = klass_seminar.id
     </select>
 
-    <select id="getKlassSeminarsBySemianrId">
+    <select id="getKlassSeminarBySeminarId">
         select id as klassSemianrId, klass_id as klassId, report_ddl as reportDDL, seminar_status as status
         from klass_seminar
         where seminar_id = #{seminarId}
@@ -54,20 +60,47 @@
     </delete>
 
     <select id="getKlassSeminarBySeminarId" resultMap="KlassSeminarResultMap">
-        SELECT klass_seminar.id as klassSeminarId, report_ddl, seminar_status, klass.id as klassId, grade, klass_serial
+        SELECT klass_seminar.id as klassSeminarId,
+               report_ddl,
+               seminar_status,
+               klass.id as klassId,
+               grade,
+               klass_serial,
+               seminar.id       as seminarId,
+               seminar_name     as seminarName
         FROM klass_seminar,
-             klass
+             klass,
+             seminar
         WHERE klass_seminar.seminar_id = #{seminarId}
           AND klass_seminar.klass_id = klass.id
+          and seminar.id = #{seminarId}
     </select>
 
     <select id="getKlassSeminarByStudentAndSeminar" resultMap="KlassSeminarResultMap">
-        SELECT klass_seminar.id as klassSeminarId, report_ddl, seminar_status, klass.id as klassId, grade, klass_serial
+        SELECT klass_seminar.id as klassSeminarId,
+               report_ddl,
+               seminar_status,
+               klass.id as klassId,
+               grade,
+               klass_serial,
+               seminar.id       as seminarId,
+               seminar_name     as seminarName
         FROM klass_seminar,
              klass_student,
-             klass
+             klass,
+             seminar
         WHERE klass_student.student_id = #{studentId}
           AND klass_seminar.seminar_id = #{seminarId}
           AND klass_seminar.klass_id = klass_student.klass_id
+          and seminar.id = #{seminarId}
     </select>
+
+    <update id="updateKlassSeminar" parameterType="com.xmu.cms.entity.KlassSeminar">
+        update klass_seminar
+        set klass_id = #{klassSeminar.klass.klassId},
+            seminar_id = #{klassSeminar.seminar.seminarId},
+            report_ddl = #{klassSeminar.reportDDL},
+            seminar_status = #{klassSeminar.status}
+        where id = #{klassSeminar.klassSeminarId}
+    </update>
 </mapper>

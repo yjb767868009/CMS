@@ -8,7 +8,7 @@
         <result property="maxMember" column="max_member"/>
     </resultMap>
 
-    <select id="getCourseMemberLimitById" resultMap="CourseMemberLimitResultMap">
+    <select id="getMemberLimitStrategyById" resultMap="CourseMemberLimitResultMap">
         select member_limit_strategy.id as strategyId,
                min_member,
                max_member

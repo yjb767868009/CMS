@@ -56,4 +56,10 @@
         set status= #{status}
         where id = #{shareId}
     </update>
+
+    <delete id="deleteShareSeminarByCourseId">
+        delete
+        from share_seminar_application
+        where sub_course_id = #{courseId} or main_course_id = #{courseId}
+    </delete>
 </mapper>

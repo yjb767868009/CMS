@@ -92,11 +92,30 @@
                enroll_end_time as signEndTime,
                enroll_start_time as signStartTime,
                course.id as courseId,
-               course_name as courseName,
-               round_id as roundId
+               course_name as courseName
         FROM seminar,
              course
         where seminar.round_id = #{roundId}
+    </select>
+
+    <select id="getRunningSeminarByTeacherId" resultMap="SeminarResultMap">
+        SELECT seminar.id as seminarId,
+               seminar_name as topic,
+               seminar.introduction as introduction,
+               max_team as maxTeamNum,
+               is_visible as visible,
+               seminar_serial as signOrder,
+               enroll_end_time as signEndTime,
+               enroll_start_time as signStartTime,
+               course.id as courseId,
+               course_name as courseName
+        FROM seminar,
+             course,
+             klass_seminar
+        where course.teacher_id = #{teacherId}
+          and seminar.course_id = course.id
+          and klass_seminar.seminar_id = seminar.id
+          and klass_seminar.seminar_status = 1 or 3
     </select>
 
     <select id="getAllSeminarByCourseId" resultMap="SeminarResultMap">
@@ -108,11 +127,8 @@
                seminar_serial as signOrder,
                enroll_end_time as signEndTime,
                enroll_start_time as signStartTime,
-               course.id as courseId,
-               course_name as courseName,
                round_id as roundId
-        FROM seminar,
-             course
+        FROM seminar
         where seminar.course_id = #{courseId}
     </select>
 

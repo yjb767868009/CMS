@@ -116,5 +116,5 @@ public interface KlassMapper {
      * @param studentId 学生id
      * @return 班级列表
      */
-    List<Klass> getKlassByStudent(BigInteger studentId);// TODO: 2018/12/23  
+    List<Klass> getKlassByStudent(@Param("studentId") BigInteger studentId);// TODO: 2018/12/23
 }

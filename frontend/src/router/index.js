@@ -149,7 +149,10 @@ export default new Router({
     {
       path:'/mobile/student/studentInfo',
       name:'StudentInfo',
-      component:StudentInfo
+      component:StudentInfo,
+      meta:{
+        requireAuth:false
+      }
     },
     {
       path:'/mobile/student/activation',

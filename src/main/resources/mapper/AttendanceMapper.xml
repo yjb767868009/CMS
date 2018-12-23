@@ -10,6 +10,7 @@
         <result property="present" column="is_present"/>
         <association property="team" javaType="com.xmu.cms.entity.Team">
             <id property="teamId" column="teamId"/>
+            <result property="teamName" column="teamName"/>
         </association>
         <association property="klass" javaType="com.xmu.cms.entity.Klass">
             <id property="klassId" column="klassId"/>
@@ -75,5 +76,38 @@
           AND klass_student.student_id = #{studentId}
           AND klass_student.team_id = attendance.team_id
           AND klass_seminar.id = attendance.klass_seminar_id
+    </select>
+
+    <select id="getAttendancesInKlassAndSeminar" resultMap="AttendanceResultMap">
+        SELECT attendance.id      as attendanceId,
+               team_order,
+               ppt_name,
+               report_name,
+               is_present,
+               attendance.team_id as teamId,
+               team.team_name     as teamName
+        FROM attendance,
+             klass_seminar,
+             team
+        WHERE klass_seminar.seminar_id = #{seminarId}
+          AND klass_seminar.klass_id = #{klassId}
+          AND attendance.klass_seminar_id = klass_seminar.id
+          AND team.id = attendance.team_id
+    </select>
+
+    <select id="getAttendancesInKlassSeminar" resultMap="AttendanceResultMap">
+        SELECT attendance.id      as attendanceId,
+               team_order,
+               ppt_name,
+               report_name,
+               is_present,
+               attendance.team_id as teamId,
+               team.team_name     as teamName
+        FROM attendance,
+             klass_seminar,
+             team
+        WHERE klass_seminar.id = #{klassSeminarId}
+          AND attendance.klass_seminar_id = klass_seminar.id
+          AND team.id = attendance.team_id
     </select>
 </mapper>

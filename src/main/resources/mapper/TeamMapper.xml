@@ -7,8 +7,8 @@
         <result property="teamName" column="teamName" javaType="java.lang.String"/>
         <result property="status" column="status" javaType="java.lang.Integer"/>
         <association property="leader" javaType="com.xmu.cms.entity.Student">
-            <id property="leaderId" column="leaderId"/>
-            <result property="leaderName" column="leaderName"/>
+            <id property="studentId" column="leaderId"/>
+            <result property="name" column="leaderName"/>
         </association>
         <association property="klass" javaType="com.xmu.cms.entity.Klass">
             <id property="klassId" column="klassId"/>

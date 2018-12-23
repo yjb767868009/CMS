@@ -7,7 +7,7 @@
         <result property="score" column="score"/>
         <association property="student" javaType="com.xmu.cms.entity.Student">
             <id property="studentId" column="studentId"/>
-            <result property="studentName" column="studentName"/>
+            <result property="name" column="studentName"/>
         </association>
         <association property="team" javaType="com.xmu.cms.entity.Team">
             <id property="teamId" column="teamId"/>
@@ -19,13 +19,13 @@
     </resultMap>
 
     <select id="getQuestionByQuestionId" resultMap="QuestionResultMap">
-        select question.id as questionId,
+        select question.id          as questionId,
                score,
-               student.id as studentId,
+               student.id           as studentId,
                student.student_name as studentName,
-               team.id as teamId,
-               team.team_name as teamName,
-               attendance.id  as attendanceId
+               team.id              as teamId,
+               team.team_name       as teamName,
+               attendance.id        as attendanceId
         from student,
              question,
              team,
@@ -59,13 +59,13 @@
     </update>
 
     <select id="getQuestionInKlassSeminar" resultMap="QuestionResultMap">
-        select question.id as questionId,
+        select question.id          as questionId,
                score,
-               student.id as studentId,
+               student.id           as studentId,
                student.student_name as studentName,
-               team.id as teamId,
-               team.team_name as teamName,
-               attendance.id  as attendanceId
+               team.id              as teamId,
+               team.team_name       as teamName,
+               attendance.id        as attendanceId
         from student,
              question,
              team,
@@ -73,16 +73,17 @@
         where question.klass_seminar_id = #{klassSeminarId}
           and question.team_id = team.id
           and question.student_id = student.id
+          and question.is_selected = 0;
     </select>
 
     <select id="getNoSelectedQuestionInKlassSeminar" resultMap="QuestionResultMap">
-        select question.id as questionId,
+        select question.id          as questionId,
                score,
-               student.id as studentId,
+               student.id           as studentId,
                student.student_name as studentName,
-               team.id as teamId,
-               team.team_name as teamName,
-               attendance.id  as attendanceId
+               team.id              as teamId,
+               team.team_name       as teamName,
+               attendance.id        as attendanceId
         from student,
              question,
              team,

@@ -16,13 +16,15 @@ public class KlassSeminar {
     private Seminar seminar;
     private Timestamp reportDDL;
     private Integer status;
+    private Attendance selectAttendance;
 
-    public KlassSeminar(BigInteger klassSeminarId, Klass klass, Seminar seminar, Timestamp reportDDL, Integer status) {
+    public KlassSeminar(BigInteger klassSeminarId, Klass klass, Seminar seminar, Timestamp reportDDL, Integer status, Attendance selectAttendance) {
         this.klassSeminarId = klassSeminarId;
         this.klass = klass;
         this.seminar = seminar;
         this.reportDDL = reportDDL;
         this.status = status;
+        this.selectAttendance = selectAttendance;
     }
 
     public KlassSeminar() {
@@ -66,5 +68,13 @@ public class KlassSeminar {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Attendance getSelectAttendance() {
+        return selectAttendance;
+    }
+
+    public void setSelectAttendance(Attendance selectAttendance) {
+        this.selectAttendance = selectAttendance;
     }
 }

@@ -15,4 +15,6 @@ public interface QuestionDao {
     List<Question> getNoSelectedQuestionInKlassSeminar(BigInteger klassSeminar);
 
     Integer scoreQuestion(Question question);
+
+    void insertQuestion(Question question);
 }

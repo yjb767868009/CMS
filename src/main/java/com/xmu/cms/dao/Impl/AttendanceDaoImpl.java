@@ -23,8 +23,8 @@ public class AttendanceDaoImpl implements AttendanceDao {
     private TeamMapper teamMapper;
 
     @Override
-    public List<Attendance> getAttendancesInKlassSeminar(BigInteger seminarId, BigInteger klassId) {
-        return attendanceMapper.getAttendancesInKlassSeminar(seminarId, klassId);
+    public List<Attendance> getAttendancesInKlassAndSeminar(BigInteger seminarId, BigInteger klassId) {
+        return attendanceMapper.getAttendancesInKlassAndSeminar(seminarId, klassId);
     }
 
     @Override
@@ -35,5 +35,10 @@ public class AttendanceDaoImpl implements AttendanceDao {
     @Override
     public Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId) {
         return attendanceMapper.getStudentAttendanceInKlassSeminar(studentId, klassId, seminarId);
+    }
+
+    @Override
+    public List<Attendance> getAttendancesInKlassSeminar(BigInteger klassSeminarId) {
+        return attendanceMapper.getAttendancesInKlassSeminar(klassSeminarId);
     }
 }

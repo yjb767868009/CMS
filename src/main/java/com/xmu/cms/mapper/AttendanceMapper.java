@@ -25,7 +25,7 @@ public interface AttendanceMapper {
      * @param klassId   班级id
      * @return 展示列表
      */
-    List<Attendance> getAttendancesInKlassSeminar(@Param("seminarId") BigInteger seminarId, @Param("klassId") BigInteger klassId);// TODO: 2018/12/22
+    List<Attendance> getAttendancesInKlassAndSeminar(@Param("seminarId") BigInteger seminarId, @Param("klassId") BigInteger klassId);// TODO: 2018/12/22
 
     Integer newAttendance(@Param("attendance") Attendance attendance);
 
@@ -42,4 +42,12 @@ public interface AttendanceMapper {
     Attendance getStudentAttendanceInKlassSeminar(@Param("studentId") BigInteger studentId,
                                                   @Param("klassId") BigInteger klassId,
                                                   @Param("seminarId") BigInteger seminarId);
+
+    /**
+     * 获取班级讨论课中的展示，按展示顺序排序
+     *
+     * @param klassSeminarId 班级讨论课id
+     * @return 展示列表
+     */
+    List<Attendance> getAttendancesInKlassSeminar(@Param("klassSeminarId") BigInteger klassSeminarId);
 }

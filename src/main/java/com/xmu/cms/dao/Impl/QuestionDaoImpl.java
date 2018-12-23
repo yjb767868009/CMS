@@ -2,7 +2,9 @@ package com.xmu.cms.dao.Impl;
 
 import com.xmu.cms.dao.QuestionDao;
 import com.xmu.cms.entity.Question;
+import com.xmu.cms.entity.Team;
 import com.xmu.cms.mapper.QuestionMapper;
+import com.xmu.cms.mapper.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +20,9 @@ public class QuestionDaoImpl implements QuestionDao {
     @Autowired
     private QuestionMapper questionMapper;
 
+    @Autowired
+    private TeamMapper teamMapper;
+
     @Override
     public List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId) {
         return questionMapper.getQuestionInKlassSeminar(klassSeminarId);
@@ -31,5 +36,12 @@ public class QuestionDaoImpl implements QuestionDao {
     @Override
     public Integer scoreQuestion(Question question) {
         return questionMapper.scoreQuestion(question);
+    }
+
+    @Override
+    public void insertQuestion(Question question) {
+        Team team = teamMapper.getTeamInKlassSeminarByStudentId(question.getKlassSeminar().getKlassSeminarId(), question.getStudent().getStudentId());
+        question.setTeam(team);
+        questionMapper.insertQuestion(question);
     }
 }

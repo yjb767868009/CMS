@@ -11,6 +11,7 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * @author JuboYu on 2018/11/29.
@@ -121,8 +122,13 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public List<Attendance> getAttendancesInKlassSeminar(BigInteger seminarId, BigInteger klassId) {
-        return attendanceDao.getAttendancesInKlassSeminar(seminarId, klassId);
+    public List<Attendance> getAttendancesInKlassAndSeminar(BigInteger seminarId, BigInteger klassId) {
+        return attendanceDao.getAttendancesInKlassAndSeminar(seminarId, klassId);
+    }
+
+    @Override
+    public List<Attendance> getAttendancesInKlassSeminar(BigInteger klassSeminarId) {
+        return attendanceDao.getAttendancesInKlassSeminar(klassSeminarId);
     }
 
     @Override
@@ -223,5 +229,45 @@ public class SeminarServiceImpl implements SeminarService {
         return roundDao.getRoundsByCourseId(info, courseId);
     }
 
+    @Override
+    public void askQuestion(Question question) {
+        questionDao.insertQuestion(question);
+    }
 
+    @Override
+    public Question selectQuestionInAttendance(BigInteger klassSeminarId) {
+        List<Question> questions = questionDao.getQuestionInKlassSeminar(klassSeminarId);
+        List<Question> noSelectQuestions = questionDao.getNoSelectedQuestionInKlassSeminar(klassSeminarId);
+        Map<BigInteger, Float> teamProbability = new HashMap<BigInteger, Float>();
+        for (Question question : questions) {
+            Team team = question.getTeam();
+            Float probability = teamProbability.get(team.getTeamId());
+            if (probability == null) {
+                teamProbability.put(team.getTeamId(), (float) 1);
+            } else {
+                teamProbability.put(team.getTeamId(), probability / 2);
+            }
+        }
+        Float probability = (float) 0;
+        Float allProbability = (float) 0;
+        Float selectProbability = new Random().nextFloat();
+        Map<Question, Float> questionProbability = new HashMap<Question, Float>();
+        for (Question question : noSelectQuestions) {
+            Team team = question.getTeam();
+            Float questionPro = teamProbability.get(team.getTeamId());
+            allProbability += questionPro;
+        }
+        for (Question question : noSelectQuestions) {
+            Team team = question.getTeam();
+            Float questionPro = teamProbability.get(team.getTeamId());
+            questionProbability.put(question, questionPro / allProbability);
+        }
+        for (Question question : noSelectQuestions) {
+            Float questionPro = questionProbability.get(question);
+            if (probability < selectProbability && selectProbability < probability + questionPro)
+                return question;
+            probability += questionPro;
+        }
+        return null;
+    }
 }

@@ -68,4 +68,13 @@ public interface TeamMapper {
      * @param team 队伍信息
      */
     void updateTeamValid(Team team);// TODO: 2018/12/22
+
+    /**
+     * 获取学生在班级讨论课中的队伍
+     *
+     * @param klassSeminarId 班级讨论课id
+     * @param studentId      学生id
+     * @return 队伍
+     */
+    Team getTeamInKlassSeminarByStudentId(BigInteger klassSeminarId, BigInteger studentId);// TODO: 2018/12/23
 }

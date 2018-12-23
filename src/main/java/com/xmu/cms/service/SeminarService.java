@@ -30,7 +30,9 @@ public interface SeminarService {
 
     Seminar getRunningSeminarByTeacherId(BigInteger userId);
 
-    List<Attendance> getAttendancesInKlassSeminar(BigInteger seminarId, BigInteger klassId);
+    List<Attendance> getAttendancesInKlassAndSeminar(BigInteger seminarId, BigInteger klassId);
+
+    List<Attendance> getAttendancesInKlassSeminar(BigInteger klassSeminarId);
 
     Map<String, String> setAttendancePresentationScore(BigInteger attendanceId, Float presentationScore);
 
@@ -61,4 +63,8 @@ public interface SeminarService {
     Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId);
 
     List<Round> getRoundInCourse(UserInfo info, BigInteger courseId);
+
+    void askQuestion(Question question);
+
+    Question selectQuestionInAttendance(BigInteger klassSeminarId);
 }

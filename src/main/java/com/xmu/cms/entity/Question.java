@@ -11,16 +11,20 @@ import java.math.BigInteger;
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Question {
     private BigInteger questionId;
+    private KlassSeminar klassSeminar;
     private Student student;
     private Team team;
     private Attendance attendance;
+    private Boolean selected;
     private Float score;
 
-    public Question(BigInteger questionId, Student student, Team team, Attendance attendance, Float score) {
+    public Question(BigInteger questionId, KlassSeminar klassSeminar, Student student, Team team, Attendance attendance, Boolean selected, Float score) {
         this.questionId = questionId;
+        this.klassSeminar = klassSeminar;
         this.student = student;
         this.team = team;
         this.attendance = attendance;
+        this.selected = selected;
         this.score = score;
     }
 
@@ -65,5 +69,25 @@ public class Question {
 
     public void setScore(Float score) {
         this.score = score;
+    }
+
+    public String getName() {
+        return team.getTeamName() + "-" + student.getName();
+    }
+
+    public Boolean getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
+    }
+
+    public KlassSeminar getKlassSeminar() {
+        return klassSeminar;
+    }
+
+    public void setKlassSeminar(KlassSeminar klassSeminar) {
+        this.klassSeminar = klassSeminar;
     }
 }

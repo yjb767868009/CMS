@@ -1,6 +1,5 @@
 package com.xmu.cms.controller;
 
-import com.xmu.cms.entity.Attendance;
 import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.entity.Team;
 import com.xmu.cms.service.*;
@@ -78,11 +77,6 @@ public class UserController {
     @GetMapping(value = "/seminar/{seminarId}")
     public Seminar getSeminarById(@PathVariable("seminarId") BigInteger seminarId) {
         return seminarService.getSeminarBySeminarId(seminarId);
-    }
-
-    @GetMapping(value = "/seminar/{seminarId}/attendances")
-    public List<Attendance> getAttendancesInSeminar(@PathVariable("seminarId") BigInteger seminarId) {
-        return seminarService.getAttendancesInSeminar(seminarId);
     }
 
     @GetMapping(value = "/information")

@@ -16,4 +16,8 @@ public interface ShareSeminarDao {
     Integer deleteShareSeminar(BigInteger seminarShareId);
 
     ShareTeam newShareSeminar(ShareSeminar shareSeminar);
+
+    List<ShareSeminar> getShareSeminarByTeacherId(BigInteger teacherId);
+
+    ShareSeminar updateShareSeminar(ShareSeminar shareSeminar);
 }

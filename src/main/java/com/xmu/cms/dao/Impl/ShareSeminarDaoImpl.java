@@ -21,7 +21,7 @@ public class ShareSeminarDaoImpl implements ShareSeminarDao {
 
     @Override
     public List<ShareSeminar> getShareSeminarInCourse(BigInteger courseId) {
-        return shareSeminarMapper.getShareSeminar(courseId);
+        return shareSeminarMapper.getShareSeminarInCourse(courseId);
     }
 
     @Override
@@ -34,6 +34,17 @@ public class ShareSeminarDaoImpl implements ShareSeminarDao {
         shareSeminarMapper.insertShareSeminar(shareSeminar);
         BigInteger masterCourseId = shareSeminar.getMasterCourse().getCourseId();
         BigInteger receiveCourseId = shareSeminar.getReceiveCourse().getCourseId();
-        return shareSeminarMapper.getShareSeminarByTwoCourse(masterCourseId,receiveCourseId);
+        return shareSeminarMapper.getShareSeminarByTwoCourse(masterCourseId, receiveCourseId);
+    }
+
+    @Override
+    public List<ShareSeminar> getShareSeminarByTeacherId(BigInteger teacherId) {
+        return shareSeminarMapper.getShareSeminarByTeacher(teacherId);
+    }
+
+    @Override
+    public ShareSeminar updateShareSeminar(ShareSeminar shareSeminar) {
+        shareSeminarMapper.updateShareSeminar(shareSeminar);
+        return shareSeminarMapper.getShareSeminar(shareSeminar.getShareSeminarId());
     }
 }

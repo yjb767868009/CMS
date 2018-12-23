@@ -36,6 +36,9 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private ShareSeminarDao shareSeminarDao;
 
+    @Autowired
+    private TeamApplicationDao teamApplicationDao;
+
     @Override
     public List<Course> getAllCoursesByTeacher(BigInteger teacherId) {
         return courseDao.getAllCoursesByTeacherId(teacherId);
@@ -161,6 +164,36 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public ShareTeam newShareSeminar(ShareSeminar shareSeminar) {
         return shareSeminarDao.newShareSeminar(shareSeminar);
+    }
+
+    @Override
+    public List<ShareTeam> getShareTeamByTeacherId(BigInteger teacherId) {
+        return shareTeamDao.getShareTeamByTeacherId(teacherId);
+    }
+
+    @Override
+    public List<ShareSeminar> getShareSeminarByTeacherId(BigInteger teacherId) {
+        return shareSeminarDao.getShareSeminarByTeacherId(teacherId);
+    }
+
+    @Override
+    public List<TeamApplication> getTeamApplicationByTeacherId(BigInteger teacherId) {
+        return teamApplicationDao.getTeamApplicationByTeacherId(teacherId);
+    }
+
+    @Override
+    public ShareTeam updateShareTeam(ShareTeam shareTeam) {
+        return shareTeamDao.updateShareTeam(shareTeam);
+    }
+
+    @Override
+    public ShareSeminar updateShareSeminar(ShareSeminar shareSeminar) {
+        return shareSeminarDao.updateShareSeminar(shareSeminar);
+    }
+
+    @Override
+    public TeamApplication updateTeamApplication(TeamApplication teamApplication) {
+        return teamApplicationDao.updateTeamApplication(teamApplication);
     }
 
 }

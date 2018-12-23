@@ -52,4 +52,27 @@ public interface ShareTeamMapper {
      * @return 共享组队
      */
     ShareTeam getShareTeamByTwoCourse(BigInteger masterCourseId, BigInteger receiveCourseId);// TODO: 2018/12/23
+
+    /**
+     * 根据老师查找收到共享组队信息
+     *
+     * @param teacherId 老师id
+     * @return 共享组队列表
+     */
+    List<ShareTeam> getShareTeamByTeacherId(BigInteger teacherId);// TODO: 2018/12/23
+
+    /**
+     * 更新共享组队，及接受或拒绝请求
+     *
+     * @param shareTeam 新的共享组队
+     */
+    void updateShareTeam(ShareTeam shareTeam);
+
+    /**
+     * 通过id获取共享组队
+     *
+     * @param shareTeamId 共享组队信息
+     * @return 共享组队
+     */
+    ShareTeam getShareTeam(BigInteger shareTeamId);
 }

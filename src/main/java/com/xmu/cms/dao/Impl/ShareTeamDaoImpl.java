@@ -36,4 +36,15 @@ public class ShareTeamDaoImpl implements ShareTeamDao {
         BigInteger receiveCourseId = shareTeam.getReceiveCourse().getCourseId();
         return shareTeamMapper.getShareTeamByTwoCourse(masterCourseId, receiveCourseId);
     }
+
+    @Override
+    public List<ShareTeam> getShareTeamByTeacherId(BigInteger teacherId) {
+        return shareTeamMapper.getShareTeamByTeacherId(teacherId);
+    }
+
+    @Override
+    public ShareTeam updateShareTeam(ShareTeam shareTeam) {
+        shareTeamMapper.updateShareTeam(shareTeam);
+        return shareTeamMapper.getShareTeam(shareTeam.getShareTeamId());
+    }
 }

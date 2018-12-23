@@ -27,7 +27,7 @@ public interface ShareSeminarMapper {
      * @param courseId 课程id
      * @return 共享讨论课列表
      */
-    List<ShareSeminar> getShareSeminar(BigInteger courseId);
+    List<ShareSeminar> getShareSeminarInCourse(BigInteger courseId);// TODO: 2018/12/23 冲突被改名了
 
     /**
      * 删除指定共享分组
@@ -52,4 +52,27 @@ public interface ShareSeminarMapper {
      * @return 共享组信息
      */
     ShareTeam getShareSeminarByTwoCourse(BigInteger masterCourseId, BigInteger receiveCourseId);// TODO: 2018/12/23
+
+    /**
+     * 根据老师查询收到的未处理的共享讨论课信息
+     *
+     * @param teacherId 老师id
+     * @return 共享讨论课列表
+     */
+    List<ShareSeminar> getShareSeminarByTeacher(BigInteger teacherId);// TODO: 2018/12/23
+
+    /**
+     * 更新共享讨论课，及接受或拒绝请求
+     *
+     * @param shareSeminar 新的共享讨论课
+     */
+    void updateShareSeminar(ShareSeminar shareSeminar);// TODO: 2018/12/23
+
+    /**
+     * 获取共享讨论课
+     *
+     * @param shareSeminarId 共享讨论课id
+     * @return 共享讨论课
+     */
+    ShareSeminar getShareSeminar(BigInteger shareSeminarId);// TODO: 2018/12/23
 }

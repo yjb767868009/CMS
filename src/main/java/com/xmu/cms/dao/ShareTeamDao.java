@@ -15,4 +15,8 @@ public interface ShareTeamDao {
     Integer deleteShareTeam(BigInteger shareTeamId);
 
     ShareTeam newShareTeam(ShareTeam shareTeam);
+
+    List<ShareTeam> getShareTeamByTeacherId(BigInteger teacherId);
+
+    ShareTeam updateShareTeam(ShareTeam shareTeam);
 }

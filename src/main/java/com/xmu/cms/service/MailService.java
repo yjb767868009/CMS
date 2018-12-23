@@ -1,6 +1,8 @@
 package com.xmu.cms.service;
 
+import com.xmu.cms.entity.ShareSeminar;
 import com.xmu.cms.entity.ShareTeam;
+import com.xmu.cms.entity.TeamApplication;
 import com.xmu.cms.support.MyUser;
 
 import java.util.Map;
@@ -15,4 +17,10 @@ public interface MailService {
     void sendShareTeam(ShareTeam newShareTeam);
 
     void sendShareSeminar(ShareTeam newShareSeminar);
+
+    void sendUpadteShareTeam(ShareTeam newShareTeam);
+
+    void sendUpadteShareSeminar(ShareSeminar newShareSeminar);
+
+    void sendUpdateTeamApplication(TeamApplication newTeamApplication);
 }

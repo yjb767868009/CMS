@@ -2,9 +2,7 @@ package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.StudentDao;
 import com.xmu.cms.dao.TeacherDao;
-import com.xmu.cms.entity.ShareTeam;
-import com.xmu.cms.entity.Student;
-import com.xmu.cms.entity.Teacher;
+import com.xmu.cms.entity.*;
 import com.xmu.cms.service.MailService;
 import com.xmu.cms.support.MyUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,5 +83,20 @@ public class MailServiceImpl implements MailService {
     public void sendShareSeminar(ShareTeam newShareSeminar) {
         String subject = "主题：共享讨论课邮件";
         // TODO: 2018/12/23
+    }
+
+    @Override
+    public void sendUpadteShareTeam(ShareTeam newShareTeam) {
+        // TODO: 2018/12/23  
+    }
+
+    @Override
+    public void sendUpadteShareSeminar(ShareSeminar newShareSeminar) {
+// TODO: 2018/12/23  
+    }
+
+    @Override
+    public void sendUpdateTeamApplication(TeamApplication newTeamApplication) {
+// TODO: 2018/12/23  
     }
 }

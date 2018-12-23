@@ -2,10 +2,7 @@ package com.xmu.cms.controller;
 
 import com.xmu.cms.aspect.annoatation.CheckCoursePermission;
 import com.xmu.cms.entity.*;
-import com.xmu.cms.service.CourseService;
-import com.xmu.cms.service.FileService;
-import com.xmu.cms.service.SeminarService;
-import com.xmu.cms.service.UserService;
+import com.xmu.cms.service.*;
 import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -31,6 +28,9 @@ public class CourseController {
 
     @Autowired
     private SeminarService seminarService;
+
+    @Autowired
+    private MailService mailService;
 
     @Autowired
     private FileService fileService;
@@ -149,13 +149,13 @@ public class CourseController {
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
-    @GetMapping(value = "/course/{courseId}/teamshare")
+    @GetMapping(value = "/course/{courseId}/shareteam")
     public List<ShareTeam> getShareTeamByCourseId(@PathVariable("courseId") BigInteger courseId) {
         return courseService.getShareTeamInCourse(courseId);
     }
 
     @Secured("ROLE_TEACHER")
-    @GetMapping(value = "/course/{courseId}/seminarshare")
+    @GetMapping(value = "/course/{courseId}/shareseminar")
     public List<ShareSeminar> getShareSeminarByCourseId(@PathVariable("courseId") BigInteger courseId) {
         return courseService.getShareSeminarInCourse(courseId);
 
@@ -163,30 +163,39 @@ public class CourseController {
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
-    @DeleteMapping(value = "/course/{courseId}/share/{shareId}")
-    public Map<String, String> deleteShare(@PathVariable("courseId") BigInteger courseId,
-                                           @PathVariable("shareId") BigInteger shareId) {
-        return courseService.deleteShare(courseId, shareId);
+    @DeleteMapping(value = "shareteam/{shareTeamId}")
+    public Map<String, String> deleteShareTeam(@PathVariable("shareTeamId") BigInteger shareTeamId) {
+        Map<String, String> message = new HashMap<String, String>();
+        try {
+            Integer count = courseService.deleteShareTeam(shareTeamId);
+            if (count > 0) {
+                message.put("message", "Success");
+            } else {
+                message.put("message", "Error");
+            }
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
 
-    /*TODO
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
-    @DeleteMapping(value = "/{courseId}/teamshare/{teamshareId}")
-    public Map<String, String> deleteTeamShare(@PathVariable("courseId") Integer courseId,
-                                           @PathVariable("teamshareId") Integer teamshareId) {
-        return courseService.deleteTeamShare(courseId, teamshareId);
+    @DeleteMapping(value = "shareseminar/{shareSeminarId}")
+    public Map<String, String> deleteSeminarShare(@PathVariable("shareSeminarId") BigInteger shareSeminarId) {
+        Map<String, String> message = new HashMap<String, String>();
+        try {
+            Integer count = courseService.deleteShareSeminar(shareSeminarId);
+            if (count > 0) {
+                message.put("message", "Success");
+            } else {
+                message.put("message", "Error");
+            }
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
-
-    @Secured("ROLE_TEACHER")
-    @CheckCoursePermission
-    @DeleteMapping(value = "/{courseId}/seminarshare/{seminarshareId}")
-    public Map<String, String> deleteSeminarShare(@PathVariable("courseId") Integer courseId,
-                                           @PathVariable("seminarshareId") Integer seminarshareId) {
-        return courseService.deleteSeminarShare(courseId, seminarshareId);
-    }
-    */
-
 
     @GetMapping(value = "/course/{courseId}/score")
     public SeminarScore getScoreInCourse() {
@@ -194,19 +203,39 @@ public class CourseController {
         return null;
     }
 
-    /*TODO
+
     @Secured("ROLE_TEACHER")
-    @PostMapping(value="/courseId/teamsharerequest")
-    public Map<String, String> sendTeamShareRequest(@PathVariable("courseId") Integer courseId,
-                                                    @RequestBody TeamShare teamShare){
-        return null;
+    @CheckCoursePermission
+    @PostMapping(value = "/course/{courseId}/teamsharerequest")
+    public Map<String, String> sendShareTeam(@PathVariable("courseId") BigInteger courseId,
+                                             @RequestBody ShareTeam shareTeam) {
+        shareTeam.setMasterCourse(new Course(courseId));
+        Map<String, String> message = new HashMap<String, String>();
+        try {
+            ShareTeam newShareTeam = courseService.newShareTeam(shareTeam);
+            mailService.sendShareTeam(newShareTeam);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
 
     @Secured("ROLE_TEACHER")
-    @PostMapping(value="/courseId/seminarsharerequest")
-    public Map<String, String> sendTeamShareRequest(@PathVariable("courseId") Integer courseId,
-                                                    @RequestBody SeminarShare teamShare){
-        return null;
+    @CheckCoursePermission
+    @PostMapping(value = "/course/{courseId}/seminarsharerequest")
+    public Map<String, String> sendTeamShareRequest(@PathVariable("courseId") BigInteger courseId,
+                                                    @RequestBody ShareSeminar shareSeminar) {
+        shareSeminar.setMasterCourse(new Course(courseId));
+        Map<String, String> message = new HashMap<String, String>();
+        try {
+            ShareTeam newShareSeminar = courseService.newShareSeminar(shareSeminar);
+            mailService.sendShareSeminar(newShareSeminar);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
-    */
+
 }

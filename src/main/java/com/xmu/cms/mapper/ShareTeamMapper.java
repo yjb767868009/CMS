@@ -28,4 +28,28 @@ public interface ShareTeamMapper {
      * @return 删除共享组队的信息
      */
     Integer deleteShareTeamByCourseId(BigInteger courseId);
+
+    /**
+     * 删除分享组队
+     *
+     * @param shareTeamId 分享组队id
+     * @return 删除信息
+     */
+    Integer deleteShareTeam(BigInteger shareTeamId);
+
+    /**
+     * 新建共享组队
+     *
+     * @param shareTeam 新的共享组队
+     */
+    void insertShareTeam(ShareTeam shareTeam);// TODO: 2018/12/23
+
+    /**
+     * 根据发出共享的课程和收到共享的学生找到共享组队请求
+     *
+     * @param masterCourseId  发出共享的课程id
+     * @param receiveCourseId 收到共享的课程id
+     * @return 共享组队
+     */
+    ShareTeam getShareTeamByTwoCourse(BigInteger masterCourseId, BigInteger receiveCourseId);// TODO: 2018/12/23
 }

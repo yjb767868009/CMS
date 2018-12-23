@@ -2,6 +2,7 @@ package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.StudentDao;
 import com.xmu.cms.dao.TeacherDao;
+import com.xmu.cms.entity.ShareTeam;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.service.MailService;
@@ -72,5 +73,17 @@ public class MailServiceImpl implements MailService {
         String text = "用户 " + name + ",您好\n" + "您刚刚申请的忘记密码\n" + "您的密码是：" + password + "\n如果您不需要获取密码，或者您从未点击过“忘记密码”按钮，请忽略本邮件。\n";
         sendEmailToAccount(subject, text, email);
         return messages;
+    }
+
+    @Override
+    public void sendShareTeam(ShareTeam newShareTeam) {
+        String subject = "主题：共享组队邮件";
+        // TODO: 2018/12/23
+    }
+
+    @Override
+    public void sendShareSeminar(ShareTeam newShareSeminar) {
+        String subject = "主题：共享讨论课邮件";
+        // TODO: 2018/12/23
     }
 }

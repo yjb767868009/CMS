@@ -25,9 +25,6 @@
 
     <select id="getAllCourseByTeacherId" resultMap="CourseResultMap">
         SELECT course.id               as courseId,
-               teacher.id              as teacherId,
-               teacher.email           as teacherEmail,
-               teacher.teacher_name    as teacherName,
                course_name             as courseName,
                introduction,
                presentation_percentage as presentationWeight,
@@ -123,9 +120,6 @@
 
     <select id="getMainShareCourseByTeacher" resultMap="CourseResultMap">
         SELECT course1.id                      as courseId,
-               teacher.id                      as teacherId,
-               teacher.email                   as teacherEmail,
-               teacher.teacher_name            as teacherName,
                course1.course_name             as courseName,
                course1.introduction,
                course1.presentation_percentage as presentationWeight,
@@ -134,18 +128,13 @@
                course1.team_start_time         as teamStartDate,
                course1.team_end_time           as teamEndDate
         FROM course course1,
-             teacher,
              course course2
         WHERE course1.teacher_id = #{teacherId}
-          AND teacher.id = #{teacherId}
           and (course2.team_main_course_id = course1.id or course2.seminar_main_course_id = course1.id)
     </select>
 
     <select id="getSubShareCourseByTeacher" resultMap="CourseResultMap">
         SELECT course.id                      as courseId,
-               teacher.id                     as teacherId,
-               teacher.email                  as teacherEmail,
-               teacher.teacher_name           as teacherName,
                course.course_name             as courseName,
                course.introduction,
                course.presentation_percentage as presentationWeight,
@@ -153,10 +142,8 @@
                course.question_percentage     as questionWeight,
                course.team_start_time         as teamStartDate,
                course.team_end_time           as teamEndDate
-        FROM course,
-             teacher
+        FROM course
         WHERE course.teacher_id = #{teacherId}
-          AND teacher.id = #{teacherId}
           and (course.seminar_main_course_id is not null or course.team_main_course_id is not null)
     </select>
 </mapper>

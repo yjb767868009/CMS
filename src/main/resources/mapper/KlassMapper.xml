@@ -61,9 +61,7 @@
                grade,
                klass_serial,
                klass_time,
-               klass_location,
-               course.id  as courseId,
-               course_name  as courseName
+               klass_location
         from klass,
              course
         where klass.course_id = #{courseId}

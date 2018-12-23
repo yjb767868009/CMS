@@ -92,8 +92,7 @@
                enroll_end_time as signEndTime,
                enroll_start_time as signStartTime,
                course.id as courseId,
-               course_name as courseName,
-               round_id as roundId
+               course_name as courseName
         FROM seminar,
              course
         where seminar.round_id = #{roundId}
@@ -108,11 +107,8 @@
                seminar_serial as signOrder,
                enroll_end_time as signEndTime,
                enroll_start_time as signStartTime,
-               course.id as courseId,
-               course_name as courseName,
                round_id as roundId
-        FROM seminar,
-             course
+        FROM seminar
         where seminar.course_id = #{courseId}
     </select>
 

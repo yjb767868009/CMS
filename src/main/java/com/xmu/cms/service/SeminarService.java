@@ -28,7 +28,7 @@ public interface SeminarService {
 
     Map<String, String> newRound(Round round);
 
-    Seminar getRunningSeminarByTeacherId(BigInteger userId);
+    KlassSeminar getRunningKlassSeminarByTeacherId(BigInteger userId);
 
     List<Attendance> getAttendancesInKlassAndSeminar(BigInteger seminarId, BigInteger klassId);
 

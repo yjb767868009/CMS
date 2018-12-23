@@ -97,12 +97,12 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public List<Course> getAllCourseByStudentId(BigInteger studentId) {
-        return null;
+        return courseMapper.getAllCourseByStudentId(studentId);
     }
 
     @Override
     public Integer createCourse(Course course) {
-        return null;
+        return courseMapper.createCourse(course);
     }
 
     @Override

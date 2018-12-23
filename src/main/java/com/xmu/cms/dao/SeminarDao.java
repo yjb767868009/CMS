@@ -1,5 +1,6 @@
 package com.xmu.cms.dao;
 
+import com.xmu.cms.entity.KlassSeminar;
 import com.xmu.cms.entity.Seminar;
 
 import java.math.BigInteger;
@@ -18,7 +19,7 @@ public interface SeminarDao {
 
     Seminar getSeminarBySeminarId(BigInteger seminarId);
 
-    Seminar getRunningSeminarByTeacherId(BigInteger teacherId);
+    KlassSeminar getRunningSeminarByTeacherId(BigInteger teacherId);
 
     List<Seminar> getAllSeminarByRoundId(BigInteger roundId);
 }

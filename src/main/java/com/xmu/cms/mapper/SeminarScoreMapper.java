@@ -12,9 +12,13 @@ import java.math.BigInteger;
  */
 @Mapper
 public interface SeminarScoreMapper {
-    SeminarScore getAllScoresInSeminar(@Param("clbumSeminarId") BigInteger clbumSeminarId);
-
-    SeminarScore getAllScoresInRound(@Param("roundId") BigInteger roundId);
+    /**
+     * 获取讨论课中分数信息
+     *
+     * @param klassSeminarId 班级讨论课id
+     * @return 讨论课分数
+     */
+    SeminarScore getAllScoresInSeminar(@Param("clbumSeminarId") BigInteger klassSeminarId);
 
     /**
      * 删除讨论课成绩

@@ -11,7 +11,7 @@
         </association>
     </resultMap>
 
-    <select id="getTeamOrByCourseId" resultMap="TeamStrategyResultMap">
+    <select id="getCourseStrategy" resultMap="TeamStrategyResultMap">
         select course_id as courseId,
                strategy_id,
                strategy_name,

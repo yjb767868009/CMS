@@ -1,5 +1,6 @@
 package com.xmu.cms.service;
 
+import com.xmu.cms.entity.ShareTeam;
 import com.xmu.cms.support.MyUser;
 
 import java.util.Map;
@@ -10,4 +11,8 @@ import java.util.Map;
  */
 public interface MailService {
     Map<String, String> sendPassword(MyUser user);
+
+    void sendShareTeam(ShareTeam newShareTeam);
+
+    void sendShareSeminar(ShareTeam newShareSeminar);
 }

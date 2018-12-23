@@ -70,6 +70,12 @@ public class SeminarController {
     }
 
     @Secured("ROLE_TEACHER")
+    @GetMapping(value = "/runklassseminar")
+    public KlassSeminar getRunningKlassSeminar(UserInfo userInfo) {
+        return seminarService.getRunningKlassSeminarByTeacherId(userInfo.getUserId());
+    }
+
+    @Secured("ROLE_TEACHER")
     @PutMapping(value = "/seminar/{seminarId}/state")
     public Map<String, String> modifySeminarState(@PathVariable("seminarId") BigInteger seminarId,
                                                   @RequestBody Seminar seminar) {
@@ -92,6 +98,7 @@ public class SeminarController {
         return seminarService.getSeminarTeamScore(seminarId, teamId);
     }
 
+    @Secured("ROLE_TEACHER")
     @PutMapping(value = "/seminar/{seminarId}/team/{teamId}/seminarscore")
     public Map<String, String> updateSeminarTeamScore(@PathVariable("seminarId") BigInteger seminarId,
                                                       @PathVariable("teamId") BigInteger teamId,
@@ -104,24 +111,7 @@ public class SeminarController {
     @GetMapping(value = "/seminar/{seminarId}/seminarscore")
     public List<SeminarScore> getSeminarScore(@PathVariable("seminarId") BigInteger seminarId) {
         return seminarService.getSeminarScore(seminarId);
-    }
-
-    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @GetMapping(value = "/seminar/{seminarId}/klass/{klassId}/question")
-    public List<Question> getAllQuestion(@PathVariable("seminarId") BigInteger seminarId,
-                                         @PathVariable("klassId") BigInteger klassId) {
-        //TODO 获取本节讨论课所有提问
-        return null;
-    }
-
-    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @PostMapping(value = "/seminar/{seminarId}/klass/{klassId}/question")
-    public Map<String, String> askQuestion(@PathVariable("seminarId") Integer seminarId,
-                                           @PathVariable("klassId") Integer klassId,
-                                           @RequestBody Question question) {
-        //TODO 提问
-        return null;
-    }
+    };
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/seminar/{seminarId}/klass/{klassId}/ppt")

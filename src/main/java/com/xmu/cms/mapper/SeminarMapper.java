@@ -1,5 +1,6 @@
 package com.xmu.cms.mapper;
 
+import com.xmu.cms.entity.KlassSeminar;
 import com.xmu.cms.entity.Seminar;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -29,20 +30,47 @@ public interface SeminarMapper {
      */
     Integer modifySeminar(@Param("seminar") Seminar seminar);
 
-
+    /**
+     * 开始讨论课
+     *
+     * @param klassSeminarId 班级讨论课id
+     * @return 开始成功信息
+     */
     Integer startKlassSeminar(@Param("klassSeminarId") BigInteger klassSeminarId);
 
+    /**
+     * 暂停讨论课
+     *
+     * @param klassSeminarId 班级讨论课id
+     * @return 暂停成功信息
+     */
     Integer stopKlassSeminar(@Param("klassSeminarId") BigInteger klassSeminarId);
 
+    /**
+     * 结束讨论课
+     *
+     * @param klassSeminarId 班级讨论课id
+     * @return 结束成功信息
+     */
     Integer endKlassSeminar(@Param("klassSeminarId") BigInteger klassSeminarId);
 
-    Integer getAttendanceNo(@Param("seminarId") BigInteger seminarId);
-
+    /**
+     * 获取讨论课信息
+     *
+     * @param seminarId 讨论课id
+     * @return 讨论课
+     */
     Seminar getSeminarBySeminarId(@Param("seminarId") BigInteger seminarId);
 
+    /**
+     * 获取轮次中的讨论课
+     *
+     * @param roundId 轮次id
+     * @return 讨论课列表
+     */
     List<Seminar> getAllSeminarByRoundId(@Param("roundId") BigInteger roundId);
 
-    Seminar getRunningSeminarByTeacherId(@Param("teacherId") BigInteger teacherId);
+    KlassSeminar getRunningKlassSeminarByTeacherId(@Param("teacherId") BigInteger teacherId);
 
     /**
      * 删除讨论课
@@ -51,14 +79,6 @@ public interface SeminarMapper {
      * @return 删除讨论课信息
      */
     Integer deleteSeminar(@Param("seminarId") BigInteger seminarId);
-
-    /**
-     * 修改讨论课的报告截止时间
-     *
-     * @param seminar 修改的后的讨论课
-     * @return 修改讨论课的信息
-     */
-    Integer modifySeminarReportDDL(Seminar seminar);
 
     /**
      * 获取课程中的所有讨论课

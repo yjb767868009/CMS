@@ -13,6 +13,12 @@ import java.util.List;
  */
 @Mapper
 public interface RoundMapper {
+    /**
+     * 获取课程中的轮次信息
+     *
+     * @param courseId 课程id
+     * @return 轮次列表
+     */
     List<Round> getRoundsByCourseId(@Param("courseId") BigInteger courseId);
 
     /**

@@ -10,7 +10,7 @@
         <result property="subStrategyTwoName" column="strategy_2_name"/>
     </resultMap>
 
-    <select id="getTeamOrById" resultMap="TeamOrResultMap">
+    <select id="getTeamOrStrategyById" resultMap="TeamOrResultMap">
         select *
         from team_or_strategy
         where team_or_strategy.id = #{strategyId}

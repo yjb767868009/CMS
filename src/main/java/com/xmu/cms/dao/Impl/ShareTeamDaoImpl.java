@@ -25,8 +25,15 @@ public class ShareTeamDaoImpl implements ShareTeamDao {
     }
 
     @Override
-    public Integer deleteShare(BigInteger courseId, BigInteger shareId) {
-        //todo
-        return null;
+    public Integer deleteShareTeam(BigInteger shareTeamId) {
+        return shareTeamMapper.deleteShareTeam(shareTeamId);
+    }
+
+    @Override
+    public ShareTeam newShareTeam(ShareTeam shareTeam) {
+        shareTeamMapper.insertShareTeam(shareTeam);
+        BigInteger masterCourseId = shareTeam.getMasterCourse().getCourseId();
+        BigInteger receiveCourseId = shareTeam.getReceiveCourse().getCourseId();
+        return shareTeamMapper.getShareTeamByTwoCourse(masterCourseId, receiveCourseId);
     }
 }

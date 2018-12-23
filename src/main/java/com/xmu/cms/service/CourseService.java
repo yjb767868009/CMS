@@ -33,8 +33,6 @@ public interface CourseService {
 
     List<Object> getShareInCourse(BigInteger courseId);
 
-    Map<String, String> deleteShare(BigInteger courseId, BigInteger shareId);
-
     List<ShareTeam> getShareTeamInCourse(BigInteger courseId);
 
     List<ShareSeminar> getShareSeminarInCourse(BigInteger courseId);
@@ -45,4 +43,11 @@ public interface CourseService {
 
     List<Course> getSubShareCourseByTeacher(BigInteger teacherId);
 
+    Integer deleteShareTeam(BigInteger shareTeamId);
+
+    Integer deleteShareSeminar(BigInteger seminarShareId);
+
+    ShareTeam newShareTeam(ShareTeam shareTeam);
+
+    ShareTeam newShareSeminar(ShareSeminar shareSeminar);
 }

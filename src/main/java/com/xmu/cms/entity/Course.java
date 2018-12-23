@@ -40,6 +40,10 @@ public class Course {
         this.seminarMainCourse = seminarMainCourse;
     }
 
+    public Course(BigInteger courseId) {
+        this.courseId = courseId;
+    }
+
     public Course() {
     }
 

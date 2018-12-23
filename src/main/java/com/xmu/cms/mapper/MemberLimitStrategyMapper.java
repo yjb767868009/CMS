@@ -17,5 +17,5 @@ public interface MemberLimitStrategyMapper {
      * @param strategyId 规则id
      * @return 队伍成员数量限制规则
      */
-    MemberLimitStrategy getMemberLimitStrategyById(BigInteger strategyId);// TODO: 2018/12/22  
+    MemberLimitStrategy getMemberLimitStrategyById(BigInteger strategyId);
 }

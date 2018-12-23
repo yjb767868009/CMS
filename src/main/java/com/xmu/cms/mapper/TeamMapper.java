@@ -13,15 +13,45 @@ import java.util.List;
  */
 @Mapper
 public interface TeamMapper {
-
+    /**
+     * 获取讨论课中所有队伍
+     *
+     * @param seminarId 讨论课id
+     * @return 队伍列表
+     */
     List<Team> getAllTeamsInSeminar(@Param("seminarId") BigInteger seminarId);
 
+    /**
+     * 获取班级讨论课中所有队伍
+     *
+     * @param klassSeminarId 班级讨论课id
+     * @return 队伍列表
+     */
     List<Team> getAllTeamsInKlassSeminar(@Param("seminarId") BigInteger klassSeminarId);
 
+    /**
+     * 获取队伍信息
+     *
+     * @param teamId 队伍id
+     * @return 队伍列表
+     */
     Team getTeamByTeamId(BigInteger teamId);
 
+    /**
+     * 获取学生在班级中的队伍
+     *
+     * @param klassId 班级id
+     * @param studentId 学生id
+     * @return 队伍信息
+     */
     Team getTeamInKlassByStudentId(BigInteger klassId, BigInteger studentId);
 
+    /**
+     * 获取课程中队伍
+     *
+     * @param courseId 课程id
+     * @return 队伍列表
+     */
     List<Team> getTeamInCourse(BigInteger courseId);
 
     /**
@@ -49,7 +79,7 @@ public interface TeamMapper {
      * @param courseId  课程id
      * @param studentId 队长id
      * @param team      队伍信息
-     * @return
+     * @return 新建成功信息
      */
     Integer insertTeam(BigInteger klassId, BigInteger courseId, BigInteger studentId, Team team);
 
@@ -67,7 +97,7 @@ public interface TeamMapper {
      *
      * @param team 队伍信息
      */
-    void updateTeamValid(Team team);// TODO: 2018/12/22
+    void updateTeamValid(Team team);
 
     /**
      * 获取学生在班级讨论课中的队伍
@@ -76,5 +106,5 @@ public interface TeamMapper {
      * @param studentId      学生id
      * @return 队伍
      */
-    Team getTeamInKlassSeminarByStudentId(BigInteger klassSeminarId, BigInteger studentId);// TODO: 2018/12/23
+    Team getTeamInKlassSeminarByStudentId(BigInteger klassSeminarId, BigInteger studentId);
 }

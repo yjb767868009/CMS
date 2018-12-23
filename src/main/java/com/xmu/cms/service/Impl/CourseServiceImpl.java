@@ -119,18 +119,6 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Map<String, String> deleteShare(BigInteger courseId, BigInteger shareId) {
-        Map<String, String> message = new HashMap<String, String>(1);
-        Integer count = shareTeamDao.deleteShare(courseId, shareId);
-        if (count == 1) {
-            message.put("message", "Success");
-        } else {
-            message.put("message", "Error");
-        }
-        return message;
-    }
-
-    @Override
     public List<ShareTeam> getShareTeamInCourse(BigInteger courseId) {
         return shareTeamDao.getShareTeamInCourse(courseId);
     }
@@ -153,6 +141,26 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getSubShareCourseByTeacher(BigInteger teacherId) {
         return klassDao.getSubShareCourseByTeacher(teacherId);
+    }
+
+    @Override
+    public Integer deleteShareTeam(BigInteger shareTeamId) {
+        return shareTeamDao.deleteShareTeam(shareTeamId);
+    }
+
+    @Override
+    public Integer deleteShareSeminar(BigInteger seminarShareId) {
+        return shareSeminarDao.deleteShareSeminar(seminarShareId);
+    }
+
+    @Override
+    public ShareTeam newShareTeam(ShareTeam shareTeam) {
+        return shareTeamDao.newShareTeam(shareTeam);
+    }
+
+    @Override
+    public ShareTeam newShareSeminar(ShareSeminar shareSeminar) {
+        return shareSeminarDao.newShareSeminar(shareSeminar);
     }
 
 }

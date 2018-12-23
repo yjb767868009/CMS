@@ -23,4 +23,6 @@ public interface KlassDao {
     List<Course> getMainShareCourseByTeacher(BigInteger teacherId);
 
     List<Course> getSubShareCourseByTeacher(BigInteger teacherId);
+
+    Klass getKlass(BigInteger klassId);
 }

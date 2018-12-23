@@ -2,6 +2,7 @@ package com.xmu.cms.dao.Impl;
 
 import com.xmu.cms.dao.ShareSeminarDao;
 import com.xmu.cms.entity.ShareSeminar;
+import com.xmu.cms.entity.ShareTeam;
 import com.xmu.cms.mapper.ShareSeminarMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,5 +22,18 @@ public class ShareSeminarDaoImpl implements ShareSeminarDao {
     @Override
     public List<ShareSeminar> getShareSeminarInCourse(BigInteger courseId) {
         return shareSeminarMapper.getShareSeminar(courseId);
+    }
+
+    @Override
+    public Integer deleteShareSeminar(BigInteger seminarShareId) {
+        return shareSeminarMapper.deleteShareSeminar(seminarShareId);
+    }
+
+    @Override
+    public ShareTeam newShareSeminar(ShareSeminar shareSeminar) {
+        shareSeminarMapper.insertShareSeminar(shareSeminar);
+        BigInteger masterCourseId = shareSeminar.getMasterCourse().getCourseId();
+        BigInteger receiveCourseId = shareSeminar.getReceiveCourse().getCourseId();
+        return shareSeminarMapper.getShareSeminarByTwoCourse(masterCourseId,receiveCourseId);
     }
 }

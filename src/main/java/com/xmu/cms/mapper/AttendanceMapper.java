@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper
 public interface AttendanceMapper {
     /**
-     *获取讨论课中的展示
+     * 获取讨论课中的展示
      *
      * @param seminarId 讨论课id
      * @return 展示列表
@@ -68,4 +68,11 @@ public interface AttendanceMapper {
      * @return 展示列表
      */
     List<Attendance> getAttendancesInKlassSeminar(@Param("klassSeminarId") BigInteger klassSeminarId);
+
+    /**
+     * 修改展示状态
+     *
+     * @param attendance 展示
+     */
+    void updateAttendancePresent(Attendance attendance);// TODO: 2018/12/24
 }

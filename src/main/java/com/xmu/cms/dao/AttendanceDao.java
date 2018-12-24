@@ -17,4 +17,6 @@ public interface AttendanceDao {
     Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId);
 
     List<Attendance> getAttendancesInKlassSeminar(BigInteger klassSeminarId);
+
+    void updateAttendancePresent(Attendance attendance);
 }

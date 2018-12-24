@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author JuboYu on 2018/11/29.
@@ -257,11 +254,52 @@ public class SeminarServiceImpl implements SeminarService {
         }
         for (Question question : noSelectQuestions) {
             Float questionPro = questionProbability.get(question);
-            if (probability < selectProbability && selectProbability < probability + questionPro)
+            if (probability < selectProbability && selectProbability < probability + questionPro) {
+                questionDao.selectQuestion(question);
                 return question;
+            }
             probability += questionPro;
         }
         return null;
     }
 
+    @Override
+    public void nextAttendance(BigInteger klassSeminarId) {
+        List<Attendance> attendances = attendanceDao.getAttendancesInKlassSeminar(klassSeminarId);
+        attendances.sort(new Comparator<Attendance>() {
+            @Override
+            public int compare(Attendance o1, Attendance o2) {
+                if (o1.getTeamOrder() < o2.getTeamOrder()) {
+                    return -1;
+                } else if (o1.getTeamOrder() > o2.getTeamOrder()) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        boolean find = false;
+        for (Attendance attendance : attendances) {
+            if (attendance.getPresent()) {
+                attendance.setPresent(false);
+                attendanceDao.updateAttendancePresent(attendance);
+                find = true;
+            }
+            if (find) {
+                attendance.setPresent(true);
+                attendanceDao.updateAttendancePresent(attendance);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void stopKlassSeminar(BigInteger klassSeminarId) {
+        klassSeminarDao.stopKlassSeminar(klassSeminarId);
+    }
+
+    @Override
+    public void startKlassSeminar(BigInteger seminarId, BigInteger klassId) {
+        klassSeminarDao.startKlassSeminar(seminarId, klassId);
+    }
 }

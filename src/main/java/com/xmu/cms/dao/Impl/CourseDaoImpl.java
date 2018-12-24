@@ -119,4 +119,9 @@ public class CourseDaoImpl implements CourseDao {
     public void updateCourseSeminarMainCourse(Course course) {
         courseMapper.updateCourseSeminarMainCourse(course);
     }
+
+    @Override
+    public Course getTeamMainCourse(BigInteger courseId) {
+        return courseMapper.getTeamMainCourse(courseId);
+    }
 }

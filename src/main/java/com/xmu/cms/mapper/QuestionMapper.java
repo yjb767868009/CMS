@@ -2,6 +2,7 @@ package com.xmu.cms.mapper;
 
 import com.xmu.cms.entity.Question;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -13,12 +14,12 @@ import java.util.List;
 @Mapper
 public interface QuestionMapper {
     /**
-     * 获取班级讨论课的所有提问,未选中
+     * 获取班级讨论课的所有提问
      *
      * @param klassSeminarId 班级讨论课id
      * @return 提问列表
      */
-    List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId);
+    List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId);// TODO: 2018/12/24 获取所有的提问包括已经选中
 
     /**
      * 获取所有未选择的提问
@@ -41,5 +42,12 @@ public interface QuestionMapper {
      *
      * @param question 新的提问
      */
-    void insertQuestion(Question question);
+    void insertQuestion(@Param("question") Question question);
+
+    /**
+     * 将提问置为选取状态
+     *
+     * @param question 提问
+     */
+    void selectQuestion(Question question);// TODO: 2018/12/24
 }

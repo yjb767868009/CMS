@@ -41,4 +41,9 @@ public class AttendanceDaoImpl implements AttendanceDao {
     public List<Attendance> getAttendancesInKlassSeminar(BigInteger klassSeminarId) {
         return attendanceMapper.getAttendancesInKlassSeminar(klassSeminarId);
     }
+
+    @Override
+    public void updateAttendancePresent(Attendance attendance) {
+        attendanceMapper.updateAttendancePresent(attendance);
+    }
 }

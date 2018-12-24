@@ -90,4 +90,12 @@ public interface CourseMapper {
      * @return 课程
      */
     Course getCourseByTeamId(BigInteger teamId); // TODO: 2018/12/24
+
+    /**
+     * 获取课程的队伍主课程
+     *
+     * @param courseId 课程id
+     * @return 队伍主课程
+     */
+    Course getTeamMainCourse(BigInteger courseId);// TODO: 2018/12/24
 }

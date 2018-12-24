@@ -24,4 +24,6 @@ public interface CourseDao {
     void updateCourseTeamMainCourse(Course course);
 
     void updateCourseSeminarMainCourse(Course course);
+
+    Course getTeamMainCourse(BigInteger courseId);
 }

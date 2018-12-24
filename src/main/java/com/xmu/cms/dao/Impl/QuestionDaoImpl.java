@@ -44,4 +44,9 @@ public class QuestionDaoImpl implements QuestionDao {
         question.setTeam(team);
         questionMapper.insertQuestion(question);
     }
+
+    @Override
+    public void selectQuestion(Question question) {
+        questionMapper.selectQuestion(question);
+    }
 }

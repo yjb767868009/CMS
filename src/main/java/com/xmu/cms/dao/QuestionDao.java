@@ -17,4 +17,6 @@ public interface QuestionDao {
     Integer scoreQuestion(Question question);
 
     void insertQuestion(Question question);
+
+    void selectQuestion(Question question);
 }

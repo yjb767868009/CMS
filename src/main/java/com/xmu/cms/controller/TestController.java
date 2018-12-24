@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigInteger;
-import java.util.List;
 
 /**
  * @author JuboYu on 2018/11/27.
@@ -64,20 +63,6 @@ public class TestController {
         KlassSeminarRun klassSeminarRun = new KlassSeminarRun();
         klassSeminarRun.setNewQuestion(question);
         return klassSeminarRun;
-    }
-
-    @MessageMapping("/{klassSeminarId}/join")
-    @SendTo("/topic/klassSeminar/{klassSeminarId}")
-    public KlassSeminarRun joinKlassSeminar(@DestinationVariable("klassSeminarId") BigInteger klassSeminarId) throws Exception {
-        Thread.sleep(1000); // simulated delay
-        List<Attendance> attendances = seminarService.getAttendancesInKlassSeminar(klassSeminarId);
-        KlassSeminarRun klassSeminarRun = new KlassSeminarRun();
-        klassSeminarRun.setAttendances(attendances);
-
-        List<Question> questions = seminarService.getQuestionInKlassSeminar(klassSeminarId);
-        klassSeminarRun.setQuestions(questions);
-        return klassSeminarRun;
-
     }
 
     @MessageMapping("/{klassSeminarId}/getQuestion")

@@ -20,13 +20,9 @@ function connect() {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/klassSeminar/1', function (KlassSeminarRun) {
             var KlassSeminarRun = JSON.parse(KlassSeminarRun.body);
-            showKlassSeminar(KlassSeminarRun.questions, KlassSeminarRun.attendances, KlassSeminarRun.nowAttendance, KlassSeminarRun.newQuestion, KlassSeminarRun.selectQuestion, KlassSeminarRun.message);
+            showKlassSeminar(KlassSeminarRun.nowAttendance, KlassSeminarRun.newQuestion, KlassSeminarRun.selectQuestion, KlassSeminarRun.message);
         });
     });
-}
-
-function join() {
-
 }
 
 function disconnect() {
@@ -53,9 +49,7 @@ function getQuestion() {
     stompClient.send("/app/1/getQuestion", {}, {});
 }
 
-function showKlassSeminar(questions, attendances, nowAttendance, newQuestion, selectQuestion, message) {
-    console.log(questions);
-    console.log(attendances);
+function showKlassSeminar(nowAttendance, newQuestion, selectQuestion, message) {
     console.log(nowAttendance);
     console.log(newQuestion);
     console.log(selectQuestion);

@@ -161,4 +161,17 @@ public class SeminarController {
         //TODO 报名展示
         return null;
     }
+
+    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
+    @GetMapping(value = "/seminar/{seminarId}/class/{classId}/run")
+    public Map<String, Object> getRunKlassSeminarInfo(@PathVariable("seminarId") BigInteger seminarId,
+                                                      @PathVariable("classId") BigInteger klassId) {
+        KlassSeminar klassSeminar = seminarService.getKlassSeminarByKlassAndSeminar(klassId, seminarId);
+        Map<String, Object> message = new HashMap<String, Object>();
+        List<Attendance> attendances = seminarService.getAttendancesInKlassSeminar(klassSeminar.getKlassSeminarId());
+        message.put("attendances", attendances);
+        List<Question> questions = seminarService.getQuestionInKlassSeminar(klassSeminar.getKlassSeminarId());
+        message.put("questions", questions);
+        return message;
+    }
 }

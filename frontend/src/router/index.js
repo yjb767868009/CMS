@@ -279,11 +279,11 @@ export default new Router({
 
 
     //teacher
-    // {
-    //   path: '/mobile/teacher',
-    //   name: 'MobileTeacher',
-    //   component: MobileTeacher
-    // },
+    {
+      path: '/mobile/teacher',
+      name: 'MobileTeacher',
+      component: MobileTeacher
+    },
     {
       path: '/mobile/teacher/activation',
       name: 'TeacherActivation',

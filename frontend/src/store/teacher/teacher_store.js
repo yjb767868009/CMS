@@ -6,6 +6,7 @@ Vue.use(vuex)
 export default new vuex.Store({
     state:{
         currentCourse:'',
+        currentRound:'',
     },
     mutations:{
         

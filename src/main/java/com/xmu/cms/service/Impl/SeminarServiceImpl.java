@@ -255,7 +255,7 @@ public class SeminarServiceImpl implements SeminarService {
         for (Question question : noSelectQuestions) {
             Float questionPro = questionProbability.get(question);
             if (probability < selectProbability && selectProbability < probability + questionPro) {
-                questionDao.selectQuestion(question);
+                //questionDao.selectQuestion(question);
                 return question;
             }
             probability += questionPro;

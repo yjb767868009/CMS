@@ -110,4 +110,10 @@
           AND attendance.klass_seminar_id = klass_seminar.id
           AND team.id = attendance.team_id
     </select>
+
+    <update id="updateAttendancePresent" parameterType="com.xmu.cms.entity.Attendance">
+        update attendance
+        set is_present = #{attendance.present}
+        where id = #{attendance.attendanceId}
+    </update>
 </mapper>

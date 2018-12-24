@@ -19,7 +19,7 @@ public interface QuestionMapper {
      * @param klassSeminarId 班级讨论课id
      * @return 提问列表
      */
-    List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId);// TODO: 2018/12/24 获取所有的提问包括已经选中
+    List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId);
 
     /**
      * 获取所有未选择的提问
@@ -49,5 +49,5 @@ public interface QuestionMapper {
      *
      * @param question 提问
      */
-    void selectQuestion(Question question);// TODO: 2018/12/24
+    void selectQuestion(Question question);
 }

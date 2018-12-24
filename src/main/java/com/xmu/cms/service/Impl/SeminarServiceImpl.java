@@ -111,7 +111,7 @@ public class SeminarServiceImpl implements SeminarService {
 
     @Override
     public KlassSeminar getRunningKlassSeminarByTeacherId(BigInteger teacherId) {
-        return seminarDao.getRunningSeminarByTeacherId(teacherId);
+        return klassSeminarDao.getRunningKlassSeminarByTeacherId(teacherId);
     }
 
     @Override

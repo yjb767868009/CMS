@@ -60,7 +60,7 @@ export default {
     },
     more: function() {},
     presentation: function() {
-      this.$router.push("/mobile/teacher/manageseminar");
+      this.$router.push("/mobile/teacher/manageSeminar");
     }
   }
 };

@@ -353,7 +353,7 @@ export default new Router({
       component:SeminarUnstarted
     },
     {
-      path:'/mobile/teacher/manageseminar',//讨论课 中
+      path:'/mobile/teacher/manageSeminar',//讨论课 中
       name:'ManageSeminar',
       component:ManageSeminar
     },

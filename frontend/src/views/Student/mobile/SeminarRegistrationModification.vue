@@ -1,6 +1,6 @@
 <template>
 <div class="student" style="height:800px;background:#eee;">
-    <x-header title="OOAD-讨论课" style="height:60px;padding-top:12px;font-size:20px"  :right-options="{showMore: true}"  @on-click-more="show=!show">
+    <x-header title="OOAD-讨论课" style="height:60px;padding-top:12px;font-size:20px" :left-options="{showBack:false}" :right-options="{showMore: true}"  @on-click-more="show=!show">
     </x-header>
     <div style="font-size:18px;background:#fff;margin-top:7px;margin-bottom:5px"><cell primary="content" value-align="left">
         <div style="text-align:center;color:#000;height:35px;"><span style="font-size:1.2em">业务流程分析</span>

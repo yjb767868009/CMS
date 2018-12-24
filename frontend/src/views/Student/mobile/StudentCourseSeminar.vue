@@ -3,6 +3,7 @@
     <x-header
       v-bind:title="this.$store.state.currentCourse.name"
       style="height:60px;padding-top:12px"
+      :left-options="{showBack:false}"
       :right-options="{showMore: true}"
       @on-click-more="show=!show"
     ></x-header>

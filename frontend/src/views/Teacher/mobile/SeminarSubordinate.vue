@@ -1,15 +1,7 @@
 <template>
   <div class="login" style="background:#eee">
-    <x-header
-      :title="this.$store.state.teacher.currentCourse.courseName"
-      style="height:60px;padding-top:12px"
-      :left-options="{showBack:false}"
-    >
-      <button @click="more" style="background:0;height:30px;border:0" slot="right">
-        <x-icon type="ios-plus-empty" size="35" style="fill:#fff"></x-icon>
-      </button>
+<x-header :title="this.$store.state.teacher.currentCourse.courseName" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
-
     <group :title="轮次">
       <template v-for="round in rounds">
         <cell

@@ -1,10 +1,7 @@
 <template>
   <div class="course" style="background:#eee">
-    <x-header
-      title="第一轮"
-      style="background-color:#35495e;height:60px;padding-top:12px"
-      :left-options="{showBack:false}"
-    ></x-header>
+    <x-header title="第一轮" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
+    </x-header>
     <div style="height:30px;padding-top:12px;text-align:left" class="box">讨论课：
       <div style="padding:0 50px;padding-top:12px">业务流程分析</div>
       <div style="padding:0 50px;padding-top:12px">领域模型设计</div>

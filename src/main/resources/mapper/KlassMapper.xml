@@ -128,4 +128,15 @@
           and klass.id = klass_student.klass_id
           and course.id = klass.course_id
     </select>
+
+    <update id="deleteKlassStudent" parameterType="com.xmu.cms.entity.Course">
+        update klass_student
+        set team_id = null
+        where course_id = #{course.courseId}
+    </update>
+
+    <insert id="addKlassRound">
+        insert klass_round (klass_id, round_id, enroll_number)
+        values (#{klassId}, #{roundId}, 1)
+    </insert>
 </mapper>

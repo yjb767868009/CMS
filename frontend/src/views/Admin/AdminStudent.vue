@@ -175,7 +175,7 @@ export default {
         this.$axios
           .get("/student/searchByAccount/" + this.studentSearchKey)
           .then(response => {
-            this.teacherData = response.data;
+            this.studentData = response.data;
           })
           .catch(function(error) {
             console.log(error);
@@ -189,7 +189,7 @@ export default {
               this.$message.error("找不到该学生");
               return;
             }
-            this.teacherData = response.data;
+            this.studentData = response.data;
           })
           .catch(function(error) {
             console.log(error);

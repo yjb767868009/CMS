@@ -1,6 +1,6 @@
 <template>
   <div class="course">
-    <x-header title="OOAD" style="background-color:#35495e;height:60px;padding-top:12px" :left-options="{showBack:false}">
+    <x-header title="OOAD" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
     <div style="margin-left:10px">
     <div title='新建讨论课' style="text-align:center;margin-top:20px">新建讨论课</div>

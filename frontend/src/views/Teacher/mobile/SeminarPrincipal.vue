@@ -1,15 +1,7 @@
 <template>
   <div class="login" style="background:#eee">
-    <x-header
-      :title="this.$store.state.teacher.currentCourse.courseName"
-      style="height:60px;padding-top:12px"
-      :left-options="{showBack:false}"
-    >
-      <button @click="more" style="background:0;height:30px;border:0" slot="right">
-        <x-icon type="ios-plus-empty" size="35" style="fill:#fff"></x-icon>
-      </button>
+    <x-header :title="this.$store.state.teacher.currentCourse.courseName" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
-
     <group :title="轮次">
       <template v-for="round in rounds">
         <cell
@@ -206,22 +198,22 @@ export default {
       ]
     };
   },
-    // mounted: function() {
-    //   this.$axios
-    //     .get(
-    //       "/course/" + this.$store.state.teacher.currentCourse.courseId + "/round"
-    //     )
-    //     .then(response => {
-    //       this.rounds = response.data;
-    //       //为返回数据绑定show属性用于折叠显示
-    //       for(var i=0;i<this.rounds.length;i++){
-    //           this.rounds.showRoundContent=false
-    //           for(var j=0;j<this.rounds[i].seminars.length;j++){
-    //               this.rounds[i].seminars[j].showSeminarContent=false
-    //           }
-    //       }
-    //     });
-    // },
+    mounted: function() {
+      this.$axios
+        .get(
+          "/course/" + this.$store.state.teacher.currentCourse.courseId + "/round"
+        )
+        .then(response => {
+          this.rounds = response.data;
+          //为返回数据绑定show属性用于折叠显示
+          for(var i=0;i<this.rounds.length;i++){
+              this.rounds.showRoundContent=false
+              for(var j=0;j<this.rounds[i].seminars.length;j++){
+                  this.rounds[i].seminars[j].showSeminarContent=false
+              }
+          }
+        });
+    },
   methods: {
     onClick() {
       console.log("on click");

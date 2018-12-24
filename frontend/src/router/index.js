@@ -155,7 +155,10 @@ export default new Router({
     {
       path:'/mobile/student/studentInfo',
       name:'StudentInfo',
-      component:StudentInfo
+      component:StudentInfo,
+      meta:{
+        requireAuth:false
+      }
     },
     {
       path:'/mobile/student/activation',
@@ -209,7 +212,7 @@ export default new Router({
       component:StudentSeminarList
     },
     {
-      path:'/mobile/student/course', //2-1讨论课
+      path:'/mobile/student/course/:name', //2-1讨论课
       name:'StudentCourseSeminar',
       component:StudentCourseSeminar
     },

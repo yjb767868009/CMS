@@ -1,9 +1,6 @@
 <template>
 <div class="student" style="background:#eee;">
-    <x-header title="账户与设置" style="height:60px;padding-top:12px;font-size:20px">
-        <button @click="onClick" style="background:0;height:30px;border:0" slot="right">
-            <x-icon type="ios-plus-empty" size="35" style="fill:#fff"></x-icon>
-        </button>
+    <x-header title="账户与设置" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
     <x-header style="background:#fff;margin:20px 0px 0px;height:60px;padding-top:12px" :left-options="{showBack:false}">
          <div slot="left" style="font-size:1.3em;color:#000;padding-top:6px;">姓名：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;www</div>

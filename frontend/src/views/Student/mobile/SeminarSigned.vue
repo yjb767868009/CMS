@@ -3,6 +3,7 @@
     <x-header
       title="OOAD-讨论课"
       style="height:60px;padding-top:12px;font-size:20px"
+      :left-options="{showBack:false}"
       :right-options="{showMore: true}"
       @on-click-more="show=!show"
     ></x-header>

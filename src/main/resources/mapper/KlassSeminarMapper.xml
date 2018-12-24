@@ -5,7 +5,7 @@
     <resultMap id="KlassSeminarResultMap" type="com.xmu.cms.entity.KlassSeminar">
         <id property="klassSeminarId" column="klassSeminarId" javaType="java.math.BigInteger"/>
         <result property="reportDDL" column="report_ddl"/>
-        <result property="status" column="seminar_status"/>
+        <result property="status" column="status"/>
         <association property="klass" javaType="com.xmu.cms.entity.Klass">
             <id property="klassId" column="klassId"/>
             <result property="grade" column="grade"/>
@@ -23,7 +23,7 @@
     <select id="getKlassSeminarByKlassAndSeminar" resultMap="KlassSeminarResultMap">
         SELECT klass_seminar.id as klassSeminarId,
                report_ddl,
-               seminar_status,
+               status,
                klass.id         as klassId,
                grade,
                klass_serial,
@@ -56,7 +56,7 @@
     <select id="getKlassSeminarBySeminarId" resultMap="KlassSeminarResultMap">
         SELECT klass_seminar.id as klassSeminarId,
                report_ddl,
-               seminar_status,
+               status,
                klass.id         as klassId,
                grade,
                klass_serial,
@@ -73,7 +73,7 @@
     <select id="getKlassSeminarByStudentAndSeminar" resultMap="KlassSeminarResultMap">
         SELECT klass_seminar.id as klassSeminarId,
                report_ddl,
-               seminar_status,
+               status,
                klass.id         as klassId,
                grade,
                klass_serial,
@@ -94,14 +94,14 @@
         set klass_id       = #{klassSeminar.klass.klassId},
             seminar_id     = #{klassSeminar.seminar.seminarId},
             report_ddl     = #{klassSeminar.reportDDL},
-            seminar_status = #{klassSeminar.status}
+            status = #{klassSeminar.status}
         where id = #{klassSeminar.klassSeminarId}
     </update>
 
     <select id="getRunningKlassSeminarByTeacherId" resultMap="KlassSeminarResultMap">
         SELECT klass_seminar.id as klassSeminarId,
                report_ddl,
-               seminar_status,
+               status,
                klass.id as klassId,
                grade,
                klass_serial,
@@ -114,7 +114,20 @@
         WHERE course.teacher_id = #{teacherId}
           and klass.course_id = course.id
           and klass_seminar.klass_id = klass.id
-          and (klass_seminar.seminar_status = 1 or 3)
+          and (klass_seminar.status = 1 or 3)
           and seminar.id = klass_seminar.seminar_id
     </select>
+
+    <update id="stopKlassSeminar">
+        update klass_seminar
+        set status = 3
+        where id = #{klassSeminarId}
+    </update>
+
+    <update id="startKlassSeminar">
+        update klass_seminar
+        set status = 1
+        where klass_id = #{klassId}
+        and seminar_id = #{seminarId}
+    </update>
 </mapper>

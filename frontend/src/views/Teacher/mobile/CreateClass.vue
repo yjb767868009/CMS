@@ -1,6 +1,6 @@
 <template>
   <div class="course" style="background:#eee">
-    <x-header title="新建班级" style="background-color:#35495e;height:60px;padding-top:12px" :left-options="{showBack:false}">
+    <x-header title="新建班级" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
 
 

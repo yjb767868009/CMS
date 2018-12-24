@@ -1,9 +1,6 @@
 <template>
   <div class="activation" style="background:#eee">
-    <x-header title="找回密码" style="height:60px;padding-top:12px" :left-options="{showBack:false}">
-        <button @click="back" style="background:0;height:30px;border:0" slot="left">
-            <x-icon type="ios-arrow-back" size="35" style="fill:#fff"></x-icon>
-        </button>
+    <x-header title="找回密码" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
   <group>
     <div style="text-align:left;margin-top:20px">发送验证码邮箱1111@qq.com</div>

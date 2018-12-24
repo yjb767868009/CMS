@@ -128,7 +128,7 @@ public interface KlassMapper {
      *
      * @param course 课程
      */
-    void deleteCourseStudentTeam(Course course);// TODO: 2018/12/24
+    void deleteCourseStudentTeam(Course course);
 
     /**
      * 新建班级和轮次的关系，enroll默认为1
@@ -136,5 +136,5 @@ public interface KlassMapper {
      * @param klassId 班级id
      * @param roundId 轮次id
      */
-    void addKlassRound(BigInteger klassId, BigInteger roundId);// TODO: 2018/12/24
+    void addKlassRound(BigInteger klassId, BigInteger roundId);
 }

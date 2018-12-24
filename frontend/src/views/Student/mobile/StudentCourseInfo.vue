@@ -1,6 +1,6 @@
 <template>
 <div class="student" style="height:800px;background:#fff;">
-    <x-header title="OOAD" style="height:60px;padding-top:12px;font-size:20px"  :right-options="{showMore: true}"  @on-click-more="show=true">
+    <x-header title="OOAD" style="height:60px;padding-top:12px;font-size:20px" :left-options="{showBack:false}" :right-options="{showMore: true}"  @on-click-more="show=!show">
     </x-header>
     <cell primary="content" title="课程简介：" value-align="left"><div style="padding-left:5px;font-size:15px">balabala</div></cell>
     <cell primary="content" :border-intent="false" value-align="left"><span style="color:#000">成绩计算规则：</span>

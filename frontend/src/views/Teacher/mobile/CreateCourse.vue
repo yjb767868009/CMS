@@ -1,9 +1,6 @@
 <template>
   <div class="course">
-    <x-header title="新建课程" style="background-color:#35495e;height:60px;padding-top:12px" :left-options="{showBack:false}">
-        <button @click="close" style="background:0;height:30px;border:0" slot="left">
-            <x-icon type="ios-close-empty" size="35" style="fill:#fff"></x-icon>
-        </button>
+    <x-header title="新建课程" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
 
 
@@ -24,8 +21,8 @@
 
     <group label-width="6em" style="margin-top:140px;padding-top:12px;text-align:left">
         <div style="height:40px;padding-top:12px;text-align:left;margin-top:20px" class="box">小组人数：
-            <input  style="margin-left:20%;width:50px;height:30px" placeholder="">上限</input>
-            <input  style="margin-left:5%;width:50px;height:30px" placeholder="">下限</input>
+            <x-input  style="margin-left:20%;width:50px;height:30px" placeholder="">上限</x-input>
+            <x-input  style="margin-left:5%;width:50px;height:30px" placeholder="">下限</x-input>
         </div>
         <datetime v-model="limitHourValue" :start-date="startDate" :end-date="endDate" format="YYYY-MM-DD HH:mm" @on-change="change" title="组队开始时间"></datetime>
         <datetime v-model="limitHourValue" :start-date="startDate" :end-date="endDate" format="YYYY-MM-DD HH:mm" @on-change="change" title="组队截止时间"></datetime>

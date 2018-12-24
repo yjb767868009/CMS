@@ -3,10 +3,10 @@
     <x-header
       title="讨论课PPT"
       style="height:60px;padding-top:12px;font-size:20px"
+      :left-options="{showBack:false}"
       :right-options="{showMore: true}"
       @on-click-more="show=!show"
     ></x-header>
-
     <div
       v-for="(item,index) in group"
       :class="{'even':index%2!==1,'odd':index%2===1}"
@@ -17,9 +17,9 @@
       </cell>
     </div>
     <template v-if="d">
-    <flexbox style="margin-top:30px">
-      <x-button type="primary" @click.native="question=!question">发起提问</x-button>
-    </flexbox>
+      <flexbox style="margin-top:30px">
+        <x-button type="primary" @click.native="question=!question">发起提问</x-button>
+      </flexbox>
     </template>
 
     <div v-transfer-dom>

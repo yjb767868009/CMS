@@ -49,19 +49,19 @@
 
     <update id="startSeminar">
         UPDATE klass_seminar
-        SET seminar_status = 1
+        SET status = 1
         WHERE id = #{klassSeminarId}
     </update>
 
     <update id="stopSeminar">
         UPDATE klass_seminar
-        SET seminar_status = 2
+        SET status = 2
         WHERE id = #{klassSeminarId}
     </update>
 
     <update id="endSeminar">
         UPDATE klass_seminar
-        SET seminar_status = 3
+        SET status = 3
         WHERE id = #{klassSeminarId}
     </update>
 

@@ -1,9 +1,6 @@
 <template>
 <div class="student" style="background:#eee">
-    <x-header title="待办及通知" style="height:60px;padding-top:12px" :left-options="{showBack:false}">
-        <button @click="onClick" style="background:0;height:30px;border:0" slot="right">
-            <x-icon type="ios-plus-empty" size="35" style="fill:#fff"></x-icon>
-        </button>
+    <x-header title="代办及通知" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
     <group style="text-align:left">
       <cell is-link title="xxxxx分组邀请">

@@ -163,14 +163,12 @@ public class SeminarController {
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @GetMapping(value = "/seminar/{seminarId}/class/{classId}/run")
-    public Map<String, Object> getRunKlassSeminarInfo(@PathVariable("seminarId") BigInteger seminarId,
-                                                      @PathVariable("classId") BigInteger klassId) {
-        KlassSeminar klassSeminar = seminarService.getKlassSeminarByKlassAndSeminar(klassId, seminarId);
+    @GetMapping(value = "/klassseminar/{klassSeminarId}/run")
+    public Map<String, Object> getRunKlassSeminarInfo(@PathVariable("klassSeminarId") BigInteger klassSeminarId) {
         Map<String, Object> message = new HashMap<String, Object>();
-        List<Attendance> attendances = seminarService.getAttendancesInKlassSeminar(klassSeminar.getKlassSeminarId());
+        List<Attendance> attendances = seminarService.getAttendancesInKlassSeminar(klassSeminarId);
         message.put("attendances", attendances);
-        List<Question> questions = seminarService.getQuestionInKlassSeminar(klassSeminar.getKlassSeminarId());
+        List<Question> questions = seminarService.getQuestionInKlassSeminar(klassSeminarId);
         message.put("questions", questions);
         return message;
     }

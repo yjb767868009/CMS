@@ -27,6 +27,7 @@
             is-link
             :key="round.roundId"
             @click.native="setRound(round)"
+            style="margin-left:20px"
           >该轮轮次设置</cell-box>
           <template v-for="seminar in round.seminars">
             <cell
@@ -35,13 +36,15 @@
               is-link
               :arrow-direction="seminar.showSeminarContent ? 'up' : 'down'"
               @click.native="seminar.showSeminarContent=!seminar.showSeminarContent"
+              style="margin-left:20px"
             ></cell>
             <template v-if="seminar.showSeminarContent">
               <template v-for="klassSeminar in seminar.klassSeminars">
                 <cell-box
                   :key="klassSeminar.klassSeminarId"
                   is-link
-                  @click.native="clickClassSeminar(klassSeminar)"
+                  @click.native="clickClassSeminar(seminar,klassSeminar)"
+                  style="margin-left:40px"
                 >{{klassSeminar.klass.name}}</cell-box>
               </template>
             </template>
@@ -234,7 +237,22 @@ export default {
         this.$store.state.teacher.currentRound=round
         this.$router.push('/mobile/teacher/setround')
     },
-    clickClassSeminar: function(klassSeminar) {}
+    clickClassSeminar: function(seminar,klassSeminar) {
+        this.$store.state.teacher.currentSeminar=seminar
+        this.$store.state.teacher.currentKlassSeminar=klassSeminar
+        if(klassSeminar.status===0){
+            //未开始
+            this.$router.push('/mobile/teacher/seminarUnstarted')
+        }
+        else if(klassSeminar.status===1){
+            //正在进行
+            this.$router.push('/mobile/teacher/seminarOngoing')
+        }
+        else if(klassSeminar.status===2){
+            //已结束
+            this.$router.push('/mobile/teacher/seminarFinished')
+        }
+    }
   }
 };
 </script>

@@ -3,8 +3,9 @@
     <x-header
       title="OOAD-讨论课"
       style="height:60px;padding-top:12px;font-size:20px"
+      :left-options="{showBack:false}"
       :right-options="{showMore: true}"
-      @on-click-more="show=!show"
+      @on-click-more="onClick"
     ></x-header>
     <div style="font-size:18px;background:#fff">
       <cell primary="content" title="轮次：" value-align="left">
@@ -27,7 +28,8 @@
     </cell>
     <div style="font-size:18px;background:#fff">
       <cell primary="content" title="课程情况：" value-align="left">
-        <div style="padding-left:65px;color:#000;">正在进行
+        <div style="padding-left:65px;color:#000;">
+          正在进行
           <span
             @click="presentation"
             style="text-decoration:underline;padding-left:15px;font-size:0.8em;color:#00DB00"

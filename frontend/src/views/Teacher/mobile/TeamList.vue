@@ -1,12 +1,6 @@
 <template>
   <div class="course" style="background:#eee">
-    <x-header title="学生组队" style="background-color:#35495e;height:60px;padding-top:12px" :left-options="{showBack:false}">
-        <button @click="onClick" style="background:0;height:0px;border:0" slot="right">
-            <x-icon type="ios-plus-empty" size="35" style="fill:#fff"></x-icon>
-        </button>
-        <button @click="back" style="background:0;height:0px;border:0" slot="left">
-            <x-icon type="ios-arrow-back" size="35" style="fill:#fff"></x-icon>
-        </button>
+    <x-header title="学生组队" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
     <group :title="组队">
       <cell
@@ -42,31 +36,47 @@
         </template>
 
     </group>
+    <div v-transfer-dom>
+      <popup v-model="show" height="22%">
+          <div>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/message.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="Undo">代办</div></cell>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="TeacherInfo">个人页</div></cell>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/book.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="GoSeminar">讨论课</div></cell>
+          </div>
+      </popup>
+    </div>
   </div>
 </template>
 
 <script>
-import {XHeader,Cell,CellBox,Group} from 'vux'
+import {XHeader,Cell,CellBox,Group,TransferDom,Popup} from 'vux'
 export default {
+    directives:{
+        TransferDom
+    },
     components:{
         XHeader,
         Cell,
         CellBox,
-        Group
+        Group,Popup
     },
     data(){
         return{
+            show:false,
             showContent001: false,
             showContent002: false
         }   
     },
     methods: {
-        onClick () {
-            console.log('on click')
-        },
-        back:function(){
+        Undo(){
             this.$router.push('/mobile/teacher')
-        }
+        },
+        TeacherInfo(){
+            this.$router.push('/mobile/teacher')
+        },
+        GoSeminar(){
+            this.$router.push('/mobile/teacher/seminarP')
+        },
     }
 }
 </script>

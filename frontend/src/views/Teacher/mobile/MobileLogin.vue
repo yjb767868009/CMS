@@ -1,9 +1,6 @@
 <template>
   <div class="login" style="background:#eee">
     <x-header title="讨论课管理系统登录" style="height:60px;padding-top:12px" :left-options="{showBack:false}">
-        <button @click="close" style="background:0;height:30px;border:0" slot="left">
-            <x-icon type="ios-close-empty" size="35" style="fill:#fff"></x-icon>
-        </button>
     </x-header>
   <group>
     <x-input v-model="account" style="margin-top:40px;background-color:#fff" placeholder="学号/教工号" ></x-input>

@@ -1,6 +1,6 @@
 <template>
 <div class="student" style="background:#eee;">
-    <x-header title="账户与设置" style="height:60px;padding-top:12px;font-size:20px"  :right-options="{showMore: true}"  @on-click-more="onClick">
+    <x-header title="账户与设置" style="height:60px;padding-top:12px;font-size:20px" :left-options="{showBack:false}" :right-options="{showMore: true}"  @on-click-more="show=!show">
     </x-header>
     <cell primary="content" title="姓名：" value-align="left" style="background:#fff"><div style="color:#000;padding-left:110px">www</div></cell>
     <cell primary="content" title="学号：" value-align="left" style="background:#eee"><div style="color:#000;padding-left:70px">25120152202348</div></cell>
@@ -69,10 +69,6 @@ import {XHeader,
     methods:{
         toast:function(){
             Toast(this.name)
-        },
-        onClick:function(){
-            console.log("sss");
-            this.show=true;
         },
         edit:function(){
             this.$router.push('/mobile/student/studentInfo')

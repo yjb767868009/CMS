@@ -1,12 +1,6 @@
 <template>
   <div class="login" title="2016-(1)">
-    <x-header title="OOAD-书面报告" style="height:60px;padding-top:12px" :left-options="{showBack:false}">
-        <button @click="back" style="background:0;height:30px;border:0" slot="left">
-            <x-icon type="ios-arrow-back" size="35" style="fill:#fff"></x-icon>
-        </button>
-        <button @click="more" style="background:0;height:30px;border:0" slot="right">
-            <x-icon type="ios-plus-empty" size="35" style="fill:#fff"></x-icon>
-        </button>
+    <x-header title="OOAD-书面报告" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
 
       <x-table :cell-bordered="false" style="background-color:#fff;">

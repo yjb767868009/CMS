@@ -1,13 +1,6 @@
 <template>
   <div class="login" title="2016-(1)">
-    <x-header
-      title="OOAD-讨论课"
-      style="height:60px;padding-top:12px"
-      :left-options="{showBack:false}"
-    >
-      <button @click="more" style="background:0;height:30px;border:0" slot="right">
-        <x-icon type="ios-plus-empty" size="35" style="fill:#fff"></x-icon>
-      </button>
+    <x-header title="OOAD讨论课" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
 
     <x-header
@@ -20,7 +13,7 @@
       >主题：{{this.$store.state.teacher.currentSeminar.topic}}</div>
     </x-header>
     <x-header style="background:#eee;height:60px;padding-top:12px" :left-options="{showBack:false}">
-      <div slot="left" style="font-size:1.3em;color:#000;padding-top:6px;">课次序号：{{}}</div>
+      <div slot="left" style="font-size:1.3em;color:#000;padding-top:6px;">课次序号：{{s}}</div>
     </x-header>
     <x-header style="background:#fff;height:85px;padding-top:12px" :left-options="{showBack:false}">
       <div

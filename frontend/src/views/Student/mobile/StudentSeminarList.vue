@@ -3,8 +3,9 @@
     <x-header
       title="讨论课"
       style="height:60px;padding-top:12px"
+      :left-options="{showBack:false}"
       :right-options="{showMore: true}"
-      @on-click-more="showMenus = true"
+      @on-click-more="show=!show"
     ></x-header>
     <group>
       <cell v-for="course in courses" :key="course.id" @click.native="click(course)" style="margin:20px">
@@ -18,6 +19,14 @@
         >
       </cell>
     </group>
+    <div v-transfer-dom>
+      <popup v-model="show" height="15%">
+          <div>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="StudentInfo">个人页</div></cell>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/book.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="running">讨论课</div></cell>
+          </div>
+      </popup>
+    </div>
   </div>
 </template>
 
@@ -37,7 +46,7 @@ import {
   Cell,
   Actionsheet,
   ButtonTab,
-  ButtonTabItem
+  ButtonTabItem,Popup
 } from "vux";
 export default {
   directives: {
@@ -50,7 +59,7 @@ export default {
     Cell,
     Actionsheet,
     ButtonTab,
-    ButtonTabItem
+    ButtonTabItem,Popup
   },
   // mounted: function() {
   //   this.$axios.get("/course").then(response => {

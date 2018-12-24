@@ -1,9 +1,6 @@
 <template>
   <div class="course">
-    <x-header title="新增共享" style="background-color:#35495e;height:60px;padding-top:12px" :left-options="{showBack:false}">
-        <button @click="close" style="background:0;height:30px;border:0" slot="left">
-            <x-icon type="ios-arrow-back" size="35" style="fill:#fff"></x-icon>
-        </button>
+    <x-header title="新增共享" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
 
     <group label-width="10em">

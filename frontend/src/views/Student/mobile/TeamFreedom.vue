@@ -1,6 +1,6 @@
 <template>
 <div class="student" style="height:20px;background:#fff">
-    <x-header title="OOAD 2016-1" style="height:60px;padding-top:12px" :right-options="{showMore: true}" @on-click-more="onClick">
+    <x-header title="OOAD 2016-1" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
     <group>
       
@@ -102,9 +102,6 @@ import {TransferDom,XHeader,
     methods:{
         toast:function(){
             Toast(this.name)
-        },
-        onClick:function(){
-            this.show=true;
         },
         running:function(){
             this.$router.push('/mobile/Student/studentSeminarList')

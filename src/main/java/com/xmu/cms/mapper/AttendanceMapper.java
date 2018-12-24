@@ -74,5 +74,5 @@ public interface AttendanceMapper {
      *
      * @param attendance 展示
      */
-    void updateAttendancePresent(Attendance attendance);// TODO: 2018/12/24
+    void updateAttendancePresent(Attendance attendance);
 }

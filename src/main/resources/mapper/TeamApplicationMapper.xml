@@ -56,4 +56,26 @@
           and team.id = team_valid_application.team_id
           and teacher.id = team_valid_application.teacher_id
     </select>
+
+    <insert id="insertTeamApplication" parameterType="com.xmu.cms.entity.TeamApplication">
+        insert team_valid_application (team_id, teacher_id, reason, status)
+        values (#{teamApplication.team.teamId}, #{teamApplication.teacher.teacherId}, #{teamApplication.reason}, #{teamApplication.status})
+    </insert>
+
+    <select id="getTeamApplication" resultMap="TeamApplicationResultMap">
+        select team_valid_application.id as teamApplicationId,
+               reason,
+               team_valid_application.status,
+               team_id as teamId,
+               team.team_name as teamName,
+               teacher_id as teacherId,
+               teacher.teacher_name as teacherName,
+               teacher.email as teacherEmail
+        from team_valid_application,
+             team,
+             teacher
+        where team_valid_application.team_id = #{teamId}
+          and team.id = team_valid_application.team_id
+          and teacher.id = team_valid_application.teacher_id
+    </select>
 </mapper>

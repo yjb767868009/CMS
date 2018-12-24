@@ -82,7 +82,6 @@
         where question.klass_seminar_id = #{klassSeminarId}
           and question.team_id = team.id
           and question.student_id = student.id
-          and question.is_selected = 0
     </select>
 
     <select id="getNoSelectedQuestionInKlassSeminar" resultMap="QuestionResultMap">
@@ -106,6 +105,12 @@
     <update id="scoreQuestion" parameterType="com.xmu.cms.entity.Question">
         update question
         set score = #{question.score}
+        where id = #{question.questionId}
+    </update>
+
+    <update id="selectQuestion" parameterType="com.xmu.cms.entity.Question">
+        update question
+        set is_selected = #{question.selected}
         where id = #{question.questionId}
     </update>
 </mapper>

@@ -14,9 +14,9 @@ public class ShareTeam {
     private Course masterCourse;
     private Course receiveCourse;
     private Teacher receiveTeacher;
-    private Integer status;
+    private Boolean status;
 
-    public ShareTeam(BigInteger shareTeamId, Course masterCourse, Course receiveCourse, Teacher receiveTeacher, Integer status) {
+    public ShareTeam(BigInteger shareTeamId, Course masterCourse, Course receiveCourse, Teacher receiveTeacher, Boolean status) {
         this.shareTeamId = shareTeamId;
         this.masterCourse = masterCourse;
         this.receiveCourse = receiveCourse;
@@ -59,11 +59,11 @@ public class ShareTeam {
         this.receiveTeacher = receiveTeacher;
     }
 
-    public Integer getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 }

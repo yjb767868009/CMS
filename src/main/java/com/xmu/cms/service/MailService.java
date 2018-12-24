@@ -1,6 +1,8 @@
 package com.xmu.cms.service;
 
+import com.xmu.cms.entity.ShareSeminar;
 import com.xmu.cms.entity.ShareTeam;
+import com.xmu.cms.entity.TeamApplication;
 import com.xmu.cms.support.MyUser;
 
 import java.util.Map;
@@ -12,7 +14,15 @@ import java.util.Map;
 public interface MailService {
     Map<String, String> sendPassword(MyUser user);
 
-    void sendShareTeam(ShareTeam newShareTeam);
+    void sendShareTeam(ShareTeam shareTeam) throws Exception;
 
-    void sendShareSeminar(ShareTeam newShareSeminar);
+    void sendShareSeminar(ShareSeminar shareSeminar) throws Exception;
+
+    void sendTeamApplication(TeamApplication teamApplication) throws Exception;
+
+    void sendUpdateShareTeam(ShareTeam shareTeam) throws Exception;
+
+    void sendUpdateShareSeminar(ShareSeminar shareSeminar) throws Exception;
+
+    void sendUpdateTeamApplication(TeamApplication teamApplication) throws Exception;
 }

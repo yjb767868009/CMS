@@ -3,7 +3,9 @@ package com.xmu.cms.controller;
 import com.xmu.cms.aspect.annoatation.CheckTeamPermission;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Team;
+import com.xmu.cms.entity.TeamApplication;
 import com.xmu.cms.service.CourseService;
+import com.xmu.cms.service.MailService;
 import com.xmu.cms.service.TeamService;
 import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +29,9 @@ public class TeamController {
 
     @Autowired
     private TeamService teamService;
+
+    @Autowired
+    private MailService mailService;
 
     @Secured("ROLE_STUDENT")
     @PostMapping(value = "/course/{courseId}/class/{classId}/team")
@@ -60,5 +66,21 @@ public class TeamController {
     public Map<String, String> removeTeamMember(@PathVariable("teamId") BigInteger teamId,
                                                 @RequestBody Student student) {
         return teamService.teamRemoveMember(teamId, student);
+    }
+
+    @Secured("ROLE_STUDENT")
+    @PostMapping(value = "/team/{teamId}/teamvalidrequest")
+    public Map<String, String> sendTeamApplication(@PathVariable("teamId") BigInteger teamId,
+                                                   @RequestBody TeamApplication teamApplication) {
+        teamApplication.setTeam(new Team(teamId));
+        Map<String, String> message = new HashMap<String, String>();
+        try {
+            TeamApplication newTeamApplication = teamService.sendTeamApplication(teamApplication);
+            mailService.sendTeamApplication(newTeamApplication);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
 }

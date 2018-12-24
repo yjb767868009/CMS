@@ -40,7 +40,7 @@
 
     <insert id="insertRound" parameterType="com.xmu.cms.entity.Round">
         insert round (course_id, round_serial, presentation_score_method, report_score_method, question_score_method)
-        values (#{round.course.courseId}, #{round.roundSerial}, #{round.presentationScoreType}, #{round.reportScoreType}, #{round.questionScoreType})
+        values (#{round.course.courseId}, #{round.order}, #{round.presentationScoreType}, #{round.reportScoreType}, #{round.questionScoreType})
     </insert>
 
     <delete id="deleteRoundByRoundId">
@@ -54,7 +54,7 @@
         set presentation_score_method = #{round.presentationScoreType},
             report_score_method = #{round.reportScoreType},
             question_score_method = #{round.questionScoreType}
-        where id = #{round.id}
+        where id = #{round.roundId}
     </update>
 
     <delete id="deleteRoundScore">

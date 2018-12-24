@@ -22,10 +22,22 @@ import VueCookie from 'vue-cookie'
 import axios from 'axios'
 // Object.defineProperty(Vue.prototype,'$axios',{value:axios})
 
+//vue-socket.io
+import VueSocketIO from 'vue-socket.io'
+
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VueCookie)
 Vue.use(MintUI)
+// Vue.use(new VueSocketIO({
+//   debug:true,
+//   connection:'http://localhost:8080',
+//   vuex:{
+//     store,
+//     actionPrefix:'SOCKET_',
+//     mutationPrefix:'SOCKET_'
+//   }
+// }))
 
 
 // axios.defaults.baseURL='http://localhost:8000'

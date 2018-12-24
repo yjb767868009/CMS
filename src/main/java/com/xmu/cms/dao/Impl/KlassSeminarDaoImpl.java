@@ -40,4 +40,19 @@ public class KlassSeminarDaoImpl implements KlassSeminarDao {
     public KlassSeminar getKlassSeminarByKlassAndSeminar(BigInteger klassId, BigInteger seminarId) {
         return klassSeminarMapper.getKlassSeminarByKlassAndSeminar(klassId, seminarId);
     }
+
+    @Override
+    public KlassSeminar getRunningKlassSeminarByTeacherId(BigInteger teacherId) {
+        return klassSeminarMapper.getRunningKlassSeminarByTeacherId(teacherId);
+    }
+
+    @Override
+    public void stopKlassSeminar(BigInteger klassSeminarId) {
+        klassSeminarMapper.stopKlassSeminar(klassSeminarId);
+    }
+
+    @Override
+    public void startKlassSeminar(BigInteger seminarId, BigInteger klassId) {
+        klassSeminarMapper.startKlassSeminar(seminarId, klassId);
+    }
 }

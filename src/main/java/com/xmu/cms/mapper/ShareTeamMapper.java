@@ -42,7 +42,7 @@ public interface ShareTeamMapper {
      *
      * @param shareTeam 新的共享组队
      */
-    void insertShareTeam(ShareTeam shareTeam);// TODO: 2018/12/23
+    void insertShareTeam(ShareTeam shareTeam);
 
     /**
      * 根据发出共享的课程和收到共享的学生找到共享组队请求
@@ -51,5 +51,28 @@ public interface ShareTeamMapper {
      * @param receiveCourseId 收到共享的课程id
      * @return 共享组队
      */
-    ShareTeam getShareTeamByTwoCourse(BigInteger masterCourseId, BigInteger receiveCourseId);// TODO: 2018/12/23
+    ShareTeam getShareTeamByTwoCourse(BigInteger masterCourseId, BigInteger receiveCourseId);
+
+    /**
+     * 根据老师查找收到共享组队信息
+     *
+     * @param teacherId 老师id
+     * @return 共享组队列表
+     */
+    List<ShareTeam> getShareTeamByTeacherId(BigInteger teacherId);
+
+    /**
+     * 更新共享组队，及接受或拒绝请求
+     *
+     * @param shareTeam 新的共享组队
+     */
+    void updateShareTeam(ShareTeam shareTeam);
+
+    /**
+     * 通过id获取共享组队
+     *
+     * @param shareTeamId 共享组队信息
+     * @return 共享组队
+     */
+    ShareTeam getShareTeam(BigInteger shareTeamId);
 }

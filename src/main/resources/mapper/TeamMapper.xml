@@ -5,7 +5,7 @@
     <resultMap id="TeamResultMap" type="com.xmu.cms.entity.Team">
         <id property="teamId" column="teamId" javaType="java.math.BigInteger"/>
         <result property="teamName" column="teamName" javaType="java.lang.String"/>
-        <result property="status" column="status" javaType="java.lang.Integer"/>
+        <result property="valid" column="status" javaType="java.lang.Boolean"/>
         <association property="leader" javaType="com.xmu.cms.entity.Student">
             <id property="studentId" column="leaderId"/>
             <result property="name" column="leaderName"/>

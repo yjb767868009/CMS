@@ -6,9 +6,11 @@ package com.xmu.cms.support;
  */
 public class HelloMessage {
     private String name;
+    private String say;
 
-    public HelloMessage(String name) {
+    public HelloMessage(String name, String say) {
         this.name = name;
+        this.say = say;
     }
 
     public HelloMessage() {
@@ -20,5 +22,13 @@ public class HelloMessage {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSay() {
+        return say;
+    }
+
+    public void setSay(String say) {
+        this.say = say;
     }
 }

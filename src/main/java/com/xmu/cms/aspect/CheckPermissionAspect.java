@@ -1,11 +1,11 @@
 package com.xmu.cms.aspect;
 
+import com.xmu.cms.dao.CourseDao;
+import com.xmu.cms.dao.KlassDao;
+import com.xmu.cms.dao.TeamDao;
 import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Klass;
 import com.xmu.cms.entity.Team;
-import com.xmu.cms.mapper.CourseMapper;
-import com.xmu.cms.mapper.KlassMapper;
-import com.xmu.cms.mapper.TeamMapper;
 import com.xmu.cms.support.JWTUtils;
 import com.xmu.cms.support.UserInfo;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -24,19 +24,19 @@ import java.math.BigInteger;
 @Configuration
 public class CheckPermissionAspect {
     @Autowired
-    private CourseMapper courseMapper;
+    private CourseDao courseDao;
 
     @Autowired
-    private TeamMapper teamMapper;
+    private TeamDao teamDao;
 
     @Autowired
-    private KlassMapper klassMapper;
+    private KlassDao klassDao;
 
     @Around(value = "@annotation(com.xmu.cms.aspect.annoatation.CheckCoursePermission)&&args(courseId,..)")
     private Object checkCoursePermission(ProceedingJoinPoint point, BigInteger courseId) throws Throwable {
         Object result = null;
         UserInfo userInfo = JWTUtils.getToken();
-        Course course = courseMapper.getCourseById(courseId);
+        Course course = courseDao.getCourse(courseId);
         if (userInfo.getUserType().equals("teacher") && course.getTeacher().getTeacherId().equals(userInfo.getUserId())) {
             result = point.proceed();
         }
@@ -47,7 +47,7 @@ public class CheckPermissionAspect {
     private Object checkKlassPermission(ProceedingJoinPoint point, BigInteger klassId) throws Throwable {
         Object result = null;
         UserInfo userInfo = JWTUtils.getToken();
-        Klass klass = klassMapper.getKlassByKlassId(klassId);
+        Klass klass = klassDao.getKlass(klassId);
         if (userInfo.getUserType().equals("teacher") && klass.getCourse().getTeacher().getTeacherId().equals(userInfo.getUserId())) {
             result = point.proceed();
         }
@@ -58,7 +58,7 @@ public class CheckPermissionAspect {
     private Object checkTeamPermission(ProceedingJoinPoint point, BigInteger teamId) throws Throwable {
         Object result = null;
         UserInfo userInfo = JWTUtils.getToken();
-        Team team = teamMapper.getTeamByTeamId(teamId);
+        Team team = teamDao.getTeamByTeamId(teamId);
         if (userInfo.getUserType().equals("teacher") && team.getLeader().getStudentId().equals(userInfo.getUserId())) {
             result = point.proceed();
         }

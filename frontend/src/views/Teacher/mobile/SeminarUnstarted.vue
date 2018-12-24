@@ -20,7 +20,7 @@
       >主题：{{this.$store.state.teacher.currentSeminar.topic}}</div>
     </x-header>
     <x-header style="background:#eee;height:60px;padding-top:12px" :left-options="{showBack:false}">
-      <div slot="left" style="font-size:1.3em;color:#000;padding-top:6px;">课次序号：{{}}</div>
+      <div slot="left" style="font-size:1.3em;color:#000;padding-top:6px;">课次序号：&emsp;&emsp;&emsp;1</div>
     </x-header>
     <x-header style="background:#fff;height:85px;padding-top:12px" :left-options="{showBack:false}">
       <div
@@ -29,7 +29,7 @@
       >要求：{{this.$store.state.teacher.currentSeminar.introduction}}</div>
     </x-header>
     <x-header style="background:#eee;height:85px;padding-top:12px" :left-options="{showBack:false}">
-      <div slot="left" style="font-size:1.3em;color:#000;padding-top:18px;">课程情况：&emsp;&emsp;正在进行</div>
+      <div slot="left" style="font-size:1.3em;color:#000;padding-top:18px;">课程情况：&emsp;&emsp;未开始</div>
       <p
         slot="right"
         @click="edit"
@@ -37,7 +37,7 @@
       >查看信息</p>
     </x-header>
 
-    <x-button @click="presentation" type="primary" style="margin-top:100px;color:#fff">进入讨论课</x-button>
+    <x-button @click="presentation" type="primary" style="margin-top:100px;color:#fff">开始讨论课</x-button>
   </div>
 </template>
 
@@ -55,12 +55,15 @@ export default {
     return {};
   },
   methods: {
+    onClick() {
+      console.log("on click");
+    },
     back: function() {
       this.$router.push("/mobile/teacher/seminars");
     },
     more: function() {},
-    presentation: function() {
-      this.$router.push("/mobile/teacher/manageSeminar");
+    presentation:function(){
+        this.$router.push('')
     }
   }
 };

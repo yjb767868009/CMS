@@ -41,12 +41,6 @@
           and attendance.klass_seminar_id = klass_seminar.id
     </select>
 
-    <select id="getKlassSeminarBySeminarId">
-        select id as klassSemianrId, klass_id as klassId, report_ddl as reportDDL, seminar_status as status
-        from klass_seminar
-        where seminar_id = #{seminarId}
-    </select>
-
     <delete id="deleteKlassSeminar">
         delete
         from klass_seminar
@@ -63,7 +57,7 @@
         SELECT klass_seminar.id as klassSeminarId,
                report_ddl,
                seminar_status,
-               klass.id as klassId,
+               klass.id         as klassId,
                grade,
                klass_serial,
                seminar.id       as seminarId,
@@ -80,7 +74,7 @@
         SELECT klass_seminar.id as klassSeminarId,
                report_ddl,
                seminar_status,
-               klass.id as klassId,
+               klass.id         as klassId,
                grade,
                klass_serial,
                seminar.id       as seminarId,
@@ -97,10 +91,30 @@
 
     <update id="updateKlassSeminar" parameterType="com.xmu.cms.entity.KlassSeminar">
         update klass_seminar
-        set klass_id = #{klassSeminar.klass.klassId},
-            seminar_id = #{klassSeminar.seminar.seminarId},
-            report_ddl = #{klassSeminar.reportDDL},
+        set klass_id       = #{klassSeminar.klass.klassId},
+            seminar_id     = #{klassSeminar.seminar.seminarId},
+            report_ddl     = #{klassSeminar.reportDDL},
             seminar_status = #{klassSeminar.status}
         where id = #{klassSeminar.klassSeminarId}
     </update>
+
+    <select id="getRunningKlassSeminarByTeacherId" resultMap="KlassSeminarResultMap">
+        SELECT klass_seminar.id as klassSeminarId,
+               report_ddl,
+               seminar_status,
+               klass.id as klassId,
+               grade,
+               klass_serial,
+               seminar.id       as seminarId,
+               seminar_name     as seminarName
+        FROM klass_seminar,
+             klass,
+             seminar,
+             course
+        WHERE course.teacher_id = #{teacherId}
+          and klass.course_id = course.id
+          and klass_seminar.klass_id = klass.id
+          and (klass_seminar.seminar_status = 1 or 3)
+          and seminar.id = klass_seminar.seminar_id
+    </select>
 </mapper>

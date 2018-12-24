@@ -13,14 +13,44 @@ import java.util.List;
  */
 @Mapper
 public interface CourseMapper {
+    /**
+     * 获取老师下的所有课程
+     *
+     * @param teacherId 老师id
+     * @return 课程列表
+     */
     List<Course> getAllCourseByTeacherId(@Param("teacherId") BigInteger teacherId);
 
+    /**
+     * 获取学生选的所有课程
+     *
+     * @param studentId 学生id
+     * @return 课程列表
+     */
     List<Course> getAllCourseByStudentId(@Param("studentId") BigInteger studentId);
 
+    /**
+     * 新建课程
+     *
+     * @param course 课程
+     * @return 新建成功信息
+     */
     Integer createCourse(@Param("course") Course course);
 
+    /**
+     * 删除课程
+     *
+     * @param courseId 课程id
+     * @return 删除成功信息
+     */
     Integer deleteCourseById(@Param("courseId") BigInteger courseId);
 
+    /**
+     * 获取课程
+     *
+     * @param courseId 课程id
+     * @return 课程对象
+     */
     Course getCourseById(@Param("courseId") BigInteger courseId);
 
     /**
@@ -38,4 +68,34 @@ public interface CourseMapper {
      * @return 课程列表
      */
     List<Course> getSubShareCourseByTeacher(@Param("teacherId") BigInteger teacherId);
+
+    /**
+     * 更新课程的共享队伍主课程
+     *
+     * @param course 新的课程
+     */
+    void updateCourseTeamMainCourse(Course course);// TODO: 2018/12/24
+
+    /**
+     * 更新课程的共享讨论课主课程
+     *
+     * @param receiveCourse 新的课程
+     */
+    void updateCourseSeminarMainCourse(Course receiveCourse);// TODO: 2018/12/24
+
+    /**
+     * 获得队伍的所属课程
+     *
+     * @param teamId 队伍id
+     * @return 课程
+     */
+    Course getCourseByTeamId(BigInteger teamId); // TODO: 2018/12/24
+
+    /**
+     * 获取课程的队伍主课程
+     *
+     * @param courseId 课程id
+     * @return 队伍主课程
+     */
+    Course getTeamMainCourse(BigInteger courseId);// TODO: 2018/12/24
 }

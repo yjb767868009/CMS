@@ -1,6 +1,6 @@
 <template>
 <div class="student" style="height:20px;background:#fff">
-    <x-header title="我的课程" style="height:60px;padding-top:12px" :right-options="{showMore: true}" @on-click-more="onClick">
+    <x-header title="我的课程" style="height:60px;padding-top:12px" @on-click-more="onClick">
     </x-header>
     <group title="我的讨论课">
       

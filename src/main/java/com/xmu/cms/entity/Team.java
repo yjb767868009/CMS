@@ -29,6 +29,10 @@ public class Team {
         this.valid = valid;
     }
 
+    public Team(BigInteger teamId) {
+        this.teamId = teamId;
+    }
+
     public Team() {
     }
 

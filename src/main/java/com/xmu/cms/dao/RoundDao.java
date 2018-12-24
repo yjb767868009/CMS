@@ -11,11 +11,15 @@ import java.util.List;
  * @version 1.0
  */
 public interface RoundDao {
-    List<Round> getRoundsByCourseId(UserInfo info, BigInteger courseId);
+    List<Round> getFullRoundsByCourseId(UserInfo info, BigInteger courseId);
 
     Round getRoundById(BigInteger roundId);
+
+    Round getFullRoundById(BigInteger roundId);
 
     Integer newRound(Round round);
 
     Integer updateCalType(Round round);
+
+    List<Round> getRoundByCourseId(BigInteger courseId);
 }

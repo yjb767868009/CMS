@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xmu.cms.mapper.TeamApplicationMapper">
+    <resultMap id="TeamApplicationResultMap" type="com.xmu.cms.entity.TeamApplication">
+        <id property="teamApplicationId" column="teamApplicationId" javaType="java.math.BigInteger"/>
+        <result property="reason" column="reason"/>
+        <result property="status" column="status"/>
+        <association property="team" javaType="com.xmu.cms.entity.Team">
+            <id property="teamId" column="teamId"/>
+            <result property="teamName" column="TeamName"/>
+        </association>
+        <association property="teacher" javaType="com.xmu.cms.entity.Teacher">
+            <id property="teacherId" column="teacherId"/>
+            <result property="name" column="teacherName"/>
+            <result property="email" column="teacherEmail"/>
+        </association>
+    </resultMap>
+
+    <select id="getTeamApplicationByTeacherId" resultMap="TeamApplicationResultMap">
+        select team_valid_application.id as teamApplicationId,
+               reason,
+               team_valid_application.status,
+               team_id as teamId,
+               team.team_name as teamName,
+               teacher_id as teacherId,
+               teacher.teacher_name as teacherName,
+               teacher.email as teacherEmail
+        from team_valid_application,
+             team,
+             teacher
+        where team_valid_application.teacher_id = #{teacherId}
+          and team.id = team_valid_application.team_id
+          and teacher.id = #{teacherId}
+    </select>
+
+    <update id="updateTeamApplication" parameterType="com.xmu.cms.entity.TeamApplication">
+        update team_valid_application
+        set status = #{teamApplication.status}
+        where id = #{teamApplication.teamApplicationId}
+    </update>
+
+    <select id="getTeamApplication" resultMap="TeamApplicationResultMap">
+        select team_valid_application.id as teamApplicationId,
+               reason,
+               team_valid_application.status,
+               team_id as teamId,
+               team.team_name as teamName,
+               teacher_id as teacherId,
+               teacher.teacher_name as teacherName,
+               teacher.email as teacherEmail
+        from team_valid_application,
+             team,
+             teacher
+        where team_valid_application.id = #{teamApplicationId}
+          and team.id = team_valid_application.team_id
+          and teacher.id = team_valid_application.teacher_id
+    </select>
+</mapper>

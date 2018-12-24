@@ -49,5 +49,17 @@ public interface CourseService {
 
     ShareTeam newShareTeam(ShareTeam shareTeam);
 
-    ShareTeam newShareSeminar(ShareSeminar shareSeminar);
+    ShareSeminar newShareSeminar(ShareSeminar shareSeminar);
+
+    List<ShareTeam> getShareTeamByTeacherId(BigInteger teacherId);
+
+    List<ShareSeminar> getShareSeminarByTeacherId(BigInteger teacherId);
+
+    List<TeamApplication> getTeamApplicationByTeacherId(BigInteger teacherId);
+
+    ShareTeam updateShareTeam(ShareTeam shareTeam);
+
+    ShareSeminar updateShareSeminar(ShareSeminar shareSeminar);
+
+    TeamApplication updateTeamApplication(TeamApplication teamApplication);
 }

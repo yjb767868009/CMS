@@ -51,11 +51,6 @@ public class SeminarDaoImpl implements SeminarDao {
     }
 
     @Override
-    public KlassSeminar getRunningSeminarByTeacherId(BigInteger teacherId) {
-        return seminarMapper.getRunningKlassSeminarByTeacherId(teacherId);
-    }
-
-    @Override
     public List<Seminar> getAllSeminarByRoundId(BigInteger roundId) {
         return seminarMapper.getAllSeminarByRoundId(roundId);
     }

@@ -1,9 +1,11 @@
 package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.StrategyDao;
+import com.xmu.cms.dao.TeamApplicationDao;
 import com.xmu.cms.dao.TeamDao;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Team;
+import com.xmu.cms.entity.TeamApplication;
 import com.xmu.cms.entity.strategy.Strategy;
 import com.xmu.cms.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class TeamServiceImpl implements TeamService {
 
     @Autowired
     private StrategyDao strategyDao;
+
+    @Autowired
+    private TeamApplicationDao teamApplicationDao;
 
     @Override
     public Team newTeam(BigInteger courseId, BigInteger classId, BigInteger studentId, Team team) {
@@ -79,5 +84,10 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public List<Team> getAllTeamsInSeminar(BigInteger seminarId) {
         return teamDao.getAllTeamsInSeminar(seminarId);
+    }
+
+    @Override
+    public TeamApplication sendTeamApplication(TeamApplication teamApplication) {
+        return teamApplicationDao.sendTeamApplication(teamApplication);
     }
 }

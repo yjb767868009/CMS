@@ -36,6 +36,9 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private ShareSeminarDao shareSeminarDao;
 
+    @Autowired
+    private TeamApplicationDao teamApplicationDao;
+
     @Override
     public List<Course> getAllCoursesByTeacher(BigInteger teacherId) {
         return courseDao.getAllCoursesByTeacherId(teacherId);
@@ -77,11 +80,15 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Team> getTeamInCourse(BigInteger courseId) {
+        Course mainCourse = courseDao.getTeamMainCourse(courseId);
+        if (mainCourse != null) courseId = mainCourse.getCourseId();
         return teamDao.getTeamInCourse(courseId);
     }
 
     @Override
     public List<Team> getTeamInCourseByStudent(BigInteger courseId, BigInteger studentId) {
+        Course mainCourse = courseDao.getTeamMainCourse(courseId);
+        if (mainCourse != null) courseId = mainCourse.getCourseId();
         List<Team> teams = new ArrayList<Team>();
         teams.add(teamDao.getTeamInCourseByStudent(courseId, studentId));
         return teams;
@@ -159,8 +166,58 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public ShareTeam newShareSeminar(ShareSeminar shareSeminar) {
+    public ShareSeminar newShareSeminar(ShareSeminar shareSeminar) {
         return shareSeminarDao.newShareSeminar(shareSeminar);
+    }
+
+    @Override
+    public List<ShareTeam> getShareTeamByTeacherId(BigInteger teacherId) {
+        return shareTeamDao.getShareTeamByTeacherId(teacherId);
+    }
+
+    @Override
+    public List<ShareSeminar> getShareSeminarByTeacherId(BigInteger teacherId) {
+        return shareSeminarDao.getShareSeminarByTeacherId(teacherId);
+    }
+
+    @Override
+    public List<TeamApplication> getTeamApplicationByTeacherId(BigInteger teacherId) {
+        return teamApplicationDao.getTeamApplicationByTeacherId(teacherId);
+    }
+
+    @Override
+    public ShareTeam updateShareTeam(ShareTeam shareTeam) {
+        ShareTeam newShareTeam = shareTeamDao.updateShareTeam(shareTeam);
+        Course masterCourse = newShareTeam.getMasterCourse();
+        Course receiveCourse = newShareTeam.getReceiveCourse();
+        receiveCourse.setTeamMainCourse(masterCourse);
+
+        courseDao.updateCourseTeamMainCourse(receiveCourse);
+        klassDao.deleteCourseStudentTeam(receiveCourse);
+
+        return newShareTeam;
+    }
+
+    @Override
+    public ShareSeminar updateShareSeminar(ShareSeminar shareSeminar) {
+        ShareSeminar newShareSeminar = shareSeminarDao.updateShareSeminar(shareSeminar);
+        Course masterCourse = newShareSeminar.getMasterCourse();
+        Course receiveCourse = newShareSeminar.getReceiveCourse();
+        receiveCourse.setTeamMainCourse(masterCourse);
+        courseDao.updateCourseSeminarMainCourse(receiveCourse);
+        List<Round> rounds = roundDao.getRoundByCourseId(masterCourse.getCourseId());
+        List<Klass> klasses = klassDao.getAllKlass(receiveCourse.getCourseId());
+        for (Round round : rounds) {
+            for (Klass klass : klasses) {
+                klassDao.addKlassRound(klass.getKlassId(), round.getRoundId());
+            }
+        }
+        return newShareSeminar;
+    }
+
+    @Override
+    public TeamApplication updateTeamApplication(TeamApplication teamApplication) {
+        return teamApplicationDao.updateTeamApplication(teamApplication);
     }
 
 }

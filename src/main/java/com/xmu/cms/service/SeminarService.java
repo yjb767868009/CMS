@@ -26,7 +26,7 @@ public interface SeminarService {
 
     List<Seminar> getAllSeminarInRound(BigInteger roundId);
 
-    Map<String, String> newRound(Round round);
+    Integer newRound(Round round);
 
     KlassSeminar getRunningKlassSeminarByTeacherId(BigInteger userId);
 
@@ -66,5 +66,11 @@ public interface SeminarService {
 
     void askQuestion(Question question);
 
-    Question selectQuestionInAttendance(BigInteger klassSeminarId);
+    Question selectQuestionInKlassSeminar(BigInteger klassSeminarId);
+
+    void nextAttendance(BigInteger klassSeminarId);
+
+    void stopKlassSeminar(BigInteger klassSeminarId);
+
+    void startKlassSeminar(BigInteger seminarId, BigInteger klassId);
 }

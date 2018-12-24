@@ -20,4 +20,10 @@ public interface CourseDao {
     Integer createCourse(Course course);
 
     Course getCourse(BigInteger courseId);
+
+    void updateCourseTeamMainCourse(Course course);
+
+    void updateCourseSeminarMainCourse(Course course);
+
+    Course getTeamMainCourse(BigInteger courseId);
 }

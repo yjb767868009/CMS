@@ -8,7 +8,6 @@
     <div style="height:30px;padding-top:12px;text-align:left" class="box">讨论课：
       <div style="padding:0 50px;padding-top:12px">业务流程分析</div>
       <div style="padding:0 50px;padding-top:12px">领域模型设计</div>
-      <x-button @click="post1" mini type="primary" style="margin-left:50px;margin-top:12px">添加讨论课</x-button>
     </div>
 
     <div style="height:30px;padding-top:12px;text-align:left;margin-top:100px" class="box">成绩设置：
@@ -87,22 +86,22 @@ export default {
       ]
     };
   },
-  mounted: function() {
-    this.$axios
-      .get(
-        "/round/" + this.$store.state.teacher.currentRound.roundId + "/seminar"
-      )
-      .then(response => {
-        this.roundSeminars = response.data;
-      });
-    this.$axios
-      .get("/round/" + this.$store.state.teacher.currentRound.roundId)
-      .then(response => {
-        this.calculatePreType = response.data.calculatePreType;
-        this.calculateQueType = response.data.calculateQueType;
-        this.calculateRepType = response.data.calculateRepType;
-      });
-  },
+  // mounted: function() {
+  //   this.$axios
+  //     .get(
+  //       "/round/" + this.$store.state.teacher.currentRound.roundId + "/seminar"
+  //     )
+  //     .then(response => {
+  //       this.roundSeminars = response.data;
+  //     });
+  //   this.$axios
+  //     .get("/round/" + this.$store.state.teacher.currentRound.roundId)
+  //     .then(response => {
+  //       this.calculatePreType = response.data.calculatePreType;
+  //       this.calculateQueType = response.data.calculateQueType;
+  //       this.calculateRepType = response.data.calculateRepType;
+  //     });
+  // },
   methods: {
     modify: function() {
       this.$axios.put(

@@ -53,6 +53,9 @@ import SetAccount from '@/views/Teacher/mobile/SetAccount'
 import ManageCourse from '@/views/Teacher/mobile/ManageCourse'
 import SeminarPrincipal from '@/views/Teacher/mobile/SeminarPrincipal'
 import SeminarSubordinate from '@/views/Teacher/mobile/SeminarSubordinate'
+import SeminarUnstarted from '@/views/Teacher/mobile/SeminarUnstarted'
+import seminarPaused from '@/views/Teacher/mobile/seminarPaused'
+
 
 import SetRound from '@/views/Teacher/mobile/SetRound'
 import CreateSeminar from '@/views/Teacher/mobile/CreateSeminar'
@@ -345,9 +348,19 @@ export default new Router({
       component:SeminarGrade
     },
     {
-      path:'/mobile/teacher/manageseminar',
+      path:'/mobile/teacher/seminarUnstarted',//讨论课 未
+      name:'SeminarUnstarted',
+      component:SeminarUnstarted
+    },
+    {
+      path:'/mobile/teacher/manageseminar',//讨论课 中
       name:'ManageSeminar',
       component:ManageSeminar
+    },
+    {
+      path:'/mobile/teacher/seminarPaused',//讨论课 正 暂停
+      name:'seminarPaused',
+      component:seminarPaused
     },
     {
       path:'/mobile/teacher/teamlist',

@@ -2,6 +2,7 @@ package com.xmu.cms.mapper;
 
 import com.xmu.cms.entity.Question;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -41,5 +42,5 @@ public interface QuestionMapper {
      *
      * @param question 新的提问
      */
-    void insertQuestion(Question question);
+    void insertQuestion(@Param("question") Question question);
 }

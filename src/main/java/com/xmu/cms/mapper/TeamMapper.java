@@ -40,7 +40,7 @@ public interface TeamMapper {
     /**
      * 获取学生在班级中的队伍
      *
-     * @param klassId 班级id
+     * @param klassId   班级id
      * @param studentId 学生id
      * @return 队伍信息
      */
@@ -90,7 +90,7 @@ public interface TeamMapper {
      * @param studentId 学生id
      * @return 队伍信息
      */
-    Team getTeamByKlass(BigInteger klassId, BigInteger studentId);
+    Team getTeamByKlass(@Param("klassId") BigInteger klassId,@Param("studentId") BigInteger studentId);
 
     /**
      * 更新队伍合法性
@@ -106,5 +106,5 @@ public interface TeamMapper {
      * @param studentId      学生id
      * @return 队伍
      */
-    Team getTeamInKlassSeminarByStudentId(BigInteger klassSeminarId, BigInteger studentId);
+    Team getTeamInKlassSeminarByStudentId(@Param("klassSeminarId") BigInteger klassSeminarId, @Param("studentId") BigInteger studentId);
 }

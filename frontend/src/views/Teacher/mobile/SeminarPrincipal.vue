@@ -50,7 +50,7 @@
       </template>
     </group>
 
-    <x-button @click="newseminar" style="margin-top:100%;background-color:#35495e;color:#fff">新建讨论课</x-button>
+    <x-button @click.native="newSeminar" style="margin-top:100%;background-color:#35495e;color:#fff">新建讨论课</x-button>
   </div>
 </template>
 
@@ -203,30 +203,37 @@ export default {
       ]
     };
   },
-  //   mounted: function() {
-  //     this.$axios
-  //       .get(
-  //         "/course/" + this.$store.state.teacher.currentCourse.courseId + "/round"
-  //       )
-  //       .then(response => {
-  //         this.rounds = response.data;
-  //       });
-  //   },
+    // mounted: function() {
+    //   this.$axios
+    //     .get(
+    //       "/course/" + this.$store.state.teacher.currentCourse.courseId + "/round"
+    //     )
+    //     .then(response => {
+    //       this.rounds = response.data;
+    //       //为返回数据绑定show属性用于折叠显示
+    //       for(var i=0;i<this.rounds.length;i++){
+    //           this.rounds.showRoundContent=false
+    //           for(var j=0;j<this.rounds[i].seminars.length;j++){
+    //               this.rounds[i].seminars[j].showSeminarContent=false
+    //           }
+    //       }
+    //     });
+    // },
   methods: {
     onClick() {
       console.log("on click");
-    },
-    back: function() {
-      this.$router.push("/mobile/teacher/course");
     },
     more: function() {},
     newround: function() {
       this.$router.push("/mobile/teacher/createround");
     },
-    newseminar: function() {
+    newSeminar: function() {
       this.$router.push("/mobile/teacher/createseminar");
     },
-    setRound: function(round) {},
+    setRound: function(round) {
+        this.$store.state.teacher.currentRound=round
+        this.$router.push('/mobile/teacher/setround')
+    },
     clickClassSeminar: function(klassSeminar) {}
   }
 };

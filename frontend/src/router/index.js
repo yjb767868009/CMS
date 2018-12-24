@@ -295,7 +295,7 @@ export default new Router({
     },
     
     {
-      path:'/mobile/teacher/setround',
+      path:'/mobile/teacher/setround',//设置轮次
       name:'SetRound',
       component:SetRound
     },

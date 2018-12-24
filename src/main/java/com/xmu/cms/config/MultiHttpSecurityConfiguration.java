@@ -53,6 +53,7 @@ public class MultiHttpSecurityConfiguration {
             http.authorizeRequests()
                     .antMatchers("/user/login", "/admin/login", "/user/password").permitAll()
                     .antMatchers("/test/**").permitAll()
+                    .anyRequest().permitAll()
                     .anyRequest().authenticated();
             http.formLogin()
                     .loginPage("/admin/login").loginProcessingUrl("/admin/login")

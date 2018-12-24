@@ -220,8 +220,8 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public void askQuestion(Question question) {
-        questionDao.insertQuestion(question);
+    public Question askQuestion(Question question) {
+        return questionDao.insertQuestion(question);
     }
 
     @Override
@@ -255,7 +255,7 @@ public class SeminarServiceImpl implements SeminarService {
         for (Question question : noSelectQuestions) {
             Float questionPro = questionProbability.get(question);
             if (probability < selectProbability && selectProbability < probability + questionPro) {
-                //questionDao.selectQuestion(question);
+                questionDao.selectQuestion(question);
                 return question;
             }
             probability += questionPro;
@@ -264,20 +264,8 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public void nextAttendance(BigInteger klassSeminarId) {
+    public Attendance nextAttendance(BigInteger klassSeminarId) {
         List<Attendance> attendances = attendanceDao.getAttendancesInKlassSeminar(klassSeminarId);
-        attendances.sort(new Comparator<Attendance>() {
-            @Override
-            public int compare(Attendance o1, Attendance o2) {
-                if (o1.getTeamOrder() < o2.getTeamOrder()) {
-                    return -1;
-                } else if (o1.getTeamOrder() > o2.getTeamOrder()) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-        });
         boolean find = false;
         for (Attendance attendance : attendances) {
             if (attendance.getPresent()) {
@@ -288,9 +276,10 @@ public class SeminarServiceImpl implements SeminarService {
             if (find) {
                 attendance.setPresent(true);
                 attendanceDao.updateAttendancePresent(attendance);
-                break;
+                return attendance;
             }
         }
+        return null;
     }
 
     @Override

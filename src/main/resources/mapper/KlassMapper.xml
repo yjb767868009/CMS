@@ -82,12 +82,6 @@
           and round_id = #{roundId}
     </delete>
 
-    <delete id="deleteKlassStudent">
-        delete
-        from klass_student
-        where klass_id = #{klassId}
-    </delete>
-
     <update id="addMembers">
         update klass_student
         set team_id = #{teamId}

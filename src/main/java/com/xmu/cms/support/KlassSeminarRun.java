@@ -4,7 +4,6 @@ import com.xmu.cms.entity.Attendance;
 import com.xmu.cms.entity.Question;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author JuboYu on 2018/12/17.
@@ -12,13 +11,17 @@ import java.util.Map;
  */
 public class KlassSeminarRun {
     private List<Question> questions;
-    private Map<Integer, Attendance> attendances;
+    private List<Attendance> attendances;
+    private Attendance nowAttendance;
+    private Question newQuestion;
     private Question selectQuestion;
     private String message;
 
-    public KlassSeminarRun(List<Question> questions, Map<Integer, Attendance> attendances, Question selectQuestion, String message) {
+    public KlassSeminarRun(List<Question> questions, List<Attendance> attendances, Attendance nowAttendance, Question newQuestion, Question selectQuestion, String message) {
         this.questions = questions;
         this.attendances = attendances;
+        this.nowAttendance = nowAttendance;
+        this.newQuestion = newQuestion;
         this.selectQuestion = selectQuestion;
         this.message = message;
     }
@@ -34,11 +37,11 @@ public class KlassSeminarRun {
         this.questions = questions;
     }
 
-    public Map<Integer, Attendance> getAttendances() {
+    public List<Attendance> getAttendances() {
         return attendances;
     }
 
-    public void setAttendances(Map<Integer, Attendance> attendances) {
+    public void setAttendances(List<Attendance> attendances) {
         this.attendances = attendances;
     }
 
@@ -57,4 +60,21 @@ public class KlassSeminarRun {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public Attendance getNowAttendance() {
+        return nowAttendance;
+    }
+
+    public void setNowAttendance(Attendance nowAttendance) {
+        this.nowAttendance = nowAttendance;
+    }
+
+    public Question getNewQuestion() {
+        return newQuestion;
+    }
+
+    public void setNewQuestion(Question newQuestion) {
+        this.newQuestion = newQuestion;
+    }
+
 }

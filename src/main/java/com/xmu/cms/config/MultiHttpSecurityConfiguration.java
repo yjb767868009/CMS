@@ -52,7 +52,7 @@ public class MultiHttpSecurityConfiguration {
                     .addFilterBefore(jwtAuthenticationFilter(), JWTLoginFilter.class);
             http.authorizeRequests()
                     .antMatchers("/user/login", "/admin/login", "/user/password").permitAll()
-                    .antMatchers("/test/**").permitAll()
+                    .antMatchers("/**").permitAll()
                     .anyRequest().permitAll()
                     .anyRequest().authenticated();
             http.formLogin()

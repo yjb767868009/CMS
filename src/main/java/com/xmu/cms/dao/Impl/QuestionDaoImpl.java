@@ -39,10 +39,17 @@ public class QuestionDaoImpl implements QuestionDao {
     }
 
     @Override
-    public void insertQuestion(Question question) {
-        Team team = teamMapper.getTeamInKlassSeminarByStudentId(question.getKlassSeminar().getKlassSeminarId(), question.getStudent().getStudentId());
-        question.setTeam(team);
-        questionMapper.insertQuestion(question);
+    public Question insertQuestion(Question question) {
+        BigInteger klassSeminarId = question.getKlassSeminar().getKlassSeminarId();
+        BigInteger studentId = question.getStudent().getStudentId();
+        Question findQuestion = questionMapper.getQuestionByKlassSeminarAndStudent(klassSeminarId, studentId);
+        if (findQuestion == null) {
+            Team team = teamMapper.getTeamInKlassSeminarByStudentId(klassSeminarId, studentId);
+            question.setTeam(team);
+            questionMapper.insertQuestion(question);
+            return questionMapper.getQuestionByKlassSeminarAndStudent(klassSeminarId, studentId);
+        }
+        return null;
     }
 
     @Override

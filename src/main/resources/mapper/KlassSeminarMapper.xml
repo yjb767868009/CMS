@@ -102,7 +102,7 @@
         SELECT klass_seminar.id as klassSeminarId,
                report_ddl,
                status,
-               klass.id as klassId,
+               klass.id         as klassId,
                grade,
                klass_serial,
                seminar.id       as seminarId,

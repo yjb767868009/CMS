@@ -20,9 +20,13 @@ function connect() {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/klassSeminar/1', function (KlassSeminarRun) {
             var KlassSeminarRun = JSON.parse(KlassSeminarRun.body);
-            showKlassSeminar(KlassSeminarRun.questions, KlassSeminarRun.attendances, KlassSeminarRun.selectQuestion, KlassSeminarRun.message);
+            showKlassSeminar(KlassSeminarRun.questions, KlassSeminarRun.attendances, KlassSeminarRun.nowAttendance, KlassSeminarRun.newQuestion, KlassSeminarRun.selectQuestion, KlassSeminarRun.message);
         });
     });
+}
+
+function join() {
+
 }
 
 function disconnect() {
@@ -34,7 +38,7 @@ function disconnect() {
 }
 
 function sendName() {
-    stompClient.send("/app/1/hello", {}, JSON.stringify({'name': $("#name").val(), 'say': $("#say").val()}));
+    stompClient.send("/app/1/join", {}, {});
 }
 
 function askQuestion() {
@@ -49,17 +53,13 @@ function getQuestion() {
     stompClient.send("/app/1/getQuestion", {}, {});
 }
 
-function showKlassSeminar(questions, attendances, selectQuestion, message) {
+function showKlassSeminar(questions, attendances, nowAttendance, newQuestion, selectQuestion, message) {
     console.log(questions);
     console.log(attendances);
+    console.log(nowAttendance);
+    console.log(newQuestion);
     console.log(selectQuestion);
     console.log(message);
-    //$("#klassSeminar").append("<tr><td>" + message + "</td></tr>");
-    if (selectQuestion == null) {
-        $("#klassSeminar").html("<tr><td>" + questions[0].name + ":" + attendances[1].team.teamName + "</td></tr>");
-    } else {
-        $("#klassSeminar").html("<tr><td>" + questions[0].name + ":" + attendances[1].team.teamName + ":" + selectQuestion.name + "</td></tr>");
-    }
 }
 
 $(function () {

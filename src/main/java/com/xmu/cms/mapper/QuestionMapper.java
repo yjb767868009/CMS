@@ -49,5 +49,14 @@ public interface QuestionMapper {
      *
      * @param question 提问
      */
-    void selectQuestion(Question question);
+    void selectQuestion(@Param("question") Question question);
+
+    /**
+     * 根据班级讨论课和学生获取提问
+     *
+     * @param klassSeminarId 班级讨论id
+     * @param studentId      学生id
+     * @return 提问
+     */
+    Question getQuestionByKlassSeminarAndStudent(@Param("klassSeminarId") BigInteger klassSeminarId, @Param("studentId") BigInteger studentId);
 }

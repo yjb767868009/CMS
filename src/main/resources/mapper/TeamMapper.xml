@@ -12,7 +12,7 @@
         </association>
         <association property="klass" javaType="com.xmu.cms.entity.Klass">
             <id property="klassId" column="klassId"/>
-            <result property="grade" column="grade"/>
+            <!--<result property="grade" column="grade"/>-->
         </association>
         <association property="course" javaType="com.xmu.cms.entity.Course">
             <id property="courseId" column="courseId"/>
@@ -23,7 +23,7 @@
     <select id="getAllTeamsInSeminar" resultMap="TeamResultMap">
         SELECT team.id              as teamId,
                team_name            as teamName,
-               status,
+               team.status          as status,
                klass.id             as klassId,
                klass.grade          as grade,
                leader_id            as leaderId,
@@ -47,7 +47,7 @@
     <select id="getAllTeamsInKlassSeminar" resultMap="TeamResultMap">
         SELECT team.id              as teamId,
                team_name            as teamName,
-               status,
+               team.status,
                klass.id             as klassId,
                klass.grade          as grade,
                leader_id            as leaderId,
@@ -69,7 +69,7 @@
     <select id="getTeamByTeamId" resultMap="TeamResultMap">
         select team.id              as teamId,
                team_name            as teamName,
-               status,
+               team.status,
                klass.id             as klassId,
                klass.grade          as grade,
                leader_id            as leaderId,
@@ -91,7 +91,7 @@
     <select id="getTeamInKlassByStudentId" resultMap="TeamResultMap">
         select team.id              as teamId,
                team_name            as teamName,
-               status,
+               team.status,
                klass.id             as klassId,
                klass.grade          as grade,
                leader_id            as leaderId,
@@ -116,7 +116,7 @@
     <select id="getTeamInCourse" resultMap="TeamResultMap">
         select team.id              as teamId,
                team_name            as teamName,
-               status,
+               team.status,
                klass.id             as klassId,
                klass.grade          as grade,
                leader_id            as leaderId,
@@ -138,7 +138,7 @@
     <select id="getTeamInCourseByStudent" resultMap="TeamResultMap">
         select team.id              as teamId,
                team_name            as teamName,
-               status,
+               team.status,
                klass.id             as klassId,
                klass.grade          as grade,
                leader_id            as leaderId,
@@ -198,7 +198,7 @@
     <select id="getTeamByKlass" resultMap="TeamResultMap">
         select team.id              as teamId,
                team_name            as teamName,
-               status,
+               team.status,
                klass.id             as klassId,
                klass.grade          as grade,
                leader_id            as leaderId,
@@ -221,7 +221,7 @@
     <select id="getTeamInKlassSeminarByStudentId" resultMap="TeamResultMap">
         select team.id              as teamId,
                team_name            as teamName,
-               status,
+               team.status,
                klass.id             as klassId,
                klass.grade          as grade,
                leader_id            as leaderId,

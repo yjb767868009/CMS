@@ -62,7 +62,7 @@
         values (#{teamApplication.team.teamId}, #{teamApplication.teacher.teacherId}, #{teamApplication.reason}, #{teamApplication.status})
     </insert>
 
-    <select id="getTeamApplication" resultMap="TeamApplicationResultMap">
+    <select id="getTeamApplicationByTeamId" resultMap="TeamApplicationResultMap">
         select team_valid_application.id as teamApplicationId,
                reason,
                team_valid_application.status,

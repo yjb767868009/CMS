@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -39,7 +40,19 @@ public class AttendanceDaoImpl implements AttendanceDao {
 
     @Override
     public List<Attendance> getAttendancesInKlassSeminar(BigInteger klassSeminarId) {
-        return attendanceMapper.getAttendancesInKlassSeminar(klassSeminarId);
+        List<Attendance> attendances = attendanceMapper.getAttendancesInKlassSeminar(klassSeminarId);
+        attendances.sort(new Comparator<Attendance>() {
+            @Override
+            public int compare(Attendance o1, Attendance o2) {
+                if (o1.getTeamOrder() < o2.getTeamOrder())
+                    return -1;
+                else if (o1.getTeamOrder() > o2.getTeamOrder())
+                    return 1;
+                else
+                    return 0;
+            }
+        });
+        return attendances;
     }
 
     @Override

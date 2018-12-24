@@ -45,7 +45,12 @@
 
     <insert id="insertQuestion" parameterType="com.xmu.cms.entity.Question">
         insert question (klass_seminar_id, attendance_id, team_id, student_id, is_selected, score)
-        values (#{question.klassSeminar.klassSeminarId}, #{question.attendance.attendanceId}, #{question.team.teamId}, #{question.student.studentId}, #{question.selected}, #{question.score})
+        values (#{question.klassSeminar.klassSeminarId},
+                #{question.attendance.attendanceId},
+                #{question.team.teamId},
+                #{question.student.studentId},
+                #{question.selected},
+                #{question.score})
     </insert>
 
     <delete id="deleteQuestion">
@@ -54,11 +59,11 @@
         where id = #{questionId}
     </delete>
 
-    <update id="selectQuestionByQuestionId">
-        update question
-        set is_selected = 1
-        where id = #{questionId}
-    </update>
+    <!--<update id="selectQuestionByQuestionId">-->
+        <!--update question-->
+        <!--set is_selected = 1-->
+        <!--where id = #{questionId}-->
+    <!--</update>-->
 
     <update id="setScore" parameterType="com.xmu.cms.entity.Question">
         update question
@@ -110,7 +115,23 @@
 
     <update id="selectQuestion" parameterType="com.xmu.cms.entity.Question">
         update question
-        set is_selected = #{question.selected}
+        set is_selected = true
         where id = #{question.questionId}
     </update>
+
+    <select id="getQuestionByKlassSeminarAndStudent" resultMap="QuestionResultMap">
+        select question.id          as questionId,
+               score,
+               student.id           as studentId,
+               student.student_name as studentName,
+               team.id              as teamId,
+               team.team_name       as teamName
+        from question,
+             team,
+             student
+        where question.klass_seminar_id = #{klassSeminarId}
+          and question.student_id = #{studentId}
+          and question.team_id = team.id
+          and question.student_id = student.id
+    </select>
 </mapper>

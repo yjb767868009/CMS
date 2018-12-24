@@ -64,11 +64,11 @@ public interface SeminarService {
 
     List<Round> getRoundInCourse(UserInfo info, BigInteger courseId);
 
-    void askQuestion(Question question);
+    Question askQuestion(Question question);
 
     Question selectQuestionInKlassSeminar(BigInteger klassSeminarId);
 
-    void nextAttendance(BigInteger klassSeminarId);
+    Attendance nextAttendance(BigInteger klassSeminarId);
 
     void stopKlassSeminar(BigInteger klassSeminarId);
 

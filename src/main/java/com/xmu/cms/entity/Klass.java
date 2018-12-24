@@ -30,6 +30,9 @@ public class Klass {
         this.klassId = klassId;
     }
 
+    public Klass() {
+    }
+
     public BigInteger getKlassId() {
         return klassId;
     }

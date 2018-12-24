@@ -1,10 +1,8 @@
 package com.xmu.cms.controller;
 
 import com.xmu.cms.entity.Attendance;
-import com.xmu.cms.entity.KlassSeminar;
 import com.xmu.cms.entity.Question;
 import com.xmu.cms.service.SeminarService;
-import com.xmu.cms.support.HelloMessage;
 import com.xmu.cms.support.KlassSeminarRun;
 import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigInteger;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author JuboYu on 2018/11/27.
@@ -56,27 +52,6 @@ public class TestController {
     @Autowired
     private SeminarService seminarService;
 
-    private KlassSeminarRun getAttendanceAndQuestion(KlassSeminarRun klassSeminarRun) {
-        KlassSeminar klassSeminar = seminarService.getKlassSeminarByKlassAndSeminar(new BigInteger("1"), new BigInteger("1"));
-        List<Attendance> attendances = seminarService.getAttendancesInKlassSeminar(klassSeminar.getKlassSeminarId());
-        Map<Integer, Attendance> reAttendances = new HashMap<Integer, Attendance>();
-        for (Attendance attendance : attendances) {
-            reAttendances.put(attendance.getTeamOrder(), attendance);
-        }
-
-        List<Question> questions = seminarService.getQuestionInKlassSeminar(klassSeminar.getKlassSeminarId());
-        klassSeminarRun.setQuestions(questions);
-        klassSeminarRun.setAttendances(reAttendances);
-        return klassSeminarRun;
-    }
-
-    @MessageMapping("/{klassSeminarId}/hello")
-    @SendTo("/topic/klassSeminar/{klassSeminarId}")
-    public KlassSeminarRun greeting(@DestinationVariable("klassSeminarId") BigInteger klassSeminarId
-            , HelloMessage message) throws Exception {
-        Thread.sleep(1000); // simulated delay
-        return getAttendanceAndQuestion(new KlassSeminarRun());
-    }
 
     @MessageMapping("/{klassSeminarId}/question")
     @SendTo("/topic/klassSeminar/{klassSeminarId}")
@@ -85,17 +60,24 @@ public class TestController {
         Thread.sleep(1000); // simulated delay
         question.setSelected(false);
         question.setScore((float) 0);
-        seminarService.askQuestion(question);
-        return getAttendanceAndQuestion(new KlassSeminarRun());
+        question = seminarService.askQuestion(question);
+        KlassSeminarRun klassSeminarRun = new KlassSeminarRun();
+        klassSeminarRun.setNewQuestion(question);
+        return klassSeminarRun;
     }
 
-    @MessageMapping("/{klassSeminarId}/scorequestion")
+    @MessageMapping("/{klassSeminarId}/join")
     @SendTo("/topic/klassSeminar/{klassSeminarId}")
-    public KlassSeminarRun scoreQuestion(@DestinationVariable("klassSeminarId") BigInteger klassSeminarId,
-                                         Question question) throws Exception {
+    public KlassSeminarRun joinKlassSeminar(@DestinationVariable("klassSeminarId") BigInteger klassSeminarId) throws Exception {
         Thread.sleep(1000); // simulated delay
-        seminarService.scoreQuestion(question);
-        return getAttendanceAndQuestion(new KlassSeminarRun());
+        List<Attendance> attendances = seminarService.getAttendancesInKlassSeminar(klassSeminarId);
+        KlassSeminarRun klassSeminarRun = new KlassSeminarRun();
+        klassSeminarRun.setAttendances(attendances);
+
+        List<Question> questions = seminarService.getQuestionInKlassSeminar(klassSeminarId);
+        klassSeminarRun.setQuestions(questions);
+        return klassSeminarRun;
+
     }
 
     @MessageMapping("/{klassSeminarId}/getQuestion")
@@ -105,14 +87,16 @@ public class TestController {
         Question question = seminarService.selectQuestionInKlassSeminar(klassSeminarId);
         KlassSeminarRun klassSeminarRun = new KlassSeminarRun();
         klassSeminarRun.setSelectQuestion(question);
-        return getAttendanceAndQuestion(klassSeminarRun);
+        return klassSeminarRun;
     }
 
     @MessageMapping("/{klassSeminarId}/nextAttendance")
     @SendTo("/topic/klassSeminar/{klassSeminarId}")
     public KlassSeminarRun nextAttendance(@DestinationVariable("klassSeminarId") BigInteger klassSeminarId) throws Exception {
-        seminarService.nextAttendance(klassSeminarId);
-        return getAttendanceAndQuestion(new KlassSeminarRun());
+        Attendance attendance = seminarService.nextAttendance(klassSeminarId);
+        KlassSeminarRun klassSeminarRun = new KlassSeminarRun();
+        klassSeminarRun.setNowAttendance(attendance);
+        return klassSeminarRun;
     }
 
     @MessageMapping("/{klassSeminarId}/stopAttendance")

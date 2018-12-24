@@ -25,27 +25,49 @@
 
 
     <x-button @click="newclass" type="primary" style="margin-top:100px;color:#fff">保存</x-button>
+    <div v-transfer-dom>
+      <popup v-model="show" height="23%">
+          <div>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/message.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="Undo">代办</div></cell>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="TeacherInfo">个人页</div></cell>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/book.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="GoSeminar">讨论课</div></cell>
+          </div>
+      </popup>
+    </div>
   </div>
 </template>
 
 <script>
-import {XHeader,XButton,Divider,Group,DatetimeRange} from 'vux'
+import {XHeader,XButton,Divider,Group,DatetimeRange,TransferDom,Popup} from 'vux'
 export default {
+  directives:{
+    TransferDom
+  },
     components:{
         XHeader,
         XButton,
         Divider,
         Group,
-        DatetimeRange
+        DatetimeRange,Popup
     },
     methods: {
     onChange (val) {
       console.log('change', val)
-        }
+        },
+    Undo(){
+            this.$router.push('/mobile/teacher/notify')
+        },
+    TeacherInfo(){
+            this.$router.push('/mobile/teacher')
+        },
+    GoSeminar(){
+            this.$router.push('/mobile/teacher/seminars')
+        },
     },
     data () {
         return {
-            value: ['周一-第一节-第十节']
+            value: ['周一-第一节-第十节'],
+            show:false,
         }
     }
 }

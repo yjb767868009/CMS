@@ -1,6 +1,6 @@
 <template>
   <div class="activation" style="background:#eee">
-    <x-header title="找回密码" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
+    <x-header title="找回密码" style="height:60px;padding-top:12px" :left-options="{showBack:false}">
     </x-header>
   <group>
     <div style="text-align:left;margin-top:20px">发送验证码邮箱1111@qq.com</div>

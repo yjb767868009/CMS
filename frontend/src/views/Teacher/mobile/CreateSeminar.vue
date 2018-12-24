@@ -22,12 +22,24 @@
     </div>
 
     <x-button @click.native="submit" type="primary" style="margin-top:100px;color:#fff">发布</x-button>
+    <div v-transfer-dom>
+      <popup v-model="show" height="23%">
+          <div>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/message.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="Undo">代办</div></cell>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="TeacherInfo">个人页</div></cell>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/book.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="GoSeminar">讨论课</div></cell>
+          </div>
+      </popup>
+    </div>
   </div>
 </template>
 
 <script>
-import {XHeader,XButton,Divider,Group,Datetime,XInput,PopupPicker,XSwitch,XTextarea} from 'vux'
+import {XHeader,XButton,Divider,Group,Datetime,XInput,PopupPicker,XSwitch,XTextarea,TransferDom,Popup} from 'vux'
 export default {
+  directives:{
+    TransferDom
+  },
     components:{
         XHeader,
         XButton,
@@ -37,7 +49,7 @@ export default {
         XInput,
         PopupPicker,
         XSwitch,
-        XTextarea
+        XTextarea,Popup
     },
     methods: {
     change (value) {
@@ -59,6 +71,7 @@ export default {
             visible:false,
             signupStartTime:'',
             signupEndTime:'',
+            show:false,
         }
     },
     methods:{
@@ -85,6 +98,15 @@ export default {
             //     signupEndTime:'',
             //     courseId:''
             // })
+        },
+    Undo(){
+            this.$router.push('/mobile/teacher/notify')
+        },
+    TeacherInfo(){
+            this.$router.push('/mobile/teacher')
+        },
+    GoSeminar(){
+            this.$router.push('/mobile/teacher/seminars')
         },
     }
 }

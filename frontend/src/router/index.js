@@ -55,7 +55,7 @@ import SeminarPrincipal from '@/views/Teacher/mobile/SeminarPrincipal'
 import SeminarSubordinate from '@/views/Teacher/mobile/SeminarSubordinate'
 import SeminarUnstarted from '@/views/Teacher/mobile/SeminarUnstarted'
 import seminarPaused from '@/views/Teacher/mobile/seminarPaused'
-
+import MobileTeacher from '@/views/Teacher/mobile/MobileTeacher'
 
 import SetRound from '@/views/Teacher/mobile/SetRound'
 import CreateSeminar from '@/views/Teacher/mobile/CreateSeminar'

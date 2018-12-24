@@ -29,11 +29,14 @@ button {
 
 
 <script>
-import {XHeader,XButton,XInput} from 'vux'
+import {XHeader,XButton,XInput,TransferDom,Popup} from 'vux'
 import axios from 'axios'
 import Toast from 'mint-ui'
 
 export default {
+  directives:{
+    TransferDom
+  },
   data () {
     return {
       password1:'',
@@ -42,7 +45,7 @@ export default {
   },
   components:{
     XHeader,
-    XButton,
+    XButton,Popup
   },
   methods:{
     post:function(){

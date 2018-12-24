@@ -29,6 +29,15 @@
     <x-button @click="comfirm" type="primary" style="margin-top:100px;color:#fff;width:50%">抽取提问</x-button>
     <x-button @click="modify" type="primary" plain style="margin-top:10px;width:50%">下组展示</x-button>
     
+    <div v-transfer-dom>
+      <popup v-model="show" height="23%">
+          <div>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/message.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="Undo">代办</div></cell>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="TeacherInfo">个人页</div></cell>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/book.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="GoSeminar">讨论课</div></cell>
+          </div>
+      </popup>
+    </div>
   </div>
 </template>
 
@@ -42,9 +51,12 @@
     Icon,
     Radio,
     Countdown,
-    Confirm
+    Confirm,TransferDom,Popup
   } from 'vux'
   export default {
+  directives:{
+    TransferDom
+  },
     components: {
       XHeader,
       Cell,
@@ -54,7 +66,8 @@
       Icon,
       Radio,
       Countdown,
-      Confirm
+      Confirm,
+      Popup
     },
     data() {
       return {
@@ -63,7 +76,8 @@
         radio002: ['111', '1111', '11111'],
         show: true,
         time: 300,
-        value: ''
+        value: '',
+        show:false,
       }
     },
     methods: {
@@ -87,7 +101,16 @@
         this.show = false
         this.value = 'completed'
         console.log('current index', index)
-      }
+      },
+    Undo(){
+            this.$router.push('/mobile/teacher/notify')
+        },
+    TeacherInfo(){
+            this.$router.push('/mobile/teacher')
+        },
+    GoSeminar(){
+            this.$router.push('/mobile/teacher/seminars')
+        },
     }
   }
 

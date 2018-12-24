@@ -44,22 +44,35 @@
       mini
       type="primary"
     >修改</x-button>
+    <div v-transfer-dom>
+      <popup v-model="show" height="23%">
+          <div>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/message.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="Undo">代办</div></cell>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="TeacherInfo">个人页</div></cell>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/book.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="GoSeminar">讨论课</div></cell>
+          </div>
+      </popup>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import { XHeader, XButton, Group, PopupPicker, Picker } from "vux";
+import { XHeader, XButton, Group, PopupPicker, Picker,Popup,TransferDom } from "vux";
 export default {
+  directives:{
+    TransferDom
+  },
   components: {
     XHeader,
     XButton,
     Group,
     PopupPicker,
-    Picker
+    Picker,Popup
   },
   data() {
     return {
+      show:false,
       calculatePreType: ["最高分"],
       calculatePreTypes: [["最高分", "平均分"]],
       calculateQueType: ["最高分"],
@@ -110,7 +123,17 @@ export default {
           classRound: this.classRounds
         }
       );
-    }
+    },
+    
+        Undo(){
+            this.$router.push('/mobile/teacher/notify')
+        },
+        TeacherInfo(){
+            this.$router.push('/mobile/teacher')
+        },
+        GoSeminar(){
+            this.$router.push('/mobile/teacher/seminars')
+        },
   }
 };
 </script>

@@ -38,7 +38,7 @@
 <script>
 import axios from 'axios'
 import {XHeader,
-        XButton,GroupTitle,Cell,Picker} from 'vux'
+        XButton,GroupTitle,Cell,Picker,TransferDom,Popup} from 'vux'
 let hours=[]
 for (var i = 0; i <= 24; i++) {
   hours.push({
@@ -47,17 +47,21 @@ for (var i = 0; i <= 24; i++) {
   })
 }
   export default {
+  directives:{
+    TransferDom
+  },
     components:{
         XHeader,
         XButton,
         GroupTitle,
         Cell,
-        Picker
+        Picker,Popup
     },
     data() {
        return{ 
         hours:[hours],
-        hour1:['8']
+        hour1:['8'],
+        show:false,
     }
     },
     methods:{
@@ -69,7 +73,16 @@ for (var i = 0; i <= 24; i++) {
         },
         edit:function(){
             this.$router.push('/StudentInfo')
-        }
+        },
+        Undo(){
+            this.$router.push('/mobile/teacher/notify')
+        },
+        TeacherInfo(){
+            this.$router.push('/mobile/teacher')
+        },
+        GoSeminar(){
+            this.$router.push('/mobile/teacher/seminars')
+        },
     }
         
   };

@@ -20,22 +20,34 @@
 
     <x-button @click="report" type="primary" style="margin-top:100px;color:#fff">书面报告</x-button>
     <x-button @click="grade" type="primary" plain style="margin-top:10px">查看成绩</x-button>
+    <div v-transfer-dom>
+      <popup v-model="show" height="23%">
+          <div>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/message.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="Undo">代办</div></cell>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="TeacherInfo">个人页</div></cell>
+              <cell value-align="left" title=""><img slot="icon" src="@/assets/book.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="GoSeminar">讨论课</div></cell>
+          </div>
+      </popup>
+    </div>
   </div>
 </template>
 
 <script>
-import {XHeader,Cell,Group,CellBox,XButton} from 'vux'
+import {XHeader,Cell,Group,CellBox,XButton,TransferDom,Popup} from 'vux'
 export default {
+  directives:{
+    TransferDom
+  },
     components:{
         XHeader,
         Cell,
         CellBox,
         Group,
-        XButton
+        XButton,Popup
     },
     data(){
         return{
-
+            show:false,
         } 
     },
     methods: {
@@ -52,7 +64,16 @@ export default {
         },
         grade:function(){
             this.$router.push('/mobile/teacher/grade')
-        }
+        },
+        Undo(){
+            this.$router.push('/mobile/teacher/notify')
+        },
+        TeacherInfo(){
+            this.$router.push('/mobile/teacher')
+        },
+        GoSeminar(){
+            this.$router.push('/mobile/teacher/seminars')
+        },
     }
 }
 </script>

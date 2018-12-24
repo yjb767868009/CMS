@@ -37,7 +37,7 @@
 
     </group>
     <div v-transfer-dom>
-      <popup v-model="show" height="22%">
+      <popup v-model="show" height="23%">
           <div>
               <cell value-align="left" title=""><img slot="icon" src="@/assets/message.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="Undo">代办</div></cell>
               <cell value-align="left" title=""><img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="TeacherInfo">个人页</div></cell>
@@ -69,13 +69,13 @@ export default {
     },
     methods: {
         Undo(){
-            this.$router.push('/mobile/teacher')
+            this.$router.push('/mobile/teacher/notify')
         },
         TeacherInfo(){
             this.$router.push('/mobile/teacher')
         },
         GoSeminar(){
-            this.$router.push('/mobile/teacher/seminarP')
+            this.$router.push('/mobile/teacher/seminars')
         },
     }
 }

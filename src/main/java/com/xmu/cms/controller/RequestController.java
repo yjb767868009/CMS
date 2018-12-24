@@ -53,7 +53,7 @@ public class RequestController {
         Map<String, String> message = new HashMap<String, String>();
         try {
             ShareTeam newShareTeam = courseService.updateShareTeam(shareTeam);
-            mailService.sendUpadteShareTeam(newShareTeam);
+            mailService.sendUpdateShareTeam(newShareTeam);
             message.put("message", "Success");
         } catch (Exception e) {
             message.put("message", e.getMessage());
@@ -70,7 +70,7 @@ public class RequestController {
         Map<String, String> message = new HashMap<String, String>();
         try {
             ShareSeminar newShareSeminar = courseService.updateShareSeminar(shareSeminar);
-            mailService.sendUpadteShareSeminar(newShareSeminar);
+            mailService.sendUpdateShareSeminar(newShareSeminar);
             message.put("message", "Success");
         } catch (Exception e) {
             message.put("message", e.getMessage());

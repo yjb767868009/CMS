@@ -109,4 +109,14 @@ public class CourseDaoImpl implements CourseDao {
     public Course getCourse(BigInteger courseId) {
         return courseMapper.getCourseById(courseId);
     }
+
+    @Override
+    public void updateCourseTeamMainCourse(Course course) {
+        courseMapper.updateCourseTeamMainCourse(course);
+    }
+
+    @Override
+    public void updateCourseSeminarMainCourse(Course course) {
+        courseMapper.updateCourseSeminarMainCourse(course);
+    }
 }

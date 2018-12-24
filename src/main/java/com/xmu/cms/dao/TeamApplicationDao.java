@@ -13,4 +13,6 @@ public interface TeamApplicationDao {
     List<TeamApplication> getTeamApplicationByTeacherId(BigInteger teacherId);
 
     TeamApplication updateTeamApplication(TeamApplication teamApplication);
+
+    TeamApplication sendTeamApplication(TeamApplication teamApplication);
 }

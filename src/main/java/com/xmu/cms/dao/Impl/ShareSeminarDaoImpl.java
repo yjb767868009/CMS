@@ -1,8 +1,10 @@
 package com.xmu.cms.dao.Impl;
 
 import com.xmu.cms.dao.ShareSeminarDao;
+import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.ShareSeminar;
-import com.xmu.cms.entity.ShareTeam;
+import com.xmu.cms.mapper.CourseMapper;
+import com.xmu.cms.mapper.KlassMapper;
 import com.xmu.cms.mapper.ShareSeminarMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,6 +21,12 @@ public class ShareSeminarDaoImpl implements ShareSeminarDao {
     @Autowired
     private ShareSeminarMapper shareSeminarMapper;
 
+    @Autowired
+    private CourseMapper courseMapper;
+
+    @Autowired
+    private KlassMapper klassMapper;
+
     @Override
     public List<ShareSeminar> getShareSeminarInCourse(BigInteger courseId) {
         return shareSeminarMapper.getShareSeminarInCourse(courseId);
@@ -30,7 +38,7 @@ public class ShareSeminarDaoImpl implements ShareSeminarDao {
     }
 
     @Override
-    public ShareTeam newShareSeminar(ShareSeminar shareSeminar) {
+    public ShareSeminar newShareSeminar(ShareSeminar shareSeminar) {
         shareSeminarMapper.insertShareSeminar(shareSeminar);
         BigInteger masterCourseId = shareSeminar.getMasterCourse().getCourseId();
         BigInteger receiveCourseId = shareSeminar.getReceiveCourse().getCourseId();
@@ -45,6 +53,16 @@ public class ShareSeminarDaoImpl implements ShareSeminarDao {
     @Override
     public ShareSeminar updateShareSeminar(ShareSeminar shareSeminar) {
         shareSeminarMapper.updateShareSeminar(shareSeminar);
-        return shareSeminarMapper.getShareSeminar(shareSeminar.getShareSeminarId());
+        ShareSeminar newShareSeminar = shareSeminarMapper.getShareSeminar(shareSeminar.getShareSeminarId());
+
+        Course masterCourse = shareSeminar.getMasterCourse();
+        Course receiveCourse = shareSeminar.getReceiveCourse();
+
+        masterCourse = courseMapper.getCourseById(masterCourse.getCourseId());
+        receiveCourse = courseMapper.getCourseById(receiveCourse.getCourseId());
+
+        newShareSeminar.setMasterCourse(masterCourse);
+        newShareSeminar.setReceiveCourse(receiveCourse);
+        return newShareSeminar;
     }
 }

@@ -1,5 +1,6 @@
 package com.xmu.cms.mapper;
 
+import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Klass;
 import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.entity.Student;
@@ -117,4 +118,19 @@ public interface KlassMapper {
      * @return 班级列表
      */
     List<Klass> getKlassByStudent(@Param("studentId") BigInteger studentId);// TODO: 2018/12/23
+
+    /**
+     * 删除课程中所有学生的队伍
+     *
+     * @param course 课程
+     */
+    void deleteCourseStudentTeam(Course course);// TODO: 2018/12/24  
+
+    /**
+     * 新建班级和轮次的关系，enroll默认为1
+     *
+     * @param klassId 班级id
+     * @param roundId 轮次id
+     */
+    void addKlassRound(BigInteger klassId, BigInteger roundId);// TODO: 2018/12/24
 }

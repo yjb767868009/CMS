@@ -36,7 +36,7 @@ public class RoundDaoImpl implements RoundDao {
     private KlassSeminarMapper klassSeminarMapper;
 
     @Override
-    public List<Round> getRoundsByCourseId(UserInfo info, BigInteger courseId) {
+    public List<Round> getFullRoundsByCourseId(UserInfo info, BigInteger courseId) {
         List<Round> rounds = roundMapper.getRoundsByCourseId(courseId);
         for (Round round : rounds) {
             List<Seminar> seminars = seminarMapper.getAllSeminarByRoundId(round.getRoundId());
@@ -66,6 +66,12 @@ public class RoundDaoImpl implements RoundDao {
     }
 
     @Override
+    public Round getFullRoundById(BigInteger roundId) {
+        Round round = roundMapper.getRoundByRoundId(roundId);
+        return round;
+    }
+
+    @Override
     public Integer newRound(Round round) {
         Map<Integer, Integer> klassEnrollNumber = round.getKlassEnrollNumber();
         for (Integer klassId : klassEnrollNumber.keySet()) {
@@ -78,5 +84,10 @@ public class RoundDaoImpl implements RoundDao {
     @Override
     public Integer updateCalType(Round round) {
         return roundMapper.updateCalType(round);
+    }
+
+    @Override
+    public List<Round> getRoundByCourseId(BigInteger courseId) {
+        return roundMapper.getRoundsByCourseId(courseId);
     }
 }

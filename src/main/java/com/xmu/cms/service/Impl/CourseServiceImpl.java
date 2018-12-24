@@ -162,7 +162,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public ShareTeam newShareSeminar(ShareSeminar shareSeminar) {
+    public ShareSeminar newShareSeminar(ShareSeminar shareSeminar) {
         return shareSeminarDao.newShareSeminar(shareSeminar);
     }
 
@@ -183,12 +183,32 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public ShareTeam updateShareTeam(ShareTeam shareTeam) {
-        return shareTeamDao.updateShareTeam(shareTeam);
+        ShareTeam newShareTeam = shareTeamDao.updateShareTeam(shareTeam);
+        Course masterCourse = newShareTeam.getMasterCourse();
+        Course receiveCourse = newShareTeam.getReceiveCourse();
+        receiveCourse.setTeamMainCourse(masterCourse);
+
+        courseDao.updateCourseTeamMainCourse(receiveCourse);
+        klassDao.deleteCourseStudentTeam(receiveCourse);
+
+        return newShareTeam;
     }
 
     @Override
     public ShareSeminar updateShareSeminar(ShareSeminar shareSeminar) {
-        return shareSeminarDao.updateShareSeminar(shareSeminar);
+        ShareSeminar newShareSeminar = shareSeminarDao.updateShareSeminar(shareSeminar);
+        Course masterCourse = newShareSeminar.getMasterCourse();
+        Course receiveCourse = newShareSeminar.getReceiveCourse();
+        receiveCourse.setTeamMainCourse(masterCourse);
+        courseDao.updateCourseSeminarMainCourse(receiveCourse);
+        List<Round> rounds = roundDao.getRoundByCourseId(masterCourse.getCourseId());
+        List<Klass> klasses = klassDao.getAllKlass(receiveCourse.getCourseId());
+        for (Round round : rounds) {
+            for (Klass klass : klasses) {
+                klassDao.addKlassRound(klass.getKlassId(), round.getRoundId());
+            }
+        }
+        return newShareSeminar;
     }
 
     @Override

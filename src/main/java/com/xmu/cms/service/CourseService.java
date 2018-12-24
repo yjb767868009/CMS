@@ -49,7 +49,7 @@ public interface CourseService {
 
     ShareTeam newShareTeam(ShareTeam shareTeam);
 
-    ShareTeam newShareSeminar(ShareSeminar shareSeminar);
+    ShareSeminar newShareSeminar(ShareSeminar shareSeminar);
 
     List<ShareTeam> getShareTeamByTeacherId(BigInteger teacherId);
 

@@ -1,7 +1,10 @@
 package com.xmu.cms.dao.Impl;
 
 import com.xmu.cms.dao.ShareTeamDao;
+import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.ShareTeam;
+import com.xmu.cms.mapper.CourseMapper;
+import com.xmu.cms.mapper.KlassMapper;
 import com.xmu.cms.mapper.ShareTeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,6 +21,12 @@ public class ShareTeamDaoImpl implements ShareTeamDao {
 
     @Autowired
     private ShareTeamMapper shareTeamMapper;
+
+    @Autowired
+    private CourseMapper courseMapper;
+
+    @Autowired
+    private KlassMapper klassMapper;
 
     @Override
     public List<ShareTeam> getShareTeamInCourse(BigInteger courseId) {
@@ -45,6 +54,16 @@ public class ShareTeamDaoImpl implements ShareTeamDao {
     @Override
     public ShareTeam updateShareTeam(ShareTeam shareTeam) {
         shareTeamMapper.updateShareTeam(shareTeam);
-        return shareTeamMapper.getShareTeam(shareTeam.getShareTeamId());
+        ShareTeam newShareTeam = shareTeamMapper.getShareTeam(shareTeam.getShareTeamId());
+
+        Course masterCourse = shareTeam.getMasterCourse();
+        Course receiveCourse = shareTeam.getReceiveCourse();
+
+        masterCourse = courseMapper.getCourseById(masterCourse.getCourseId());
+        receiveCourse = courseMapper.getCourseById(receiveCourse.getCourseId());
+
+        newShareTeam.setMasterCourse(masterCourse);
+        newShareTeam.setReceiveCourse(receiveCourse);
+        return newShareTeam;
     }
 }

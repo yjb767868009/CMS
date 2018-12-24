@@ -14,13 +14,15 @@ import java.util.Map;
 public interface MailService {
     Map<String, String> sendPassword(MyUser user);
 
-    void sendShareTeam(ShareTeam newShareTeam);
+    void sendShareTeam(ShareTeam shareTeam) throws Exception;
 
-    void sendShareSeminar(ShareTeam newShareSeminar);
+    void sendShareSeminar(ShareSeminar shareSeminar) throws Exception;
 
-    void sendUpadteShareTeam(ShareTeam newShareTeam);
+    void sendTeamApplication(TeamApplication teamApplication) throws Exception;
 
-    void sendUpadteShareSeminar(ShareSeminar newShareSeminar);
+    void sendUpdateShareTeam(ShareTeam shareTeam) throws Exception;
 
-    void sendUpdateTeamApplication(TeamApplication newTeamApplication);
+    void sendUpdateShareSeminar(ShareSeminar shareSeminar) throws Exception;
+
+    void sendUpdateTeamApplication(TeamApplication teamApplication) throws Exception;
 }

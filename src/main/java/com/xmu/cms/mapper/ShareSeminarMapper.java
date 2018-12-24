@@ -1,7 +1,6 @@
 package com.xmu.cms.mapper;
 
 import com.xmu.cms.entity.ShareSeminar;
-import com.xmu.cms.entity.ShareTeam;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.math.BigInteger;
@@ -51,7 +50,7 @@ public interface ShareSeminarMapper {
      * @param receiveCourseId 收到共享的课程id
      * @return 共享组信息
      */
-    ShareTeam getShareSeminarByTwoCourse(BigInteger masterCourseId, BigInteger receiveCourseId);// TODO: 2018/12/23
+    ShareSeminar getShareSeminarByTwoCourse(BigInteger masterCourseId, BigInteger receiveCourseId);// TODO: 2018/12/23
 
     /**
      * 根据老师查询收到的未处理的共享讨论课信息

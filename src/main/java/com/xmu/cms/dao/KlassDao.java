@@ -25,4 +25,8 @@ public interface KlassDao {
     List<Course> getSubShareCourseByTeacher(BigInteger teacherId);
 
     Klass getKlass(BigInteger klassId);
+
+    void deleteCourseStudentTeam(Course receiveCourse);
+
+    void addKlassRound(BigInteger klassId, BigInteger roundId);
 }

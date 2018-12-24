@@ -34,4 +34,19 @@ public interface TeamApplicationMapper {
      * @return 队伍合法申请
      */
     TeamApplication getTeamApplication(BigInteger teamApplicationId);// TODO: 2018/12/23  
+
+    /**
+     * 新建队伍合法申请
+     *
+     * @param teamApplication 新的队伍合法申请
+     */
+    void insertTeamApplication(TeamApplication teamApplication);// TODO: 2018/12/24  
+
+    /**
+     * 根据队伍获取队伍合法申请
+     *
+     * @param teamId 队伍id
+     * @return 队伍合法申请
+     */
+    TeamApplication getTeamApplicationByTeamId(BigInteger teamId);// TODO: 2018/12/24
 }

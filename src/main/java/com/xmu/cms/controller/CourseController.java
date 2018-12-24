@@ -100,10 +100,16 @@ public class CourseController {
     @PostMapping(value = "/course/{courseId}/round")
     public Map<String, String> newRound(@PathVariable("courseId") BigInteger courseId,
                                         @RequestBody Round round) {
-        Course course = new Course();
-        course.setCourseId(courseId);
-        round.setCourse(course);
-        return seminarService.newRound(round);
+        round.setCourse(new Course(courseId));
+        Map<String, String> message = new HashMap<String, String>(2);
+        Integer count = seminarService.newRound(round);
+        if (count > 0) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
+
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
@@ -229,7 +235,7 @@ public class CourseController {
         shareSeminar.setMasterCourse(new Course(courseId));
         Map<String, String> message = new HashMap<String, String>();
         try {
-            ShareTeam newShareSeminar = courseService.newShareSeminar(shareSeminar);
+            ShareSeminar newShareSeminar = courseService.newShareSeminar(shareSeminar);
             mailService.sendShareSeminar(newShareSeminar);
             message.put("message", "Success");
         } catch (Exception e) {

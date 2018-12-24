@@ -14,9 +14,9 @@ public class TeamApplication {
     private Team team;
     private Teacher teacher;
     private String reason;
-    private Integer status;
+    private Boolean status;
 
-    public TeamApplication(BigInteger teamApplicationId, Team team, Teacher teacher, String reason, Integer status) {
+    public TeamApplication(BigInteger teamApplicationId, Team team, Teacher teacher, String reason, Boolean status) {
         this.teamApplicationId = teamApplicationId;
         this.team = team;
         this.teacher = teacher;
@@ -59,11 +59,11 @@ public class TeamApplication {
         this.reason = reason;
     }
 
-    public Integer getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 }

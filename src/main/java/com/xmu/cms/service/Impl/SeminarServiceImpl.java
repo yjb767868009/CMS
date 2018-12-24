@@ -105,15 +105,8 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Map<String, String> newRound(Round round) {
-        Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = roundDao.newRound(round);
-        if (count == 1) {
-            message.put("message", "Success");
-        } else {
-            message.put("message", "Error");
-        }
-        return message;
+    public Integer newRound(Round round) {
+        return roundDao.newRound(round);
     }
 
     @Override
@@ -226,7 +219,7 @@ public class SeminarServiceImpl implements SeminarService {
 
     @Override
     public List<Round> getRoundInCourse(UserInfo info, BigInteger courseId) {
-        return roundDao.getRoundsByCourseId(info, courseId);
+        return roundDao.getFullRoundsByCourseId(info, courseId);
     }
 
     @Override

@@ -66,5 +66,6 @@ public interface SeminarService {
 
     void askQuestion(Question question);
 
-    Question selectQuestionInAttendance(BigInteger klassSeminarId);
+    Question selectQuestionInKlassSeminar(BigInteger klassSeminarId);
+
 }

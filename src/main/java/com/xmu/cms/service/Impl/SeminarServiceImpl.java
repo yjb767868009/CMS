@@ -228,7 +228,7 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Question selectQuestionInAttendance(BigInteger klassSeminarId) {
+    public Question selectQuestionInKlassSeminar(BigInteger klassSeminarId) {
         List<Question> questions = questionDao.getQuestionInKlassSeminar(klassSeminarId);
         List<Question> noSelectQuestions = questionDao.getNoSelectedQuestionInKlassSeminar(klassSeminarId);
         Map<BigInteger, Float> teamProbability = new HashMap<BigInteger, Float>();
@@ -263,4 +263,5 @@ public class SeminarServiceImpl implements SeminarService {
         }
         return null;
     }
+
 }

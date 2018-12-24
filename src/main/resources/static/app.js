@@ -20,7 +20,7 @@ function connect() {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/klassSeminar/1', function (KlassSeminarRun) {
             var KlassSeminarRun = JSON.parse(KlassSeminarRun.body);
-            showKlassSeminar(KlassSeminarRun.questions, KlassSeminarRun.attendances, KlassSeminarRun.selectQuestion);
+            showKlassSeminar(KlassSeminarRun.questions, KlassSeminarRun.attendances, KlassSeminarRun.selectQuestion, KlassSeminarRun.message);
         });
     });
 }
@@ -46,16 +46,14 @@ function askQuestion() {
 }
 
 function getQuestion() {
-    stompClient.send("/app/1/getQuestion", {}, JSON.stringify({
-        'klassSeminarId': 1,
-        'selectAttendance': {"attendanceId": 1}
-    }));
+    stompClient.send("/app/1/getQuestion", {}, {});
 }
 
-function showKlassSeminar(questions, attendances, selectQuestion) {
+function showKlassSeminar(questions, attendances, selectQuestion, message) {
     console.log(questions);
     console.log(attendances);
     console.log(selectQuestion);
+    console.log(message);
     //$("#klassSeminar").append("<tr><td>" + message + "</td></tr>");
     if (selectQuestion == null) {
         $("#klassSeminar").html("<tr><td>" + questions[0].name + ":" + attendances[1].team.teamName + "</td></tr>");

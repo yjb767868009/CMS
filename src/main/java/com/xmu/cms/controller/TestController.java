@@ -110,14 +110,17 @@ public class TestController {
 
     @MessageMapping("/{klassSeminarId}/nextAttendance")
     @SendTo("/topic/klassSeminar/{klassSeminarId}")
-    public KlassSeminarRun nextAttendance(@DestinationVariable("klassSeminarId") KlassSeminar klassSeminar) throws Exception {
-
+    public KlassSeminarRun nextAttendance(@DestinationVariable("klassSeminarId") BigInteger klassSeminarId) throws Exception {
+        seminarService.nextAttendance(klassSeminarId);
         return getAttendanceAndQuestion(new KlassSeminarRun());
     }
 
     @MessageMapping("/{klassSeminarId}/stopAttendance")
     @SendTo("/topic/klassSeminar/{klassSeminarId}")
     public KlassSeminarRun stopAttendance(@DestinationVariable("klassSeminarId") BigInteger klassSeminarId) throws Exception {
-        return getAttendanceAndQuestion(new KlassSeminarRun());
+        seminarService.stopKlassSeminar(klassSeminarId);
+        KlassSeminarRun klassSeminarRun = new KlassSeminarRun();
+        klassSeminarRun.setMessage("stop");
+        return klassSeminarRun;
     }
 }

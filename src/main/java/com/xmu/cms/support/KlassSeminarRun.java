@@ -14,11 +14,13 @@ public class KlassSeminarRun {
     private List<Question> questions;
     private Map<Integer, Attendance> attendances;
     private Question selectQuestion;
+    private String message;
 
-    public KlassSeminarRun(List<Question> questions, Map<Integer, Attendance> attendances, Question selectQuestion) {
+    public KlassSeminarRun(List<Question> questions, Map<Integer, Attendance> attendances, Question selectQuestion, String message) {
         this.questions = questions;
         this.attendances = attendances;
         this.selectQuestion = selectQuestion;
+        this.message = message;
     }
 
     public KlassSeminarRun() {
@@ -46,5 +48,13 @@ public class KlassSeminarRun {
 
     public void setSelectQuestion(Question selectQuestion) {
         this.selectQuestion = selectQuestion;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

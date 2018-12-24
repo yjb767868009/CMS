@@ -14,12 +14,12 @@ import java.util.List;
 @Mapper
 public interface QuestionMapper {
     /**
-     * 获取班级讨论课的所有提问,未选中
+     * 获取班级讨论课的所有提问
      *
      * @param klassSeminarId 班级讨论课id
      * @return 提问列表
      */
-    List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId);
+    List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId);// TODO: 2018/12/24 获取所有的提问包括已经选中
 
     /**
      * 获取所有未选择的提问

@@ -67,4 +67,11 @@ public interface KlassSeminarMapper {
                                                     @Param("seminarId") BigInteger seminarId);
 
     KlassSeminar getRunningKlassSeminarByTeacherId(@Param("teacherId") BigInteger teacherId);
+
+    /**
+     * 停止班级讨论课
+     *
+     * @param klassSeminarId 班级讨论课id
+     */
+    void stopKlassSeminar(BigInteger klassSeminarId); // TODO: 2018/12/24
 }

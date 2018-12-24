@@ -20,11 +20,11 @@ public class Seminar {
     private String introduction;
     private Timestamp signStartTime;
     private Timestamp signEndTime;
-    private Boolean signOrder;
+    private Integer signOrder;
     private Boolean visible;
     private List<KlassSeminar> klassSeminars;
 
-    public Seminar(BigInteger seminarId, Course course, Round round, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Boolean signOrder, Boolean visible, List<KlassSeminar> klassSeminars) {
+    public Seminar(BigInteger seminarId, Course course, Round round, Integer maxTeamNum, String topic, String introduction, Timestamp signStartTime, Timestamp signEndTime, Integer signOrder, Boolean visible, List<KlassSeminar> klassSeminars) {
         this.seminarId = seminarId;
         this.course = course;
         this.round = round;
@@ -105,11 +105,11 @@ public class Seminar {
         this.signEndTime = signEndTime;
     }
 
-    public Boolean getSignOrder() {
+    public Integer getSignOrder() {
         return signOrder;
     }
 
-    public void setSignOrder(Boolean signOrder) {
+    public void setSignOrder(Integer signOrder) {
         this.signOrder = signOrder;
     }
 

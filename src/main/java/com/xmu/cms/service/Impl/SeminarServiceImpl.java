@@ -254,8 +254,10 @@ public class SeminarServiceImpl implements SeminarService {
         }
         for (Question question : noSelectQuestions) {
             Float questionPro = questionProbability.get(question);
-            if (probability < selectProbability && selectProbability < probability + questionPro)
+            if (probability < selectProbability && selectProbability < probability + questionPro) {
+                questionDao.selectQuestion(question);
                 return question;
+            }
             probability += questionPro;
         }
         return null;
@@ -294,5 +296,10 @@ public class SeminarServiceImpl implements SeminarService {
     @Override
     public void stopKlassSeminar(BigInteger klassSeminarId) {
         klassSeminarDao.stopKlassSeminar(klassSeminarId);
+    }
+
+    @Override
+    public void startKlassSeminar(BigInteger seminarId, BigInteger klassId) {
+        klassSeminarDao.startKlassSeminar(seminarId, klassId);
     }
 }

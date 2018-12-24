@@ -76,11 +76,27 @@ public class SeminarController {
     }
 
     @Secured("ROLE_TEACHER")
-    @PutMapping(value = "/seminar/{seminarId}/state")
+    @PutMapping(value = "/seminar/{seminarId}/class/{classId}/state")
     public Map<String, String> modifySeminarState(@PathVariable("seminarId") BigInteger seminarId,
-                                                  @RequestBody Seminar seminar) {
-        //TODO 设置讨论课状态
+                                                  @PathVariable("classId") BigInteger klassId,
+                                                  @RequestBody KlassSeminar klassSeminar) {
+        klassSeminar.setSeminar(new Seminar());
+        // TODO: 2018/12/24
         return null;
+    }
+
+    @Secured("ROLE_TEACHER")
+    @PutMapping(value = "/seminar/{seminarId}/class/{classId}/start")
+    public Map<String, String> startKlassSeminar(@PathVariable("seminarId") BigInteger seminarId,
+                                                 @PathVariable("classId") BigInteger klassId) {
+        Map<String, String> message = new HashMap<String, String>();
+        try {
+            seminarService.startKlassSeminar(seminarId, klassId);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
 
     @Secured("ROLE_TEACHER")
@@ -111,7 +127,7 @@ public class SeminarController {
     @GetMapping(value = "/seminar/{seminarId}/seminarscore")
     public List<SeminarScore> getSeminarScore(@PathVariable("seminarId") BigInteger seminarId) {
         return seminarService.getSeminarScore(seminarId);
-    };
+    }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/seminar/{seminarId}/klass/{klassId}/ppt")

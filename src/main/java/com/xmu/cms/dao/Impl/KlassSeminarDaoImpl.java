@@ -50,4 +50,9 @@ public class KlassSeminarDaoImpl implements KlassSeminarDao {
     public void stopKlassSeminar(BigInteger klassSeminarId) {
         klassSeminarMapper.stopKlassSeminar(klassSeminarId);
     }
+
+    @Override
+    public void startKlassSeminar(BigInteger seminarId, BigInteger klassId) {
+        klassSeminarMapper.startKlassSeminar(seminarId, klassId);
+    }
 }

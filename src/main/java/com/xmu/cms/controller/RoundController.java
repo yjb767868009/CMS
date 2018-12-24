@@ -1,6 +1,5 @@
 package com.xmu.cms.controller;
 
-import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Round;
 import com.xmu.cms.entity.RoundScore;
 import com.xmu.cms.entity.Seminar;
@@ -41,14 +40,6 @@ public class RoundController {
     public Map<String, String> modifyRound(@PathVariable("roundId") Round round) {
         return seminarService.modifyRound(round);
     }
-
-    /*TODO
-    @Secured("ROLE_TEACHER")
-    @PostMapping(value = "/{round")
-    public Map<String, String> newRound(@RequestBody Round round) {
-        return null;
-    }
-    */
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/round/{roundId}/roundscore")

@@ -38,6 +38,10 @@ public class Seminar {
         this.klassSeminars = klassSeminars;
     }
 
+    public Seminar(BigInteger seminarId) {
+        this.seminarId = seminarId;
+    }
+
     public Seminar() {
     }
 

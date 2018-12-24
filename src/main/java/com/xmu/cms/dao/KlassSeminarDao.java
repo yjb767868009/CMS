@@ -20,4 +20,6 @@ public interface KlassSeminarDao {
     KlassSeminar getRunningKlassSeminarByTeacherId(BigInteger teacherId);
 
     void stopKlassSeminar(BigInteger klassSeminarId);
+
+    void startKlassSeminar(BigInteger seminarId, BigInteger klassId);
 }

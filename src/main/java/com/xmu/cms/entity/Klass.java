@@ -26,7 +26,8 @@ public class Klass {
         this.klassTime = klassTime;
     }
 
-    public Klass() {
+    public Klass(BigInteger klassId) {
+        this.klassId = klassId;
     }
 
     public BigInteger getKlassId() {

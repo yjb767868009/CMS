@@ -19,7 +19,5 @@ public interface SeminarDao {
 
     Seminar getSeminarBySeminarId(BigInteger seminarId);
 
-    KlassSeminar getRunningSeminarByTeacherId(BigInteger teacherId);
-
     List<Seminar> getAllSeminarByRoundId(BigInteger roundId);
 }

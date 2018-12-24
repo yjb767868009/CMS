@@ -18,14 +18,14 @@ public interface TeamApplicationMapper {
      * @param teacherId 老师id
      * @return 队伍合法申请列表
      */
-    List<TeamApplication> getTeamApplicationByTeacherId(BigInteger teacherId);// TODO: 2018/12/23
+    List<TeamApplication> getTeamApplicationByTeacherId(BigInteger teacherId);
 
     /**
      * 更新队伍合法申请，及接受或拒绝请求
      *
      * @param teamApplication 新的队伍合法申请
      */
-    void updateTeamApplication(TeamApplication teamApplication);// TODO: 2018/12/23  
+    void updateTeamApplication(TeamApplication teamApplication);
 
     /**
      * 获取队伍合法申请
@@ -33,5 +33,5 @@ public interface TeamApplicationMapper {
      * @param teamApplicationId 队伍合法申请id
      * @return 队伍合法申请
      */
-    TeamApplication getTeamApplication(BigInteger teamApplicationId);// TODO: 2018/12/23  
+    TeamApplication getTeamApplication(BigInteger teamApplicationId);
 }

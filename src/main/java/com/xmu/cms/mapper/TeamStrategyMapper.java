@@ -17,5 +17,5 @@ public interface TeamStrategyMapper {
      * @param courseId 班级id
      * @return 规则
      */
-    TeamStrategy getCourseStrategy(BigInteger courseId);// TODO: 2018/12/22
+    TeamStrategy getCourseStrategy(BigInteger courseId);
 }

@@ -40,9 +40,9 @@
           and teacher.id = course2.teacher_id
     </select>
 
-    <insert id="newTeamShare">
+    <insert id="insertShareTeam" parameterType="com.xmu.cms.entity.ShareTeam">
         insert share_team_application (main_course_id, sub_course_id, sub_course_teacher_id, status)
-        values (#{mainCourseId}, #{subCourseId}, #{subCourseTeacherId}, #{status})
+        values (#{shareTeam.masterCourse.courseId}, #{shareTeam.receiveCourse.courseId}, #{shareTeam.receiveTeacher.teacherId}, #{shareTeam.status})
     </insert>
 
     <delete id="deleteShareTeamByCourseId">
@@ -73,6 +73,47 @@
              course course2,
              teacher
         where (main_course_id = #{courseId} or sub_course_id = #{courseId})
+          and course1.id = share_team_application.main_course_id
+          and course2.id = share_team_application.sub_course_id
+          and teacher.id = course2.teacher_id
+    </select>
+
+    <select id="getShareTeamByTwoCourse" resultMap="ShareTeamResultMap">
+        select share_team_application.id as shareId,
+               course1.id as masterCourseId,
+               course1.course_name as masterCourseName,
+               course2.id as receiveCourseId,
+               course2.course_name as receiveCourseName,
+               teacher.id as receiveTeacherId,
+               teacher.teacher_name as receiveTeacherName,
+               teacher.email as receiveTeacherEmail,
+               status
+        from share_team_application,
+             course course1,
+             course course2,
+             teacher
+        where share_team_application.main_course_id = #{masterCourseId}
+          and share_team_application.sub_course_id = #{receiveCourseId}
+          and course1.id = share_team_application.main_course_id
+          and course2.id = share_team_application.sub_course_id
+          and teacher.id = course2.teacher_id
+    </select>
+
+    <select id="getShareTeamByTeacherId" resultMap="ShareTeamResultMap">
+        select share_team_application.id as shareId,
+               course1.id as masterCourseId,
+               course1.course_name as masterCourseName,
+               course2.id as receiveCourseId,
+               course2.course_name as receiveCourseName,
+               teacher.id as receiveTeacherId,
+               teacher.teacher_name as receiveTeacherName,
+               teacher.email as receiveTeacherEmail,
+               status
+        from share_team_application,
+             course course1,
+             course course2,
+             teacher
+        where share_team_application.sub_course_teacher_id = #{teacherId}
           and course1.id = share_team_application.main_course_id
           and course2.id = share_team_application.sub_course_id
           and teacher.id = course2.teacher_id

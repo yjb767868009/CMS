@@ -70,7 +70,6 @@ public interface SeminarMapper {
      */
     List<Seminar> getAllSeminarByRoundId(@Param("roundId") BigInteger roundId);
 
-    KlassSeminar getRunningKlassSeminarByTeacherId(@Param("teacherId") BigInteger teacherId);
 
     /**
      * 删除讨论课

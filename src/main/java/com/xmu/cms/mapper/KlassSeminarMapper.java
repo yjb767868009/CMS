@@ -65,4 +65,6 @@ public interface KlassSeminarMapper {
      */
     KlassSeminar getKlassSeminarByStudentAndSeminar(@Param("studentId") BigInteger studentId,
                                                     @Param("seminarId") BigInteger seminarId);
+
+    KlassSeminar getRunningKlassSeminarByTeacherId(@Param("teacherId") BigInteger teacherId);
 }

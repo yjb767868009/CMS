@@ -16,14 +16,21 @@ import java.util.List;
  */
 @Mapper
 public interface KlassMapper {
+    /**
+     * 新建班级
+     *
+     * @param klass 班级对象
+     * @return 新建成功信息
+     */
     Integer insertKlass(Klass klass);
 
-    List<Seminar> getStudentKlassByCourseId(@Param("studentId") BigInteger studentId,
-                                            @Param("courseId") BigInteger courseId);
-
+    /**
+     * 删除班级
+     *
+     * @param klassId 班级id
+     * @return 删除成功信息
+     */
     Integer deleteKlassByKlassId(@Param("klassId") BigInteger klassId);
-
-    List<Klass> getAllKlass(@Param("courseId") BigInteger courseId);
 
     /**
      * 通过班级id获取班级
@@ -32,9 +39,6 @@ public interface KlassMapper {
      * @return 班级对象
      */
     Klass getKlassByKlassId(@Param("kassId") BigInteger klassId);
-
-    Integer getKlassIdByStudentIdAndCourseId(@Param("studentId") BigInteger studentId,
-                                             @Param("courseId") BigInteger courseId);
 
     /**
      * 在班级学生关系表中加入新学生的信息
@@ -117,14 +121,14 @@ public interface KlassMapper {
      * @param studentId 学生id
      * @return 班级列表
      */
-    List<Klass> getKlassByStudent(@Param("studentId") BigInteger studentId);// TODO: 2018/12/23
+    List<Klass> getKlassByStudent(@Param("studentId") BigInteger studentId);
 
     /**
      * 删除课程中所有学生的队伍
      *
      * @param course 课程
      */
-    void deleteCourseStudentTeam(Course course);// TODO: 2018/12/24  
+    void deleteCourseStudentTeam(Course course);// TODO: 2018/12/24
 
     /**
      * 新建班级和轮次的关系，enroll默认为1

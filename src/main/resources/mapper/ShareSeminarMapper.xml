@@ -34,27 +34,27 @@
              course course1,
              course course2,
              teacher
-        where share_seminar_application.id = #{shareId}
+        where share_seminar_application.id = #{shareSeminarId}
           and course1.id = share_seminar_application.main_course_id
           and course2.id = share_seminar_application.sub_course_id
           and teacher.id = course2.teacher_id
     </select>
 
-    <insert id="newSeminarShare">
+    <insert id="insertShareSeminar" parameterType="com.xmu.cms.entity.ShareSeminar">
         insert share_seminar_application (main_course_id, sub_course_id, sub_course_teacher_id, status)
-        values (#{mainCourseId}, #{subCourseId}, #{subCourseTeacherId}, #{status})
+        values (#{shareSeminar.masterCourse.courseId}, #{shareSeminar.receiveCourse.courseId}, #{shareSeminar.receiveTeacher.teacherId}, #{shareSeminar.status})
     </insert>
 
-    <delete id="deleteSeminarShare">
+    <delete id="deleteShareSeminar">
         delete
         from share_seminar_application
         where id = #{shareId}
     </delete>
 
-    <update id="setSeminarShareStatus">
+    <update id="updateShareSeminar" parameterType="com.xmu.cms.entity.ShareSeminar">
         update share_seminar_application
-        set status= #{status}
-        where id = #{shareId}
+        set status= #{shareSeminar.status}
+        where id = #{shareSeminar.shareSeminarId}
     </update>
 
     <delete id="deleteShareSeminarByCourseId">
@@ -62,4 +62,68 @@
         from share_seminar_application
         where sub_course_id = #{courseId} or main_course_id = #{courseId}
     </delete>
+
+    <select id="getShareSeminarInCourse" resultMap="ShareSeminarResultMap">
+        select share_seminar_application.id as shareId,
+               course1.id as masterCourseId,
+               course1.course_name as masterCourseName,
+               course2.id as receiveCourseId,
+               course2.course_name as receiveCourseName,
+               teacher.id as receiveTeacherId,
+               teacher.teacher_name as receiveTeacherName,
+               teacher.email as receiveTeacherEmail,
+               status
+        from share_seminar_application,
+             course course1,
+             course course2,
+             teacher,
+             course
+        where (share_seminar_application.sub_course_id = #{courseId} or main_course_id = #{courseId})
+          and course1.id = share_seminar_application.main_course_id
+          and course2.id = share_seminar_application.sub_course_id
+          and teacher.id = course2.teacher_id
+    </select>
+
+    <select id="getShareSeminarByTwoCourse" resultMap="ShareSeminarResultMap">
+        select share_seminar_application.id as shareId,
+               course1.id as masterCourseId,
+               course1.course_name as masterCourseName,
+               course2.id as receiveCourseId,
+               course2.course_name as receiveCourseName,
+               teacher.id as receiveTeacherId,
+               teacher.teacher_name as receiveTeacherName,
+               teacher.email as receiveTeacherEmail,
+               status
+        from share_seminar_application,
+             course course1,
+             course course2,
+             teacher
+        where share_seminar_application.main_course_id = #{masterCourseId}
+          and share_seminar_application.sub_course_id = #{receiveCourseId}
+          and course1.id = share_seminar_application.main_course_id
+          and course2.id = share_seminar_application.sub_course_id
+          and teacher.id = course2.teacher_id
+    </select>
+
+    <select id="getShareSeminarByTeacher" resultMap="ShareSeminarResultMap">
+        select share_seminar_application.id as shareId,
+               course1.id as masterCourseId,
+               course1.course_name as masterCourseName,
+               course2.id as receiveCourseId,
+               course2.course_name as receiveCourseName,
+               teacher.id as receiveTeacherId,
+               teacher.teacher_name as receiveTeacherName,
+               teacher.email as receiveTeacherEmail,
+               status
+        from share_seminar_application,
+             course course1,
+             course course2,
+             teacher,
+             course
+        where share_seminar_application.sub_course_teacher_id = #{teacherId}
+          and course1.id = share_seminar_application.main_course_id
+          and course2.id = share_seminar_application.sub_course_id
+          and teacher.id = course2.teacher_id
+          and share_seminar_application.status is null
+    </select>
 </mapper>

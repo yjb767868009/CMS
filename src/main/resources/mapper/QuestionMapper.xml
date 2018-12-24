@@ -43,9 +43,9 @@
           and question.klass_seminar_id = klass_seminar.id
     </select>
 
-    <insert id="insertQuestion">
+    <insert id="insertQuestion" parameterType="com.xmu.cms.entity.Question">
         insert question (klass_seminar_id, attendance_id, team_id, student_id, is_selected, score)
-        values (#{klassSeminarId}, #{attendanceId}, #{teamId}, #{studentId}, #{isSelected}, #{score})
+        values (#{question.klassSeminar.klassSeminarId}, #{question.attendance.attendanceId}, #{question.team.teamId}, #{question.student.studentId}, #{question.selected}, #{question.score})
     </insert>
 
     <delete id="deleteQuestion">
@@ -60,10 +60,10 @@
         where id = #{questionId}
     </update>
 
-    <update id="setScore">
+    <update id="setScore" parameterType="com.xmu.cms.entity.Question">
         update question
-        set score = 1
-        where id = #{questionId}
+        set score = #{question.score}
+        where id = #{question.questionId}
     </update>
 
     <select id="getQuestionInKlassSeminar" resultMap="QuestionResultMap">

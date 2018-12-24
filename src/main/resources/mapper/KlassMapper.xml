@@ -14,9 +14,9 @@
         </association>
     </resultMap>
 
-    <insert id="newKlass">
+    <insert id="insertKlass" parameterType="com.xmu.cms.entity.Klass">
         INSERT klass (course_id, grade, klass_serial, klass_time, klass_location)
-        VALUE (#{courseId}, #{grade}, #{klassSerial}, #{klassTime}, #{klassPlace})
+        VALUE (#{klass.course.courseId}, #{klass.grade}, #{klass.klassSerial}, #{klass.klassTime}, #{klass.klassPlace})
     </insert>
 
     <delete id="deleteKlassByKlassId" parameterType="java.lang.Integer">
@@ -37,7 +37,7 @@
         where id = #{klassId}
     </update>
     
-    <select id="getKlass" resultMap="KlassResultMap">
+    <select id="getKlassByKlassId" resultMap="KlassResultMap">
         select klass.id as klassId,
                grade,
                klass_serial,
@@ -51,9 +51,9 @@
         and course.id = klass.course_id
     </select>
 
-    <insert id="addStudent">
+    <insert id="addStudent" parameterType="com.xmu.cms.entity.Student">
         insert klass_student(klass_id, student_id, course_id)
-        values (#{klassId}, #{studentId}, #{courseId})
+        values (#{klassId}, #{student.studentId}, #{courseId})
     </insert>
 
     <select id="getKlassesInCourse" resultMap="KlassResultMap">
@@ -66,13 +66,6 @@
              course
         where klass.course_id = #{courseId}
           and course.id = klass.course_id
-    </select>
-
-    <select id="getKlassIdByStudentIdAndCourseId">
-        select klass_id
-        from klass_student
-        where course_id = #{courseId}
-          and student_id = #{studentId}
     </select>
     
     <select id="getKlassEnrollNumber">
@@ -108,11 +101,11 @@
         where team_id = #{teamId}
     </update>
 
-    <update id="removeTeamStudent">
+    <update id="removeTeamStudent" parameterType="com.xmu.cms.entity.Student">
         update klass_student
         set team_id = null
         where team_id = #{teamId}
-        and student_id = #{studentId}
+        and student_id = #{student.studentId}
     </update>
 
     <insert id="insertKlassRound">

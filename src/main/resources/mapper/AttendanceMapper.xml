@@ -36,7 +36,7 @@
         ORDER BY team_order
     </select>
 
-    <insert id="newAttendance">
+    <insert id="newAttendance" parameterType="com.xmu.cms.entity.Attendance">
         insert attendance (klass_seminar_id,
                            team_id,
                            team_order,
@@ -45,14 +45,14 @@
                            reprot_url,
                            ppt_name,
                            ppt_url)
-        values (#{klassSeminarId},
-                #{teamId},
-                #{teamOrder},
-                #{present},
-                #{reportName},
-                #{reportUrl},
-                #{pptName},
-                #{pptUrl})
+        values (#{attendance.klassSeminarId},
+                #{attendance.team.teamId},
+                #{attendance.teamOrder},
+                #{attendance.present},
+                #{attendance.reportFile},
+                null ,
+                #{attendance.presentationFile},
+                null )
     </insert>
 
     <delete id="deleteAttendance" parameterType="java.lang.Integer">

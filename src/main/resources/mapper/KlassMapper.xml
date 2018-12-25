@@ -83,24 +83,23 @@
     </delete>
 
     <update id="addMembers">
-        update klass_student
-        set team_id = #{teamId}
-        where klass_id = #{klassId}
-          and student_id = #{studentId}
-    </update>
-
-    <update id="deleteTeamStudent">
-        update klass_student
-        set team_id = null
+        update team_student
+        set student_id = #{studentId}
         where team_id = #{teamId}
     </update>
 
-    <update id="removeTeamStudent" parameterType="com.xmu.cms.entity.Student">
-        update klass_student
-        set team_id = null
+    <delete id="deleteTeamStudent">
+        delete
+        from team_student
+        where team_id = #{teamId}
+    </delete>
+
+    <delete id="removeTeamStudent" parameterType="com.xmu.cms.entity.Student">
+        delete
+        from team_student
         where team_id = #{teamId}
         and student_id = #{student.studentId}
-    </update>
+    </delete>
 
     <insert id="insertKlassRound">
         insert klass_round (klass_id, round_id, enroll_number)
@@ -123,13 +122,13 @@
           and course.id = klass.course_id
     </select>
 
-    <update id="deleteKlassStudent" parameterType="com.xmu.cms.entity.Course">
-        update klass_student
-        set team_id = null
-        where course_id = #{course.courseId}
-    </update>
+    <delete id="deleteKlassStudent" parameterType="com.xmu.cms.entity.Klass">
+        delete
+        from klass_student
+        where klass_id = #{klass.klassId}
+    </delete>
 
-    <insert id="addKlassRound">
+    <insert id="addKlassRound" parameterType="java.math.BigInteger">
         insert klass_round (klass_id, round_id, enroll_number)
         values (#{klassId}, #{roundId}, 1)
     </insert>

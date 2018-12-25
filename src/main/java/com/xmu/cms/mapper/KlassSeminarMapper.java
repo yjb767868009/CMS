@@ -73,7 +73,7 @@ public interface KlassSeminarMapper {
      *
      * @param klassSeminarId 班级讨论课id
      */
-    void stopKlassSeminar(BigInteger klassSeminarId);
+    void stopKlassSeminar(@Param("klassSeminarId") BigInteger klassSeminarId);
 
     /**
      * 开始班级讨论课
@@ -81,5 +81,6 @@ public interface KlassSeminarMapper {
      * @param seminarId 讨论课id
      * @param klassId   班级id
      */
-    void startKlassSeminar(BigInteger seminarId, BigInteger klassId);
+    void startKlassSeminar(@Param("seminarId") BigInteger seminarId,
+                           @Param("klassId") BigInteger klassId);
 }

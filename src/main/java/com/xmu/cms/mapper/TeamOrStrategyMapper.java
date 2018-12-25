@@ -2,6 +2,7 @@ package com.xmu.cms.mapper;
 
 import com.xmu.cms.entity.strategy.TeamOrStrategy;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.math.BigInteger;
 
@@ -18,5 +19,5 @@ public interface TeamOrStrategyMapper {
      * @param strategyId 队伍或规则id
      * @return 队伍或规则id
      */
-    TeamOrStrategy getTeamOrStrategyById(BigInteger strategyId);
+    TeamOrStrategy getTeamOrStrategyById(@Param("strategyId") BigInteger strategyId);
 }

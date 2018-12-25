@@ -2,6 +2,7 @@ package com.xmu.cms.mapper;
 
 import com.xmu.cms.entity.strategy.CourseMemberLimitStrategy;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.math.BigInteger;
 
@@ -17,5 +18,5 @@ public interface CourseMemberLimitStrategyMapper {
      * @param strategyId 规则id
      * @return 队伍中选课人数限制规则
      */
-    CourseMemberLimitStrategy getCourseMemberLimitStrategyById(BigInteger strategyId);
+    CourseMemberLimitStrategy getCourseMemberLimitStrategyById(@Param("strategyId") BigInteger strategyId);
 }

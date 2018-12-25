@@ -52,6 +52,12 @@
           or sub_course_id = #{courseId}
     </delete>
 
+    <delete id="deleteShareTeam">
+        delete
+        from share_team_application
+        where id = #{shareId}
+    </delete>
+
     <update id="setTeamShareStatus">
         update share_seminar_application
         set status= #{status}

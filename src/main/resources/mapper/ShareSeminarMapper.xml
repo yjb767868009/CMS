@@ -34,7 +34,7 @@
              course course1,
              course course2,
              teacher
-        where share_seminar_application.id = #{shareSeminarId}
+        where share_seminar_application.id = #{shareId}
           and course1.id = share_seminar_application.main_course_id
           and course2.id = share_seminar_application.sub_course_id
           and teacher.id = course2.teacher_id

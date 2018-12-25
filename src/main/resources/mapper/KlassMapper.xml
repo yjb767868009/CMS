@@ -122,10 +122,10 @@
           and course.id = klass.course_id
     </select>
 
-    <delete id="deleteKlassStudent" parameterType="com.xmu.cms.entity.Klass">
+    <delete id="deleteKlassStudent">
         delete
         from klass_student
-        where klass_id = #{klass.klassId}
+        where klass_id = #{klassId}
     </delete>
 
     <insert id="addKlassRound" parameterType="java.math.BigInteger">

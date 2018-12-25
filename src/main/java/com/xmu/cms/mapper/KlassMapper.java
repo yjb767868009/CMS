@@ -96,7 +96,7 @@ public interface KlassMapper {
      */
     Integer addMembers(@Param("klassId") BigInteger klassId,
                        @Param("teamId") BigInteger teamId,
-                       @Param("studentId") BigInteger studentId);
+                       @Param("studentId") BigInteger studentId);//klassId不需要
 
     /**
      * 删除单个学生和队伍的关系
@@ -127,13 +127,6 @@ public interface KlassMapper {
      * @return 班级列表
      */
     List<Klass> getKlassByStudent(@Param("studentId") BigInteger studentId);
-
-    /**
-     * 删除课程中所有学生的队伍
-     *
-     * @param course 课程
-     */
-    void deleteCourseStudentTeam(@Param("course") Course course);
 
     /**
      * 新建班级和轮次的关系，enroll默认为1

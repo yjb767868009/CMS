@@ -29,7 +29,7 @@ public interface CourseService {
 
     List<Klass> getKlassInCourse(BigInteger courseId);
 
-    Map<String, String> deleteKlass(BigInteger classId);
+    void deleteKlass(BigInteger klassId);
 
     List<Object> getShareInCourse(BigInteger courseId);
 
@@ -62,4 +62,7 @@ public interface CourseService {
     ShareSeminar updateShareSeminar(ShareSeminar shareSeminar);
 
     TeamApplication updateTeamApplication(TeamApplication teamApplication);
+
+    void uploadKlassFile(BigInteger klassId, List<Student> students) throws Exception;
+
 }

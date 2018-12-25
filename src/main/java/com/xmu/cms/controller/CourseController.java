@@ -32,9 +32,6 @@ public class CourseController {
     @Autowired
     private MailService mailService;
 
-    @Autowired
-    private FileService fileService;
-
     @Secured("ROLE_TEACHER")
     @PostMapping(value = "/course")
     public Map<String, String> createCourse(@RequestBody Course course) {

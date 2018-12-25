@@ -33,9 +33,7 @@ public class KlassDaoImpl implements KlassDao {
 
     @Override
     public List<Klass> getAllKlass(BigInteger courseId) {
-        //return klassMapper.getAllKlass(courseId);
-        //todo
-        return null;
+        return klassMapper.getKlassesInCourse(courseId);
     }
 
     @Override
@@ -76,5 +74,10 @@ public class KlassDaoImpl implements KlassDao {
     @Override
     public void addKlassRound(BigInteger klassId, BigInteger roundId) {
         klassMapper.addKlassRound(klassId, roundId);
+    }
+
+    @Override
+    public void deleteKlass(BigInteger klassId) {
+        klassMapper.deleteKlassByKlassId(klassId);
     }
 }

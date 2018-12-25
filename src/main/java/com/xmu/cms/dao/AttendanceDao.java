@@ -19,4 +19,14 @@ public interface AttendanceDao {
     List<Attendance> getAttendancesInKlassSeminar(BigInteger klassSeminarId);
 
     void updateAttendancePresent(Attendance attendance);
+
+    Attendance getAttendanceByAttendanceId(BigInteger attendanceId);
+
+    void attendanceUploadReport(BigInteger attendanceId, String filename);
+
+    void attendanceUploadPPT(BigInteger attendanceId, String filename);
+
+    void deleteAttendance(BigInteger attendanceId);
+
+    void insertAttendance(Attendance attendance);
 }

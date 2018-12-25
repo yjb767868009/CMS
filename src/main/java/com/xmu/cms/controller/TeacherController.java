@@ -2,7 +2,6 @@ package com.xmu.cms.controller;
 
 import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.service.CourseService;
-import com.xmu.cms.service.FileService;
 import com.xmu.cms.service.SeminarService;
 import com.xmu.cms.service.UserService;
 import com.xmu.cms.support.UserInfo;
@@ -30,9 +29,6 @@ public class TeacherController {
 
     @Autowired
     private SeminarService seminarService;
-
-    @Autowired
-    private FileService fileService;
 
     @Secured("ROLE_ADMIN")
     @GetMapping(value = "")

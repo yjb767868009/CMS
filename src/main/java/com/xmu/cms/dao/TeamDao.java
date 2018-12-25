@@ -28,4 +28,6 @@ public interface TeamDao {
     Team removeMember(BigInteger teamId, Student student);
 
     void updateTeamValid(Team team);
+
+    Team getStudentTeamInKlassSeminar(BigInteger studentId, BigInteger klassSeminarId);
 }

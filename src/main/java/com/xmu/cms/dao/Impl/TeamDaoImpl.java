@@ -111,4 +111,9 @@ public class TeamDaoImpl implements TeamDao {
     public void updateTeamValid(Team team) {
         teamMapper.updateTeamValid(team);
     }
+
+    @Override
+    public Team getStudentTeamInKlassSeminar(BigInteger studentId, BigInteger klassSeminarId) {
+        return teamMapper.getStudentTeamInKlassSeminar(studentId, klassSeminarId);
+    }
 }

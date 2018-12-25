@@ -39,6 +39,9 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private TeamApplicationDao teamApplicationDao;
 
+    @Autowired
+    private StudentDao studentDao;
+
     @Override
     public List<Course> getAllCoursesByTeacher(BigInteger teacherId) {
         return courseDao.getAllCoursesByTeacherId(teacherId);
@@ -112,9 +115,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Map<String, String> deleteKlass(BigInteger classId) {
-        //TODO
-        return null;
+    public void deleteKlass(BigInteger klassId) {
+        klassDao.deleteKlass(klassId);
     }
 
     @Override
@@ -218,6 +220,12 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public TeamApplication updateTeamApplication(TeamApplication teamApplication) {
         return teamApplicationDao.updateTeamApplication(teamApplication);
+    }
+
+    @Override
+    public void uploadKlassFile(BigInteger klassId, List<Student> students) throws Exception {
+        studentDao.newStudent(students);
+        klassDao.addStudentInKlass(klassId, students);
     }
 
 }

@@ -77,16 +77,11 @@ public class StudentController {
         return userService.getStudentByAccount(account);
     }
 
-    @PostMapping(value = "/klassSeminar/{klassSeminarId}/attendance")
-    public Map<String, String> attendance(@PathVariable("klassSeminarId") BigInteger klassSeminarId,
-                                          @RequestParam("teamOrder") BigInteger teamOrder) {
-        return seminarService.newAttendance(klassSeminarId, teamOrder);
-    }
-
     @PostMapping(value = "/klassSeminar/{klassSeminarId}/score")
     public Map<String, String> getScoreInKlassSeminar(@PathVariable("klassSeminarId") BigInteger klassSeminarId,
                                                       @RequestParam("teamOrder") BigInteger teamOrder) {
-        return seminarService.newAttendance(klassSeminarId, teamOrder);
+        // TODO: 2018/12/25  
+        return null;
     }
 
 }

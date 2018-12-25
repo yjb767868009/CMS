@@ -90,7 +90,7 @@ public interface TeamMapper {
      * @param studentId 学生id
      * @return 队伍信息
      */
-    Team getTeamByKlass(@Param("klassId") BigInteger klassId,@Param("studentId") BigInteger studentId);
+    Team getTeamByKlass(@Param("klassId") BigInteger klassId, @Param("studentId") BigInteger studentId);
 
     /**
      * 更新队伍合法性
@@ -107,4 +107,13 @@ public interface TeamMapper {
      * @return 队伍
      */
     Team getTeamInKlassSeminarByStudentId(@Param("klassSeminarId") BigInteger klassSeminarId, @Param("studentId") BigInteger studentId);
+
+    /**
+     * 获取学生在班级讨论课的队伍
+     *
+     * @param studentId      学生id
+     * @param klassSeminarId 班级讨论课id
+     * @return 队伍
+     */
+    Team getStudentTeamInKlassSeminar(BigInteger studentId, BigInteger klassSeminarId);// TODO: 2018/12/25  
 }

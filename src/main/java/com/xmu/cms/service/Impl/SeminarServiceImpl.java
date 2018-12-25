@@ -38,6 +38,9 @@ public class SeminarServiceImpl implements SeminarService {
     @Autowired
     private KlassSeminarDao klassSeminarDao;
 
+    @Autowired
+    private TeamDao teamDao;
+
     @Override
     public Map<String, String> newSeminar(Seminar seminar) {
         Map<String, String> message = new HashMap<String, String>(2);
@@ -80,15 +83,8 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Map<String, String> modifyKlassSeminarReportDDL(KlassSeminar klassSeminar) {
-        Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = klassSeminarDao.updateKlassSeminarReportDDL(klassSeminar);
-        if (count > 0) {
-            message.put("message", "Success");
-        } else {
-            message.put("message", "Error");
-        }
-        return message;
+    public void modifyKlassSeminarReportDDL(KlassSeminar klassSeminar) {
+        klassSeminarDao.updateKlassSeminarReportDDL(klassSeminar);
     }
 
     @Override
@@ -134,9 +130,11 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public Map<String, String> newAttendance(BigInteger klassSeminarId, BigInteger teamOrder) {
-        //todo
-        return null;
+    public void newAttendance(BigInteger studentId, Attendance attendance) {
+        KlassSeminar klassSeminar = attendance.getKlassSeminar();
+        Team team = teamDao.getStudentTeamInKlassSeminar(studentId, klassSeminar.getKlassSeminarId());
+        attendance.setTeam(team);
+        attendanceDao.insertAttendance(attendance);
     }
 
     @Override
@@ -294,5 +292,25 @@ public class SeminarServiceImpl implements SeminarService {
             attendanceDao.updateAttendancePresent(attendances.get(0));
         }
         klassSeminarDao.startKlassSeminar(seminarId, klassId);
+    }
+
+    @Override
+    public Attendance getAttendanceByAttendanceId(BigInteger attendanceId) {
+        return attendanceDao.getAttendanceByAttendanceId(attendanceId);
+    }
+
+    @Override
+    public void attendanceUploadReport(BigInteger attendanceId, String filename) {
+        attendanceDao.attendanceUploadReport(attendanceId, filename);
+    }
+
+    @Override
+    public void attendanceUploadPPT(BigInteger attendanceId, String filename) {
+        attendanceDao.attendanceUploadPPT(attendanceId, filename);
+    }
+
+    @Override
+    public void deleteAttendance(BigInteger attendanceId) {
+        attendanceDao.deleteAttendance(attendanceId);
     }
 }

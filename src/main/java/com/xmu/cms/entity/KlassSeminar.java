@@ -27,6 +27,10 @@ public class KlassSeminar {
         this.selectAttendance = selectAttendance;
     }
 
+    public KlassSeminar(BigInteger klassSeminarId) {
+        this.klassSeminarId = klassSeminarId;
+    }
+
     public KlassSeminar() {
     }
 

@@ -76,16 +76,6 @@ public class SeminarController {
     }
 
     @Secured("ROLE_TEACHER")
-    @PutMapping(value = "/seminar/{seminarId}/class/{classId}/state")
-    public Map<String, String> modifySeminarState(@PathVariable("seminarId") BigInteger seminarId,
-                                                  @PathVariable("classId") BigInteger klassId,
-                                                  @RequestBody KlassSeminar klassSeminar) {
-        klassSeminar.setSeminar(new Seminar());
-        // TODO: 2018/12/24
-        return null;
-    }
-
-    @Secured("ROLE_TEACHER")
     @PutMapping(value = "/seminar/{seminarId}/class/{classId}/start")
     public Map<String, String> startKlassSeminar(@PathVariable("seminarId") BigInteger seminarId,
                                                  @PathVariable("classId") BigInteger klassId) {
@@ -100,11 +90,18 @@ public class SeminarController {
     }
 
     @Secured("ROLE_TEACHER")
-    @PutMapping(value = "/seminar/{seminarId}/round")
-    public Map<String, String> modifySeminarReportDDL(@PathVariable("seminarId") BigInteger seminarId,
-                                                      @RequestBody Seminar seminar) {
-        //TODO 设置讨论课书面报告截止时间
-        return null;
+    @PutMapping(value = "/klasssemianr/{klassSeminarId}/reportddl")
+    public Map<String, String> modifyKlassSeminarReportDDL(@PathVariable("klassSeminarId") BigInteger klassSeminarId,
+                                                           @RequestBody KlassSeminar klassSeminar) {
+        Map<String, String> message = new HashMap<String, String>(1);
+        try {
+            klassSeminar.setKlassSeminarId(klassSeminarId);
+            seminarService.modifyKlassSeminarReportDDL(klassSeminar);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
@@ -130,36 +127,19 @@ public class SeminarController {
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @GetMapping(value = "/seminar/{seminarId}/klass/{klassId}/ppt")
-    public void downloadPPT(@PathVariable("seminarId") BigInteger seminarId,
-                            @PathVariable("klassId") BigInteger klassId) {
-        //TODO 下载本次讨论课所有PPT
-        return;
-    }
-
-    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @GetMapping(value = "/seminar/{seminarId}/klass/{klassId}/report")
-    public void downloadReport(@PathVariable("seminarId") BigInteger seminarId,
-                               @PathVariable("klassId") BigInteger klassId) {
-        //TODO 下载本次讨论课所有报告
-        return;
-    }
-
-    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @GetMapping(value = "/seminar/{seminarId}/class/{classId}/attendance")
-    public List<Attendance> getAttendance(@PathVariable("seminarId") BigInteger seminarId,
-                                          @PathVariable("classId") BigInteger klassId) {
-        //TODO 下载本次讨论课所有PPT
-        return null;
-    }
-
-    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @PostMapping(value = "/seminar/{seminarId}/class/{classId}/attendance")
-    public Map<String, String> registion(@PathVariable("seminarId") BigInteger seminarId,
-                                         @PathVariable("classId") BigInteger klassId,
-                                         @RequestBody Attendance attendance) {
-        //TODO 报名展示
-        return null;
+    @PostMapping(value = "/klassseminar/{klassSeminarId}/attendance")
+    public Map<String, String> attendance(UserInfo info,
+                                          @PathVariable("klassSeminarId") BigInteger klassSeminarId,
+                                          @RequestBody Attendance attendance) {
+        Map<String, String> message = new HashMap<String, String>();
+        try {
+            attendance.setKlassSeminar(new KlassSeminar(klassSeminarId));
+            seminarService.newAttendance(info.getUserId(), attendance);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})

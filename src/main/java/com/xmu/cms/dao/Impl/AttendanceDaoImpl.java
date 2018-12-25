@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -41,16 +40,13 @@ public class AttendanceDaoImpl implements AttendanceDao {
     @Override
     public List<Attendance> getAttendancesInKlassSeminar(BigInteger klassSeminarId) {
         List<Attendance> attendances = attendanceMapper.getAttendancesInKlassSeminar(klassSeminarId);
-        attendances.sort(new Comparator<Attendance>() {
-            @Override
-            public int compare(Attendance o1, Attendance o2) {
-                if (o1.getTeamOrder() < o2.getTeamOrder())
-                    return -1;
-                else if (o1.getTeamOrder() > o2.getTeamOrder())
-                    return 1;
-                else
-                    return 0;
-            }
+        attendances.sort((o1, o2) -> {
+            if (o1.getTeamOrder() < o2.getTeamOrder())
+                return -1;
+            else if (o1.getTeamOrder() > o2.getTeamOrder())
+                return 1;
+            else
+                return 0;
         });
         return attendances;
     }
@@ -58,5 +54,31 @@ public class AttendanceDaoImpl implements AttendanceDao {
     @Override
     public void updateAttendancePresent(Attendance attendance) {
         attendanceMapper.updateAttendancePresent(attendance);
+    }
+
+    @Override
+    public Attendance getAttendanceByAttendanceId(BigInteger attendanceId) {
+        return attendanceMapper.getAttendanceByAttendanceId(attendanceId);
+    }
+
+    @Override
+    public void attendanceUploadReport(BigInteger attendanceId, String filename) {
+        attendanceMapper.attendanceUploadReport(attendanceId, filename);
+    }
+
+    @Override
+    public void attendanceUploadPPT(BigInteger attendanceId, String filename) {
+        attendanceMapper.attendanceUploadPPT(attendanceId, filename);
+    }
+
+    @Override
+    public void deleteAttendance(BigInteger attendanceId) {
+        attendanceMapper.deleteAttendance(attendanceId);
+    }
+
+    @Override
+    public void insertAttendance(Attendance attendance) {
+        attendance.setPresent(false);
+        attendanceMapper.insertAttendance(attendance);
     }
 }

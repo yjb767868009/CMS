@@ -5,27 +5,30 @@
             <x-icon type="ios-arrow-back" size="35" style="fill:#fff"></x-icon>
         </button> -->
     </x-header>
+    <div style="padding-left:10px;margin-top:10px;height:10px">发送验证码到邮箱：{{this.$store.state.student.myemail}}</div>
   <group>
-    <x-input type="password" v-model="password1" style="margin-top:20px;background-color:#fff" placeholder="输入密码"></x-input>
-    <x-input type="password" v-model="password2" style="margin-top:20px;background-color:#fff" placeholder="确认密码"></x-input>
+    <x-input type="password" v-model="password1" style="background-color:#fff" placeholder="输入密码"></x-input>
+  </group>
+  <group>
+    <x-input type="password" v-model="password2" style="background-color:#fff" placeholder="确认密码"></x-input>
   </group>
     <x-button @click.native="submit" style="margin-top:100px">确认提交</x-button>
   </div>
 </template>
 
 <script>
-import {XHeader,XButton,XInput} from 'vux'
+import {XHeader,XButton,XInput,Group} from 'vux'
 export default {
   data () {
     return {
       password1:'',
-      password2:''
+      password2:'',
     }
   },
   components:{
     XHeader,
     XButton,
-    XInput
+    XInput,Group
   },
   methods:{
     submit:function(){

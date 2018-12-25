@@ -70,8 +70,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course getCourse(BigInteger courseId) {
-        return courseDao.getCourse(courseId);
+    public Course getCourse(BigInteger courseId) throws Exception{
+        Course course = courseDao.getCourse(courseId);
+        if (course == null) throw new Exception("无此课程");
+        return course;
     }
 
     @Override

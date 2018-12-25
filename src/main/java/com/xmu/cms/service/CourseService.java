@@ -19,7 +19,7 @@ public interface CourseService {
 
     Map<String, String> createCourse(Course course);
 
-    Course getCourse(BigInteger courseId);
+    Course getCourse(BigInteger courseId) throws Exception;
 
     List<Team> getTeamInCourse(BigInteger courseId);
 

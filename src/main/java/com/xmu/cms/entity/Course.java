@@ -16,16 +16,16 @@ public class Course {
     private Teacher teacher;
     private String courseName;
     private String introduction;
-    private Float presentationWeight;
-    private Float reportWeight;
-    private Float questionWeight;
+    private Integer presentationWeight;
+    private Integer reportWeight;
+    private Integer questionWeight;
     private Timestamp teamStartTime;
     private Timestamp teamEndTime;
     private List<Klass> klasses;
     private Course teamMainCourse;
     private Course seminarMainCourse;
 
-    public Course(BigInteger courseId, Teacher teacher, String CourseName, String introduction, Float presentationWeight, Float reportWeight, Float questionWeight, Timestamp teamStartTime, Timestamp teamEndTime, List<Klass> klasses, Course teamMainCourse, Course seminarMainCourse) {
+    public Course(BigInteger courseId, Teacher teacher, String CourseName, String introduction, Integer presentationWeight, Integer reportWeight, Integer questionWeight, Timestamp teamStartTime, Timestamp teamEndTime, List<Klass> klasses, Course teamMainCourse, Course seminarMainCourse) {
         this.courseId = courseId;
         this.teacher = teacher;
         this.courseName = CourseName;
@@ -79,27 +79,27 @@ public class Course {
         this.introduction = introduction;
     }
 
-    public Float getPresentationWeight() {
+    public Integer getPresentationWeight() {
         return presentationWeight;
     }
 
-    public void setPresentationWeight(Float presentationWeight) {
+    public void setPresentationWeight(Integer presentationWeight) {
         this.presentationWeight = presentationWeight;
     }
 
-    public Float getReportWeight() {
+    public Integer getReportWeight() {
         return reportWeight;
     }
 
-    public void setReportWeight(Float reportWeight) {
+    public void setReportWeight(Integer reportWeight) {
         this.reportWeight = reportWeight;
     }
 
-    public Float getQuestionWeight() {
+    public Integer getQuestionWeight() {
         return questionWeight;
     }
 
-    public void setQuestionWeight(Float questionWeight) {
+    public void setQuestionWeight(Integer questionWeight) {
         this.questionWeight = questionWeight;
     }
 

@@ -80,7 +80,10 @@ public class TestController {
     public KlassSeminarRun nextAttendance(@DestinationVariable("klassSeminarId") BigInteger klassSeminarId) throws Exception {
         Attendance attendance = seminarService.nextAttendance(klassSeminarId);
         KlassSeminarRun klassSeminarRun = new KlassSeminarRun();
-        klassSeminarRun.setNowAttendance(attendance);
+        if (attendance == null) {
+            klassSeminarRun.setMessage("无未展示的组");
+        } else
+            klassSeminarRun.setNowAttendance(attendance);
         return klassSeminarRun;
     }
 

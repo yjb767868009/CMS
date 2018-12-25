@@ -16,91 +16,68 @@
             <result property="name" column="teacherName"/>
             <result property="email" column="teacherEmail"/>
         </association>
-        <association property="teamMainCourse" javaType="com.xmu.cms.entity.Course">
-            <id property="courseId" column="teamMainCourseId"/>
-            <result property="courseName" column="teamMainCourseName"/>
-        </association>
-        <association property="seminarMainCourse" javaType="com.xmu.cms.entity.Course">
-            <id property="courseId" column="seminarMainCourseId"/>
-            <result property="courseName" column="seminarMainCourseName"/>
-        </association>
     </resultMap>
 
     <select id="getAllCourseByTeacherId" resultMap="CourseResultMap">
-        SELECT course.id               as courseId,
+            SELECT course.id               as courseId,
+    course.course_name             as courseName,
+    course.introduction,
+    course.presentation_percentage as presentationWeight,
+    course.report_percentage       as reportWeight,
+    course.question_percentage     as questionWeight,
+    course.team_start_time         as teamStartDate,
+    course.team_end_time           as teamEndDate,
+    course1.id              as teamMainCourseId,
+    course1.course_name     as teamMainCourseName,
+    course2.id              as seminarMainCourseId,
+    course2.course_name     as seminarMainCourseName
+    FROM course,
+    teacher,
+    course course1,
+    course course2
+    WHERE teacher.id = #{teacherId}
+    AND teacher.id = course.teacher_id
+    and course1.id like course.team_main_course_id||'%'
+    and course2.id like course.seminar_main_course_id||'%';
+    </select>
+
+
+    <select id="getAllCourseByStudentId" resultType="com.xmu.cms.entity.Course">
+        SELECT course.id                      as courseId,
+               teacher.id                     as teacherId,
+               teacher.email                  as teacherEmail,
+               teacher.teacher_name           as teacherName,
                course.course_name             as courseName,
                course.introduction,
                course.presentation_percentage as presentationWeight,
                course.report_percentage       as reportWeight,
                course.question_percentage     as questionWeight,
                course.team_start_time         as teamStartDate,
-               course.team_end_time           as teamEndDate,
-               course1.id              as teamMainCourseId,
-               course1.course_name     as teamMainCourseName,
-               course2.id              as seminarMainCourseId,
-               course2.course_name     as seminarMainCourseName
+               course.team_end_time           as teamEndDate
         FROM course,
              teacher,
-             course course1,
-             course course2
-        WHERE teacher.id = #{teacherId}
-          AND teacher.id = course.teacher_id
-          and course1.id = course.team_main_course_id
-          and course2.id = course.seminar_main_course_id
-    </select>
-
-    <select id="getAllCourseByStudentId" resultType="com.xmu.cms.entity.Course">
-        SELECT course.id               as courseId,
-               teacher.id              as teacherId,
-               teacher.email           as teacherEmail,
-               teacher.teacher_name    as teacherName,
-               course.course_name             as courseName,
-               course.introduction,
-               course.presentation_percentage as presentationWeight,
-               course.report_percentage       as reportWeight,
-               course.question_percentage     as questionWeight,
-               course. team_start_time         as teamStartDate,
-               course.team_end_time           as teamEndDate,
-               course1.id              as teamMainCourseId,
-               course1.course_name     as teamMainCourseName,
-               course2.id              as seminarMainCourseId,
-               course2.course_name     as seminarMainCourseName
-        FROM course,
-             teacher,
-             klass_student,
-             course course1,
-             course course2
+             klass_student
         WHERE klass_student.student_id = #{studentId}
           AND course.id = klass_student.course_id
           AND course.teacher_id = teacher.id
-          and course1.id = course.team_main_course_id
-          and course2.id = course.seminar_main_course_id
     </select>
 
     <select id="getCourseById" resultMap="CourseResultMap">
-        SELECT course.id               as courseId,
-               teacher.id              as teacherId,
-               teacher.email           as teacherEmail,
-               teacher.teacher_name    as teacherName,
+        SELECT course.id                      as courseId,
+               teacher.id                     as teacherId,
+               teacher.email                  as teacherEmail,
+               teacher.teacher_name           as teacherName,
                course.course_name             as courseName,
                course.introduction,
                course.presentation_percentage as presentationWeight,
                course.report_percentage       as reportWeight,
                course.question_percentage     as questionWeight,
                course.team_start_time         as teamStartDate,
-               course.team_end_time           as teamEndDate,
-               course1.id              as teamMainCourseId,
-               course1.course_name     as teamMainCourseName,
-               course2.id              as seminarMainCourseId,
-               course2.course_name     as seminarMainCourseName
+               course.team_end_time           as teamEndDate
         FROM course,
-             teacher,
-             course course1,
-             course course2
+             teacher
         WHERE course.id = #{courseId}
           AND teacher.id = course.teacher_id
-          and course1.id = course.team_main_course_id
-          and course2.id = course.seminar_main_course_id
     </select>
 
     <delete id="deleteCourseById" parameterType="java.math.BigInteger">
@@ -158,7 +135,7 @@
         WHERE course.teacher_id = #{teacherId}
           and (course.seminar_main_course_id is not null or course.team_main_course_id is not null)
     </select>
-    
+
     <update id="updateCourseTeamMainCourse" parameterType="com.xmu.cms.entity.Course">
         update course
         set team_main_course_id = #{course.teamMainCourse.courseId}
@@ -172,32 +149,24 @@
     </update>
 
     <select id="getCourseByTeamId" resultMap="CourseResultMap">
-        SELECT course.id               as courseId,
+        SELECT course.id                      as courseId,
                course.course_name             as courseName,
                course.introduction,
                course.presentation_percentage as presentationWeight,
                course.report_percentage       as reportWeight,
                course.question_percentage     as questionWeight,
                course.team_start_time         as teamStartDate,
-               course.team_end_time           as teamEndDate,
-               course1.id              as teamMainCourseId,
-               course1.course_name     as teamMainCourseName,
-               course2.id              as seminarMainCourseId,
-               course2.course_name     as seminarMainCourseName
+               course.team_end_time           as teamEndDate
         FROM course,
              teacher,
-             course course1,
-             course course2,
              team
         WHERE team.id = #{teamId}
           and course.id = team.course_id
           AND teacher.id = course.teacher_id
-          and course1.id = course.team_main_course_id
-          and course2.id = course.seminar_main_course_id
     </select>
 
     <select id="getTeamMainCourse" resultMap="CourseResultMap">
-        SELECT course.id               as courseId,
+        SELECT course.id                      as courseId,
                course.course_name             as courseName,
                course.introduction,
                course.presentation_percentage as presentationWeight,
@@ -205,10 +174,10 @@
                course.question_percentage     as questionWeight,
                course.team_start_time         as teamStartDate,
                course.team_end_time           as teamEndDate,
-               course1.id              as teamMainCourseId,
-               course1.course_name     as teamMainCourseName,
-               course2.id              as seminarMainCourseId,
-               course2.course_name     as seminarMainCourseName
+               course1.id                     as teamMainCourseId,
+               course1.course_name            as teamMainCourseName,
+               course2.id                     as seminarMainCourseId,
+               course2.course_name            as seminarMainCourseName
         FROM course,
              teacher,
              course course1,

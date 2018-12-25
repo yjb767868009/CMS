@@ -32,9 +32,6 @@ public class CourseController {
     @Autowired
     private MailService mailService;
 
-    @Autowired
-    private FileService fileService;
-
     @Secured("ROLE_TEACHER")
     @PostMapping(value = "/course")
     public Map<String, String> createCourse(@RequestBody Course course) {
@@ -93,7 +90,14 @@ public class CourseController {
     @CheckCoursePermission
     @DeleteMapping(value = "/course/{courseId}")
     public Map<String, String> deleteCourse(@PathVariable("courseId") BigInteger courseId) {
-        return courseService.deleteCourseById(courseId);
+        Map<String, String> message = new HashMap<String, String>();
+        try {
+            courseService.deleteCourseById(courseId);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
 
     @Secured("ROLE_TEACHER")
@@ -112,18 +116,11 @@ public class CourseController {
 
     }
 
-    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
+    @Secured("ROLE_TEACHER")
     @GetMapping(value = "/course/{courseId}/team")
     public List<Team> getTeamInCourse(UserInfo info,
                                       @PathVariable("courseId") BigInteger courseId) {
-        switch (info.getUserType()) {
-            case "teacher":
-                return courseService.getTeamInCourse(courseId);
-            case "student":
-                return courseService.getTeamInCourseByStudent(courseId, info.getUserId());
-            default:
-                return null;
-        }
+        return courseService.getTeamInCourse(courseId);
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
@@ -143,7 +140,14 @@ public class CourseController {
     @PostMapping(value = "/course/{courseId}/class")
     public Map<String, String> createClass(@PathVariable("courseId") BigInteger courseId,
                                            @RequestBody Klass klass) {
-        return courseService.newKlass(courseId, klass);
+        Map<String, String> message = new HashMap<String, String>();
+        try {
+            courseService.newKlass(courseId, klass);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
 
     @Secured("ROLE_TEACHER")

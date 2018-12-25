@@ -43,13 +43,6 @@ public class TeamDaoImpl implements TeamDao {
     }
 
     @Override
-    public Team getTeamInCourseByStudent(BigInteger courseId, BigInteger studentId) {
-        Team team = teamMapper.getTeamInCourseByStudent(courseId, studentId);
-        team.setMembers(studentMapper.getMembersInTeam(team.getTeamId()));
-        return team;
-    }
-
-    @Override
     public List<Team> getAllTeamsInSeminar(BigInteger seminarId) {
         List<Team> teams = teamMapper.getAllTeamsInSeminar(seminarId);
         for (Team team : teams) {
@@ -110,5 +103,15 @@ public class TeamDaoImpl implements TeamDao {
     @Override
     public void updateTeamValid(Team team) {
         teamMapper.updateTeamValid(team);
+    }
+
+    @Override
+    public Team getStudentTeamInKlassSeminar(BigInteger studentId, BigInteger klassSeminarId) {
+        return teamMapper.getStudentTeamInKlassSeminar(studentId, klassSeminarId);
+    }
+
+    @Override
+    public Team getStudentTeamInKlass(BigInteger studentId, BigInteger klassId) {
+        return teamMapper.getStudentTeamInKlass(studentId, klassId);
     }
 }

@@ -113,6 +113,7 @@ public class CourseDaoImpl implements CourseDao {
     @Override
     public void updateCourseTeamMainCourse(Course course) {
         courseMapper.updateCourseTeamMainCourse(course);
+        courseMapper.deleteCourseTeam(course);
     }
 
     @Override

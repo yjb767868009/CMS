@@ -34,7 +34,7 @@ function disconnect() {
 }
 
 function sendName() {
-    stompClient.send("/app/1/join", {}, {});
+    stompClient.send("/app/1/nextAttendance", {}, {});
 }
 
 function askQuestion() {

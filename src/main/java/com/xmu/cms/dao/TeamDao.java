@@ -13,8 +13,6 @@ import java.util.List;
 public interface TeamDao {
     List<Team> getTeamInCourse(BigInteger courseId);
 
-    Team getTeamInCourseByStudent(BigInteger courseId, BigInteger studentId);
-
     List<Team> getAllTeamsInSeminar(BigInteger seminarId);
 
     Team newTeam(BigInteger courseId, BigInteger classId, BigInteger studentId, Team team);
@@ -28,4 +26,8 @@ public interface TeamDao {
     Team removeMember(BigInteger teamId, Student student);
 
     void updateTeamValid(Team team);
+
+    Team getStudentTeamInKlassSeminar(BigInteger studentId, BigInteger klassSeminarId);
+
+    Team getStudentTeamInKlass(BigInteger studentId, BigInteger klassId);
 }

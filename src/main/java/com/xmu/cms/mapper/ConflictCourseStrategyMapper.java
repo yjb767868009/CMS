@@ -2,6 +2,7 @@ package com.xmu.cms.mapper;
 
 import com.xmu.cms.entity.strategy.ConflictCourseStrategy;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.math.BigInteger;
 
@@ -17,5 +18,5 @@ public interface ConflictCourseStrategyMapper {
      * @param strategyId 规则id
      * @return 冲突课程规则
      */
-    ConflictCourseStrategy getConflictCourseStrategyById(BigInteger strategyId);
+    ConflictCourseStrategy getConflictCourseStrategyById(@Param("conflictCourseId") BigInteger strategyId);
 }

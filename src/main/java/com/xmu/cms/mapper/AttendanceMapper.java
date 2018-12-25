@@ -74,5 +74,38 @@ public interface AttendanceMapper {
      *
      * @param attendance 展示
      */
-    void updateAttendancePresent(Attendance attendance);
+    void updateAttendancePresent(@Param("attendance") Attendance attendance);
+
+    /**
+     * 根据自身id获取展示对象
+     *
+     * @param attendanceId 展示id
+     * @return 展示
+     */
+    Attendance getAttendanceByAttendanceId(@Param("attendanceId") BigInteger attendanceId);
+
+    /**
+     * 展示上传报告
+     *
+     * @param attendanceId 展示id
+     * @param filename     报告文件名
+     */
+    void attendanceUploadReport(@Param("attendanceId") BigInteger attendanceId,
+                                @Param("fileName") String filename);
+
+    /**
+     * 展示上传PPT
+     *
+     * @param attendanceId 展示id
+     * @param filename     PPT文件名
+     */
+    void attendanceUploadPPT(@Param("attendanceId") BigInteger attendanceId,
+                             @Param("fileName") String filename);
+
+    /**
+     * 新建展示
+     *
+     * @param attendance 新的展示
+     */
+    void insertAttendance(@Param("attendance") Attendance attendance);
 }

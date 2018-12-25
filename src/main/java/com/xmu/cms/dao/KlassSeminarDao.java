@@ -21,5 +21,5 @@ public interface KlassSeminarDao {
 
     void stopKlassSeminar(BigInteger klassSeminarId);
 
-    void startKlassSeminar(BigInteger seminarId, BigInteger klassId);
+    void startKlassSeminar(BigInteger klassSeminarId);
 }

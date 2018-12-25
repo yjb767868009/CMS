@@ -52,7 +52,7 @@ public class KlassSeminarDaoImpl implements KlassSeminarDao {
     }
 
     @Override
-    public void startKlassSeminar(BigInteger seminarId, BigInteger klassId) {
-        klassSeminarMapper.startKlassSeminar(seminarId, klassId);
+    public void startKlassSeminar(BigInteger klassSeminarId) {
+        klassSeminarMapper.startKlassSeminar(klassSeminarId);
     }
 }

@@ -8,11 +8,12 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -34,13 +35,12 @@ public class FileUtils {
         if (file.isEmpty()) {
             throw new Exception("请选择一个文件");
         }
-        String fatherPath = filePath.substring(0, filePath.lastIndexOf("\\"));
-        File fatherFile = new File(fatherPath);
+        File fatherFile = new File(filePath);
         if (!fatherFile.exists()) {
             fatherFile.mkdirs();
         }
         byte[] bytes = file.getBytes();
-        Path path = Paths.get(filePath);
+        Path path = Paths.get(filePath + File.separator + file.getOriginalFilename());
         Files.write(path, bytes);
     }
 
@@ -115,13 +115,46 @@ public class FileUtils {
         return students;
     }
 
-    private static String getKlassFilePath(BigInteger klassId, MultipartFile file) {
-        return UPLOADED_FOLDER + "class" + File.separator + klassId.toString() + File.separator + file.getOriginalFilename();
+    private static String getKlassFilePath(BigInteger klassId) {
+        return UPLOADED_FOLDER + "class" + File.separator + klassId.toString();
     }
 
     public static List<Student> uploadKlassFile(BigInteger klassId, MultipartFile file) throws Exception {
-        String filePath = getKlassFilePath(klassId, file);
+        String filePath = getKlassFilePath(klassId);
         saveFile(filePath, file);
-        return analysisFile(filePath);
+        return analysisFile(filePath + File.separator + file.getOriginalFilename());
+    }
+
+    private static String getAttendancePath(BigInteger attendanceId) {
+        return UPLOADED_FOLDER + "attendance" + File.separator + attendanceId.toString();
+    }
+
+
+    public static void downloadAttendanceFile(BigInteger attendanceId, String fileName) throws Exception {
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (requestAttributes == null) throw new Exception("请求失败");
+        HttpServletResponse response = requestAttributes.getResponse();
+        if (response == null) throw new Exception("请求失败");
+
+
+        if (fileName == null) throw new Exception("空的文件名");
+        String filePath = getAttendancePath(attendanceId);
+        File file = new File(filePath, fileName);
+        if (file.exists()) {
+            byte[] buffer = new byte[1024];
+            try (FileInputStream fis = new FileInputStream(file); BufferedInputStream bis = new BufferedInputStream(fis)) {
+                OutputStream os = response.getOutputStream();
+                int i = bis.read(buffer);
+                while (i != -1) {
+                    os.write(buffer, 0, i);
+                    i = bis.read(buffer);
+                }
+            }
+        } else throw new Exception("文件不存在");
+    }
+
+    public static void uploadAttendanceFile(BigInteger attendanceId, MultipartFile file) throws Exception {
+        String filePath = getAttendancePath(attendanceId);
+        saveFile(filePath, file);
     }
 }

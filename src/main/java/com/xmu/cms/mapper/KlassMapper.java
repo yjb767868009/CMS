@@ -22,7 +22,7 @@ public interface KlassMapper {
      * @param klass 班级对象
      * @return 新建成功信息
      */
-    Integer insertKlass(Klass klass);
+    Integer insertKlass(@Param("klass") Klass klass);
 
     /**
      * 删除班级
@@ -84,7 +84,7 @@ public interface KlassMapper {
      *
      * @param teamId 队伍id
      */
-    Integer deleteTeamStudent(BigInteger teamId);
+    Integer deleteTeamStudent(@Param("teamId") BigInteger teamId);
 
     /**
      * 队伍增加学生
@@ -94,7 +94,9 @@ public interface KlassMapper {
      * @param studentId 学生id
      * @return 修改信息
      */
-    Integer addMembers(BigInteger klassId, BigInteger teamId, BigInteger studentId);
+    Integer addMembers(@Param("klassId") BigInteger klassId,
+                       @Param("teamId") BigInteger teamId,
+                       @Param("studentId") BigInteger studentId);//klassId不需要
 
     /**
      * 删除单个学生和队伍的关系
@@ -103,7 +105,8 @@ public interface KlassMapper {
      * @param student 学生id
      * @return 修改信息
      */
-    Integer removeTeamStudent(BigInteger teamId, Student student);
+    Integer removeTeamStudent(@Param("teamId") BigInteger teamId,
+                              @Param("student") Student student);
 
     /**
      * 增加班级与轮次的关系
@@ -113,7 +116,9 @@ public interface KlassMapper {
      * @param enrollNumber 最大报名数
      * @return 新建信息
      */
-    Integer insertKlassRound(Integer klassId, BigInteger roundId, Integer enrollNumber);
+    Integer insertKlassRound(@Param("klassId") BigInteger klassId,
+                             @Param("roundId") BigInteger roundId,
+                             @Param("enrollNumber") Integer enrollNumber);
 
     /**
      * 获取学生的所有班级
@@ -124,17 +129,11 @@ public interface KlassMapper {
     List<Klass> getKlassByStudent(@Param("studentId") BigInteger studentId);
 
     /**
-     * 删除课程中所有学生的队伍
-     *
-     * @param course 课程
-     */
-    void deleteCourseStudentTeam(Course course);
-
-    /**
      * 新建班级和轮次的关系，enroll默认为1
      *
      * @param klassId 班级id
      * @param roundId 轮次id
      */
-    void addKlassRound(BigInteger klassId, BigInteger roundId);
+    void addKlassRound(@Param("klassId") BigInteger klassId,
+                       @Param("roundId") BigInteger roundId);
 }

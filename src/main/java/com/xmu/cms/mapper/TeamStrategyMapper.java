@@ -2,6 +2,7 @@ package com.xmu.cms.mapper;
 
 import com.xmu.cms.entity.strategy.TeamStrategy;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.math.BigInteger;
 
@@ -17,5 +18,5 @@ public interface TeamStrategyMapper {
      * @param courseId 班级id
      * @return 规则
      */
-    TeamStrategy getCourseStrategy(BigInteger courseId);
+    TeamStrategy getCourseStrategy(@Param("courseId") BigInteger courseId);
 }

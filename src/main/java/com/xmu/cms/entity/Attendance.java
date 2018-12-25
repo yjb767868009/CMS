@@ -12,18 +12,16 @@ import java.math.BigInteger;
 public class Attendance {
     private BigInteger attendanceId;
     private Team team;
-    private Klass klass;
-    private Seminar seminar;
+    private KlassSeminar klassSeminar;
     private Integer teamOrder;
     private String presentationFile;
     private String reportFile;
     private Boolean present;
 
-    public Attendance(BigInteger attendanceId, Team team, Klass klass, Seminar seminar, Integer teamOrder, String presentationFile, String reportFile, Boolean present) {
+    public Attendance(BigInteger attendanceId, Team team, KlassSeminar klassSeminar, Integer teamOrder, String presentationFile, String reportFile, Boolean present) {
         this.attendanceId = attendanceId;
         this.team = team;
-        this.klass = klass;
-        this.seminar = seminar;
+        this.klassSeminar = klassSeminar;
         this.teamOrder = teamOrder;
         this.presentationFile = presentationFile;
         this.reportFile = reportFile;
@@ -47,22 +45,6 @@ public class Attendance {
 
     public void setTeam(Team team) {
         this.team = team;
-    }
-
-    public Klass getKlass() {
-        return klass;
-    }
-
-    public void setKlass(Klass klass) {
-        this.klass = klass;
-    }
-
-    public Seminar getSeminar() {
-        return seminar;
-    }
-
-    public void setSeminar(Seminar seminar) {
-        this.seminar = seminar;
     }
 
     public String getPresentationFile() {
@@ -95,5 +77,13 @@ public class Attendance {
 
     public void setPresent(Boolean present) {
         this.present = present;
+    }
+
+    public KlassSeminar getKlassSeminar() {
+        return klassSeminar;
+    }
+
+    public void setKlassSeminar(KlassSeminar klassSeminar) {
+        this.klassSeminar = klassSeminar;
     }
 }

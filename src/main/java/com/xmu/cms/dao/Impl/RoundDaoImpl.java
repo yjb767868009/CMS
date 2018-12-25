@@ -73,8 +73,8 @@ public class RoundDaoImpl implements RoundDao {
 
     @Override
     public Integer newRound(Round round) {
-        Map<Integer, Integer> klassEnrollNumber = round.getKlassEnrollNumber();
-        for (Integer klassId : klassEnrollNumber.keySet()) {
+        Map<BigInteger, Integer> klassEnrollNumber = round.getKlassEnrollNumber();
+        for (BigInteger klassId : klassEnrollNumber.keySet()) {
             Integer enrollNumber = klassEnrollNumber.get(klassId);
             klassMapper.insertKlassRound(klassId, round.getRoundId(), enrollNumber);
         }

@@ -20,7 +20,7 @@ public interface SeminarService {
 
     Map<String, String> modifySeminar(Seminar seminar);
 
-    Map<String, String> modifyKlassSeminarReportDDL(KlassSeminar klassSeminar);
+    void modifyKlassSeminarReportDDL(KlassSeminar klassSeminar);
 
     Seminar getSeminarBySeminarId(BigInteger seminarId);
 
@@ -36,7 +36,7 @@ public interface SeminarService {
 
     Map<String, String> setAttendancePresentationScore(BigInteger attendanceId, Float presentationScore);
 
-    Map<String, String> newAttendance(BigInteger klassSeminarId, BigInteger teamOrder);
+    void newAttendance(BigInteger studentId, Attendance attendance);
 
     Round getRoundByRoundId(BigInteger roundId);
 
@@ -72,5 +72,14 @@ public interface SeminarService {
 
     void stopKlassSeminar(BigInteger klassSeminarId);
 
-    void startKlassSeminar(BigInteger seminarId, BigInteger klassId);
+    void startKlassSeminar(BigInteger klassSeminarId);
+
+    Attendance getAttendanceByAttendanceId(BigInteger attendanceId);
+
+    void attendanceUploadReport(BigInteger attendanceId, String filename);
+
+    void attendanceUploadPPT(BigInteger attendanceId, String filename);
+
+    void deleteAttendance(BigInteger attendanceId);
+
 }

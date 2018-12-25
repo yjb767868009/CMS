@@ -2,6 +2,7 @@ package com.xmu.cms.mapper;
 
 import com.xmu.cms.entity.TeamApplication;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -18,7 +19,7 @@ public interface TeamApplicationMapper {
      * @param teacherId 老师id
      * @return 队伍合法申请列表
      */
-    List<TeamApplication> getTeamApplicationByTeacherId(BigInteger teacherId);
+    List<TeamApplication> getTeamApplicationByTeacherId(@Param("teacherId") BigInteger teacherId);
 
     /**
      * 更新队伍合法申请，及接受或拒绝请求

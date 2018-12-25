@@ -103,7 +103,7 @@
           and course2.id = course.seminar_main_course_id
     </select>
 
-    <delete id="deleteCourseById">
+    <delete id="deleteCourseById" parameterType="java.math.BigInteger">
         DELETE *
         FROM course
         WHERE id = #{courseId}

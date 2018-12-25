@@ -12,11 +12,8 @@
             <id property="teamId" column="teamId"/>
             <result property="teamName" column="teamName"/>
         </association>
-        <association property="klass" javaType="com.xmu.cms.entity.Klass">
-            <id property="klassId" column="klassId"/>
-        </association>
-        <association property="seminar" javaType="com.xmu.cms.entity.Seminar">
-            <id property="seminarId" column="seminarId"/>
+        <association property="klassSeminar" javaType="com.xmu.cms.entity.KlassSeminar">
+            <id property="klassSeminarId" column="klassSeminarId"/>
         </association>
     </resultMap>
 
@@ -27,8 +24,7 @@
                report_name,
                is_present,
                attendance.team_id as teamId,
-               klass_id           as klassId,
-               seminar_id         as seminarId
+               klass_seminar_id as klassSeminarId
         FROM attendance,
              klass_seminar
         WHERE klass_seminar.seminar_id = #{seminarId}
@@ -36,7 +32,7 @@
         ORDER BY team_order
     </select>
 
-    <insert id="newAttendance" parameterType="com.xmu.cms.entity.Attendance">
+    <insert id="insertAttendance" parameterType="com.xmu.cms.entity.Attendance">
         insert attendance (klass_seminar_id,
                            team_id,
                            team_order,
@@ -66,15 +62,14 @@
                ppt_name,
                report_name,
                attendance.team_id     as teamId,
-               klass_seminar.klass_id as klassId,
-               seminar_id             as seminarId
+               klass_seminar_id       as klassSeminarId
         FROM attendance,
              klass_seminar,
-             klass_student
+             team_student
         WHERE klass_seminar.seminar_id = #{seminarId}
           AND klass_seminar.klass_id = #{klassId}
-          AND klass_student.student_id = #{studentId}
-          AND klass_student.team_id = attendance.team_id
+          AND team_student.student_id = #{studentId}
+          AND team_student.team_id = attendance.team_id
           AND klass_seminar.id = attendance.klass_seminar_id
     </select>
 
@@ -115,5 +110,33 @@
         update attendance
         set is_present = #{attendance.present}
         where id = #{attendance.attendanceId}
+    </update>
+
+    <select id="getAttendanceByAttendanceId" resultMap="AttendanceResultMap">
+        SELECT attendance.id      as attendanceId,
+               team_order,
+               ppt_name,
+               report_name,
+               is_present,
+               attendance.team_id as teamId,
+               team.team_name     as teamName
+        FROM attendance,
+             klass_seminar,
+             team
+        WHERE attendance.id = #{attendanceId}
+          AND attendance.klass_seminar_id = klass_seminar.id
+          AND team.id = attendance.team_id
+    </select>
+
+    <update id="attendanceUploadReport">
+        update attendance
+        set report_name = #{fileName}
+        where id = #{attendanceId}
+    </update>
+
+    <update id="attendanceUploadPPT">
+        update attendance
+        set ppt_name = #{fileName}
+        where id = #{attendanceId}
     </update>
 </mapper>

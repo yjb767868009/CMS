@@ -19,7 +19,7 @@ public interface QuestionMapper {
      * @param klassSeminarId 班级讨论课id
      * @return 提问列表
      */
-    List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId);
+    List<Question> getQuestionInKlassSeminar(@Param("klassSeminarId") BigInteger klassSeminarId);
 
     /**
      * 获取所有未选择的提问
@@ -27,7 +27,7 @@ public interface QuestionMapper {
      * @param klassSeminarId 班级讨论课id
      * @return 提问列表
      */
-    List<Question> getNoSelectedQuestionInKlassSeminar(BigInteger klassSeminarId);
+    List<Question> getNoSelectedQuestionInKlassSeminar(@Param("klassSeminarId") BigInteger klassSeminarId);
 
     /**
      * 给提问打分
@@ -35,7 +35,7 @@ public interface QuestionMapper {
      * @param question 提问信息
      * @return 修改信息
      */
-    Integer scoreQuestion(Question question);
+    Integer scoreQuestion(@Param("question") Question question);
 
     /**
      * 发出提问

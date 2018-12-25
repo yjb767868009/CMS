@@ -88,7 +88,7 @@
           and team.course_id = course.id
     </select>
 
-    <select id="getTeamInKlassByStudentId" resultMap="TeamResultMap">
+    <select id="getStudentTeamInKlassSeminar" resultMap="TeamResultMap">
         select team.id              as teamId,
                team_name            as teamName,
                team.status,
@@ -103,10 +103,15 @@
              klass,
              student,
              course,
+             klass_team,
+             team_student,
+             klass_seminar,
              klass_student
-        where klass_student.klass_id = #{klassId}
-          and klass_student.student_id = #{studentId}
-          and team.id = klass_student.team_id
+        where klass_seminar.id = #{klassSeminarId}
+          and klass_seminar.klass_id = klass_team.klass_id
+          and klass_team.team_id = team_student.team_id
+          and team_student.student_id = #{studentId}
+          and team.id = team_student.team_id
           and attendance.team_id = team.id
           and team.klass_id = klass.id
           and team.leader_id = student.id
@@ -150,10 +155,15 @@
              klass,
              student,
              course,
-             klass_student
-        where team.course_id = #{courseId}
-          and klass_student.student_id = #{studentId}
-          and team.id = klass_student.team_id
+             klass_student,
+             team_student,
+             klass_team
+        where klass_student.student_id = #{studentId}
+          and klass_student.course_id = #{courseId}
+          and team_student.student_id = #{studentId}
+          and klass_team.team_id = team_student.team_id
+          and klass_team.klass_id = klass_student.klass_id
+          and team.id = klass_team.team_id
           and attendance.team_id = team.id
           and team.klass_id = klass.id
           and team.leader_id = student.id
@@ -162,7 +172,7 @@
 
     <insert id="insertTeam">
         insert team (klass_id, course_id, leader_id, team_name, team_serial, status)
-        values (#{classId}, #{courseId}, #{leaderId}, #{teamName}, #{teamSerial}, #{status})
+        values (#{klassId}, #{courseId}, #{studentId}, #{team.teamName}, #{team.teamSerial}, #{team.status})
     </insert>
 
     <update id="updateTeamValid" parameterType="com.xmu.cms.entity.Team">
@@ -183,11 +193,9 @@
         where id = #{teamId}
     </update>
 
-    <update id="setMembers">
-        update klass_student
-        set team_id = #{teamId}
-        where student_id = #{studentId}
-    </update>
+    <insert id="setMembers">
+        insert team_student (team_id, student_id) VALUES (#{teamId}, #{studentId})
+    </insert>
 
     <delete id="deleteTeamByTeamId">
         delete
@@ -218,7 +226,7 @@
           and team.course_id = course.id
     </select>
 
-    <select id="getTeamInKlassSeminarByStudentId" resultMap="TeamResultMap">
+    <select id="getTeamInKlassByStudentId" resultMap="TeamResultMap">
         select team.id              as teamId,
                team_name            as teamName,
                team.status,
@@ -233,12 +241,12 @@
              klass,
              student,
              course,
-             klass_seminar,
-             klass_student
-        where klass_seminar.id = #{klassSeminarId}
-          and klass_student.student_id = #{studentId}
-          and klass_seminar.klass_id = klass_student.klass_id
-          and team.id = klass_student.team_id
+             klass_team,
+             team_student
+        where klass_team.klass_id = #{klassId}
+          and team_student.student_id = #{studentId}
+          and team_student.team_id = klass_team.team_id
+          and team.id = team_student.team_id
           and attendance.team_id = team.id
           and team.klass_id = klass.id
           and team.leader_id = student.id

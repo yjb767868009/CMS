@@ -74,14 +74,14 @@ public interface CourseMapper {
      *
      * @param course 新的课程
      */
-    void updateCourseTeamMainCourse(Course course);
+    void updateCourseTeamMainCourse(@Param("course") Course course);
 
     /**
      * 更新课程的共享讨论课主课程
      *
      * @param receiveCourse 新的课程
      */
-    void updateCourseSeminarMainCourse(Course receiveCourse);
+    void updateCourseSeminarMainCourse(@Param("course") Course receiveCourse);
 
     /**
      * 获得队伍的所属课程
@@ -89,7 +89,7 @@ public interface CourseMapper {
      * @param teamId 队伍id
      * @return 课程
      */
-    Course getCourseByTeamId(BigInteger teamId);
+    Course getCourseByTeamId(@Param("teamId") BigInteger teamId);
 
     /**
      * 获取课程的队伍主课程
@@ -97,5 +97,5 @@ public interface CourseMapper {
      * @param courseId 课程id
      * @return 队伍主课程
      */
-    Course getTeamMainCourse(BigInteger courseId);
+    Course getTeamMainCourse(@Param("courseId") BigInteger courseId);
 }

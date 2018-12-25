@@ -26,5 +26,5 @@ public interface SeminarScoreMapper {
      * @param seminarId 讨论课id
      * @return 删除信息
      */
-    Integer deleteSeminarScore(BigInteger seminarId);
+    Integer deleteSeminarScore(@Param("seminarId") BigInteger seminarId);
 }

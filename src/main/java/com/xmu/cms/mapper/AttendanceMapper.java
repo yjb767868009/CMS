@@ -82,7 +82,7 @@ public interface AttendanceMapper {
      * @param attendanceId 展示id
      * @return 展示
      */
-    Attendance getAttendanceByAttendanceId(BigInteger attendanceId);// TODO: 2018/12/25  
+    Attendance getAttendanceByAttendanceId(@Param("attendanceId") BigInteger attendanceId);
 
     /**
      * 展示上传报告
@@ -90,7 +90,8 @@ public interface AttendanceMapper {
      * @param attendanceId 展示id
      * @param filename     报告文件名
      */
-    void attendanceUploadReport(BigInteger attendanceId, String filename);// TODO: 2018/12/25
+    void attendanceUploadReport(@Param("attendanceId") BigInteger attendanceId,
+                                @Param("fileName") String filename);
 
     /**
      * 展示上传PPT
@@ -98,12 +99,13 @@ public interface AttendanceMapper {
      * @param attendanceId 展示id
      * @param filename     PPT文件名
      */
-    void attendanceUploadPPT(BigInteger attendanceId, String filename);// TODO: 2018/12/25
+    void attendanceUploadPPT(@Param("attendanceId") BigInteger attendanceId,
+                             @Param("fileName") String filename);
 
     /**
      * 新建展示
      *
      * @param attendance 新的展示
      */
-    void insertAttendance(Attendance attendance);// TODO: 2018/12/25  
+    void insertAttendance(@Param("attendance") Attendance attendance);
 }

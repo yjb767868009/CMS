@@ -59,7 +59,6 @@ import MobileTeacher from '@/views/Teacher/mobile/MobileTeacher'
 
 import SetRound from '@/views/Teacher/mobile/SetRound'
 import CreateSeminar from '@/views/Teacher/mobile/CreateSeminar'
-import CreateRound from '@/views/Teacher/mobile/CreateRound'
 import TeacherSeminars from '@/views/Teacher/mobile/TeacherSeminars'
 import SeminarFinished from '@/views/Teacher/mobile/SeminarFinished'
 import SeminarOngoing from '@/views/Teacher/mobile/SeminarOngoing'
@@ -71,7 +70,6 @@ import GradeList from '@/views/Teacher/mobile/GradeList'
 import TeamList from '@/views/Teacher/mobile/TeamList'
 import CourseInfo from '@/views/Teacher/mobile/CourseInfo'
 import ClassInfo from '@/views/Teacher/mobile/ClassInfo'
-import CreateClass from '@/views/Teacher/mobile/CreateClass'
 import Notify from '@/views/Teacher/mobile/Notify'
 import CreateCourse from '@/views/Teacher/mobile/CreateCourse'
 import Share from '@/views/Teacher/mobile/Share'
@@ -295,7 +293,7 @@ export default new Router({
       component: SetAccount
     },
     {
-      path: '/mobile/teacher/course',//课程管理
+      path: '/mobile/teacher/manageCourse',//课程管理
       name: 'ManageCourse',
       component: ManageCourse
     },
@@ -304,11 +302,6 @@ export default new Router({
       path:'/mobile/teacher/setround',//设置轮次
       name:'SetRound',
       component:SetRound
-    },
-    {
-      path:'/mobile/teacher/createround',
-      name:'CreateRound',
-      component:CreateRound
     },
     {
       path:'/mobile/teacher/createseminar',
@@ -376,19 +369,14 @@ export default new Router({
       component:GradeList
     },
     {
-      path:'/mobile/teacher/courseinfo',
+      path:'/mobile/teacher/courseinfo',//课程信息
       name:'CourseInfo',
       component:CourseInfo
     },
     {
-      path:'/mobile/teacher/classinfo',
+      path:'/mobile/teacher/classinfo',//班级信息
       name:'ClassInfo',
       component:ClassInfo
-    },
-    {
-      path:'/mobile/teacher/createclass',
-      name:'CreateClass',
-      component:CreateClass
     },
     {
       path:'/mobile/teacher/notify',
@@ -396,7 +384,7 @@ export default new Router({
       component:Notify
     },
     {
-      path:'/mobile/teacher/createcourse',
+      path:'/mobile/teacher/createcourse',//创建课程
       name:'CreateCourse',
       component:CreateCourse
     },

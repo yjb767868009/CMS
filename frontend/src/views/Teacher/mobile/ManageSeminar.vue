@@ -1,6 +1,7 @@
 <template>
   <div class="login" title="2016-(1)">
-    <x-header title="OOAD-讨论课" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
+    <x-header title="OOAD-讨论课" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}"
+      @on-click-more="show=!show">
     </x-header>
 
     <cell title="业务流程分析" style="text-align:center">
@@ -37,7 +38,7 @@
     </flexbox>
 
 
-    
+
     <template v-if="!is_modifying">
       <x-button @click.native="nextQuestion" type="primary" style="margin-top:100px;color:#fff;width:50%">抽取提问</x-button>
       <x-button @click.native="nextTeam" type="primary" plain style="margin-top:10px;width:50%">下组展示</x-button>
@@ -46,13 +47,22 @@
       <x-button @click.native="confirmModification" type="primary" style="margin-top:100px;color:#fff;width:50%">确认修改</x-button>
     </template>
 
-        <div v-transfer-dom>
+    <div v-transfer-dom>
       <popup v-model="show" height="23%">
-          <div>
-              <cell value-align="left" title=""><img slot="icon" src="@/assets/message.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="Undo">代办</div></cell>
-              <cell value-align="left" title=""><img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="TeacherInfo">个人页</div></cell>
-              <cell value-align="left" title=""><img slot="icon" src="@/assets/book.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="GoSeminar">讨论课</div></cell>
-          </div>
+        <div>
+          <cell value-align="left" title=""><img slot="icon" src="@/assets/message.png" style="display:block;margin-right:10px;"
+              width="30px" height="30px" />
+            <div style="padding-left:110px;font-size:1.3em;color:#000" @click="Undo">代办</div>
+          </cell>
+          <cell value-align="left" title=""><img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;"
+              width="30px" height="30px" />
+            <div style="padding-left:110px;font-size:1.3em;color:#000" @click="TeacherInfo">个人页</div>
+          </cell>
+          <cell value-align="left" title=""><img slot="icon" src="@/assets/book.png" style="display:block;margin-right:10px;"
+              width="30px" height="30px" />
+            <div style="padding-left:110px;font-size:1.3em;color:#000" @click="GoSeminar">讨论课</div>
+          </cell>
+        </div>
       </popup>
     </div>
   </div>
@@ -70,19 +80,20 @@
     Icon,
     Radio,
     Countdown,
-    Confirm,TransferDom,Popup,
+    Confirm,
+    TransferDom,
+    Popup,
     Flexbox,
     FlexboxItem,
     XTextarea,
     XInput,
     Countup
   } from 'vux'
-import { setInterval, setTimeout } from 'timers';
-import axios from 'axios'
+  import axios from 'axios'
   export default {
-  directives:{
-    TransferDom
-  },
+    directives: {
+      TransferDom
+    },
     components: {
       XHeader,
       Cell,
@@ -96,11 +107,12 @@ import axios from 'axios'
       FlexboxItem,
       XTextarea,
       XInput,
-      Countup,Popup
+      Countup,
+      Popup
     },
     data() {
       return {
-        show:false,
+        show: false,
         Teams: ['1-1', '1-2', '1-3'],
         Questions: ['111', '1111', '11111', 'fdfad'],
         currentTeamIndex: -1,
@@ -110,34 +122,32 @@ import axios from 'axios'
         is_modifying: false,
         usedMillisecond: 0,
         usedSecond: 0,
-        timerInterval: '',
-        presentationScore:'',
-        questionScore:'',
+        presentationScore: '',
+        questionScore: '',
       }
     },
-    mounted:function(){
-        this.initWebSocket()
-        //this.$store.state.teacher.currentKlassSeminar.klassSeminarId
-        this.$axios.get('/klassseminar/1/run')
-        .then((response)=>{
-            console.log(response)
-            this.questions=response.data.questions
-            this.attendances=response.data.attendances
-            this.Questions=[]
-            for(var i=0;i<this.questions.length;i++){
-                this.Questions.push(this.questions[i].name)
-            }
-            this.Teams=[]
-            for(var i=0;i<this.attendances.length;i++){
-                this.Teams.push(this.attendances[i].team.teamName)
-            }
+    mounted: function () {
+      this.initWebSocket()
+      //this.$store.state.teacher.currentKlassSeminar.klassSeminarId
+      this.$axios.get('/klassseminar/1/run')
+        .then((response) => {
+          console.log(response)
+          this.questions = response.data.questions
+          this.attendances = response.data.attendances
+          this.Questions = []
+          for (var i = 0; i < this.questions.length; i++) {
+            this.Questions.push(this.questions[i].name)
+          }
+          this.Teams = []
+          for (var i = 0; i < this.attendances.length; i++) {
+            this.Teams.push(this.attendances[i].team.teamName)
+          }
         })
     },
-     beforeDestroy: function () {
-  // 页面离开时断开连接,清除定时器
-  this.disconnect();
-  clearInterval(this.timer);
- },
+    beforeDestroy: function () {
+      // 页面离开时断开连接,清除定时器
+      this.disconnect();
+    },
 
     methods: {
       back: function () {
@@ -151,88 +161,65 @@ import axios from 'axios'
         this.value = 'completed'
         console.log('current index', index)
       },
-    Undo(){
-            this.$router.push('/mobile/teacher/notify')
-        },
-    TeacherInfo(){
-            this.$router.push('/mobile/teacher')
-        },
-    GoSeminar(){
-            this.$router.push('/mobile/teacher/seminars')
-        },
+      Undo() {
+        this.$router.push('/mobile/teacher/notify')
+      },
+      TeacherInfo() {
+        this.$router.push('/mobile/teacher')
+      },
+      GoSeminar() {
+        this.$router.push('/mobile/teacher/seminars')
+      },
       keepUp: function () {
         this.is_pause = false
       },
 
-      
-      startTimer: function () {
-        this.timerInterval = setInterval(this.timer, 50)
+
+      confirmModification: function () {
+        console.log('post')
+        this.is_modifying = false
       },
-      stopTimer: function () {
-        window.clearInterval(this.timerInterval)
-      },
-      resetTimer: function () {
-        if (this.timerInterval !== '') {
-          window.clearInterval(this.timerInterval)
+      typePresentationScore: function (value) {
+        this.is_modifying = true
+        return {
+          valid: (['1', '2', '3', '4', '5'].indexOf(value)) !== -1,
+          msg: '分数为大于0，小于6的整数'
         }
-        this.usedMillisecond = 0
-        this.usedSecond = 0
-      },
-      timer: function () {
-        this.usedMillisecond = this.usedMillisecond + 50
-        if (this.usedMillisecond >= 1000) {
-          this.usedMillisecond = 0;
-          this.usedSecond = this.usedSecond + 1
-        }
-      },
-      confirmModification:function(){
-          console.log('post')
-          this.is_modifying=false
-      },
-      typePresentationScore:function(value){
-          this.is_modifying=true
-          return{
-              valid:(['1','2','3','4','5'].indexOf(value))!==-1,
-              msg:'分数为大于0，小于6的整数'
-          }
       },
 
       //websocket
-      initWebSocket:function(){
-          this.connection()
+      initWebSocket: function () {
+        this.connection()
       },
 
-      connection:function(){
-          //建立链接对象
-          this.socket=new SockJS('http://localhost:8000/gs-guide-websocket')
-          //获取STOMP子协议的客户端对象
-          this.stompClient=Stomp.over(this.socket)
-          //空header
-          //this.$store.state.teacher.currentKlassSeminar.klassSeminarId
-          this.stompClient.connect({},(frame)=>{
-              this.stompClient.subscribe('/topic/klassSeminar/1',(KlassSeminarRun)=>{
-                //   this.KlassSeminarRun=JSON.parse(KlassSeminarRun.body)
-                //   this.showKlassSeminarRun(this.KlassSeminarRun)
-                console.log('???')
-                console.log(KlassSeminarRun.body)
-              })
+      connection: function () {
+        //建立链接对象
+        this.socket = new SockJS('http://localhost:8000/gs-guide-websocket')
+        //获取STOMP子协议的客户端对象
+        this.stompClient = Stomp.over(this.socket)
+        //空header
+        //this.$store.state.teacher.currentKlassSeminar.klassSeminarId
+        this.stompClient.connect({}, (frame) => {
+          this.stompClient.subscribe('/topic/klassSeminar/1', (KlassSeminarRun) => {
+            //   this.KlassSeminarRun=JSON.parse(KlassSeminarRun.body)
+            //   this.showKlassSeminarRun(this.KlassSeminarRun)
+            console.log(KlassSeminarRun.body)
           })
-          
+        })
+
       },
 
-      disconnect(){
-          if(this.stompClient!=null){
-              this.stompClient.disconnect()
-              console.log("Disconnected")
-          }
+      disconnect() {
+        if (this.stompClient != null) {
+          this.stompClient.disconnect()
+          console.log("Disconnected")
+        }
       },
 
       nextQuestion: function () {
-          this.stompClient.send('/app/1/getQuestion',{},{})
+        this.stompClient.send('/app/1/getQuestion', {}, {})
       },
       nextTeam: function () {
-        this.resetTimer()
-        this.startTimer()
         this.stompClient.send('/app/1/nextAttendance')
         if (this.currentTeamIndex >= -1 && this.currentTeamIndex < this.Teams.length - 1) {
           console.log('nextTeam')
@@ -242,8 +229,8 @@ import axios from 'axios'
           console.log('no more team')
         }
       },
-      showKlassSeminarRun:function(v){
-          console.log(v)
+      showKlassSeminarRun: function (v) {
+        console.log(v)
       }
     }
   }

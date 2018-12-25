@@ -74,8 +74,8 @@ export default {
           if(data.active==="false"){//需要激活
             this.$router.push('/mobile/teacher/activation')
           }
-          else{
-            this.$router.push('')
+          else{//不用激活
+            this.$router.push('/mobile/teacher/seminars')
           }
         }
 
@@ -86,7 +86,7 @@ export default {
           if(data.active==="false"){//需要激活
             this.$router.push('mobile/student/activation')
           }
-          else{
+          else{//不用激活
             this.$router.push('/mobile/Student/studentSeminarList')
           }
         }

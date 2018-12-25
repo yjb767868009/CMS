@@ -13,7 +13,7 @@ import java.util.Map;
 public interface CourseService {
     List<Course> getAllCoursesByTeacher(BigInteger teacherId);
 
-    Map<String, String> deleteCourseById(BigInteger courseId);
+    void deleteCourseById(BigInteger courseId);
 
     List<Course> getAllCoursesByStudent(Student student);
 
@@ -23,9 +23,7 @@ public interface CourseService {
 
     List<Team> getTeamInCourse(BigInteger courseId);
 
-    List<Team> getTeamInCourseByStudent(BigInteger courseId, BigInteger studentId);
-
-    Map<String, String> newKlass(BigInteger courseId, Klass klass);
+    void newKlass(BigInteger courseId, Klass klass);
 
     List<Klass> getKlassInCourse(BigInteger courseId);
 
@@ -65,4 +63,5 @@ public interface CourseService {
 
     void uploadKlassFile(BigInteger klassId, List<Student> students) throws Exception;
 
+    Team getStudentTeamInKlass(BigInteger studentId, BigInteger klassId);
 }

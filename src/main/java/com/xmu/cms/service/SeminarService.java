@@ -72,7 +72,7 @@ public interface SeminarService {
 
     void stopKlassSeminar(BigInteger klassSeminarId);
 
-    void startKlassSeminar(BigInteger seminarId, BigInteger klassId);
+    void startKlassSeminar(BigInteger klassSeminarId);
 
     Attendance getAttendanceByAttendanceId(BigInteger attendanceId);
 
@@ -81,4 +81,5 @@ public interface SeminarService {
     void attendanceUploadPPT(BigInteger attendanceId, String filename);
 
     void deleteAttendance(BigInteger attendanceId);
+
 }

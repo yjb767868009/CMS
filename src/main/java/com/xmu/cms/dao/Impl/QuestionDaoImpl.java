@@ -44,7 +44,7 @@ public class QuestionDaoImpl implements QuestionDao {
         BigInteger studentId = question.getStudent().getStudentId();
         Question findQuestion = questionMapper.getQuestionByKlassSeminarAndStudent(klassSeminarId, studentId);
         if (findQuestion == null) {
-            Team team = teamMapper.getTeamInKlassSeminarByStudentId(klassSeminarId, studentId);
+            Team team = teamMapper.getStudentTeamInKlassSeminar(studentId, klassSeminarId);
             question.setTeam(team);
             questionMapper.insertQuestion(question);
             return questionMapper.getQuestionByKlassSeminarAndStudent(klassSeminarId, studentId);

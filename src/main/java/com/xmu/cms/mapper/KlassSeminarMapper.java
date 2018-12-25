@@ -82,4 +82,11 @@ public interface KlassSeminarMapper {
      * @param klassId   班级id
      */
     void startKlassSeminar(BigInteger seminarId, BigInteger klassId);
+
+    /**
+     * 开始班级讨论课，把班级讨论课状态置为开始
+     *
+     * @param klassSeminarId 班级讨论课id
+     */
+    void startKlassSeminar(BigInteger klassSeminarId);// TODO: 2018/12/25
 }

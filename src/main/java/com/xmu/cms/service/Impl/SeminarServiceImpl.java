@@ -286,12 +286,12 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public void startKlassSeminar(BigInteger seminarId, BigInteger klassId) {
-        List<Attendance> attendances = attendanceDao.getAttendancesInKlassAndSeminar(seminarId, klassId);
+    public void startKlassSeminar(BigInteger klassSeminarId) {
+        List<Attendance> attendances = attendanceDao.getAttendancesInKlassSeminar(klassSeminarId);
         if (attendances != null) {
             attendanceDao.updateAttendancePresent(attendances.get(0));
         }
-        klassSeminarDao.startKlassSeminar(seminarId, klassId);
+        klassSeminarDao.startKlassSeminar(klassSeminarId);
     }
 
     @Override

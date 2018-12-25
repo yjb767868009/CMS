@@ -48,15 +48,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Map<String, String> deleteCourseById(BigInteger courseId) {
-        Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = courseDao.deleteCourse(courseId);
-        if (count == 1) {
-            message.put("message", "Success");
-        } else {
-            message.put("message", "Error");
-        }
-        return message;
+    public void deleteCourseById(BigInteger courseId) {
+        courseDao.deleteCourse(courseId);
     }
 
     @Override
@@ -89,24 +82,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Team> getTeamInCourseByStudent(BigInteger courseId, BigInteger studentId) {
-        Course mainCourse = courseDao.getTeamMainCourse(courseId);
-        if (mainCourse != null) courseId = mainCourse.getCourseId();
-        List<Team> teams = new ArrayList<Team>();
-        teams.add(teamDao.getTeamInCourseByStudent(courseId, studentId));
-        return teams;
-    }
-
-    @Override
-    public Map<String, String> newKlass(BigInteger courseId, Klass klass) {
-        Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = klassDao.newKlass(courseId, klass);
-        if (count == 1) {
-            message.put("message", "Success");
-        } else {
-            message.put("message", "Error");
-        }
-        return message;
+    public void newKlass(BigInteger courseId, Klass klass) {
+        klassDao.newKlass(courseId, klass);
     }
 
     @Override
@@ -226,6 +203,11 @@ public class CourseServiceImpl implements CourseService {
     public void uploadKlassFile(BigInteger klassId, List<Student> students) throws Exception {
         studentDao.newStudent(students);
         klassDao.addStudentInKlass(klassId, students);
+    }
+
+    @Override
+    public Team getStudentTeamInKlass(BigInteger studentId, BigInteger klassId) {
+        return teamDao.getStudentTeamInKlass(studentId, klassId);
     }
 
 }

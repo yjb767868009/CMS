@@ -76,17 +76,22 @@ public class SeminarController {
     }
 
     @Secured("ROLE_TEACHER")
-    @PutMapping(value = "/seminar/{seminarId}/class/{classId}/start")
-    public Map<String, String> startKlassSeminar(@PathVariable("seminarId") BigInteger seminarId,
-                                                 @PathVariable("classId") BigInteger klassId) {
+    @PutMapping(value = "/klassseminar/{klassSeminarId}/start")
+    public Map<String, String> startKlassSeminar(@PathVariable("klassSeminarId") BigInteger klassSeminarId) {
         Map<String, String> message = new HashMap<String, String>();
         try {
-            seminarService.startKlassSeminar(seminarId, klassId);
+            seminarService.startKlassSeminar(klassSeminarId);
             message.put("message", "Success");
         } catch (Exception e) {
             message.put("message", e.getMessage());
         }
         return message;
+    }
+
+    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
+    @GetMapping(value = "/klassseminar/{klassSeminarId}/attendances")
+    public List<Attendance> getAttendanceInKlassSeminar(@PathVariable("klassSeminarId") BigInteger klassSeminarId) {
+        return seminarService.getAttendancesInKlassSeminar(klassSeminarId);
     }
 
     @Secured("ROLE_TEACHER")

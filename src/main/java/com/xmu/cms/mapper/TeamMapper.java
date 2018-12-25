@@ -55,16 +55,6 @@ public interface TeamMapper {
     List<Team> getTeamInCourse(BigInteger courseId);
 
     /**
-     * 获取课程中该学生的队伍
-     *
-     * @param courseId  课程id
-     * @param studentId 学生id
-     * @return 队伍信息
-     */
-    Team getTeamInCourseByStudent(@Param("courseId") BigInteger courseId,
-                                  @Param("studentId") BigInteger studentId);
-
-    /**
      * 删除队伍
      *
      * @param teamId 队伍id
@@ -100,20 +90,20 @@ public interface TeamMapper {
     void updateTeamValid(Team team);
 
     /**
-     * 获取学生在班级讨论课中的队伍
+     * 学生在某节班级讨论课属于的队伍
      *
-     * @param klassSeminarId 班级讨论课id
      * @param studentId      学生id
+     * @param klassSeminarId 班级讨论课id
      * @return 队伍
      */
-    Team getTeamInKlassSeminarByStudentId(@Param("klassSeminarId") BigInteger klassSeminarId, @Param("studentId") BigInteger studentId);
+    Team getStudentTeamInKlassSeminar(@Param("studentId") BigInteger studentId, @Param("klassSeminarId") BigInteger klassSeminarId);// TODO: 2018/12/25
 
     /**
-     * 获取学生在班级讨论课的队伍
+     * 获取班级中学生的队伍
      *
-     * @param studentId      学生id
-     * @param klassSeminarId 班级讨论课id
+     * @param studentId 学生id
+     * @param klassId   班级id
      * @return 队伍
      */
-    Team getStudentTeamInKlassSeminar(BigInteger studentId, BigInteger klassSeminarId);// TODO: 2018/12/25  
+    Team getStudentTeamInKlass(BigInteger studentId, BigInteger klassId);// TODO: 2018/12/25  
 }

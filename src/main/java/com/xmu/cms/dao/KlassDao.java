@@ -26,8 +26,6 @@ public interface KlassDao {
 
     Klass getKlass(BigInteger klassId);
 
-    void deleteCourseStudentTeam(Course receiveCourse);
-
     void addKlassRound(BigInteger klassId, BigInteger roundId);
 
     void deleteKlass(BigInteger klassId);

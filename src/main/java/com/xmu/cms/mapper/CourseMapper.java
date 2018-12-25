@@ -98,4 +98,11 @@ public interface CourseMapper {
      * @return 队伍主课程
      */
     Course getTeamMainCourse(@Param("courseId") BigInteger courseId);
+
+    /**
+     * 共享之后,删除课程原有的所有队伍
+     *
+     * @param course 课程
+     */
+    void deleteCourseTeam(Course course);// TODO: 2018/12/25
 }

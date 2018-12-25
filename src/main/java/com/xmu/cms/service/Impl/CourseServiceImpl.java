@@ -167,13 +167,13 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public ShareTeam updateShareTeam(ShareTeam shareTeam) {
         ShareTeam newShareTeam = shareTeamDao.updateShareTeam(shareTeam);
-        Course masterCourse = newShareTeam.getMasterCourse();
-        Course receiveCourse = newShareTeam.getReceiveCourse();
-        receiveCourse.setTeamMainCourse(masterCourse);
+        if (newShareTeam.getStatus()) {
+            Course masterCourse = newShareTeam.getMasterCourse();
+            Course receiveCourse = newShareTeam.getReceiveCourse();
+            receiveCourse.setTeamMainCourse(masterCourse);
 
-        courseDao.updateCourseTeamMainCourse(receiveCourse);
-        klassDao.deleteCourseStudentTeam(receiveCourse);
-
+            courseDao.updateCourseTeamMainCourse(receiveCourse);
+        }
         return newShareTeam;
     }
 

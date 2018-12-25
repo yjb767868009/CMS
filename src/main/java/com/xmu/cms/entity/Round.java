@@ -19,9 +19,9 @@ public class Round {
     private Integer reportScoreType;
     private Integer questionScoreType;
     private List<Seminar> seminars;
-    private Map<Integer, Integer> klassEnrollNumber;//Map<klassId,enrollNumber>
+    private Map<BigInteger, Integer> klassEnrollNumber;//Map<klassId,enrollNumber>
 
-    public Round(BigInteger roundId, Integer order, Course course, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType, List<Seminar> seminars, Map<Integer, Integer> klassEnrollNumber) {
+    public Round(BigInteger roundId, Integer order, Course course, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType, List<Seminar> seminars, Map<BigInteger, Integer> klassEnrollNumber) {
         this.roundId = roundId;
         this.order = order;
         this.course = course;
@@ -83,11 +83,11 @@ public class Round {
         this.order = order;
     }
 
-    public Map<Integer, Integer> getKlassEnrollNumber() {
+    public Map<BigInteger, Integer> getKlassEnrollNumber() {
         return klassEnrollNumber;
     }
 
-    public void setKlassEnrollNumber(Map<Integer, Integer> klassEnrollNumber) {
+    public void setKlassEnrollNumber(Map<BigInteger, Integer> klassEnrollNumber) {
         this.klassEnrollNumber = klassEnrollNumber;
     }
 

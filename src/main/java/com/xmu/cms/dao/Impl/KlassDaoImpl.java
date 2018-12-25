@@ -67,11 +67,6 @@ public class KlassDaoImpl implements KlassDao {
     }
 
     @Override
-    public void deleteCourseStudentTeam(Course course) {
-        klassMapper.deleteCourseStudentTeam(course);
-    }
-
-    @Override
     public void addKlassRound(BigInteger klassId, BigInteger roundId) {
         klassMapper.addKlassRound(klassId, roundId);
     }

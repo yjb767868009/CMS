@@ -39,7 +39,7 @@ public class JWTUtils {
 
         String token = JWT.create().withHeader(map) // header
                 .withIssuer("CMS")
-                .withExpiresAt(new Date(System.currentTimeMillis() + 2 * 60 * 60 * 100))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 2 * 60 * 60 * 1000))
                 .withClaim("userId", userId)
                 .withClaim("userType", info.getUserType())
                 .withClaim("account", info.getAccount())

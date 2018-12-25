@@ -266,15 +266,15 @@ public class SeminarServiceImpl implements SeminarService {
         List<Attendance> attendances = attendanceDao.getAttendancesInKlassSeminar(klassSeminarId);
         boolean find = false;
         for (Attendance attendance : attendances) {
-            if (attendance.getPresent()) {
-                attendance.setPresent(false);
-                attendanceDao.updateAttendancePresent(attendance);
-                find = true;
-            }
             if (find) {
                 attendance.setPresent(true);
                 attendanceDao.updateAttendancePresent(attendance);
                 return attendance;
+            }
+            if (attendance.getPresent()) {
+                attendance.setPresent(false);
+                attendanceDao.updateAttendancePresent(attendance);
+                find = true;
             }
         }
         return null;

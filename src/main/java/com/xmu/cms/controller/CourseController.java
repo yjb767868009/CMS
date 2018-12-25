@@ -81,8 +81,12 @@ public class CourseController {
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/course/{courseId}")
-    public Course getCourse(@PathVariable("courseId") BigInteger courseId) {
-        return courseService.getCourse(courseId);
+    public Object getCourse(@PathVariable("courseId") BigInteger courseId) {
+        try {
+            return courseService.getCourse(courseId);
+        } catch (Exception e) {
+            return "无此课";
+        }
     }
 
 

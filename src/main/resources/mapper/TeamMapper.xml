@@ -95,27 +95,20 @@
                klass.id             as klassId,
                klass.grade          as grade,
                leader_id            as leaderId,
-               student.student_name as leaderName,
-               course.id            as courseId,
-               course.course_name   as courseName
+               student.student_name as leaderName
         from team,
-             attendance,
              klass,
              student,
-             course,
              klass_team,
              team_student,
-             klass_seminar,
-             klass_student
+             klass_seminar
         where klass_seminar.id = #{klassSeminarId}
           and klass_seminar.klass_id = klass_team.klass_id
           and klass_team.team_id = team_student.team_id
           and team_student.student_id = #{studentId}
           and team.id = team_student.team_id
-          and attendance.team_id = team.id
           and team.klass_id = klass.id
           and team.leader_id = student.id
-          and team.course_id = course.id
     </select>
 
     <select id="getTeamInCourse" resultMap="TeamResultMap">

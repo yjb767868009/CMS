@@ -1,9 +1,6 @@
 <template>
   <div class="login" title="2016-(1)">
-    <x-header title="OOAD-讨论课" style="height:60px;padding-top:12px" :left-options="{showBack:false}">
-      <button @click.native="onClick" style="background:0;height:0px;border:0" slot="right">
-        <x-icon type="ios-plus-empty" size="35" style="fill:#fff"></x-icon>
-      </button>
+    <x-header title="OOAD-讨论课" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
 
     <cell title="业务流程分析" style="text-align:center">
@@ -39,7 +36,17 @@
       </flexbox-item>
     </flexbox>
 
-    <div v-transfer-dom>
+
+    
+    <template v-if="!is_modifying">
+      <x-button @click.native="nextQuestion" type="primary" style="margin-top:100px;color:#fff;width:50%">抽取提问</x-button>
+      <x-button @click.native="nextTeam" type="primary" plain style="margin-top:10px;width:50%">下组展示</x-button>
+    </template>
+    <template v-if="is_modifying">
+      <x-button @click.native="confirmModification" type="primary" style="margin-top:100px;color:#fff;width:50%">确认修改</x-button>
+    </template>
+
+        <div v-transfer-dom>
       <popup v-model="show" height="23%">
           <div>
               <cell value-align="left" title=""><img slot="icon" src="@/assets/message.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="Undo">代办</div></cell>
@@ -48,13 +55,6 @@
           </div>
       </popup>
     </div>
-    <template v-if="!is_modifying">
-      <x-button @click.native="nextQuestion" type="primary" style="margin-top:100px;color:#fff;width:50%">抽取提问</x-button>
-      <x-button @click.native="nextTeam" type="primary" plain style="margin-top:10px;width:50%">下组展示</x-button>
-    </template>
-    <template v-if="is_modifying">
-      <x-button @click.native="confirmModification" type="primary" style="margin-top:100px;color:#fff;width:50%">确认修改</x-button>
-    </template>
   </div>
 </template>
 
@@ -77,6 +77,8 @@
     XInput,
     Countup
   } from 'vux'
+import { setInterval, setTimeout } from 'timers';
+import axios from 'axios'
   export default {
   directives:{
     TransferDom
@@ -94,10 +96,11 @@
       FlexboxItem,
       XTextarea,
       XInput,
-      Countup
+      Countup,Popup
     },
     data() {
       return {
+        show:false,
         Teams: ['1-1', '1-2', '1-3'],
         Questions: ['111', '1111', '11111', 'fdfad'],
         currentTeamIndex: -1,
@@ -114,20 +117,31 @@
     },
     mounted:function(){
         this.initWebSocket()
+        //this.$store.state.teacher.currentKlassSeminar.klassSeminarId
+        this.$axios.get('/klassseminar/1/run')
+        .then((response)=>{
+            console.log(response)
+            this.questions=response.data.questions
+            this.attendances=response.data.attendances
+            this.Questions=[]
+            for(var i=0;i<this.questions.length;i++){
+                this.Questions.push(this.questions[i].name)
+            }
+            this.Teams=[]
+            for(var i=0;i<this.attendances.length;i++){
+                this.Teams.push(this.attendances[i].team.teamName)
+            }
+        })
     },
+     beforeDestroy: function () {
+  // 页面离开时断开连接,清除定时器
+  this.disconnect();
+  clearInterval(this.timer);
+ },
+
     methods: {
-      onClick() {
-        console.log('on click')
-      },
       back: function () {
         this.$router.push('/mobile/teacher/seminar')
-      },
-      more: function () {},
-      comfirm: function () {
-
-      },
-      modify: function () {
-
       },
       pause: function () {
         this.is_pause = true
@@ -149,20 +163,8 @@
       keepUp: function () {
         this.is_pause = false
       },
-      nextTeam: function () {
-        this.resetTimer()
-        this.startTimer()
-        if (this.currentTeamIndex >= -1 && this.currentTeamIndex < this.Teams.length - 1) {
-          console.log('nextTeam')
-          this.currentTeamIndex = this.currentTeamIndex + 1
-          this.currentTeam = this.Teams[this.currentTeamIndex]
-        } else {
-          console.log('no more team')
-        }
-      },
-      nextQuestion: function () {
-        
-      },
+
+      
       startTimer: function () {
         this.timerInterval = setInterval(this.timer, 50)
       },
@@ -202,15 +204,20 @@
 
       connection:function(){
           //建立链接对象
-          this.socket=new SockJs('http://localhost:8000/gs-guide-websocket')
+          this.socket=new SockJS('http://localhost:8000/gs-guide-websocket')
           //获取STOMP子协议的客户端对象
           this.stompClient=Stomp.over(this.socket)
           //空header
+          //this.$store.state.teacher.currentKlassSeminar.klassSeminarId
           this.stompClient.connect({},(frame)=>{
-              this.stompClient.subscribe('/topic/klassSeminar/'+this.$store.state.teacher.currentKlassSeminar.klassSeminarId,(KlassSeminarRun)=>{
-                  this.KlassSeminarRun=JSON.parse(KlassSeminarRun.body)
+              this.stompClient.subscribe('/topic/klassSeminar/1',(KlassSeminarRun)=>{
+                //   this.KlassSeminarRun=JSON.parse(KlassSeminarRun.body)
+                //   this.showKlassSeminarRun(this.KlassSeminarRun)
+                console.log('???')
+                console.log(KlassSeminarRun.body)
               })
           })
+          
       },
 
       disconnect(){
@@ -220,6 +227,24 @@
           }
       },
 
+      nextQuestion: function () {
+          this.stompClient.send('/app/1/getQuestion',{},{})
+      },
+      nextTeam: function () {
+        this.resetTimer()
+        this.startTimer()
+        this.stompClient.send('/app/1/nextAttendance')
+        if (this.currentTeamIndex >= -1 && this.currentTeamIndex < this.Teams.length - 1) {
+          console.log('nextTeam')
+          this.currentTeamIndex = this.currentTeamIndex + 1
+          this.currentTeam = this.Teams[this.currentTeamIndex]
+        } else {
+          console.log('no more team')
+        }
+      },
+      showKlassSeminarRun:function(v){
+          console.log(v)
+      }
     }
   }
 

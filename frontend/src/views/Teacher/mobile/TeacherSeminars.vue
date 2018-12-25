@@ -16,6 +16,7 @@
     <template v-if="seminar_on_going">
       <x-button @click="doing" style="margin-top:100%;font-size:10px;" mini type="warn">正在进行讨论课</x-button>
     </template>
+    
     <div v-transfer-dom>
       <popup v-model="show" height="23%">
           <div>
@@ -59,7 +60,7 @@ export default {
           teamStartTime: "2018-11-27T14:00:00.000+0000",
           teamEndTime: "2018-12-01T14:00:00.000+0000"
         }
-      ],
+      ], 
       coursePlus: {
         "1": "主",
         "2": "从"

@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import {XHeader,XButton,Divider,Group,Datetime,XInput,PopupPicker,TransferDom,Popup} from 'vux'
+import {XHeader,XButton,Divider,Group,Datetime,XInput,PopupPicker,TransferDom,Popup,Cell} from 'vux'
 export default {
   directives:{
     TransferDom
@@ -54,7 +54,7 @@ export default {
         Group,
         Datetime,
         XInput,
-        PopupPicker,Popup
+        PopupPicker,Popup,Cell
     },
     methods: {
     onChange (val) {

@@ -20,55 +20,55 @@ import VueCookie from 'vue-cookie'
 
 //axios
 import axios from 'axios'
-// Object.defineProperty(Vue.prototype,'$axios',{value:axios})
+Object.defineProperty(Vue.prototype,'$axios',{value:axios})
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VueCookie)
 Vue.use(MintUI)
 
-// axios.defaults.baseURL='http://localhost:8000'
-// axios.defaults.withCredentials=true
+axios.defaults.baseURL='http://localhost:8000'
+axios.defaults.withCredentials=true
 
 
-// axios.interceptors.request.use(
-//     config=>{
-//         if(store.state.token){
-//           config.headers={
-//               'Authorization':"Bearer "+store.state.token
-//           }
-//         }
-//         return config
-//     },
-//     err=>{
-//         return Promise.reject(err)
-//     }
-// )
-// // http response 拦截器
-// axios.interceptors.response.use(
-//     response => {
-//         console.log('response interceptor:',response)
+axios.interceptors.request.use(
+    config=>{
+        if(store.state.token){
+          config.headers={
+              'Authorization':"Bearer "+store.state.token
+          }
+        }
+        return config
+    },
+    err=>{
+        return Promise.reject(err)
+    }
+)
+// http response 拦截器
+axios.interceptors.response.use(
+    response => {
+        console.log('response interceptor:',response)
 
-//         if(response.data ==='NoLogIn') {
-//           router.push({
-//             path: '/login',
-//             query: {redirect: router.currentRoute.fullPath} //从哪个页面跳转
-//           })
-//         }
+        if(response.data ==='NoLogIn') {
+          router.push({
+            path: '/login',
+            query: {redirect: router.currentRoute.fullPath} //从哪个页面跳转
+          })
+        }
 
-//         if(response.data==='AdminsNoLogIn'){
-//         console.log("response interceptor: intercepting")
-//           router.push({
-//               path:'/AdminLogin',
-//               query: {redirect: router.currentRoute.fullPath} //从哪个页面跳转
-//           })
-//         }
-//       return response;
-//       }
-//     ,
-//     error => {
-//       return Promise.reject(error.response.data)
-// });
+        if(response.data==='AdminsNoLogIn'){
+        console.log("response interceptor: intercepting")
+          router.push({
+              path:'/AdminLogin',
+              query: {redirect: router.currentRoute.fullPath} //从哪个页面跳转
+          })
+        }
+      return response;
+      }
+    ,
+    error => {
+      return Promise.reject(error.response.data)
+});
 
 
 /* eslint-disable no-new */

@@ -28,14 +28,14 @@
 </template>
 
 <script>
-import {XHeader,XButton,TransferDom,Popup} from 'vux'
+import {XHeader,XButton,TransferDom,Popup,Cell} from 'vux'
 export default {
   directives:{
     TransferDom
   },
     components:{
         XHeader,
-        XButton,Popup
+        XButton,Popup,Cell
     },
     data(){
         return{

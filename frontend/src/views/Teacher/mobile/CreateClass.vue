@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import {XHeader,XButton,Divider,Group,DatetimeRange,TransferDom,Popup} from 'vux'
+import {XHeader,XButton,Divider,Group,DatetimeRange,TransferDom,Popup,Cell} from 'vux'
 export default {
   directives:{
     TransferDom
@@ -48,7 +48,7 @@ export default {
         XButton,
         Divider,
         Group,
-        DatetimeRange,Popup
+        DatetimeRange,Popup,Cell
     },
     methods: {
     onChange (val) {

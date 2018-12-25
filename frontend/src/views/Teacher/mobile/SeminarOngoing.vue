@@ -30,7 +30,7 @@
       >查看信息</p>
     </x-header>
 
-    <x-button @click="presentation" type="primary" style="margin-top:100px;color:#fff">进入讨论课</x-button>
+    <x-button @click.native="presentation" type="primary" style="margin-top:100px;color:#fff">进入讨论课</x-button>
     <div v-transfer-dom>
       <popup v-model="show" height="23%">
           <div>

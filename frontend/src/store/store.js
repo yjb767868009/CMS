@@ -8,9 +8,10 @@ import teacher_store from './teacher/teacher_store'
 export default new Vuex.Store({
     modules:{
         admin:admin_store,
-        teacher:teacher_store
+        teacher:teacher_store,
+        student:student_store,
     },
-    state:{
+    state:{//this.$store.state.teacher
         show:false,
         token:'',
         userType:'',

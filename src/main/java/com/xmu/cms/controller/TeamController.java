@@ -41,8 +41,25 @@ public class TeamController {
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/team/{teamId}")
-    public Team getTeam(@PathVariable("teamId") BigInteger teamId) {
-        return teamService.getTeamByTeamId(teamId);
+    public Map<String, Object> getTeam(UserInfo info, @PathVariable("teamId") BigInteger teamId) {
+        Map<String, Object> message = new HashMap<>(2);
+        switch (info.getUserType()) {
+            case "teacher":
+                message.put("team", teamService.getTeamAndMembers(teamId));
+                break;
+            case "student":
+                Team team = teamService.getTeamAndMembers(teamId);
+                if (team.getLeader().getStudentId().equals(info.getUserId())) {
+                    message.put("isLeader", true);
+                }else {
+                    message.put("isLeader", false);
+                }
+                message.put("team", team);
+                break;
+            default:
+                break;
+        }
+        return message;
     }
 
     @Secured("ROLE_STUDENT")

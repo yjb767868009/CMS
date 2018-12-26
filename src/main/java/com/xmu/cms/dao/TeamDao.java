@@ -115,4 +115,10 @@ public class TeamDao {
     public Team getStudentTeamInCourse(BigInteger studentId, BigInteger courseId) {
         return teamMapper.getStudentTeamInCourse(studentId, courseId);
     }
+
+    public Team getTeamAndMembers(BigInteger teamId) {
+        Team team = teamMapper.getTeamByTeamId(teamId);
+        team.setMembers(studentMapper.getMembersInTeam(team.getTeamId()));
+        return team;
+    }
 }

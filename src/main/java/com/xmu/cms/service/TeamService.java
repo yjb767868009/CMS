@@ -39,8 +39,7 @@ public class TeamService {
     }
 
     public Team getTeamByTeamId(BigInteger teamId) {
-        Team team = teamDao.getTeamByTeamId(teamId);
-        return team;
+        return teamDao.getTeamByTeamId(teamId);
     }
 
     public Map<String, String> deleteTeam(BigInteger teamId) {
@@ -86,5 +85,18 @@ public class TeamService {
 
     public TeamApplication sendTeamApplication(TeamApplication teamApplication) {
         return teamApplicationDao.sendTeamApplication(teamApplication);
+    }
+
+    public Team getTeamAndMembers(BigInteger teamId) {
+        Team team = teamDao.getTeamAndMembers(teamId);
+        List<Student> students = team.getMembers();
+        for (Student student : students) {
+            if (student.getStudentId().equals(team.getLeader().getStudentId())) {
+                students.remove(student);
+                team.setMembers(students);
+                break;
+            }
+        }
+        return team;
     }
 }

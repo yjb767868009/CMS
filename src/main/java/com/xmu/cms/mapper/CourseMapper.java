@@ -104,5 +104,21 @@ public interface CourseMapper {
      *
      * @param course 课程
      */
-    void deleteCourseTeam(Course course);// TODO: 2018/12/25
+    void deleteCourseTeam(@Param("course") Course course);
+
+    /**
+     * 根据课程id获得队伍共享课程
+     *
+     * @param courseId 课程id
+     * @return 课程
+     */
+    Course getTeamMainCourseByCourseId(@Param("courseId") BigInteger courseId);
+
+    /**
+     * 根据课程id获得讨论课共享课程
+     *
+     * @param courseId 课程id
+     * @return 课程
+     */
+    Course getSemianrMainCourseByCourseId(@Param("courseId") BigInteger courseId);
 }

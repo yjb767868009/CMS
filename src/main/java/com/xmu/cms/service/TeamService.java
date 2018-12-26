@@ -1,6 +1,7 @@
 package com.xmu.cms.service;
 
 import com.xmu.cms.dao.StrategyDao;
+import com.xmu.cms.dao.StudentDao;
 import com.xmu.cms.dao.TeamApplicationDao;
 import com.xmu.cms.dao.TeamDao;
 import com.xmu.cms.entity.Student;
@@ -25,6 +26,9 @@ public class TeamService {
     private TeamDao teamDao;
 
     @Autowired
+    private StudentDao studentDao;
+
+    @Autowired
     private StrategyDao strategyDao;
 
     @Autowired
@@ -35,7 +39,8 @@ public class TeamService {
     }
 
     public Team getTeamByTeamId(BigInteger teamId) {
-        return teamDao.getTeamByTeamId(teamId);
+        Team team = teamDao.getTeamByTeamId(teamId);
+        return team;
     }
 
     public Map<String, String> deleteTeam(BigInteger teamId) {

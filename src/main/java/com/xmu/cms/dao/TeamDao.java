@@ -111,4 +111,8 @@ public class TeamDao {
     public List<Team> getSimpleTeamInCourse(BigInteger courseId) {
         return teamMapper.getSimpleTeamInCourse(courseId);
     }
+
+    public Team getStudentTeamInCourse(BigInteger studentId, BigInteger courseId) {
+        return teamMapper.getStudentTeamInCourse(studentId, courseId);
+    }
 }

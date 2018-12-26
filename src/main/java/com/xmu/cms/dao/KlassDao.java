@@ -29,4 +29,5 @@ public interface KlassDao {
     void addKlassRound(BigInteger klassId, BigInteger roundId);
 
     void deleteKlass(BigInteger klassId);
+
 }

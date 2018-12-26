@@ -75,4 +75,5 @@ public class KlassDaoImpl implements KlassDao {
     public void deleteKlass(BigInteger klassId) {
         klassMapper.deleteKlassByKlassId(klassId);
     }
+
 }

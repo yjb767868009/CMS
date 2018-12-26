@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author JuboYu on 2018/11/27.
@@ -49,36 +47,19 @@ public class CourseServiceImpl implements CourseService {
     private StrategyDao strategyDao;
 
     @Override
-    public List<Course> getAllCoursesByTeacher(BigInteger teacherId) {
-        return courseDao.getAllCoursesByTeacherId(teacherId);
-    }
-
-    @Override
     public void deleteCourseById(BigInteger courseId) {
         courseDao.deleteCourse(courseId);
     }
 
     @Override
-    public List<Course> getAllCoursesByStudent(Student student) {
-        return courseDao.getAllCourseByStudentId(student.getStudentId());
-    }
-
-    @Override
-    public Map<String, String> createCourse(Course course) {
-        Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = courseDao.createCourse(course);
-        if (count == 1) {
-            message.put("message", "Success");
-        } else {
-            message.put("message", "Error");
-        }
-        return message;
+    public void createCourse(Course course) {
+        courseDao.createCourse(course);
     }
 
     @Override
     public Course getCourse(BigInteger courseId) throws Exception {
         Course course = courseDao.getCourse(courseId);
-        if (course == null){
+        if (course == null) {
             throw new Exception(noCourseError);
         }
         return course;
@@ -87,7 +68,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Team> getTeamInCourse(BigInteger courseId) {
         Course mainCourse = courseDao.getTeamMainCourse(courseId);
-        if (mainCourse != null){
+        if (mainCourse != null) {
             courseId = mainCourse.getCourseId();
         }
         return teamDao.getTeamAndMembersInCourse(courseId);

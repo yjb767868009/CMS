@@ -69,4 +69,12 @@ public interface RoundMapper {
      * @return 轮次
      */
     Round getRoundBySeminar(BigInteger seminarId);// TODO: 2018/12/26
+
+    /**
+     * 获取班级讨论课的轮次
+     *
+     * @param klassSeminarId 班级讨论课id
+     * @return 轮次
+     */
+    Round getRoundByKlassSeminarId(BigInteger klassSeminarId);// TODO: 2018/12/26
 }

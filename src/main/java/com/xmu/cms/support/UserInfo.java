@@ -69,7 +69,7 @@ public class UserInfo {
     }
 
     public Boolean isEmpty() {
-        return this.userType != null && !this.userType.equals("") && this.userId != null;
+        return this.userType != null && !"".equals(this.userType) && this.userId != null;
     }
 
     public Boolean getActive() {

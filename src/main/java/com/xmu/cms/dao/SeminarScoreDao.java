@@ -13,4 +13,8 @@ public interface SeminarScoreDao {
     List<SeminarScore> getTeamSeminarScoreInRound(BigInteger teamId, BigInteger roundId);
 
     void modifyTeamSeminarScore(SeminarScore seminarScore);
+
+    void updateReportScore(SeminarScore seminarScore);
+
+    void updatePresentationScore(SeminarScore seminarScore);
 }

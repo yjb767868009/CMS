@@ -44,7 +44,7 @@ public class CourseController {
     @GetMapping(value = "/course")
     public Map<String, Object> getCourses(UserInfo info) {
         Map<String, Object> message = new HashMap<String, Object>(2);
-        Map<BigInteger, String> coursePlus = new HashMap<BigInteger, String>();
+        Map<BigInteger, String> coursePlus = new HashMap<BigInteger, String>(16);
         List<Course> courses = new ArrayList<Course>();
         switch (info.getUserType()) {
             case "teacher":
@@ -102,7 +102,7 @@ public class CourseController {
     @CheckCoursePermission
     @DeleteMapping(value = "/course/{courseId}")
     public Map<String, String> deleteCourse(@PathVariable("courseId") BigInteger courseId) {
-        Map<String, String> message = new HashMap<String, String>();
+        Map<String, String> message = new HashMap<String, String>(1);
         try {
             courseService.deleteCourseById(courseId);
             message.put("message", "Success");
@@ -150,7 +150,7 @@ public class CourseController {
     @PostMapping(value = "/course/{courseId}/class")
     public Map<String, String> createClass(@PathVariable("courseId") BigInteger courseId,
                                            @RequestBody Klass klass) {
-        Map<String, String> message = new HashMap<String, String>();
+        Map<String, String> message = new HashMap<String, String>(1);
         try {
             courseService.newKlass(courseId, klass);
             message.put("message", "Success");
@@ -185,7 +185,7 @@ public class CourseController {
     @CheckCoursePermission
     @DeleteMapping(value = "shareteam/{shareTeamId}")
     public Map<String, String> deleteShareTeam(@PathVariable("shareTeamId") BigInteger shareTeamId) {
-        Map<String, String> message = new HashMap<String, String>();
+        Map<String, String> message = new HashMap<String, String>(1);
         try {
             Integer count = courseService.deleteShareTeam(shareTeamId);
             if (count > 0) {
@@ -203,7 +203,7 @@ public class CourseController {
     @CheckCoursePermission
     @DeleteMapping(value = "shareseminar/{shareSeminarId}")
     public Map<String, String> deleteSeminarShare(@PathVariable("shareSeminarId") BigInteger shareSeminarId) {
-        Map<String, String> message = new HashMap<String, String>();
+        Map<String, String> message = new HashMap<String, String>(1);
         try {
             Integer count = courseService.deleteShareSeminar(shareSeminarId);
             if (count > 0) {
@@ -232,7 +232,7 @@ public class CourseController {
     public Map<String, String> sendShareTeam(@PathVariable("courseId") BigInteger courseId,
                                              @RequestBody ShareTeam shareTeam) {
         shareTeam.setMasterCourse(new Course(courseId));
-        Map<String, String> message = new HashMap<String, String>();
+        Map<String, String> message = new HashMap<String, String>(1);
         try {
             ShareTeam newShareTeam = courseService.newShareTeam(shareTeam);
             mailService.sendShareTeam(newShareTeam);
@@ -249,7 +249,7 @@ public class CourseController {
     public Map<String, String> sendTeamShareRequest(@PathVariable("courseId") BigInteger courseId,
                                                     @RequestBody ShareSeminar shareSeminar) {
         shareSeminar.setMasterCourse(new Course(courseId));
-        Map<String, String> message = new HashMap<String, String>();
+        Map<String, String> message = new HashMap<String, String>(1);
         try {
             ShareSeminar newShareSeminar = courseService.newShareSeminar(shareSeminar);
             mailService.sendShareSeminar(newShareSeminar);
@@ -271,7 +271,7 @@ public class CourseController {
     @PostMapping(value = "/course/{courseId}/strategy")
     public Map<String, String> newCourseStrategy(@PathVariable("courseId") BigInteger courseId,
                                                  @RequestBody List<Strategy> strategies) {
-        Map<String, String> message = new HashMap<>();
+        Map<String, String> message = new HashMap<>(1);
         try {
             courseService.newCourseStrategy(strategies);
             message.put("message", "Success");

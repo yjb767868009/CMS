@@ -90,4 +90,12 @@ public interface KlassSeminarMapper {
      * @param klassSeminarId 班级讨论课id
      */
     void startKlassSeminar(BigInteger klassSeminarId);// TODO: 2018/12/25
+
+    /**
+     * 新建班级讨论课，ddl为空，状态为0
+     *
+     * @param klassId   班级id
+     * @param seminarId 讨论课id
+     */
+    void insertKlassSeminar(BigInteger klassId, BigInteger seminarId);// TODO: 2018/12/26
 }

@@ -28,6 +28,9 @@ import java.util.List;
  */
 public class FileUtils {
 
+    private static String Error = "Error";
+    private static String EmptyFileError = "空的文件";
+
     @Value("${file.folder}")
     private static String UPLOADED_FOLDER;
 
@@ -132,12 +135,16 @@ public class FileUtils {
 
     public static void downloadAttendanceFile(BigInteger attendanceId, String fileName) throws Exception {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (requestAttributes == null) throw new Exception("请求失败");
+        if (requestAttributes == null) {
+            throw new Exception(Error);
+        }
         HttpServletResponse response = requestAttributes.getResponse();
-        if (response == null) throw new Exception("请求失败");
-
-
-        if (fileName == null) throw new Exception("空的文件名");
+        if (response == null) {
+            throw new Exception(Error);
+        }
+        if (fileName == null) {
+            throw new Exception(EmptyFileError);
+        }
         String filePath = getAttendancePath(attendanceId);
         File file = new File(filePath, fileName);
         if (file.exists()) {
@@ -150,7 +157,9 @@ public class FileUtils {
                     i = bis.read(buffer);
                 }
             }
-        } else throw new Exception("文件不存在");
+        } else {
+            throw new Exception("文件不存在");
+        }
     }
 
     public static void uploadAttendanceFile(BigInteger attendanceId, MultipartFile file) throws Exception {

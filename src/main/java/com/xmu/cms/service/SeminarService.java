@@ -12,7 +12,13 @@ import java.util.Map;
  * @version 1.0
  */
 public interface SeminarService {
-    Map<String, String> newSeminar(Seminar seminar);
+    /**
+     * 新建讨论课
+     *
+     * @param seminar 讨论课
+     * @throws Exception 新建讨论课异常
+     */
+    void newSeminar(Seminar seminar) throws Exception;
 
     Map<String, String> deleteSeminar(BigInteger seminarId);
 
@@ -34,13 +40,11 @@ public interface SeminarService {
 
     List<Attendance> getAttendancesInKlassSeminar(BigInteger klassSeminarId);
 
-    Map<String, String> setAttendancePresentationScore(BigInteger attendanceId, Float presentationScore);
-
     void newAttendance(BigInteger studentId, Attendance attendance);
 
     Round getRoundByRoundId(BigInteger roundId);
 
-    Map<String, String> modifyRound(Round round);
+    Integer modifyRound(Round round);
 
     RoundScore getRoundTeamScore(BigInteger roundId, BigInteger teamId);
 
@@ -87,4 +91,22 @@ public interface SeminarService {
     List<Round> getRoundInCourse(BigInteger courseId);
 
     void modifyTeamSeminarScore(SeminarScore seminarScore);
+
+    /**
+     * 给报告打分
+     *
+     * @param attendanceId 展示id
+     * @param seminarScore 讨论课报告分数
+     * @throws Exception 异常
+     */
+    void scoreReportScore(BigInteger attendanceId, SeminarScore seminarScore) throws Exception;
+
+    /**
+     * 给展示打分
+     *
+     * @param attendanceId 展示id
+     * @param seminarScore 讨论课展示分数
+     * @throws Exception 异常
+     */
+    void scorePresentationScore(BigInteger attendanceId, SeminarScore seminarScore) throws Exception;
 }

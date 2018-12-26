@@ -22,8 +22,12 @@ public class MemberLimitStrategy implements Strategy {
         for (Student student : students) {
             memberCount++;
         }
-        if (minMember != null && memberCount < minMember) return false;
-        if (maxMember != null && memberCount > maxMember) return false;
+        if (minMember != null && memberCount < minMember) {
+            return false;
+        }
+        if (maxMember != null && memberCount > maxMember) {
+            return false;
+        }
         return true;
     }
 

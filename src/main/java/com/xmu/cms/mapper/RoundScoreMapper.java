@@ -31,4 +31,11 @@ public interface RoundScoreMapper {
      */
     RoundScore getTeamScoreInRound(@Param("roundId") BigInteger roundId,
                                    @Param("teamId") BigInteger teamId);
+
+    /**
+     * 更新轮次成绩，包含轮次，队伍，三个成绩
+     *
+     * @param roundScore 轮次成绩
+     */
+    void updateRoundScore(RoundScore roundScore);// TODO: 2018/12/26
 }

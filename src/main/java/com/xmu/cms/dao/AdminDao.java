@@ -1,8 +1,6 @@
 package com.xmu.cms.dao;
 
 import com.xmu.cms.entity.Admin;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,5 +10,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface AdminDao {
+    /**
+     * 根据管理员账户获取管理员对象
+     *
+     * @param account 账户
+     * @return 管理员
+     */
     Admin getAdminByAccount(String account);
 }

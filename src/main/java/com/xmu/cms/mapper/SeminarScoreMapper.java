@@ -14,20 +14,11 @@ import java.util.List;
 @Mapper
 public interface SeminarScoreMapper {
     /**
-     * 获取讨论课中分数信息
-     *
-     * @param klassSeminarId 班级讨论课id
-     * @return 讨论课分数
-     */
-    SeminarScore getAllScoresInSeminar(@Param("clbumSeminarId") BigInteger klassSeminarId);
-
-    /**
      * 删除讨论课成绩
      *
      * @param seminarId 讨论课id
-     * @return 删除信息
      */
-    Integer deleteSeminarScore(@Param("seminarId") BigInteger seminarId);
+    void deleteSeminarScore(@Param("seminarId") BigInteger seminarId);
 
     /**
      * 获取轮次中队伍的所有讨论课成绩
@@ -43,5 +34,20 @@ public interface SeminarScoreMapper {
      *
      * @param seminarScore 讨论课成绩
      */
-    void modifyTeamSeminarScore(SeminarScore seminarScore);// TODO: 2018/12/26  
+    void modifyTeamSeminarScore(SeminarScore seminarScore);// TODO: 2018/12/26
+
+
+    /**
+     * 根据队伍和讨论课给报告打分
+     *
+     * @param seminarScore 讨论课成绩，包含队伍id，讨论课id，报告成绩
+     */
+    void updateReportScore(SeminarScore seminarScore);// TODO: 2018/12/26
+
+    /**
+     * 根据队伍和讨论课给展示打分
+     *
+     * @param seminarScore 讨论课成绩，包含队伍id，讨论课id，展示成绩
+     */
+    void updatePresentationScore(SeminarScore seminarScore);// TODO: 2018/12/26
 }

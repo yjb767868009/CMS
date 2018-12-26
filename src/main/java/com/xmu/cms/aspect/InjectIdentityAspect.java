@@ -1,6 +1,6 @@
 package com.xmu.cms.aspect;
 
-import com.xmu.cms.support.JWTUtils;
+import com.xmu.cms.support.jwtUtils;
 import com.xmu.cms.support.UserInfo;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 public class InjectIdentityAspect {
     @Around(value = "execution(* com.xmu.cms.controller.*.*(com.xmu.cms.support.UserInfo,..))&&args(info,..)")
     private Object injectUserInfoPointcut(ProceedingJoinPoint point, UserInfo info) throws Throwable {
-        UserInfo userInfo = JWTUtils.getToken();
+        UserInfo userInfo = jwtUtils.getToken();
         Object[] args = point.getArgs();
         args[0] = userInfo;
         return point.proceed(args);

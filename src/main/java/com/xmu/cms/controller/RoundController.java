@@ -9,6 +9,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,8 +38,17 @@ public class RoundController {
 
     @Secured("ROLE_TEACHER")
     @PutMapping(value = "/{roundId}")
-    public Map<String, String> modifyRound(@PathVariable("roundId") Round round) {
-        return seminarService.modifyRound(round);
+    public Map<String, String> modifyRound(@PathVariable("roundId") BigInteger roundId,
+                                           @RequestBody Round round) {
+        Map<String, String> message = new HashMap<String, String>(1);
+        try {
+            round.setRoundId(roundId);
+            seminarService.modifyRound(round);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})

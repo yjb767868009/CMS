@@ -71,8 +71,12 @@ public class CourseMemberLimitStrategy implements Strategy {
                 }
             }
         }
-        if (maxMember != null && courseCount > maxMember) return false;
-        if (minMember != null && courseCount < minMember) return false;
+        if (maxMember != null && courseCount > maxMember) {
+            return false;
+        }
+        if (minMember != null && courseCount < minMember) {
+            return false;
+        }
         return true;
     }
 

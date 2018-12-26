@@ -20,14 +20,14 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping(value = "/class")
+@RequestMapping(value = "")
 public class KlassController {
 
     @Autowired
     private CourseService courseService;
 
     @Secured("ROLE_TEACHER")
-    @PutMapping(value = "/{classId}")
+    @PutMapping(value = "/class/{classId}/classfile")
     public Map<String, String> uploadClassFile(@PathVariable("classId") BigInteger klassId,
                                                @RequestParam("file") MultipartFile file) {
         Map<String, String> message = new HashMap<String, String>(1);

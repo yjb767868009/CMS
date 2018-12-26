@@ -18,14 +18,24 @@ import java.util.Map;
  */
 @RestController
 public class SeminarController {
+
     @Autowired
     private SeminarService seminarService;
 
 
     @Secured("ROLE_TEACHER")
-    @PostMapping(value = "/seminar")
-    public Map<String, String> newSeminar(@RequestBody Seminar seminar) {
-        return seminarService.newSeminar(seminar);
+    @PostMapping(value = "/course/{courseId}/seminar")
+    public Map<String, String> newSeminar(@PathVariable("courseId") BigInteger courseId,
+                                          @RequestBody Seminar seminar) {
+        Map<String, String> message = new HashMap<String, String>(1);
+        try {
+            seminar.setCourse(new Course(courseId));
+            seminarService.newSeminar(seminar);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
@@ -34,14 +44,14 @@ public class SeminarController {
         return seminarService.getSeminarBySeminarId(seminarId);
     }
 
-
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/seminar/{seminarId}/class/{classId}")
     public Map<String, Object> getKlassSeminar(UserInfo userInfo,
                                                @PathVariable("seminarId") BigInteger seminarId,
                                                @PathVariable("classId") BigInteger klassId) {
         Map<String, Object> message = new HashMap<String, Object>(2);
-        if (userInfo.getUserType().equals("student")) {
+        String student = "student";
+        if (userInfo.getUserType().equals(student)) {
             message.put("attendance", seminarService.getStudentAttendanceInKlassSeminar(userInfo.getUserId(), klassId, seminarId));
         }
         message.put("klassSeminar", seminarService.getKlassSeminarByKlassAndSeminar(klassId, seminarId));
@@ -78,7 +88,7 @@ public class SeminarController {
     @Secured("ROLE_TEACHER")
     @PutMapping(value = "/klassseminar/{klassSeminarId}/start")
     public Map<String, String> startKlassSeminar(@PathVariable("klassSeminarId") BigInteger klassSeminarId) {
-        Map<String, String> message = new HashMap<String, String>();
+        Map<String, String> message = new HashMap<String, String>(1);
         try {
             seminarService.startKlassSeminar(klassSeminarId);
             message.put("message", "Success");
@@ -117,12 +127,20 @@ public class SeminarController {
     }
 
     @Secured("ROLE_TEACHER")
-    @PutMapping(value = "/seminar/{seminarId}/team/{teamId}/seminarscore")
-    public Map<String, String> updateSeminarTeamScore(@PathVariable("seminarId") BigInteger seminarId,
+    @PutMapping(value = "/klassseminar/{klassSeminarId}/team/{teamId}/seminarscore")
+    public Map<String, String> modifyTeamSeminarScore(@PathVariable("klassSeminarId") BigInteger klassSeminarId,
                                                       @PathVariable("teamId") BigInteger teamId,
                                                       @RequestBody SeminarScore seminarScore) {
-        //TODO 按讨论课ID修改队伍讨论课成绩
-        return null;
+        Map<String, String> message = new HashMap<String, String>(1);
+        try {
+            seminarScore.setKlassSeminar(new KlassSeminar(klassSeminarId));
+            seminarScore.setTeam(new Team(teamId));
+            seminarService.modifyTeamSeminarScore(seminarScore);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
@@ -136,7 +154,7 @@ public class SeminarController {
     public Map<String, String> attendance(UserInfo info,
                                           @PathVariable("klassSeminarId") BigInteger klassSeminarId,
                                           @RequestBody Attendance attendance) {
-        Map<String, String> message = new HashMap<String, String>();
+        Map<String, String> message = new HashMap<String, String>(1);
         try {
             attendance.setKlassSeminar(new KlassSeminar(klassSeminarId));
             seminarService.newAttendance(info.getUserId(), attendance);
@@ -150,7 +168,7 @@ public class SeminarController {
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/klassseminar/{klassSeminarId}/run")
     public Map<String, Object> getRunKlassSeminarInfo(@PathVariable("klassSeminarId") BigInteger klassSeminarId) {
-        Map<String, Object> message = new HashMap<String, Object>();
+        Map<String, Object> message = new HashMap<String, Object>(2);
         List<Attendance> attendances = seminarService.getAttendancesInKlassSeminar(klassSeminarId);
         message.put("attendances", attendances);
         List<Question> questions = seminarService.getQuestionInKlassSeminar(klassSeminarId);

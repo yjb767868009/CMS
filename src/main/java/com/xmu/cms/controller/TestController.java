@@ -56,7 +56,7 @@ public class TestController {
     @SendTo("/topic/klassSeminar/{klassSeminarId}")
     public KlassSeminarRun question(@DestinationVariable("klassSeminarId") BigInteger klassSeminarId,
                                     Question question) throws Exception {
-        Thread.sleep(1000); // simulated delay
+        Thread.sleep(1000);
         question.setSelected(false);
         question.setScore((float) 0);
         question = seminarService.askQuestion(question);
@@ -68,7 +68,7 @@ public class TestController {
     @MessageMapping("/{klassSeminarId}/getQuestion")
     @SendTo("/topic/klassSeminar/{klassSeminarId}")
     public KlassSeminarRun getQuestion(@DestinationVariable("klassSeminarId") BigInteger klassSeminarId) throws Exception {
-        Thread.sleep(1000); // simulated delay
+        Thread.sleep(1000);
         Question question = seminarService.selectQuestionInKlassSeminar(klassSeminarId);
         KlassSeminarRun klassSeminarRun = new KlassSeminarRun();
         klassSeminarRun.setSelectQuestion(question);
@@ -82,8 +82,9 @@ public class TestController {
         KlassSeminarRun klassSeminarRun = new KlassSeminarRun();
         if (attendance == null) {
             klassSeminarRun.setMessage("无未展示的组");
-        } else
+        } else {
             klassSeminarRun.setNowAttendance(attendance);
+        }
         return klassSeminarRun;
     }
 

@@ -71,7 +71,7 @@
         WHERE student_name = #{name}
     </select>
 
-    <select id="getMembersInTeam">
+    <select id="getMembersInTeam" resultMap="StudentResultMap">
         select student.id as studentId,
                student_name as studentName
         from student,

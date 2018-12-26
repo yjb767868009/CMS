@@ -1,6 +1,6 @@
 package com.xmu.cms.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -10,7 +10,7 @@ import java.util.List;
  * @author JuboYu on 2018/11/29.
  * @version 1.0
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Seminar {
     private BigInteger seminarId;
     private Course course;

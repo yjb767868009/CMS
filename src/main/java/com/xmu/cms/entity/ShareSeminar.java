@@ -1,6 +1,6 @@
 package com.xmu.cms.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.math.BigInteger;
 
@@ -8,7 +8,7 @@ import java.math.BigInteger;
  * @author JuboYu on 2018/12/20.
  * @version 1.0
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ShareSeminar {
     private BigInteger shareSeminarId;
     private Course masterCourse;

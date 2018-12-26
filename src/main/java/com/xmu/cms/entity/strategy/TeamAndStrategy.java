@@ -3,7 +3,6 @@ package com.xmu.cms.entity.strategy;
 import com.xmu.cms.entity.Team;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -94,15 +93,9 @@ public class TeamAndStrategy implements Strategy {
     }
 
     @Override
-    public List<Strategy> findSubStrategy() {
-        List<Strategy> strategies = new ArrayList<Strategy>();
-        strategies.add(subStrategyOne);
-        strategies.add(subStrategyTwo);
+    public List<Strategy> getStrategy(List<Strategy> strategies) {
+        strategies = subStrategyOne.getStrategy(strategies);
+        strategies = subStrategyTwo.getStrategy(strategies);
         return strategies;
-    }
-
-    @Override
-    public List<Strategy> getStrategy() {
-        return null;
     }
 }

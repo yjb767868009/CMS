@@ -73,7 +73,7 @@ public class TeamController {
     public Map<String, String> sendTeamApplication(@PathVariable("teamId") BigInteger teamId,
                                                    @RequestBody TeamApplication teamApplication) {
         teamApplication.setTeam(new Team(teamId));
-        Map<String, String> message = new HashMap<String, String>();
+        Map<String, String> message = new HashMap<String, String>(1);
         try {
             TeamApplication newTeamApplication = teamService.sendTeamApplication(teamApplication);
             mailService.sendTeamApplication(newTeamApplication);

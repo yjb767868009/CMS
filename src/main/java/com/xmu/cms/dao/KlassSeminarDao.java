@@ -2,24 +2,54 @@ package com.xmu.cms.dao;
 
 import com.xmu.cms.entity.Klass;
 import com.xmu.cms.entity.KlassSeminar;
+import com.xmu.cms.mapper.KlassSeminarMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author JuboYu on 2018/12/21.
  * @version 1.0
  */
-public interface KlassSeminarDao {
-    List<Klass> getKlassInSeminar(BigInteger seminarId);
+@Component
+public class KlassSeminarDao {
 
-    Integer updateKlassSeminarReportDDL(KlassSeminar klassSeminar);
+    @Autowired
+    private KlassSeminarMapper klassSeminarMapper;
 
-    KlassSeminar getKlassSeminarByKlassAndSeminar(BigInteger klassId, BigInteger seminarId);
+    public List<Klass> getKlassInSeminar(BigInteger seminarId) {
+        List<KlassSeminar> klassSeminars = klassSeminarMapper.getKlassSeminarBySeminarId(seminarId);
+        List<Klass> klasses = new ArrayList<Klass>();
+        for (KlassSeminar klassSeminar : klassSeminars) {
+            klasses.add(klassSeminar.getKlass());
+        }
+        return klasses;
+    }
 
-    KlassSeminar getRunningKlassSeminarByTeacherId(BigInteger teacherId);
+    public Integer updateKlassSeminarReportDDL(KlassSeminar klassSeminar) {
+        return klassSeminarMapper.updateKlassSeminar(klassSeminar);
+    }
 
-    void stopKlassSeminar(BigInteger klassSeminarId);
+    public KlassSeminar getKlassSeminarByKlassAndSeminar(BigInteger klassId, BigInteger seminarId) {
+        return klassSeminarMapper.getKlassSeminarByKlassAndSeminar(klassId, seminarId);
+    }
 
-    void startKlassSeminar(BigInteger klassSeminarId);
+    public KlassSeminar getRunningKlassSeminarByTeacherId(BigInteger teacherId) {
+        return klassSeminarMapper.getRunningKlassSeminarByTeacherId(teacherId);
+    }
+
+    public void stopKlassSeminar(BigInteger klassSeminarId) {
+        klassSeminarMapper.stopKlassSeminar(klassSeminarId);
+    }
+
+    public void startKlassSeminar(BigInteger klassSeminarId) {
+        klassSeminarMapper.startKlassSeminar(klassSeminarId);
+    }
+
+    public void insertKlassSeminar(BigInteger klassId, BigInteger seminarId) {
+        klassSeminarMapper.insertKlassSeminar(klassId, seminarId);
+    }
 }

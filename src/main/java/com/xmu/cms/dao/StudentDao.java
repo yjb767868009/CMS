@@ -1,6 +1,9 @@
 package com.xmu.cms.dao;
 
 import com.xmu.cms.entity.Student;
+import com.xmu.cms.mapper.StudentMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -9,26 +12,62 @@ import java.util.List;
  * @author JuboYu on 2018/12/11.
  * @version 1.0
  */
-public interface StudentDao {
-    List<Student> getAllStudents();
+@Component
+public class StudentDao {
+    @Autowired
+    private StudentMapper studentMapper;
 
-    void newStudent(List<Student> students);
+    public List<Student> getAllStudents() {
+        return studentMapper.getAllStudents();
+    }
 
-    Integer modifyStudentInfo(Student student);
+    public void newStudent(List<Student> students) {
+        for (Student newStudent : students) {
+            Student student = studentMapper.getStudentByAccount(newStudent.getAccount());
+            if (student == null) {
+                studentMapper.insertStudent(newStudent);
+            }
+        }
+    }
 
-    Integer updateStudentPassword(Student student);
+    public Integer modifyStudentInfo(Student student) {
+        return studentMapper.updateStudentInfo(student);
+    }
 
-    Integer deleteStudent(BigInteger studentId);
+    public Integer updateStudentPassword(Student student) {
+        return studentMapper.updateStudentPassword(student);
+    }
 
-    List<Student> getStudentByName(String name);
+    public Integer deleteStudent(BigInteger studentId) {
+        return studentMapper.deleteStudent(studentId);
+    }
 
-    Student getStudentByAccount(String account);
+    public List<Student> getStudentByName(String name) {
+        return studentMapper.getStudentByName(name);
+    }
 
-    Integer activateStudent(BigInteger studentId, Student student);
+    public Student getStudentByAccount(String account) {
+        return studentMapper.getStudentByAccount(account);
+    }
 
-    Student getStudentById(BigInteger userId);
+    public Integer activateStudent(BigInteger studentId, Student student) {
+        Student modifyStudent = studentMapper.getStudentById(studentId);
+        modifyStudent.setPassword(student.getPassword());
+        modifyStudent.setPassword(student.getEmail());
+        return studentMapper.updateStudent(student);
+    }
 
-    Integer modifyStudentEmail(BigInteger studentId, Student student);
+    public Student getStudentById(BigInteger userId) {
+        return studentMapper.getStudentById(userId);
+    }
 
-    List<Student> getNoTeamStudentInCourse(BigInteger courseId);
+    public Integer modifyStudentEmail(BigInteger studentId, Student student) {
+        Student modifyStudent = studentMapper.getStudentById(studentId);
+        modifyStudent.setEmail(student.getEmail());
+        return studentMapper.updateStudent(modifyStudent);
+    }
+
+    public List<Student> getNoTeamStudentInCourse(BigInteger courseId) {
+        return studentMapper.getNoTeamStudentInCourse(courseId);
+    }
 }

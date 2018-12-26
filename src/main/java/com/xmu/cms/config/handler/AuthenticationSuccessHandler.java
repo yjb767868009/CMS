@@ -1,7 +1,7 @@
 package com.xmu.cms.config.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xmu.cms.support.JWTUtils;
+import com.xmu.cms.support.JwtUtils;
 import com.xmu.cms.config.LoginType;
 import com.xmu.cms.config.SecurityProperties;
 import com.xmu.cms.support.UserInfo;
@@ -32,13 +32,12 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         if (LoginType.JSON.equals(securityProperties.getLoginType())) {
-            //System.out.println(authentication);
             UserInfo info = (UserInfo) authentication.getDetails();
-            Map<String, String> message = new HashMap<String, String>();
+            Map<String, String> message = new HashMap<String, String>(5);
             message.put("id", info.getUserId().toString());
             message.put("account", info.getAccount());
             message.put("role", info.getUserType());
-            message.put("token", JWTUtils.setToken(info));
+            message.put("token", JwtUtils.setToken(info));
             Boolean active = info.getActive();
             if (active != null) {
                 message.put("active", info.getActive().toString());

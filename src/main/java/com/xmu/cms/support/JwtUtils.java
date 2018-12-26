@@ -20,7 +20,7 @@ import java.util.Map;
  * @author JuboYu on 2018/12/5.
  * @version 1.0
  */
-public class JWTUtils {
+public class JwtUtils {
     private static final String SECRET = "JKKLJOoasdlfj";
 
     public static String setToken(UserInfo info) {
@@ -29,7 +29,7 @@ public class JWTUtils {
         HttpServletResponse response = requestAttributes.getResponse();
 
         // header Map
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(2);
         map.put("alg", "HS256");
         map.put("typ", "JWT");
 
@@ -37,7 +37,7 @@ public class JWTUtils {
         // param backups {iss:Service, aud:APP}
         String userId = info.getUserId().toString();
 
-        String token = JWT.create().withHeader(map) // header
+        String token = JWT.create().withHeader(map)
                 .withIssuer("CMS")
                 .withExpiresAt(new Date(System.currentTimeMillis() + 2 * 60 * 60 * 1000))
                 .withClaim("userId", userId)
@@ -56,7 +56,9 @@ public class JWTUtils {
         assert attributes != null;
         HttpServletRequest request = attributes.getRequest();
         String header = request.getHeader("Authorization");
-        if (header == null) return null;
+        if (header == null) {
+            return null;
+        }
         String token = header.replace("Bearer ", "");
         DecodedJWT jwt = null;
         try {

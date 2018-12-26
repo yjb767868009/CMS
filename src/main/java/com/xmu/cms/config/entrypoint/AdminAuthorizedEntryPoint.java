@@ -1,4 +1,4 @@
-package com.xmu.cms.config.EntryPoint;
+package com.xmu.cms.config.entrypoint;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -12,7 +12,7 @@ import java.io.IOException;
  * @author JuboYu on 2018/12/4.
  * @version 1.0
  */
-public class UserAuthorizedEntryPoint implements AuthenticationEntryPoint {
+public class AdminAuthorizedEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         if (isAjaxRequest(request)) {
@@ -20,7 +20,7 @@ public class UserAuthorizedEntryPoint implements AuthenticationEntryPoint {
         } else {
             response.setCharacterEncoding("utf-8");
             response.setContentType("text/javascript;charset=utf-8");
-            response.getWriter().print("UserNoLogIn");
+            response.getWriter().print("AdminsNoLogIn");
         }
     }
 

@@ -1,4 +1,4 @@
-package com.xmu.cms.config.Filter;
+package com.xmu.cms.config.filter;
 
 import com.xmu.cms.config.handler.AuthenticationFailureHandler;
 import com.xmu.cms.config.handler.AuthenticationSuccessHandler;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * @version 1.0
  */
 @Component
-public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
+public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Autowired
     private AuthenticationSuccessHandler successHandler;
@@ -59,10 +59,6 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
      */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if (null != authentication) {
-//            return authentication;
-//        }
 
         String username = this.obtainUsername(request);
         String password = this.obtainPassword(request);
@@ -80,11 +76,6 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password, authorities);
 
-        //authenticate()接受一个token参数,返回一个完全经过身份验证的对象，包括证书.
-        // 这里并没有对用户名密码进行验证,而是使用 AuthenticationProvider 提供的 authenticate 方法返回一个完全经过身份验证的对象，包括证书.
-        //Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-
-        //UsernamePasswordAuthenticationToken 是 Authentication 的实现类
         return this.getAuthenticationManager().authenticate(authenticationToken);
     }
 
@@ -98,7 +89,9 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         String url = request.getServletPath();
-        if (!url.equals("/admin/login") && !url.equals("/user/login")) {
+        String adminLogInURL = "/admin/login";
+        String userLogInURL = "/user/login";
+        if (!url.equals(adminLogInURL) && !url.equals(userLogInURL)) {
             chain.doFilter(request, response);
         } else {
             if (this.logger.isDebugEnabled()) {
@@ -133,6 +126,6 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         SecurityContextHolder.clearContext();
-        failureHandler.onAuthenticationFailure(request,response,failed);
+        failureHandler.onAuthenticationFailure(request, response, failed);
     }
 }

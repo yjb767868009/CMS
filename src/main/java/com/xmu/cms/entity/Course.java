@@ -1,6 +1,6 @@
 package com.xmu.cms.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -10,7 +10,7 @@ import java.util.List;
  * @author JuboYu on 2018/11/26.
  * @version 1.0
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Course {
     private BigInteger courseId;
     private Teacher teacher;
@@ -25,10 +25,10 @@ public class Course {
     private Course teamMainCourse;
     private Course seminarMainCourse;
 
-    public Course(BigInteger courseId, Teacher teacher, String CourseName, String introduction, Integer presentationWeight, Integer reportWeight, Integer questionWeight, Timestamp teamStartTime, Timestamp teamEndTime, List<Klass> klasses, Course teamMainCourse, Course seminarMainCourse) {
+    public Course(BigInteger courseId, Teacher teacher, String coursename, String introduction, Integer presentationWeight, Integer reportWeight, Integer questionWeight, Timestamp teamStartTime, Timestamp teamEndTime, List<Klass> klasses, Course teamMainCourse, Course seminarMainCourse) {
         this.courseId = courseId;
         this.teacher = teacher;
-        this.courseName = CourseName;
+        this.courseName = coursename;
         this.introduction = introduction;
         this.presentationWeight = presentationWeight;
         this.reportWeight = reportWeight;

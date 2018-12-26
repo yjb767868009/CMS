@@ -1,6 +1,11 @@
 package com.xmu.cms.dao;
 
 import com.xmu.cms.entity.Question;
+import com.xmu.cms.entity.Team;
+import com.xmu.cms.mapper.QuestionMapper;
+import com.xmu.cms.mapper.TeamMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -9,14 +14,40 @@ import java.util.List;
  * @author JuboYu on 2018/12/20.
  * @version 1.0
  */
-public interface QuestionDao {
-    List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId);
+@Component
+public class QuestionDao {
+    @Autowired
+    private QuestionMapper questionMapper;
 
-    List<Question> getNoSelectedQuestionInKlassSeminar(BigInteger klassSeminar);
+    @Autowired
+    private TeamMapper teamMapper;
 
-    Integer scoreQuestion(Question question);
+    public List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId) {
+        return questionMapper.getQuestionInKlassSeminar(klassSeminarId);
+    }
 
-    Question insertQuestion(Question question);
+    public List<Question> getNoSelectedQuestionInKlassSeminar(BigInteger klassSeminar) {
+        return questionMapper.getNoSelectedQuestionInKlassSeminar(klassSeminar);
+    }
 
-    void selectQuestion(Question question);
+    public Integer scoreQuestion(Question question) {
+        return questionMapper.scoreQuestion(question);
+    }
+
+    public Question insertQuestion(Question question) {
+        BigInteger klassSeminarId = question.getKlassSeminar().getKlassSeminarId();
+        BigInteger studentId = question.getStudent().getStudentId();
+        Question findQuestion = questionMapper.getQuestionByKlassSeminarAndStudent(klassSeminarId, studentId);
+        if (findQuestion == null) {
+            Team team = teamMapper.getStudentTeamInKlassSeminar(studentId, klassSeminarId);
+            question.setTeam(team);
+            questionMapper.insertQuestion(question);
+            return questionMapper.getQuestionByKlassSeminarAndStudent(klassSeminarId, studentId);
+        }
+        return null;
+    }
+
+    public void selectQuestion(Question question) {
+        questionMapper.selectQuestion(question);
+    }
 }

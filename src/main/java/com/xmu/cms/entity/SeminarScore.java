@@ -1,23 +1,23 @@
 package com.xmu.cms.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * @author JuboYu on 2018/11/29.
  * @version 1.0
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SeminarScore {
     private Team team;
-    private Seminar seminar;
+    private KlassSeminar klassSeminar;
     private Float presentationScore;
     private Float questionScore;
     private Float reportScore;
     private Float totalScore;
 
-    public SeminarScore(Team team, Seminar seminar, Float presentationScore, Float questionScore, Float reportScore, Float totalScore) {
+    public SeminarScore(Team team, KlassSeminar klassSeminar, Float presentationScore, Float questionScore, Float reportScore, Float totalScore) {
         this.team = team;
-        this.seminar = seminar;
+        this.klassSeminar = klassSeminar;
         this.presentationScore = presentationScore;
         this.questionScore = questionScore;
         this.reportScore = reportScore;
@@ -35,12 +35,12 @@ public class SeminarScore {
         this.team = team;
     }
 
-    public Seminar getSeminar() {
-        return seminar;
+    public KlassSeminar getKlassSeminar() {
+        return klassSeminar;
     }
 
-    public void setSeminar(Seminar seminar) {
-        this.seminar = seminar;
+    public void setKlassSeminar(KlassSeminar klassSeminar) {
+        this.klassSeminar = klassSeminar;
     }
 
     public Float getPresentationScore() {

@@ -24,7 +24,7 @@ import java.util.List;
  * @version 1.0
  */
 @Component
-public class JWTAuthenticationProvider implements AuthenticationProvider {
+public class JwtAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     private AdminDao adminDao;
 

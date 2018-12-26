@@ -1,11 +1,11 @@
 package com.xmu.cms.config;
 
-import com.xmu.cms.config.Filter.JWTAuthenticationFilter;
-import com.xmu.cms.config.Filter.JWTLoginFilter;
+import com.xmu.cms.config.filter.JwtAuthenticationFilter;
+import com.xmu.cms.config.filter.JwtLoginFilter;
 import com.xmu.cms.config.handler.AuthenticationFailureHandler;
 import com.xmu.cms.config.handler.AuthenticationSuccessHandler;
-import com.xmu.cms.config.EntryPoint.AdminAuthorizedEntryPoint;
-import com.xmu.cms.config.EntryPoint.UserAuthorizedEntryPoint;
+import com.xmu.cms.config.entrypoint.AdminAuthorizedEntryPoint;
+import com.xmu.cms.config.entrypoint.UserAuthorizedEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,7 +36,7 @@ public class MultiHttpSecurityConfiguration {
     public static class AdminConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
         @Autowired
-        private JWTAuthenticationProvider jwtAuthenticationProvider;
+        private JwtAuthenticationProvider jwtAuthenticationProvider;
 
         @Autowired
         private AuthenticationSuccessHandler successHandler;
@@ -48,8 +48,8 @@ public class MultiHttpSecurityConfiguration {
         protected void configure(HttpSecurity http) throws Exception {
             http.exceptionHandling().
                     authenticationEntryPoint(new AdminAuthorizedEntryPoint());
-            http.addFilter(jwtLoginFilter())
-                    .addFilterBefore(jwtAuthenticationFilter(), JWTLoginFilter.class);
+            http.addFilter(authJwtLoginFilter())
+                    .addFilterBefore(authJwtAuthenticationFilter(), JwtLoginFilter.class);
             http.authorizeRequests()
                     .antMatchers("/user/login", "/admin/login", "/user/password").permitAll()
                     .antMatchers("/**").permitAll()
@@ -66,7 +66,6 @@ public class MultiHttpSecurityConfiguration {
 
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-            //auth.userDetailsService(adminUserDetailsService).passwordEncoder(passwordEncoder());
             auth.authenticationProvider(jwtAuthenticationProvider);
         }
 
@@ -82,22 +81,22 @@ public class MultiHttpSecurityConfiguration {
         }
 
         @Bean
-        public JWTLoginFilter jwtLoginFilter() throws Exception {
-            JWTLoginFilter loginFilter = new JWTLoginFilter();
+        public JwtLoginFilter authJwtLoginFilter() throws Exception {
+            JwtLoginFilter loginFilter = new JwtLoginFilter();
             loginFilter.setAuthenticationManager(authenticationManager());
             return loginFilter;
         }
 
         @Bean
-        public JWTAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-            return new JWTAuthenticationFilter(authenticationManager());
+        public JwtAuthenticationFilter authJwtAuthenticationFilter() throws Exception {
+            return new JwtAuthenticationFilter(authenticationManager());
         }
     }
 
     @Configuration
     public static class UserConfigurationAdapter extends WebSecurityConfigurerAdapter {
         @Autowired
-        private JWTAuthenticationProvider jwtAuthenticationProvider;
+        private JwtAuthenticationProvider jwtAuthenticationProvider;
 
         @Autowired
         private AuthenticationSuccessHandler successHandler;
@@ -110,7 +109,7 @@ public class MultiHttpSecurityConfiguration {
             http.exceptionHandling().
                     authenticationEntryPoint(new UserAuthorizedEntryPoint());
             http.addFilter(userJWTLoginFilter())
-                    .addFilterBefore(userJWTAuthenticationFilter(), JWTLoginFilter.class);
+                    .addFilterBefore(userJWTAuthenticationFilter(), JwtLoginFilter.class);
             http.formLogin()
                     .loginPage("/user/login").loginProcessingUrl("/user/login")
                     .usernameParameter("account").passwordParameter("password")
@@ -135,15 +134,15 @@ public class MultiHttpSecurityConfiguration {
         }
 
         @Bean
-        public JWTLoginFilter userJWTLoginFilter() throws Exception {
-            JWTLoginFilter loginFilter = new JWTLoginFilter();
+        public JwtLoginFilter userJWTLoginFilter() throws Exception {
+            JwtLoginFilter loginFilter = new JwtLoginFilter();
             loginFilter.setAuthenticationManager(authenticationManager());
             return loginFilter;
         }
 
         @Bean
-        public JWTAuthenticationFilter userJWTAuthenticationFilter() throws Exception {
-            return new JWTAuthenticationFilter(authenticationManager());
+        public JwtAuthenticationFilter userJWTAuthenticationFilter() throws Exception {
+            return new JwtAuthenticationFilter(authenticationManager());
         }
 
     }

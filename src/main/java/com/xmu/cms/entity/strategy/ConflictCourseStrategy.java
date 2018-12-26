@@ -13,16 +13,22 @@ import java.util.List;
  */
 public class ConflictCourseStrategy implements Strategy {
     private BigInteger strategyId;
-    private Course courseOne;
-    private Course courseTwo;
+    private List<Course> conflictCourses;
+
+    public ConflictCourseStrategy(BigInteger strategyId, List<Course> conflictCourses) {
+        this.strategyId = strategyId;
+        this.conflictCourses = conflictCourses;
+    }
 
     public ConflictCourseStrategy() {
     }
 
-    public ConflictCourseStrategy(BigInteger strategyId, Course courseOne, Course courseTwo) {
-        this.strategyId = strategyId;
-        this.courseOne = courseOne;
-        this.courseTwo = courseTwo;
+    public List<Course> getCourses() {
+        return conflictCourses;
+    }
+
+    public void setCourses(List<Course> conflictCourses) {
+        this.conflictCourses = conflictCourses;
     }
 
     public BigInteger getStrategyId() {
@@ -33,51 +39,30 @@ public class ConflictCourseStrategy implements Strategy {
         this.strategyId = strategyId;
     }
 
-    public Course getCourseOne() {
-        return courseOne;
-    }
-
-    public void setCourseOne(Course courseOne) {
-        this.courseOne = courseOne;
-    }
-
-    public Course getCourseTwo() {
-        return courseTwo;
-    }
-
-    public void setCourseTwo(Course courseTwo) {
-        this.courseTwo = courseTwo;
-    }
-
     @Override
     public Boolean checkValid(Team team) {
         List<Student> students = team.getMembers();
-        Boolean hasCourseOne = false;
-        Boolean hasCourseTwo = false;
+        BigInteger hasCourseId = null;
         for (Student student : students) {
             List<Course> courses = student.getCourses();
             for (Course course : courses) {
-                if (course.getCourseId().equals(courseOne.getCourseId())) {
-                    hasCourseOne = true;
+                if (conflictCourses.contains(course)) {
+                    if (hasCourseId != null && !course.getCourseId().equals(hasCourseId)) {
+                        return false;
+                    } else {
+                        hasCourseId = course.getCourseId();
+                    }
                 }
-                if (course.getCourseId().equals(courseTwo.getCourseId())) {
-                    hasCourseTwo = true;
-                }
-            }
-            if (hasCourseOne && hasCourseTwo) {
-                return false;
             }
         }
         return true;
     }
 
     @Override
-    public List<Strategy> findSubStrategy() {
-        return null;
+    public List<Strategy> getStrategy(List<Strategy> strategies) {
+        strategies.add(this);
+        return strategies;
     }
 
-    @Override
-    public List<Strategy> getStrategy() {
-        return null;
-    }
+
 }

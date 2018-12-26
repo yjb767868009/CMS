@@ -1,10 +1,17 @@
 package com.xmu.cms.service;
 
+import com.xmu.cms.dao.StrategyDao;
+import com.xmu.cms.dao.TeamApplicationDao;
+import com.xmu.cms.dao.TeamDao;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Team;
 import com.xmu.cms.entity.TeamApplication;
+import com.xmu.cms.entity.strategy.Strategy;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,18 +19,67 @@ import java.util.Map;
  * @author JuboYu on 2018/11/27.
  * @version 1.0
  */
-public interface TeamService {
-    Team newTeam(BigInteger courseId, BigInteger classId, BigInteger studentId, Team team);
+@Service
+public class TeamService {
+    @Autowired
+    private TeamDao teamDao;
 
-    Team getTeamByTeamId(BigInteger teamId);
+    @Autowired
+    private StrategyDao strategyDao;
 
-    Map<String, String> deleteTeam(BigInteger teamId);
+    @Autowired
+    private TeamApplicationDao teamApplicationDao;
 
-    Map<String, String> teamAddMembers(BigInteger teamId, List<Student> students);
+    public Team newTeam(BigInteger courseId, BigInteger classId, BigInteger studentId, Team team) {
+        return teamDao.newTeam(courseId, classId, studentId, team);
+    }
 
-    Map<String, String> teamRemoveMember(BigInteger teamId, Student student);
+    public Team getTeamByTeamId(BigInteger teamId) {
+        return teamDao.getTeamByTeamId(teamId);
+    }
 
-    List<Team> getAllTeamsInSeminar(BigInteger seminarId);
+    public Map<String, String> deleteTeam(BigInteger teamId) {
+        Map<String, String> message = new HashMap<String, String>(1);
+        Integer count = teamDao.deleteTeam(teamId);
+        if (count > 0) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
+    }
 
-    TeamApplication sendTeamApplication(TeamApplication teamApplication);
+    public Map<String, String> teamAddMembers(BigInteger teamId, List<Student> students) {
+        Map<String, String> message = new HashMap<String, String>(1);
+        Team team = teamDao.addMembers(teamId, students);
+        Strategy strategy = strategyDao.getCourseStrategy(team.getCourse().getCourseId());
+        Boolean valid = strategy.checkValid(team);
+        if (!team.getValid().equals(valid)) {
+            team.setValid(valid);
+            teamDao.updateTeamValid(team);
+        }
+        message.put("message", "Success");
+        return message;
+    }
+
+    public Map<String, String> teamRemoveMember(BigInteger teamId, Student student) {
+        Map<String, String> message = new HashMap<String, String>(1);
+        Team team = teamDao.removeMember(teamId, student);
+        Strategy strategy = strategyDao.getCourseStrategy(team.getCourse().getCourseId());
+        Boolean valid = strategy.checkValid(team);
+        if (!team.getValid().equals(valid)) {
+            team.setValid(valid);
+            teamDao.updateTeamValid(team);
+        }
+        message.put("message", "Success");
+        return message;
+    }
+
+    public List<Team> getAllTeamsInSeminar(BigInteger seminarId) {
+        return teamDao.getAllTeamsInSeminar(seminarId);
+    }
+
+    public TeamApplication sendTeamApplication(TeamApplication teamApplication) {
+        return teamApplicationDao.sendTeamApplication(teamApplication);
+    }
 }

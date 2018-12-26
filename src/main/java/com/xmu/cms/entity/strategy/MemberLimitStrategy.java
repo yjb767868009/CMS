@@ -22,18 +22,18 @@ public class MemberLimitStrategy implements Strategy {
         for (Student student : students) {
             memberCount++;
         }
-        if (minMember != null && memberCount < minMember) return false;
-        if (maxMember != null && memberCount > maxMember) return false;
+        if (minMember != null && memberCount < minMember) {
+            return false;
+        }
+        if (maxMember != null && memberCount > maxMember) {
+            return false;
+        }
         return true;
     }
 
     @Override
-    public List<Strategy> findSubStrategy() {
-        return null;
-    }
-
-    @Override
-    public List<Strategy> getStrategy() {
-        return null;
+    public List<Strategy> getStrategy(List<Strategy> strategies) {
+        strategies.add(this);
+        return strategies;
     }
 }

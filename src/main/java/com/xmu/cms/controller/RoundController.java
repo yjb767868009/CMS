@@ -9,6 +9,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,28 +18,37 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping(value = "/round")
+@RequestMapping(value = "")
 public class RoundController {
 
     @Autowired
     private SeminarService seminarService;
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @GetMapping(value = "/{roundId}/seminar")
+    @GetMapping(value = "/round/{roundId}/seminar")
     public List<Seminar> getSeminarInRound(@PathVariable("roundId") BigInteger roundId) {
         return seminarService.getAllSeminarInRound(roundId);
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @GetMapping(value = "/{roundId}")
+    @GetMapping(value = "/round/{roundId}")
     public Round getRoundById(@PathVariable("roundId") BigInteger roundId) {
         return seminarService.getRoundByRoundId(roundId);
     }
 
     @Secured("ROLE_TEACHER")
-    @PutMapping(value = "/{roundId}")
-    public Map<String, String> modifyRound(@PathVariable("roundId") Round round) {
-        return seminarService.modifyRound(round);
+    @PutMapping(value = "/round/{roundId}")
+    public Map<String, String> modifyRound(@PathVariable("roundId") BigInteger roundId,
+                                           @RequestBody Round round) {
+        Map<String, String> message = new HashMap<String, String>(1);
+        try {
+            round.setRoundId(roundId);
+            seminarService.modifyRound(round);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
@@ -52,14 +62,5 @@ public class RoundController {
     public RoundScore getRoundTeamScore(@PathVariable("roundId") BigInteger roundId,
                                         @PathVariable("teamId") BigInteger teamId) {
         return seminarService.getRoundTeamScore(roundId, teamId);
-    }
-
-    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @PutMapping(value = "/round/{roundId}/team/{teamId}/roundscore")
-    public Map<String,String> updateRoundTeamScore(@PathVariable("roundId") Integer roundId,
-                                        @PathVariable("teamId") Integer teamId,
-                                        @RequestBody RoundScore roundScore) {
-        //TODO
-        return null;
     }
 }

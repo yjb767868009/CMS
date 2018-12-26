@@ -2,6 +2,7 @@ package com.xmu.cms.controller;
 
 import com.xmu.cms.aspect.annoatation.CheckCoursePermission;
 import com.xmu.cms.entity.*;
+import com.xmu.cms.entity.strategy.Strategy;
 import com.xmu.cms.service.*;
 import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,15 @@ public class CourseController {
 
     @Secured("ROLE_TEACHER")
     @PostMapping(value = "/course")
-    public Map<String, String> createCourse(@RequestBody Course course) {
-        return courseService.createCourse(course);
+    public Map<String, String> createCourse(@RequestBody Course course) throws Exception {
+        Map<String, String> message = new HashMap<String, String>(1);
+        try {
+            courseService.createCourse(course);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
 
 
@@ -43,7 +51,7 @@ public class CourseController {
     @GetMapping(value = "/course")
     public Map<String, Object> getCourses(UserInfo info) {
         Map<String, Object> message = new HashMap<String, Object>(2);
-        Map<BigInteger, String> coursePlus = new HashMap<BigInteger, String>();
+        Map<BigInteger, String> coursePlus = new HashMap<BigInteger, String>(16);
         List<Course> courses = new ArrayList<Course>();
         switch (info.getUserType()) {
             case "teacher":
@@ -73,11 +81,18 @@ public class CourseController {
         return message;
     }
 
+
     @GetMapping(value = "/course/{courseId}/round")
     public List<Round> getRoundInCourse(UserInfo info,
                                         @PathVariable("courseId") BigInteger courseId) {
         return seminarService.getRoundInCourse(info, courseId);
     }
+
+//    @GetMapping(value = "/course/{courseId}/round")
+//    public List<Round> getRoundInCourse(@PathVariable("courseId") BigInteger courseId) {
+//        return seminarService.getRoundInCourse(courseId);
+//    }
+
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/course/{courseId}")
@@ -94,7 +109,7 @@ public class CourseController {
     @CheckCoursePermission
     @DeleteMapping(value = "/course/{courseId}")
     public Map<String, String> deleteCourse(@PathVariable("courseId") BigInteger courseId) {
-        Map<String, String> message = new HashMap<String, String>();
+        Map<String, String> message = new HashMap<String, String>(1);
         try {
             courseService.deleteCourseById(courseId);
             message.put("message", "Success");
@@ -117,13 +132,11 @@ public class CourseController {
             message.put("message", "Error");
         }
         return message;
-
     }
 
     @Secured({"ROLE_TEACHER","ROLE_STUDENT"})
     @GetMapping(value = "/course/{courseId}/team")
-    public List<Team> getTeamInCourse(UserInfo info,
-                                      @PathVariable("courseId") BigInteger courseId) {
+    public List<Team> getTeamInCourse(@PathVariable("courseId") BigInteger courseId) {
         return courseService.getTeamInCourse(courseId);
     }
 
@@ -144,7 +157,7 @@ public class CourseController {
     @PostMapping(value = "/course/{courseId}/class")
     public Map<String, String> createClass(@PathVariable("courseId") BigInteger courseId,
                                            @RequestBody Klass klass) {
-        Map<String, String> message = new HashMap<String, String>();
+        Map<String, String> message = new HashMap<String, String>(1);
         try {
             courseService.newKlass(courseId, klass);
             message.put("message", "Success");
@@ -179,7 +192,7 @@ public class CourseController {
     @CheckCoursePermission
     @DeleteMapping(value = "shareteam/{shareTeamId}")
     public Map<String, String> deleteShareTeam(@PathVariable("shareTeamId") BigInteger shareTeamId) {
-        Map<String, String> message = new HashMap<String, String>();
+        Map<String, String> message = new HashMap<String, String>(1);
         try {
             Integer count = courseService.deleteShareTeam(shareTeamId);
             if (count > 0) {
@@ -197,7 +210,7 @@ public class CourseController {
     @CheckCoursePermission
     @DeleteMapping(value = "shareseminar/{shareSeminarId}")
     public Map<String, String> deleteSeminarShare(@PathVariable("shareSeminarId") BigInteger shareSeminarId) {
-        Map<String, String> message = new HashMap<String, String>();
+        Map<String, String> message = new HashMap<String, String>(1);
         try {
             Integer count = courseService.deleteShareSeminar(shareSeminarId);
             if (count > 0) {
@@ -211,20 +224,28 @@ public class CourseController {
         return message;
     }
 
+    @Secured("ROLE_TEACHER")
+    @GetMapping(value = "/course/{courseId}/round/{roundId}/teamscore")
+    public List<Map<String, Object>> getScoreInCourse(@PathVariable("courseId") BigInteger courseId,
+                                                      @PathVariable("roundId") BigInteger roundId) {
+        return seminarService.getRoundScoreInCourse(courseId, roundId);
+    }
+
+    @Secured("ROLE_TEACHER")
     @GetMapping(value = "/course/{courseId}/score")
-    public SeminarScore getScoreInCourse() {
-        //TODO
-        return null;
+    public List<Map<String, Object>> getCourseScore(@PathVariable("courseId") BigInteger courseId){
+        return seminarService.getCourseScore(courseId);
     }
 
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
     @PostMapping(value = "/course/{courseId}/teamsharerequest")
+
     public Map<String, String> sendShareTeam(@PathVariable("courseId") BigInteger courseId,
                                              @RequestBody ShareTeam shareTeam) {
         shareTeam.setMasterCourse(new Course(courseId));
-        Map<String, String> message = new HashMap<String, String>();
+        Map<String, String> message = new HashMap<String, String>(1);
         try {
             ShareTeam newShareTeam = courseService.newShareTeam(shareTeam);
             mailService.sendShareTeam(newShareTeam);
@@ -241,7 +262,7 @@ public class CourseController {
     public Map<String, String> sendTeamShareRequest(@PathVariable("courseId") BigInteger courseId,
                                                     @RequestBody ShareSeminar shareSeminar) {
         shareSeminar.setMasterCourse(new Course(courseId));
-        Map<String, String> message = new HashMap<String, String>();
+        Map<String, String> message = new HashMap<String, String>(1);
         try {
             ShareSeminar newShareSeminar = courseService.newShareSeminar(shareSeminar);
             mailService.sendShareSeminar(newShareSeminar);
@@ -252,4 +273,24 @@ public class CourseController {
         return message;
     }
 
+    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
+    @GetMapping(value = "/course/{courseId}/strategy")
+    public List<Strategy> getCourseStrategy(@PathVariable("courseId") BigInteger courseId) {
+        List<Strategy> strategies = new ArrayList<>();
+        return courseService.getCourseStrategy(courseId).getStrategy(strategies);
+    }
+
+    @Secured("ROLE_TEACHER")
+    @PostMapping(value = "/course/{courseId}/strategy")
+    public Map<String, String> newCourseStrategy(@PathVariable("courseId") BigInteger courseId,
+                                                 @RequestBody List<Strategy> strategies) {
+        Map<String, String> message = new HashMap<>(1);
+        try {
+            courseService.newCourseStrategy(strategies);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", "Error");
+        }
+        return message;
+    }
 }

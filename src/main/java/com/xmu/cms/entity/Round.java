@@ -1,6 +1,6 @@
 package com.xmu.cms.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.Map;
  * @author JuboYu on 2018/11/27.
  * @version 1.0
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Round {
     private BigInteger roundId;
     private Integer order;
@@ -19,7 +19,10 @@ public class Round {
     private Integer reportScoreType;
     private Integer questionScoreType;
     private List<Seminar> seminars;
-    private Map<BigInteger, Integer> klassEnrollNumber;//Map<klassId,enrollNumber>
+    /**
+     * Map<klassId,enrollNumber>
+     */
+    private Map<BigInteger, Integer> klassEnrollNumber;
 
     public Round(BigInteger roundId, Integer order, Course course, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType, List<Seminar> seminars, Map<BigInteger, Integer> klassEnrollNumber) {
         this.roundId = roundId;

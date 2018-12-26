@@ -71,18 +71,18 @@ public class CourseMemberLimitStrategy implements Strategy {
                 }
             }
         }
-        if (maxMember != null && courseCount > maxMember) return false;
-        if (minMember != null && courseCount < minMember) return false;
+        if (maxMember != null && courseCount > maxMember) {
+            return false;
+        }
+        if (minMember != null && courseCount < minMember) {
+            return false;
+        }
         return true;
     }
 
     @Override
-    public List<Strategy> findSubStrategy() {
-        return null;
-    }
-
-    @Override
-    public List<Strategy> getStrategy() {
-        return null;
+    public List<Strategy> getStrategy(List<Strategy> strategies) {
+        strategies.add(this);
+        return strategies;
     }
 }

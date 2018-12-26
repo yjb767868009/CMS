@@ -120,5 +120,5 @@ public interface CourseMapper {
      * @param courseId 课程id
      * @return 课程
      */
-    Course getSemianrMainCourseByCourseId(@Param("courseId") BigInteger courseId);
+    Course getSeminarMainCourseByCourseId(@Param("courseId") BigInteger courseId);
 }

@@ -5,19 +5,7 @@
     </x-header>
 
     <cell title="业务流程分析" style="text-align:center">
-      <!-- <button style="color:#000;background:0;border:0">
-        <template v-if="!is_pause">  
-            <img slot="right"  @click="pause" src="@/assets/pause.png" style="display:block;margin-right:10px;" width="20px" height="20px" />
-        </template>
-        <template v-if="is_pause">
-            <img slot="right" @click="keepUp" src="@/assets/play.png" style="display:block;margin-right:10px;" width="20px" height="20px" />
-        </template>
-      </button> -->
-      <!-- <img @click="pause" src="@/assets/pause.png"/> -->
     </cell>
-    <div style="text-align:center">
-      当前组已用时:{{''+this.usedSecond+'秒'}}
-    </div>
     <flexbox :gutter="10">
       <flexbox-item>
         <group title="展示队伍">
@@ -89,7 +77,6 @@
     XInput,
     Countup
   } from 'vux'
-  import axios from 'axios'
   export default {
     directives: {
       TransferDom

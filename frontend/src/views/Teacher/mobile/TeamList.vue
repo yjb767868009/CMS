@@ -3,6 +3,8 @@
     <x-header title="学生组队" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}"
       @on-click-more="show=!show">
     </x-header>
+
+    
     <group>
       <cell title="1-1 hhhhhh" is-link :border-intent="false" :arrow-direction="showContent001 ? 'up' : 'down'"
         @click.native="showContent001 = !showContent001"></cell>

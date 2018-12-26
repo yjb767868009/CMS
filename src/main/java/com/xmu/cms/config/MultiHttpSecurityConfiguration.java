@@ -48,8 +48,8 @@ public class MultiHttpSecurityConfiguration {
         protected void configure(HttpSecurity http) throws Exception {
             http.exceptionHandling().
                     authenticationEntryPoint(new AdminAuthorizedEntryPoint());
-            http.addFilter(jwtLoginFilter())
-                    .addFilterBefore(jwtAuthenticationFilter(), JwtLoginFilter.class);
+            http.addFilter(authJwtLoginFilter())
+                    .addFilterBefore(authJwtAuthenticationFilter(), JwtLoginFilter.class);
             http.authorizeRequests()
                     .antMatchers("/user/login", "/admin/login", "/user/password").permitAll()
                     .antMatchers("/**").permitAll()
@@ -81,14 +81,14 @@ public class MultiHttpSecurityConfiguration {
         }
 
         @Bean
-        public JwtLoginFilter jwtLoginFilter() throws Exception {
+        public JwtLoginFilter authJwtLoginFilter() throws Exception {
             JwtLoginFilter loginFilter = new JwtLoginFilter();
             loginFilter.setAuthenticationManager(authenticationManager());
             return loginFilter;
         }
 
         @Bean
-        public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
+        public JwtAuthenticationFilter authJwtAuthenticationFilter() throws Exception {
             return new JwtAuthenticationFilter(authenticationManager());
         }
     }

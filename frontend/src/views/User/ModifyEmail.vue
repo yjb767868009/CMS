@@ -1,9 +1,6 @@
 <template>
   <div class="activation" style="background:#eee">
     <x-header title="账户邮箱" style="height:60px;padding-top:12px" :left-options="{showBack:false}">
-        <button @click="back" style="background:0;height:30px;border:0" slot="left">
-            <x-icon type="ios-arrow-back" size="35" style="fill:#fff"></x-icon>
-        </button>
     </x-header>
   <group>
 

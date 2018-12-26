@@ -3,8 +3,8 @@
     <x-header title="我" style="height:60px;padding-top:12px" :left-options="{showBack:false}"  :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
     <x-header align="right" style="background:#fff;margin:20px 0px 0px;height:90px;padding-top:12px border:1" :left-options="{showBack:false}">
-         <div slot="right" style="font-size:1.3em;color:#000;">www&emsp;</div>
-         <p slot="right" style="font-size:1.3em;color:#000">25120152202348&emsp;</p>
+         <div slot="right" style="font-size:1.3em;color:#000;">{{myInfo.name}}&emsp;</div>
+         <p slot="right" style="font-size:1.3em;color:#000">{{myInfo.account}}&emsp;</p>
     </x-header>
     <group>
       <cell is-link title="我的课程" link="/mobile/Student/myClass"><img slot="icon" src="@/assets/lock.png" style="display:block;margin-right:12px;margin-left:3px" width="15px" height="20px"/></cell>
@@ -50,11 +50,31 @@ import {TransferDom,XHeader,
 		ButtonTabItem,
 		Popup
     },
+    mounted:function(){
+            this.$store.state.student.account=this.myInfo.account;
+            this.$store.state.student.name=this.myInfo.name;
+            this.$store.state.student.email=this.myInfo.email;
+        // this.$axios.get('/user/information')
+        // .then((response)=>{
+        //     this.myInfo.account=response.data.account;
+        //     this.myInfo.name=response.data.name;
+        //     this.myInfo.email=response.data.email;
+        //     this.$store.state.student.account=response.data.account;
+        //     this.$store.state.student.name=response.data.name;
+        //     this.$store.state.student.email=response.data.email;
+        // })
+    },
     data() {
         return{
-            name:'name',
 			newItem:'newItem',
-			show:false,
+            show:false,
+            myInfo:{
+                id:'',
+                account: "24322016231",
+                role:'',
+                name: "张三",
+                email: "413142222@qq.com",
+            }
 		}
     },
     methods:{

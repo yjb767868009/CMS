@@ -43,7 +43,7 @@ import MyScore from '@/views/Student/mobile/MyScore'
 import StudentCourseInfo from '@/views/Student/mobile/StudentCourseInfo'
 import TeamFreedom from '@/views/Student/mobile/TeamFreedom'
 import NewTeam from '@/views/Student/mobile/NewTeam'
-import TeamLeader from '@/views/Student/mobile/TeamLeader'
+import Teamed from '@/views/Student/mobile/Teamed'
 import TeamMember from '@/views/Student/mobile/TeamMember'
 
 
@@ -151,7 +151,7 @@ export default new Router({
 
     //student mobile
     {
-      path:'/mobile/student/studentInfo',
+      path:'/mobile/student/studentInfo', //学生个人信息
       name:'StudentInfo',
       component:StudentInfo,
       meta:{
@@ -190,9 +190,9 @@ export default new Router({
       component:TeamFreedom
     },
     {
-      path:'/mobile/Student/teamLeader',
-      name:'TeamLeader',
-      component:TeamLeader
+      path:'/mobile/Student/teamed',
+      name:'Teamed',
+      component:Teamed
     },
     {
       path:'/mobile/Student/teamMember',
@@ -210,7 +210,7 @@ export default new Router({
       component:StudentSeminarList
     },
     {
-      path:'/mobile/student/course/:name', //2-1讨论课
+      path:'/mobile/student/course', //2-1讨论课
       name:'StudentCourseSeminar',
       component:StudentCourseSeminar
     },

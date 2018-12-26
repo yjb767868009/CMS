@@ -23,7 +23,7 @@
         theme="android"
         @on-cancel="onCancel"
         @on-confirm="onConfirm">
-        <p style="text-align:center;">确定解散该组吗</p>
+        <p style="text-align:center;">确定退出该组吗</p>
       </confirm>
       
       <popup v-model="show" height="15%">

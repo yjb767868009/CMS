@@ -19,19 +19,28 @@
     </resultMap>
 
     <select id="getAllCourseByTeacherId" resultMap="CourseResultMap">
-        SELECT course.id                      as courseId,
-               course.course_name             as courseName,
-               course.introduction,
-               course.presentation_percentage as presentationWeight,
-               course.report_percentage       as reportWeight,
-               course.question_percentage     as questionWeight,
-               course.team_start_time         as teamStartDate,
-               course.team_end_time           as teamEndDate
-        FROM course,
-             teacher
-        WHERE teacher.id = #{teacherId}
-          AND teacher.id = course.teacher_id
+            SELECT course.id               as courseId,
+    course.course_name             as courseName,
+    course.introduction,
+    course.presentation_percentage as presentationWeight,
+    course.report_percentage       as reportWeight,
+    course.question_percentage     as questionWeight,
+    course.team_start_time         as teamStartDate,
+    course.team_end_time           as teamEndDate,
+    course1.id              as teamMainCourseId,
+    course1.course_name     as teamMainCourseName,
+    course2.id              as seminarMainCourseId,
+    course2.course_name     as seminarMainCourseName
+    FROM course,
+    teacher,
+    course course1,
+    course course2
+    WHERE teacher.id = #{teacherId}
+    AND teacher.id = course.teacher_id
+    and course1.id like course.team_main_course_id||'%'
+    and course2.id like course.seminar_main_course_id||'%';
     </select>
+
 
     <select id="getAllCourseByStudentId" resultType="com.xmu.cms.entity.Course">
         SELECT course.id                      as courseId,

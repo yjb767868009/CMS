@@ -59,7 +59,7 @@ export default {
           questionWeight: 30,
           teamStartTime: "2018-11-27T14:00:00.000+0000",
           teamEndTime: "2018-12-01T14:00:00.000+0000"
-        }
+        },
       ], 
       coursePlus: {
         "1": "主",

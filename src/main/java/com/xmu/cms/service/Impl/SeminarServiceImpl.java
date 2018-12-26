@@ -313,4 +313,23 @@ public class SeminarServiceImpl implements SeminarService {
     public void deleteAttendance(BigInteger attendanceId) {
         attendanceDao.deleteAttendance(attendanceId);
     }
+
+    @Override
+    public List<Map<String, Object>> getRoundScoreInCourse(BigInteger courseId, BigInteger roundId) {
+        List<Team> teams = teamDao.getSimpleTeamInCourse(courseId);
+        List<Map<String, Object>> allScore = new ArrayList<>();
+        for (Team team : teams) {
+            Map<String, Object> score = new HashMap<>();
+            RoundScore roundScore = roundScoreDao.getRoundTeamScore(roundId, team.getTeamId());
+            score.put("team", team);
+            score.put("score", roundScore.getTotalScore());
+            allScore.add(score);
+        }
+        return allScore;
+    }
+
+    @Override
+    public List<Round> getRoundInCourse(BigInteger courseId) {
+        return roundDao.getRoundByCourseId(courseId);
+    }
 }

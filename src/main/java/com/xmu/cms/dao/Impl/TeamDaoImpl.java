@@ -34,12 +34,17 @@ public class TeamDaoImpl implements TeamDao {
     private CourseMapper courseMapper;
 
     @Override
-    public List<Team> getTeamInCourse(BigInteger courseId) {
+    public List<Team> getTeamAndMembersInCourse(BigInteger courseId) {
         List<Team> teams = teamMapper.getTeamInCourse(courseId);
         for (Team team : teams) {
             team.setMembers(studentMapper.getMembersInTeam(team.getTeamId()));
         }
         return teams;
+    }
+
+    @Override
+    public List<Team> getTeamInCourse(BigInteger courseId) {
+        return teamMapper.getTeamInCourse(courseId);
     }
 
     @Override
@@ -113,5 +118,10 @@ public class TeamDaoImpl implements TeamDao {
     @Override
     public Team getStudentTeamInKlass(BigInteger studentId, BigInteger klassId) {
         return teamMapper.getStudentTeamInKlass(studentId, klassId);
+    }
+
+    @Override
+    public List<Team> getSimpleTeamInCourse(BigInteger courseId) {
+        return teamMapper.getSimpleTeamInCourse(courseId);
     }
 }

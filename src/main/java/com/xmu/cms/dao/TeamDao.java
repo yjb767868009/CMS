@@ -11,6 +11,8 @@ import java.util.List;
  * @version 1.0
  */
 public interface TeamDao {
+    List<Team> getTeamAndMembersInCourse(BigInteger courseId);
+
     List<Team> getTeamInCourse(BigInteger courseId);
 
     List<Team> getAllTeamsInSeminar(BigInteger seminarId);
@@ -30,4 +32,6 @@ public interface TeamDao {
     Team getStudentTeamInKlassSeminar(BigInteger studentId, BigInteger klassSeminarId);
 
     Team getStudentTeamInKlass(BigInteger studentId, BigInteger klassId);
+
+    List<Team> getSimpleTeamInCourse(BigInteger courseId);
 }

@@ -187,7 +187,8 @@
     </update>
 
     <insert id="setMembers">
-        insert team_student (team_id, student_id) VALUES (#{teamId}, #{studentId})
+        insert team_student (team_id, student_id)
+        VALUES (#{teamId}, #{studentId})
     </insert>
 
     <delete id="deleteTeamByTeamId">
@@ -244,5 +245,11 @@
           and team.klass_id = klass.id
           and team.leader_id = student.id
           and team.course_id = course.id
+    </select>
+
+    <select id="getSimpleTeamInCourse" resultMap="TeamResultMap">
+        select team.id as teamId, team_name as teamName, team.status
+        from team
+        where team.course_id = #{courseId}
     </select>
 </mapper>

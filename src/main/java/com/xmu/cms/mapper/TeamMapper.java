@@ -112,4 +112,11 @@ public interface TeamMapper {
      */
     Team getStudentTeamInKlass(BigInteger studentId, BigInteger klassId);// TODO: 2018/12/25
 
+    /**
+     * 获取简单的队伍信息，无嵌套关系
+     *
+     * @param courseId 课程id
+     * @return 队伍列表
+     */
+    List<Team> getSimpleTeamInCourse(BigInteger courseId);
 }

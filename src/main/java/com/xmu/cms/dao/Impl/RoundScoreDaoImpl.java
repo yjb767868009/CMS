@@ -21,7 +21,7 @@ public class RoundScoreDaoImpl implements RoundScoreDao {
 
     @Override
     public RoundScore getRoundTeamScore(BigInteger roundId, BigInteger teamId) {
-        return roundScoreMapper.getScoreInRound(roundId, teamId);
+        return roundScoreMapper.getTeamScoreInRound(roundId, teamId);
     }
 
     @Override

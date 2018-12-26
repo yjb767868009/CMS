@@ -29,6 +29,6 @@ public interface RoundScoreMapper {
      * @param teamId  队伍Id
      * @return 轮次成绩
      */
-    RoundScore getScoreInRound(@Param("roundId") BigInteger roundId,
-                               @Param("teamId") BigInteger teamId);
+    RoundScore getTeamScoreInRound(@Param("roundId") BigInteger roundId,
+                                   @Param("teamId") BigInteger teamId);
 }

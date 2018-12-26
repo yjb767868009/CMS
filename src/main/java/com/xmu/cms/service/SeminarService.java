@@ -82,4 +82,7 @@ public interface SeminarService {
 
     void deleteAttendance(BigInteger attendanceId);
 
+    List<Map<String, Object>> getRoundScoreInCourse(BigInteger courseId, BigInteger roundId);
+
+    List<Round> getRoundInCourse(BigInteger courseId);
 }

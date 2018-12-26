@@ -73,11 +73,18 @@ public class CourseController {
         return message;
     }
 
+
     @GetMapping(value = "/course/{courseId}/round")
     public List<Round> getRoundInCourse(UserInfo info,
                                         @PathVariable("courseId") BigInteger courseId) {
         return seminarService.getRoundInCourse(info, courseId);
     }
+
+//    @GetMapping(value = "/course/{courseId}/round")
+//    public List<Round> getRoundInCourse(@PathVariable("courseId") BigInteger courseId) {
+//        return seminarService.getRoundInCourse(courseId);
+//    }
+
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/course/{courseId}")
@@ -117,13 +124,11 @@ public class CourseController {
             message.put("message", "Error");
         }
         return message;
-
     }
 
     @Secured("ROLE_TEACHER")
     @GetMapping(value = "/course/{courseId}/team")
-    public List<Team> getTeamInCourse(UserInfo info,
-                                      @PathVariable("courseId") BigInteger courseId) {
+    public List<Team> getTeamInCourse(@PathVariable("courseId") BigInteger courseId) {
         return courseService.getTeamInCourse(courseId);
     }
 
@@ -211,10 +216,10 @@ public class CourseController {
         return message;
     }
 
-    @GetMapping(value = "/course/{courseId}/score")
-    public SeminarScore getScoreInCourse() {
-        //TODO
-        return null;
+    @GetMapping(value = "/course/{courseId}/round/{roundId}/teamscore")
+    public List<Map<String, Object>> getScoreInCourse(@PathVariable("courseId") BigInteger courseId,
+                                                      @PathVariable("roundId") BigInteger roundId) {
+        return seminarService.getRoundScoreInCourse(courseId, roundId);
     }
 
 

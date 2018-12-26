@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  * @author BiqunZhou on 2018/12/5.
@@ -27,4 +28,13 @@ public interface SeminarScoreMapper {
      * @return 删除信息
      */
     Integer deleteSeminarScore(@Param("seminarId") BigInteger seminarId);
+
+    /**
+     * 获取轮次中队伍的所有讨论课成绩
+     *
+     * @param teamId  队伍id
+     * @param roundId 轮次id
+     * @return 讨论课成绩列表
+     */
+    List<SeminarScore> getTeamSeminarScoreInRound(@Param("teamId") BigInteger teamId, @Param("roundId") BigInteger roundId);
 }

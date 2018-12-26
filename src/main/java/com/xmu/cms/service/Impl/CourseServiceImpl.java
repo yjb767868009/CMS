@@ -80,7 +80,7 @@ public class CourseServiceImpl implements CourseService {
     public List<Team> getTeamInCourse(BigInteger courseId) {
         Course mainCourse = courseDao.getTeamMainCourse(courseId);
         if (mainCourse != null) courseId = mainCourse.getCourseId();
-        return teamDao.getTeamInCourse(courseId);
+        return teamDao.getTeamAndMembersInCourse(courseId);
     }
 
     @Override

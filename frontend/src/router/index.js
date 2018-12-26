@@ -47,6 +47,11 @@ import Teamed from '@/views/Student/mobile/Teamed'
 import TeamMember from '@/views/Student/mobile/TeamMember'
 
 
+//student pc
+import PcStudent from '@/views/Student/pc/PcStudent'
+
+//teacher pc
+import PcTeacher from '@/views/Teacher/pc/PcTeacher'
 
 //Teacher
 import SetAccount from '@/views/Teacher/mobile/SetAccount'
@@ -148,7 +153,18 @@ export default new Router({
       name:'AdminTeacher',
       component:AdminTeacher,
     },
-
+    //teacher pc
+    {
+      path:'/pc/teacher',
+      name:'PcTeacher',
+      component:PcTeacher,
+    },
+    //student pc
+    {
+      path:'/pc/student',
+      name:'PcStudent',
+      component:PcStudent,
+    },
     //student mobile
     {
       path:'/mobile/student/studentInfo', //学生个人信息

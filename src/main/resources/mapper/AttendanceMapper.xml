@@ -11,6 +11,10 @@
         <association property="team" javaType="com.xmu.cms.entity.Team">
             <id property="teamId" column="teamId"/>
             <result property="teamName" column="teamName"/>
+            <association property="leader" javaType="com.xmu.cms.entity.Student">
+                <id property="studentId" column="leaderId"/>
+                <result property="name" column="leaderName"/>
+            </association>
         </association>
         <association property="klassSeminar" javaType="com.xmu.cms.entity.KlassSeminar">
             <id property="klassSeminarId" column="klassSeminarId"/>
@@ -24,7 +28,7 @@
                report_name,
                is_present,
                attendance.team_id as teamId,
-               klass_seminar_id as klassSeminarId
+               klass_seminar_id   as klassSeminarId
         FROM attendance,
              klass_seminar
         WHERE klass_seminar.seminar_id = #{seminarId}
@@ -46,9 +50,9 @@
                 #{attendance.teamOrder},
                 #{attendance.present},
                 #{attendance.reportFile},
-                null ,
+                null,
                 #{attendance.presentationFile},
-                null )
+                null)
     </insert>
 
     <delete id="deleteAttendance" parameterType="java.lang.Integer">
@@ -58,20 +62,18 @@
     </delete>
 
     <select id="getStudentAttendanceInKlassSeminar" resultMap="AttendanceResultMap">
-        SELECT attendance.id          as attendanceId,
+        SELECT attendance.id      as attendanceId,
                ppt_name,
                report_name,
-               attendance.team_id     as teamId,
-               klass_seminar_id       as klassSeminarId
+               attendance.team_id as teamId,
+               klass_seminar_id   as klassSeminarId
         FROM attendance,
              team_student
         WHERE team_student.student_id = #{studentId}
           AND team_student.team_id = attendance.team_id
           and attendance.klass_seminar_id
-                  in (select klass_seminar.id
-                      from klass_seminar
-                      where klass_id = #{klassId}
-                        and seminar_id = #{seminarId})
+                  in (select klass_seminar.id from klass_seminar where klass_id = #{klassId}
+                                                                   and seminar_id = #{seminarId})
     </select>
 
     <select id="getAttendancesInKlassAndSeminar" resultMap="AttendanceResultMap">
@@ -86,25 +88,27 @@
              klass_seminar,
              team
         WHERE attendance.klass_seminar_id
-                  in (select klass_seminar.id
-                      from klass_seminar
-                      where klass_id = #{klassId}
-                        and seminar_id = #{seminarId})
+                  in (select klass_seminar.id from klass_seminar where klass_id = #{klassId}
+                                                                   and seminar_id = #{seminarId})
           AND team.id = attendance.team_id
     </select>
 
     <select id="getAttendancesInKlassSeminar" resultMap="AttendanceResultMap">
-        SELECT attendance.id      as attendanceId,
+        SELECT attendance.id        as attendanceId,
                team_order,
                ppt_name,
                report_name,
                is_present,
-               attendance.team_id as teamId,
-               team.team_name     as teamName
+               attendance.team_id   as teamId,
+               team.team_name       as teamName,
+               student.id           as leaderId,
+               student.student_name as leaderName
         FROM attendance,
-             team
+             team,
+             student
         WHERE attendance.klass_seminar_id = #{klassSeminarId}
           AND team.id = attendance.team_id
+          AND team.leader_id = student.id
     </select>
 
     <update id="updateAttendancePresent" parameterType="com.xmu.cms.entity.Attendance">

@@ -1,7 +1,7 @@
 package com.xmu.cms.config.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xmu.cms.support.jwtUtils;
+import com.xmu.cms.support.JwtUtils;
 import com.xmu.cms.config.LoginType;
 import com.xmu.cms.config.SecurityProperties;
 import com.xmu.cms.support.UserInfo;
@@ -37,7 +37,7 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
             message.put("id", info.getUserId().toString());
             message.put("account", info.getAccount());
             message.put("role", info.getUserType());
-            message.put("token", jwtUtils.setToken(info));
+            message.put("token", JwtUtils.setToken(info));
             Boolean active = info.getActive();
             if (active != null) {
                 message.put("active", info.getActive().toString());

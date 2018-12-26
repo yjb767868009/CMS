@@ -98,4 +98,21 @@ public interface KlassSeminarMapper {
      * @param seminarId 讨论课id
      */
     void insertKlassSeminar(BigInteger klassId, BigInteger seminarId);// TODO: 2018/12/26
+
+    /**
+     * 获取班级下所有班级讨论课
+     *
+     * @param courseId 班级id
+     * @return 班级讨论课列表
+     */
+    List<KlassSeminar> getKlassSeminarByCourse(@Param("courseId") BigInteger courseId);
+
+    /**
+     * 获取课程底下学生所有的班级讨论课
+     *
+     * @param studentId 学生id
+     * @param courseId  课程id
+     * @return 班级讨论课列表
+     */
+    List<KlassSeminar> getKlassSeminarByStudentAndCourse(BigInteger studentId, BigInteger courseId);// TODO: 2018/12/27
 }

@@ -1,8 +1,6 @@
 package com.xmu.cms.mapper;
 
-import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Klass;
-import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.entity.Student;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -136,4 +134,5 @@ public interface KlassMapper {
      */
     void addKlassRound(@Param("klassId") BigInteger klassId,
                        @Param("roundId") BigInteger roundId);
+
 }

@@ -1,6 +1,11 @@
 package com.xmu.cms.dao;
 
+import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Teacher;
+import com.xmu.cms.mapper.CourseMapper;
+import com.xmu.cms.mapper.TeacherMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -9,25 +14,65 @@ import java.util.List;
  * @author JuboYu on 2018/12/11.
  * @version 1.0
  */
-public interface TeacherDao {
+@Component
+public class TeacherDao {
 
-    List<Teacher> getAllTeachers();
+    @Autowired
+    private TeacherMapper teacherMapper;
 
-    Teacher getTeacherByAccount(String account);
+    @Autowired
+    private CourseMapper courseMapper;
 
-    List<Teacher> getTeacherByName(String name);
+    public List<Teacher> getAllTeachers() {
+        return teacherMapper.getAllTeachers();
+    }
 
-    Teacher getTeacherById(BigInteger teacherId);
+    public Teacher getTeacherByAccount(String account) {
+        return teacherMapper.getTeacherByAccount(account);
+    }
 
-    Teacher getFullTeacherById(BigInteger teacherId);
+    public List<Teacher> getTeacherByName(String name) {
+        return teacherMapper.getTeacherByName(name);
+    }
 
-    Integer updateTeacherInfo(BigInteger teacherId, Teacher teacher);
+    public Teacher getTeacherById(BigInteger teacherId) {
+        return teacherMapper.getTeacherById(teacherId);
+    }
 
-    Integer updateTeacherPassword(Teacher teacher);
+    public Teacher getFullTeacherById(BigInteger teacherId) {
+        Teacher teacher = teacherMapper.getTeacherById(teacherId);
+        List<Course> courses = courseMapper.getAllCourseByTeacherId(teacher.getTeacherId());
+        teacher.setCourses(courses);
+        return teacher;
+    }
 
-    Integer deleteTeacherByTeacherId(BigInteger teacherId);
+    public Integer updateTeacherInfo(BigInteger teacherId, Teacher teacher) {
+        Teacher modifyTeacher = teacherMapper.getTeacherById(teacherId);
+        modifyTeacher.setAccount(teacher.getAccount());
+        modifyTeacher.setName(teacher.getName());
+        modifyTeacher.setEmail(teacher.getEmail());
+        return teacherMapper.updateTeacher(modifyTeacher);
+    }
 
-    Integer createTeacher(Teacher teacher) throws Exception;
+    public Integer updateTeacherPassword(Teacher teacher) {
+        Teacher modifyTeacher = teacherMapper.getTeacherById(teacher.getTeacherId());
+        modifyTeacher.setPassword(teacher.getPassword());
+        modifyTeacher.setActivation(true);
+        return teacherMapper.updateTeacher(modifyTeacher);
+    }
 
-    Integer modifyTeacherEmail(BigInteger teacherId, Teacher teacher);
+    public Integer deleteTeacherByTeacherId(BigInteger teacherId) {
+        return teacherMapper.deleteTeacher(teacherId);
+    }
+
+    public Integer createTeacher(Teacher teacher) throws Exception {
+        teacher.setActivation(false);
+        return teacherMapper.insertTeacher(teacher);
+    }
+
+    public Integer modifyTeacherEmail(BigInteger teacherId, Teacher teacher) {
+        Teacher modifyTeacher = teacherMapper.getTeacherById(teacherId);
+        modifyTeacher.setEmail(teacher.getEmail());
+        return teacherMapper.updateTeacher(modifyTeacher);
+    }
 }

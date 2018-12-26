@@ -18,26 +18,26 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping(value = "/round")
+@RequestMapping(value = "")
 public class RoundController {
 
     @Autowired
     private SeminarService seminarService;
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @GetMapping(value = "/{roundId}/seminar")
+    @GetMapping(value = "/round/{roundId}/seminar")
     public List<Seminar> getSeminarInRound(@PathVariable("roundId") BigInteger roundId) {
         return seminarService.getAllSeminarInRound(roundId);
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @GetMapping(value = "/{roundId}")
+    @GetMapping(value = "/round/{roundId}")
     public Round getRoundById(@PathVariable("roundId") BigInteger roundId) {
         return seminarService.getRoundByRoundId(roundId);
     }
 
     @Secured("ROLE_TEACHER")
-    @PutMapping(value = "/{roundId}")
+    @PutMapping(value = "/round/{roundId}")
     public Map<String, String> modifyRound(@PathVariable("roundId") BigInteger roundId,
                                            @RequestBody Round round) {
         Map<String, String> message = new HashMap<String, String>(1);

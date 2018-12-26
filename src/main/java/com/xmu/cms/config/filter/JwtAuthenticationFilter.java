@@ -1,6 +1,6 @@
 package com.xmu.cms.config.filter;
 
-import com.xmu.cms.support.jwtUtils;
+import com.xmu.cms.support.JwtUtils;
 import com.xmu.cms.support.UserInfo;
 import com.xmu.cms.support.UsernameIsExitedException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -63,7 +63,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
      * 解析token中的信息,并判断是否过期
      */
     private UsernamePasswordAuthenticationToken getAuthentication(String token) {
-        UserInfo info = jwtUtils.getToken();
+        UserInfo info = JwtUtils.getToken();
         if (null == info) {
             throw new UsernameIsExitedException("失效的令牌");
         }

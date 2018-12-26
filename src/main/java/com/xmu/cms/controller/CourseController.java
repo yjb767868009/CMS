@@ -35,8 +35,15 @@ public class CourseController {
 
     @Secured("ROLE_TEACHER")
     @PostMapping(value = "/course")
-    public Map<String, String> createCourse(@RequestBody Course course) {
-        return courseService.createCourse(course);
+    public Map<String, String> createCourse(@RequestBody Course course) throws Exception {
+        Map<String, String> message = new HashMap<String, String>(1);
+        try {
+            courseService.createCourse(course);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
 
 
@@ -222,6 +229,12 @@ public class CourseController {
     public List<Map<String, Object>> getScoreInCourse(@PathVariable("courseId") BigInteger courseId,
                                                       @PathVariable("roundId") BigInteger roundId) {
         return seminarService.getRoundScoreInCourse(courseId, roundId);
+    }
+
+    @Secured("ROLE_TEACHER")
+    @GetMapping(value = "/course/{courseId}/score")
+    public List<Map<String, Object>> getCourseScore(@PathVariable("courseId") BigInteger courseId){
+        return seminarService.getCourseScore(courseId);
     }
 
 

@@ -91,10 +91,10 @@
 
     <update id="updateKlassSeminar" parameterType="com.xmu.cms.entity.KlassSeminar">
         update klass_seminar
-        set klass_id       = #{klassSeminar.klass.klassId},
-            seminar_id     = #{klassSeminar.seminar.seminarId},
-            report_ddl     = #{klassSeminar.reportDDL},
-            status = #{klassSeminar.status}
+        set klass_id   = #{klassSeminar.klass.klassId},
+            seminar_id = #{klassSeminar.seminar.seminarId},
+            report_ddl = #{klassSeminar.reportDDL},
+            status     = #{klassSeminar.status}
         where id = #{klassSeminar.klassSeminarId}
     </update>
 
@@ -128,6 +128,22 @@
         update klass_seminar
         set status = 1
         where klass_id = #{klassId}
-        and seminar_id = #{seminarId}
+          and seminar_id = #{seminarId}
     </update>
+
+    <select id="getKlassSeminarByCourse" resultMap="KlassSeminarResultMap">
+        SELECT klass_seminar.id as klassSeminarId,
+               report_ddl,
+               status,
+               klass.id         as klassId,
+               grade,
+               klass_serial,
+               seminar.id       as seminarId
+        FROM klass_seminar,
+             klass,
+             seminar
+        WHERE seminar.course_id = #{courseId}
+          AND seminar.id = klass_seminar.seminar_id
+          AND klass.id = klass_seminar.klass_id
+    </select>
 </mapper>

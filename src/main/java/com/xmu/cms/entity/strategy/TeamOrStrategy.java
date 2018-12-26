@@ -3,7 +3,6 @@ package com.xmu.cms.entity.strategy;
 import com.xmu.cms.entity.Team;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -91,14 +90,6 @@ public class TeamOrStrategy implements Strategy {
     @Override
     public Boolean checkValid(Team team) {
         return subStrategyOne.checkValid(team) || subStrategyTwo.checkValid(team);
-    }
-
-    @Override
-    public List<Strategy> findSubStrategy() {
-        List<Strategy> strategies = new ArrayList<Strategy>();
-        strategies.add(subStrategyOne);
-        strategies.add(subStrategyTwo);
-        return strategies;
     }
 
     @Override

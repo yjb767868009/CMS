@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       account: "",
-      password: ""
+      password: "",
     };
   },
   mounted() {
@@ -65,7 +65,7 @@ export default {
             account: this.account,
             password: this.password
           })
-      }).then(response => {
+      }).then((response) => {
         let data = response.data;
         if (data.role === "teacher") {
           console.log('teacher');
@@ -91,6 +91,8 @@ export default {
           }
         }
 
+      }).catch((error)=>{
+        console.log(error)
       });
     }
   }

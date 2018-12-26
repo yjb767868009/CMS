@@ -64,13 +64,14 @@
                attendance.team_id     as teamId,
                klass_seminar_id       as klassSeminarId
         FROM attendance,
-             klass_seminar,
              team_student
-        WHERE klass_seminar.seminar_id = #{seminarId}
-          AND klass_seminar.klass_id = #{klassId}
-          AND team_student.student_id = #{studentId}
+        WHERE team_student.student_id = #{studentId}
           AND team_student.team_id = attendance.team_id
-          AND klass_seminar.id = attendance.klass_seminar_id
+          and attendance.klass_seminar_id
+                  in (select klass_seminar.id
+                      from klass_seminar
+                      where klass_id = #{klassId}
+                        and seminar_id = #{seminarId})
     </select>
 
     <select id="getAttendancesInKlassAndSeminar" resultMap="AttendanceResultMap">
@@ -84,9 +85,11 @@
         FROM attendance,
              klass_seminar,
              team
-        WHERE klass_seminar.seminar_id = #{seminarId}
-          AND klass_seminar.klass_id = #{klassId}
-          AND attendance.klass_seminar_id = klass_seminar.id
+        WHERE attendance.klass_seminar_id
+                  in (select klass_seminar.id
+                      from klass_seminar
+                      where klass_id = #{klassId}
+                        and seminar_id = #{seminarId})
           AND team.id = attendance.team_id
     </select>
 
@@ -99,10 +102,8 @@
                attendance.team_id as teamId,
                team.team_name     as teamName
         FROM attendance,
-             klass_seminar,
              team
-        WHERE klass_seminar.id = #{klassSeminarId}
-          AND attendance.klass_seminar_id = klass_seminar.id
+        WHERE attendance.klass_seminar_id = #{klassSeminarId}
           AND team.id = attendance.team_id
     </select>
 
@@ -121,10 +122,8 @@
                attendance.team_id as teamId,
                team.team_name     as teamName
         FROM attendance,
-             klass_seminar,
              team
         WHERE attendance.id = #{attendanceId}
-          AND attendance.klass_seminar_id = klass_seminar.id
           AND team.id = attendance.team_id
     </select>
 

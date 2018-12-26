@@ -1,18 +1,18 @@
 <template>
 <div class="student" style="height:20px;background:#fff">
-    <x-header :title="this.$store.state.student.currentCourse.name" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
+    <x-header :title="this.$store.state.student.currentCourse.courseName" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
     <group>
-        <template v-for="round in rounds">
+    <template v-for="round in rounds">
       <cell :key="round.roundId" is-link :border-intent="false" :arrow-direction="round.showRoundContent ? 'up' : 'down'"
       @click.native="getRoundScore(round)" value-align="left">
-      <span>第{{round.roundId}}轮</span>
+      <span>第{{round.order}}轮</span>
       </cell>
 
         <template v-if="round.showRoundContent">
             <template v-for="seminar in round.seminars">
             <cell :key="seminar.seminarId" is-link :border-intent="false" :arrow-direction="seminar.showSeminarContent ? 'up' : 'down'"
-            @click.native="getSeminarScore(seminar)" value-align="left" style="padding-left:150px">
+            @click.native="getSeminarScore(seminar)" value-align="left" style="padding-left:130px">
             <span>{{seminar.topic}}</span>
         </cell>
 
@@ -78,17 +78,7 @@ import {TransferDom,XHeader,
         showContent001: false,
         showContent002:false,
         showContent003:false,
-        score:{
-  "id": 233,
-  "team": {
-    "id": 123,
-    "name": "4-3"
-  },
-  "preScpre": "5",
-  "reportScore": "4",
-  "questionScore": "5",
-  "totalScore": "4.5"
-},      
+        score:'',
         roundscore:{
   "preScore": 3,
   "reportScore": 4.5,
@@ -103,155 +93,29 @@ import {TransferDom,XHeader,
     "order": 1
   }
 },
-         rounds: [
-        // fake data
-        {
-          roundId: 1,
-          showRoundContent: false,
-          order: 1,
-          course: {
-            courseName: "j2ee"
-          },
-          presentationScoreType: 0,
-          reportScoreType: 0,
-          questionScoreType: 0,
-          seminars: [
-            {
-              seminarId: 1,
-              showSeminarContent: false,
-              course: {
-                courseId: 4,
-                courseName: "ssss"
-              },
-              round: {
-                roundId: 1
-              },
-              maxTeamNum: 6,
-              topic: "1111",
-              introduction: "1111",
-              signStartTime: "2018-11-17T14:00:00.000+0000",
-              signEndTime: "2018-11-24T14:00:00.000+0000",
-              signOrder: false,
-              visible: false,
-              klassSeminars: [
-                {
-                  klassSeminarId: 1,
-                  klass: {
-                    klassId: 1,
-                    grade: 2016,
-                    klassSerial: 1,
-                    name: "2016-1"
-                  },
-                  reportDDL: "2018-12-18T18:28:25.000+0000",
-                  status: 0
-                }
-              ]
-            }
-          ]
-        },
-        {
-          roundId: 2,
-          showRoundContent: false,
-          order: 2,
-          course: {
-            courseName: "j2ee"
-          },
-          presentationScoreType: 1,
-          reportScoreType: 0,
-          questionScoreType: 1,
-          seminars: [
-            {
-              seminarId: 2,
-              showSeminarContent: false,
-              course: {
-                courseId: 4,
-                courseName: "ssss"
-              },
-              round: {
-                roundId: 2
-              },
-              maxTeamNum: 6,
-              topic: "2222",
-              introduction: "2",
-              signStartTime: "2018-11-17T14:00:00.000+0000",
-              signEndTime: "2018-11-24T14:00:00.000+0000",
-              signOrder: true,
-              visible: true,
-              klassSeminars: [
-                {
-                  klassSeminarId: 2,
-                  klass: {
-                    klassId: 1,
-                    grade: 2016,
-                    klassSerial: 1,
-                    name: "2016-1"
-                  },
-                  reportDDL: "2018-12-18T18:28:39.000+0000",
-                  status: 1
-                }
-              ]
-            }
-          ]
-        },
-        {
-          roundId: 3,
-          showRoundContent: false,
-          order: 3,
-          course: {
-            courseName: "j2ee"
-          },
-          presentationScoreType: 0,
-          reportScoreType: 1,
-          questionScoreType: 0,
-          seminars: [
-            {
-              seminarId: 3,
-              showSeminarContent: false,
-              course: {
-                courseId: 4,
-                courseName: "ssss"
-              },
-              round: {
-                roundId: 3
-              },
-              maxTeamNum: 4,
-              topic: "3333",
-              introduction: "3333",
-              signStartTime: "2018-11-17T14:00:00.000+0000",
-              signEndTime: "2018-11-24T14:00:00.000+0000",
-              signOrder: true,
-              visible: false,
-              klassSeminars: [
-                {
-                  klassSeminarId: 3,
-                  klass: {
-                    klassId: 1,
-                    grade: 2016,
-                    klassSerial: 1,
-                    name: "2016-1"
-                  },
-                  reportDDL: "2018-12-18T18:28:48.000+0000",
-                  status: 2
-                }
-              ]
-            }
-          ]
-        }
-      ]
+         rounds: '',
         }
     },
-    // mounted:function(){
-    //     this.$axios.get('/course/'+this.store.state.student.currentCourse.id+'/round')
-    //     .then((response)=>{
-    //         this.rounds=response.data
-    //         for(var i=0;i<this.rounds.lenth;i++){
-    //             this.rounds[i].showRoundContent=false;
-    //             for(var j=0;j<this.rounds[i].seminars.length;j++){
-    //                 this.rounds[i].seminars[j].showSeminarContent=false;
-    //             }
-    //         }
-    //     })
-    // },
+    mounted:function(){
+        this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId+'/round')
+        .then((response)=>{
+            this.rounds=response.data;
+            
+            this.rounds.forEach(rounditem=>{
+              this.$set(rounditem,'showRoundContent',false);
+              rounditem.seminars.forEach(seminaritem=>{
+                this.$set(seminaritem,'showSeminarContent',false)
+              });
+            });
+
+            // for(var i=0;i<this.rounds.length;i++){
+            //     this.$set(this.rounds[i],'showRoundContent',false);
+            //     for(var j=0;j<this.rounds[i].seminars.length;j++){
+            //         this.$set(this.rounds[i].seminars[j],'showSeminarContent',false);
+            //     }
+            // }
+        })
+    },
     methods:{
         toast:function(){
             Toast(this.name)

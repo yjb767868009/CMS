@@ -29,7 +29,7 @@ export default {
   components:{
     XHeader,
     XButton,
-    XInput
+    XInput,
   },
   methods:{
     post:function(){

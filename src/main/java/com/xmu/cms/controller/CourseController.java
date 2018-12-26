@@ -120,7 +120,7 @@ public class CourseController {
 
     }
 
-    @Secured("ROLE_TEACHER")
+    @Secured({"ROLE_TEACHER","ROLE_STUDENT"})
     @GetMapping(value = "/course/{courseId}/team")
     public List<Team> getTeamInCourse(UserInfo info,
                                       @PathVariable("courseId") BigInteger courseId) {

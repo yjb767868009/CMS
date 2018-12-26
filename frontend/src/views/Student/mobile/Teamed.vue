@@ -1,6 +1,6 @@
 <template>
 <div class="student" style="height:20px;background:#fff">
-    <x-header :title="this.$store.state.student.currentCourse.name" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
+    <x-header :title="this.$store.state.student.currentCourse.courseName" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
         <cell :border-intent="false" value-align="left" style="height:20px"><span style="padding-left:100px;font-size:1.2em">{{myteam.name}}</span></cell>
         <cell :border-intent="false"  value-align="left" title="组长：" style="height:20px"><span style="color:#000;padding-left:20px">&emsp;{{myteam.leader.account}} &emsp;{{myteam.leader.name}}</span></cell>

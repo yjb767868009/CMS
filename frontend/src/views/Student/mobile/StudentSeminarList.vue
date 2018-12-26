@@ -61,17 +61,18 @@ export default {
     ButtonTab,
     ButtonTabItem,Popup
   },
-  // mounted: function() {
-  //   this.$axios.get("/course").then(response => {
-  //     this.courses = repsonse.data;
-  //   }).catch((error)=>{
-  //       console.log(error)
-  //   });
-  // },
+  mounted: function() {
+    this.$axios.get("/course").then(response => {
+      this.courses = repsonse.data;
+    }).catch((error)=>{
+        console.log(error)
+    });
+  },
   data() {
     return {
       name: "name",
       newItem: "newItem",
+      show:false,
       courses: [
         {
           id: 1,
@@ -99,7 +100,13 @@ export default {
     click: function(course) {
       this.$store.state.currentCourse=course
       this.$router.push({ name: 'StudentCourseSeminar'})
-    }
+    },
+        running:function(){
+            this.$router.push('/mobile/Student/studentSeminarList')
+        },
+        StudentInfo:function(){
+            this.$router.push('/mobile/student/studentInfo')
+        }
   }
 };
 </script>

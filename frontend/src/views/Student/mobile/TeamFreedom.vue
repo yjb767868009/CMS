@@ -1,9 +1,8 @@
 <template>
 <div class="student" style="height:20px;background:#fff">
-    <x-header :title="this.$store.state.student.currentCourse.name" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
+    <x-header :title="this.$store.state.student.currentCourse.courseName" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
     <group>
-        
         
         <cell is-link :border-intent="false" :arrow-direction="showMyContent ? 'up' : 'down'"
          @click.native="showMyContent = !showMyContent" value-align="left">
@@ -150,69 +149,24 @@ import {TransferDom,XHeader,
     "name": "张四"
   }
 ],
-            teams:[
-  {
-    "showMemberContent":false,
-    "name": "1-33 早早早鸟小组",
-    "valid": true,
-    "leader": {
-      "id": "007",
-      "account": 1218,
-      "name": "张七"
-    },
-    "members": [
-      {
-        "id": "008",
-        "account": 1234,
-        "name": "李八"
-      },
-      {
-        "id": "009",
-        "account": 1246,
-        "name": "王九"
-      }
-    ]
-  },
-  {
-    "showMemberContent":false,
-    "name": "1-34 早鸟小组",
-    "valid": true,
-    "leader": {
-      "id": "004",
-      "account": 112,
-      "name": "三张"
-    },
-    "members": [
-      {
-        "id": "005",
-        "account": 132,
-        "name": "四李"
-      },
-      {
-        "id": "006",
-        "account": 142,
-        "name": "五王"
-      }
-    ]
-  }
-]
+            teams:'',
         }
     },
     mounted:function(){
-    //     this.$axios.get('/course/'+this.$store.state.student.currentCourse.id+'/team')
-    //     .then((response)=>{
-    //         this.teams=response.data;
-    //         for(var i=0;i<this.teams.length;i++){
-    //             this.teams[i].showMemberContent=false;
-    //         }
-    //     })
-    //         this.$axios.get('/course/'+this.$store.state.student.currentCourse.id+'/noteam')
-    //     .then((response)=>{
-    //         this.noteam=response.data;
-    //         for(var i=0;i<this.noteam.length;i++){
-    //             this.noteam[i].showNoTeam=false;
-    //         }
-    //     });
+        this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId+'/team')
+        .then((response)=>{
+            this.teams=response.data;
+            for(var i=0;i<this.teams.length;i++){
+                this.$set(teams[i],'showMemberContent',false);
+            }
+        })
+            this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId+'/noteam')
+        .then((response)=>{
+            this.noteam=response.data;
+            for(var i=0;i<this.noteam.length;i++){
+                this.noteam[i].showNoTeam=false;
+            }
+        });
     },
         
     methods:{

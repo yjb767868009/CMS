@@ -1,6 +1,6 @@
 <template>
 <div class="student" style="height:20px;background:#fff">
-    <x-header :title="this.$store.state.student.currentCourse.name" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
+    <x-header :title="this.$store.state.student.currentCourse.courseName" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
     
     
@@ -18,19 +18,19 @@
                 </template>
             </template>
     
-
-        <cell :border-intent="false" value-align="left" title="添加成员：" style="margin-top:15px;height:20px"><span style="color:#000;padding-left:20px"></span></cell>
-        <template v-for="stu in noteam">
-            <check-icon :key="stu.id" :value.sync="stu.showNoTeam" style="color:#000;padding-left:15px">  &emsp;&emsp;&emsp;{{stu.account}} &emsp;{{stu.name}}&emsp;&emsp;</check-icon>
-        </template>
         <group>
-        <cell :border-intent="false" value-align="left" title="搜索成员：" style="padding-top:20px;height:20px;padding-right:30px">
+        <cell :border-intent="false" value-align="left" title="搜索成员：" style="height:20px">
         <x-input style="height:20px" placeholder="请输入成员学号或姓名" v-model="searchstu"></x-input>
         </cell>
         </group>
         <template v-for="stu in noteam">
-        <check-icon :key="stu.id" v-if="(searchstu===stu.account||searchstu===stu.name)" :value.sync="stu.showNoTeam" style="color:#000;padding-left:15px">  &emsp;&emsp;&emsp;{{stu.account}} &emsp;{{stu.name}}&emsp;&emsp;</check-icon>
+        <check-icon :key="stu.id" v-if="(searchstu===stu.account||searchstu===stu.name)" :value.sync="stu.showNoTeam" style="color:#000;padding-left:15px">&emsp;{{stu.account}} &emsp;{{stu.name}}&emsp;&emsp;</check-icon>
         </template>
+        <cell :border-intent="false" value-align="left" title="添加成员：" style="margin-top:20px;height:20px"><span style="color:#000;padding-left:20px"></span></cell>
+        <template v-for="stu in noteam">
+            <check-icon :key="stu.id" :value.sync="stu.showNoTeam" style="color:#000;padding-left:15px">&emsp;{{stu.account}} &emsp;{{stu.name}}<span v-if="stu.showNoTeam">&emsp; (｡･∀･)ﾉﾞ</span></check-icon>
+        </template>
+        
 
         <flexbox style="margin-top:30px">
             <flexbox-item>
@@ -94,49 +94,23 @@ import {TransferDom,XHeader,
             currentklass:'',
             searchstu:"",
             stunum:1111111111,
-            klasses:[
-  {
-    "id": 45,
-    "name": "2016-1",
-    "time": "周三 7、8节",
-    "classroom": "海韵教学楼"
-  },
-  {
-    "id": 48,
-    "name": "2016-2",
-    "time": "周二7、8节",
-    "classroom": "海韵教学楼"
-  }
-],
-            noteam:[
-  {
-    "id": "001",
-    "account": "111111",
-    "name": "张三",
-    "showNoTeam":false,
-  },
-  {
-    "id": "002",
-    "account": "222222",
-    "name": "张四",
-    "showNoTeam":false,
-  }
-]
+            klasses:'',
+            noteam:'',
         }
     },
-    // mounted:function(){
-    //     this.$axios.get('/course/'+this.$store.state.student.currentCourse.id+'/noteam')
-    //     .then((response)=>{
-    //         this.noteam=response.data;
-    //         for(var i=0;i<this.noteam.length;i++){
-    //             this.noteam[i].showNoTeam=false;
-    //         }
-    //     });
-    //     this.$axios.get('/course/'+this.$store.state.student.currentCourse.id+'/class')
-    //     .then((response)=>{
-    //         this.klasses=response.data;
-    //     })
-    // },
+    mounted:function(){
+        this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId+'/noteam')
+        .then((response)=>{
+            this.noteam=response.data;
+            for(var i=0;i<this.noteam.length;i++){
+                this.$set(noteam[i],'showNoTeam',false);
+            }
+        });
+        this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId+'/class')
+        .then((response)=>{
+            this.klasses=response.data;
+        })
+    },
     methods:{
         toast:function(){
             Toast(this.name)

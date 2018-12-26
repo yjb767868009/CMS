@@ -174,7 +174,7 @@
           AND teacher.id = course.teacher_id
     </select>
 
-    <select id="getTeamMainCourseByCourseId">
+    <select id="getTeamMainCourseByCourseId" resultMap="CourseResultMap">
         select course1.id as courseId,
                course1.course_name as courseName
         from course,

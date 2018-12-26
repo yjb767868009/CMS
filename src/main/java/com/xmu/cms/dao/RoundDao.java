@@ -67,6 +67,49 @@ public class RoundDao {
         return rounds;
     }
 
+    public List<Round> getRoundsInCourse(UserInfo info, BigInteger courseId) {
+        List<Round> rounds = roundMapper.getRoundsByCourseId(courseId);
+        List<Seminar> seminars = seminarMapper.getAllSeminarByCourseId(courseId);
+        List<KlassSeminar> klassSeminars = null;
+        switch (info.getUserType()) {
+            case "teacher":
+                klassSeminars = klassSeminarMapper.getKlassSeminarByCourse(courseId);
+                break;
+            case "student":
+                klassSeminars = klassSeminarMapper.getKlassSeminarByStudentAndCourse(info.getUserId(), courseId);
+                break;
+            default:
+                break;
+        }
+        for (KlassSeminar klassSeminar : klassSeminars) {
+            for (Seminar seminar : seminars) {
+                if (klassSeminar.getSeminar().getSeminarId().equals(seminar.getSeminarId())) {
+                    List<KlassSeminar> klassSeminarList = seminar.getKlassSeminars();
+                    if (klassSeminarList == null) {
+                        klassSeminarList = new ArrayList<>();
+                    }
+                    klassSeminarList.add(klassSeminar);
+                    seminar.setKlassSeminars(klassSeminarList);
+                    break;
+                }
+            }
+        }
+        for (Seminar seminar : seminars) {
+            for (Round round : rounds) {
+                if (seminar.getRound().getRoundId().equals(round.getRoundId())) {
+                    List<Seminar> seminarList = round.getSeminars();
+                    if (seminarList == null) {
+                        seminarList = new ArrayList<>();
+                    }
+                    seminarList.add(seminar);
+                    round.setSeminars(seminarList);
+                    break;
+                }
+            }
+        }
+        return rounds;
+    }
+
     public Round getRoundById(BigInteger roundId) {
         return roundMapper.getRoundByRoundId(roundId);
     }

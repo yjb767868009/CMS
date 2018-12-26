@@ -81,11 +81,6 @@ public class CourseMemberLimitStrategy implements Strategy {
     }
 
     @Override
-    public List<Strategy> findSubStrategy() {
-        return null;
-    }
-
-    @Override
     public List<Strategy> getStrategy(List<Strategy> strategies) {
         strategies.add(this);
         return strategies;

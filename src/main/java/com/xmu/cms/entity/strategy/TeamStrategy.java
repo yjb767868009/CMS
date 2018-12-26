@@ -4,7 +4,6 @@ import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Team;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,13 +61,6 @@ public class TeamStrategy implements Strategy {
     @Override
     public Boolean checkValid(Team team) {
         return subStrategy.checkValid(team);
-    }
-
-    @Override
-    public List<Strategy> findSubStrategy() {
-        List<Strategy> strategies = new ArrayList<Strategy>();
-        strategies.add(subStrategy);
-        return strategies;
     }
 
     @Override

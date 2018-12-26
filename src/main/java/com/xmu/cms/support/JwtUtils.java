@@ -20,7 +20,7 @@ import java.util.Map;
  * @author JuboYu on 2018/12/5.
  * @version 1.0
  */
-public class jwtUtils {
+public class JwtUtils {
     private static final String SECRET = "JKKLJOoasdlfj";
 
     public static String setToken(UserInfo info) {

@@ -171,7 +171,7 @@ public class SeminarService {
     }
 
     public List<Round> getRoundInCourse(UserInfo info, BigInteger courseId) {
-        return roundDao.getFullRoundsByCourseId(info, courseId);
+        return roundDao.getRoundsInCourse(info, courseId);
     }
 
     public Question askQuestion(Question question) {
@@ -194,7 +194,7 @@ public class SeminarService {
         Float probability = (float) 0;
         Float allProbability = (float) 0;
         Float selectProbability = new Random().nextFloat();
-        Map<Question, Float> questionProbability = new HashMap<Question, Float>(16);
+        Map<BigInteger, Float> questionProbability = new HashMap<>(16);
         for (Question question : noSelectQuestions) {
             Team team = question.getTeam();
             Float questionPro = teamProbability.get(team.getTeamId());
@@ -203,10 +203,10 @@ public class SeminarService {
         for (Question question : noSelectQuestions) {
             Team team = question.getTeam();
             Float questionPro = teamProbability.get(team.getTeamId());
-            questionProbability.put(question, questionPro / allProbability);
+            questionProbability.put(question.getQuestionId(), questionPro / allProbability);
         }
         for (Question question : noSelectQuestions) {
-            Float questionPro = questionProbability.get(question);
+            Float questionPro = questionProbability.get(question.getQuestionId());
             if (probability < selectProbability && selectProbability < probability + questionPro) {
                 questionDao.selectQuestion(question);
                 return question;
@@ -302,5 +302,19 @@ public class SeminarService {
         seminarScore.setKlassSeminar(new KlassSeminar(attendance.getKlassSeminar().getKlassSeminarId()));
         seminarScore.setTeam(new Team(attendance.getTeam().getTeamId()));
         seminarScoreDao.updatePresentationScore(seminarScore);
+    }
+
+    public List<Map<String, Object>> getCourseScore(BigInteger courseId) {
+//        List<Map<String, Object>> courseScores = new ArrayList<>();
+//        List<Round> rounds = roundDao.getRoundByCourseId(courseId);
+//        List<Seminar> seminars = seminarDao.getSeminarInCourse(courseId);
+//        List<SeminarScore> seminarScores = seminarScoreDao.getSeminarScoreInCourse(courseId);
+//        List<RoundScore> roundScores = roundScoreDao.getRoundScoreInCourse(courseId);
+//        for (Round round : rounds) {
+//            round=
+//            courseScores.add()
+//        }
+        // TODO: 2018/12/26
+        return null;
     }
 }

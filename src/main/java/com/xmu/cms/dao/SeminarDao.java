@@ -42,7 +42,6 @@ public class SeminarDao {
         return seminarMapper.getSeminarBySeminarId(seminarId);
     }
 
-
     public List<Seminar> getAllSeminarByRoundId(BigInteger roundId) {
         return seminarMapper.getAllSeminarByRoundId(roundId);
     }

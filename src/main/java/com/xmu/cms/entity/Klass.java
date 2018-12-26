@@ -82,6 +82,9 @@ public class Klass {
     }
 
     public String getName() {
+        if (grade == null || klassSerial == null) {
+            return null;
+        }
         return grade.toString() + "-" + klassSerial.toString();
     }
 }

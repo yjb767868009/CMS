@@ -231,6 +231,12 @@ public class CourseController {
         return seminarService.getRoundScoreInCourse(courseId, roundId);
     }
 
+    @Secured("ROLE_TEACHER")
+    @GetMapping(value = "/course/{courseId}/score")
+    public List<Map<String, Object>> getCourseScore(@PathVariable("courseId") BigInteger courseId){
+        return seminarService.getCourseScore(courseId);
+    }
+
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission

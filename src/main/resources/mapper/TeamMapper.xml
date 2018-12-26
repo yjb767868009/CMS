@@ -244,4 +244,13 @@
         from team
         where team.course_id = #{courseId}
     </select>
+
+    <select id="getStudentTeamInCourse" resultMap="TeamResultMap">
+        select team.id as teamId, team_name as teamName, team.status
+        from team,
+             team_student
+        where team.course_id = #{courseId}
+          and team_student.student_id = #{studentId}
+          and team.id = team_student.team_id
+    </select>
 </mapper>

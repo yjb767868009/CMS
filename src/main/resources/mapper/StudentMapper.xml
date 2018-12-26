@@ -72,8 +72,7 @@
     </select>
 
     <select id="getMembersInTeam" resultMap="StudentResultMap">
-        select student.id as studentId,
-               student_name as studentName
+        select *
         from student,
              team_student
         where team_student.team_id = #{teamId}
@@ -91,8 +90,17 @@
                from team_student,
                     klass_student,
                     klass_team
-              where klass_student.course_id = #{courseId}
-                and klass_team.klass_id = klass_student.klass_id
-                and team_student.team_id = klass_team.team_id)
+               where klass_student.course_id = #{courseId}
+                 and klass_team.klass_id = klass_student.klass_id
+                 and team_student.team_id = klass_team.team_id)
     </select>
+
+    <select id="getStudentInCourse" resultMap="StudentResultMap">
+        select *
+        from student,
+             klass_student
+        where student_id = student.id
+          and klass_student.course_id = #{courseId}
+    </select>
+
 </mapper>

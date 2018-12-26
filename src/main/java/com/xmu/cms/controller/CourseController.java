@@ -134,10 +134,16 @@ public class CourseController {
         return message;
     }
 
-    @Secured({"ROLE_TEACHER","ROLE_STUDENT"})
+    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/course/{courseId}/team")
-    public List<Team> getTeamInCourse(@PathVariable("courseId") BigInteger courseId) {
-        return courseService.getTeamInCourse(courseId);
+    public Map<String, Object> getTeamInCourse(UserInfo info, @PathVariable("courseId") BigInteger courseId) {
+        Map<String, Object> message = new HashMap<>(2);
+        String student = "student";
+        if (info.getUserType().equals(student)) {
+            message.put("myTeam", courseService.getStudentTeamInCourse(info.getUserId(), courseId));
+        }
+        message.put("teams", courseService.getTeamInCourse(courseId));
+        return message;
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
@@ -233,7 +239,7 @@ public class CourseController {
 
     @Secured("ROLE_TEACHER")
     @GetMapping(value = "/course/{courseId}/score")
-    public List<Map<String, Object>> getCourseScore(@PathVariable("courseId") BigInteger courseId){
+    public List<Map<String, Object>> getCourseScore(@PathVariable("courseId") BigInteger courseId) {
         return seminarService.getCourseScore(courseId);
     }
 

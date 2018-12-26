@@ -118,5 +118,15 @@ public interface TeamMapper {
      * @param courseId 课程id
      * @return 队伍列表
      */
-    List<Team> getSimpleTeamInCourse(BigInteger courseId);
+    List<Team> getSimpleTeamInCourse(@Param("courseId") BigInteger courseId);
+
+    /**
+     * 获取学生在课程下的队伍
+     *
+     * @param studentId 学生id
+     * @param courseId  课程id
+     * @return 队伍
+     */
+    Team getStudentTeamInCourse(@Param("studentId") BigInteger studentId,
+                                @Param("courseId") BigInteger courseId);
 }

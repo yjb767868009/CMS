@@ -66,7 +66,7 @@ public class CourseService {
         if (mainCourse != null) {
             courseId = mainCourse.getCourseId();
         }
-        return teamDao.getTeamAndMembersInCourse(courseId);
+        return teamDao.getSimpleTeamInCourse(courseId);
     }
 
     public void newKlass(BigInteger courseId, Klass klass) {
@@ -185,4 +185,11 @@ public class CourseService {
 
     }
 
+    public Team getStudentTeamInCourse(BigInteger studentId, BigInteger courseId) {
+        Course mainCourse = courseDao.getTeamMainCourse(courseId);
+        if (mainCourse != null) {
+            courseId = mainCourse.getCourseId();
+        }
+        return teamDao.getStudentTeamInCourse(studentId, courseId);
+    }
 }

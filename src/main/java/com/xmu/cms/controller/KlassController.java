@@ -1,10 +1,8 @@
 package com.xmu.cms.controller;
 
 import com.xmu.cms.entity.Student;
-import com.xmu.cms.entity.Team;
 import com.xmu.cms.service.CourseService;
 import com.xmu.cms.support.FileUtils;
-import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -54,10 +52,5 @@ public class KlassController {
         return message;
     }
 
-    @Secured("ROLE_STUDENT")
-    @GetMapping(value = "/class/{classId}/team")
-    public Team getTeamInKlass(UserInfo info,
-                               @PathVariable("klassId") BigInteger klassId) {
-        return courseService.getStudentTeamInKlass(info.getUserId(), klassId);
-    }
+
 }

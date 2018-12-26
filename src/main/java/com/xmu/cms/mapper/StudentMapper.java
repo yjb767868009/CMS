@@ -96,9 +96,17 @@ public interface StudentMapper {
 
     /**
      * 获取队伍中的成员信息
+     *
      * @param teamId 队伍id
      * @return 成员列表
      */
     List<Student> getMembersInTeam(@Param("teamId") BigInteger teamId);
 
+    /**
+     * 获取课程下的所有学生
+     *
+     * @param courseId 课程id
+     * @return 学生列表
+     */
+    List<Student> getStudentInCourse(BigInteger courseId);
 }

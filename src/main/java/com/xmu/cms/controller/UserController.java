@@ -1,11 +1,14 @@
 package com.xmu.cms.controller;
 
 import com.xmu.cms.entity.Seminar;
+import com.xmu.cms.entity.Student;
+import com.xmu.cms.entity.Teacher;
 import com.xmu.cms.entity.Team;
 import com.xmu.cms.service.*;
 import com.xmu.cms.support.MyUser;
 import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
@@ -58,6 +61,20 @@ public class UserController {
         return userService.modifyEmail(info, user);
     }
 
+    @Secured({"ROLE_STUDENT", "ROLE_TEACHER"})
+    @GetMapping(value = "/email")
+    public String getMyEmail(UserInfo info) {
+        switch (info.getUserType()) {
+            case "teacher":
+                Teacher teacher = userService.getTeacherById(info.getUserId());
+                return teacher.getEmail();
+            case "student":
+                Student student = userService.getStudentById(info.getUserId());
+                return student.getEmail();
+            default:
+                return "Error";
+        }
+    }
 
     @GetMapping(value = "/course/{courseId}/seminars")
     public List<Seminar> getSeminarsByCourseId(@PathVariable("courseId") BigInteger courseId) {

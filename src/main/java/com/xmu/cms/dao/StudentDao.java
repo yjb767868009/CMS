@@ -70,4 +70,8 @@ public class StudentDao {
     public List<Student> getNoTeamStudentInCourse(BigInteger courseId) {
         return studentMapper.getNoTeamStudentInCourse(courseId);
     }
+
+    public List<Student> getStudentInCourse(BigInteger courseId) {
+        return studentMapper.getStudentInCourse(courseId);
+    }
 }

@@ -11,9 +11,8 @@
             <id property="teamId" column="teamId"/>
             <result property="teamName" column="teamName"/>
         </association>
-        <association property="seminar" javaType="com.xmu.cms.entity.Seminar">
-            <id property="seminarId" column="seminarId"/>
-            <result property="seminarName" column="seminarName"/>
+        <association property="klassSeminar" javaType="com.xmu.cms.entity.KlassSeminar">
+            <id property="klassSeminarId" column="klassSeminarId"/>
         </association>
     </resultMap>
 

@@ -118,11 +118,19 @@ public class SeminarController {
 
     @Secured("ROLE_TEACHER")
     @PutMapping(value = "/seminar/{seminarId}/team/{teamId}/seminarscore")
-    public Map<String, String> updateSeminarTeamScore(@PathVariable("seminarId") BigInteger seminarId,
+    public Map<String, String> modifyTeamSeminarScore(@PathVariable("seminarId") BigInteger seminarId,
                                                       @PathVariable("teamId") BigInteger teamId,
                                                       @RequestBody SeminarScore seminarScore) {
-        //TODO 按讨论课ID修改队伍讨论课成绩
-        return null;
+        Map<String, String> message = new HashMap<String, String>();
+        try {
+            seminarScore.setSeminar(new Seminar(seminarId));
+            seminarScore.setTeam(new Team(teamId));
+            seminarService.modifyTeamSeminarScore(seminarScore);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})

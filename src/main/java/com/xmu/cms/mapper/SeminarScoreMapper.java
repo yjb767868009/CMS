@@ -37,4 +37,11 @@ public interface SeminarScoreMapper {
      * @return 讨论课成绩列表
      */
     List<SeminarScore> getTeamSeminarScoreInRound(@Param("teamId") BigInteger teamId, @Param("roundId") BigInteger roundId);
+
+    /**
+     * 根据队伍讨论课，修改对应的讨论课成绩
+     *
+     * @param seminarScore 讨论课成绩
+     */
+    void modifyTeamSeminarScore(SeminarScore seminarScore);// TODO: 2018/12/26  
 }

@@ -332,4 +332,10 @@ public class SeminarServiceImpl implements SeminarService {
     public List<Round> getRoundInCourse(BigInteger courseId) {
         return roundDao.getRoundByCourseId(courseId);
     }
+
+    @Override
+    public void modifyTeamSeminarScore(SeminarScore seminarScore) {
+        seminarScoreDao.modifyTeamSeminarScore(seminarScore);
+        roundScoreDao.updateRoundScore(seminarScore.getSeminar().getSeminarId(), seminarScore.getTeam().getTeamId());
+    }
 }

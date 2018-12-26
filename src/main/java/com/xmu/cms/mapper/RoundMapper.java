@@ -61,4 +61,12 @@ public interface RoundMapper {
      * @return 删除信息
      */
     Integer deleteRoundScore(@Param("roundId") BigInteger roundId);
+
+    /**
+     * 获取讨论课所属的轮次，无级联，属性完整的
+     *
+     * @param seminarId 讨论课id
+     * @return 轮次
+     */
+    Round getRoundBySeminar(BigInteger seminarId);// TODO: 2018/12/26
 }

@@ -13,5 +13,5 @@ public interface Strategy {
 
     List<Strategy> findSubStrategy();
 
-    List<Strategy> getStrategy();
+    List<Strategy> getStrategy(List<Strategy> strategies);
 }

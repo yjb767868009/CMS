@@ -1,6 +1,7 @@
 package com.xmu.cms.service;
 
 import com.xmu.cms.entity.*;
+import com.xmu.cms.entity.strategy.Strategy;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -64,4 +65,8 @@ public interface CourseService {
     void uploadKlassFile(BigInteger klassId, List<Student> students) throws Exception;
 
     Team getStudentTeamInKlass(BigInteger studentId, BigInteger klassId);
+
+    Strategy getCourseStrategy(BigInteger courseId);
+
+    void newCourseStrategy(List<Strategy> strategies);
 }

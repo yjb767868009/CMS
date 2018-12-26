@@ -85,4 +85,6 @@ public interface SeminarService {
     List<Map<String, Object>> getRoundScoreInCourse(BigInteger courseId, BigInteger roundId);
 
     List<Round> getRoundInCourse(BigInteger courseId);
+
+    void modifyTeamSeminarScore(SeminarScore seminarScore);
 }

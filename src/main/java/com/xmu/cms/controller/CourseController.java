@@ -2,6 +2,7 @@ package com.xmu.cms.controller;
 
 import com.xmu.cms.aspect.annoatation.CheckCoursePermission;
 import com.xmu.cms.entity.*;
+import com.xmu.cms.entity.strategy.Strategy;
 import com.xmu.cms.service.*;
 import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -216,6 +217,7 @@ public class CourseController {
         return message;
     }
 
+    @Secured("ROLE_TEACHER")
     @GetMapping(value = "/course/{courseId}/round/{roundId}/teamscore")
     public List<Map<String, Object>> getScoreInCourse(@PathVariable("courseId") BigInteger courseId,
                                                       @PathVariable("roundId") BigInteger roundId) {
@@ -226,6 +228,7 @@ public class CourseController {
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
     @PostMapping(value = "/course/{courseId}/teamsharerequest")
+
     public Map<String, String> sendShareTeam(@PathVariable("courseId") BigInteger courseId,
                                              @RequestBody ShareTeam shareTeam) {
         shareTeam.setMasterCourse(new Course(courseId));
@@ -257,4 +260,24 @@ public class CourseController {
         return message;
     }
 
+    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
+    @GetMapping(value = "/course/{courseId}/strategy")
+    public List<Strategy> getCourseStrategy(@PathVariable("courseId") BigInteger courseId) {
+        List<Strategy> strategies = new ArrayList<>();
+        return courseService.getCourseStrategy(courseId).getStrategy(strategies);
+    }
+
+    @Secured("ROLE_TEACHER")
+    @PostMapping(value = "/course/{courseId}/strategy")
+    public Map<String, String> newCourseStrategy(@PathVariable("courseId") BigInteger courseId,
+                                                 @RequestBody List<Strategy> strategies) {
+        Map<String, String> message = new HashMap<>();
+        try {
+            courseService.newCourseStrategy(strategies);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", "Error");
+        }
+        return message;
+    }
 }

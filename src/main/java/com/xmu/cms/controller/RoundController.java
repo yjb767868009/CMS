@@ -53,13 +53,4 @@ public class RoundController {
                                         @PathVariable("teamId") BigInteger teamId) {
         return seminarService.getRoundTeamScore(roundId, teamId);
     }
-
-    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @PutMapping(value = "/round/{roundId}/team/{teamId}/roundscore")
-    public Map<String,String> updateRoundTeamScore(@PathVariable("roundId") Integer roundId,
-                                        @PathVariable("teamId") Integer teamId,
-                                        @RequestBody RoundScore roundScore) {
-        //TODO
-        return null;
-    }
 }

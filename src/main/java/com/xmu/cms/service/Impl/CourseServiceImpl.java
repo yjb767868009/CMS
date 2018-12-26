@@ -2,6 +2,7 @@ package com.xmu.cms.service.Impl;
 
 import com.xmu.cms.dao.*;
 import com.xmu.cms.entity.*;
+import com.xmu.cms.entity.strategy.Strategy;
 import com.xmu.cms.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,9 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private StudentDao studentDao;
 
+    @Autowired
+    private StrategyDao strategyDao;
+
     @Override
     public List<Course> getAllCoursesByTeacher(BigInteger teacherId) {
         return courseDao.getAllCoursesByTeacherId(teacherId);
@@ -70,7 +74,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course getCourse(BigInteger courseId) throws Exception{
+    public Course getCourse(BigInteger courseId) throws Exception {
         Course course = courseDao.getCourse(courseId);
         if (course == null) throw new Exception("无此课程");
         return course;
@@ -210,6 +214,16 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Team getStudentTeamInKlass(BigInteger studentId, BigInteger klassId) {
         return teamDao.getStudentTeamInKlass(studentId, klassId);
+    }
+
+    @Override
+    public Strategy getCourseStrategy(BigInteger courseId) {
+        return strategyDao.getCourseStrategy(courseId);
+    }
+
+    @Override
+    public void newCourseStrategy(List<Strategy> strategies) {
+
     }
 
 }

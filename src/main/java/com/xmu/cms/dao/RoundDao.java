@@ -22,4 +22,6 @@ public interface RoundDao {
     Integer updateCalType(Round round);
 
     List<Round> getRoundByCourseId(BigInteger courseId);
+
+    Round getRoundBySeminar(BigInteger seminarId);
 }

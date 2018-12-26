@@ -33,7 +33,8 @@ public class MemberLimitStrategy implements Strategy {
     }
 
     @Override
-    public List<Strategy> getStrategy() {
-        return null;
+    public List<Strategy> getStrategy(List<Strategy> strategies) {
+        strategies.add(this);
+        return strategies;
     }
 }

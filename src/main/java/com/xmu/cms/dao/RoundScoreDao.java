@@ -13,4 +13,7 @@ public interface RoundScoreDao {
     RoundScore getRoundTeamScore(BigInteger roundId, BigInteger teamId);
 
     List<RoundScore> getRoundScore(BigInteger roundId);
+
+    void updateRoundScore(BigInteger roundId, BigInteger teamId);
+
 }

@@ -72,7 +72,7 @@ public class TeamStrategy implements Strategy {
     }
 
     @Override
-    public List<Strategy> getStrategy() {
-        return null;
+    public List<Strategy> getStrategy(List<Strategy> strategies) {
+        return subStrategy.getStrategy(strategies);
     }
 }

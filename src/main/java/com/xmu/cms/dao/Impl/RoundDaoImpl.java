@@ -90,4 +90,9 @@ public class RoundDaoImpl implements RoundDao {
     public List<Round> getRoundByCourseId(BigInteger courseId) {
         return roundMapper.getRoundsByCourseId(courseId);
     }
+
+    @Override
+    public Round getRoundBySeminar(BigInteger seminarId) {
+        return roundMapper.getRoundBySeminar(seminarId);
+    }
 }

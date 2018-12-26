@@ -198,7 +198,7 @@ import {TransferDom,XHeader,
 ]
         }
     },
-    // mounted:function(){
+    mounted:function(){
     //     this.$axios.get('/course/'+this.$store.state.student.currentCourse.id+'/team')
     //     .then((response)=>{
     //         this.teams=response.data;
@@ -213,7 +213,7 @@ import {TransferDom,XHeader,
     //             this.noteam[i].showNoTeam=false;
     //         }
     //     });
-    // },
+    },
         
     methods:{
         toast:function(){

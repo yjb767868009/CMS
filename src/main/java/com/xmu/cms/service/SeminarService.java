@@ -1,112 +1,306 @@
 package com.xmu.cms.service;
 
+import com.xmu.cms.dao.*;
 import com.xmu.cms.entity.*;
 import com.xmu.cms.support.UserInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author JuboYu on 2018/11/29.
  * @version 1.0
  */
-public interface SeminarService {
-    /**
-     * 新建讨论课
-     *
-     * @param seminar 讨论课
-     * @throws Exception 新建讨论课异常
-     */
-    void newSeminar(Seminar seminar) throws Exception;
+@Service
+public class SeminarService {
 
-    Map<String, String> deleteSeminar(BigInteger seminarId);
+    private static String emptyAttendance = "不存在展示";
 
-    List<Seminar> getSeminarsByCourseId(BigInteger courseId);
+    @Autowired
+    private SeminarDao seminarDao;
 
-    Map<String, String> modifySeminar(Seminar seminar);
+    @Autowired
+    private AttendanceDao attendanceDao;
 
-    void modifyKlassSeminarReportDDL(KlassSeminar klassSeminar);
+    @Autowired
+    private RoundDao roundDao;
 
-    Seminar getSeminarBySeminarId(BigInteger seminarId);
+    @Autowired
+    private RoundScoreDao roundScoreDao;
 
-    List<Seminar> getAllSeminarInRound(BigInteger roundId);
+    @Autowired
+    private SeminarScoreDao seminarScoreDao;
 
-    Integer newRound(Round round);
+    @Autowired
+    private QuestionDao questionDao;
 
-    KlassSeminar getRunningKlassSeminarByTeacherId(BigInteger userId);
+    @Autowired
+    private KlassDao klassDao;
 
-    List<Attendance> getAttendancesInKlassAndSeminar(BigInteger seminarId, BigInteger klassId);
+    @Autowired
+    private KlassSeminarDao klassSeminarDao;
 
-    List<Attendance> getAttendancesInKlassSeminar(BigInteger klassSeminarId);
+    @Autowired
+    private TeamDao teamDao;
 
-    void newAttendance(BigInteger studentId, Attendance attendance);
+    public void newSeminar(Seminar seminar) throws Exception {
+        seminarDao.insertSeminar(seminar);
+        List<Klass> klasses = klassDao.getAllKlass(seminar.getCourse().getCourseId());
+        for (Klass klass : klasses) {
+            klassSeminarDao.insertKlassSeminar(klass.getKlassId(), seminar.getSeminarId());
+        }
+    }
 
-    Round getRoundByRoundId(BigInteger roundId);
+    public Map<String, String> deleteSeminar(BigInteger seminarId) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        Integer count = seminarDao.deleteSeminar(seminarId);
+        if (count == 1) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
+    }
 
-    Integer modifyRound(Round round);
+    public List<Seminar> getSeminarsByCourseId(BigInteger courseId) {
+        return null;
+    }
 
-    RoundScore getRoundTeamScore(BigInteger roundId, BigInteger teamId);
+    public Map<String, String> modifySeminar(Seminar seminar) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        Integer count = seminarDao.modifySeminar(seminar);
+        if (count == 1) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
+    }
 
-    List<RoundScore> getRoundScore(BigInteger roundId);
+    public void modifyKlassSeminarReportDDL(KlassSeminar klassSeminar) {
+        klassSeminarDao.updateKlassSeminarReportDDL(klassSeminar);
+    }
 
-    SeminarScore getSeminarTeamScore(BigInteger seminarId, BigInteger teamId);
+    public Seminar getSeminarBySeminarId(BigInteger seminarId) {
+        return seminarDao.getSeminarBySeminarId(seminarId);
+    }
 
-    List<SeminarScore> getSeminarScore(BigInteger seminarId);
+    public List<Seminar> getAllSeminarInRound(BigInteger roundId) {
+        return seminarDao.getAllSeminarByRoundId(roundId);
+    }
 
-    List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId);
+    public Integer newRound(Round round) {
+        return roundDao.newRound(round);
+    }
 
-    Question askQuestion(BigInteger userId, BigInteger attendanceId);
+    public KlassSeminar getRunningKlassSeminarByTeacherId(BigInteger teacherId) {
+        return klassSeminarDao.getRunningKlassSeminarByTeacherId(teacherId);
+    }
 
-    Map<String, String> scoreQuestion(Question question);
+    public List<Attendance> getAttendancesInKlassAndSeminar(BigInteger seminarId, BigInteger klassId) {
+        return attendanceDao.getAttendancesInKlassAndSeminar(seminarId, klassId);
+    }
 
-    List<Klass> getKlassInSeminar(BigInteger seminarId);
+    public List<Attendance> getAttendancesInKlassSeminar(BigInteger klassSeminarId) {
+        return attendanceDao.getAttendancesInKlassSeminar(klassSeminarId);
+    }
 
-    KlassSeminar getKlassSeminarByKlassAndSeminar(BigInteger klassId, BigInteger seminarId);
+    public void newAttendance(BigInteger studentId, Attendance attendance) {
+        KlassSeminar klassSeminar = attendance.getKlassSeminar();
+        Team team = teamDao.getStudentTeamInKlassSeminar(studentId, klassSeminar.getKlassSeminarId());
+        attendance.setTeam(team);
+        attendanceDao.insertAttendance(attendance);
+    }
 
-    Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId);
+    public Round getRoundByRoundId(BigInteger roundId) {
+        return roundDao.getRoundById(roundId);
+    }
 
-    List<Round> getRoundInCourse(UserInfo info, BigInteger courseId);
+    public Integer modifyRound(Round round) {
+        return roundDao.updateCalType(round);
+    }
 
-    Question askQuestion(Question question);
+    public RoundScore getRoundTeamScore(BigInteger roundId, BigInteger teamId) {
+        return roundScoreDao.getRoundTeamScore(roundId, teamId);
+    }
 
-    Question selectQuestionInKlassSeminar(BigInteger klassSeminarId);
+    public List<RoundScore> getRoundScore(BigInteger roundId) {
+        return roundScoreDao.getRoundScore(roundId);
+    }
 
-    Attendance nextAttendance(BigInteger klassSeminarId);
+    public SeminarScore getSeminarTeamScore(BigInteger seminarId, BigInteger teamId) {
+        return null;
+    }
 
-    void stopKlassSeminar(BigInteger klassSeminarId);
+    public List<SeminarScore> getSeminarScore(BigInteger seminarId) {
+        return null;
+    }
 
-    void startKlassSeminar(BigInteger klassSeminarId);
+    public List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId) {
+        return questionDao.getQuestionInKlassSeminar(klassSeminarId);
+    }
 
-    Attendance getAttendanceByAttendanceId(BigInteger attendanceId);
+    public Question askQuestion(BigInteger userId, BigInteger attendanceId) {
+        //todo
+        return null;
+    }
 
-    void attendanceUploadReport(BigInteger attendanceId, String filename);
+    public Map<String, String> scoreQuestion(Question question) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        Integer count = questionDao.scoreQuestion(question);
+        if (count == 1) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
+    }
 
-    void attendanceUploadPPT(BigInteger attendanceId, String filename);
+    public List<Klass> getKlassInSeminar(BigInteger seminarId) {
+        return klassSeminarDao.getKlassInSeminar(seminarId);
+    }
 
-    void deleteAttendance(BigInteger attendanceId);
+    public KlassSeminar getKlassSeminarByKlassAndSeminar(BigInteger klassId, BigInteger seminarId) {
+        return klassSeminarDao.getKlassSeminarByKlassAndSeminar(klassId, seminarId);
+    }
 
-    List<Map<String, Object>> getRoundScoreInCourse(BigInteger courseId, BigInteger roundId);
+    public Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId) {
+        return attendanceDao.getStudentAttendanceInKlassSeminar(studentId, klassId, seminarId);
+    }
 
-    List<Round> getRoundInCourse(BigInteger courseId);
+    public List<Round> getRoundInCourse(UserInfo info, BigInteger courseId) {
+        return roundDao.getFullRoundsByCourseId(info, courseId);
+    }
 
-    void modifyTeamSeminarScore(SeminarScore seminarScore);
+    public Question askQuestion(Question question) {
+        return questionDao.insertQuestion(question);
+    }
 
-    /**
-     * 给报告打分
-     *
-     * @param attendanceId 展示id
-     * @param seminarScore 讨论课报告分数
-     * @throws Exception 异常
-     */
-    void scoreReportScore(BigInteger attendanceId, SeminarScore seminarScore) throws Exception;
+    public Question selectQuestionInKlassSeminar(BigInteger klassSeminarId) {
+        List<Question> questions = questionDao.getQuestionInKlassSeminar(klassSeminarId);
+        List<Question> noSelectQuestions = questionDao.getNoSelectedQuestionInKlassSeminar(klassSeminarId);
+        Map<BigInteger, Float> teamProbability = new HashMap<BigInteger, Float>(16);
+        for (Question question : questions) {
+            Team team = question.getTeam();
+            Float probability = teamProbability.get(team.getTeamId());
+            if (probability == null) {
+                teamProbability.put(team.getTeamId(), (float) 1);
+            } else {
+                teamProbability.put(team.getTeamId(), probability / 2);
+            }
+        }
+        Float probability = (float) 0;
+        Float allProbability = (float) 0;
+        Float selectProbability = new Random().nextFloat();
+        Map<Question, Float> questionProbability = new HashMap<Question, Float>(16);
+        for (Question question : noSelectQuestions) {
+            Team team = question.getTeam();
+            Float questionPro = teamProbability.get(team.getTeamId());
+            allProbability += questionPro;
+        }
+        for (Question question : noSelectQuestions) {
+            Team team = question.getTeam();
+            Float questionPro = teamProbability.get(team.getTeamId());
+            questionProbability.put(question, questionPro / allProbability);
+        }
+        for (Question question : noSelectQuestions) {
+            Float questionPro = questionProbability.get(question);
+            if (probability < selectProbability && selectProbability < probability + questionPro) {
+                questionDao.selectQuestion(question);
+                return question;
+            }
+            probability += questionPro;
+        }
+        return null;
+    }
 
-    /**
-     * 给展示打分
-     *
-     * @param attendanceId 展示id
-     * @param seminarScore 讨论课展示分数
-     * @throws Exception 异常
-     */
-    void scorePresentationScore(BigInteger attendanceId, SeminarScore seminarScore) throws Exception;
+    public Attendance nextAttendance(BigInteger klassSeminarId) {
+        List<Attendance> attendances = attendanceDao.getAttendancesInKlassSeminar(klassSeminarId);
+        boolean find = false;
+        for (Attendance attendance : attendances) {
+            if (find) {
+                attendance.setPresent(true);
+                attendanceDao.updateAttendancePresent(attendance);
+                return attendance;
+            }
+            if (attendance.getPresent()) {
+                attendance.setPresent(false);
+                attendanceDao.updateAttendancePresent(attendance);
+                find = true;
+            }
+        }
+        return null;
+    }
+
+    public void stopKlassSeminar(BigInteger klassSeminarId) {
+        klassSeminarDao.stopKlassSeminar(klassSeminarId);
+    }
+
+    public void startKlassSeminar(BigInteger klassSeminarId) {
+        List<Attendance> attendances = attendanceDao.getAttendancesInKlassSeminar(klassSeminarId);
+        if (attendances != null) {
+            attendanceDao.updateAttendancePresent(attendances.get(0));
+        }
+        klassSeminarDao.startKlassSeminar(klassSeminarId);
+    }
+
+    public Attendance getAttendanceByAttendanceId(BigInteger attendanceId) {
+        return attendanceDao.getAttendanceByAttendanceId(attendanceId);
+    }
+
+    public void attendanceUploadReport(BigInteger attendanceId, String filename) {
+        attendanceDao.attendanceUploadReport(attendanceId, filename);
+    }
+
+    public void attendanceUploadPPT(BigInteger attendanceId, String filename) {
+        attendanceDao.attendanceUploadPPT(attendanceId, filename);
+    }
+
+    public void deleteAttendance(BigInteger attendanceId) {
+        attendanceDao.deleteAttendance(attendanceId);
+    }
+
+    public List<Map<String, Object>> getRoundScoreInCourse(BigInteger courseId, BigInteger roundId) {
+        List<Team> teams = teamDao.getSimpleTeamInCourse(courseId);
+        List<Map<String, Object>> allScore = new ArrayList<>();
+        for (Team team : teams) {
+            Map<String, Object> score = new HashMap<>(2);
+            RoundScore roundScore = roundScoreDao.getRoundTeamScore(roundId, team.getTeamId());
+            score.put("team", team);
+            score.put("score", roundScore.getTotalScore());
+            allScore.add(score);
+        }
+        return allScore;
+    }
+
+    public List<Round> getRoundInCourse(BigInteger courseId) {
+        return roundDao.getRoundByCourseId(courseId);
+    }
+
+    public void modifyTeamSeminarScore(SeminarScore seminarScore) {
+        seminarScoreDao.modifyTeamSeminarScore(seminarScore);
+        roundScoreDao.updateRoundScore(seminarScore.getKlassSeminar().getKlassSeminarId(), seminarScore.getTeam().getTeamId());
+    }
+
+    public void scoreReportScore(BigInteger attendanceId, SeminarScore seminarScore) throws Exception {
+        Attendance attendance = attendanceDao.getAttendanceByAttendanceId(attendanceId);
+        if (attendance == null) {
+            throw new Exception(emptyAttendance);
+        }
+        seminarScore.setKlassSeminar(new KlassSeminar(attendance.getKlassSeminar().getKlassSeminarId()));
+        seminarScore.setTeam(new Team(attendance.getTeam().getTeamId()));
+        seminarScoreDao.updateReportScore(seminarScore);
+    }
+
+    public void scorePresentationScore(BigInteger attendanceId, SeminarScore seminarScore) throws Exception {
+        Attendance attendance = attendanceDao.getAttendanceByAttendanceId(attendanceId);
+        if (attendance == null) {
+            throw new Exception(emptyAttendance);
+        }
+        seminarScore.setKlassSeminar(new KlassSeminar(attendance.getKlassSeminar().getKlassSeminarId()));
+        seminarScore.setTeam(new Team(attendance.getTeam().getTeamId()));
+        seminarScoreDao.updatePresentationScore(seminarScore);
+    }
 }

@@ -8,7 +8,10 @@ import com.xmu.cms.service.MailService;
 import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigInteger;
 import java.util.HashMap;

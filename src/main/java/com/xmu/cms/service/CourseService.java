@@ -1,115 +1,188 @@
 package com.xmu.cms.service;
 
+import com.xmu.cms.dao.*;
 import com.xmu.cms.entity.*;
 import com.xmu.cms.entity.strategy.Strategy;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author JuboYu on 2018/11/27.
  * @version 1.0
  */
-public interface CourseService {
-    /**
-     * 删除课程
-     *
-     * @param courseId 课程id
-     */
-    void deleteCourseById(BigInteger courseId);
+@Service
+public class CourseService {
+    private String noCourseError = "无此课程";
 
-    /**
-     * 新建课程
-     *
-     * @param course 新的课程
-     * @throws Exception 新建异常
-     */
-    void createCourse(Course course) throws Exception;
+    @Autowired
+    private CourseDao courseDao;
 
-    /**
-     * 获取课程
-     *
-     * @param courseId 课程id
-     * @return 课程
-     * @throws Exception 获取异常
-     */
-    Course getCourse(BigInteger courseId) throws Exception;
+    @Autowired
+    private RoundDao roundDao;
 
-    /**
-     * 获取队伍中所有队伍
-     *
-     * @param courseId 课程id
-     * @return 队伍列表
-     */
-    List<Team> getTeamInCourse(BigInteger courseId);
+    @Autowired
+    private TeamDao teamDao;
 
-    /**
-     * 新建班级
-     *
-     * @param courseId 课程id
-     * @param klass    班级
-     */
-    void newKlass(BigInteger courseId, Klass klass);
+    @Autowired
+    private KlassDao klassDao;
 
-    /**
-     * 获取课程中的班级
-     *
-     * @param courseId 课程id
-     * @return 班级列表
-     */
-    List<Klass> getKlassInCourse(BigInteger courseId);
+    @Autowired
+    private ShareTeamDao shareTeamDao;
 
-    /**
-     * 删除班级
-     *
-     * @param klassId 班级id
-     */
-    void deleteKlass(BigInteger klassId);
+    @Autowired
+    private ShareSeminarDao shareSeminarDao;
 
-    /**
-     * 返回课程中的共享信息
-     *
-     * @param courseId 课程id
-     * @return 共享信息列表
-     */
-    List<Object> getShareInCourse(BigInteger courseId);
+    @Autowired
+    private TeamApplicationDao teamApplicationDao;
 
-    List<ShareTeam> getShareTeamInCourse(BigInteger courseId);
+    @Autowired
+    private StudentDao studentDao;
 
-    List<ShareSeminar> getShareSeminarInCourse(BigInteger courseId);
+    @Autowired
+    private StrategyDao strategyDao;
 
-    List<Klass> getKlassByStudent(BigInteger studentId);
+    public void deleteCourseById(BigInteger courseId) {
+        courseDao.deleteCourse(courseId);
+    }
 
-    List<Course> getMainShareCourseByTeacher(BigInteger teacherId);
+    public void createCourse(Course course) {
+        courseDao.createCourse(course);
+    }
 
-    List<Course> getSubShareCourseByTeacher(BigInteger teacherId);
+    public Course getCourse(BigInteger courseId) throws Exception {
+        Course course = courseDao.getCourse(courseId);
+        if (course == null) {
+            throw new Exception(noCourseError);
+        }
+        return course;
+    }
 
-    Integer deleteShareTeam(BigInteger shareTeamId);
+    public List<Team> getTeamInCourse(BigInteger courseId) {
+        Course mainCourse = courseDao.getTeamMainCourse(courseId);
+        if (mainCourse != null) {
+            courseId = mainCourse.getCourseId();
+        }
+        return teamDao.getTeamAndMembersInCourse(courseId);
+    }
 
-    Integer deleteShareSeminar(BigInteger seminarShareId);
+    public void newKlass(BigInteger courseId, Klass klass) {
+        klassDao.newKlass(courseId, klass);
+    }
 
-    ShareTeam newShareTeam(ShareTeam shareTeam);
+    public List<Klass> getKlassInCourse(BigInteger courseId) {
+        return klassDao.getAllKlass(courseId);
+    }
 
-    ShareSeminar newShareSeminar(ShareSeminar shareSeminar);
+    public void deleteKlass(BigInteger klassId) {
+        klassDao.deleteKlass(klassId);
+    }
 
-    List<ShareTeam> getShareTeamByTeacherId(BigInteger teacherId);
+    public List<Object> getShareInCourse(BigInteger courseId) {
+        List<Object> shares = new ArrayList<>();
+        shares.addAll(shareTeamDao.getShareTeamInCourse(courseId));
+        shares.addAll(shareSeminarDao.getShareSeminarInCourse(courseId));
+        return shares;
+    }
 
-    List<ShareSeminar> getShareSeminarByTeacherId(BigInteger teacherId);
+    public List<ShareTeam> getShareTeamInCourse(BigInteger courseId) {
+        return shareTeamDao.getShareTeamInCourse(courseId);
+    }
 
-    List<TeamApplication> getTeamApplicationByTeacherId(BigInteger teacherId);
+    public List<ShareSeminar> getShareSeminarInCourse(BigInteger courseId) {
+        return shareSeminarDao.getShareSeminarInCourse(courseId);
+    }
 
-    ShareTeam updateShareTeam(ShareTeam shareTeam);
+    public List<Klass> getKlassByStudent(BigInteger studentId) {
+        return klassDao.getKlassByStudent(studentId);
+    }
 
-    ShareSeminar updateShareSeminar(ShareSeminar shareSeminar);
+    public List<Course> getMainShareCourseByTeacher(BigInteger teacherId) {
+        return klassDao.getMainShareCourseByTeacher(teacherId);
+    }
 
-    TeamApplication updateTeamApplication(TeamApplication teamApplication);
+    public List<Course> getSubShareCourseByTeacher(BigInteger teacherId) {
+        return klassDao.getSubShareCourseByTeacher(teacherId);
+    }
 
-    void uploadKlassFile(BigInteger klassId, List<Student> students) throws Exception;
+    public Integer deleteShareTeam(BigInteger shareTeamId) {
+        return shareTeamDao.deleteShareTeam(shareTeamId);
+    }
 
-    Team getStudentTeamInKlass(BigInteger studentId, BigInteger klassId);
+    public Integer deleteShareSeminar(BigInteger seminarShareId) {
+        return shareSeminarDao.deleteShareSeminar(seminarShareId);
+    }
 
-    Strategy getCourseStrategy(BigInteger courseId);
+    public ShareTeam newShareTeam(ShareTeam shareTeam) {
+        return shareTeamDao.newShareTeam(shareTeam);
+    }
 
-    void newCourseStrategy(List<Strategy> strategies);
+    public ShareSeminar newShareSeminar(ShareSeminar shareSeminar) {
+        return shareSeminarDao.newShareSeminar(shareSeminar);
+    }
+
+    public List<ShareTeam> getShareTeamByTeacherId(BigInteger teacherId) {
+        return shareTeamDao.getShareTeamByTeacherId(teacherId);
+    }
+
+    public List<ShareSeminar> getShareSeminarByTeacherId(BigInteger teacherId) {
+        return shareSeminarDao.getShareSeminarByTeacherId(teacherId);
+    }
+
+    public List<TeamApplication> getTeamApplicationByTeacherId(BigInteger teacherId) {
+        return teamApplicationDao.getTeamApplicationByTeacherId(teacherId);
+    }
+
+    public ShareTeam updateShareTeam(ShareTeam shareTeam) {
+        ShareTeam newShareTeam = shareTeamDao.updateShareTeam(shareTeam);
+        if (newShareTeam.getStatus()) {
+            Course masterCourse = newShareTeam.getMasterCourse();
+            Course receiveCourse = newShareTeam.getReceiveCourse();
+            receiveCourse.setTeamMainCourse(masterCourse);
+
+            courseDao.updateCourseTeamMainCourse(receiveCourse);
+        }
+        return newShareTeam;
+    }
+
+    public ShareSeminar updateShareSeminar(ShareSeminar shareSeminar) {
+        ShareSeminar newShareSeminar = shareSeminarDao.updateShareSeminar(shareSeminar);
+        Course masterCourse = newShareSeminar.getMasterCourse();
+        Course receiveCourse = newShareSeminar.getReceiveCourse();
+        receiveCourse.setTeamMainCourse(masterCourse);
+        courseDao.updateCourseSeminarMainCourse(receiveCourse);
+        List<Round> rounds = roundDao.getRoundByCourseId(masterCourse.getCourseId());
+        List<Klass> klasses = klassDao.getAllKlass(receiveCourse.getCourseId());
+        for (Round round : rounds) {
+            for (Klass klass : klasses) {
+                klassDao.addKlassRound(klass.getKlassId(), round.getRoundId());
+            }
+        }
+        return newShareSeminar;
+    }
+
+    public TeamApplication updateTeamApplication(TeamApplication teamApplication) {
+        return teamApplicationDao.updateTeamApplication(teamApplication);
+    }
+
+    public void uploadKlassFile(BigInteger klassId, List<Student> students) throws Exception {
+        studentDao.newStudent(students);
+        klassDao.addStudentInKlass(klassId, students);
+    }
+
+    public Team getStudentTeamInKlass(BigInteger studentId, BigInteger klassId) {
+        return teamDao.getStudentTeamInKlass(studentId, klassId);
+    }
+
+    public Strategy getCourseStrategy(BigInteger courseId) {
+        return strategyDao.getCourseStrategy(courseId);
+    }
+
+    public void newCourseStrategy(List<Strategy> strategies) {
+
+    }
 
 }

@@ -1,6 +1,10 @@
 package com.xmu.cms.dao;
 
 import com.xmu.cms.entity.Attendance;
+import com.xmu.cms.mapper.AttendanceMapper;
+import com.xmu.cms.mapper.TeamMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -9,76 +13,58 @@ import java.util.List;
  * @author JuboYu on 2018/12/19.
  * @version 1.0
  */
-public interface AttendanceDao {
-    /**
-     * 根据讨论课和班级获取所有的展示
-     *
-     * @param seminarId 讨论课id
-     * @param klassId   班级id
-     * @return 讨论课列表
-     */
-    List<Attendance> getAttendancesInKlassAndSeminar(BigInteger seminarId, BigInteger klassId);
+@Component
+public class AttendanceDao {
+    @Autowired
+    private AttendanceMapper attendanceMapper;
 
-    /**
-     * 获取学生在班级和讨论课下的展示
-     *
-     * @param studentId 学生id
-     * @param klassId   班级id
-     * @param seminarId 展示id
-     * @return 展示
-     */
-    Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId);
+    @Autowired
+    private TeamMapper teamMapper;
 
-    /**
-     * 获取在班级讨论课下的所有展示
-     *
-     * @param klassSeminarId 班级讨论课id
-     * @return 班级讨论课列表
-     */
-    List<Attendance> getAttendancesInKlassSeminar(BigInteger klassSeminarId);
+    public List<Attendance> getAttendancesInKlassAndSeminar(BigInteger seminarId, BigInteger klassId) {
+        return attendanceMapper.getAttendancesInKlassAndSeminar(seminarId, klassId);
+    }
 
-    /**
-     * 修改展示的进行状态
-     *
-     * @param attendance 新的展示
-     */
-    void updateAttendancePresent(Attendance attendance);
+    public Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId) {
+        return attendanceMapper.getStudentAttendanceInKlassSeminar(studentId, klassId, seminarId);
+    }
 
-    /**
-     * 根据id获取对应展示
-     *
-     * @param attendanceId 展示id
-     * @return 展示
-     */
-    Attendance getAttendanceByAttendanceId(BigInteger attendanceId);
+    public List<Attendance> getAttendancesInKlassSeminar(BigInteger klassSeminarId) {
+        List<Attendance> attendances = attendanceMapper.getAttendancesInKlassSeminar(klassSeminarId);
+        attendances.sort((o1, o2) -> {
+            if (o1.getTeamOrder() < o2.getTeamOrder()) {
+                return -1;
+            } else if (o1.getTeamOrder() > o2.getTeamOrder()) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+        return attendances;
+    }
 
-    /**
-     * 修改展示上传的报告名
-     *
-     * @param attendanceId 展示id
-     * @param filename     报告文件名
-     */
-    void attendanceUploadReport(BigInteger attendanceId, String filename);
+    public void updateAttendancePresent(Attendance attendance) {
+        attendanceMapper.updateAttendancePresent(attendance);
+    }
 
-    /**
-     * 修改展示的ppt名
-     *
-     * @param attendanceId 展示id
-     * @param filename     ppt文件名
-     */
-    void attendanceUploadPPT(BigInteger attendanceId, String filename);
+    public Attendance getAttendanceByAttendanceId(BigInteger attendanceId) {
+        return attendanceMapper.getAttendanceByAttendanceId(attendanceId);
+    }
 
-    /**
-     * 根据id删除展示
-     *
-     * @param attendanceId 展示id
-     */
-    void deleteAttendance(BigInteger attendanceId);
+    public void attendanceUploadReport(BigInteger attendanceId, String filename) {
+        attendanceMapper.attendanceUploadReport(attendanceId, filename);
+    }
 
-    /**
-     * 新建展示
-     *
-     * @param attendance 展示
-     */
-    void insertAttendance(Attendance attendance);
+    public void attendanceUploadPPT(BigInteger attendanceId, String filename) {
+        attendanceMapper.attendanceUploadPPT(attendanceId, filename);
+    }
+
+    public void deleteAttendance(BigInteger attendanceId) {
+        attendanceMapper.deleteAttendance(attendanceId);
+    }
+
+    public void insertAttendance(Attendance attendance) {
+        attendance.setPresent(false);
+        attendanceMapper.insertAttendance(attendance);
+    }
 }

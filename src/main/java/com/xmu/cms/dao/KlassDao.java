@@ -3,6 +3,10 @@ package com.xmu.cms.dao;
 import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Klass;
 import com.xmu.cms.entity.Student;
+import com.xmu.cms.mapper.CourseMapper;
+import com.xmu.cms.mapper.KlassMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -11,23 +15,55 @@ import java.util.List;
  * @author JuboYu on 2018/12/16.
  * @version 1.0
  */
-public interface KlassDao {
-    Integer newKlass(BigInteger courseId, Klass klass);
+@Component
+public class KlassDao {
+    @Autowired
+    private KlassMapper klassMapper;
 
-    List<Klass> getAllKlass(BigInteger courseId);
+    @Autowired
+    private CourseMapper courseMapper;
 
-    Integer addStudentInKlass(BigInteger klassId, List<Student> students);
+    public Integer newKlass(BigInteger courseId, Klass klass) {
+        Course course = courseMapper.getCourseById(courseId);
+        klass.setCourse(course);
+        return klassMapper.insertKlass(klass);
+    }
 
-    List<Klass> getKlassByStudent(BigInteger studentId);
+    public List<Klass> getAllKlass(BigInteger courseId) {
+        return klassMapper.getKlassesInCourse(courseId);
+    }
 
-    List<Course> getMainShareCourseByTeacher(BigInteger teacherId);
+    public Integer addStudentInKlass(BigInteger klassId, List<Student> students) {
+        Klass klass = klassMapper.getKlassByKlassId(klassId);
+        Integer count = 0;
+        for (Student student : students) {
+            count += klassMapper.addStudent(klass.getCourse().getCourseId(), klassId, student);
+        }
+        return count;
+    }
 
-    List<Course> getSubShareCourseByTeacher(BigInteger teacherId);
+    public List<Klass> getKlassByStudent(BigInteger studentId) {
+        return klassMapper.getKlassByStudent(studentId);
+    }
 
-    Klass getKlass(BigInteger klassId);
+    public List<Course> getMainShareCourseByTeacher(BigInteger teacherId) {
+        return courseMapper.getMainShareCourseByTeacher(teacherId);
+    }
 
-    void addKlassRound(BigInteger klassId, BigInteger roundId);
+    public List<Course> getSubShareCourseByTeacher(BigInteger teacherId) {
+        return courseMapper.getSubShareCourseByTeacher(teacherId);
+    }
 
-    void deleteKlass(BigInteger klassId);
+    public Klass getKlass(BigInteger klassId) {
+        return klassMapper.getKlassByKlassId(klassId);
+    }
+
+    public void addKlassRound(BigInteger klassId, BigInteger roundId) {
+        klassMapper.addKlassRound(klassId, roundId);
+    }
+
+    public void deleteKlass(BigInteger klassId) {
+        klassMapper.deleteKlassByKlassId(klassId);
+    }
 
 }

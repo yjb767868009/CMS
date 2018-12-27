@@ -43,7 +43,8 @@ public class StudentController {
                                                @RequestBody Student student) {
         Map<String, String> message = new HashMap<String, String>(1);
         try {
-            userService.activateStudent(info.getUserId(), student);
+            student.setStudentId(info.getUserId());
+            userService.activateStudent(student);
             message.put("message", "Success");
         } catch (Exception e) {
             message.put("message", e.getMessage());

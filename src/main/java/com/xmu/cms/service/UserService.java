@@ -242,8 +242,8 @@ public class UserService {
         return studentDao.getStudentByAccount(account);
     }
 
-    public void activateStudent(BigInteger studentId, Student student) {
-        studentDao.activateStudent(studentId, student);
+    public void activateStudent(Student student) {
+        studentDao.activateStudent(student);
     }
 
     public Student getStudentById(BigInteger studentId) {

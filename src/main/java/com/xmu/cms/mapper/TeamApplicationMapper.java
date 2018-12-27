@@ -26,7 +26,7 @@ public interface TeamApplicationMapper {
      *
      * @param teamApplication 新的队伍合法申请
      */
-    void updateTeamApplication(TeamApplication teamApplication);
+    void updateTeamApplication(@Param("teamApplication") TeamApplication teamApplication);
 
     /**
      * 获取队伍合法申请
@@ -34,14 +34,14 @@ public interface TeamApplicationMapper {
      * @param teamApplicationId 队伍合法申请id
      * @return 队伍合法申请
      */
-    TeamApplication getTeamApplication(BigInteger teamApplicationId);
+    TeamApplication getTeamApplication(@Param("teamApplication") BigInteger teamApplicationId);
 
     /**
      * 新建队伍合法申请
      *
      * @param teamApplication 新的队伍合法申请
      */
-    void insertTeamApplication(TeamApplication teamApplication);
+    void insertTeamApplication(@Param("teamApplication") TeamApplication teamApplication);
 
     /**
      * 根据队伍获取队伍合法申请
@@ -49,5 +49,5 @@ public interface TeamApplicationMapper {
      * @param teamId 队伍id
      * @return 队伍合法申请
      */
-    TeamApplication getTeamApplicationByTeamId(BigInteger teamId);
+    TeamApplication getTeamApplicationByTeamId(@Param("teamId") BigInteger teamId);
 }

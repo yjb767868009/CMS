@@ -37,5 +37,5 @@ public interface RoundScoreMapper {
      *
      * @param roundScore 轮次成绩
      */
-    void updateRoundScore(RoundScore roundScore);// TODO: 2018/12/26
+    void updateRoundScore(@Param("roundScore") RoundScore roundScore);
 }

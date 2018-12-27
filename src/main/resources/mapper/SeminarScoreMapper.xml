@@ -31,13 +31,13 @@
           and klass_seminar.id = klass_seminar_id
     </select>
 
-    <update id="modifyScoreInSeminar">
+    <update id="modifyTeamSeminarScore" parameterType="com.xmu.cms.entity.SeminarScore">
         update seminar_score, team
-        set presentation_score = #{presentationScore},
-            question_score     = #{questionScore},
-            report_score       = #{reportScore}
-        WHERE klass_seminar_id = #{classSeminarId}
-          AND team.id = seminar_score.team_id
+        set presentation_score = #{seminarScore.presentationScore},
+            question_score     = #{seminarScore.questionScore},
+            report_score       = #{seminarScore.reportScore}
+        WHERE klass_seminar_id = #{seminarScore.klassSeminar.klassSeminarId}
+          AND team.id = #{seminarScore.team.teamId}
     </update>
 
     <insert id="newScoreInSeminar">
@@ -70,4 +70,18 @@
           AND seminar.id = klass_seminar.seminar_id
           AND klass_seminar.id = seminar_score.klass_seminar_id
     </select>
+
+    <update id="updateReportScore" parameterType="com.xmu.cms.entity.SeminarScore">
+        update seminar_score
+        set report_score = #{seminarScore.reportScore}
+        where klass_seminar_id = #{seminarScore.klassSeminar.klassSeminarId}
+          and team_id = #{seminarScore.team.teamId}
+    </update>
+
+    <update id="updatePresentationScore" parameterType="com.xmu.cms.entity.SeminarScore">
+        update seminar_score
+        set presentation_score = #{seminarScore.presentationScore}
+        where klass_seminar_id = #{seminarScore.klassSeminar.klassSeminarId}
+          and team_id = #{seminarScore.team.teamId}
+    </update>
 </mapper>

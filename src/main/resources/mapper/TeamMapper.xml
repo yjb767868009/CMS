@@ -220,7 +220,7 @@
           and team.course_id = course.id
     </select>
 
-    <select id="getTeamInKlassByStudentId" resultMap="TeamResultMap">
+    <select id="getStudentTeamInKlass" resultMap="TeamResultMap">
         select team.id              as teamId,
                team_name            as teamName,
                team.status,

@@ -1,5 +1,6 @@
 package com.xmu.cms.entity.strategy;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Team;
@@ -11,20 +12,23 @@ import java.util.List;
  * @author JuboYu on 2018/12/22.
  * @version 1.0
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CourseMemberLimitStrategy implements Strategy {
     private BigInteger strategyId;
     private Course course;
     private Integer minMember;
     private Integer maxMember;
+    private String type;
 
     public CourseMemberLimitStrategy() {
     }
 
-    public CourseMemberLimitStrategy(BigInteger strategyId, Course course, Integer minMember, Integer maxMember) {
+    public CourseMemberLimitStrategy(BigInteger strategyId, Course course, Integer minMember, Integer maxMember, String type) {
         this.strategyId = strategyId;
         this.course = course;
         this.minMember = minMember;
         this.maxMember = maxMember;
+        this.type = type;
     }
 
     public BigInteger getStrategyId() {
@@ -82,7 +86,17 @@ public class CourseMemberLimitStrategy implements Strategy {
 
     @Override
     public List<Strategy> getStrategy(List<Strategy> strategies) {
+        String strategyClass = this.getClass().getName();
+        type = strategyClass.substring(strategyClass.lastIndexOf(".") + 1);
         strategies.add(this);
         return strategies;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

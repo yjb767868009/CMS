@@ -1,5 +1,6 @@
 package com.xmu.cms.entity.strategy;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Team;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * @author JuboYu on 2018/12/22.
  * @version 1.0
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TeamStrategy implements Strategy {
     private Course course;
     private BigInteger subStrategyId;

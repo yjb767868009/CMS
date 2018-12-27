@@ -242,15 +242,8 @@ public class UserService {
         return studentDao.getStudentByAccount(account);
     }
 
-    public Map<String, String> activateStudent(BigInteger studentId, Student student) {
-        Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = studentDao.activateStudent(studentId, student);
-        if (count == 1) {
-            message.put("message", "成功");
-        } else {
-            message.put("message", "信息不合法");
-        }
-        return message;
+    public void activateStudent(BigInteger studentId, Student student) {
+        studentDao.activateStudent(studentId, student);
     }
 
     public Student getStudentById(BigInteger studentId) {

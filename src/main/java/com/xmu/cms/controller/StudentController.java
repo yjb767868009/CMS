@@ -10,6 +10,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,8 +40,15 @@ public class StudentController {
     @Secured("ROLE_STUDENT")
     @PutMapping(value = "/active")
     public Map<String, String> activateStudent(UserInfo info,
-                                               @RequestParam(value = "student") Student student) {
-        return userService.activateStudent(info.getUserId(), student);
+                                               @RequestBody Student student) {
+        Map<String, String> message = new HashMap<String, String>(1);
+        try {
+            userService.activateStudent(info.getUserId(), student);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
 
     @Secured("ROLE_ADMIN")
@@ -75,13 +83,6 @@ public class StudentController {
     @GetMapping(value = "/searchByAccount")
     public Student getStudentByAccount(@RequestParam("account") String account) {
         return userService.getStudentByAccount(account);
-    }
-
-    @PostMapping(value = "/klassSeminar/{klassSeminarId}/score")
-    public Map<String, String> getScoreInKlassSeminar(@PathVariable("klassSeminarId") BigInteger klassSeminarId,
-                                                      @RequestParam("teamOrder") BigInteger teamOrder) {
-        // TODO: 2018/12/25  
-        return null;
     }
 
 }

@@ -23,10 +23,10 @@ public class KlassDao {
     @Autowired
     private CourseMapper courseMapper;
 
-    public Integer newKlass(BigInteger courseId, Klass klass) {
+    public void newKlass(BigInteger courseId, Klass klass) {
         Course course = courseMapper.getCourseById(courseId);
         klass.setCourse(course);
-        return klassMapper.insertKlass(klass);
+        klassMapper.insertKlass(klass);
     }
 
     public List<Klass> getAllKlass(BigInteger courseId) {

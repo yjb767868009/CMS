@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.TeamStrategyMapper">
-    <resultMap id="TeamStrategyResultMap" type="com.xmu.cms.entity.strategy.TeamOrStrategy">
+    <resultMap id="TeamStrategyResultMap" type="com.xmu.cms.entity.strategy.TeamStrategy">
         <result property="subStrategyId" column="strategy_id"/>
         <result property="subStrategyName" column="strategy_name"/>
         <association property="course" javaType="com.xmu.cms.entity.Course">

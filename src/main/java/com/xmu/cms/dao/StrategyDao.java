@@ -37,11 +37,11 @@ public class StrategyDao {
     private Strategy getStrategy(BigInteger strategyId, String subStrategy) {
         Strategy strategy = null;
         switch (subStrategy) {
-            case "team_and_strategy":
+            case "TeamAndStrategy":
                 strategy = teamAndStrategyMapper.getTeamAndStrategyById(strategyId);
                 strategy = setSubStrategy(strategy);
                 break;
-            case "team_or_strategy":
+            case "TeamOrStrategy":
                 strategy = teamOrStrategyMapper.getTeamOrStrategyById(strategyId);
                 strategy = setSubStrategy(strategy);
                 break;

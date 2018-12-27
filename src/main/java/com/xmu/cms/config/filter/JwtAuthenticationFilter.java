@@ -1,8 +1,10 @@
 package com.xmu.cms.config.filter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xmu.cms.support.JwtUtils;
 import com.xmu.cms.support.UserInfo;
 import com.xmu.cms.support.UsernameIsExitedException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,6 +26,9 @@ import java.util.List;
  */
 @Component
 public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
+    @Autowired
+    private ObjectMapper objectMapper;
+
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }

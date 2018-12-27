@@ -81,18 +81,12 @@ public class CourseController {
         return message;
     }
 
-
+    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/course/{courseId}/round")
     public List<Round> getRoundInCourse(UserInfo info,
                                         @PathVariable("courseId") BigInteger courseId) {
         return seminarService.getRoundInCourse(info, courseId);
     }
-
-//    @GetMapping(value = "/course/{courseId}/round")
-//    public List<Round> getRoundInCourse(@PathVariable("courseId") BigInteger courseId) {
-//        return seminarService.getRoundInCourse(courseId);
-//    }
-
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/course/{courseId}")
@@ -103,7 +97,6 @@ public class CourseController {
             return "无此课";
         }
     }
-
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
@@ -238,9 +231,20 @@ public class CourseController {
     }
 
     @Secured("ROLE_TEACHER")
-    @GetMapping(value = "/course/{courseId}/score")
-    public List<Map<String, Object>> getCourseScore(@PathVariable("courseId") BigInteger courseId) {
-        return seminarService.getCourseScore(courseId);
+    @GetMapping(value = "/course/{courseId}/round/{roundId}/team/{teamId}/score")
+    public Map<String, Object> getTeamScoreInCourse(@PathVariable("courseId") BigInteger courseId,
+                                                    @PathVariable("roundId") BigInteger roundId,
+                                                    @PathVariable("teamId") BigInteger teamId) {
+        return seminarService.getTeamRoundScoreAndSeminarScore(teamId, courseId, roundId);
+    }
+
+
+    @Secured("ROLE_STUDENT")
+    @GetMapping(value = "/course/{courseId}/round/{roundId}/score")
+    public Map<String, Object> getStudentScoreInCourse(UserInfo info,
+                                                       @PathVariable("courseId") BigInteger courseId,
+                                                       @PathVariable("roundId") BigInteger roundId) {
+        return seminarService.getStudentRoundScoreAndSeminarScore(info.getUserId(), courseId, roundId);
     }
 
 

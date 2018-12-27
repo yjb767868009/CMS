@@ -37,22 +37,13 @@
           AND round_score.team_id = #{teamId}
     </select>
 
-    <update id="modifyScoreInRound">
+    <update id="updateRoundScore" parameterType="com.xmu.cms.entity.RoundScore">
         update round_score, team
-        set presentation_score = #{presentationScore},
-            question_score     = #{questionScore},
-            report_score       = #{reportScore}
-        where round_score.round_id = #{roundId}
+        set presentation_score = #{roundScore.presentationScore},
+            question_score     = #{roundScore.questionScore},
+            report_score       = #{roundScore.reportScore}
+        where round_score.round_id = #{roundScore.round.roundId}
           and team.id = round_score.team_id
-    </update>
-
-    <update id="modifyScoreInSeminar">
-        update seminar_score, team
-        set presentation_score = #{presentationScore},
-            question_score     = #{questionScore},
-            report_score       = #{reportScore}
-        WHERE klass_seminar_id = #{classSeminarId}
-          AND team.id = seminar_score.team_id
     </update>
 
     <insert id="newScoreInRound">

@@ -9,6 +9,7 @@
         <association property="leader" javaType="com.xmu.cms.entity.Student">
             <id property="studentId" column="leaderId"/>
             <result property="name" column="leaderName"/>
+            <result property="account" column="leaderAccount"/>
         </association>
         <association property="klass" javaType="com.xmu.cms.entity.Klass">
             <id property="klassId" column="klassId"/>
@@ -26,6 +27,7 @@
                team.status          as status,
                klass.id             as klassId,
                leader_id            as leaderId,
+               student.account      as leaderAccount,
                student.student_name as leaderName,
                course.id            as courseId,
                course.course_name   as courseName
@@ -49,6 +51,7 @@
                team.status,
                klass.id             as klassId,
                leader_id            as leaderId,
+               student.account      as leaderAccount,
                student.student_name as leaderName,
                course.id            as courseId,
                course.course_name   as courseName
@@ -70,6 +73,7 @@
                team.status,
                klass.id             as klassId,
                leader_id            as leaderId,
+               student.account      as leaderAccount,
                student.student_name as leaderName,
                course.id            as courseId,
                course.course_name   as courseName
@@ -91,6 +95,7 @@
                team.status,
                klass.id             as klassId,
                leader_id            as leaderId,
+               student.account      as leaderAccount,
                student.student_name as leaderName
         from team,
              klass,
@@ -113,6 +118,7 @@
                team.status,
                klass.id             as klassId,
                leader_id            as leaderId,
+               student.account      as leaderAccount,
                student.student_name as leaderName,
                course.id            as courseId,
                course.course_name   as courseName
@@ -134,6 +140,7 @@
                team.status,
                klass.id             as klassId,
                leader_id            as leaderId,
+               student.account      as leaderAccount,
                student.student_name as leaderName,
                course.id            as courseId,
                course.course_name   as courseName
@@ -213,12 +220,13 @@
           and team.course_id = course.id
     </select>
 
-    <select id="getTeamInKlassByStudentId" resultMap="TeamResultMap">
+    <select id="getStudentTeamInKlass" resultMap="TeamResultMap">
         select team.id              as teamId,
                team_name            as teamName,
                team.status,
                klass.id             as klassId,
                leader_id            as leaderId,
+               student.account      as leaderAccount,
                student.student_name as leaderName,
                course.id            as courseId,
                course.course_name   as courseName

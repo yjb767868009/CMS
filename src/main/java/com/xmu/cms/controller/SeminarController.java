@@ -1,6 +1,7 @@
 package com.xmu.cms.controller;
 
 import com.xmu.cms.entity.*;
+import com.xmu.cms.service.CourseService;
 import com.xmu.cms.service.SeminarService;
 import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class SeminarController {
     @Autowired
     private SeminarService seminarService;
 
+    @Autowired
+    private CourseService courseService;
 
     @Secured("ROLE_TEACHER")
     @PostMapping(value = "/course/{courseId}/seminar")
@@ -98,12 +101,6 @@ public class SeminarController {
         return message;
     }
 
-    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @GetMapping(value = "/klassseminar/{klassSeminarId}/attendances")
-    public List<Attendance> getAttendanceInKlassSeminar(@PathVariable("klassSeminarId") BigInteger klassSeminarId) {
-        return seminarService.getAttendancesInKlassSeminar(klassSeminarId);
-    }
-
     @Secured("ROLE_TEACHER")
     @PutMapping(value = "/klasssemianr/{klassSeminarId}/reportddl")
     public Map<String, String> modifyKlassSeminarReportDDL(@PathVariable("klassSeminarId") BigInteger klassSeminarId,
@@ -150,6 +147,32 @@ public class SeminarController {
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
+    @GetMapping(value = "/klassseminar/{klassSeminarId}/attendance")
+    public Map<String, Object> getAttendanceInKlassSeminar(UserInfo info, @PathVariable("klassSeminarId") BigInteger klassSeminarId) {
+        Map<String, Object> message = new HashMap<>(2);
+        try {
+            List<Attendance> attendances = seminarService.getAttendancesInKlassSeminar(klassSeminarId);
+            message.put("attendance", attendances);
+            String studentType = "student";
+            if (studentType.equals(info.getUserType())) {
+                message.put("message", "other");
+                Team team = courseService.getStudentTeamInKlassSeminar(info.getUserId(), klassSeminarId);
+                if (team != null) {
+                    for (Attendance attendance : attendances) {
+                        if (attendance.getTeam().getTeamId().equals(team.getTeamId())) {
+                            message.put("message", "join");
+                            break;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            message.put("message", "Error");
+        }
+        return message;
+    }
+
+    @Secured("ROLE_STUDENT")
     @PostMapping(value = "/klassseminar/{klassSeminarId}/attendance")
     public Map<String, String> attendance(UserInfo info,
                                           @PathVariable("klassSeminarId") BigInteger klassSeminarId,

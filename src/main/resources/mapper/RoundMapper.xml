@@ -62,4 +62,38 @@
         from round_score
         where round_id = #{roundId}
     </delete>
+
+    <select id="getRoundBySeminar" resultMap="RoundResultMap">
+        SELECT round.id                as roundId,
+               round.course_id               as couseId,
+               course.course_name    as courseName,
+               round_serial,
+               presentation_score_method as presentationScoreType,
+               report_score_method       as reportScoreType,
+               question_score_method     as questionScoreType
+        FROM round,
+             course,
+             seminar
+        WHERE seminar.id = #{seminarId}
+          and round.id = seminar.round_id
+          and course.id = round.course_id
+    </select>
+
+    <select id="getRoundByKlassSeminarId" resultMap="RoundResultMap">
+        SELECT round.id                as roundId,
+               round.course_id               as couseId,
+               course.course_name    as courseName,
+               round_serial,
+               presentation_score_method as presentationScoreType,
+               report_score_method       as reportScoreType,
+               question_score_method     as questionScoreType
+        FROM round,
+             course,
+             seminar,
+             klass_seminar
+        WHERE klass_seminar.id = #{klassSeminarId}
+          and seminar.id = klass_seminar.seminar_id
+          and round.id = seminar.round_id
+          and course.id = round.course_id
+    </select>
 </mapper>

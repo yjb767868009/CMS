@@ -45,6 +45,12 @@ public class CourseService {
     @Autowired
     private StrategyDao strategyDao;
 
+    @Autowired
+    private SeminarDao seminarDao;
+
+    @Autowired
+    private KlassSeminarDao klassSeminarDao;
+
     public void deleteCourseById(BigInteger courseId) {
         courseDao.deleteCourse(courseId);
     }
@@ -71,6 +77,10 @@ public class CourseService {
 
     public void newKlass(BigInteger courseId, Klass klass) {
         klassDao.newKlass(courseId, klass);
+        List<Seminar> seminars = seminarDao.getSeminarByCourseId(courseId);
+        for (Seminar seminar : seminars) {
+            klassSeminarDao.insertKlassSeminar(klass.getKlassId(), seminar.getSeminarId());
+        }
     }
 
     public List<Klass> getKlassInCourse(BigInteger courseId) {
@@ -191,5 +201,9 @@ public class CourseService {
             courseId = mainCourse.getCourseId();
         }
         return teamDao.getStudentTeamInCourse(studentId, courseId);
+    }
+
+    public Team getStudentTeamInKlassSeminar(BigInteger studentId, BigInteger klassSeminarId) {
+        return teamDao.getStudentTeamInKlassSeminar(studentId, klassSeminarId);
     }
 }

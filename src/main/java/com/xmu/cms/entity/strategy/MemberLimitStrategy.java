@@ -15,6 +15,39 @@ public class MemberLimitStrategy implements Strategy {
     private Integer minMember;
     private Integer maxMember;
 
+    public MemberLimitStrategy(BigInteger strategyId, Integer minMember, Integer maxMember) {
+        this.strategyId = strategyId;
+        this.minMember = minMember;
+        this.maxMember = maxMember;
+    }
+
+    public MemberLimitStrategy() {
+    }
+
+    public BigInteger getStrategyId() {
+        return strategyId;
+    }
+
+    public void setStrategyId(BigInteger strategyId) {
+        this.strategyId = strategyId;
+    }
+
+    public Integer getMinMember() {
+        return minMember;
+    }
+
+    public void setMinMember(Integer minMember) {
+        this.minMember = minMember;
+    }
+
+    public Integer getMaxMember() {
+        return maxMember;
+    }
+
+    public void setMaxMember(Integer maxMember) {
+        this.maxMember = maxMember;
+    }
+
     @Override
     public Boolean checkValid(Team team) {
         Integer memberCount = 0;

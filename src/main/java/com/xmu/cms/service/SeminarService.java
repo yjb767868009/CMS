@@ -304,17 +304,22 @@ public class SeminarService {
         seminarScoreDao.updatePresentationScore(seminarScore);
     }
 
-    public List<Map<String, Object>> getCourseScore(BigInteger courseId) {
-//        List<Map<String, Object>> courseScores = new ArrayList<>();
-//        List<Round> rounds = roundDao.getRoundByCourseId(courseId);
-//        List<Seminar> seminars = seminarDao.getSeminarInCourse(courseId);
-//        List<SeminarScore> seminarScores = seminarScoreDao.getSeminarScoreInCourse(courseId);
-//        List<RoundScore> roundScores = roundScoreDao.getRoundScoreInCourse(courseId);
-//        for (Round round : rounds) {
-//            round=
-//            courseScores.add()
-//        }
-        // TODO: 2018/12/26
-        return null;
+    public Map<String, Object> getStudentRoundScoreAndSeminarScore(BigInteger studentId, BigInteger courseId, BigInteger roundId) {
+        Team team = teamDao.getStudentTeamInCourse(studentId, courseId);
+        RoundScore roundScore = roundScoreDao.getRoundTeamScore(roundId, team.getTeamId());
+        List<SeminarScore> seminarScores = seminarScoreDao.getTeamSeminarScoreInRound(team.getTeamId(), roundId);
+        Map<String, Object> score = new HashMap<>();
+        score.put("roundScore", roundScore);
+        score.put("seminarScore", seminarScores);
+        return score;
+    }
+
+    public Map<String, Object> getTeamRoundScoreAndSeminarScore(BigInteger teamId, BigInteger courseId, BigInteger roundId) {
+        RoundScore roundScore = roundScoreDao.getRoundTeamScore(roundId, teamId);
+        List<SeminarScore> seminarScores = seminarScoreDao.getTeamSeminarScoreInRound(teamId, roundId);
+        Map<String, Object> score = new HashMap<>();
+        score.put("roundScore", roundScore);
+        score.put("seminarScore", seminarScores);
+        return score;
     }
 }

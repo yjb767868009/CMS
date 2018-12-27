@@ -6,26 +6,26 @@
     <template v-for="round in rounds">
       <cell :key="round.roundId" is-link :border-intent="false" :arrow-direction="round.showRoundContent ? 'up' : 'down'"
       @click.native="getRoundScore(round)" value-align="left">
-      <span>第{{round.order}}轮</span>
+      <span style="color:#000">第{{round.order}}轮</span>
       </cell>
 
         <template v-if="round.showRoundContent">
             <template v-for="seminar in round.seminars">
             <cell :key="seminar.seminarId" is-link :border-intent="false" :arrow-direction="seminar.showSeminarContent ? 'up' : 'down'"
-            @click.native="getSeminarScore(seminar)" value-align="left" style="padding-left:130px">
+            @click.native="getSeminarScore(seminar,round)" value-align="left" style="padding-right:10px">
             <span>{{seminar.topic}}</span>
         </cell>
 
             <template v-if="seminar.showSeminarContent">
-                <cell :key="seminar.seminarId" primary="content" :border-intent="false" value-align="left">
+                <cell :key="seminar.seminarId+1" primary="content" :border-intent="false" value-align="left">
                     <div style="padding-left:20px;color:#000;font-size:0.8em">
                     展示：{{score.preScpre}}&emsp;&emsp;&emsp;提问：{{score.questionScore}}&emsp;&emsp;&emsp;书面报告：{{score.reportScore}}
                     <p style="padding-left:4px">本次总成绩：{{score.totalScore}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</p>
                     </div>
-                    <p style="color:#000;padding-left:110px;margin-bottom:5px">本轮成绩：{{roundscore.preScore}}</p>
                 </cell>
             </template>
             </template>
+                    <p style="color:#000;padding-left:220px;margin-top:0">本轮成绩：{{roundscore.totalScore}}</p>
         </template>
       </template>
     </group>
@@ -78,21 +78,9 @@ import {TransferDom,XHeader,
         showContent001: false,
         showContent002:false,
         showContent003:false,
+        myteam:'',
+        roundscore:'',
         score:'',
-        roundscore:{
-  "preScore": 3,
-  "reportScore": 4.5,
-  "questionScore": 5,
-  "totalScore":4,
-  "team": {
-    "id": 1,
-    "name": "早早鸟小组"
-  },
-  "round": {
-    "id": 1,
-    "order": 1
-  }
-},
          rounds: '',
         }
     },
@@ -107,13 +95,16 @@ import {TransferDom,XHeader,
                 this.$set(seminaritem,'showSeminarContent',false)
               });
             });
-
             // for(var i=0;i<this.rounds.length;i++){
             //     this.$set(this.rounds[i],'showRoundContent',false);
             //     for(var j=0;j<this.rounds[i].seminars.length;j++){
             //         this.$set(this.rounds[i].seminars[j],'showSeminarContent',false);
             //     }
             // }
+        })
+        this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId+'/team')
+        .then((response)=>{
+            this.myteam=response.data.myTeam;
         })
     },
     methods:{
@@ -129,19 +120,29 @@ import {TransferDom,XHeader,
         StudentInfo:function(){
             this.$router.push('/mobile/student/studentInfo')
         },
-        getSeminarScore:function(Seminar){
-            Seminar.showSeminarContent = !Seminar.showSeminarContent;
-            // this.$axios.get('/seminar/'+Seminar.seminarId+'/team/'+this.$store.state.student.myteam.id+'/seminarscore')
-            // .then((response)=>{
-            //     this.score=response.data;
-            // })
+        getSeminarScore:function(Seminar,Round){
+            this.$axios.get('/seminar/'+Seminar.seminarId+'/team/'+this.myteam.teamId+'/seminarscore')
+            .then((response)=>{
+                this.score=response.data;
+                Seminar.showSeminarContent = !Seminar.showSeminarContent;
+                for(var i=0;i<Round.seminars.length;i++){
+                    if(Round.seminars[i].showSeminarContent===true&&Round.seminars[i]!=Seminar){
+                        Round.seminars[i].showSeminarContent=false;
+                    }
+                }
+            })
         },
         getRoundScore:function(Round){
-            Round.showRoundContent = !Round.showRoundContent;
-            // this.$axios.get('/seminar/'+Round.roundId+'/team/'+this.$store.state.student.myteam.id+'/roundscore')
-            // .then((response)=>{
-            //     this.roundscore=response.data;
-            // })
+            this.$axios.get('/round/'+Round.roundId+'/team/'+this.myteam.teamId+'/roundscore')
+            .then((response)=>{
+                this.roundscore=response.data;
+                Round.showRoundContent = !Round.showRoundContent;
+            for(var i=0;i<this.rounds.length;i++){
+                if(this.rounds[i].showRoundContent===true&&this.rounds[i]!=Round){
+                    this.rounds[i].showRoundContent=false;
+                }
+            }
+            })
         }
     }
         

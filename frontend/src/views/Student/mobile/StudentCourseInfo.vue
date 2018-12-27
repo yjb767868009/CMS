@@ -11,16 +11,12 @@
             <p>书面报告：{{this.courseInfo.reportWeight}}%</p>
         </div>
     </cell>
-    
     <div style="font-size:15px;background:#fff;margin-top:15px">
-        <div style="padding-left:15px;color:#000;">小组人数：&emsp;&emsp;&emsp;&emsp;&emsp;{{this.courseInfo.minMemberNumber}}~{{this.courseInfo.maxMemberNumber}}</div>
+        <template v-if="this.strategy"><div style="padding-left:15px;color:#000;">小组人数：&emsp;&emsp;&emsp;&emsp;&emsp;{{this.strategy[0].minMember}}~{{this.strategy[0].maxMember}} 人</div></template>
         <div style="padding-left:15px;color:#000;margin-top:15px">组队开始时间：&emsp;{{this.courseInfo.teamStartTime.substring(0, 10)}}&emsp;{{this.courseInfo.teamStartTime.substring(11, 22)}}</div>
         <div style="padding-left:15px;color:#000;margin-top:15px">组队截止时间：&emsp;{{this.courseInfo.teamEndTime.substring(0, 10)}}&emsp;{{this.courseInfo.teamEndTime.substring(11, 22)}}</div>
-        <div style="padding-left:15px;color:#000;margin-top:15px">组员性别要求：&emsp;&emsp;&emsp;&emsp;无</div>
-        <div style="padding-left:15px;color:#000;margin-top:15px">组员星座要求：&emsp;&emsp;&emsp;&emsp;无</div>
     </div>
-    //TODO
-    <div style="padding-left:15px;color:#000;margin-top:15px">冲突课程：
+    <div style="padding-left:15px;color:#000;margin-top:35px">冲突课程：
         <div style="padding-left:100px;color:#000;">
             <p>.Net(xxx老师)</p>
             <p>.Net(xxx老师)</p>
@@ -69,23 +65,18 @@ import {TransferDom,XHeader,Cell,Actionsheet,Popup
     data() {
        return{ 
            show:false,
-           courseInfo:{
-  "name": "OOAD",
-  "intro": "课程介绍",
-  "presentationWeight": 0.5,
-  "questionWeight": 0.1,
-  "reportWeight": 0.3,
-  "minMemberNumber": 4,
-  "maxMemberNumber": 6,
-  "startTeamTime": "2018.10.11 18:00",
-  "endTeamTime": "2018.11.11 18:00"
-}
+           courseInfo:'',
+           strategy:'',
     }
     },
     mounted:function(){
         this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId)
         .then((response)=>{
             this.courseInfo=response.data;
+        })
+        this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId+'/strategy')
+        .then((response)=>{
+            this.strategy=response.data;
         })
     },
     methods:{

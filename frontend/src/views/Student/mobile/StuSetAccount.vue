@@ -5,13 +5,13 @@
     <cell primary="content" title="姓名：" value-align="left" style="background:#fff"><div style="color:#000;padding-left:110px">{{this.$store.state.student.name}}</div></cell>
     <cell primary="content" title="学号：" value-align="left" style="background:#eee"><div style="color:#000;padding-left:70px">{{this.$store.state.student.account}}</div></cell>
     <cell primary="content" title="联系方式(邮箱)：" value-align="left" style="background:#fff">
-        <div style="color:#000;padding-left:0px">{{this.$store.state.student.email}}&emsp;<span @click="modifyEmail" style="text-decoration:underline;color:#DC143C;font-size:0.5em;">修改</span>
-        </div>      
+        <div style="color:#000;padding-left:0px">{{this.$store.state.student.email}}<span @click="modifyEmail" style="text-decoration:underline;color:#DC143C;font-size:0.5em;">修改</span>  
+        </div>  
     </cell>
     <cell is-link title="账户密码" link="/mobile/modifypw" style="font-size:1.1em;padding-left:18px"></cell>
     <cell primary="content" title="管理员邮箱：" value-align="left" style="background:#fff"><div style="color:#000;padding-left:70px">86738468@qq.com</div></cell>
     
-    <x-button type="warn" @click.native="out=!out">退出登录</x-button>
+    <x-button type="warn" style="margin-top:100px" @click.native="out=!out">退出登录</x-button>
 
     <div v-transfer-dom>
         <confirm v-model="out"
@@ -64,6 +64,7 @@ import {XHeader,
        return{ 
            show:false,
            out:false,
+           email:'',
     }
     },
     methods:{
@@ -84,6 +85,7 @@ import {XHeader,
         },
         onConfirm:function(){
             console.log('确认')
+            this.$router.push('/')
         },
         running:function(){
             this.$router.push('/mobile/Student/studentSeminarList')

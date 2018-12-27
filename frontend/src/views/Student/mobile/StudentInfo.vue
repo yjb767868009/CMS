@@ -55,10 +55,12 @@ import {TransferDom,XHeader,
         .then((response)=>{
             this.myInfo.account=response.data.account;
             this.myInfo.name=response.data.name;
-            this.myInfo.email=response.data.email;
             this.$store.state.student.account=response.data.account;
             this.$store.state.student.name=response.data.name;
-            this.$store.state.student.email=response.data.email;
+        })
+        this.$axios.get('/user/email')
+        .then((response)=>{
+            this.$store.state.student.email=response.data;
         })
     },
     data() {

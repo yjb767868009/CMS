@@ -17,11 +17,12 @@ public class TeamAndStrategy implements Strategy {
     private BigInteger subStrategyTwoId;
     private String subStrategyTwoName;
     private Strategy subStrategyTwo;
+    private String type;
 
     public TeamAndStrategy() {
     }
 
-    public TeamAndStrategy(BigInteger strategyId, BigInteger subStrategyOneId, String subStrategyOneName, Strategy subStrategyOne, BigInteger subStrategyTwoId, String subStrategyTwoName, Strategy subStrategyTwo) {
+    public TeamAndStrategy(BigInteger strategyId, BigInteger subStrategyOneId, String subStrategyOneName, Strategy subStrategyOne, BigInteger subStrategyTwoId, String subStrategyTwoName, Strategy subStrategyTwo, String type) {
         this.strategyId = strategyId;
         this.subStrategyOneId = subStrategyOneId;
         this.subStrategyOneName = subStrategyOneName;
@@ -29,6 +30,7 @@ public class TeamAndStrategy implements Strategy {
         this.subStrategyTwoId = subStrategyTwoId;
         this.subStrategyTwoName = subStrategyTwoName;
         this.subStrategyTwo = subStrategyTwo;
+        this.type = type;
     }
 
     public BigInteger getStrategyId() {
@@ -97,5 +99,13 @@ public class TeamAndStrategy implements Strategy {
         strategies = subStrategyOne.getStrategy(strategies);
         strategies = subStrategyTwo.getStrategy(strategies);
         return strategies;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

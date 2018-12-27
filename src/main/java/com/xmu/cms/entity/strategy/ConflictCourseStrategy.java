@@ -15,14 +15,16 @@ public class ConflictCourseStrategy implements Strategy {
     private BigInteger strategyId;
     private Course courseOne;
     private Course courseTwo;
+    private String type;
 
     public ConflictCourseStrategy() {
     }
 
-    public ConflictCourseStrategy(BigInteger strategyId, Course courseOne, Course courseTwo) {
+    public ConflictCourseStrategy(BigInteger strategyId, Course courseOne, Course courseTwo, String type) {
         this.strategyId = strategyId;
         this.courseOne = courseOne;
         this.courseTwo = courseTwo;
+        this.type = type;
     }
 
     public BigInteger getStrategyId() {
@@ -73,7 +75,17 @@ public class ConflictCourseStrategy implements Strategy {
 
     @Override
     public List<Strategy> getStrategy(List<Strategy> strategies) {
+        String strategyClass = this.getClass().getName();
+        type = strategyClass.substring(strategyClass.lastIndexOf(".") + 1);
         strategies.add(this);
         return strategies;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

@@ -9,9 +9,9 @@
         <span>{{course.courseName}}</span>
         </cell>
             <template v-if="course.showContent">
-                <cell-box :border-intent="false" class="sub-item" is-link @click.native="classInfo(course)" style="padding-left:130px">课程信息</cell-box>
-                <cell-box class="sub-item" is-link style="padding-left:130px" @click.native="checkMyScore(course)">我的成绩</cell-box>
-                <cell-box class="sub-item" is-link style="padding-left:130px" @click.native="checkMyTeam(course)">我的组队</cell-box>
+                <cell-box :key="course.id" :border-intent="false" class="sub-item" is-link @click.native="classInfo(course)" style="padding-left:130px">课程信息</cell-box>
+                <cell-box :key="course.id+1" class="sub-item" is-link style="padding-left:130px" @click.native="checkMyScore(course)">我的成绩</cell-box>
+                <cell-box :key="course.id+2" class="sub-item" is-link style="padding-left:130px" @click.native="checkMyTeam(course)">我的组队</cell-box>
             </template>
         </template>
     </group>

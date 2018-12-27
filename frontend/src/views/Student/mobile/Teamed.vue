@@ -4,7 +4,7 @@
     </x-header>
         <cell :border-intent="false" value-align="left" style="height:20px"><span style="padding-left:130px;font-size:1.2em">{{this.$store.state.student.Myteam.teamName}}</span></cell>
         <cell :border-intent="false"  value-align="left" title="组长：" style="height:20px"><span style="color:#000;padding-left:20px">&emsp;{{this.teaminfo.team.leader.account}} &emsp;{{this.teaminfo.team.leader.name}}</span></cell>
-        {{this.teaminfo.team.valid}}
+        
         <!-- 组长点击人名可以选择删除组员 -->
         <template v-if="teaminfo.role==='leader'">
             <template v-for="memb in this.teaminfo.team.members">

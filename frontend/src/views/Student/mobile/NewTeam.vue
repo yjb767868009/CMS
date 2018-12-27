@@ -48,7 +48,7 @@
         <p>班级：{{this.currentklass}}</p>
         <p>组长：<span style="padding-left:5px">{{this.$store.state.student.name}}</span></p>
         <p>小组成员：</p>
-        <template v-for="mem in this.newMembers"><span style="padding-left:10px">{{mem}}</span></template>
+        <template v-for="mem in this.newMembers"><span :key="mem.id" style="padding-left:10px">{{mem}}</span></template>
       </confirm>
       <confirm v-model="error"
         title="错误"

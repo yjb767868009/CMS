@@ -25,7 +25,7 @@
                 </cell>
             </template>
             </template>
-                    <p style="color:#000;padding-left:220px;margin-top:0">本轮成绩：{{roundscore.totalScore}}</p>
+                    <p :key="round.roundId" style="color:#000;padding-left:220px;margin-top:0">本轮成绩：{{roundscore.totalScore}}</p>
         </template>
       </template>
     </group>

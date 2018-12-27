@@ -89,7 +89,7 @@ public interface KlassSeminarMapper {
      *
      * @param klassSeminarId 班级讨论课id
      */
-    void startKlassSeminar(BigInteger klassSeminarId);// TODO: 2018/12/25
+    void startKlassSeminar(@Param("klassSeminarId") BigInteger klassSeminarId);
 
     /**
      * 新建班级讨论课，ddl为空，状态为0
@@ -97,7 +97,8 @@ public interface KlassSeminarMapper {
      * @param klassId   班级id
      * @param seminarId 讨论课id
      */
-    void insertKlassSeminar(BigInteger klassId, BigInteger seminarId);// TODO: 2018/12/26
+    void insertKlassSeminar(@Param("klassId") BigInteger klassId,
+                            @Param("seminarId") BigInteger seminarId);
 
     /**
      * 获取班级下所有班级讨论课
@@ -114,5 +115,6 @@ public interface KlassSeminarMapper {
      * @param courseId  课程id
      * @return 班级讨论课列表
      */
-    List<KlassSeminar> getKlassSeminarByStudentAndCourse(BigInteger studentId, BigInteger courseId);// TODO: 2018/12/27
+    List<KlassSeminar> getKlassSeminarByStudentAndCourse(@Param("studentId") BigInteger studentId,
+                                                         @Param("courseId") BigInteger courseId);
 }

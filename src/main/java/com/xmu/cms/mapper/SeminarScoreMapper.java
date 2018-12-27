@@ -34,7 +34,7 @@ public interface SeminarScoreMapper {
      *
      * @param seminarScore 讨论课成绩
      */
-    void modifyTeamSeminarScore(SeminarScore seminarScore);// TODO: 2018/12/26
+    void modifyTeamSeminarScore(@Param("seminarScore") SeminarScore seminarScore);
 
 
     /**
@@ -42,12 +42,12 @@ public interface SeminarScoreMapper {
      *
      * @param seminarScore 讨论课成绩，包含队伍id，讨论课id，报告成绩
      */
-    void updateReportScore(SeminarScore seminarScore);// TODO: 2018/12/26
+    void updateReportScore(@Param("seminarScore") SeminarScore seminarScore);
 
     /**
      * 根据队伍和讨论课给展示打分
      *
      * @param seminarScore 讨论课成绩，包含队伍id，讨论课id，展示成绩
      */
-    void updatePresentationScore(SeminarScore seminarScore);// TODO: 2018/12/26
+    void updatePresentationScore(@Param("seminarScore") SeminarScore seminarScore);
 }

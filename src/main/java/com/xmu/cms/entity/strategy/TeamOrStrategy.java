@@ -1,5 +1,6 @@
 package com.xmu.cms.entity.strategy;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.xmu.cms.entity.Team;
 
 import java.math.BigInteger;
@@ -9,6 +10,7 @@ import java.util.List;
  * @author JuboYu on 2018/12/22.
  * @version 1.0
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TeamOrStrategy implements Strategy {
     private BigInteger strategyId;
     private BigInteger subStrategyOneId;
@@ -96,7 +98,12 @@ public class TeamOrStrategy implements Strategy {
 
     @Override
     public List<Strategy> getStrategy(List<Strategy> strategies) {
+        String strategyClass = this.getClass().getName();
+        type = strategyClass.substring(strategyClass.lastIndexOf(".") + 1);
         strategies = subStrategyOne.getStrategy(strategies);
+        TeamOrStrategy strategy = new TeamOrStrategy();
+        strategy.setType(type);
+        strategies.add(strategy);
         strategies = subStrategyTwo.getStrategy(strategies);
         return strategies;
     }

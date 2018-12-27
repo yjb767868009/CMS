@@ -107,11 +107,28 @@ public class SeminarService {
         return attendanceDao.getAttendancesInKlassSeminar(klassSeminarId);
     }
 
-    public void newAttendance(BigInteger studentId, Attendance attendance) {
-        KlassSeminar klassSeminar = attendance.getKlassSeminar();
-        Team team = teamDao.getStudentTeamInKlassSeminar(studentId, klassSeminar.getKlassSeminarId());
-        attendance.setTeam(team);
-        attendanceDao.insertAttendance(attendance);
+    public void newAttendance(BigInteger studentId, BigInteger klassSeminarId, Attendance attendance) throws Exception {
+        attendance.setKlassSeminar(new KlassSeminar(klassSeminarId));
+        KlassSeminar klassSeminar = klassSeminarDao.getKlassSeminar(klassSeminarId);
+        Team team = teamDao.getStudentTeamInKlassSeminar(studentId, klassSeminarId);
+        if (team == null) {
+            throw new Exception("不是该班的成员无法报名");
+        }
+        Round round = roundDao.getRoundByKlassSeminar(klassSeminarId);
+        List<Attendance> attendances = attendanceDao.getTeamAttendanceInRound(team.getTeamId(), round.getRoundId());
+        Integer maxNumber = round.getKlassEnrollNumber().get(klassSeminar.getKlass().getKlassId());
+        Integer count = 0;
+        if (attendances != null) {
+            for (Attendance everAttendance : attendances) {
+                count++;
+            }
+        }
+        if (count < maxNumber) {
+            attendance.setTeam(team);
+            attendanceDao.insertAttendance(attendance);
+        } else {
+            throw new Exception("超出报名上线");
+        }
     }
 
     public Round getRoundByRoundId(BigInteger roundId) {
@@ -167,7 +184,7 @@ public class SeminarService {
     }
 
     public Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId) {
-        return attendanceDao.getStudentAttendanceInKlassSeminar(studentId, klassId, seminarId);
+        return attendanceDao.getStudentAttendanceInKlassAndSeminar(studentId, klassId, seminarId);
     }
 
     public List<Round> getRoundInCourse(UserInfo info, BigInteger courseId) {

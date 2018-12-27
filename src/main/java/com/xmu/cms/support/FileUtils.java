@@ -7,7 +7,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,11 +27,7 @@ import java.util.List;
  */
 public class FileUtils {
 
-    private static String Error = "Error";
-    private static String EmptyFileError = "空的文件";
-
-    @Value("${file.folder}")
-    private static String UPLOADED_FOLDER;
+    private static String UPLOADED_FOLDER = "D:\\temp\\";
 
     private static void saveFile(String filePath, MultipartFile file) throws Exception {
         if (file.isEmpty()) {
@@ -66,7 +61,7 @@ public class FileUtils {
 
     private static List<Student> analysisFile(String filePath) throws Exception {
         Workbook workbook = getWorkBook(filePath);
-        List<List<Object>> list = new ArrayList<List<Object>>();
+        List<List<Object>> list = new ArrayList<>();
         for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
             Sheet sheet = workbook.getSheetAt(i);
             if (sheet == null) {
@@ -77,7 +72,7 @@ public class FileUtils {
                 if (row == null || row.getFirstCellNum() == j) {
                     continue;
                 }
-                List<Object> objectList = new ArrayList<Object>();
+                List<Object> objectList = new ArrayList<>();
                 for (int y = row.getFirstCellNum(); y < row.getLastCellNum(); y++) {
                     Object value = null;
                     DecimalFormat df = new DecimalFormat("0");
@@ -103,7 +98,7 @@ public class FileUtils {
                 list.add(objectList);
             }
         }
-        List<Student> students = new ArrayList<Student>();
+        List<Student> students = new ArrayList<>();
         for (List<Object> studentMessage : list) {
             String account = (String) studentMessage.get(0);
             String name = (String) studentMessage.get(1);
@@ -135,15 +130,17 @@ public class FileUtils {
 
     public static void downloadAttendanceFile(BigInteger attendanceId, String fileName) throws Exception {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        String error = "Error";
         if (requestAttributes == null) {
-            throw new Exception(Error);
+            throw new Exception(error);
         }
         HttpServletResponse response = requestAttributes.getResponse();
         if (response == null) {
-            throw new Exception(Error);
+            throw new Exception(error);
         }
         if (fileName == null) {
-            throw new Exception(EmptyFileError);
+            String emptyFileError = "空的文件";
+            throw new Exception(emptyFileError);
         }
         String filePath = getAttendancePath(attendanceId);
         File file = new File(filePath, fileName);

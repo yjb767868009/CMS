@@ -73,7 +73,7 @@
         @on-cancel="onCancelnew"
         @on-confirm="onConfirm">
         <p style="text-align:center;">添加组员：</p>
-        <template v-for="mem in this.newMembers"><span style="padding-left:10px">{{mem}}</span></template>
+        <template v-for="mem in this.newMembers"><span :key="mem.id" style="padding-left:10px">{{mem}}</span></template>
       </confirm>
         <confirm v-model="nomember"
         :show-cancel-button="false"

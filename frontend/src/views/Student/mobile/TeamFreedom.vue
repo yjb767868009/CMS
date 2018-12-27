@@ -60,7 +60,7 @@
         </cell>
 
             <template v-if="team.showMemberContent">
-                <cell :border-intent="false" value-align="left" title="组长：" style="height:20px"><span style="color:#000">&emsp;{{team.members.leader.account}}&emsp;{{team.members.leader.name}}</span></cell>
+                <cell :key="team.teamId" :border-intent="false" value-align="left" title="组长：" style="height:20px"><span style="color:#000">&emsp;{{team.members.leader.account}}&emsp;{{team.members.leader.name}}</span></cell>
                 <template v-for="member in team.members.members">
                 <cell :key="member.id" :border-intent="false" value-align="left" title="组员：" style="height:20px;"><span style="color:#000">&emsp;{{member.account}}&emsp;{{member.name}}</span></cell>
                 </template>

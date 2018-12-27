@@ -25,8 +25,8 @@ public class AttendanceDao {
         return attendanceMapper.getAttendancesInKlassAndSeminar(seminarId, klassId);
     }
 
-    public Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId) {
-        return attendanceMapper.getStudentAttendanceInKlassSeminar(studentId, klassId, seminarId);
+    public Attendance getStudentAttendanceInKlassAndSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId) {
+        return attendanceMapper.getStudentAttendanceInKlassAndSeminar(studentId, klassId, seminarId);
     }
 
     public List<Attendance> getAttendancesInKlassSeminar(BigInteger klassSeminarId) {
@@ -66,5 +66,13 @@ public class AttendanceDao {
     public void insertAttendance(Attendance attendance) {
         attendance.setPresent(false);
         attendanceMapper.insertAttendance(attendance);
+    }
+
+    public Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassSeminarId) {
+        return attendanceMapper.getStudentAttendanceInKlassSeminar(studentId, klassSeminarId);
+    }
+
+    public List<Attendance> getTeamAttendanceInRound(BigInteger teamId, BigInteger roundId) {
+        return attendanceMapper.getTeamAttendancesInRound(teamId, roundId);
     }
 }

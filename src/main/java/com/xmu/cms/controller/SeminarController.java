@@ -179,8 +179,7 @@ public class SeminarController {
                                           @RequestBody Attendance attendance) {
         Map<String, String> message = new HashMap<String, String>(1);
         try {
-            attendance.setKlassSeminar(new KlassSeminar(klassSeminarId));
-            seminarService.newAttendance(info.getUserId(), attendance);
+            seminarService.newAttendance(info.getUserId(), klassSeminarId, attendance);
             message.put("message", "Success");
         } catch (Exception e) {
             message.put("message", e.getMessage());

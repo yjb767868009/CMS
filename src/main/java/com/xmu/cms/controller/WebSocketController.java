@@ -4,19 +4,12 @@ import com.xmu.cms.entity.Attendance;
 import com.xmu.cms.entity.Question;
 import com.xmu.cms.service.SeminarService;
 import com.xmu.cms.support.KlassSeminarRun;
-import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
 import java.math.BigInteger;
 
 /**
@@ -24,33 +17,10 @@ import java.math.BigInteger;
  * @version 1.0
  */
 @RestController
-@RequestMapping(value = "/")
-public class TestController {
-
-    @GetMapping(value = "/getUserType")
-    public Object getUserType(HttpSession session) {
-        return session.getAttribute("userType");
-    }
-
-    @GetMapping(value = "/getUser")
-    public Object getUserId() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(authentication.toString());
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            return authentication.getName();
-        }
-        return null;
-    }
-
-    @GetMapping(value = "/test/myinfo")
-    public UserInfo getUserInfo(UserInfo info) {
-        return info;
-    }
-
+public class WebSocketController {
 
     @Autowired
     private SeminarService seminarService;
-
 
     @MessageMapping("/{klassSeminarId}/question")
     @SendTo("/topic/klassSeminar/{klassSeminarId}")

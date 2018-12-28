@@ -27,7 +27,6 @@ public class SeminarController {
     private CourseService courseService;
 
 
-
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/seminar/{seminarId}")
     public Seminar getSeminar(@PathVariable("seminarId") BigInteger seminarId) {
@@ -42,7 +41,7 @@ public class SeminarController {
         Map<String, Object> message = new HashMap<String, Object>(2);
         String student = "student";
         if (userInfo.getUserType().equals(student)) {
-            message.put("attendance", seminarService.getStudentAttendanceInKlassSeminar(userInfo.getUserId(), klassId, seminarId));
+            message.put("attendance", seminarService.getStudentAttendanceInKlassAndSeminar(userInfo.getUserId(), klassId, seminarId));
         }
         message.put("klassSeminar", seminarService.getKlassSeminarByKlassAndSeminar(klassId, seminarId));
         message.put("seminar", seminarService.getSeminarBySeminarId(seminarId));
@@ -184,4 +183,6 @@ public class SeminarController {
         message.put("questions", questions);
         return message;
     }
+
+
 }

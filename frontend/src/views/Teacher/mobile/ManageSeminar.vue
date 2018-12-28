@@ -107,8 +107,6 @@
         currentQuestionIndex: -1,
         currentQuestion: '',
         is_modifying: false,
-        usedMillisecond: 0,
-        usedSecond: 0,
         presentationScore: '',
         questionScore: '',
       }
@@ -116,7 +114,7 @@
     mounted: function () {
       this.initWebSocket()
       //this.$store.state.teacher.currentKlassSeminar.klassSeminarId
-      this.$axios.get('/klassseminar/1/run')
+      this.$axios.get('/klassseminar/'+this.$store.state.teacher.currentKlassSeminar.klassSeminarId+'/run')
         .then((response) => {
           console.log(response)
           this.questions = response.data.questions
@@ -188,8 +186,7 @@
         //this.$store.state.teacher.currentKlassSeminar.klassSeminarId
         this.stompClient.connect({}, (frame) => {
           this.stompClient.subscribe('/topic/klassSeminar/1', (KlassSeminarRun) => {
-            //   this.KlassSeminarRun=JSON.parse(KlassSeminarRun.body)
-            //   this.showKlassSeminarRun(this.KlassSeminarRun)
+            this.KlassSeminarRun=JSON.parse(KlassSeminarRun.body)
             console.log(KlassSeminarRun.body)
           })
         })
@@ -216,9 +213,6 @@
           console.log('no more team')
         }
       },
-      showKlassSeminarRun: function (v) {
-        console.log(v)
-      }
     }
   }
 

@@ -10,7 +10,7 @@ export default new vuex.Store({
         email:'',
         currentCourse:'',
         Myteam:'',
-        newMembers:''
+        newMembers:'',
     },
     mutations:{
         

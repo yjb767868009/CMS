@@ -135,5 +135,5 @@ public interface TeamMapper {
      * @param klassId 班级id
      * @return 队伍
      */
-    Team getLastTeamInKlass(BigInteger klassId);// TODO: 2018/12/28  
+    Team getLastTeamInKlass(@Param("klassId") BigInteger klassId);
 }

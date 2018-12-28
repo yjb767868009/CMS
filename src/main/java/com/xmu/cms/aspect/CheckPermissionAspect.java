@@ -61,7 +61,7 @@ public class CheckPermissionAspect {
         Object result = null;
         UserInfo userInfo = JwtUtils.getToken();
         Team team = teamDao.getTeamByTeamId(teamId);
-        if (userInfo.getUserType().equals(teacherType) && team.getLeader().getStudentId().equals(userInfo.getUserId())) {
+        if (userInfo.getUserType().equals("student") && team.getLeader().getStudentId().equals(userInfo.getUserId())) {
             result = point.proceed();
         }
         return result;

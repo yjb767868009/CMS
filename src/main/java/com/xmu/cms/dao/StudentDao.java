@@ -50,11 +50,8 @@ public class StudentDao {
         return studentMapper.getStudentByAccount(account);
     }
 
-    public Integer activateStudent(BigInteger studentId, Student student) {
-        Student modifyStudent = studentMapper.getStudentById(studentId);
-        modifyStudent.setPassword(student.getPassword());
-        modifyStudent.setPassword(student.getEmail());
-        return studentMapper.updateStudent(student);
+    public void activateStudent(Student student) {
+        studentMapper.activeStudent(student);
     }
 
     public Student getStudentById(BigInteger userId) {

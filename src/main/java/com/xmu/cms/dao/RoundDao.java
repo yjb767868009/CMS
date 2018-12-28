@@ -139,4 +139,8 @@ public class RoundDao {
     public Round getRoundBySeminar(BigInteger seminarId) {
         return roundMapper.getRoundBySeminar(seminarId);
     }
+
+    public Round getRoundByKlassSeminar(BigInteger klassSeminarId) {
+        return roundMapper.getRoundByKlassSeminarId(klassSeminarId);
+    }
 }

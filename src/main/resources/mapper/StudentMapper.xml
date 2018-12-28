@@ -103,4 +103,12 @@
           and klass_student.course_id = #{courseId}
     </select>
 
+    <update id="activeStudent">
+        UPDATE student
+        SET password  = #{student.password},
+            email     = #{student.email},
+            is_active = true
+        WHERE id = #{student.studentId}
+    </update>
+
 </mapper>

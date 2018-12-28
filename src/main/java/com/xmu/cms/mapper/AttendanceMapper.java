@@ -46,9 +46,9 @@ public interface AttendanceMapper {
      * @param seminarId 讨论课id
      * @return 展示
      */
-    Attendance getStudentAttendanceInKlassSeminar(@Param("studentId") BigInteger studentId,
-                                                  @Param("klassId") BigInteger klassId,
-                                                  @Param("seminarId") BigInteger seminarId);
+    Attendance getStudentAttendanceInKlassAndSeminar(@Param("studentId") BigInteger studentId,
+                                                     @Param("klassId") BigInteger klassId,
+                                                     @Param("seminarId") BigInteger seminarId);
 
     /**
      * 获取班级讨论课中的展示，按展示顺序排序
@@ -97,4 +97,24 @@ public interface AttendanceMapper {
      * @param attendance 新的展示
      */
     void insertAttendance(@Param("attendance") Attendance attendance);
+
+    /**
+     * 获取学生在班级讨论课下的展示
+     *
+     * @param studentId      学生id
+     * @param klassSeminarId 班级讨论课id
+     * @return 展示
+     */
+    Attendance getStudentAttendanceInKlassSeminar(@Param("studentId") BigInteger studentId,
+                                                  @Param("klassSeminarId") BigInteger klassSeminarId);
+
+    /**
+     * 获取队伍在轮次中的所有展示
+     *
+     * @param teamId  队伍id
+     * @param roundId 轮次id
+     * @return 展示列表
+     */
+    List<Attendance> getTeamAttendancesInRound(@Param("teamId") BigInteger teamId,
+                                               @Param("roundId") BigInteger roundId);
 }

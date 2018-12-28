@@ -84,10 +84,10 @@ export default {
           this.$store.state.token=data.token;
           this.$store.state.userType='student';
           if(data.active==="false"){//需要激活
-            this.$router.push('mobile/student/activation')
+            this.$router.push('/mobile/student/activation')
           }
           else{//不用激活
-            this.$router.push('/mobile/Student/studentSeminarList')
+            this.$router.push('/mobile/student/studentInfo')
           }
         }
 

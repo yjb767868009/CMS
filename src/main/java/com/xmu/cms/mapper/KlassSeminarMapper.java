@@ -117,4 +117,12 @@ public interface KlassSeminarMapper {
      */
     List<KlassSeminar> getKlassSeminarByStudentAndCourse(@Param("studentId") BigInteger studentId,
                                                          @Param("courseId") BigInteger courseId);
+
+    /**
+     * 获取班级讨论课
+     *
+     * @param klassSeminarId 班级讨论课id
+     * @return 班级讨论课
+     */
+    KlassSeminar getKlassSeminar(@Param("klassSeminarId") BigInteger klassSeminarId);
 }

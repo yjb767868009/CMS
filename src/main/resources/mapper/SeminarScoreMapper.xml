@@ -14,6 +14,10 @@
         <association property="klassSeminar" javaType="com.xmu.cms.entity.KlassSeminar">
             <id property="klassSeminarId" column="klassSeminarId"/>
         </association>
+        <association property="seminar" javaType="com.xmu.cms.entity.Seminar">
+            <id property="seminarId" column="seminarId"/>
+            <id property="topic" column="seminarName"/>
+        </association>
     </resultMap>
 
     <select id="getAllScoresInSeminar" resultMap="SeminarScoreResultMap">
@@ -61,7 +65,9 @@
         SELECT presentation_score as presentationScore,
                question_score     as questionScore,
                report_score       as reportScore,
-               total_score        as totalScore
+               total_score        as totalScore,
+               seminar_id         as seminarId,
+               seminar_name       as seminarName
         FROM seminar_score,
              klass_seminar,
              seminar

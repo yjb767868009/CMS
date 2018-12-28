@@ -1,5 +1,6 @@
 package com.xmu.cms.entity.strategy;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.xmu.cms.entity.Team;
 
 import java.math.BigInteger;
@@ -9,6 +10,7 @@ import java.util.List;
  * @author JuboYu on 2018/12/22.
  * @version 1.0
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TeamOrStrategy implements Strategy {
     private BigInteger strategyId;
     private BigInteger subStrategyOneId;
@@ -17,8 +19,9 @@ public class TeamOrStrategy implements Strategy {
     private BigInteger subStrategyTwoId;
     private String subStrategyTwoName;
     private Strategy subStrategyTwo;
+    private String type;
 
-    public TeamOrStrategy(BigInteger strategyId, BigInteger subStrategyOneId, String subStrategyOneName, Strategy subStrategyOne, BigInteger subStrategyTwoId, String subStrategyTwoName, Strategy subStrategyTwo) {
+    public TeamOrStrategy(BigInteger strategyId, BigInteger subStrategyOneId, String subStrategyOneName, Strategy subStrategyOne, BigInteger subStrategyTwoId, String subStrategyTwoName, Strategy subStrategyTwo, String type) {
         this.strategyId = strategyId;
         this.subStrategyOneId = subStrategyOneId;
         this.subStrategyOneName = subStrategyOneName;
@@ -26,6 +29,7 @@ public class TeamOrStrategy implements Strategy {
         this.subStrategyTwoId = subStrategyTwoId;
         this.subStrategyTwoName = subStrategyTwoName;
         this.subStrategyTwo = subStrategyTwo;
+        this.type = type;
     }
 
     public TeamOrStrategy() {
@@ -95,7 +99,25 @@ public class TeamOrStrategy implements Strategy {
     @Override
     public List<Strategy> getStrategy(List<Strategy> strategies) {
         strategies = subStrategyOne.getStrategy(strategies);
+        TeamOrStrategy strategy = new TeamOrStrategy();
+        strategy.setType(TEAM_OR_STRATEGY_TYPE);
+        String firstStrategyType = strategies.get(0).getType();
+        if (!TEAM_OR_STRATEGY_TYPE.equals(firstStrategyType) && !TEAM_AND_STRATEGY_TYPE.equals(firstStrategyType)) {
+            TeamOrStrategy teamOrStrategy = new TeamOrStrategy();
+            teamOrStrategy.setType(TEAM_OR_STRATEGY_TYPE);
+            strategies.add(0, teamOrStrategy);
+        }
+        strategies.add(strategy);
         strategies = subStrategyTwo.getStrategy(strategies);
         return strategies;
+    }
+
+    @Override
+    public String getType() {
+        return TEAM_OR_STRATEGY_TYPE;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

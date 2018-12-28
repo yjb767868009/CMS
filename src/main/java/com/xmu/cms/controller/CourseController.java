@@ -3,7 +3,10 @@ package com.xmu.cms.controller;
 import com.xmu.cms.aspect.annoatation.CheckCoursePermission;
 import com.xmu.cms.entity.*;
 import com.xmu.cms.entity.strategy.Strategy;
-import com.xmu.cms.service.*;
+import com.xmu.cms.service.CourseService;
+import com.xmu.cms.service.MailService;
+import com.xmu.cms.service.SeminarService;
+import com.xmu.cms.service.UserService;
 import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -81,18 +84,12 @@ public class CourseController {
         return message;
     }
 
-
+    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/course/{courseId}/round")
     public List<Round> getRoundInCourse(UserInfo info,
                                         @PathVariable("courseId") BigInteger courseId) {
         return seminarService.getRoundInCourse(info, courseId);
     }
-
-//    @GetMapping(value = "/course/{courseId}/round")
-//    public List<Round> getRoundInCourse(@PathVariable("courseId") BigInteger courseId) {
-//        return seminarService.getRoundInCourse(courseId);
-//    }
-
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/course/{courseId}")
@@ -103,7 +100,6 @@ public class CourseController {
             return "无此课";
         }
     }
-
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
@@ -237,17 +233,18 @@ public class CourseController {
         return seminarService.getRoundScoreInCourse(courseId, roundId);
     }
 
-    @Secured("ROLE_TEACHER")
-    @GetMapping(value = "/course/{courseId}/score")
-    public List<Map<String, Object>> getCourseScore(@PathVariable("courseId") BigInteger courseId) {
-        return seminarService.getCourseScore(courseId);
+    @Secured("ROLE_STUDENT")
+    @GetMapping(value = "/course/{courseId}/round/{roundId}/score")
+    public Map<String, Object> getStudentScoreInCourse(UserInfo info,
+                                                       @PathVariable("courseId") BigInteger courseId,
+                                                       @PathVariable("roundId") BigInteger roundId) {
+        return seminarService.getStudentRoundScoreAndSeminarScore(info.getUserId(), roundId);
     }
 
 
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
     @PostMapping(value = "/course/{courseId}/teamsharerequest")
-
     public Map<String, String> sendShareTeam(@PathVariable("courseId") BigInteger courseId,
                                              @RequestBody ShareTeam shareTeam) {
         shareTeam.setMasterCourse(new Course(courseId));

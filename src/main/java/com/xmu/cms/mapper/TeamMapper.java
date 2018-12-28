@@ -66,16 +66,9 @@ public interface TeamMapper {
     /**
      * 新建队伍（不包括新建队伍学生关系），默认status为0
      *
-     * @param klassId   班级id
-     * @param courseId  课程id
-     * @param studentId 队长id
-     * @param team      队伍信息
-     * @return 新建成功信息
+     * @param team 队伍信息
      */
-    Integer insertTeam(@Param("klassId") BigInteger klassId,
-                       @Param("courseId") BigInteger courseId,
-                       @Param("studentId") BigInteger studentId,
-                       @Param("team") Team team);
+    void insertTeam(@Param("team") Team team);
 
     /**
      * 根据班级和队长获取队伍
@@ -84,7 +77,8 @@ public interface TeamMapper {
      * @param studentId 学生id
      * @return 队伍信息
      */
-    Team getTeamByKlass(@Param("klassId") BigInteger klassId, @Param("studentId") BigInteger studentId);
+    Team getTeamByKlass(@Param("klassId") BigInteger klassId,
+                        @Param("studentId") BigInteger studentId);
 
     /**
      * 更新队伍合法性
@@ -110,7 +104,8 @@ public interface TeamMapper {
      * @param klassId   班级id
      * @return 队伍
      */
-    Team getStudentTeamInKlass(BigInteger studentId, BigInteger klassId);
+    Team getStudentTeamInKlass(@Param("studentId") BigInteger studentId,
+                               @Param("klassId") BigInteger klassId);
 
     /**
      * 获取简单的队伍信息，无嵌套关系
@@ -129,4 +124,31 @@ public interface TeamMapper {
      */
     Team getStudentTeamInCourse(@Param("studentId") BigInteger studentId,
                                 @Param("courseId") BigInteger courseId);
+
+    /**
+     * 获取班级里最后的队伍
+     *
+     * @param klassId 班级id
+     * @return 队伍
+     */
+    Team getLastTeamInKlass(@Param("klassId") BigInteger klassId);
+
+    /**
+     * 获取学生在轮次下的队伍
+     *
+     * @param studentId 学生id
+     * @param roundId   轮次id
+     * @return 队伍
+     */
+    Team getStudentTeamInRound(@Param("studentId") BigInteger studentId,
+                               @Param("roundId") BigInteger roundId);
+
+    /**
+     * 根据队伍序号获取队伍
+     * @param klassSerial 班级序号
+     * @param teamSerial 队伍序号
+     * @return 队伍
+     */
+    Team getTeamBySerial(@Param("klassSerial") Integer klassSerial,
+                         @Param("teamSerial") Integer teamSerial);
 }

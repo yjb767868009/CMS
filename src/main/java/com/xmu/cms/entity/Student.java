@@ -29,6 +29,10 @@ public class Student {
         this.courses = courses;
     }
 
+    public Student(BigInteger studentId) {
+        this.studentId = studentId;
+    }
+
     public Student() {
     }
 

@@ -52,4 +52,8 @@ public class KlassSeminarDao {
     public void insertKlassSeminar(BigInteger klassId, BigInteger seminarId) {
         klassSeminarMapper.insertKlassSeminar(klassId, seminarId);
     }
+
+    public KlassSeminar getKlassSeminar(BigInteger klassSeminarId) {
+        return klassSeminarMapper.getKlassSeminar(klassSeminarId);
+    }
 }

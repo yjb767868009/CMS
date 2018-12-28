@@ -109,4 +109,11 @@ public interface StudentMapper {
      * @return 学生列表
      */
     List<Student> getStudentInCourse(BigInteger courseId);
+
+    /**
+     * 激活学生
+     *
+     * @param student 学生
+     */
+    void activeStudent(@Param("student") Student student);
 }

@@ -1,26 +1,22 @@
 <template>
 <div class="student" style="height:800px;background:#fff;">
-    <x-header :title="this.$store.state.student.currentCourse.name" style="height:60px;padding-top:12px;font-size:20px" :left-options="{showBack:false}" :right-options="{showMore: true}"  @on-click-more="show=!show">
+    <x-header :title="this.$store.state.student.currentCourse.courseName" style="height:60px;padding-top:12px;font-size:20px" :left-options="{showBack:false}" :right-options="{showMore: true}"  @on-click-more="show=!show">
     
     </x-header>
-    <cell primary="content" title="课程简介：" value-align="left"><div style="padding-left:5px;font-size:15px">{{this.courseInfo.intro}}</div></cell>
+    <cell primary="content" title="课程简介：" value-align="left"><div style="padding-left:5px;font-size:15px">{{this.courseInfo.introduction}}</div></cell>
     <cell primary="content" :border-intent="false" value-align="left"><span style="color:#000">成绩计算规则：</span>
         <div style="padding-left:98px;color:#000;">
-            <p>课堂展示：{{this.courseInfo.presentationWeight*100}}%</p>
-            <p>课堂提问：{{this.courseInfo.questionWeight*100}}%</p>
-            <p>书面报告：{{this.courseInfo.reportWeight*100}}%</p>
+            <p>课堂展示：{{this.courseInfo.presentationWeight}}%</p>
+            <p>课堂提问：{{this.courseInfo.questionWeight}}%</p>
+            <p>书面报告：{{this.courseInfo.reportWeight}}%</p>
         </div>
     </cell>
-    
     <div style="font-size:15px;background:#fff;margin-top:15px">
-        <div style="padding-left:15px;color:#000;">小组人数：&emsp;&emsp;&emsp;&emsp;&emsp;{{this.courseInfo.minMemberNumber}}~{{this.courseInfo.maxMemberNumber}}</div>
-        <div style="padding-left:15px;color:#000;margin-top:15px">组队开始时间：&emsp;&emsp;&emsp;{{this.courseInfo.startTeamTime}}</div>
-        <div style="padding-left:15px;color:#000;margin-top:15px">组队截止时间：&emsp;&emsp;&emsp;{{this.courseInfo.endTeamTime}}</div>
-        <div style="padding-left:15px;color:#000;margin-top:15px">组员性别要求：&emsp;&emsp;&emsp;&emsp;无</div>
-        <div style="padding-left:15px;color:#000;margin-top:15px">组员星座要求：&emsp;&emsp;&emsp;&emsp;无</div>
+        <template v-if="this.strategy"><div style="padding-left:15px;color:#000;">小组人数：&emsp;&emsp;&emsp;&emsp;&emsp;{{this.strategy[0].minMember}}~{{this.strategy[0].maxMember}} 人</div></template>
+        <div style="padding-left:15px;color:#000;margin-top:15px">组队开始时间：&emsp;{{this.courseInfo.teamStartTime.substring(0, 10)}}&emsp;{{this.courseInfo.teamStartTime.substring(11, 22)}}</div>
+        <div style="padding-left:15px;color:#000;margin-top:15px">组队截止时间：&emsp;{{this.courseInfo.teamEndTime.substring(0, 10)}}&emsp;{{this.courseInfo.teamEndTime.substring(11, 22)}}</div>
     </div>
-    //TODO
-    <div style="padding-left:15px;color:#000;margin-top:15px">冲突课程：
+    <div style="padding-left:15px;color:#000;margin-top:35px">冲突课程：
         <div style="padding-left:100px;color:#000;">
             <p>.Net(xxx老师)</p>
             <p>.Net(xxx老师)</p>
@@ -69,25 +65,20 @@ import {TransferDom,XHeader,Cell,Actionsheet,Popup
     data() {
        return{ 
            show:false,
-           courseInfo:{
-  "name": "OOAD",
-  "intro": "课程介绍",
-  "presentationWeight": 0.5,
-  "questionWeight": 0.1,
-  "reportWeight": 0.3,
-  "minMemberNumber": 4,
-  "maxMemberNumber": 6,
-  "startTeamTime": "2018.10.11 18:00",
-  "endTeamTime": "2018.11.11 18:00"
-}
+           courseInfo:'',
+           strategy:'',
     }
     },
-    // mounted:function(){
-    //     this.$axios.get('/course/'+this.$store.state.student.currentCourseId)
-    //     .then((response)=>{
-    //         this.courseInfo=response.data;
-    //     })
-    // },
+    mounted:function(){
+        this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId)
+        .then((response)=>{
+            this.courseInfo=response.data;
+        })
+        this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId+'/strategy')
+        .then((response)=>{
+            this.strategy=response.data;
+        })
+    },
     methods:{
         toast:function(){
             Toast(this.name)

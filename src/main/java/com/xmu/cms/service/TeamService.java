@@ -35,7 +35,14 @@ public class TeamService {
     private TeamApplicationDao teamApplicationDao;
 
     public Team newTeam(BigInteger courseId, BigInteger classId, BigInteger studentId, Team team) {
-        return teamDao.newTeam(courseId, classId, studentId, team);
+        Team newTeam = teamDao.newTeam(courseId, classId, studentId, team);
+        Strategy strategy = strategyDao.getCourseStrategy(courseId);
+        Boolean valid = strategy.checkValid(team);
+        if (!valid.equals(newTeam.getValid())){
+            newTeam.setValid(valid);
+            teamDao.updateTeamValid(team);
+        }
+        return newTeam;
     }
 
     public Team getTeamByTeamId(BigInteger teamId) {
@@ -54,7 +61,7 @@ public class TeamService {
     }
 
     public Map<String, String> teamAddMembers(BigInteger teamId, List<Student> students) {
-        Map<String, String> message = new HashMap<String, String>(1);
+        Map<String, String> message = new HashMap<>(1);
         Team team = teamDao.addMembers(teamId, students);
         Strategy strategy = strategyDao.getCourseStrategy(team.getCourse().getCourseId());
         Boolean valid = strategy.checkValid(team);

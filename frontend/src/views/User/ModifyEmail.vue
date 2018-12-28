@@ -2,16 +2,13 @@
   <div class="activation" style="background:#eee">
     <x-header title="账户邮箱" style="height:60px;padding-top:12px" :left-options="{showBack:false}">
     </x-header>
+    <div style="padding-left:10px;margin-top:10px;height:10px">当前邮箱：{{this.$store.state.student.email}}</div>
   <group>
+    <x-input v-model="account" style="margin-top:20px;background-color:#fff" title="e-mail:" placeholder="填写修改邮箱"></x-input>  
 
-    <x-input v-model="account" style="margin-top:20px;background-color:#fff" title="e-mail:" placeholder="填写邮箱"></x-input>  
-    <x-input class="weui-vcode" style="margin-top:20px;background-color:#fff" title="验证码:" placeholder="填写验证码">
-
-    </x-input>
-    <x-button style="margin-left:60%;margin-top:10px" type="warn" mini plain>立即验证</x-button>
   </group>
-        <div style="text-align:left;margin-top:100px;font-size:10px">邮箱格式如：useremail@host.domainnames</div>
-    <x-button @click="post" style="margin-top:10px">确认提交</x-button>
+      <div style="text-align:left;margin-top:100px;font-size:10px">邮箱格式如：useremail@host.domainnames</div>
+    <x-button type="primary" @click="post" style="margin-top:10px">确认提交</x-button>
   </div>
 </template>
 
@@ -23,13 +20,17 @@ export default {
   data () {
     return {
       account:'',
-      password:''
+      password:'',
+      identifying:''
     }
+  },
+  mounted:function(){
+
   },
   components:{
     XHeader,
     XButton,
-    XInput
+    XInput,
   },
   methods:{
     post:function(){

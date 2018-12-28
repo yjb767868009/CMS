@@ -135,4 +135,10 @@ public interface KlassMapper {
     void addKlassRound(@Param("klassId") BigInteger klassId,
                        @Param("roundId") BigInteger roundId);
 
+    /**
+     * 删除班级队伍信息的表中队伍的信息
+     *
+     * @param teamId 队伍id
+     */
+    void deleteKlassTeam(@Param("teamId") BigInteger teamId);
 }

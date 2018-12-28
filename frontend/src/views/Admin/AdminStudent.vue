@@ -138,7 +138,7 @@ export default {
       studentDataPagination: "",
       studentSearchKey: "",
       currentPage: 1,
-      currentTotal: 1
+      currentTotal: 1,
     };
   },
   mounted: function() {

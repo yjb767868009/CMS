@@ -1,0 +1,20 @@
+[{
+  "studentId": 162,
+  "account": "24320152202847",
+  "password": "123456",
+  "name": "俞剑桥",
+  "activation": false
+}, {
+  "studentId": 184,
+  "account": "24320162202880",
+  "password": "123456",
+  "name": "陆婧昭",
+  "activation": false
+}, {
+  "studentId": 193,
+  "account": "24320162202936",
+  "password": "123456",
+  "email": "222",
+  "name": "徐政强",
+  "activation": true
+}]

@@ -35,7 +35,9 @@ public class TeamController {
 
     @Secured("ROLE_STUDENT")
     @PostMapping(value = "/course/{courseId}/class/{classId}/team")
-    public Team newTeam(UserInfo userInfo, @PathVariable("courseId") BigInteger courseId, @PathVariable("classId") BigInteger classId, @RequestBody Team team) {
+    public Team newTeam(UserInfo userInfo, @PathVariable("courseId") BigInteger courseId,
+                        @PathVariable("classId") BigInteger classId,
+                        @RequestBody Team team) {
         return teamService.newTeam(courseId, classId, userInfo.getUserId(), team);
     }
 
@@ -49,10 +51,17 @@ public class TeamController {
                 break;
             case "student":
                 Team team = teamService.getTeamAndMembers(teamId);
+                List<Student> students = team.getMembers();
+                message.put("role", "no");
                 if (team.getLeader().getStudentId().equals(info.getUserId())) {
-                    message.put("isLeader", true);
-                }else {
-                    message.put("isLeader", false);
+                    message.put("role", "leader");
+                } else {
+                    for (Student student : students) {
+                        if (student.getStudentId().equals(info.getUserId())) {
+                            message.put("role", "member");
+                            break;
+                        }
+                    }
                 }
                 message.put("team", team);
                 break;
@@ -78,7 +87,6 @@ public class TeamController {
     }
 
     @Secured("ROLE_STUDENT")
-    @CheckTeamPermission
     @PutMapping(value = "/team/{teamId}/remove")
     public Map<String, String> removeTeamMember(@PathVariable("teamId") BigInteger teamId,
                                                 @RequestBody Student student) {

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  * @author JuboYu on 2018/12/22.
@@ -37,21 +38,21 @@ public class StrategyDao {
     private Strategy getStrategy(BigInteger strategyId, String subStrategy) {
         Strategy strategy = null;
         switch (subStrategy) {
-            case "team_and_strategy":
+            case "TeamAndStrategy":
                 strategy = teamAndStrategyMapper.getTeamAndStrategyById(strategyId);
                 strategy = setSubStrategy(strategy);
                 break;
-            case "team_or_strategy":
+            case "TeamOrStrategy":
                 strategy = teamOrStrategyMapper.getTeamOrStrategyById(strategyId);
                 strategy = setSubStrategy(strategy);
                 break;
-            case "MemberLimitStrategy":
+            case "MEMBER_LIMIT_STRATEGY":
                 strategy = memberLimitStrategyMapper.getMemberLimitStrategyById(strategyId);
                 break;
-            case "ConflictCourseStrategy":
+            case "CONFLICT_COURSE_STRATEGY":
                 strategy = conflictCourseStrategyMapper.getConflictCourseStrategyById(strategyId);
                 break;
-            case "CourseMemberLimitStrategy":
+            case "COURSE_MEMBER_LIMIT_STRATEGY":
                 strategy = courseMemberLimitStrategyMapper.getCourseMemberLimitStrategyById(strategyId);
                 break;
             default:
@@ -67,7 +68,7 @@ public class StrategyDao {
         Strategy subStrategyOne = null;
         Strategy subStrategyTwo = null;
         switch (subStrategyName) {
-            case "TeamStrategy":
+            case "TEAM_STRATEGY":
                 TeamStrategy teamStrategy = (TeamStrategy) strategy;
                 subStrategy = getStrategy(teamStrategy.getSubStrategyId(), teamStrategy.getSubStrategyName());
                 teamStrategy.setSubStrategy(subStrategy);
@@ -89,11 +90,11 @@ public class StrategyDao {
                 teamOrStrategy.setSubStrategyTwo(subStrategyTwo);
                 strategy = teamOrStrategy;
                 break;
-            case "MemberLimitStrategy":
+            case "MEMBER_LIMIT_STRATEGY":
                 break;
-            case "ConflictCourseStrategy":
+            case "CONFLICT_COURSE_STRATEGY":
                 break;
-            case "CourseMemberLimitStrategy":
+            case "COURSE_MEMBER_LIMIT_STRATEGY":
                 break;
             default:
                 break;
@@ -104,5 +105,12 @@ public class StrategyDao {
     public Strategy getCourseStrategy(BigInteger courseId) {
         TeamStrategy teamStrategy = teamStrategyMapper.getCourseStrategy(courseId);
         return setSubStrategy(teamStrategy);
+    }
+
+    public Strategy newStrategy(List<Strategy> strategies) {
+        Strategy firstStrategy = strategies.get(0);
+        if (firstStrategy.getType().equals(Strategy.TEAM_OR_STRATEGY_TYPE)) {
+        }
+        return null;
     }
 }

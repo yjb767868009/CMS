@@ -27,7 +27,7 @@ Vue.use(ElementUI)
 Vue.use(VueCookie)
 Vue.use(MintUI)
 
-axios.defaults.baseURL='http://localhost:8002'
+axios.defaults.baseURL='http://localhost:8000'
 axios.defaults.withCredentials=true
 
 
@@ -77,5 +77,5 @@ new Vue({
   store,
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
 })

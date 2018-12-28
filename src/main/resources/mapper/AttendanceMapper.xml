@@ -45,7 +45,7 @@
                            report_url,
                            ppt_name,
                            ppt_url)
-        values (#{attendance.klassSeminarId},
+        values (#{attendance.klassSeminar.klassSeminarId},
                 #{attendance.team.teamId},
                 #{attendance.teamOrder},
                 #{attendance.present},
@@ -61,7 +61,7 @@
         where id = #{attendanceId}
     </delete>
 
-    <select id="getStudentAttendanceInKlassSeminar" resultMap="AttendanceResultMap">
+    <select id="getStudentAttendanceInKlassAndSeminar" resultMap="AttendanceResultMap">
         SELECT attendance.id      as attendanceId,
                ppt_name,
                report_name,
@@ -142,4 +142,33 @@
         set ppt_name = #{fileName}
         where id = #{attendanceId}
     </update>
+
+    <select id="getStudentAttendanceInKlassSeminar" resultMap="AttendanceResultMap">
+        SELECT attendance.id      as attendanceId,
+               ppt_name,
+               report_name,
+               attendance.team_id as teamId,
+               klass_seminar_id   as klassSeminarId
+        FROM attendance,
+             team_student
+        WHERE team_student.student_id = #{studentId}
+          AND team_student.team_id = attendance.team_id
+          and attendance.klass_seminar_id = #{klassSeminarId}
+    </select>
+
+    <select id="getTeamAttendancesInRound" resultMap="AttendanceResultMap">
+        SELECT attendance.id      as attendanceId,
+               ppt_name,
+               report_name,
+               attendance.team_id as teamId,
+               klass_seminar_id   as klassSeminarId
+        FROM attendance,
+             team_student,
+             seminar,
+             klass_seminar
+        WHERE attendance.team_id = #{teamId}
+          and seminar.round_id = #{roundId}
+          and klass_seminar.seminar_id = seminar.id
+          and attendance.klass_seminar_id = klass_seminar.id
+    </select>
 </mapper>

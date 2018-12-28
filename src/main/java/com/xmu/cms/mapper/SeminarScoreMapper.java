@@ -67,5 +67,5 @@ public interface SeminarScoreMapper {
      * @param seminarId 讨论课id
      * @return 讨论课成绩列表
      */
-    List<SeminarScore> getSeminarScoreInSeminar(BigInteger seminarId);// TODO: 2018/12/29
+    List<SeminarScore> getSeminarScoreInSeminar(@Param("seminarId") BigInteger seminarId);
 }

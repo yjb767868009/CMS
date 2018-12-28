@@ -20,7 +20,7 @@ public interface KlassMapper {
      * @param klass 班级对象
      * @return 新建成功信息
      */
-    Integer insertKlass(@Param("klass") Klass klass);
+    BigInteger insertKlass(@Param("klass") Klass klass);
 
     /**
      * 删除班级

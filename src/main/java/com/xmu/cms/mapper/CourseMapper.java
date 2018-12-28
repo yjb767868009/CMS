@@ -35,7 +35,7 @@ public interface CourseMapper {
      * @param course 课程
      * @return 新建成功信息
      */
-    Integer createCourse(@Param("course") Course course);
+    BigInteger createCourse(@Param("course") Course course);
 
     /**
      * 删除课程

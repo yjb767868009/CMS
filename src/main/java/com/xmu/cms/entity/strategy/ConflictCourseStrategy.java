@@ -6,6 +6,7 @@ import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Team;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +34,7 @@ public class ConflictCourseStrategy implements Strategy {
         return strategyId;
     }
 
+    @Override
     public void setStrategyId(BigInteger strategyId) {
         this.strategyId = strategyId;
     }
@@ -58,6 +60,10 @@ public class ConflictCourseStrategy implements Strategy {
         List<Student> students = team.getMembers();
         Boolean hasCourseOne = false;
         Boolean hasCourseTwo = false;
+        if (students == null) {
+            students = new ArrayList<>();
+        }
+        students.add(team.getLeader());
         for (Student student : students) {
             List<Course> courses = student.getCourses();
             for (Course course : courses) {

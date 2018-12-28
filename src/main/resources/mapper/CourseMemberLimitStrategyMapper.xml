@@ -23,4 +23,12 @@
         where course_member_limit_strategy.id = #{strategyId}
           and course.id = course_member_limit_strategy.course_id
     </select>
+
+    <insert id="insertCourseMemberLimitStrategy" parameterType="com.xmu.cms.entity.strategy.CourseMemberLimitStrategy">
+        <selectKey keyProperty="strategyId" order="AFTER" resultType="java.math.BigInteger">
+            select last_insert_id()
+        </selectKey>
+        insert course_member_limit_strategy (course_id, min_member, max_member)
+        VALUES (#{strategy.course.courseId}, #{strategy.minMember}, #{strategy.maxMember})
+    </insert>
 </mapper>

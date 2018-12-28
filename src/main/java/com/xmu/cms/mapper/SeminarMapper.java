@@ -20,7 +20,7 @@ public interface SeminarMapper {
      * @param seminar 新建的讨论课
      * @return 新建讨论课信息
      */
-    Integer insertSeminar(@Param("seminar") Seminar seminar);
+    BigInteger insertSeminar(@Param("seminar") Seminar seminar);
 
     /**
      * 修改讨论课

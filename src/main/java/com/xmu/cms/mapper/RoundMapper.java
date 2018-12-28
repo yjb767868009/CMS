@@ -27,7 +27,7 @@ public interface RoundMapper {
      * @param round Round信息
      * @return 新建round成功信息
      */
-    Integer insertRound(@Param("round") Round round);
+    BigInteger insertRound(@Param("round") Round round);
 
 
     /**

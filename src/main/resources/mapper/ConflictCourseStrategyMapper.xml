@@ -4,49 +4,33 @@
 <mapper namespace="com.xmu.cms.mapper.ConflictCourseStrategyMapper">
     <resultMap id="ConflictCourseResultMap" type="com.xmu.cms.entity.strategy.ConflictCourseStrategy">
         <id property="strategyId" column="conflictCourseId" javaType="java.math.BigInteger"/>
-        <association property="courseOne" javaType="com.xmu.cms.entity.Course">
-            <id property="courseId" column="courseOneId"/>
-            <result property="courseName" column="courseOneName"/>
+        <association property="course" javaType="com.xmu.cms.entity.Course">
+            <id property="courseId" column="courseId"/>
+            <result property="courseName" column="courseName"/>
             <association property="teacher" javaType="com.xmu.cms.entity.Teacher">
-                <id property="teacherId" column="teacherOneId"/>
-                <result property="teacherName" column="TeacherOneName"/>
-            </association>
-        </association>
-        <association property="courseTwo" javaType="com.xmu.cms.entity.Course">
-            <id property="courseId" column="courseTwoId"/>
-            <result property="courseName" column="courseTwoName"/>
-            <association property="teacher" javaType="com.xmu.cms.entity.Teacher">
-                <id property="teacherId" column="teacherTwoId"/>
-                <result property="teacherName" column="TeacherTwoName"/>
+                <id property="teacherId" column="teacherId"/>
+                <result property="name" column="TeacherName"/>
             </association>
         </association>
     </resultMap>
 
     <select id="getConflictCourseStrategyById" resultMap="ConflictCourseResultMap">
         select conflict_course_strategy.id as conflictCourseId,
-               course1.id as courseOneId,
-               course1.course_name as courseOneName,
-               course1.teacher_id  as teacherOneId,
-               teacher1.teacher_name as teacherOneName,
-               course2.id as courseTwoId,
-               course2.course_name as courseTwoName,
-               course2.teacher_id  as teacherTwoId,
-               teacher2.teacher_name as teacherTwoName
+               course.id as courseOneId,
+               course.course_name as courseOneName,
+               course.teacher_id  as teacherOneId,
+               teacher.teacher_name as teacherOneName
         from conflict_course_strategy,
-             course course1,
-             course course2,
-             teacher teacher1,
-             teacher teacher2
+             course,
+             teacher
         where conflict_course_strategy.id = #{conflictCourseId}
-          and course1.id = course_1_id
-          and course2.id = course_2_id
-          and teacher1.id = course1.teacher_id
-          and teacher2.id = course2.teacher_id
+          and course.id = course_id
+          and teacher.id = course.teacher_id
     </select>
 
-    <insert id="newConflictCourse">
-        insert conflict_course_strategy (course_1_id, course_2_id)
-        values (#{courseOneId}, #{courseTwoId})
+    <insert id="newConflictCourse" parameterType="com.xmu.cms.entity.strategy.ConflictCourseStrategy">
+        insert conflict_course_strategy (id, course_id)
+        values (#{strategy.strategyId}, #{strategy.course.courseId})
     </insert>
 
     <delete id="deleteConflictCourse">
@@ -54,4 +38,9 @@
         from conflict_course_strategy
         where id = #{conflictCourseId}
     </delete>
+
+    <select id="getMaxId">
+        select max(id)
+        from conflict_course_strategy
+    </select>
 </mapper>

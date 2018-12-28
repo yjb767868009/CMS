@@ -96,7 +96,7 @@ public interface AttendanceMapper {
      *
      * @param attendance 新的展示
      */
-    void insertAttendance(@Param("attendance") Attendance attendance);
+    BigInteger insertAttendance(@Param("attendance") Attendance attendance);
 
     /**
      * 获取学生在班级讨论课下的展示

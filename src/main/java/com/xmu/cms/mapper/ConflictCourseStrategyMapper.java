@@ -19,4 +19,11 @@ public interface ConflictCourseStrategyMapper {
      * @return 冲突课程规则
      */
     ConflictCourseStrategy getConflictCourseStrategyById(@Param("conflictCourseId") BigInteger strategyId);
+
+    /**
+     * 新建冲突课程规则
+     *
+     * @param strategy 规则
+     */
+    void insertConflictCourseStrategy(@Param("strategy") ConflictCourseStrategy strategy);
 }

@@ -11,6 +11,7 @@ export default new vuex.Store({
         currentCourse:'',
         Myteam:'',
         newMembers:'',
+        currentSeminar:'',
     },
     mutations:{
         

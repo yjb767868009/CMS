@@ -55,12 +55,7 @@ import {XHeader,
         }
     },
     methods:{
-        toast:function(){
-            Toast(this.name)
-        },
-        onClick:function(){
-            console.log("sss");
-        },
+        
         Undo(){
             this.$router.push('/mobile/teacher/notify')
         },

@@ -20,7 +20,10 @@ export default new Vuex.Store({
         currentCourse:'',
         showContent:'',
         currentSeminar:'',
-        currentClass:''
+        currentClass:'',
+        reportDDL:'',
+        seminarSignEndTime:'',
+        
     },
     mutations:{
         

@@ -22,7 +22,7 @@
         <cell-box
           v-for="seminar in round.seminars"
           :key="seminar.seminarId"
-          @click.native="click(seminar)"
+          @click.native="click(round,seminar)"
           is-link
         >{{seminar.topic}}</cell-box>
       </template>
@@ -120,38 +120,39 @@ export default {
     }
   },
   methods: {
-    click: function(seminar) {
-      this.$store.state.student.currentSeminar = seminar;
+    click: function(round,seminar) {
+      this.$store.state.student.currentRound=round
+      this.$store.state.student.currentSeminar = seminar
       this.$axios
         .get(
-          "/seminar/" + seminar.seminarId + "/class/" + seminar.class.classId
+          "/seminar/" + seminar.seminarId + "/class/" + seminar.klassSeminars[0].klass.klassId
         )
         .then(response => {
-          this.$stoer.state.currentClass=response.data
-          this.$store.state.reportDDL=response.data.klassSeminar.reportDDL
-          this.$store.state.seminarSignEndTime=moment(response.data.seminar.signEndTime)
+          this.$store.state.student.currentClass=response.data
+          this.$store.state.student.reportDDL=response.data.klassSeminar.reportDDL
+          this.$store.state.student.seminarSignEndTime=moment(response.data.seminar.signEndTime)
           
-          if(response.data.status===0&&response.data.attendance===null){
+          if(response.data.klassSeminar.status===0&&response.data.attendance===null){
             //未开未报
             this.$router.push({name:'SeminarRegistration'})
           }
-          else if(response.data.status===1&&response.data.attendance===null){
+          else if(response.data.klassSeminar.status===1&&response.data.attendance===null){
             //正在未报
             this.$router.push({name:'SeminarDetail'})
           }
-          else if(response.data.status===2&&response.data.attendance===null){
+          else if(response.data.klassSeminar.status===2&&response.data.attendance===null){
             //已完未报
             this.$router.push({name:'SeminarSeqFinished'})
           }
-          else if(response.data.status===0&&response.data.attendance!==null){
+          else if(response.data.klassSeminar.status===0&&response.data.attendance!==null){
             //未开始已报
             this.$router.push({name:'SeminarUnstartSigned'})
           }
-          else if(response.data.status===1&&response.data.attendance!==null){
+          else if(response.data.klassSeminar.status===1&&response.data.attendance!==null){
             //正在已报
             this.$router.push({name:'SeminarRunningSigned'})
           }
-          else if(response.data.status===2&&response.data.attendance!==null){
+          else if(response.data.klassSeminar.status===2&&response.data.attendance!==null){
             //已完已报 -》分成有没有截止的
             this.$router.push({name:'SeminarSigned'})
           }

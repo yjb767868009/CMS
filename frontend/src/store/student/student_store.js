@@ -12,6 +12,10 @@ export default new vuex.Store({
         Myteam:'',
         newMembers:'',
         currentSeminar:'',
+        currentClass:'',
+        currentRound:'',
+        reportDDL:'',
+        seminarSignEndTime:''
     },
     mutations:{
         

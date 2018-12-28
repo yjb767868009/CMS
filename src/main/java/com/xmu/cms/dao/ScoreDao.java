@@ -18,7 +18,7 @@ import java.util.List;
  * @version 1.0
  */
 @Component
-public class RoundScoreDao {
+public class ScoreDao {
 
     @Autowired
     private RoundScoreMapper roundScoreMapper;
@@ -87,4 +87,27 @@ public class RoundScoreDao {
         roundScoreMapper.updateRoundScore(roundScore);
     }
 
+    public List<SeminarScore> getTeamSeminarScoreInRound(BigInteger teamId, BigInteger roundId) {
+        return seminarScoreMapper.getTeamSeminarScoreInRound(teamId, roundId);
+    }
+
+    public void modifyTeamSeminarScore(SeminarScore seminarScore) {
+        seminarScoreMapper.modifyTeamSeminarScore(seminarScore);
+    }
+
+    public void updateReportScore(SeminarScore seminarScore) {
+        seminarScoreMapper.updateReportScore(seminarScore);
+    }
+
+    public void updatePresentationScore(SeminarScore seminarScore) {
+        seminarScoreMapper.updatePresentationScore(seminarScore);
+    }
+
+    public SeminarScore getSeminarTeamScore(BigInteger seminarId, BigInteger teamId) {
+        return seminarScoreMapper.getSeminarTeamScore(seminarId, teamId);
+    }
+
+    public List<SeminarScore> getSeminarScoreInSeminar(BigInteger seminarId) {
+        return seminarScoreMapper.getSeminarScoreInSeminar(seminarId);
+    }
 }

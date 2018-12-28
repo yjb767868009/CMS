@@ -4,10 +4,12 @@ import com.xmu.cms.entity.Question;
 import com.xmu.cms.service.SeminarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,13 +20,6 @@ import java.util.Map;
 public class QuestionController {
     @Autowired
     private SeminarService seminarService;
-
-
-    @Secured({"ROLE_STUDENT", "ROLE_TEACHER"})
-    @GetMapping(value = "/klassSeminar/{klassSeminarId}/question")
-    public List<Question> getQuestionInKlassSeminar(@PathVariable("klassSeminarId") BigInteger klassSeminarId) {
-        return seminarService.getQuestionInKlassSeminar(klassSeminarId);
-    }
 
     @Secured("ROLE_TEACHER")
     @PutMapping(value = "/question/{questionId}")

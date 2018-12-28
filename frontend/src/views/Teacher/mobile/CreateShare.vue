@@ -21,7 +21,9 @@
     </group>
             <template v-if="showContent002">
                 <template v-for="ob in Objects">
+                <template v-if="ob.courseId!=mycourseId">
                 <cell-box :key="ob.courseId" :border-intent="false" class="sub-item" style="padding-left:130px" @click.native="makeob(ob)">{{ob.courseName}} ({{ob.teacher.name}})</cell-box>
+                </template>
                 </template>
             </template>
 
@@ -66,6 +68,7 @@ export default {
                 console.log(response.data)
                 this.Objects=response.data
             })
+            this.mycourseId=this.$store.state.teacher.currentCourse.courseId
     },
     methods: {
     changetype:function(string){
@@ -80,7 +83,7 @@ export default {
     },
     onConfirm () {
         if(this.type=='共享讨论课'){
-            this.$axios.post('/course/'+this.$store.state.teacher.currentCourse.courseId+'/seminarsharerequest',{masterCourse:this.$store.state.teacher.currentCourse.courseId,receiveCourse:this.followklassId,receiveTeacher:this.followteacherId,shareSeminar:''})
+            this.$axios.post('/course/'+this.$store.state.teacher.currentCourse.courseId+'/seminarsharerequest',{masterCourse:{courseId:this.$store.state.teacher.currentCourse.courseId},receiveCourse:{courseId:this.followklassId},receiveTeacher:{teacherId:this.followteacherId}})
             .then((response)=>{
                 console.log(response.data)
             })
@@ -129,7 +132,8 @@ export default {
             type1:'共享讨论课',
             type2:'共享组队',
             followklassId:'',
-            followteacherId:''
+            followteacherId:'',
+            mycourseId:'',
         }
     }
 }

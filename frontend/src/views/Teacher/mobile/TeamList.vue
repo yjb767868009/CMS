@@ -1,36 +1,12 @@
 <template>
-  <div class="course" style="background:#eee">
+  <div style="background:#eee;height:1000px">
     <x-header title="学生组队" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}"
       @on-click-more="show=!show">
     </x-header>
-
-    
-    <group>
-      <cell title="1-1 hhhhhh" is-link :border-intent="false" :arrow-direction="showContent001 ? 'up' : 'down'"
-        @click.native="showContent001 = !showContent001"></cell>
-
-      <template v-if="showContent001">
-        <cell-box :border-intent="false" class="sub-item">组长： 111111111 王二</cell-box>
-        <cell-box class="sub-item">组员：111111111 ---</cell-box>
-        <cell-box class="sub-item">111111111 ---</cell-box>
-        <cell-box class="sub-item">111111111 ---</cell-box>
-        <cell-box class="sub-item">111111111 ---</cell-box>
-        <cell-box class="sub-item">111111111 ---</cell-box>
-      </template>
-
-      <cell title="1-2 aaaaa" is-link :border-intent="false" :arrow-direction="showContent002 ? 'up' : 'down'"
-        @click.native="showContent002 = !showContent002"></cell>
-
-      <template v-if="showContent002">
-        <cell-box :border-intent="false" class="sub-item">111111111 王二</cell-box>
-        <cell-box class="sub-item">111111111 ---</cell-box>
-        <cell-box class="sub-item">111111111 ---</cell-box>
-        <cell-box class="sub-item">111111111 ---</cell-box>
-        <cell-box class="sub-item">111111111 ---</cell-box>
-        <cell-box class="sub-item"> 111111111 ---</cell-box>
-      </template>
-
-    </group>
+  
+    <template v-for="t in allteam">
+      {{t.teamName+' & '}}
+    </template>
     <div v-transfer-dom>
       <popup v-model="show" height="23%">
         <div>
@@ -76,15 +52,16 @@
       return {
         show: false,
         showContent001: false,
-        showContent002: false
+        showContent002: false,
+        allteam:'',
       }
     },
-    // mounted:function(){
-    //     this.$axios.get('/course/'+this.$store.state.teacher.currentCourse.courseId+'/team')
-    //     .then((response)=>{
-
-    //     })
-    // },
+    mounted:function(){
+        this.$axios.get('/course/'+this.$store.state.teacher.currentCourse.courseId+'/team')
+        .then((response)=>{
+            this.allteam=response.data.teams
+        })
+    },
     methods: {
       Undo() {
         this.$router.push('/mobile/teacher/notify')
@@ -107,7 +84,6 @@
 
   .slide {
     padding: 0 20px;
-    overflow: hidden;
     max-height: 0;
     transition: max-height .5s cubic-bezier(0, 1, 0, 1) -.1s;
   }

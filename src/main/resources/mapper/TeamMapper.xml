@@ -27,7 +27,7 @@
         SELECT team.id              as teamId,
                team_name            as teamName,
                team.status          as status,
-               klass.id             as klassId,
+               team.klass_id             as klassId,
                leader_id            as leaderId,
                student.account      as leaderAccount,
                student.student_name as leaderName,
@@ -37,14 +37,12 @@
                team.klass_serial    as klassSerial
         FROM team,
              attendance,
-             klass,
              student,
              course,
              klass_seminar
         WHERE klass_seminar.seminar_id = #{seminarId}
           and klass_seminar.id = attendance.klass_seminar_id
           and team.id = attendance.team_id
-          and team.klass_id = klass.id
           and team.leader_id = student.id
           and team.course_id = course.id
     </select>
@@ -53,7 +51,7 @@
         SELECT team.id              as teamId,
                team_name            as teamName,
                team.status,
-               klass.id             as klassId,
+               klass_id             as klassId,
                leader_id            as leaderId,
                student.account      as leaderAccount,
                student.student_name as leaderName,
@@ -63,12 +61,10 @@
                team.klass_serial    as klassSerial
         FROM team,
              attendance,
-             klass,
              student,
              course
         WHERE team.id = attendance.team_id
           AND attendance.klass_seminar_id = #{klassSeminarId}
-          and team.klass_id = klass.id
           and team.leader_id = student.id
           and team.course_id = course.id
     </select>
@@ -77,7 +73,7 @@
         select team.id              as teamId,
                team_name            as teamName,
                team.status,
-               klass.id             as klassId,
+               klass_id             as klassId,
                leader_id            as leaderId,
                student.account      as leaderAccount,
                student.student_name as leaderName,
@@ -86,11 +82,9 @@
                team_serial          as teamSerial,
                team.klass_serial    as klassSerial
         from team,
-             klass,
              student,
              course
         where team.id = #{teamId}
-          and team.klass_id = klass.id
           and team.leader_id = student.id
           and team.course_id = course.id
     </select>
@@ -99,24 +93,20 @@
         select team.id              as teamId,
                team_name            as teamName,
                team.status,
-               klass.id             as klassId,
+               team.klass_id             as klassId,
                leader_id            as leaderId,
                student.account      as leaderAccount,
                student.student_name as leaderName,
                team_serial          as teamSerial,
                team.klass_serial    as klassSerial
         from team,
-             klass,
              student,
-             klass_team,
              team_student,
-             klass_seminar
-        where klass_seminar.id = #{klassSeminarId}
-          and klass_seminar.klass_id = klass_team.klass_id
-          and klass_team.team_id = team_student.team_id
+             attendance
+        where attendance.klass_seminar_id = #{klassSeminarId}
           and team_student.student_id = #{studentId}
+          and team_student.team_id = attendance.team_id
           and team.id = team_student.team_id
-          and team.klass_id = klass.id
           and team.leader_id = student.id
     </select>
 
@@ -124,7 +114,7 @@
         select team.id              as teamId,
                team_name            as teamName,
                team.status,
-               klass.id             as klassId,
+               klass_id             as klassId,
                leader_id            as leaderId,
                student.account      as leaderAccount,
                student.student_name as leaderName,
@@ -133,11 +123,9 @@
                team_serial          as teamSerial,
                team.klass_serial    as klassSerial
         from team,
-             klass,
              student,
              course
         where team.course_id = #{courseId}
-          and team.klass_id = klass.id
           and team.leader_id = student.id
           and team.course_id = course.id
     </select>
@@ -146,7 +134,7 @@
         select team.id              as teamId,
                team_name            as teamName,
                team.status,
-               klass.id             as klassId,
+               team.klass_id             as klassId,
                leader_id            as leaderId,
                student.account      as leaderAccount,
                student.student_name as leaderName,
@@ -155,24 +143,23 @@
                team_serial          as teamSerial,
                team.klass_serial    as klassSerial
         from team,
-             klass,
              student,
              course,
              klass_student,
-             team_student,
-             klass_team
+             team_student
         where klass_student.student_id = #{studentId}
           and klass_student.course_id = #{courseId}
           and team_student.student_id = #{studentId}
-          and klass_team.team_id = team_student.team_id
-          and klass_team.klass_id = klass_student.klass_id
-          and team.id = klass_team.team_id
-          and team.klass_id = klass.id
+          and team.klass_id = klass_student.klass_id
+          and team_student.team_id = team.id
           and team.leader_id = student.id
           and team.course_id = course.id
     </select>
 
-    <insert id="insertTeam">
+    <insert id="insertTeam" parameterType="com.xmu.cms.entity.Team">
+        <selectKey keyProperty="teamId" order="AFTER" resultType="java.math.BigInteger">
+            select last_insert_id()
+        </selectKey>
         insert team (klass_id, course_id, leader_id, team_name, team_serial, klass_serial, status)
         values (#{team.klass.klassId},
                 #{team.course.courseId},
@@ -216,19 +203,17 @@
         select team.id            as teamId,
                team_name          as teamName,
                team.status,
-               klass.id           as klassId,
+               klass_id           as klassId,
                course.id          as courseId,
                course.course_name as courseName,
                team_serial        as teamSerial,
                team.klass_serial  as klassSerial
         from team,
-             klass,
              team_student,
              course
         where team.klass_id = #{klassId}
           and team_student.student_id = #{studentId}
           and team.id = team_student.team_id
-          and team.klass_id = klass.id
           and team.course_id = course.id
     </select>
 
@@ -278,29 +263,26 @@
         SELECT team.id           as teamId,
                team_name         as teamName,
                team.status       as status,
-               klass.id          as klassId,
+               klass_id          as klassId,
                leader_id         as leaderId,
                team_serial       as teamSerial,
                team.klass_serial as klassSerial
-        FROM team,
-             klass
+        FROM team
         WHERE team.klass_id = #{klassId}
           and team.team_serial in (select max(team_serial) from team where team.klass_id = #{klassId})
-          and team.klass_id = klass.id
     </select>
 
     <select id="getStudentTeamInRound" resultMap="TeamResultMap">
         select team.id              as teamId,
                team_name            as teamName,
                team.status,
-               klass.id             as klassId,
+               team.klass_id             as klassId,
                leader_id            as leaderId,
                student.account      as leaderAccount,
                student.student_name as leaderName,
                team_serial          as teamSerial,
                team.klass_serial    as klassSerial
         from team,
-             klass,
              student,
              team_student,
              klass_seminar,
@@ -312,7 +294,6 @@
           and attendance.klass_seminar_id = klass_seminar.id
           and team_student.team_id = attendance.team_id
           and team.id = team_student.team_id
-          and team.klass_id = klass.id
           and team.leader_id = student.id
     </select>
 
@@ -320,7 +301,7 @@
         select team.id              as teamId,
                team_name            as teamName,
                team.status,
-               klass.id             as klassId,
+               klass_id             as klassId,
                leader_id            as leaderId,
                student.account      as leaderAccount,
                student.student_name as leaderName,
@@ -329,12 +310,10 @@
                team_serial          as teamSerial,
                team.klass_serial    as klassSerial
         from team,
-             klass,
              student,
              course
         where team.team_serial = #{teamSerial}
           and team.klass_serial = #{klassSerial}
-          and team.klass_id = klass.id
           and team.leader_id = student.id
           and team.course_id = course.id
     </select>

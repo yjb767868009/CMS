@@ -2,6 +2,7 @@ package com.xmu.cms.entity.strategy;
 
 import com.xmu.cms.entity.Team;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -38,4 +39,11 @@ public interface Strategy {
      * @return 规则名
      */
     String getType();
+
+    /**
+     * 设置规则id
+     *
+     * @param strategyId 规则id
+     */
+    void setStrategyId(BigInteger strategyId);
 }

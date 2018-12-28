@@ -15,4 +15,12 @@
         from team_and_strategy
         where team_and_strategy.id = #{strategyId}
     </select>
+
+    <insert id="insertTeamAndStrategy" parameterType="com.xmu.cms.entity.strategy.TeamAndStrategy">
+        <selectKey keyProperty="strategyId" order="AFTER" resultType="java.math.BigInteger">
+            select last_insert_id()
+        </selectKey>
+        insert team_and_strategy (strategy_1_name, strategy_1_id, strategy_2_name, strategy_2_id)
+        VALUES (#{strategy.subStrategyOneName}, #{strategy.subStrategyOneId}, #{strategy.subStrategyTwoName}, #{strategy.subStrategyTwoId})
+    </insert>
 </mapper>

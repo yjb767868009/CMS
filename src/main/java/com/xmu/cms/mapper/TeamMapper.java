@@ -68,7 +68,7 @@ public interface TeamMapper {
      *
      * @param team 队伍信息
      */
-    void insertTeam(@Param("team") Team team);
+    BigInteger insertTeam(@Param("team") Team team);
 
     /**
      * 根据班级和队长获取队伍
@@ -149,5 +149,6 @@ public interface TeamMapper {
      * @param teamSerial 队伍序号
      * @return 队伍
      */
-    Team getTeamBySerial(Integer klassSerial, Integer teamSerial);// TODO: 2018/12/28
+    Team getTeamBySerial(@Param("klassSerial") Integer klassSerial,
+                         @Param("teamSerial") Integer teamSerial);
 }

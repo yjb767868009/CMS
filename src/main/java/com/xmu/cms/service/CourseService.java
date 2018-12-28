@@ -191,8 +191,8 @@ public class CourseService {
         return strategyDao.getCourseStrategy(courseId);
     }
 
-    public void newCourseStrategy(List<Strategy> strategies) {
-
+    public void newCourseStrategy(BigInteger courseId, List<Strategy> strategies) throws Exception {
+        strategyDao.newStrategy(courseId, strategies);
     }
 
     public Team getStudentTeamInCourse(BigInteger studentId, BigInteger courseId) {

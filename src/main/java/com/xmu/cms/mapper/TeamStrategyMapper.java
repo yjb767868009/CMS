@@ -19,4 +19,12 @@ public interface TeamStrategyMapper {
      * @return 规则
      */
     TeamStrategy getCourseStrategy(@Param("courseId") BigInteger courseId);
+
+    /**
+     * 新建队伍总规则
+     *
+     * @param teamStrategy 队伍规则
+     * @return 新建的id
+     */
+    BigInteger insertTeamStrategy(@Param("strategy") TeamStrategy teamStrategy);
 }

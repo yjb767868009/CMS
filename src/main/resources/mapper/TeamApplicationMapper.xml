@@ -58,6 +58,9 @@
     </select>
 
     <insert id="insertTeamApplication" parameterType="com.xmu.cms.entity.TeamApplication">
+        <selectKey keyProperty="teamApplicationId" order="AFTER" resultType="java.math.BigInteger">
+            select last_insert_id()
+        </selectKey>
         insert team_valid_application (team_id, teacher_id, reason, status)
         values (#{teamApplication.team.teamId}, #{teamApplication.teacher.teacherId}, #{teamApplication.reason}, #{teamApplication.status})
     </insert>

@@ -19,4 +19,12 @@ public interface MemberLimitStrategyMapper {
      * @return 队伍成员数量限制规则
      */
     MemberLimitStrategy getMemberLimitStrategyById(@Param("strategyId") BigInteger strategyId);
+
+    /**
+     * 新建成员限制规则
+     *
+     * @param strategy 规则
+     * @return 新规则id
+     */
+    BigInteger insertMemberLimitStrategy(@Param("strategy") MemberLimitStrategy strategy);
 }

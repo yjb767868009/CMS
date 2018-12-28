@@ -37,6 +37,9 @@
     </select>
 
     <insert id="insertAttendance" parameterType="com.xmu.cms.entity.Attendance">
+        <selectKey keyProperty="attendanceId" order="AFTER" resultType="java.math.BigInteger">
+            select last_insert_id()
+        </selectKey>
         insert attendance (klass_seminar_id,
                            team_id,
                            team_order,

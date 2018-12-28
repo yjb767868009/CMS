@@ -15,4 +15,12 @@
         from member_limit_strategy
         where member_limit_strategy.id = #{strategyId}
     </select>
+
+    <insert id="insertMemberLimitStrategy" parameterType="com.xmu.cms.entity.strategy.MemberLimitStrategy">
+        <selectKey keyProperty="strategyId" order="AFTER" resultType="java.math.BigInteger">
+            select last_insert_id()
+        </selectKey>
+        insert member_limit_strategy (min_member, max_member)
+        values (#{strategy.minMember}, #{strategy.maxMember})
+    </insert>
 </mapper>

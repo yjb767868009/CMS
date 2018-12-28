@@ -20,4 +20,12 @@ public interface TeamOrStrategyMapper {
      * @return 队伍或规则id
      */
     TeamOrStrategy getTeamOrStrategyById(@Param("strategyId") BigInteger strategyId);
+
+    /**
+     * 新建队伍或规则
+     *
+     * @param teamOrStrategy 队伍或规则
+     * @return 规则id
+     */
+    BigInteger insertTeamOrStrategy(@Param("strategy") TeamOrStrategy teamOrStrategy);
 }

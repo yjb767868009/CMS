@@ -21,4 +21,11 @@ public interface TeamAndStrategyMapper {
      */
     TeamAndStrategy getTeamAndStrategyById(@Param("strategyId") BigInteger strategyId);
 
+    /**
+     * 新建队伍与规则
+     *
+     * @param strategy 规则
+     * @return 新的规则id
+     */
+    BigInteger insertTeamAndStrategy(@Param("strategy") TeamAndStrategy strategy);
 }

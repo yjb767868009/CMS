@@ -35,7 +35,9 @@ public class TeamController {
 
     @Secured("ROLE_STUDENT")
     @PostMapping(value = "/course/{courseId}/class/{classId}/team")
-    public Team newTeam(UserInfo userInfo, @PathVariable("courseId") BigInteger courseId, @PathVariable("classId") BigInteger classId, @RequestBody Team team) {
+    public Team newTeam(UserInfo userInfo, @PathVariable("courseId") BigInteger courseId,
+                        @PathVariable("classId") BigInteger classId,
+                        @RequestBody Team team) {
         return teamService.newTeam(courseId, classId, userInfo.getUserId(), team);
     }
 

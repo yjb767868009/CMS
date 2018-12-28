@@ -331,7 +331,7 @@ public class SeminarService {
         return score;
     }
 
-    public Map<String, Object> getTeamRoundScoreAndSeminarScore(BigInteger teamId, BigInteger courseId, BigInteger roundId) {
+    public Map<String, Object> getTeamRoundScoreAndSeminarScore(BigInteger teamId, BigInteger roundId) {
         RoundScore roundScore = roundScoreDao.getRoundTeamScore(roundId, teamId);
         List<SeminarScore> seminarScores = seminarScoreDao.getTeamSeminarScoreInRound(teamId, roundId);
         Map<String, Object> score = new HashMap<>();

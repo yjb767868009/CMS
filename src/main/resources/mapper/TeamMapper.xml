@@ -165,8 +165,8 @@
     </select>
 
     <insert id="insertTeam">
-        insert team (klass_id, course_id, leader_id, team_name, team_serial, status)
-        values (#{klassId}, #{courseId}, #{studentId}, #{team.teamName}, #{team.teamSerial}, #{team.status})
+        insert team (klass_id, course_id, leader_id, team_name, status)
+        values (#{klassId}, #{courseId}, #{studentId}, #{team.teamName}, 0)
     </insert>
 
     <update id="updateTeamValid" parameterType="com.xmu.cms.entity.Team">

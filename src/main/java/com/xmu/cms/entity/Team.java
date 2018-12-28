@@ -16,15 +16,19 @@ public class Team {
     private List<Student> members;
     private Course course;
     private Klass klass;
+    private Integer klassSerial;
+    private Integer teamSerial;
     private String teamName;
     private Boolean valid;
 
-    public Team(BigInteger teamId, Student leader, List<Student> members, Course course, Klass klass, String teamName, Boolean valid) {
+    public Team(BigInteger teamId, Student leader, List<Student> members, Course course, Klass klass, Integer klassSerial, Integer teamSerial, String teamName, Boolean valid) {
         this.teamId = teamId;
         this.leader = leader;
         this.members = members;
         this.course = course;
         this.klass = klass;
+        this.klassSerial = klassSerial;
+        this.teamSerial = teamSerial;
         this.teamName = teamName;
         this.valid = valid;
     }
@@ -90,5 +94,21 @@ public class Team {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Integer getKlassSerial() {
+        return klassSerial;
+    }
+
+    public void setKlassSerial(Integer klassSerial) {
+        this.klassSerial = klassSerial;
+    }
+
+    public Integer getTeamSerial() {
+        return teamSerial;
+    }
+
+    public void setTeamSerial(Integer teamSerial) {
+        this.teamSerial = teamSerial;
     }
 }

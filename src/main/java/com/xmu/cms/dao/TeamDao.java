@@ -53,6 +53,7 @@ public class TeamDao {
     }
 
     public Team newTeam(BigInteger courseId, BigInteger klassId, BigInteger studentId, Team newTeam) {
+        Team BigTeam  =teamMapper.getLastTeamInKlass(klassId);
         teamMapper.insertTeam(klassId, courseId, studentId, newTeam);
         Team team = teamMapper.getTeamByKlass(klassId, studentId);
         List<Student> students = newTeam.getMembers();
@@ -60,7 +61,7 @@ public class TeamDao {
         for (Student student : students) {
             klassMapper.addMembers(klassId, student.getStudentId(), team.getTeamId());
         }
-        return team;
+        return getFullTeam(team.getTeamId());
     }
 
     public Team getTeamByTeamId(BigInteger teamId) {

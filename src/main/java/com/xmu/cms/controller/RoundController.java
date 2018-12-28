@@ -51,6 +51,13 @@ public class RoundController {
         return message;
     }
 
+    @Secured("ROLE_TEACHER")
+    @GetMapping(value = "/round/{roundId}/team/{teamId}/score")
+    public Map<String, Object> getTeamScoreInCourse(@PathVariable("roundId") BigInteger roundId,
+                                                    @PathVariable("teamId") BigInteger teamId) {
+        return seminarService.getTeamRoundScoreAndSeminarScore(teamId, roundId);
+    }
+
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/round/{roundId}/roundscore")
     public List<RoundScore> getRoundScore(@PathVariable("roundId") BigInteger roundId) {

@@ -61,8 +61,8 @@ public class RoundController {
 
     @Secured("ROLE_STUDENT")
     @GetMapping(value = "/round/{roundId}/score")
-    public Map<String, Object> getMyScoreInRound(UserInfo info, @PathVariable("roundId") BigInteger roundId) {
-        return seminarService.getMyScoreInRound(info.getUserId(), roundId);
+    public Map<String, Object> getStudentRoundScoreAndSeminarScore(UserInfo info, @PathVariable("roundId") BigInteger roundId) {
+        return seminarService.getStudentRoundScoreAndSeminarScore(info.getUserId(), roundId);
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})

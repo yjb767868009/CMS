@@ -9,6 +9,13 @@ import java.util.List;
  * @version 1.0
  */
 public interface Strategy {
+    static String TEAM_OR_STRATEGY_TYPE = "TeamOrStrategy";
+    static String TEAM_AND_STRATEGY_TYPE = "TeamAndStrategy";
+    static String CONFLICT_COURSE_STRATEGY = "ConflictCourseStrategy";
+    static String COURSE_MEMBER_LIMIT_STRATEGY = "CourseMemberLimitStrategy";
+    static String MEMBER_LIMIT_STRATEGY = "MemberLimitStrategy";
+    static String TEAM_STRATEGY = "TeamStrategy";
+
     /**
      * 检查队伍合法性
      *
@@ -24,4 +31,11 @@ public interface Strategy {
      * @return 规则列表
      */
     List<Strategy> getStrategy(List<Strategy> strategies);
+
+    /**
+     * 获取规则名
+     *
+     * @return 规则名
+     */
+    String getType();
 }

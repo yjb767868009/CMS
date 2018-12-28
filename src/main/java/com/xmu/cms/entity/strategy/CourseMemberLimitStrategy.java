@@ -86,14 +86,14 @@ public class CourseMemberLimitStrategy implements Strategy {
 
     @Override
     public List<Strategy> getStrategy(List<Strategy> strategies) {
-        String strategyClass = this.getClass().getName();
-        type = strategyClass.substring(strategyClass.lastIndexOf(".") + 1);
+        type = COURSE_MEMBER_LIMIT_STRATEGY;
         strategies.add(this);
         return strategies;
     }
 
+    @Override
     public String getType() {
-        return type;
+        return COURSE_MEMBER_LIMIT_STRATEGY;
     }
 
     public void setType(String type) {

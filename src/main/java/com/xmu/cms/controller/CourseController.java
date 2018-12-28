@@ -238,7 +238,7 @@ public class CourseController {
     public Map<String, Object> getStudentScoreInCourse(UserInfo info,
                                                        @PathVariable("courseId") BigInteger courseId,
                                                        @PathVariable("roundId") BigInteger roundId) {
-        return seminarService.getStudentRoundScoreAndSeminarScore(info.getUserId(), courseId, roundId);
+        return seminarService.getStudentRoundScoreAndSeminarScore(info.getUserId(), roundId);
     }
 
 

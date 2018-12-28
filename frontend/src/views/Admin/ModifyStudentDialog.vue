@@ -32,7 +32,7 @@ export default {
     },
     methods:{
         postModifyStudent:function(){
-          this.$axios.put('/student/'+this.$store.state.admin.currentStudent.studentId+'/information',{
+          this.$axios.put('/admin/student/'+this.$store.state.admin.currentStudent.studentId+'/information',{
             name:this.modifyStudentForm.name,
             account:this.modifyStudentForm.account,
             email:this.modifyStudentForm.email,

@@ -1,17 +1,17 @@
 <template>
 <div class="student" style="background:#eee;">
 
-    <template v-if="!modifyingPassword&&!modifyingEmail">
-    <x-header title="账户与设置" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
+    <!-- <template v-if="!modifyingPassword&&!modifyingEmail"> -->
+    <x-header title="账户与设置" style="height:60px;padding-top:12px" :left-options="{showBack:false}">
     </x-header>
     <x-header style="background:#fff;margin:20px 0px 0px;height:60px;padding-top:12px" :left-options="{showBack:false}">
-         <div slot="left" style="font-size:1.3em;color:#000;padding-top:6px;">姓名：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;www</div>
+         <div slot="left" style="font-size:1.3em;color:#000;padding-top:6px;">姓名：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{{this.$store.state.teacher.name}}</div>
     </x-header>
     <x-header style="background:#eee;height:60px;padding-top:12px" :left-options="{showBack:false}">
-         <div slot="left" style="font-size:1.3em;color:#000;padding-top:6px;">学号：&emsp;&emsp;&emsp;25120152202348</div>
+         <div slot="left" style="font-size:1.3em;color:#000;padding-top:6px;">学号：&emsp;&emsp;&emsp;{{this.$store.state.teacher.account}}</div>
     </x-header>
     <x-header style="background:#fff;height:85px;padding-top:12px" :left-options="{showBack:false}">
-         <div slot="left" style="font-size:1.3em;color:#000;padding-top:18px;">联系方式(邮箱)：&emsp;&emsp;135768543@qq.com</div>
+         <div slot="left" style="font-size:1.3em;color:#000;padding-top:18px;">联系方式(邮箱)：{{this.$store.state.email}}</div>
          <p slot="right" @click="modifyEmail" style="text-decoration:underline;color:#DC143C;font-size:1.1em;padding-top:30px">修改</p>
     </x-header>
     <cell is-link title="账户密码" @click.native="modifyPassword" style="font-size:1.1em;padding-left:18px"></cell>
@@ -19,12 +19,12 @@
          <div slot="left" style="font-size:1.3em;color:#000;padding-top:18px;">管理员邮箱：&emsp;&emsp;86738468@qq.com</div>
     </x-header>
 
-    <div style="margin-top:100%">
+    <div style="margin-top:40%">
     <x-button type="warn" @click.native="logOut">退出登陆</x-button>
     </div>
 
     <!-- 模态框 -->
-    <div v-transfer-dom>
+    <!-- <div v-transfer-dom>
       <popup v-model="show" height="23%">
         <div>
           <cell value-align="left" title=""><img slot="icon" src="@/assets/message.png" style="display:block;margin-right:10px;"
@@ -41,12 +41,12 @@
           </cell>
         </div>
       </popup>
-    </div>
-    </template>
+    </div> -->
+    <!-- </template> -->
 
-    <template v-if="modifyingPassword&&!modifyingEmail">
+    <!-- <template v-if="modifyingPassword&&!modifyingEmail"> -->
         <!-- 修改密码 -->
-    <x-header title="修改密码" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: false}">
+    <!-- <x-header title="修改密码" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: false}">
     </x-header>
     <group>
     <x-input title="旧密码" placeholder="原密码" type="password" v-model="oldPassword" placeholder-align="right" text-align="right"></x-input>
@@ -65,7 +65,7 @@
     <x-button type="primary" @click.native="postEmail">确认提交</x-button>
     </div>
     </group>
-    </template>
+    </template> -->
 
 </div>
 </template>
@@ -103,6 +103,8 @@ import {XHeader,
         modifyingPassword:false,
     }
     },
+    mounted:function(){
+    },
     methods:{
         Undo(){
             this.$router.push('/mobile/teacher/notify')
@@ -119,8 +121,7 @@ import {XHeader,
             this.$router.push('/')
         },
         modifyEmail(){
-            this.modifyingEmail=true
-            this.newEmail=''
+            this.$router.push('/mobile/modifyEmail')
         },
         postEmail(){
             console.log(
@@ -129,10 +130,7 @@ import {XHeader,
             this.modifyingEmail=false
         },
         modifyPassword(){
-            this.modifyingPassword=true
-            this.oldPassword=''
-            this.newPassword=''
-            this.newConfrimPassword=''
+            this.$router.push('/mobile/modifypw')
         },
         postPassword(){
             console.log(

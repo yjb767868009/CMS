@@ -1,20 +1,245 @@
 [{
-  "studentId": 162,
-  "account": "24320152202847",
-  "password": "123456",
-  "name": "俞剑桥",
-  "activation": false
+  "roundId": 3,
+  "order": 1,
+  "presentationScoreType": 0,
+  "reportScoreType": 0,
+  "questionScoreType": 0,
+  "seminars": [{
+    "seminarId": 10,
+    "round": {
+      "roundId": 3
+    },
+    "maxTeamNum": 6,
+    "topic": "用例分析",
+    "introduction": "题目为课堂管理系统的用例分析，包括分辨Actors、Use Cases划分和撰写用例。课后发言小组提交书面报告，书面报告应该是一份完整的用例设计。课后以作业方式提交设计报告，文件以组号命名，PDF格式",
+    "signStartTime": "2018-09-01T16:49:42.000+0000",
+    "signEndTime": "2018-09-27T05:00:00.000+0000",
+    "signOrder": 1,
+    "visible": true,
+    "klassSeminars": [{
+      "klassSeminarId": 21,
+      "klass": {
+        "klassId": 21,
+        "grade": 2016,
+        "klassSerial": 1,
+        "name": "2016-1"
+      },
+      "seminar": {
+        "seminarId": 10,
+        "topic": "用例分析"
+      },
+      "reportDDL": "2018-09-28T05:00:00.000+0000",
+      "status": 0
+    }]
+  }, {
+    "seminarId": 16,
+    "round": {
+      "roundId": 3
+    },
+    "maxTeamNum": 6,
+    "topic": "业务流程分析",
+    "introduction": "每个小组需要以讨论课1中的一个小组的用例设计为基础来设计业务流程。",
+    "signStartTime": "2018-09-01T05:35:29.000+0000",
+    "signEndTime": "2018-10-13T05:00:00.000+0000",
+    "signOrder": 2,
+    "visible": true,
+    "klassSeminars": [{
+      "klassSeminarId": 34,
+      "klass": {
+        "klassId": 21,
+        "grade": 2016,
+        "klassSerial": 1,
+        "name": "2016-1"
+      },
+      "seminar": {
+        "seminarId": 16,
+        "topic": "业务流程分析"
+      },
+      "reportDDL": "2018-10-13T05:00:00.000+0000",
+      "status": 0
+    }]
+  }]
 }, {
-  "studentId": 184,
-  "account": "24320162202880",
-  "password": "123456",
-  "name": "陆婧昭",
-  "activation": false
+  "roundId": 4,
+  "order": 2,
+  "presentationScoreType": 0,
+  "reportScoreType": 0,
+  "questionScoreType": 0,
+  "seminars": [{
+    "seminarId": 9,
+    "round": {
+      "roundId": 4
+    },
+    "maxTeamNum": 6,
+    "topic": "界面设计",
+    "introduction": "界面导航图和所有界面原型设计\r\n\r\n所有小组请课前提前准备，课堂讨论每个小组15分钟\r\n\r\n课后提交书面报告，书面报告应该是一份完整界面设计说明书。课后以作业方式提交设计报告，文件以组号命名， PDF格式",
+    "signStartTime": "2018-09-15T16:35:00.000+0000",
+    "signEndTime": "2018-10-11T16:35:16.000+0000",
+    "signOrder": 3,
+    "visible": true,
+    "klassSeminars": [{
+      "klassSeminarId": 26,
+      "klass": {
+        "klassId": 21,
+        "grade": 2016,
+        "klassSerial": 1,
+        "name": "2016-1"
+      },
+      "seminar": {
+        "seminarId": 9,
+        "topic": "界面设计"
+      },
+      "reportDDL": "2018-10-26T05:00:00.000+0000",
+      "status": 0
+    }]
+  }, {
+    "seminarId": 15,
+    "round": {
+      "roundId": 4
+    },
+    "maxTeamNum": 6,
+    "topic": "领域模型",
+    "introduction": "讨论课内容为领域模型分析，包括领域模型的Package Diagrams。所有小组请课前提前准备，课堂讨论每个小组15分钟。课后提交书面报告，书面报告应该是一份完整领域模型设计。课后以作业方式提交设计报告，文件以组号命名， PDF格式。",
+    "signStartTime": "2018-09-01T05:00:00.000+0000",
+    "signEndTime": "2018-11-02T05:00:00.000+0000",
+    "signOrder": 4,
+    "visible": true,
+    "klassSeminars": [{
+      "klassSeminarId": 31,
+      "klass": {
+        "klassId": 21,
+        "grade": 2016,
+        "klassSerial": 1,
+        "name": "2016-1"
+      },
+      "seminar": {
+        "seminarId": 15,
+        "topic": "领域模型"
+      },
+      "reportDDL": "2018-11-04T05:00:00.000+0000",
+      "status": 0
+    }]
+  }]
 }, {
-  "studentId": 193,
-  "account": "24320162202936",
-  "password": "123456",
-  "email": "222",
-  "name": "徐政强",
-  "activation": true
+  "roundId": 5,
+  "order": 3,
+  "presentationScoreType": 0,
+  "reportScoreType": 0,
+  "questionScoreType": 0,
+  "seminars": [{
+    "seminarId": 5,
+    "round": {
+      "roundId": 5
+    },
+    "maxTeamNum": 7,
+    "topic": "对象模型设计",
+    "introduction": "对象模型设计\r\n\r\n所有小组请课前提前准备，课堂讨论每个小组15分钟\r\n\r\n课后提交书面报告，书面报告应该是一份完整对象模型和关系模型的设计说明书。课后以作业方式提交设计报告，文件以组号命名， PDF格式",
+    "signStartTime": "2018-09-02T02:40:14.000+0000",
+    "signEndTime": "2018-11-16T18:00:00.000+0000",
+    "signOrder": 5,
+    "visible": true,
+    "klassSeminars": [{
+      "klassSeminarId": 9,
+      "klass": {
+        "klassId": 21,
+        "grade": 2016,
+        "klassSerial": 1,
+        "name": "2016-1"
+      },
+      "seminar": {
+        "seminarId": 5,
+        "topic": "对象模型设计"
+      },
+      "reportDDL": "2018-11-16T18:00:00.000+0000",
+      "status": 0
+    }]
+  }, {
+    "seminarId": 6,
+    "round": {
+      "roundId": 5
+    },
+    "maxTeamNum": 6,
+    "topic": "Controller层API设计",
+    "introduction": "Controller的api的详细设计\r\n\r\n所有小组请课前提前准备，课堂讨论每个小组15分钟\r\n\r\n课后提交书面报告，书面报告应该是一份完整API设计说明书。课后以作业方式提交设计报告，文件以组号命名， PDF格式，可以提交在线链接\r\n\r\n本次讨论课供报名竞选Controller层标准组的小组报名，每个小组只能竞选一个标准组名额。\r\n\r\n不想竞选的小组请报名第五次讨论课",
+    "signStartTime": "2018-09-02T02:41:36.000+0000",
+    "signEndTime": "2018-11-30T18:00:00.000+0000",
+    "signOrder": 6,
+    "visible": true,
+    "klassSeminars": [{
+      "klassSeminarId": 12,
+      "klass": {
+        "klassId": 21,
+        "grade": 2016,
+        "klassSerial": 1,
+        "name": "2016-1"
+      },
+      "seminar": {
+        "seminarId": 6,
+        "topic": "Controller层API设计"
+      },
+      "reportDDL": "2018-11-30T18:00:00.000+0000",
+      "status": 0
+    }]
+  }]
+}, {
+  "roundId": 6,
+  "order": 4,
+  "presentationScoreType": 0,
+  "reportScoreType": 0,
+  "questionScoreType": 0,
+  "seminars": [{
+    "seminarId": 7,
+    "round": {
+      "roundId": 6
+    },
+    "maxTeamNum": 6,
+    "topic": "讨论课七",
+    "introduction": "系统Controller层、Service层、DAO层和Entity的详细设计，包括Package的设计，类图，Sequence Diagram（能体现设计的部分），Deployment Diagram",
+    "signStartTime": "2018-09-01T13:58:35.000+0000",
+    "signEndTime": "2018-12-21T06:00:00.000+0000",
+    "signOrder": 7,
+    "visible": true,
+    "klassSeminars": [{
+      "klassSeminarId": 15,
+      "klass": {
+        "klassId": 21,
+        "grade": 2016,
+        "klassSerial": 1,
+        "name": "2016-1"
+      },
+      "seminar": {
+        "seminarId": 7,
+        "topic": "讨论课七"
+      },
+      "reportDDL": "2018-12-21T06:00:00.000+0000",
+      "status": 0
+    }]
+  }, {
+    "seminarId": 8,
+    "round": {
+      "roundId": 6
+    },
+    "maxTeamNum": 6,
+    "topic": "详细设计",
+    "introduction": "系统Controller层、Service层、DAO层和Entity的详细设计，包括Package的设计，类图，Sequence Diagram（能体现设计的部分），Deployment Diagram",
+    "signStartTime": "2018-09-01T13:58:35.000+0000",
+    "signEndTime": "2018-12-21T06:00:00.000+0000",
+    "signOrder": 8,
+    "visible": true,
+    "klassSeminars": [{
+      "klassSeminarId": 18,
+      "klass": {
+        "klassId": 21,
+        "grade": 2016,
+        "klassSerial": 1,
+        "name": "2016-1"
+      },
+      "seminar": {
+        "seminarId": 8,
+        "topic": "详细设计"
+      },
+      "reportDDL": "2018-12-21T06:00:00.000+0000",
+      "status": 0
+    }]
+  }]
 }]

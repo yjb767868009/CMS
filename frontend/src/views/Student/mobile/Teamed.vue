@@ -37,7 +37,7 @@
             </flexbox-item> -->
         </flexbox>
         <!-- invalid组申请 -->
-            <template v-if="teaminfo.team.valid===true">
+            <template v-if="teaminfo.team.valid===false">
                 <flexbox style="margin-top:30px">
                     <flexbox-item>
                         <x-button type="primary" @click.native="application=!application">提交申请</x-button>
@@ -66,28 +66,27 @@
         theme="android"
         @on-cancel="Return"
         @on-confirm="Broken">
-        <p style="text-align:center;">确定解散该组吗</p>
+        <p style="text-align:center;">确定解散该组吗？</p>
       </confirm>
         
         <confirm v-model="add"
-        title="请确认添加信息"
+        title="新添加组员："
         @on-cancel="onCancelnew"
         @on-confirm="onConfirm">
-        <p style="text-align:center;">添加组员：</p>
-        <template v-for="mem in this.newMembersname"><span :key="mem.id" style="padding-left:10px">{{mem.studentId}}</span></template>
+        <template v-for="mem in this.newMembersname"><span :key="mem.id" style="padding-right:10px">{{mem.studentId}}</span></template>
       </confirm>
         <confirm v-model="nomember"
         :show-cancel-button="false"
-        title="错误"
+        title="出错啦"
         @on-confirm="Return">
         <p style="text-align:center;">请选择组员</p>
      </confirm>
-      <confirm v-model="save"
+      <!-- <confirm v-model="save"
         :show-cancel-button="false"
         title="提示"
         @on-confirm="saving">
         <p style="text-align:center;">保存成功</p>
-      </confirm>
+      </confirm> -->
 
       <confirm v-model="Delete"
         title="提示"
@@ -182,11 +181,11 @@ import { notEqual } from 'assert';
         })
     },
     methods:{
-        //把当前确认的人保存在session中，待维护
-        saving:function(){
-            console.log('保存')
-            this.$store.state.student.newMembers=this.newMembers
-        },
+        //把当前确认的人保存在session中
+        // saving:function(){
+        //     console.log('保存')
+        //     this.$store.state.student.newMembers=this.newMembers
+        // },
         running:function(){
             this.$router.push('/mobile/Student/studentSeminarList')
         },
@@ -245,12 +244,12 @@ import { notEqual } from 'assert';
         },
         applic:function(value){
             if(value!=''){
-            // this.$axios.post('/team/'+this.teaminfo.team.teamId+'/teamvalidrequest',{
-            //     reason:value
-            // })
-            // .then((response)=>{
-            //     console.log(response.data)
-            // })
+            this.$axios.post('/team/'+this.teaminfo.team.teamId+'/teamvalidrequest',{
+                reason:value
+            })
+            .then((response)=>{
+                console.log(response.data)
+            })
             this.$message.success('申请发送成功')
             }else if(value===''){
                 this.$message.error('申请未发送!请填写申请原因')
@@ -269,7 +268,6 @@ import { notEqual } from 'assert';
         deleting:function(memberAC){
             this.Delete=!this.Delete
             this.memberWillBeDe=memberAC
-            console.log(memberAC)
         },
         getmyId:function(){
             for(var i=0;i<this.teaminfo.team.members.length;i++){

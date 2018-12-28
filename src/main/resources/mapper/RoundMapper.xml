@@ -39,7 +39,7 @@
     </select>
 
     <insert id="insertRound" parameterType="com.xmu.cms.entity.Round">
-        <selectKey keyProperty="roundId" order="AFTER" resultType="java.math.BigInteger">
+        <selectKey keyProperty="roundId" order="AFTER" resultType="java.lang.Integer">
             select last_insert_id()
         </selectKey>
         insert round (course_id, round_serial, presentation_score_method, report_score_method, question_score_method)

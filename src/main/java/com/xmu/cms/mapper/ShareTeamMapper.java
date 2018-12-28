@@ -43,7 +43,7 @@ public interface ShareTeamMapper {
      *
      * @param shareTeam 新的共享组队
      */
-    BigInteger insertShareTeam(@Param("shareTeam") ShareTeam shareTeam);
+    Integer insertShareTeam(@Param("shareTeam") ShareTeam shareTeam);
 
     /**
      * 根据发出共享的课程和收到共享的学生找到共享组队请求

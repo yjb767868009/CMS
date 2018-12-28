@@ -26,5 +26,5 @@ public interface MemberLimitStrategyMapper {
      * @param strategy 规则
      * @return 新规则id
      */
-    BigInteger insertMemberLimitStrategy(@Param("strategy") MemberLimitStrategy strategy);
+    Integer insertMemberLimitStrategy(@Param("strategy") MemberLimitStrategy strategy);
 }

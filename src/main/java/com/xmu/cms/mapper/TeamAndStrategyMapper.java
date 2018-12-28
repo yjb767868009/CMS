@@ -27,5 +27,5 @@ public interface TeamAndStrategyMapper {
      * @param strategy 规则
      * @return 新的规则id
      */
-    BigInteger insertTeamAndStrategy(@Param("strategy") TeamAndStrategy strategy);
+    Integer insertTeamAndStrategy(@Param("strategy") TeamAndStrategy strategy);
 }

@@ -43,7 +43,7 @@ public interface ShareSeminarMapper {
      *
      * @param shareSeminar 新增的共享讨论课
      */
-    BigInteger insertShareSeminar(@Param("shareSeminar") ShareSeminar shareSeminar);
+    Integer insertShareSeminar(@Param("shareSeminar") ShareSeminar shareSeminar);
 
     /**
      * 根据发出共享的课程和收到共享的课程找到共享讨论课请求

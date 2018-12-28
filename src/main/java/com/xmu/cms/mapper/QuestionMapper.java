@@ -42,7 +42,7 @@ public interface QuestionMapper {
      *
      * @param question 新的提问
      */
-    BigInteger insertQuestion(@Param("question") Question question);
+    Integer insertQuestion(@Param("question") Question question);
 
     /**
      * 将提问置为选取状态

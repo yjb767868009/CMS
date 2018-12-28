@@ -26,7 +26,7 @@ public interface TeacherMapper {
      * @param teacher new teacher
      * @return the num of new teacher
      */
-    BigInteger insertTeacher(@Param("teacher") Teacher teacher) throws Exception;
+    Integer insertTeacher(@Param("teacher") Teacher teacher) throws Exception;
 
     /**
      * delete teacher by his id

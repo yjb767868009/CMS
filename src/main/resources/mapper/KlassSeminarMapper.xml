@@ -131,7 +131,7 @@
     </select>
 
     <insert id="insertKlassSeminar">
-        <selectKey keyProperty="klassSeminarId" order="AFTER" resultType="java.math.BigInteger">
+        <selectKey keyProperty="klassSeminarId" order="AFTER" resultType="java.lang.Integer">
             select last_insert_id()
         </selectKey>
         insert klass_seminar (klass_id, seminar_id, report_ddl, status)

@@ -28,7 +28,7 @@ public interface StudentMapper {
      * @param student new student
      * @return if new student success
      */
-    BigInteger insertStudent(@Param("student") Student student);
+    Integer insertStudent(@Param("student") Student student);
 
     /**
      * update student

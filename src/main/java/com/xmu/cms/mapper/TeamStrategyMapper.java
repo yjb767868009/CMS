@@ -26,5 +26,5 @@ public interface TeamStrategyMapper {
      * @param teamStrategy 队伍规则
      * @return 新建的id
      */
-    BigInteger insertTeamStrategy(@Param("strategy") TeamStrategy teamStrategy);
+    Integer insertTeamStrategy(@Param("strategy") TeamStrategy teamStrategy);
 }

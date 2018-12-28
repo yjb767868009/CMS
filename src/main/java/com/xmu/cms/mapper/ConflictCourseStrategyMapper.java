@@ -34,5 +34,6 @@ public interface ConflictCourseStrategyMapper {
      * @param strategyId 规则id
      * @param courseId   课程id
      */
-    void insertConflictCourseStrategy(BigInteger strategyId, BigInteger courseId);
+    void insertConflictCourseStrategy(@Param("strategyId") BigInteger strategyId,
+                                      @Param("courseId") BigInteger courseId);
 }

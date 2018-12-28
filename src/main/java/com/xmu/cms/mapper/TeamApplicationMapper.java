@@ -41,7 +41,7 @@ public interface TeamApplicationMapper {
      *
      * @param teamApplication 新的队伍合法申请
      */
-    BigInteger insertTeamApplication(@Param("teamApplication") TeamApplication teamApplication);
+    Integer insertTeamApplication(@Param("teamApplication") TeamApplication teamApplication);
 
     /**
      * 根据队伍获取队伍合法申请

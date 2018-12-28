@@ -41,7 +41,7 @@
     </select>
 
     <insert id="insertShareTeam" parameterType="com.xmu.cms.entity.ShareTeam">
-        <selectKey keyProperty="shareTeamId" order="AFTER" resultType="java.math.BigInteger">
+        <selectKey keyProperty="shareTeamId" order="AFTER" resultType="java.lang.Integer">
             select last_insert_id()
         </selectKey>
         insert share_team_application (main_course_id, sub_course_id, sub_course_teacher_id, status)

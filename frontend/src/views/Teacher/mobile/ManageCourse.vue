@@ -8,21 +8,12 @@
         <cell :key="course.courseId" :title="course.courseName" is-link :border-intent="false" :arrow-direction="course.showCourseContent?'up':'down'"
           @click.native="select(course)">
         </cell>
-<<<<<<< HEAD
-        <template v-if="course.showCourseContent" style="margin-left:20px">
-          <div :key="course.courseId">
-          <cell-box :border-intent="false" class="sub-item" is-link @click.native="gradelist">学生成绩</cell-box>
-          <cell-box class="sub-item" is-link @click.native="teamlist">学生组队</cell-box>
-          <cell-box class="sub-item" is-link @click.native="courseinfo">课程信息</cell-box>
-          <cell-box class="sub-item" is-link @click.native="klassinfo">班级信息</cell-box>
-=======
         <template v-if="course.showCourseContent">
           <div style="margin-left:20px" :key="course.courseId">
           <cell-box :border-intent="false" class="sub-item" is-link @click.native="studentScore(course)">学生成绩</cell-box>
           <cell-box class="sub-item" is-link @click.native="studentTeam(course)">学生组队</cell-box>
           <cell-box class="sub-item" is-link @click.native="courseInfo(course)">课程信息</cell-box>
           <cell-box class="sub-item" is-link @click.native="classInfo(course)">班级信息</cell-box>
->>>>>>> c2deb32ca5a2a34e457c87b265b3c1ec220f2752
           <cell-box class="sub-item" is-link @click.native="classInfo(course)">讨论课设置</cell-box>
           <cell-box class="sub-item" is-link @click.native="setShare(course)">共享设置</cell-box>
           </div>

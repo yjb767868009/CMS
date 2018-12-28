@@ -21,16 +21,17 @@ public interface ConflictCourseStrategyMapper {
     ConflictCourseStrategy getConflictCourseStrategyById(@Param("conflictCourseId") BigInteger strategyId);
 
     /**
-     * 新建冲突课程规则
-     *
-     * @param strategy 规则
-     */
-    void insertConflictCourseStrategy(@Param("strategy") ConflictCourseStrategy strategy);
-
-    /**
      * 获取最大的id
      *
      * @return 最大id
      */
     BigInteger getMaxId();
+
+    /**
+     * 新建冲突课程池
+     *
+     * @param strategyId 规则id
+     * @param courseId   课程id
+     */
+    void insertConflictCourseStrategy(BigInteger strategyId, BigInteger courseId);// TODO: 2018/12/28  
 }

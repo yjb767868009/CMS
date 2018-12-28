@@ -8,7 +8,7 @@
         <!-- 组长点击人名可以选择删除组员 -->
         <template v-if="teaminfo.role==='leader'">
             <template v-for="memb in this.teaminfo.team.members">
-            <cell :key="memb.id" :border-intent="false" @click.native="deleting(memb.account)"  value-align="left" title="组员：" style="height:20px"><span style="color:#000;padding-left:20px">&emsp;{{memb.account}} &emsp;{{memb.name}}</span></cell>
+            <cell :key="memb.id" :border-intent="false" @click.native="deleting(memb.studentId)"  value-align="left" title="组员：" style="height:20px"><span style="color:#000;padding-left:20px">&emsp;{{memb.account}} &emsp;{{memb.name}}</span></cell>
             </template>
         </template>
 
@@ -37,7 +37,7 @@
             </flexbox-item>
         </flexbox>
         <!-- invalid组申请 -->
-            <template v-if="teaminfo.team.valid===false">
+            <template v-if="teaminfo.team.valid===true">
                 <flexbox style="margin-top:30px">
                     <flexbox-item>
                         <x-button type="primary" @click.native="application=!application">提交申请</x-button>
@@ -60,6 +60,7 @@
       @on-cancel="Return"
       @on-confirm="applic">
       </confirm>
+
       <confirm v-model="dissolved"
         title="提示"
         theme="android"
@@ -78,7 +79,7 @@
         <confirm v-model="nomember"
         :show-cancel-button="false"
         title="错误"
-        @on-confirm="add">
+        @on-confirm="Return">
         <p style="text-align:center;">请选择组员</p>
      </confirm>
       <confirm v-model="save"
@@ -110,7 +111,6 @@
           </div>
       </popup>
     </div>
-    {{this.newMembers}}
 </div>
 </template>
 
@@ -162,7 +162,7 @@ import { notEqual } from 'assert';
             teaminfo:'',
             myteam:'',
             noteam:'',
-            newMembers:{},
+            newMembers:[],
             nomember:false,
             memberWillBeDe:'',
         }
@@ -195,27 +195,29 @@ import { notEqual } from 'assert';
         //将newMember中保存的人清空
         onCancelnew:function(){
             console.log('取消')
-            this.newMembers={}
+            this.newMembers=[]
         },
         Return:function(){
             console.log('返回')
         },
         onConfirm:function(){
             console.log('添加')
-            this.axios.post('/team/'+this.teaminfo.team.teamId,{})  //学生List待完成
+            console.log(this.newMembers)
+            this.$axios.put('/team/'+this.teaminfo.team.teamId+'/add',this.newMembers)  //学生List待完成
             .then((response)=>{
                 console.log(response.data)
+                this.newMembers=[]
+                window.location.reload()
             })
-            // this.$router.push('/mobile/Student/teamFreedom')
         },
         //addmember函数用于将已勾选的学生加入到newmember列表当中用于post
         addmember:function(){
             for(var i=0;i<this.noteam.length;i++){
                 if(this.noteam[i].showNoTeam){
-                    this.newMembers[this.noteam[i].studentId]=this.noteam[i].name
+                    this.newMembers.push({'studentId':this.noteam[i].studentId})
                 }
             }
-            if(JSON.stringify(this.newMembers)=='{}'){
+            if(JSON.stringify(this.newMembers)=='[]'){
                 this.nomember=!this.nomember
             }else{
                 this.add=!this.add
@@ -230,24 +232,31 @@ import { notEqual } from 'assert';
         },
         deleteMem:function(){
             console.log('确认删除')
-            this.$axios.put('/team/'+this.teaminfo.team.teamId,{})
+            this.$axios.put('/team/'+this.teaminfo.team.teamId+'/remove',{studentId:this.memberWillBeDe})
             .then((response)=>{
                 console.log(response.data)
+                window.location.reload()
             })
         },
-        applic:function(){
-            console.log('申请')
-            // this.$axios.post('/team/'+this.teaminfo.team.teamId,{})
+        applic:function(value){
+            if(value!=''){
+            // this.$axios.post('/team/'+this.teaminfo.team.teamId+'/teamvalidrequest',{
+            //     reason:value
+            // })
             // .then((response)=>{
             //     console.log(response.data)
             // })
+            this.$message.success('申请发送成功')
+            }else if(value===''){
+                this.$message.error('申请未发送!请填写申请原因')
+            }
         },
         leaveGroup:function(){
             console.log('离开小组')
             //不太清楚到底调用那个接口
             // this.$router.push('/mobile/Student/teamFreedom')
         },
-        //这里将要删除的组员信息存在memberAC中
+        //这里将要删除的组员信息存在memberWillBeDe中
         deleting:function(memberAC){
             this.Delete=!this.Delete
             this.memberWillBeDe=memberAC

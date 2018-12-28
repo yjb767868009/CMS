@@ -4,14 +4,14 @@
     </x-header>
         <group>
         <cell :border-intent="false" title="小组名：" value-align="left" style="height:30px;padding-right:50px"> 
-            <x-input v-model="teamName"></x-input>
+            <x-input  placeholder="请输入小组名" style="padding-left:60px" v-model="teamName"></x-input>
         </cell>
         </group>
 
         <group>
         <cell is-link :border-intent="false" :arrow-direction="showContent002 ? 'up' : 'down'"
          @click.native="showContent002 = !showContent002" value-align="left">
-        <span style="color:#000">选择班级：&emsp;&emsp;&emsp;{{currentklass}}</span>
+        <span style="color:#000">选择班级：&emsp;&emsp;&emsp;{{this.currentklass.name}}</span>
         </cell>
         </group>
 
@@ -42,13 +42,13 @@
     <div v-transfer-dom>
       <confirm v-model="submit"
         title="请确认信息"
-        @on-confirm="onConfirm"
+        @on-confirm="sureNewTeam"
         @on-cancel="onCancel">
         <p style="text-align:center;">队伍名:{{this.teamName}}</p>
-        <p>班级：{{this.currentklass}}</p>
+        <p>班级：{{this.currentklass.name}}</p>
         <p>组长：<span style="padding-left:5px">{{this.$store.state.student.name}}</span></p>
         <p>小组成员：</p>
-        <template v-for="mem in this.newMembers"><span :key="mem.id" style="padding-left:10px">{{mem}}</span></template>
+        <template v-for="mem in this.newMembersname"><span :key="mem.id" style="padding-left:10px">{{mem.studentId}}</span></template>
       </confirm>
       <confirm v-model="error"
         title="错误"
@@ -114,8 +114,9 @@ import {TransferDom,XHeader,
             noteam:'',
             teamName:'',
             error:false,
-            newMembers:{},
+            newMembers:[],
             error1:false,
+            newMembersname:[],
         }
     },
     mounted:function(){
@@ -144,7 +145,8 @@ import {TransferDom,XHeader,
         },
         onCancel:function(){
             console.log('取消')
-            this.newMembers={}
+            this.newMembers=[]
+            this.newMembersname=[]
         },
         onConfirm:function(){
             console.log('确认')
@@ -159,7 +161,8 @@ import {TransferDom,XHeader,
                 }else{
                 for(var i=0;i<this.noteam.length;i++){
                     if(this.noteam[i].showNoTeam===true){
-                        this.newMembers[this.noteam[i].studentId]=this.noteam[i].name
+                        this.newMembers.push({'studentId':this.noteam[i].studentId})
+                        this.newMembersname.push({'studentId':this.noteam[i].name})
                     }
                 }
                 this.submit=!this.submit;
@@ -167,8 +170,16 @@ import {TransferDom,XHeader,
             }
         },
         chooseKlass:function(klass){
-            this.currentklass=klass.name
+            this.currentklass=klass
             this.showContent002=!this.showContent002
+        },
+        sureNewTeam:function(){
+            this.$axios.post('/course/'+this.$store.state.student.currentCourse.courseId+'/class/'+this.currentklass.klassId+'/team',this.newMembers.push({teamName:this.teamName}))
+            .then((response)=>{
+                console.log(response.data)
+                this.newMembers=[]
+                this.newMembersname=[]
+            })
         }
     }
         

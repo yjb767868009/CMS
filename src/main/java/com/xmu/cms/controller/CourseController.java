@@ -98,7 +98,7 @@ public class CourseController {
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
-    @GetMapping(value = "/course/{courseId}/roundList")
+    @GetMapping(value = "/course/{courseId}/roundlist")
     public List<Round> getRoundListInCourse(@PathVariable("courseId") BigInteger courseId) {
         return seminarService.getRoundListInCourse(courseId);
     }

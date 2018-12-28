@@ -10,6 +10,7 @@ import com.xmu.cms.mapper.StudentMapper;
 import com.xmu.cms.mapper.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -53,6 +54,7 @@ public class TeamDao {
         return teams;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public Team newTeam(BigInteger courseId, BigInteger klassId, BigInteger studentId, Team newTeam) {
         Team myTeam = teamMapper.getStudentTeamInKlass(studentId, klassId);
         if (myTeam != null) {

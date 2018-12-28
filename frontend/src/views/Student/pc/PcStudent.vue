@@ -102,7 +102,7 @@
               <template v-if="is_signed[0]">
                 <el-col :span="5">
                   <el-upload 
-                  action="http://loaclhost:8000/"
+                  :action="uploadFileURL+'attendance/'+AttendancesForShow[0].attendanceId+'/powerpoint'"
                   :headers="{'Authorization':'Bearer '+this.$store.state.token}"
                   :with-credentials="true">
                   <el-button size="small" type="primary">上传</el-button>
@@ -141,7 +141,7 @@
               <template v-if="is_signed[1]">
                 <el-col :span="5">
                   <el-upload 
-                  action="http://loaclhost:8000/"
+                  :action="uploadFileURL+'attendance/'+AttendancesForShow[1].attendanceId+'/powerpoint'"
                   :headers="{'Authorization':'Bearer '+this.$store.state.token}"
                   :with-credentials="true">
                   <el-button size="small" type="primary">上传</el-button>
@@ -180,7 +180,7 @@
               <template v-if="is_signed[2]">
                 <el-col :span="5">
                   <el-upload 
-                  action="http://loaclhost:8000/"
+                  :action="uploadFileURL+'attendance/'+AttendancesForShow[2].attendanceId+'/powerpoint'"
                   :headers="{'Authorization':'Bearer '+this.$store.state.token}"
                   :with-credentials="true">
                   <el-button size="small" type="primary">上传</el-button>
@@ -219,7 +219,7 @@
               <template v-if="is_signed[3]">
                 <el-col :span="5">
                   <el-upload 
-                  action="http://loaclhost:8000/"
+                  :action="uploadFileURL+'attendance/'+AttendancesForShow[3].attendanceId+'/powerpoint'"
                   :headers="{'Authorization':'Bearer '+this.$store.state.token}"
                   :with-credentials="true">
                   <el-button size="small" type="primary">上传</el-button>
@@ -258,7 +258,7 @@
               <template v-if="is_signed[4]">
                 <el-col :span="5">
                   <el-upload 
-                  action="http://loaclhost:8000/"
+                  :action="uploadFileURL+'attendance/'+AttendancesForShow[4].attendanceId+'/powerpoint'"
                   :headers="{'Authorization':'Bearer '+this.$store.state.token}"
                   :with-credentials="true">
                   <el-button size="small" type="primary">上传</el-button>
@@ -297,7 +297,7 @@
               <template v-if="is_signed[5]">
                 <el-col :span="5">
                   <el-upload 
-                  action="http://loaclhost:8000/"
+                  :action="uploadFileURL+'attendance/'+AttendancesForShow[5].attendanceId+'/powerpoint'"
                   :headers="{'Authorization':'Bearer '+this.$store.state.token}"
                   :with-credentials="true">
                   <el-button size="small" type="primary">上传</el-button>
@@ -324,8 +324,10 @@
             <div style="width:100%;height:1px; background:#E0E0E0;margin-bottom:18px"></div>
             <el-row>内容:{{this.currentSeminar.introduction}}</el-row>
           </div>
+          
           <el-row style="margin-bottom:18px">已经报名小组</el-row>
-          <el-row>
+
+          <el-row style="margin-bottom:18px">
             <el-col :span="5"><div >展示次序</div></el-col>
             <el-col :span="5"><div >小组序号</div></el-col>
             <el-col :span="5"><div >组长</div></el-col>
@@ -334,11 +336,250 @@
 
           <el-row style="margin-bottom:18px">
             <el-col :span="5"><div >1</div></el-col>
-            <el-col :span="5"><div >小组序号</div></el-col>
-            <el-col :span="5"><div >组长</div></el-col>
-            <el-col :span="5"><div >展示材料</div></el-col>
-            <el-col :span="4"><el-button>enen</el-button></el-col>
+
+            <template v-if="AttendancesForShow[0]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[0].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[0].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[0].reportFile">
+              <el-col :span="5">
+                <el-button size="small" type="primay">
+                  <a :href="'/attendence/'+AttendancesForshow[0].attendanceId+'/powerpoint'">下载</a></el-button>
+                </el-col>
+              </template>
+              <template v-if="!AttendancesForShow[0].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+              <el-col :span="4">
+                <template v-if="is_signed[0]">
+                  <el-upload 
+                  :action="uploadFileURL+'attendance/'+AttendancesForShow[0].attendanceId+'/powerpoint'"
+                  :headers="{'Authorization':'Bearer '+this.$store.state.token}"
+                  :with-credentials="true">
+                  <el-button size="small" type="primary">重新上传</el-button>
+                  </el-upload>
+                </template>
+                <template v-if="!is_signed[0]">
+                  <el-col :span="4"><div>&emsp;</div></el-col>
+                </template>
+              </el-col>
+            </template>
+
+            <template v-if="AttendancesForShow[0]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
           </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >2</div></el-col>
+
+            <template v-if="AttendancesForShow[1]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[1].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[1].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[1].reportFile">
+              <el-col :span="5">
+                <el-button size="small" type="primay">
+                  <a :href="'/attendence/'+AttendancesForshow[1].attendanceId+'/powerpoint'">下载</a></el-button>
+                </el-col>
+              </template>
+              <template v-if="!AttendancesForShow[1].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+              <el-col :span="4">
+                <template v-if="is_signed[1]">
+                  <el-upload 
+                  :action="uploadFileURL+'attendance/'+AttendancesForShow[1].attendanceId+'/powerpoint'"
+                  :headers="{'Authorization':'Bearer '+this.$store.state.token}"
+                  :with-credentials="true">
+                  <el-button size="small" type="primary">重新上传</el-button>
+                  </el-upload>
+                </template>
+                <template v-if="!is_signed[1]">
+                  <el-col :span="4"><div>&emsp;</div></el-col>
+                </template>
+              </el-col>
+            </template>
+
+            <template v-if="AttendancesForShow[1]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+          
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >3</div></el-col>
+
+            <template v-if="AttendancesForShow[2]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[2].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[2].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[2].reportFile">
+              <el-col :span="5">
+                <el-button size="small" type="primay">
+                  <a :href="'/attendence/'+AttendancesForshow[2].attendanceId+'/powerpoint'">下载</a></el-button>
+                </el-col>
+              </template>
+              <template v-if="!AttendancesForShow[2].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+              <el-col :span="4">
+                <template v-if="is_signed[2]">
+                  <el-upload 
+                  :action="uploadFileURL+'attendance/'+AttendancesForShow[2].attendanceId+'/powerpoint'"
+                  :headers="{'Authorization':'Bearer '+this.$store.state.token}"
+                  :with-credentials="true">
+                  <el-button size="small" type="primary">重新上传</el-button>
+                  </el-upload>
+                </template>
+                <template v-if="!is_signed[2]">
+                  <el-col :span="4"><div>&emsp;</div></el-col>
+                </template>
+              </el-col>
+            </template>
+
+            <template v-if="AttendancesForShow[2]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >4</div></el-col>
+
+            <template v-if="AttendancesForShow[3]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[3].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[3].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[3].reportFile">
+              <el-col :span="5">
+                <el-button size="small" type="primay">
+                  <a :href="'/attendence/'+AttendancesForshow[3].attendanceId+'/powerpoint'">下载</a></el-button>
+                </el-col>
+              </template>
+              <template v-if="!AttendancesForShow[3].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+              <el-col :span="4">
+                <template v-if="is_signed[3]">
+                  <el-upload 
+                  :action="uploadFileURL+'attendance/'+AttendancesForShow[3].attendanceId+'/powerpoint'"
+                  :headers="{'Authorization':'Bearer '+this.$store.state.token}"
+                  :with-credentials="true">
+                  <el-button size="small" type="primary">重新上传</el-button>
+                  </el-upload>
+                </template>
+                <template v-if="!is_signed[3]">
+                  <el-col :span="4"><div>&emsp;</div></el-col>
+                </template>
+              </el-col>
+            </template>
+
+            <template v-if="AttendancesForShow[3]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >5</div></el-col>
+
+            <template v-if="AttendancesForShow[4]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[4].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[4].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[4].reportFile">
+              <el-col :span="5">
+                <el-button size="small" type="primay">
+                  <a :href="'/attendence/'+AttendancesForshow[4].attendanceId+'/powerpoint'">下载</a></el-button>
+                </el-col>
+              </template>
+              <template v-if="!AttendancesForShow[4].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+              <el-col :span="4">
+                <template v-if="is_signed[4]">
+                  <el-upload 
+                  :action="uploadFileURL+'attendance/'+AttendancesForShow[4].attendanceId+'/powerpoint'"
+                  :headers="{'Authorization':'Bearer '+this.$store.state.token}"
+                  :with-credentials="true">
+                  <el-button size="small" type="primary">重新上传</el-button>
+                  </el-upload>
+                </template>
+                <template v-if="!is_signed[4]">
+                  <el-col :span="4"><div>&emsp;</div></el-col>
+                </template>
+              </el-col>
+            </template>
+
+            <template v-if="AttendancesForShow[4]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >6</div></el-col>
+
+            <template v-if="AttendancesForShow[5]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[5].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[5].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[5].reportFile">
+              <el-col :span="5">
+                <el-button size="small" type="primay">
+                  <a :href="'/attendence/'+AttendancesForshow[5].attendanceId+'/powerpoint'">下载</a></el-button>
+                </el-col>
+              </template>
+              <template v-if="!AttendancesForShow[5].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+              <el-col :span="4">
+                <template v-if="is_signed[5]">
+                  <el-upload 
+                  :action="uploadFileURL+'attendance/'+AttendancesForShow[5].attendanceId+'/powerpoint'"
+                  :headers="{'Authorization':'Bearer '+this.$store.state.token}"
+                  :with-credentials="true">
+                  <el-button size="small" type="primary">重新上传</el-button>
+                  </el-upload>
+                </template>
+                <template v-if="!is_signed[5]">
+                  <el-col :span="4"><div>&emsp;</div></el-col>
+                </template>
+              </el-col>
+            </template>
+
+            <template v-if="AttendancesForShow[5]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
         </el-card>
       </template>
 
@@ -355,7 +596,7 @@
             <el-row>内容:{{this.currentSeminar.introduction}}</el-row>
           </div>
             <el-row style="margin-bottom:18px">已经报名小组</el-row>
-            <el-row>
+            <el-row style="margin-bottom:18px">
             <el-col :span="5"><div >展示次序</div></el-col>
             <el-col :span="5"><div >小组序号</div></el-col>
             <el-col :span="5"><div >组长</div></el-col>
@@ -364,12 +605,256 @@
 
           <el-row style="margin-bottom:18px">
             <el-col :span="5"><div >1</div></el-col>
-            <el-col :span="5"><div >小组序号</div></el-col>
-            <el-col :span="5"><div >组长</div></el-col>
-            <el-col :span="5"><div >展示材料</div></el-col>
-            <el-col :span="4"><el-button >enen</el-button></el-col>
+
+            <template v-if="AttendancesForShow[0]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[0].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[0].team.leader.name}}</div></el-col>
+
+              <template v-if="AttendancesForShow[0].reportFile">
+              <el-col :span="5">{{AttendancesForShow[0].reportFile}}</el-col>
+              </template>
+
+              <template v-if="!AttendancesForShow[0].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+
+              <el-col :span="4">
+                <template v-if="is_signed[0]">
+                  <el-upload 
+                  :action="uploadFileURL+'attendance/'+AttendancesForShow[0].attendanceId+'/powerpoint'"
+                  :headers="{'Authorization':'Bearer '+this.$store.state.token}"
+                  :with-credentials="true">
+                  <el-button size="small" type="primary">重新上传</el-button>
+                  </el-upload>
+                </template>
+                <template v-if="!is_signed[0]">
+                  <el-col :span="4"><div>&emsp;</div></el-col>
+                </template>
+              </el-col>
+
+            </template>
+
+            <template v-if="AttendancesForShow[0]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >2</div></el-col>
+
+            <template v-if="AttendancesForShow[1]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[1].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[1].team.leader.name}}</div></el-col>
+
+              <template v-if="AttendancesForShow[1].reportFile">
+              <el-col :span="5">{{AttendancesForShow[1].reportFile}}</el-col>
+              </template>
+
+              <template v-if="!AttendancesForShow[1].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+
+              <el-col :span="4">
+                <template v-if="is_signed[1]">
+                  <el-upload 
+                  :action="uploadFileURL+'attendance/'+AttendancesForShow[1].attendanceId+'/powerpoint'"
+                  :headers="{'Authorization':'Bearer '+this.$store.state.token}"
+                  :with-credentials="true">
+                  <el-button size="small" type="primary">重新上传</el-button>
+                  </el-upload>
+                </template>
+                <template v-if="!is_signed[1]">
+                  <el-col :span="4"><div>&emsp;</div></el-col>
+                </template>
+              </el-col>
+
+            </template>
+
+            <template v-if="AttendancesForShow[1]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >3</div></el-col>
+
+            <template v-if="AttendancesForShow[2]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[2].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[2].team.leader.name}}</div></el-col>
+
+              <template v-if="AttendancesForShow[2].reportFile">
+              <el-col :span="5">{{AttendancesForShow[2].reportFile}}</el-col>
+              </template>
+
+              <template v-if="!AttendancesForShow[2].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+
+              <el-col :span="4">
+                <template v-if="is_signed[2]">
+                  <el-upload 
+                  :action="uploadFileURL+'attendance/'+AttendancesForShow[2].attendanceId+'/powerpoint'"
+                  :headers="{'Authorization':'Bearer '+this.$store.state.token}"
+                  :with-credentials="true">
+                  <el-button size="small" type="primary">重新上传</el-button>
+                  </el-upload>
+                </template>
+                <template v-if="!is_signed[2]">
+                  <el-col :span="4"><div>&emsp;</div></el-col>
+                </template>
+              </el-col>
+
+            </template>
+
+            <template v-if="AttendancesForShow[2]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
           </el-row>
           
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >4</div></el-col>
+
+            <template v-if="AttendancesForShow[3]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[3].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[3].team.leader.name}}</div></el-col>
+
+              <template v-if="AttendancesForShow[3].reportFile">
+              <el-col :span="5">{{AttendancesForShow[3].reportFile}}</el-col>
+              </template>
+
+              <template v-if="!AttendancesForShow[3].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+
+              <el-col :span="4">
+                <template v-if="is_signed[3]">
+                  <el-upload 
+                  :action="uploadFileURL+'attendance/'+AttendancesForShow[3].attendanceId+'/powerpoint'"
+                  :headers="{'Authorization':'Bearer '+this.$store.state.token}"
+                  :with-credentials="true">
+                  <el-button size="small" type="primary">重新上传</el-button>
+                  </el-upload>
+                </template>
+                <template v-if="!is_signed[3]">
+                  <el-col :span="4"><div>&emsp;</div></el-col>
+                </template>
+              </el-col>
+
+            </template>
+
+            <template v-if="AttendancesForShow[3]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >5</div></el-col>
+
+            <template v-if="AttendancesForShow[4]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[4].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[4].team.leader.name}}</div></el-col>
+
+              <template v-if="AttendancesForShow[4].reportFile">
+              <el-col :span="5">{{AttendancesForShow[4].reportFile}}</el-col>
+              </template>
+
+              <template v-if="!AttendancesForShow[4].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+
+              <el-col :span="4">
+                <template v-if="is_signed[4]">
+                  <el-upload 
+                  :action="uploadFileURL+'attendance/'+AttendancesForShow[4].attendanceId+'/powerpoint'"
+                  :headers="{'Authorization':'Bearer '+this.$store.state.token}"
+                  :with-credentials="true">
+                  <el-button size="small" type="primary">重新上传</el-button>
+                  </el-upload>
+                </template>
+                <template v-if="!is_signed[4]">
+                  <el-col :span="4"><div>&emsp;</div></el-col>
+                </template>
+              </el-col>
+
+            </template>
+
+            <template v-if="AttendancesForShow[4]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >6</div></el-col>
+
+            <template v-if="AttendancesForShow[5]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[5].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[5].team.leader.name}}</div></el-col>
+
+              <template v-if="AttendancesForShow[5].reportFile">
+              <el-col :span="5">{{AttendancesForShow[5].reportFile}}</el-col>
+              </template>
+
+              <template v-if="!AttendancesForShow[5].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+
+              <el-col :span="4">
+                <template v-if="is_signed[5]">
+                  <el-upload 
+                  :action="uploadFileURL+'attendance/'+AttendancesForShow[5].attendanceId+'/powerpoint'"
+                  :headers="{'Authorization':'Bearer '+this.$store.state.token}"
+                  :with-credentials="true">
+                  <el-button size="small" type="primary">重新上传</el-button>
+                  </el-upload>
+                </template>
+                <template v-if="!is_signed[5]">
+                  <el-col :span="4"><div>&emsp;</div></el-col>
+                </template>
+              </el-col>
+
+            </template>
+
+            <template v-if="AttendancesForShow[5]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
         </el-card>
       </template>
 
@@ -447,7 +932,7 @@
                     "topic": "用例分析"
                   },
                   "reportDDL": "2018-09-28T05:00:00.000+0000",
-                  "status": 0
+                  "status": 1
                 }]
               },
               {
@@ -781,8 +1266,10 @@
         showSeminarUnstarted: false,
         showSeminarFinished: false,
         is_signed:[false,false,false,false,false,false],
+        is_join:true,
         currentCourse: '',
         currentSeminar: '',
+        uploadFileURL:'http://localhost:8000/'
       }
     },
     // mounted: function () {
@@ -834,11 +1321,22 @@
       clickSeminar: function (seminar) {
         console.log(seminar.topic)
         console.log(seminar.klassSeminars[0].status)
+        for(var i=0;i<this.is_signed.length;i++){
+          this.$set(this.is_signed,i,false)
+        }
         this.currentSeminar = seminar
-        // this.$axios.get('/klassseminar/'+this.currentSeminar.klassSeminars[0].klassSeminarId+'/attendances')
-        // .then((response)=>{
-        //     this.Attendances=response.data
-        // })
+        this.$axios.get('/klassseminar/'+this.currentSeminar.klassSeminars[0].klassSeminarId+'/attendance')
+        .then((response)=>{
+            this.Attendances=response.data.attendance
+            if(response.data.message==='1'||response.data.message==='2'||response.data.message==='3'||response.data.message==='4'||response.data.message==='5'||response.data.message==='6'){
+              //当前用户已经参加了该讨论课
+              this.is_join=response.data.
+              this.$set(this.is_signed,parseInt(this.is_join),true)
+            }else if(response.data.message==='other'){
+              //当前用户还没有参与讨论课
+              this.is_join='0'
+            }
+        })
 
         //TODO:用户已报名的情况
         this.AttendancesForShow=[null,null,null,null,null,null]
@@ -877,7 +1375,7 @@
       cancelSignSeminar:function(index){
         console.log('cancel:',index)
         this.$set(this.is_signed,index,false)
-      }
+      },
     }
   }
 

@@ -3,7 +3,6 @@
     <x-header title="课程管理" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}"
       @on-click-more="show=!show">
     </x-header>
-
     <group>
       <template v-for="course in this.courses">
         <cell :key="course.courseId" :title="course.courseName" is-link :border-intent="false" :arrow-direction="course.showCourseContent?'up':'down'"
@@ -16,7 +15,7 @@
           <cell-box class="sub-item" is-link @click.native="classInfo(course)">课程信息</cell-box>
           <cell-box class="sub-item" is-link @click.native="classInfo(course)">班级信息</cell-box>
           <cell-box class="sub-item" is-link @click.native="classInfo(course)">讨论课设置</cell-box>
-          <cell-box class="sub-item" is-link @click.native="classInfo(course)">共享设置</cell-box>
+          <cell-box class="sub-item" is-link @click.native="setShare(course)">共享设置</cell-box>
           </div>
         </template>
       </template>
@@ -111,6 +110,10 @@
       },
       classInfo(){
 
+      },
+      setShare:function(Course){
+        this.$store.state.teacher.currentCourse=Course
+        this.$router.push('/mobile/teacher/share')
       }
     }
   }

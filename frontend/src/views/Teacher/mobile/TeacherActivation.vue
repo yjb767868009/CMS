@@ -57,7 +57,7 @@ export default {
           password:this.password1
         }).then((response)=>{
           if(response.status='200'){//成功
-            this.$router.push('/mobile/teacher/seminars')
+            this.$router.push('/mobile/teacher')
           }else{
             return
           }

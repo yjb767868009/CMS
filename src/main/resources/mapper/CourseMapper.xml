@@ -200,4 +200,21 @@
         where klass.course_id = #{course.courseId}
           and klass_team.klass_id = klass.id
     </delete>
+
+    <select id="getAllCourse" resultMap="CourseResultMap">
+        SELECT course.id                      as courseId,
+               teacher.id                     as teacherId,
+               teacher.email                  as teacherEmail,
+               teacher.teacher_name           as teacherName,
+               course.course_name             as courseName,
+               course.introduction,
+               course.presentation_percentage as presentationWeight,
+               course.report_percentage       as reportWeight,
+               course.question_percentage     as questionWeight,
+               course.team_start_time         as teamStartDate,
+               course.team_end_time           as teamEndDate
+        FROM course,
+             teacher
+        WHERE course.teacher_id = teacher.id
+    </select>
 </mapper>

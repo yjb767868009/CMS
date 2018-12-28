@@ -10,7 +10,10 @@
     
     <group>
     <cell>{{'第'+attendances.teamOrder+'组展示中    '+this.$store.state.student.currentSeminar.topic+'   已有'+Questions.length+'位同学提问'}}</cell>
-    
+    <template v-for="attendance in attendances">
+      <cell :key="attendance.attendanceId" :title="'第'+attendance.teamOrder+'组'">{{attendance.team.teamName}}</cell>
+    </template>
+
     </group>
 
     <flexbox style="margin-top:30px">
@@ -127,7 +130,12 @@ export default {
     },
     onConfirm: function() {
       console.log("确认");
-      this.postQuestion()
+      let len = this.attendances.length
+      console.log(len)
+      console.log(this.attendances[len-1].attendanceId+1)
+        this.stompClient.send('/app/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/question', {}, {
+          attendanceId:this.attendances[len-1].attendanceId+1
+        })
     },
     running: function() {
       this.$router.push("/mobile/Student/studentSeminarList");
@@ -163,8 +171,9 @@ export default {
         }
       },
       postQuestion: function () {
+        console.log(this.attendances[this.attendances.length].attendanceId+1)
         this.stompClient.send('/app/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/question', {}, {
-          attendanceId:attendances.attendanceId
+          attendanceId:this.attendances[this.attendances.length].attendanceId+1
         })
       },
   }

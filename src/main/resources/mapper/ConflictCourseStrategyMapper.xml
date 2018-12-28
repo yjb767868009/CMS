@@ -7,10 +7,18 @@
         <association property="courseOne" javaType="com.xmu.cms.entity.Course">
             <id property="courseId" column="courseOneId"/>
             <result property="courseName" column="courseOneName"/>
+            <association property="teacher" javaType="com.xmu.cms.entity.Teacher">
+                <id property="teacherId" column="teacherOneId"/>
+                <result property="teacherName" column="TeacherOneName"/>
+            </association>
         </association>
         <association property="courseTwo" javaType="com.xmu.cms.entity.Course">
             <id property="courseId" column="courseTwoId"/>
             <result property="courseName" column="courseTwoName"/>
+            <association property="teacher" javaType="com.xmu.cms.entity.Teacher">
+                <id property="teacherId" column="teacherTwoId"/>
+                <result property="teacherName" column="TeacherTwoName"/>
+            </association>
         </association>
     </resultMap>
 
@@ -18,14 +26,22 @@
         select conflict_course_strategy.id as conflictCourseId,
                course1.id as courseOneId,
                course1.course_name as courseOneName,
+               course1.teacher_id  as teacherOneId,
+               teacher1.teacher_name as teacherOneName,
                course2.id as courseTwoId,
-               course2.course_name as courseTwoName
+               course2.course_name as courseTwoName,
+               course2.teacher_id  as teacherTwoId,
+               teacher2.teacher_name as teacherTwoName
         from conflict_course_strategy,
              course course1,
-             course course2
+             course course2,
+             teacher teacher1,
+             teacher teacher2
         where conflict_course_strategy.id = #{conflictCourseId}
           and course1.id = course_1_id
           and course2.id = course_2_id
+          and teacher1.id = course1.teacher_id
+          and teacher2.id = course2.teacher_id
     </select>
 
     <insert id="newConflictCourse">

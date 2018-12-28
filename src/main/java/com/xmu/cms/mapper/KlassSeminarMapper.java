@@ -124,5 +124,5 @@ public interface KlassSeminarMapper {
      * @param klassSeminarId 班级讨论课id
      * @return 班级讨论课
      */
-    KlassSeminar getKlassSeminar(BigInteger klassSeminarId);// TODO: 2018/12/27  
+    KlassSeminar getKlassSeminar(@Param("klassSeminarId") BigInteger klassSeminarId);
 }

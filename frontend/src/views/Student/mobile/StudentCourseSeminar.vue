@@ -1,7 +1,7 @@
 <template>
   <div class="student" style="height:20px;background:#fff">
     <x-header
-      v-bind:title="this.$store.state.currentCourse.name"
+      v-bind:title="this.$store.state.student.currentCourse.courseName"
       style="height:60px;padding-top:12px"
       :left-options="{showBack:false}"
       :right-options="{showMore: true}"
@@ -9,43 +9,25 @@
     ></x-header>
 
     <group>
-      <cell
+      <template v-for="round in this.rounds">
+      <cell :key="round.roundId"
         is-link
         :border-intent="false"
-        :arrow-direction="showContent1?'down':'up'"
-        @click.native="showContent1=!showContent1"
-        value-align="left"
-      >
-        <span>第{{rounds[0].order}}轮</span>
+        :arrow-direction="round.showRoundContent?'down':'up'"
+        @click.native="round.showRoundContent=!round.showRoundContent"
+        value-align="left">
+        <span>第{{round.order}}轮</span>
       </cell>
-      <template v-if="showContent1">
+      <template v-if="round.showRoundContent">
         <cell-box
-          v-for="seminar in rounds[0].seminar"
-          :key="seminar.id"
+          v-for="seminar in round.seminars"
+          :key="seminar.seminarId"
           @click.native="click(seminar)"
           is-link
         >{{seminar.topic}}</cell-box>
       </template>
-
-      <cell
-        is-link
-        :border-intent="false"
-        :arrow-direction="showContent2?'down':'up'"
-        @click.native="showContent2=!showContent2"
-        value-align="left"
-      >
-        <span>第{{rounds[1].order}}轮</span>
-      </cell>
-      <template v-if="showContent2">
-        <cell-box
-          v-for="seminar in rounds[1].seminar"
-          :key="seminar.id"
-          @click.native="click(seminar)"
-          is-link
-        ></cell-box>
       </template>
     </group>
-
     <div v-transfer-dom>
       <popup v-model="show" height="15%">
         <div>
@@ -125,25 +107,21 @@ export default {
     };
   },
   mounted: function() {//挂载:获取round 和 seminar
-    this.$axios
-      .get("/course/" + this.$store.state.currentCourse.id + "/round")
-      .then(response => {
-        this.rounds = respnose.data;
-      });
-    for (var i = 0; i < this.rounds.length; i++) {
-      this.$axios
-        .get("/round/" + this.rounds[i].id + "/seminar")
-        .then(response => {
-          this.rounds[i].seminars = response.data;
-        });
-    }
+     this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId+'/round')
+        .then((response)=>{
+            this.rounds=response.data;
+            
+            this.rounds.forEach(rounditem=>{
+              this.$set(rounditem,'showRoundContent',false);
+            })
+          });
     for (var i = 0; i < this.rounds.length; i++) {
       this.rounds[i].seminar = this.seminars;
     }
   },
   methods: {
     click: function(seminar) {
-      this.$store.state.currentSeminar = seminar;
+      this.$store.state.student.currentSeminar = seminar;
       this.$axios
         .get(
           "/seminar/" + seminar.seminarId + "/class/" + seminar.class.classId

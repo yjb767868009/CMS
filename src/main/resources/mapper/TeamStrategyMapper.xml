@@ -21,4 +21,12 @@
         where team_strategy.course_id = #{courseId}
           and course.id = #{courseId}
     </select>
+
+    <insert id="insertTeamStrategy" parameterType="com.xmu.cms.entity.strategy.TeamStrategy">
+        <selectKey keyProperty="strategyId" order="AFTER" resultType="java.math.BigInteger">
+            select last_insert_id()
+        </selectKey>
+        insert team_strategy (course_id, strategy_id, strategy_name)
+        VALUES (#{strategy.course.courseId}, #{strategy.subStrategyId}, #{strategy.subStrategyName})
+    </insert>
 </mapper>

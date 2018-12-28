@@ -11,13 +11,13 @@
 
         <template v-if="round.showRoundContent">
             <template v-for="seminar in round.seminars">
-            <cell :key="seminar.seminarId" is-link :border-intent="false" :arrow-direction="seminar.showSeminarContent ? 'up' : 'down'"
+            <cell  is-link :border-intent="false" :arrow-direction="seminar.showSeminarContent ? 'up' : 'down'"
             @click.native="getSeminarScore(seminar,round)" value-align="left" style="padding-right:10px">
             <span>{{seminar.topic}}</span>
         </cell>
 
             <template v-if="seminar.showSeminarContent">
-                <cell :key="seminar.seminarId+1" primary="content" :border-intent="false" value-align="left">
+                <cell  primary="content" :border-intent="false" value-align="left">
                     <div style="padding-left:20px;color:#000;font-size:0.8em">
                     展示：{{score.preScpre}}&emsp;&emsp;&emsp;提问：{{score.questionScore}}&emsp;&emsp;&emsp;书面报告：{{score.reportScore}}
                     <p style="padding-left:4px">本次总成绩：{{score.totalScore}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</p>
@@ -25,7 +25,7 @@
                 </cell>
             </template>
             </template>
-                    <p :key="round.roundId" style="color:#000;padding-left:220px;margin-top:0">本轮成绩：{{roundscore.totalScore}}</p>
+                    <p  style="color:#000;padding-left:220px;margin-top:0">本轮成绩：{{roundscore.totalScore}}</p>
         </template>
       </template>
     </group>

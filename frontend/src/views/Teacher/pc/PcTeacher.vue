@@ -55,8 +55,574 @@
       </template>
 
 
-      <!-- 导入学生名单 -->
+      <!-- 未开始-->
+      <template v-if="showSeminarCard&&showSeminarUnstarted">
+        <el-card>
+          <div slot="header">
+            <span>{{this.currentCourse.courseName+' '+this.currentSeminar.topic}}</span>
+            <div style="width:100%;height:1px; background:#E0E0E0;margin-bottom:18px"></div>
+            <el-row>主题:{{this.currentSeminar.topic}}</el-row>
+            <div style="width:100%;height:1px; background:#E0E0E0;margin-bottom:18px"></div>
+            <el-row>报名起止时间:{{''+this.currentSeminar.signStartTime.slice(0,10)+'~'+this.currentSeminar.signEndTime.slice(0,10)}}</el-row>
+            <div style="width:100%;height:1px; background:#E0E0E0;margin-bottom:18px"></div>
+            <el-row>内容:{{this.currentSeminar.introduction}}</el-row>
+          </div>
+          
+          <el-row style="margin-bottom:18px">已经报名小组</el-row>
 
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >展示次序</div></el-col>
+            <el-col :span="5"><div >小组序号</div></el-col>
+            <el-col :span="5"><div >组长</div></el-col>
+            <el-col :span="5"><div >展示材料</div></el-col>
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >1</div></el-col>
+
+            <template v-if="AttendancesForShow[0]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[0].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[0].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[0].reportFile">
+              <el-col :span="5"><div >已上传</div></el-col>
+              </template>
+              <template v-if="!AttendancesForShow[0].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+              <el-col :span="4"></el-col>
+            </template>
+
+            <template v-if="AttendancesForShow[0]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+            </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >2</div></el-col>
+
+            <template v-if="AttendancesForShow[1]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[1].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[1].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[1].reportFile">
+              <el-col :span="5"><div >已上传</div></el-col>
+              </template>
+              <template v-if="!AttendancesForShow[1].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+              <el-col :span="4"></el-col>
+            </template>
+
+            <template v-if="AttendancesForShow[1]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+            </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >3</div></el-col>
+
+            <template v-if="AttendancesForShow[2]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[2].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[2].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[2].reportFile">
+              <el-col :span="5"><div >已上传</div></el-col>
+              </template>
+              <template v-if="!AttendancesForShow[2].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+              <el-col :span="4"></el-col>
+            </template>
+
+            <template v-if="AttendancesForShow[2]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+            </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >4</div></el-col>
+
+            <template v-if="AttendancesForShow[3]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[3].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[3].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[3].reportFile">
+              <el-col :span="5"><div >已上传</div></el-col>
+              </template>
+              <template v-if="!AttendancesForShow[3].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+              <el-col :span="4"></el-col>
+            </template>
+
+            <template v-if="AttendancesForShow[3]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+            </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >5</div></el-col>
+
+            <template v-if="AttendancesForShow[4]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[4].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[4].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[4].reportFile">
+              <el-col :span="5"><div >已上传</div></el-col>
+              </template>
+              <template v-if="!AttendancesForShow[4].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+              <el-col :span="4"></el-col>
+            </template>
+
+            <template v-if="AttendancesForShow[4]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+            </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >6</div></el-col>
+
+            <template v-if="AttendancesForShow[5]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[5].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[5].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[5].reportFile">
+              <el-col :span="5"><div >已上传</div></el-col>
+              </template>
+              <template v-if="!AttendancesForShow[5].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+              <el-col :span="4"></el-col>
+            </template>
+
+            <template v-if="AttendancesForShow[5]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+            </template>
+
+          </el-row>
+
+        </el-card>
+      </template>
+
+      <!-- 进行中 -->
+      <template v-if="showSeminarCard&&showSeminarOngoing">
+        <el-card>
+          <div slot="header">
+            <span>{{this.currentCourse.courseName+' '+this.currentSeminar.topic}}</span>
+            <div style="width:100%;height:1px; background:#E0E0E0;margin-bottom:18px"></div>
+            <el-row>主题:{{this.currentSeminar.topic}}</el-row>
+            <div style="width:100%;height:1px; background:#E0E0E0;margin-bottom:18px"></div>
+            <el-row>报名起止时间:{{''+this.currentSeminar.signStartTime.slice(0,10)+'~'+this.currentSeminar.signEndTime.slice(0,10)}}</el-row>
+            <div style="width:100%;height:1px; background:#E0E0E0;margin-bottom:18px"></div>
+            <el-row>内容:{{this.currentSeminar.introduction}}</el-row>
+          </div>
+          
+          <el-row style="margin-bottom:18px">已经报名小组</el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >展示次序</div></el-col>
+            <el-col :span="5"><div >小组序号</div></el-col>
+            <el-col :span="5"><div >组长</div></el-col>
+            <el-col :span="5"><div >展示材料</div></el-col>
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >1</div></el-col>
+
+            <template v-if="AttendancesForShow[0]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[0].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[0].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[0].reportFile">
+              <el-col :span="5">
+                <el-button size="small" type="primay">
+                  <a :href="'/attendence/'+AttendancesForshow[0].attendanceId+'/powerpoint'">下载</a></el-button>
+                </el-col>
+              </template>
+              <template v-if="!AttendancesForShow[0].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+            </template>
+
+            <template v-if="AttendancesForShow[0]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >2</div></el-col>
+
+            <template v-if="AttendancesForShow[1]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[1].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[1].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[1].reportFile">
+              <el-col :span="5">
+                <el-button size="small" type="primay">
+                  <a :href="'/attendence/'+AttendancesForshow[1].attendanceId+'/powerpoint'">下载</a></el-button>
+                </el-col>
+              </template>
+              <template v-if="!AttendancesForShow[1].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+            </template>
+
+            <template v-if="AttendancesForShow[1]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+          
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >3</div></el-col>
+
+            <template v-if="AttendancesForShow[2]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[2].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[2].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[2].reportFile">
+              <el-col :span="5">
+                <el-button size="small" type="primay">
+                  <a :href="'/attendence/'+AttendancesForshow[2].attendanceId+'/powerpoint'">下载</a></el-button>
+                </el-col>
+              </template>
+              <template v-if="!AttendancesForShow[2].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+            </template>
+
+            <template v-if="AttendancesForShow[2]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >4</div></el-col>
+
+            <template v-if="AttendancesForShow[3]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[3].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[3].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[3].reportFile">
+              <el-col :span="5">
+                <el-button size="small" type="primay">
+                  <a :href="'/attendence/'+AttendancesForshow[3].attendanceId+'/powerpoint'">下载</a></el-button>
+                </el-col>
+              </template>
+              <template v-if="!AttendancesForShow[3].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+            </template>
+
+            <template v-if="AttendancesForShow[3]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >5</div></el-col>
+
+            <template v-if="AttendancesForShow[4]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[4].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[4].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[4].reportFile">
+              <el-col :span="5">
+                <el-button size="small" type="primay">
+                  <a :href="'/attendence/'+AttendancesForshow[4].attendanceId+'/powerpoint'">下载</a></el-button>
+                </el-col>
+              </template>
+              <template v-if="!AttendancesForShow[4].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+            </template>
+
+            <template v-if="AttendancesForShow[4]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >6</div></el-col>
+
+            <template v-if="AttendancesForShow[5]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[5].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[5].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[5].reportFile">
+              <el-col :span="5">
+                <el-button size="small" type="primay">
+                  <a :href="'/attendence/'+AttendancesForshow[5].attendanceId+'/powerpoint'">下载</a></el-button>
+                </el-col>
+              </template>
+              <template v-if="!AttendancesForShow[5].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+            </template>
+
+            <template v-if="AttendancesForShow[5]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
+        </el-card>
+      </template>
+
+      <!-- 已结束 -->
+      <template v-if="showSeminarCard&&showSeminarFinished">
+        <el-card>
+          <div slot="header">
+            <span>{{this.currentCourse.courseName+' '+this.currentSeminar.topic}}</span>
+            <div style="width:100%;height:1px; background:#E0E0E0;margin-bottom:18px"></div>
+            <el-row>主题:{{this.currentSeminar.topic}}</el-row>
+            <div style="width:100%;height:1px; background:#E0E0E0;margin-bottom:18px"></div>
+            <el-row>报名起止时间:{{''+this.currentSeminar.signStartTime.slice(0,10)+'~'+this.currentSeminar.signEndTime.slice(0,10)}}</el-row>
+            <div style="width:100%;height:1px; background:#E0E0E0;margin-bottom:18px"></div>
+            <el-row>内容:{{this.currentSeminar.introduction}}</el-row>
+          </div>
+          
+          <el-row style="margin-bottom:18px">已经报名小组</el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >展示次序</div></el-col>
+            <el-col :span="5"><div >小组序号</div></el-col>
+            <el-col :span="5"><div >组长</div></el-col>
+            <el-col :span="5"><div >展示材料</div></el-col>
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >1</div></el-col>
+
+            <template v-if="AttendancesForShow[0]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[0].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[0].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[0].reportFile">
+              <el-col :span="5">
+                <el-button size="small" type="primay">
+                  <a :href="'/attendence/'+AttendancesForshow[0].attendanceId+'/powerpoint'">下载</a></el-button>
+                </el-col>
+              </template>
+              <template v-if="!AttendancesForShow[0].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+            </template>
+
+            <template v-if="AttendancesForShow[0]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >2</div></el-col>
+
+            <template v-if="AttendancesForShow[1]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[1].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[1].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[1].reportFile">
+              <el-col :span="5">
+                <el-button size="small" type="primay">
+                  <a :href="'/attendence/'+AttendancesForshow[1].attendanceId+'/powerpoint'">下载</a></el-button>
+                </el-col>
+              </template>
+              <template v-if="!AttendancesForShow[1].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+            </template>
+
+            <template v-if="AttendancesForShow[1]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+          
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >3</div></el-col>
+
+            <template v-if="AttendancesForShow[2]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[2].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[2].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[2].reportFile">
+              <el-col :span="5">
+                <el-button size="small" type="primay">
+                  <a :href="'/attendence/'+AttendancesForshow[2].attendanceId+'/powerpoint'">下载</a></el-button>
+                </el-col>
+              </template>
+              <template v-if="!AttendancesForShow[2].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+            </template>
+
+            <template v-if="AttendancesForShow[2]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >4</div></el-col>
+
+            <template v-if="AttendancesForShow[3]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[3].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[3].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[3].reportFile">
+              <el-col :span="5">
+                <el-button size="small" type="primay">
+                  <a :href="'/attendence/'+AttendancesForshow[3].attendanceId+'/powerpoint'">下载</a></el-button>
+                </el-col>
+              </template>
+              <template v-if="!AttendancesForShow[3].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+            </template>
+
+            <template v-if="AttendancesForShow[3]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >5</div></el-col>
+
+            <template v-if="AttendancesForShow[4]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[4].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[4].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[4].reportFile">
+              <el-col :span="5">
+                <el-button size="small" type="primay">
+                  <a :href="'/attendence/'+AttendancesForshow[4].attendanceId+'/powerpoint'">下载</a></el-button>
+                </el-col>
+              </template>
+              <template v-if="!AttendancesForShow[4].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+            </template>
+
+            <template v-if="AttendancesForShow[4]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
+          <el-row style="margin-bottom:18px">
+            <el-col :span="5"><div >6</div></el-col>
+
+            <template v-if="AttendancesForShow[5]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[5].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[5].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[5].reportFile">
+              <el-col :span="5">
+                <el-button size="small" type="primay">
+                  <a :href="'/attendence/'+AttendancesForshow[5].attendanceId+'/powerpoint'">下载</a></el-button>
+                </el-col>
+              </template>
+              <template v-if="!AttendancesForShow[5].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+            </template>
+
+            <template v-if="AttendancesForShow[5]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="4"><div >&emsp;</div></el-col>
+              </template>
+
+          </el-row>
+
+        </el-card>
+      </template>
+
+      <!-- 导入学生名单 -->
       <template v-if="showStudentCard">
         <el-card>
           <div slot="header">
@@ -689,9 +1255,80 @@
         showSeminarCard: false,
         showStudentCard: false,
         showScoreCard: false,
+        showSeminarOngoing: false,
+        showSeminarUnstarted: false,
+        showSeminarFinished: false,
         currentCourse: '',
         fileList: {},
-        selectedOrder:''
+        selectedOrder:'',
+        AttendancesForShow:[null,null,null,null,null,null],
+        Attendances: [
+          {
+            "attendanceId": 2,
+            "team": {
+              "teamId": 21,
+              "leader": {
+                "studentId": 141,
+                "name": "吴悠"
+              },
+              "teamName": "晚晚鸟"
+            },
+            "teamOrder": 2,
+            "present": false
+          },
+          {
+            "attendanceId": 3,
+            "team": {
+              "teamId": 20,
+              "leader": {
+                "studentId": 129,
+                "name": "邱学良"
+              },
+              "teamName": "超励志小组"
+            },
+            "teamOrder": 3,
+            "present": false
+          },
+          {
+            "attendanceId": 4,
+            "team": {
+              "teamId": 7,
+              "leader": {
+                "studentId": 156,
+                "name": "朱演演"
+              },
+              "teamName": "FLAG"
+            },
+            "teamOrder": 4,
+            "present": false
+          },
+          {
+            "attendanceId": 5,
+            "team": {
+              "teamId": 6,
+              "leader": {
+                "studentId": 122,
+                "name": "林晓明"
+              },
+              "teamName": "Intellij"
+            },
+            "teamOrder": 5,
+            "present": false
+          },
+          {
+            "attendanceId": 6,
+            "team": {
+              "teamId": 14,
+              "leader": {
+                "studentId": 126,
+                "name": "马子晋"
+              },
+              "teamName": "Flyway"
+            },
+            "teamOrder": 6,
+            "present": false
+          }
+        ],
       }
     },
     // mounted: function () {
@@ -773,6 +1410,51 @@
             console.log(error)
           })
       },
+      
+      clickSeminar: function (seminar) {
+        console.log(seminar.topic)
+        console.log(seminar.klassSeminars[0].status)
+        for(var i=0;i<this.is_signed.length;i++){
+          this.$set(this.is_signed,i,false)
+        }
+        this.currentSeminar = seminar
+        this.$axios.get('/klassseminar/'+this.currentSeminar.klassSeminars[0].klassSeminarId+'/attendance')
+        .then((response)=>{
+            this.Attendances=response.data.attendance
+        }).catch((error)=>{
+          console.log(error)
+        })
+
+        this.AttendancesForShow=[null,null,null,null,null,null]
+        for (var i=1;i<this.AttendancesForShow.length+1;i++){
+          for(var j=0;j<this.Attendances.length;j++){
+            if(this.Attendances[j].teamOrder===i){
+              this.AttendancesForShow[i-1]=this.Attendances[j]
+            }
+          }
+        }
+        if (seminar.klassSeminars[0].status === 0) {
+          //未开始
+          this.showSeminarUnstarted = true
+          this.showSeminarOngoing = false
+          this.showSeminarFinished = false
+        } else if (seminar.klassSeminars[0].status === 1) {
+          //正在进行
+          this.showSeminarUnstarted = false
+          this.showSeminarOngoing = true
+          this.showSeminarFinished = false
+        } else if (seminar.klassSeminars[0].status === 2) {
+          //已结束
+          this.showSeminarUnstarted = false
+          this.showSeminarOngoing = false
+          this.showSeminarFinished = true
+        } else if (seminar.klassSeminars[0].status === 3) {
+          console.log('讨论课暂停中')
+        } else {
+          console.log('wrong status')
+        }
+      },
+      
     }
   }
 

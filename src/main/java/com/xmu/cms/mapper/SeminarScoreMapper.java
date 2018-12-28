@@ -53,10 +53,19 @@ public interface SeminarScoreMapper {
 
     /**
      * 获取队伍在讨论课的成绩
+     *
      * @param seminarId 讨论课id
-     * @param teamId 队伍id
+     * @param teamId    队伍id
      * @return 讨论课成绩
      */
     SeminarScore getSeminarTeamScore(@Param("seminarId") BigInteger seminarId,
                                      @Param("teamId") BigInteger teamId);
+
+    /**
+     * 获取讨论课中所有讨论课成绩，所有team
+     *
+     * @param seminarId 讨论课id
+     * @return 讨论课成绩列表
+     */
+    List<SeminarScore> getSeminarScoreInSeminar(@Param("seminarId") BigInteger seminarId);
 }

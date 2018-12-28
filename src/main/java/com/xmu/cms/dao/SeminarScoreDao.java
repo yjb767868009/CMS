@@ -40,4 +40,8 @@ public class SeminarScoreDao {
     public SeminarScore getSeminarTeamScore(BigInteger seminarId, BigInteger teamId) {
         return seminarScoreMapper.getSeminarTeamScore(seminarId, teamId);
     }
+
+    public List<SeminarScore> getSeminarScoreInSeminar(BigInteger seminarId) {
+        return seminarScoreMapper.getSeminarScoreInSeminar(seminarId);
+    }
 }

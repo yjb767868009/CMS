@@ -2,7 +2,6 @@ package com.xmu.cms.controller;
 
 import com.xmu.cms.entity.Question;
 import com.xmu.cms.service.SeminarService;
-import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -25,12 +24,6 @@ public class QuestionController {
     @GetMapping(value = "/klassSeminar/{klassSeminarId}/question")
     public List<Question> getQuestionInKlassSeminar(@PathVariable("klassSeminarId") BigInteger klassSeminarId) {
         return seminarService.getQuestionInKlassSeminar(klassSeminarId);
-    }
-
-    @Secured("ROLE_STUDENT")
-    @PostMapping(value = "/attendance/{attendanceId}/question")
-    public Question askQuestion(UserInfo userInfo, @PathVariable("attendanceId") BigInteger attendanceId) {
-        return seminarService.askQuestion(userInfo.getUserId(), attendanceId);
     }
 
     @Secured("ROLE_TEACHER")

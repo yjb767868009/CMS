@@ -149,5 +149,6 @@ public interface TeamMapper {
      * @param teamSerial 队伍序号
      * @return 队伍
      */
-    Team getTeamBySerial(Integer klassSerial, Integer teamSerial);// TODO: 2018/12/28
+    Team getTeamBySerial(@Param("klassSerial") Integer klassSerial,
+                         @Param("teamSerial") Integer teamSerial);
 }

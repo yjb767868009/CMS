@@ -67,6 +67,7 @@
           </div>
           
           <el-row style="margin-bottom:18px">已经报名小组</el-row>
+
           <el-row style="margin-bottom:18px">
             <el-col :span="5"><div >展示次序</div></el-col>
             <el-col :span="5"><div >小组序号</div></el-col>
@@ -76,50 +77,236 @@
 
           <el-row style="margin-bottom:18px">
             <el-col :span="5"><div >1</div></el-col>
-            <el-col :span="5"><div >{{Attendances[0].team.teamId}}</div></el-col>
-            <el-col :span="5"><div >{{Attendances[0].team.leader.name}}</div></el-col>
-            <el-col :span="5"><div >展示材料</div></el-col>
-            <el-col :span="4"><el-button>enen</el-button></el-col>
+
+            <template v-if="AttendancesForShow[0]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[0].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[0].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[0].reportFile">
+              <el-col :span="5"><div >已上传</div></el-col>
+              </template>
+              <template v-if="!AttendancesForShow[0].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+              <el-col :span="4"></el-col>
+            </template>
+
+            <template v-if="AttendancesForShow[0]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <template v-if="!is_signed[0]">
+                <el-col :span="5">&emsp;</el-col>
+                <el-col :span="4"><el-button size="small" @click="signSeminar(0)">报名</el-button></el-col>
+              </template>
+              <template v-if="is_signed[0]">
+                <el-col :span="5">
+                  <el-upload 
+                  action="http://loaclhost:8000/"
+                  :headers="{'Authorization':'Bearer '+this.$store.state.token}"
+                  :with-credentials="true">
+                  <el-button size="small" type="primary">上传</el-button>
+                  </el-upload>
+                </el-col>
+                <el-col :span="4"><el-button size="small" type="info" @click="cancelSignSeminar(0)">取消报名</el-button></el-col>
+              </template>
+            </template>
+
           </el-row>
 
           <el-row style="margin-bottom:18px">
             <el-col :span="5"><div >2</div></el-col>
-            <el-col :span="5"><div >{{Attendances[1].team.teamId}}</div></el-col>
-            <el-col :span="5"><div >{{Attendances[1].team.leader.name}}</div></el-col>
-            <el-col :span="5"><div >展示材料</div></el-col>
-            <el-col :span="4"><el-button>enen</el-button></el-col>
+
+            <template v-if="AttendancesForShow[1]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[1].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[1].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[1].reportFile">
+              <el-col :span="5"><div >已上传</div></el-col>
+              </template>
+              <template v-if="!AttendancesForShow[1].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+              <el-col :span="4"></el-col>
+            </template>
+
+            <template v-if="AttendancesForShow[1]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <template v-if="!is_signed[1]">
+                <el-col :span="5">&emsp;</el-col>
+                <el-col :span="4"><el-button size="small" @click="signSeminar(1)">报名</el-button></el-col>
+              </template>
+              <template v-if="is_signed[1]">
+                <el-col :span="5">
+                  <el-upload 
+                  action="http://loaclhost:8000/"
+                  :headers="{'Authorization':'Bearer '+this.$store.state.token}"
+                  :with-credentials="true">
+                  <el-button size="small" type="primary">上传</el-button>
+                  </el-upload>
+                </el-col>
+                <el-col :span="4"><el-button size="small" type="info" @click="cancelSignSeminar(1)">取消报名</el-button></el-col>
+              </template>
+            </template>
+
           </el-row>
 
           <el-row style="margin-bottom:18px">
             <el-col :span="5"><div >3</div></el-col>
-            <el-col :span="5"><div >{{Attendances[2].team.teamId}}</div></el-col>
-            <el-col :span="5"><div >{{Attendances[2].team.leader.name}}</div></el-col>
-            <el-col :span="5"><div >展示材料</div></el-col>
-            <el-col :span="4"><el-button>enen</el-button></el-col>
+
+            <template v-if="AttendancesForShow[2]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[2].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[2].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[2].reportFile">
+              <el-col :span="5"><div >已上传</div></el-col>
+              </template>
+              <template v-if="!AttendancesForShow[2].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+              <el-col :span="4"></el-col>
+            </template>
+
+            <template v-if="AttendancesForShow[2]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <template v-if="!is_signed[2]">
+                <el-col :span="5">&emsp;</el-col>
+                <el-col :span="4"><el-button size="small" @click="signSeminar(2)">报名</el-button></el-col>
+              </template>
+              <template v-if="is_signed[2]">
+                <el-col :span="5">
+                  <el-upload 
+                  action="http://loaclhost:8000/"
+                  :headers="{'Authorization':'Bearer '+this.$store.state.token}"
+                  :with-credentials="true">
+                  <el-button size="small" type="primary">上传</el-button>
+                  </el-upload>
+                </el-col>
+                <el-col :span="4"><el-button size="small" type="info" @click="cancelSignSeminar(2)">取消报名</el-button></el-col>
+              </template>
+            </template>
+
           </el-row>
 
           <el-row style="margin-bottom:18px">
             <el-col :span="5"><div >4</div></el-col>
-            <el-col :span="5"><div >{{Attendances[3].team.teamId}}</div></el-col>
-            <el-col :span="5"><div >{{Attendances[3].team.leader.name}}</div></el-col>
-            <el-col :span="5"><div >展示材料</div></el-col>
-            <el-col :span="4"><el-button>enen</el-button></el-col>
+
+            <template v-if="AttendancesForShow[3]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[3].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[3].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[3].reportFile">
+              <el-col :span="5"><div >已上传</div></el-col>
+              </template>
+              <template v-if="!AttendancesForShow[3].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+              <el-col :span="4"></el-col>
+            </template>
+
+            <template v-if="AttendancesForShow[3]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <template v-if="!is_signed[3]">
+                <el-col :span="5">&emsp;</el-col>
+                <el-col :span="4"><el-button size="small" @click="signSeminar(3)">报名</el-button></el-col>
+              </template>
+              <template v-if="is_signed[3]">
+                <el-col :span="5">
+                  <el-upload 
+                  action="http://loaclhost:8000/"
+                  :headers="{'Authorization':'Bearer '+this.$store.state.token}"
+                  :with-credentials="true">
+                  <el-button size="small" type="primary">上传</el-button>
+                  </el-upload>
+                </el-col>
+                <el-col :span="4"><el-button size="small" type="info" @click="cancelSignSeminar(3)">取消报名</el-button></el-col>
+              </template>
+            </template>
+
           </el-row>
 
           <el-row style="margin-bottom:18px">
             <el-col :span="5"><div >5</div></el-col>
-            <el-col :span="5"><div >{{Attendances[4].team.teamId}}</div></el-col>
-            <el-col :span="5"><div >{{Attendances[4].team.leader.name}}</div></el-col>
-            <el-col :span="5"><div >展示材料</div></el-col>
-            <el-col :span="4"><el-button>enen</el-button></el-col>
+
+            <template v-if="AttendancesForShow[4]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[4].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[4].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[4].reportFile">
+              <el-col :span="5"><div >已上传</div></el-col>
+              </template>
+              <template v-if="!AttendancesForShow[4].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+              <el-col :span="4"></el-col>
+            </template>
+
+            <template v-if="AttendancesForShow[4]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <template v-if="!is_signed[4]">
+                <el-col :span="5">&emsp;</el-col>
+                <el-col :span="4"><el-button size="small" @click="signSeminar(4)">报名</el-button></el-col>
+              </template>
+              <template v-if="is_signed[4]">
+                <el-col :span="5">
+                  <el-upload 
+                  action="http://loaclhost:8000/"
+                  :headers="{'Authorization':'Bearer '+this.$store.state.token}"
+                  :with-credentials="true">
+                  <el-button size="small" type="primary">上传</el-button>
+                  </el-upload>
+                </el-col>
+                <el-col :span="4"><el-button size="small" type="info" @click="cancelSignSeminar(4)">取消报名</el-button></el-col>
+              </template>
+            </template>
+
           </el-row>
 
           <el-row style="margin-bottom:18px">
             <el-col :span="5"><div >6</div></el-col>
-            <el-col :span="5"><div >{{Attendances[5].team.teamId}}</div></el-col>
-            <el-col :span="5"><div >{{Attendances[5].team.leader.name}}</div></el-col>
-            <el-col :span="5"><div >展示材料</div></el-col>
-            <el-col :span="4"><el-button>enen</el-button></el-col>
+
+            <template v-if="AttendancesForShow[5]">
+              <!-- 已经被报名 -->
+              <el-col :span="5"><div >{{AttendancesForShow[5].team.teamId}}</div></el-col>
+              <el-col :span="5"><div >{{AttendancesForShow[5].team.leader.name}}</div></el-col>
+              <template v-if="AttendancesForShow[5].reportFile">
+              <el-col :span="5"><div >已上传</div></el-col>
+              </template>
+              <template v-if="!AttendancesForShow[5].reportFile">
+              <el-col :span="5"><div >未上传</div></el-col>
+              </template>
+              <el-col :span="4"></el-col>
+            </template>
+
+            <template v-if="AttendancesForShow[5]===null">
+              <!-- 还没有报名 -->
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <el-col :span="5"><div >&emsp;</div></el-col>
+              <template v-if="!is_signed[5]">
+                <el-col :span="5">&emsp;</el-col>
+                <el-col :span="4"><el-button size="small" @click="signSeminar(5)">报名</el-button></el-col>
+              </template>
+              <template v-if="is_signed[5]">
+                <el-col :span="5">
+                  <el-upload 
+                  action="http://loaclhost:8000/"
+                  :headers="{'Authorization':'Bearer '+this.$store.state.token}"
+                  :with-credentials="true">
+                  <el-button size="small" type="primary">上传</el-button>
+                  </el-upload>
+                </el-col>
+                <el-col :span="4"><el-button size="small" type="info" @click="cancelSignSeminar(5)">取消报名</el-button></el-col>
+              </template>
+            </template>
+
           </el-row>
 
         </el-card>
@@ -518,20 +705,8 @@
             "name": "2016-3"
           }
         ],
-        Attendances: [{
-            "attendanceId": 1,
-            "team": {
-              "teamId": 18,
-              "leader": {
-                "studentId": 142,
-                "name": "谢停停"
-              },
-              "teamName": "1-7"
-            },
-            "teamOrder": 1,
-            "reportFile": "1111",
-            "present": false
-          },
+        AttendancesForShow:[null,null,null,null,null,null],
+        Attendances: [
           {
             "attendanceId": 2,
             "team": {
@@ -605,6 +780,7 @@
         showSeminarOngoing: false,
         showSeminarUnstarted: false,
         showSeminarFinished: false,
+        is_signed:[false,false,false,false,false,false],
         currentCourse: '',
         currentSeminar: '',
       }
@@ -635,7 +811,6 @@
         this.lookingSeminar = false
       },
       handleSelect: function (index) {
-        console.log(index)
         if (index === '1') {
           //讨论课
           // this.$axios.get('/course/'+this.currentCourse.courseId+'/round')
@@ -655,7 +830,7 @@
           this.showSeminarUnstarted = false
           this.showSeminarFinished = false
         }
-      },
+      }, 
       clickSeminar: function (seminar) {
         console.log(seminar.topic)
         console.log(seminar.klassSeminars[0].status)
@@ -665,6 +840,15 @@
         //     this.Attendances=response.data
         // })
 
+        //TODO:用户已报名的情况
+        this.AttendancesForShow=[null,null,null,null,null,null]
+        for (var i=1;i<this.AttendancesForShow.length+1;i++){
+          for(var j=0;j<this.Attendances.length;j++){
+            if(this.Attendances[j].teamOrder===i){
+              this.AttendancesForShow[i-1]=this.Attendances[j]
+            }
+          }
+        }
         if (seminar.klassSeminars[0].status === 0) {
           //未开始
           this.showSeminarUnstarted = true
@@ -686,6 +870,14 @@
           console.log('wrong status')
         }
       },
+      signSeminar:function(index){
+        console.log('sign:',index)
+        this.$set(this.is_signed,index,true)
+      },
+      cancelSignSeminar:function(index){
+        console.log('cancel:',index)
+        this.$set(this.is_signed,index,false)
+      }
     }
   }
 

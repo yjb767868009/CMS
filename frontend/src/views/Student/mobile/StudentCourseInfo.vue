@@ -16,12 +16,12 @@
         <div style="padding-left:15px;color:#000;margin-top:15px">组队开始时间：&emsp;{{this.courseInfo.teamStartTime.substring(0, 10)}}&emsp;{{this.courseInfo.teamStartTime.substring(11, 22)}}</div>
         <div style="padding-left:15px;color:#000;margin-top:15px">组队截止时间：&emsp;{{this.courseInfo.teamEndTime.substring(0, 10)}}&emsp;{{this.courseInfo.teamEndTime.substring(11, 22)}}</div>
     </div>
-    <div style="padding-left:15px;color:#000;margin-top:35px">冲突课程：
+    <!-- <div style="padding-left:15px;color:#000;margin-top:35px">冲突课程：
         <div style="padding-left:100px;color:#000;">
             <p>.Net(xxx老师)</p>
             <p>.Net(xxx老师)</p>
         </div>
-    </div>
+    </div> -->
 
     <div v-transfer-dom>
       <popup v-model="show" height="15%">

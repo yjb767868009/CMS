@@ -21,7 +21,9 @@
     </group>
             <template v-if="showContent002">
                 <template v-for="ob in Objects">
+                <template v-if="ob.courseId!=mycourseId">
                 <cell-box :key="ob.courseId" :border-intent="false" class="sub-item" style="padding-left:130px" @click.native="makeob(ob)">{{ob.courseName}} ({{ob.teacher.name}})</cell-box>
+                </template>
                 </template>
             </template>
 
@@ -66,6 +68,7 @@ export default {
                 console.log(response.data)
                 this.Objects=response.data
             })
+            this.mycourseId=this.$store.state.teacher.currentCourse.courseId
     },
     methods: {
     changetype:function(string){
@@ -129,7 +132,8 @@ export default {
             type1:'共享讨论课',
             type2:'共享组队',
             followklassId:'',
-            followteacherId:''
+            followteacherId:'',
+            mycourseId:'',
         }
     }
 }

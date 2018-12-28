@@ -37,6 +37,12 @@ public class CourseController {
     private MailService mailService;
 
     @Secured("ROLE_TEACHER")
+    @GetMapping(value = "/allcourse")
+    public List<Course> getAllCourse() throws Exception {
+        return courseService.getAllCourse();
+    }
+
+    @Secured("ROLE_TEACHER")
     @PostMapping(value = "/course")
     public Map<String, String> createCourse(@RequestBody Course course) throws Exception {
         Map<String, String> message = new HashMap<String, String>(1);
@@ -89,6 +95,27 @@ public class CourseController {
     public List<Round> getRoundInCourse(UserInfo info,
                                         @PathVariable("courseId") BigInteger courseId) {
         return seminarService.getRoundInCourse(info, courseId);
+    }
+
+    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
+    @GetMapping(value = "/course/{courseId}/roundList")
+    public List<Round> getRoundListInCourse(@PathVariable("courseId") BigInteger courseId) {
+        return seminarService.getRoundListInCourse(courseId);
+    }
+
+    @Secured("ROLE_TEACHER")
+    @PostMapping(value = "/course/{courseId}/seminar")
+    public Map<String, String> newSeminar(@PathVariable("courseId") BigInteger courseId,
+                                          @RequestBody Seminar seminar) {
+        Map<String, String> message = new HashMap<String, String>(1);
+        try {
+            seminar.setCourse(new Course(courseId));
+            seminarService.newSeminar(seminar);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})

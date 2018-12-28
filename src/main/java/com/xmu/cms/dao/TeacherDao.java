@@ -67,7 +67,7 @@ public class TeacherDao {
 
     public BigInteger createTeacher(Teacher teacher) throws Exception {
         teacher.setActivation(false);
-        return teacherMapper.insertTeacher(teacher);
+        return BigInteger.valueOf(teacherMapper.insertTeacher(teacher));
     }
 
     public Integer modifyTeacherEmail(BigInteger teacherId, Teacher teacher) {

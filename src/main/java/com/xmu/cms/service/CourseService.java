@@ -206,4 +206,8 @@ public class CourseService {
     public Team getStudentTeamInKlassSeminar(BigInteger studentId, BigInteger klassSeminarId) {
         return teamDao.getStudentTeamInKlassSeminar(studentId, klassSeminarId);
     }
+
+    public List<Course> getAllCourse() {
+        return teamDao.getAllCourse();
+    }
 }

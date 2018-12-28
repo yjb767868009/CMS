@@ -121,4 +121,6 @@ public interface CourseMapper {
      * @return 课程
      */
     Course getSeminarMainCourseByCourseId(@Param("courseId") BigInteger courseId);
+
+    List<Course> getAllCourse();
 }

@@ -125,7 +125,7 @@ public class RoundDao {
             Integer enrollNumber = klassEnrollNumber.get(klassId);
             klassMapper.insertKlassRound(klassId, round.getRoundId(), enrollNumber);
         }
-        return roundMapper.insertRound(round);
+        return BigInteger.valueOf(roundMapper.insertRound(round));
     }
 
     public Integer updateCalType(Round round) {
@@ -142,5 +142,9 @@ public class RoundDao {
 
     public Round getRoundByKlassSeminar(BigInteger klassSeminarId) {
         return roundMapper.getRoundByKlassSeminarId(klassSeminarId);
+    }
+
+    public List<Round> getRoundListInCourse(BigInteger courseId) {
+        return roundMapper.getRoundsByCourseId(courseId);
     }
 }

@@ -26,20 +26,7 @@ public class SeminarController {
     @Autowired
     private CourseService courseService;
 
-    @Secured("ROLE_TEACHER")
-    @PostMapping(value = "/course/{courseId}/seminar")
-    public Map<String, String> newSeminar(@PathVariable("courseId") BigInteger courseId,
-                                          @RequestBody Seminar seminar) {
-        Map<String, String> message = new HashMap<String, String>(1);
-        try {
-            seminar.setCourse(new Course(courseId));
-            seminarService.newSeminar(seminar);
-            message.put("message", "Success");
-        } catch (Exception e) {
-            message.put("message", e.getMessage());
-        }
-        return message;
-    }
+
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/seminar/{seminarId}")

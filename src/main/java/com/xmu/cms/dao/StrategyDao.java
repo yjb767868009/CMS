@@ -113,15 +113,15 @@ public class StrategyDao {
         BigInteger strategyId;
         switch (strategy.getType()) {
             case TEAM_AND_STRATEGY_TYPE:
-                strategyId = teamAndStrategyMapper.insertTeamAndStrategy((TeamAndStrategy) strategy);
+                strategyId = BigInteger.valueOf(teamAndStrategyMapper.insertTeamAndStrategy((TeamAndStrategy) strategy));
                 strategy.setStrategyId(strategyId);
                 return strategy;
             case TEAM_OR_STRATEGY_TYPE:
-                strategyId = teamOrStrategyMapper.insertTeamOrStrategy((TeamOrStrategy) strategy);
+                strategyId = BigInteger.valueOf(teamOrStrategyMapper.insertTeamOrStrategy((TeamOrStrategy) strategy));
                 strategy.setStrategyId(strategyId);
                 return strategy;
             case MEMBER_LIMIT_STRATEGY:
-                strategyId = memberLimitStrategyMapper.insertMemberLimitStrategy((MemberLimitStrategy) strategy);
+                strategyId = BigInteger.valueOf(memberLimitStrategyMapper.insertMemberLimitStrategy((MemberLimitStrategy) strategy));
                 strategy.setStrategyId(strategyId);
                 return strategy;
             case CONFLICT_COURSE_STRATEGY:
@@ -133,7 +133,7 @@ public class StrategyDao {
                 }
                 return strategy;
             case COURSE_MEMBER_LIMIT_STRATEGY:
-                strategyId = courseMemberLimitStrategyMapper.insertCourseMemberLimitStrategy((CourseMemberLimitStrategyMapper) strategy);
+                strategyId = BigInteger.valueOf(courseMemberLimitStrategyMapper.insertCourseMemberLimitStrategy((CourseMemberLimitStrategyMapper) strategy));
                 strategy.setStrategyId(strategyId);
                 return strategy;
             default:

@@ -23,7 +23,7 @@ public class SeminarDao {
     private KlassSeminarMapper klassSeminarMapper;
 
     public BigInteger insertSeminar(Seminar seminar) {
-        return seminarMapper.insertSeminar(seminar);
+        return BigInteger.valueOf(seminarMapper.insertSeminar(seminar));
     }
 
     public Integer deleteSeminar(BigInteger seminarId) {

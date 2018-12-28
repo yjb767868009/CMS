@@ -336,4 +336,7 @@ public class SeminarService {
         return score;
     }
 
+    public List<Round> getRoundListInCourse(BigInteger courseId) {
+        return roundDao.getRoundListInCourse(courseId);
+    }
 }

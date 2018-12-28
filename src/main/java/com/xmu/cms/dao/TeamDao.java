@@ -55,7 +55,7 @@ public class TeamDao {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Team newTeam(BigInteger courseId, BigInteger klassId, BigInteger studentId, Team newTeam) throws Exception {
+    public Team newTeam(BigInteger courseId, BigInteger klassId, BigInteger studentId, Team team) throws Exception {
         Team myTeam = teamMapper.getStudentTeamInKlass(studentId, klassId);
         if (myTeam != null) {
             throw new Exception("已创建队伍");
@@ -70,22 +70,22 @@ public class TeamDao {
             newKlassSerial = klassMapper.getKlassByKlassId(klassId).getKlassSerial();
             newTeamSerial = 1;
         }
-        newTeam.setKlassSerial(newKlassSerial);
-        newTeam.setTeamSerial(newTeamSerial);
-        newTeam.setLeader(new Student(studentId));
-        newTeam.setKlass(new Klass(klassId));
-        newTeam.setCourse(new Course(courseId));
-        teamMapper.insertTeam(newTeam);
-        Team team = teamMapper.getTeamBySerial(newTeam.getKlassSerial(), newTeam.getTeamSerial());
-        klassMapper.addTeam(klassId, team.getTeamId());
-        klassMapper.addMembers(team.getTeamId(), studentId);
-        List<Student> students = newTeam.getMembers();
+        team.setKlassSerial(newKlassSerial);
+        team.setTeamSerial(newTeamSerial);
+        team.setLeader(new Student(studentId));
+        team.setKlass(new Klass(klassId));
+        team.setCourse(new Course(courseId));
+        teamMapper.insertTeam(team);
+        Team newTeam = teamMapper.getTeamBySerial(newKlassSerial, newTeamSerial);
+        klassMapper.addTeam(klassId, newTeam.getTeamId());
+        klassMapper.addMembers(newTeam.getTeamId(), studentId);
+        List<Student> students = team.getMembers();
         if (students != null) {
             for (Student student : students) {
-                klassMapper.addMembers(team.getTeamId(), student.getStudentId());
+                klassMapper.addMembers(newTeam.getTeamId(), student.getStudentId());
             }
         }
-        return getFullTeam(team.getTeamId());
+        return getFullTeam(newTeam.getTeamId());
     }
 
     public Team getTeamByTeamId(BigInteger teamId) {

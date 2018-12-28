@@ -174,7 +174,7 @@ public class SeminarService {
         return klassSeminarDao.getKlassSeminarByKlassAndSeminar(klassId, seminarId);
     }
 
-    public Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId) {
+    public Attendance getStudentAttendanceInKlassAndSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId) {
         return attendanceDao.getStudentAttendanceInKlassAndSeminar(studentId, klassId, seminarId);
     }
 
@@ -333,5 +333,9 @@ public class SeminarService {
 
     public List<Round> getRoundListInCourse(BigInteger courseId) {
         return roundDao.getRoundListInCourse(courseId);
+    }
+
+    public Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassSeminarId) {
+        return attendanceDao.getStudentAttendanceInKlassSeminar(studentId, klassSeminarId);
     }
 }

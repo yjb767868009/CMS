@@ -63,6 +63,7 @@ import {TransferDom,XHeader,
             showContent001:false,
             show:false,
             courses:'',
+            myteam:'',
         }
     },
     mounted:function(){
@@ -72,6 +73,10 @@ import {TransferDom,XHeader,
             this.courses.forEach(item=>{
                 this.$set(item,'showContent',false)
             })
+        })
+         this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId+'/team')
+        .then((response)=>{
+            this.myteam=response.data.myTeam;
         })
     },
     methods:{
@@ -89,8 +94,12 @@ import {TransferDom,XHeader,
             this.$router.push('/mobile/Student/studentCourseInfo')
         },
         checkMyScore:function(Currcourse){
+            if(this.myteam!=null){
             this.$store.state.student.currentCourse=Currcourse
-            this.$router.push("/mobile/Student/myScore")
+            this.$router.push("/mobile/Student/myScore")}
+            else{
+            this.$message.error('请先加入或创建一个小组')
+            }
         },
         checkMyTeam:function(Currcourse){
             this.$store.state.student.currentCourse=Currcourse

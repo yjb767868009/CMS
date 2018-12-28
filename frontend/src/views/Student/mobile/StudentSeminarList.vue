@@ -8,8 +8,8 @@
       @on-click-more="show=!show"
     ></x-header>
     <group>
-      <cell v-for="course in courses" :key="course.id" @click.native="click(course)" style="margin:20px">
-        {{course.name}}
+      <cell v-for="course in this.courses" :key="course.couresId" @click.native="click(course)" style="margin:20px">
+        {{course.courseName}}
         <img
           slot="icon"
           src="@/assets/book.png"
@@ -61,9 +61,9 @@ export default {
     ButtonTab,
     ButtonTabItem,Popup
   },
-  mounted: function() {
+  mounted:function() {
     this.$axios.get("/course").then(response => {
-      this.courses = repsonse.data;
+      this.courses = response.data.courses;
     }).catch((error)=>{
         console.log(error)
     });
@@ -73,32 +73,13 @@ export default {
       name: "name",
       newItem: "newItem",
       show:false,
-      courses: [
-        {
-          id: 1,
-          isShareTeam: true,
-          isShareSeminar: false,
-          name: "OOAD",
-          className: "2016-2",
-          classId: 1,
-          teacherName: "邱明"
-        },
-        {
-          id: 2,
-          isShareTeam: true,
-          isShareSeminar: false,
-          name: "J2EE",
-          className: "2016-1",
-          classId: 2,
-          teacherName: "邱明"
-        },
-      ]
+      courses:'',
     };
   },
   methods: {
     // /mobile/Student/studentSeminarList
     click: function(course) {
-      this.$store.state.currentCourse=course
+      this.$store.state.student.currentCourse=course
       this.$router.push({ name: 'StudentCourseSeminar'})
     },
         running:function(){

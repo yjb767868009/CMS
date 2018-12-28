@@ -19,7 +19,7 @@
         </template>
         <template v-if="teaminfo.role==='leader'">
         <cell :border-intent="false" value-align="left" title="添加成员：" style="height:20px"><span style="color:#000;padding-left:20px"></span></cell>
-        <template v-for="stu in noteam">
+        <template v-for="stu in this.noteam">
         <check-icon  :key="stu.id" :value.sync="stu.showNoTeam" style="color:#000;padding-left:15px"> &emsp;{{stu.account}} &emsp;{{stu.name}} &emsp;<span v-if="stu.showNoTeam">(｡･∀･)ﾉﾞ</span></check-icon>
         </template>
             <cell :border-intent="false" value-align="left" title="搜索成员：" style="margin-top:30px;padding-top:20px;height:20px;padding-right:30px"><el-input placeholder="请输入成员学号或姓名"></el-input></cell>
@@ -172,7 +172,7 @@ import { notEqual } from 'assert';
         .then((response)=>{
             this.noteam=response.data;
             for(var i=0;i<this.noteam.length;i++){
-                this.$set(noteam[i],'showNoTeam',false);
+                this.$set(this.noteam[i],'showNoTeam',false);
             }
         })
         this.$axios.get('/team/'+this.$store.state.student.Myteam.teamId)
@@ -209,8 +209,8 @@ import { notEqual } from 'assert';
                 console.log(response.data)
                 this.newMembers=[]
                 this.newMembersname=[]
-                window.location.reload()
             })
+            window.location.reload()
         },
         //addmember函数用于将已勾选的学生加入到newmember列表当中用于post
         addmember:function(){
@@ -239,8 +239,8 @@ import { notEqual } from 'assert';
             this.$axios.put('/team/'+this.teaminfo.team.teamId+'/remove',{studentId:this.memberWillBeDe})
             .then((response)=>{
                 console.log(response.data)
-                window.location.reload()
-            })
+            }) 
+            window.location.reload()
         },
         applic:function(value){
             if(value!=''){

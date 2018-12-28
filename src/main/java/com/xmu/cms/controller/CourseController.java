@@ -289,7 +289,7 @@ public class CourseController {
                                                  @RequestBody List<Strategy> strategies) {
         Map<String, String> message = new HashMap<>(1);
         try {
-            courseService.newCourseStrategy(strategies);
+            courseService.newCourseStrategy(courseId, strategies);
             message.put("message", "Success");
         } catch (Exception e) {
             message.put("message", "Error");

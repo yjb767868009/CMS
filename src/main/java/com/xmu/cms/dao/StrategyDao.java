@@ -1,5 +1,6 @@
 package com.xmu.cms.dao;
 
+import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.strategy.*;
 import com.xmu.cms.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,11 +135,11 @@ public class StrategyDao {
         }
     }
 
-    public void newStrategy(List<Strategy> strategies) throws Exception {
+    public void newStrategy(BigInteger courseId, List<Strategy> strategies) throws Exception {
         Strategy firstStrategy = strategies.get(0);
+        Strategy beforeStrategy = null;
         if (firstStrategy.getType().equals(TEAM_OR_STRATEGY_TYPE)) {
             strategies.remove(0);
-            Strategy beforeStrategy = null;
             TeamOrStrategy teamOrStrategy = null;
             for (Strategy strategy : strategies) {
                 if (strategy.getType().equals(COURSE_MEMBER_LIMIT_STRATEGY)) {
@@ -162,10 +163,30 @@ public class StrategyDao {
             if (teamOrStrategy != null) {
                 beforeStrategy = teamOrStrategy;
             }
-            TeamAndStrategy teamAndStrategy = null;
-            for (Strategy strategy : strategies) {
-                // TODO: 2018/12/28
+        }
+        TeamAndStrategy teamAndStrategy = null;
+        for (Strategy strategy : strategies) {
+            if (beforeStrategy == null) {
+                beforeStrategy = insertStrategy(strategy);
+            } else {
+                strategy = insertStrategy(strategy);
+                TeamAndStrategy newTeamAndStrategy = new TeamAndStrategy();
+                if (teamAndStrategy == null) {
+                    newTeamAndStrategy.setSubStrategyOne(beforeStrategy);
+                } else {
+                    newTeamAndStrategy.setSubStrategyOne(teamAndStrategy);
+                }
+                newTeamAndStrategy.setSubStrategyTwo(strategy);
+                newTeamAndStrategy = (TeamAndStrategy) insertStrategy(newTeamAndStrategy);
+                teamAndStrategy = newTeamAndStrategy;
             }
         }
+        if (teamAndStrategy != null) {
+            beforeStrategy = teamAndStrategy;
+        }
+        TeamStrategy teamStrategy = new TeamStrategy();
+        teamStrategy.setCourse(new Course(courseId));
+        teamStrategy.setSubStrategy(beforeStrategy);
+        teamStrategyMapper.insertTeamStrategy(teamStrategy);
     }
 }

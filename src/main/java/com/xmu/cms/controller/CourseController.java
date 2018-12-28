@@ -233,13 +233,7 @@ public class CourseController {
         return seminarService.getRoundScoreInCourse(courseId, roundId);
     }
 
-    @Secured("ROLE_TEACHER")
-    @GetMapping(value = "/course/{courseId}/round/{roundId}/team/{teamId}/score")
-    public Map<String, Object> getTeamScoreInCourse(@PathVariable("courseId") BigInteger courseId,
-                                                    @PathVariable("roundId") BigInteger roundId,
-                                                    @PathVariable("teamId") BigInteger teamId) {
-        return seminarService.getTeamRoundScoreAndSeminarScore(teamId, courseId, roundId);
-    }
+
 
 
     @Secured("ROLE_STUDENT")

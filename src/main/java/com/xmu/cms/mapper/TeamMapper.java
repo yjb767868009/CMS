@@ -129,4 +129,11 @@ public interface TeamMapper {
      */
     Team getStudentTeamInCourse(@Param("studentId") BigInteger studentId,
                                 @Param("courseId") BigInteger courseId);
+
+    /**
+     * 获取班级里最后的队伍
+     * @param klassId 班级id
+     * @return 队伍
+     */
+    Team getLastTeamInKlass(BigInteger klassId);// TODO: 2018/12/28  
 }

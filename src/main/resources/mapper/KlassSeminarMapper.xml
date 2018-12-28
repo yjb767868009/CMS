@@ -174,9 +174,4 @@
           AND klass.id = klass_seminar.klass_id
           and seminar.id = klass_seminar.seminar_id
     </select>
-
-    <insert id="addTeam">
-        insert klass_team (klass_id, team_id)
-        values (#{klassId}, #{teamId})
-    </insert>
 </mapper>

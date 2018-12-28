@@ -135,4 +135,9 @@
         from klass_team
         where team_id = #{teamId}
     </delete>
+
+    <insert id="addTeam">
+        insert klass_team (klass_id, team_id)
+        values (#{klassId}, #{teamId})
+    </insert>
 </mapper>

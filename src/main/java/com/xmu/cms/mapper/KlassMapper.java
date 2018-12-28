@@ -140,5 +140,5 @@ public interface KlassMapper {
      *
      * @param teamId 队伍id
      */
-    void deleteKlassTeam(BigInteger teamId);// TODO: 2018/12/28  
+    void deleteKlassTeam(@Param("teamId") BigInteger teamId);
 }

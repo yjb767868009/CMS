@@ -126,4 +126,10 @@
         insert klass_round (klass_id, round_id, enroll_number)
         values (#{klassId}, #{roundId}, 1)
     </insert>
+
+    <delete id="deleteKlassTeam">
+        delete
+        from klass_team
+        where team_id = #{teamId}
+    </delete>
 </mapper>

@@ -35,7 +35,7 @@
                 <cell-box
                   :key="klassSeminar.klassSeminarId"
                   is-link
-                  @click.native="clickClassSeminar(seminar,klassSeminar)"
+                  @click.native="clickClassSeminar(round,seminar,klassSeminar)"
                   style="margin-left:40px"
                 >{{klassSeminar.klass.name}}</cell-box>
               </template>
@@ -242,7 +242,8 @@ export default {
         this.$store.state.teacher.currentRound=round
         this.$router.push('/mobile/teacher/setround')
     },
-    clickClassSeminar: function(seminar,klassSeminar) {
+    clickClassSeminar: function(round,seminar,klassSeminar) {
+        this.$store.state.teacher.currentRound=round
         this.$store.state.teacher.currentSeminar=seminar
         this.$store.state.teacher.currentKlassSeminar=klassSeminar
         if(klassSeminar.status===0){

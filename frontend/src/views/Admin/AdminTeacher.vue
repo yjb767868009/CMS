@@ -181,7 +181,7 @@ export default {
       if (!isNaN(this.teacherSearchKey)) {
         //搜教工号
         this.$axios
-          .get("/teacher/searchByAccount/" + this.teacherSearchKey)
+          .get("/admin/teacher/searchByAccount/" + this.teacherSearchKey)
           .then(response => {
             this.teacherData = response.data;
           })
@@ -191,7 +191,7 @@ export default {
       } else {
         //搜名字
         this.$axios
-          .get("/teacher/searchByName/" + this.teacherSearchKey)
+          .get("/admin/teacher/searchByName/" + this.teacherSearchKey)
           .then(response => {
             if (response.data[0] === null) {
               this.$message.error("找不到该老师");
@@ -210,7 +210,7 @@ export default {
 
     getAllTeacher: function() {
       this.$axios
-        .get("/teacher")
+        .get("/admin/teacher")
         .then(response => {
           this.teacherData = response.data;
           this.currentTotal = this.teacherData.length;
@@ -231,7 +231,7 @@ export default {
       }).then(({ value }) => {
         let input = value;
         this.$axios
-          .put("/teacher/" + teacher.teacherId + "/password", {
+          .put("/admin/teacher/" + teacher.teacherId + "/password", {
             password: input
           })
           .then(response => {
@@ -261,7 +261,7 @@ export default {
       }).then(() => {
         //确认删除
         this.$axios
-          .delete("/teacher/" + teacher.teacherId)
+          .delete("/admin/teacher/" + teacher.teacherId)
           .then(response => {
             console.log(response);
             this.getAllTeacher();

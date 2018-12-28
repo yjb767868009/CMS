@@ -220,9 +220,6 @@ export default {
         });
     },
   methods: {
-    newSeminar: function() {
-      this.$router.push("/mobile/teacher/createseminar");
-    },
     clickClassSeminar: function(seminar,klassSeminar) {
         this.$store.state.teacher.currentSeminar=seminar
         this.$store.state.teacher.currentKlassSeminar=klassSeminar

@@ -173,7 +173,7 @@ export default {
       if (!isNaN(this.studentSearchKey)) {
         //搜学号
         this.$axios
-          .get("/student/searchByAccount/" + this.studentSearchKey)
+          .get("/admin/student/searchByAccount/" + this.studentSearchKey)
           .then(response => {
             this.studentData = response.data;
           })
@@ -183,7 +183,7 @@ export default {
       } else {
         //搜名字
         this.$axios
-          .get("/student/searchByName/" + this.studentSearchKey)
+          .get("/admin/student/searchByName/" + this.studentSearchKey)
           .then(response => {
             if (response.data[0] === null) {
               this.$message.error("找不到该学生");
@@ -202,7 +202,7 @@ export default {
 
     getAllStudent: function() {
       this.$axios
-        .get("/student")
+        .get("/admin/student")
         .then(response => {
           this.studentData = response.data;
           this.currentTotal = this.studentData.length;
@@ -223,7 +223,7 @@ export default {
       }).then(({ value }) => {
         let input = value;
         this.$axios
-          .put("/student/" + student.studentId + "/password", {
+          .put("/admin/student/" + student.studentId + "/password", {
             password: input
           })
           .then(response => {
@@ -253,7 +253,7 @@ export default {
       }).then(() => {
         //确认删除
         this.$axios
-          .delete("/student/" + student.studentId)
+          .delete("/admin/student/" + student.studentId)
           .then(response => {
             console.log(response);
             this.getAllStudent();

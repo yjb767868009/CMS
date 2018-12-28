@@ -1272,12 +1272,12 @@
         uploadFileURL:'http://localhost:8000/'
       }
     },
-    // mounted: function () {
-    //   this.$axios.get('/course')
-    //     .then((response) => {
-    //         this.courses=response.data.courses
-    //     })
-    // },
+    mounted: function () {
+      this.$axios.get('/course')
+        .then((response) => {
+            this.courses=response.data.courses
+        })
+    },
     methods: {
       logOut: function () {
         this.$store.state.token = ''
@@ -1285,10 +1285,10 @@
       },
       clickCourse: function (course) {
         this.currentCourse = course
-        // this.$axios.get('/course/'+this.currentCourse.courseId+'/round')
-        // .then((response)=>{
-        //     this.rounds=response.data
-        // })
+        this.$axios.get('/course/'+this.currentCourse.courseId+'/round')
+        .then((response)=>{
+            this.rounds=response.data
+        })
         this.chooseCourses = false
         this.showSeminarCard = true
         this.lookingSeminar = true
@@ -1300,10 +1300,10 @@
       handleSelect: function (index) {
         if (index === '1') {
           //讨论课
-          // this.$axios.get('/course/'+this.currentCourse.courseId+'/round')
-          // .then((response)=>{
-          //     this.rounds=response.data
-          // })
+          this.$axios.get('/course/'+this.currentCourse.courseId+'/round')
+          .then((response)=>{
+              this.rounds=response.data
+          })
           this.showScoreCard = false
           this.showSeminarCard = true
           this.showSeminarOngoing = false
@@ -1330,7 +1330,7 @@
             this.Attendances=response.data.attendance
             if(response.data.message==='1'||response.data.message==='2'||response.data.message==='3'||response.data.message==='4'||response.data.message==='5'||response.data.message==='6'){
               //当前用户已经参加了该讨论课
-              this.is_join=response.data.
+              this.is_join=response.data.message
               this.$set(this.is_signed,parseInt(this.is_join),true)
             }else if(response.data.message==='other'){
               //当前用户还没有参与讨论课

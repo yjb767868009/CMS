@@ -9,7 +9,6 @@ export default new vuex.Store({
         currentRound:'',
         currentKlassSeminar:'', 
         currentSeminar:'',
-        
     },
     mutations:{
         

@@ -7,26 +7,8 @@
       :right-options="{showMore: true}"
       @on-click-more="show=!show"
     ></x-header>
-    <div style="font-size:18px;background:#fff">
-      <cell primary="content" title="第一组：" value-align="left">
-        <div style="text-decoration:underline;padding-left:40px;color:#005AB5;">1-1&emsp;业务流程.ppt</div>
-      </cell>
-    </div>
-    <div style="font-size:18px;background:#eee">
-      <cell primary="content" title="第二组：" value-align="left">
-        <div style="text-decoration:underline;padding-left:40px;color:#005AB5;">1-2&emsp;业务流程.ppt</div>
-      </cell>
-    </div>
-    <div style="font-size:18px;background:#fff">
-      <cell primary="content" title="第三组：" value-align="left">
-        <div style="text-decoration:underline;padding-left:40px;color:#005AB5;">1-3&emsp;业务流程.ppt</div>
-      </cell>
-    </div>
-    <div style="font-size:18px;background:#eee">
-      <cell primary="content" title="第四组：" value-align="left">
-        <div style="text-decoration:underline;padding-left:40px;color:#005AB5;">1-4&emsp;业务流程.ppt</div>
-      </cell>
-    </div>
+    
+     
 
     <div v-transfer-dom>
       <popup v-model="show" height="15%">
@@ -72,7 +54,8 @@
 
 
 <script>
-import axios from "axios";
+import SockJS from 'sockjs-client'
+import Stomp from 'stompjs'
 import { XHeader, XButton, Group, Cell, TransferDom, Popup } from "vux";
 export default {
   directives: {
@@ -90,6 +73,28 @@ export default {
       show: false
     };
   },
+   mounted: function () {
+      this.initWebSocket()
+      //this.$store.state.teacher.currentKlassSeminar.klassSeminarId
+      this.$axios.get('/klassseminar/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/run')
+        .then((response) => {
+          console.log(response)
+          this.questions = response.data.questions
+          this.attendances = response.data.attendances
+          this.Questions = []
+          for (var i = 0; i < this.questions.length; i++) {
+            this.Questions.push(this.questions[i].name)
+          }
+          this.Teams = []
+          for (var i = 0; i < this.attendances.length; i++) {
+            this.Teams.push(this.attendances[i].team.teamName)
+          }
+        })
+    },
+    beforeDestroy: function () {
+      // 页面离开时断开连接,清除定时器
+      this.disconnect();
+    },
   methods: {
     toast: function() {
       Toast(this.name);
@@ -105,7 +110,37 @@ export default {
     },
     StudentInfo: function() {
       this.$router.push("/mobile/student/studentInfo");
-    }
+    },
+
+
+
+     //websocket
+      initWebSocket: function () {
+        this.connection()
+      },
+
+      connection: function () {
+        //建立链接对象
+        this.socket = new SockJS('http://localhost:8000/gs-guide-websocket')
+        //获取STOMP子协议的客户端对象
+        this.stompClient = Stomp.over(this.socket)
+        //空header
+        //this.$store.state.teacher.currentKlassSeminar.klassSeminarId
+        this.stompClient.connect({}, (frame) => {
+          this.stompClient.subscribe('/topic/klassSeminar/1', (KlassSeminarRun) => {
+            this.KlassSeminarRun=JSON.parse(KlassSeminarRun.body)
+            console.log(KlassSeminarRun.body)
+          })
+        })
+
+      },
+
+      disconnect() {
+        if (this.stompClient != null) {
+          this.stompClient.disconnect()
+          console.log("Disconnected")
+        }
+      },
   }
 };
 </script>

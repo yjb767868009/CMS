@@ -121,7 +121,7 @@ export default {
 
       connection: function () {
         //建立链接对象
-        this.socket = new SockJS('http://localhost:8000/gs-guide-websocket')
+        this.socket = new SockJS('http://119.23.49.112:8000/gs-guide-websocket')
         //获取STOMP子协议的客户端对象
         this.stompClient = Stomp.over(this.socket)
         //空header

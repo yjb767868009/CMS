@@ -79,8 +79,10 @@
     </delete>
 
     <insert id="createCourse" parameterType="com.xmu.cms.entity.Course">
-        insert into course (id,
-                            teacher_id,
+        <selectKey keyProperty="courseId" order="AFTER" resultType="java.math.BigInteger">
+            select last_insert_id()
+        </selectKey>
+        insert into course (teacher_id,
                             course_name,
                             introduction,
                             presentation_percentage,
@@ -88,8 +90,7 @@
                             question_percentage,
                             team_start_time,
                             team_end_time)
-        values (#{course.courseId},
-                #{course.teacher.teacherId},
+        values (#{course.teacher.teacherId},
                 #{course.courseName},
                 #{course.introduction},
                 #{course.presentationWeight},

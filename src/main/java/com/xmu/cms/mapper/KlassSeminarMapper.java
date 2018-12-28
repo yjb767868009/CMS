@@ -97,7 +97,7 @@ public interface KlassSeminarMapper {
      * @param klassId   班级id
      * @param seminarId 讨论课id
      */
-    void insertKlassSeminar(@Param("klassId") BigInteger klassId,
+    BigInteger insertKlassSeminar(@Param("klassId") BigInteger klassId,
                             @Param("seminarId") BigInteger seminarId);
 
     /**

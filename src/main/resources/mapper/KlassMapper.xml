@@ -15,6 +15,9 @@
     </resultMap>
 
     <insert id="insertKlass" parameterType="com.xmu.cms.entity.Klass">
+        <selectKey keyProperty="klassId" order="AFTER" resultType="java.math.BigInteger">
+            select last_insert_id()
+        </selectKey>
         INSERT klass (course_id, grade, klass_serial, klass_time, klass_location)
         VALUE (#{klass.course.courseId}, #{klass.grade}, #{klass.klassSerial}, #{klass.klassTime}, #{klass.klassPlace})
     </insert>

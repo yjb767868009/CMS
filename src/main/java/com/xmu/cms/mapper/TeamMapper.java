@@ -68,7 +68,7 @@ public interface TeamMapper {
      *
      * @param team 队伍信息
      */
-    void insertTeam(@Param("team") Team team);
+    BigInteger insertTeam(@Param("team") Team team);
 
     /**
      * 根据班级和队长获取队伍

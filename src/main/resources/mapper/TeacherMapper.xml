@@ -26,7 +26,10 @@
         WHERE id = #{teacher.teacherId}
     </update>
 
-    <insert id="insertTeacher">
+    <insert id="insertTeacher" parameterType="com.xmu.cms.entity.Teacher">
+        <selectKey keyProperty="teacherId" order="AFTER" resultType="java.math.BigInteger">
+            select last_insert_id()
+        </selectKey>
         INSERT INTO teacher (account, password, email, teacher_name, is_active)
         VALUE (#{teacher.account}, #{teacher.password}, #{teacher.email}, #{teacher.name}, #{teacher.activation})
     </insert>

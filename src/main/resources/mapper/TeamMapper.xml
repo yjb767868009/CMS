@@ -156,7 +156,10 @@
           and team.course_id = course.id
     </select>
 
-    <insert id="insertTeam">
+    <insert id="insertTeam" parameterType="com.xmu.cms.entity.Team">
+        <selectKey keyProperty="teamId" order="AFTER" resultType="java.math.BigInteger">
+            select last_insert_id()
+        </selectKey>
         insert team (klass_id, course_id, leader_id, team_name, team_serial, klass_serial, status)
         values (#{team.klass.klassId},
                 #{team.course.courseId},

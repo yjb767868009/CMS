@@ -158,7 +158,9 @@ public class TeamDao {
     public List<Course> getAllCourse(Course course) {
         List<Course> allCourse = courseMapper.getAllCourse();
         for (Course oneCourse : allCourse) {
-            // TODO: 2018/12/29
+            if (oneCourse.getCourseId().equals(course.getCourseId())) {
+                allCourse.remove(oneCourse);
+            }
         }
         return allCourse;
     }

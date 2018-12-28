@@ -14,7 +14,7 @@
         </collection>
     </resultMap>
 
-    <select id="getConflictCourseStrategyById" resultMap="com.xmu.cms.entity.Course">
+    <select id="getConflictCourseStrategyById" resultMap="ConflictCourseResultMap">
         select course.id as courseOneId,
                course.course_name as courseOneName,
                course.teacher_id  as teacherOneId,

@@ -15,8 +15,7 @@
     </resultMap>
 
     <select id="getConflictCourseStrategyById" resultMap="ConflictCourseResultMap">
-        select conflict_course_strategy.id as conflictCourseId,
-               course.id as courseOneId,
+        select course.id as courseOneId,
                course.course_name as courseOneName,
                course.teacher_id  as teacherOneId,
                teacher.teacher_name as teacherOneName

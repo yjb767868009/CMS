@@ -62,11 +62,11 @@ public class TeamDao {
         newTeam.setCourse(new Course(courseId));
         teamMapper.insertTeam(newTeam);
         Team team = teamMapper.getTeamBySerial(newTeam.getKlassSerial(), newTeam.getTeamSerial());
-        klassMapper.addMembers(klassId, studentId, team.getTeamId());
+        klassMapper.addMembers(team.getTeamId(), studentId);
         List<Student> students = newTeam.getMembers();
         if (students != null) {
             for (Student student : students) {
-                klassMapper.addMembers(klassId, student.getStudentId(), team.getTeamId());
+                klassMapper.addMembers(team.getTeamId(), student.getStudentId());
             }
         }
         return getFullTeam(team.getTeamId());
@@ -87,7 +87,7 @@ public class TeamDao {
         for (Student student : students) {
             Team findTeam = teamMapper.getStudentTeamInKlass(student.getStudentId(), team.getKlass().getKlassId());
             if (findTeam == null) {
-                klassMapper.addMembers(team.getKlass().getKlassId(), team.getTeamId(), student.getStudentId());
+                klassMapper.addMembers(team.getTeamId(), student.getStudentId());
             }
         }
         return getFullTeam(teamId);

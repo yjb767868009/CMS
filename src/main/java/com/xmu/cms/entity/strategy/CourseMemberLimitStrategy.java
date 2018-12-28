@@ -75,6 +75,9 @@ public class CourseMemberLimitStrategy implements Strategy {
         students.add(team.getLeader());
         for (Student student : students) {
             List<Course> courses = student.getCourses();
+            if (courses == null) {
+                continue;
+            }
             for (Course studentCourse : courses) {
                 if (course.getCourseId().equals(studentCourse.getCourseId())) {
                     courseCount++;

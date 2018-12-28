@@ -58,12 +58,12 @@ public class WebSocketController {
         return klassSeminarRun;
     }
 
-    @MessageMapping("/{klassSeminarId}/stopAttendance")
+    @MessageMapping("/{klassSeminarId}/endAttendance")
     @SendTo("/topic/klassSeminar/{klassSeminarId}")
-    public KlassSeminarRun stopAttendance(@DestinationVariable("klassSeminarId") BigInteger klassSeminarId) throws Exception {
-        seminarService.stopKlassSeminar(klassSeminarId);
+    public KlassSeminarRun endKlassSeminar(@DestinationVariable("klassSeminarId") BigInteger klassSeminarId) throws Exception {
+        seminarService.endKlassSeminar(klassSeminarId);
         KlassSeminarRun klassSeminarRun = new KlassSeminarRun();
-        klassSeminarRun.setMessage("stop");
+        klassSeminarRun.setMessage("end");
         return klassSeminarRun;
     }
 }

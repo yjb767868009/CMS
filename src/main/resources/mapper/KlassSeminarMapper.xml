@@ -101,9 +101,9 @@
           and seminar.id = klass_seminar.seminar_id
     </select>
 
-    <update id="stopKlassSeminar">
+    <update id="endKlassSeminar">
         update klass_seminar
-        set status = 3
+        set status = 2
         where id = #{klassSeminarId}
     </update>
 

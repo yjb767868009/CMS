@@ -41,8 +41,8 @@ public class KlassSeminarDao {
         return klassSeminarMapper.getRunningKlassSeminarByTeacherId(teacherId);
     }
 
-    public void stopKlassSeminar(BigInteger klassSeminarId) {
-        klassSeminarMapper.stopKlassSeminar(klassSeminarId);
+    public void endKlassSeminar(BigInteger klassSeminarId) {
+        klassSeminarMapper.endKlassSeminar(klassSeminarId);
     }
 
     public void startKlassSeminar(BigInteger klassSeminarId) {

@@ -247,8 +247,8 @@ public class SeminarService {
         return null;
     }
 
-    public void stopKlassSeminar(BigInteger klassSeminarId) {
-        klassSeminarDao.stopKlassSeminar(klassSeminarId);
+    public void endKlassSeminar(BigInteger klassSeminarId) {
+        klassSeminarDao.endKlassSeminar(klassSeminarId);
     }
 
     public void startKlassSeminar(BigInteger klassSeminarId) {

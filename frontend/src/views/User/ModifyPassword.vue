@@ -36,6 +36,8 @@ export default {
       }else{
         this.$axios.put('/user/password',{
           password:this.password1
+        }).then((response)=>{
+          this.$router.go(-1)
         })
       }
     },

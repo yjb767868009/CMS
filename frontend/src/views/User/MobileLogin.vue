@@ -75,7 +75,7 @@ export default {
             this.$router.push('/mobile/teacher/activation')
           }
           else{//不用激活
-            this.$router.push('/mobile/teacher/seminars')
+            this.$router.push('/mobile/teacher')
           }
         }
 

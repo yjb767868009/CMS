@@ -176,12 +176,12 @@ import {TransferDom,XHeader,
             this.showContent002=!this.showContent002
         },
         sureNewTeam:function(){
-            this.$axios.post('/course/'+this.$store.state.student.currentCourse.courseId+'/class/'+this.currentklass.klassId+'/team',this.newMembers.push({teamName:this.teamName}))
+            this.$axios.post('/course/'+this.$store.state.student.currentCourse.courseId+'/class/'+this.currentklass.klassId+'/team',{members:this.newMembers,teamName:this.teamName})
             .then((response)=>{
-                console.log(response.data)
                 this.newMembers=[]
                 this.newMembersname=[]
             })
+            // console.log(['members'=this.newMembers,'teamName'=this.teamName]);
         }
     }
         

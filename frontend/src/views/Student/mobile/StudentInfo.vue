@@ -3,8 +3,8 @@
     <x-header title="我" style="height:60px;padding-top:12px" :left-options="{showBack:false}"  :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
     <x-header align="right" style="background:#fff;margin:20px 0px 0px;height:90px;padding-top:12px border:1" :left-options="{showBack:false}">
-         <div slot="right" style="font-size:1.3em;color:#000;">{{myInfo.name}}&emsp;</div>
-         <p slot="right" style="font-size:1.3em;color:#000">{{myInfo.account}}&emsp;</p>
+         <div slot="right" style="font-size:1.3em;color:#000;">{{this.myInfo.name}}&emsp;</div>
+         <p slot="right" style="font-size:1.3em;color:#000">{{this.myInfo.account}}&emsp;</p>
     </x-header>
     <group>
       <cell is-link title="我的课程" link="/mobile/Student/myClass"><img slot="icon" src="@/assets/lock.png" style="display:block;margin-right:12px;margin-left:3px" width="15px" height="20px"/></cell>
@@ -60,7 +60,7 @@ import {TransferDom,XHeader,
         })
         this.$axios.get('/user/email')
         .then((response)=>{
-            this.$store.state.student.email=response.data;
+            this.$store.state.email=response.data;
         })
     },
     data() {

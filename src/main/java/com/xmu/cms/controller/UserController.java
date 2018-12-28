@@ -1,18 +1,18 @@
 package com.xmu.cms.controller;
 
-import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Teacher;
-import com.xmu.cms.entity.Team;
-import com.xmu.cms.service.*;
+import com.xmu.cms.service.MailService;
+import com.xmu.cms.service.SeminarService;
+import com.xmu.cms.service.TeamService;
+import com.xmu.cms.service.UserService;
 import com.xmu.cms.support.MyUser;
 import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigInteger;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -20,7 +20,7 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "")
 public class UserController {
 
     @Autowired
@@ -35,31 +35,64 @@ public class UserController {
     @Autowired
     private MailService mailService;
 
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/user/login")
     public Map<String, String> userLogIn(@RequestParam(value = "account") String account,
                                          @RequestParam(value = "password") String password) {
         return userService.userLogIn(account, password);
     }
 
-    @GetMapping(value = "/password")
+    @Secured("ROLE_STUDENT")
+    @PutMapping(value = "/student/active")
+    public Map<String, String> activateStudent(UserInfo info,
+                                               @RequestBody Student student) {
+        Map<String, String> message = new HashMap<String, String>(1);
+        try {
+            student.setStudentId(info.getUserId());
+            userService.activateStudent(student);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
+    }
+
+    @Secured("ROLE_TEACHER")
+    @PutMapping(value = "/teacher/active")
+    public Map<String, String> activeTeacher(UserInfo info,
+                                             @RequestBody Teacher teacher) {
+        Map<String, String> message = new HashMap<String, String>(2);
+        teacher.setTeacherId(info.getUserId());
+        Integer count = userService.activeTeacher(teacher);
+        if (count > 0) {
+            message.put("message", "Success");
+        } else {
+            message.put("message", "Error");
+        }
+        return message;
+    }
+
+    @Secured({"ROLE_STUDENT", "ROLE_TEACHER"})
+    @GetMapping(value = "/user/password")
     public Map<String, String> getPassword(@RequestBody MyUser user) {
         return mailService.sendPassword(user);
     }
 
-    @PutMapping(value = "/password")
+    @Secured({"ROLE_STUDENT", "ROLE_TEACHER"})
+    @PutMapping(value = "/user/password")
     public Map<String, String> modifyPassword(UserInfo info,
                                               @RequestBody MyUser user) {
         return userService.modifyPassword(info, user);
     }
 
-    @PutMapping(value = "/email")
+    @Secured({"ROLE_STUDENT", "ROLE_TEACHER"})
+    @PutMapping(value = "/user/email")
     public Map<String, String> modifyEmail(UserInfo info,
                                            @RequestBody MyUser user) {
         return userService.modifyEmail(info, user);
     }
 
     @Secured({"ROLE_STUDENT", "ROLE_TEACHER"})
-    @GetMapping(value = "/email")
+    @GetMapping(value = "/user/email")
     public String getMyEmail(UserInfo info) {
         switch (info.getUserType()) {
             case "teacher":
@@ -73,21 +106,7 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "round/{roundId}/seminars")
-    public List<Seminar> getAllSeminarInRound(@PathVariable(value = "roundId") BigInteger roundId) {
-        return seminarService.getAllSeminarInRound(roundId);
-    }
-
-    @GetMapping(value = "/seminar/{seminarId}/teams")
-    public List<Team> getTeamsInSeminar(@PathVariable("seminarId") BigInteger seminarId) {
-        return teamService.getAllTeamsInSeminar(seminarId);
-    }
-
-    @GetMapping(value = "/seminar/{seminarId}")
-    public Seminar getSeminarById(@PathVariable("seminarId") BigInteger seminarId) {
-        return seminarService.getSeminarBySeminarId(seminarId);
-    }
-
+    @Secured({"ROLE_STUDENT", "ROLE_TEACHER"})
     @GetMapping(value = "/information")
     public Map<String, String> getMyInfo(UserInfo info) {
         return userService.getMyInfo(info);

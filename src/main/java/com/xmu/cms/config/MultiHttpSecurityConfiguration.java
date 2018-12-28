@@ -50,10 +50,9 @@ public class MultiHttpSecurityConfiguration {
                     authenticationEntryPoint(new AdminAuthorizedEntryPoint());
             http.addFilter(authJwtLoginFilter())
                     .addFilterBefore(authJwtAuthenticationFilter(), JwtLoginFilter.class);
-            http.authorizeRequests()
-                    .antMatchers("/user/login", "/admin/login", "/user/password").permitAll()
-                    .antMatchers("/**").permitAll()
-                    .anyRequest().permitAll()
+            http.antMatcher("/admin/**")
+                    .authorizeRequests()
+                    .antMatchers("/user/login", "/user/password", "/admin/login").permitAll()
                     .anyRequest().authenticated();
             http.formLogin()
                     .loginPage("/admin/login").loginProcessingUrl("/admin/login")
@@ -157,7 +156,7 @@ public class MultiHttpSecurityConfiguration {
     public static CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH","OPTIONS"));
+        configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         // setAllowCredentials(true) is important, otherwise:
         // The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
         configuration.setAllowCredentials(true);

@@ -20,7 +20,6 @@ import java.util.Map;
  */
 
 @RestController
-@RequestMapping(value = "")
 public class AttendanceController {
 
     @Autowired

@@ -15,8 +15,8 @@
       <x-textarea :title="'要求'" :show-counter="false" :placeholder="this.$store.state.student.currentSeminar.introduction" disabled></x-textarea>
       <cell :title="'报名:'">已报名</cell>
       <cell :title="'课程情况'">已完成&emsp;&emsp;&emsp;<a @click="checkInfo">报名情况</a></cell>
-      <cell :title="'PPT'">{{}}</cell>
-      <cell :title="'书面报告'">{{}}</cell>
+      <cell :title="'PPT'">{{'未提交'}}</cell>
+      <cell :title="'书面报告'">{{'未提交'}}</cell>
       <x-button @click.native="register" type="primary" style="margin-top:18px;color:#fff">报名</x-button>
     </group>
 

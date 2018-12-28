@@ -9,7 +9,9 @@
     ></x-header>
     
     <group>
-    <cell>{{'第'+attendances.teamOrder+'组展示中    '+this.$store.state.student.currentSeminar.topic+'   已有'+Questions.length+'位同学提问'}}</cell>
+
+      <cell>{{KlassSeminarRun}}</cell>
+    <cell>{{'第'+KlassSeminarRun.teamOrder+'组展示中    '+this.$store.state.student.currentSeminar.topic+'   已有'+Questions.length+'位同学提问'}}</cell>
     <template v-for="attendance in attendances">
       <cell :key="attendance.attendanceId" :title="'第'+attendance.teamOrder+'组'">{{attendance.team.teamName}}</cell>
     </template>
@@ -100,6 +102,7 @@ export default {
       questions:'',
       Questions:'',
       attendances:'',
+      KlassSeminarRun:'',
     };
   },
   mounted: function () {
@@ -131,7 +134,6 @@ export default {
     onConfirm: function() {
       console.log("确认");
       let len = this.attendances.length
-      console.log(len)
       console.log(this.attendances[len-1].attendanceId+1)
         this.stompClient.send('/app/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/question', {}, {
           attendanceId:this.attendances[len-1].attendanceId+1
@@ -150,7 +152,7 @@ export default {
 
       connection: function () {
         //建立链接对象
-        this.socket = new SockJS('http://localhost:8000/gs-guide-websocket')
+        this.socket = new SockJS('http://119.23.49.112:8000/gs-guide-websocket')
         //获取STOMP子协议的客户端对象
         this.stompClient = Stomp.over(this.socket)
         //空header

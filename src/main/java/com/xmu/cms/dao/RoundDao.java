@@ -119,7 +119,7 @@ public class RoundDao {
         return round;
     }
 
-    public Integer newRound(Round round) {
+    public BigInteger newRound(Round round) {
         Map<BigInteger, Integer> klassEnrollNumber = round.getKlassEnrollNumber();
         for (BigInteger klassId : klassEnrollNumber.keySet()) {
             Integer enrollNumber = klassEnrollNumber.get(klassId);

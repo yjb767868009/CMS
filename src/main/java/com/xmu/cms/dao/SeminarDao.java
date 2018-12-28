@@ -22,7 +22,7 @@ public class SeminarDao {
     @Autowired
     private KlassSeminarMapper klassSeminarMapper;
 
-    public Integer insertSeminar(Seminar seminar) {
+    public BigInteger insertSeminar(Seminar seminar) {
         return seminarMapper.insertSeminar(seminar);
     }
 

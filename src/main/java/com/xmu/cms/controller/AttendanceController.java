@@ -53,7 +53,7 @@ public class AttendanceController {
     }
 
     @Secured("ROLE_STUDENT")
-    @PutMapping(value = "/attendance/{attendanceId}/report")
+    @PostMapping(value = "/attendance/{attendanceId}/report")
     public Map<String, String> uploadReport(@PathVariable("attendanceId") BigInteger attendanceId,
                                             @RequestParam("file") MultipartFile file) {
         Map<String, String> message = new HashMap<String, String>(1);
@@ -68,7 +68,7 @@ public class AttendanceController {
     }
 
     @Secured("ROLE_STUDENT")
-    @PutMapping(value = "/attendance/{attendanceId}/powerpoint")
+    @PostMapping(value = "/attendance/{attendanceId}/powerpoint")
     public Map<String, String> uploadPPT(@PathVariable("attendanceId") BigInteger attendanceId,
                                          @RequestParam("file") MultipartFile file) {
         Map<String, String> message = new HashMap<String, String>(1);
@@ -98,9 +98,10 @@ public class AttendanceController {
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
     @GetMapping(value = "/attendance/{attendanceId}/powerpoint")
-    public Map<String, String> downloadPPT(@PathVariable("attendanceId") BigInteger attendanceId, @RequestBody Attendance attendance) throws UnsupportedEncodingException {
+    public Map<String, String> downloadPPT(@PathVariable("attendanceId") BigInteger attendanceId) throws UnsupportedEncodingException {
         Map<String, String> message = new HashMap<String, String>(1);
         try {
+            Attendance attendance = seminarService.getAttendanceByAttendanceId(attendanceId);
             FileUtils.downloadAttendanceFile(attendanceId, attendance.getPresentationFile());
             message.put("message", "Success");
         } catch (Exception e) {

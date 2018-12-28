@@ -95,7 +95,7 @@ public class CourseDao {
         return courseMapper.getAllCourseByStudentId(studentId);
     }
 
-    public Integer createCourse(Course course) {
+    public BigInteger createCourse(Course course) {
         return courseMapper.createCourse(course);
     }
 

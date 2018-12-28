@@ -54,7 +54,7 @@ public class SeminarService {
     }
 
     public Map<String, String> deleteSeminar(BigInteger seminarId) {
-        Map<String, String> message = new HashMap<String, String>(2);
+        Map<String, String> message = new HashMap<>(2);
         Integer count = seminarDao.deleteSeminar(seminarId);
         if (count == 1) {
             message.put("message", "Success");
@@ -62,10 +62,6 @@ public class SeminarService {
             message.put("message", "Error");
         }
         return message;
-    }
-
-    public List<Seminar> getSeminarsByCourseId(BigInteger courseId) {
-        return null;
     }
 
     public Map<String, String> modifySeminar(Seminar seminar) {
@@ -91,7 +87,7 @@ public class SeminarService {
         return seminarDao.getAllSeminarByRoundId(roundId);
     }
 
-    public Integer newRound(Round round) {
+    public BigInteger newRound(Round round) {
         return roundDao.newRound(round);
     }
 
@@ -325,7 +321,7 @@ public class SeminarService {
         Team team = teamDao.getStudentTeamInRound(studentId, roundId);
         RoundScore roundScore = roundScoreDao.getRoundTeamScore(roundId, team.getTeamId());
         List<SeminarScore> seminarScores = seminarScoreDao.getTeamSeminarScoreInRound(team.getTeamId(), roundId);
-        Map<String, Object> score = new HashMap<>();
+        Map<String, Object> score = new HashMap<>(2);
         score.put("roundScore", roundScore);
         score.put("seminarScore", seminarScores);
         return score;
@@ -334,7 +330,7 @@ public class SeminarService {
     public Map<String, Object> getTeamRoundScoreAndSeminarScore(BigInteger teamId, BigInteger roundId) {
         RoundScore roundScore = roundScoreDao.getRoundTeamScore(roundId, teamId);
         List<SeminarScore> seminarScores = seminarScoreDao.getTeamSeminarScoreInRound(teamId, roundId);
-        Map<String, Object> score = new HashMap<>();
+        Map<String, Object> score = new HashMap<>(2);
         score.put("roundScore", roundScore);
         score.put("seminarScore", seminarScores);
         return score;

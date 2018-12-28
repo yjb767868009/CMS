@@ -27,9 +27,6 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private CourseService courseService;
-
-    @Autowired
     private SeminarService seminarService;
 
     @Autowired
@@ -74,11 +71,6 @@ public class UserController {
             default:
                 return "Error";
         }
-    }
-
-    @GetMapping(value = "/course/{courseId}/seminars")
-    public List<Seminar> getSeminarsByCourseId(@PathVariable("courseId") BigInteger courseId) {
-        return seminarService.getSeminarsByCourseId(courseId);
     }
 
     @GetMapping(value = "round/{roundId}/seminars")

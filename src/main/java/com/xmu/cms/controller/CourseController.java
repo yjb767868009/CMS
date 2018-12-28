@@ -119,13 +119,13 @@ public class CourseController {
     @PostMapping(value = "/course/{courseId}/round")
     public Map<String, String> newRound(@PathVariable("courseId") BigInteger courseId,
                                         @RequestBody Round round) {
-        round.setCourse(new Course(courseId));
-        Map<String, String> message = new HashMap<String, String>(2);
-        Integer count = seminarService.newRound(round);
-        if (count > 0) {
+        Map<String, String> message = new HashMap<String, String>(1);
+        try {
+            round.setCourse(new Course(courseId));
+            seminarService.newRound(round);
             message.put("message", "Success");
-        } else {
-            message.put("message", "Error");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
         }
         return message;
     }
@@ -159,7 +159,7 @@ public class CourseController {
     @PostMapping(value = "/course/{courseId}/class")
     public Map<String, String> createClass(@PathVariable("courseId") BigInteger courseId,
                                            @RequestBody Klass klass) {
-        Map<String, String> message = new HashMap<String, String>(1);
+        Map<String, String> message = new HashMap<>(1);
         try {
             courseService.newKlass(courseId, klass);
             message.put("message", "Success");

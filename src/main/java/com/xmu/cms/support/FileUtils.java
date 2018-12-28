@@ -127,7 +127,6 @@ public class FileUtils {
         return UPLOADED_FOLDER + "attendance" + File.separator + attendanceId.toString();
     }
 
-
     public static void downloadAttendanceFile(BigInteger attendanceId, String fileName) throws Exception {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         String error = "Error";
@@ -142,6 +141,8 @@ public class FileUtils {
             String emptyFileError = "空的文件";
             throw new Exception(emptyFileError);
         }
+        response.setContentType("application/force-download");
+        response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);
         String filePath = getAttendancePath(attendanceId);
         File file = new File(filePath, fileName);
         if (file.exists()) {

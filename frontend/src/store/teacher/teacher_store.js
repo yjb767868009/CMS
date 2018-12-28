@@ -9,6 +9,9 @@ export default new vuex.Store({
         currentRound:'',
         currentKlassSeminar:'', 
         currentSeminar:'',
+        account:'',
+        name:'',
+        email:'',
         
     },
     mutations:{

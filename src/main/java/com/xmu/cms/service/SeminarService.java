@@ -144,7 +144,7 @@ public class SeminarService {
     }
 
     public SeminarScore getSeminarTeamScore(BigInteger seminarId, BigInteger teamId) {
-        return null;
+        return seminarScoreDao.getSeminarTeamScore(seminarId, teamId);
     }
 
     public List<SeminarScore> getSeminarScore(BigInteger seminarId) {

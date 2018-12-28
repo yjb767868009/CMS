@@ -50,4 +50,12 @@ public interface SeminarScoreMapper {
      * @param seminarScore 讨论课成绩，包含队伍id，讨论课id，展示成绩
      */
     void updatePresentationScore(@Param("seminarScore") SeminarScore seminarScore);
+
+    /**
+     * 获取队伍在讨论课的成绩
+     * @param seminarId 讨论课id
+     * @param teamId 队伍id
+     * @return 讨论课成绩
+     */
+    SeminarScore getSeminarTeamScore(BigInteger seminarId, BigInteger teamId);// TODO: 2018/12/28  
 }

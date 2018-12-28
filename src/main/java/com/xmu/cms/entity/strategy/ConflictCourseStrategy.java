@@ -16,17 +16,14 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ConflictCourseStrategy implements Strategy {
     private BigInteger strategyId;
-    private Course courseOne;
-    private Course courseTwo;
+    private List<Course> courses;
     private String type;
 
     public ConflictCourseStrategy() {
     }
 
-    public ConflictCourseStrategy(BigInteger strategyId, Course courseOne, Course courseTwo, String type) {
+    public ConflictCourseStrategy(BigInteger strategyId, String type) {
         this.strategyId = strategyId;
-        this.courseOne = courseOne;
-        this.courseTwo = courseTwo;
         this.type = type;
     }
 
@@ -39,43 +36,30 @@ public class ConflictCourseStrategy implements Strategy {
         this.strategyId = strategyId;
     }
 
-    public Course getCourseOne() {
-        return courseOne;
+    public List<Course> getCourses() {
+        return courses;
     }
 
-    public void setCourseOne(Course courseOne) {
-        this.courseOne = courseOne;
-    }
-
-    public Course getCourseTwo() {
-        return courseTwo;
-    }
-
-    public void setCourseTwo(Course courseTwo) {
-        this.courseTwo = courseTwo;
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
     @Override
     public Boolean checkValid(Team team) {
         List<Student> students = team.getMembers();
-        Boolean hasCourseOne = false;
-        Boolean hasCourseTwo = false;
+        Course hasCourse = null;
         if (students == null) {
             students = new ArrayList<>();
         }
         students.add(team.getLeader());
         for (Student student : students) {
-            List<Course> courses = student.getCourses();
-            for (Course course : courses) {
-                if (course.getCourseId().equals(courseOne.getCourseId())) {
-                    hasCourseOne = true;
+            List<Course> studentCourses = student.getCourses();
+            for (Course studentCourse : studentCourses) {
+                for (Course course : courses) {
+                    if (course.getCourseId().equals(hasCourse.getCourseId())) {
+                        // TODO: 2018/12/28
+                    }
                 }
-                if (course.getCourseId().equals(courseTwo.getCourseId())) {
-                    hasCourseTwo = true;
-                }
-            }
-            if (hasCourseOne && hasCourseTwo) {
-                return false;
             }
         }
         return true;

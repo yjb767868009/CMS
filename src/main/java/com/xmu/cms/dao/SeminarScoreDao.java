@@ -36,4 +36,8 @@ public class SeminarScoreDao {
     public void updatePresentationScore(SeminarScore seminarScore) {
         seminarScoreMapper.updatePresentationScore(seminarScore);
     }
+
+    public SeminarScore getSeminarTeamScore(BigInteger seminarId, BigInteger teamId) {
+        return seminarScoreMapper.getSeminarTeamScore(seminarId, teamId);
+    }
 }

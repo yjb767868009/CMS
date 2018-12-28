@@ -7,7 +7,7 @@
         <collection property="courses" javaType="com.xmu.cms.entity.Course">
             <id property="courseId" column="courseId"/>
             <result property="courseName" column="courseName"/>
-            <association property="teacher" javaType="com.xmu.cms.entity.Teacher">
+            <association property="teacher" javaType="com.xmu.cms.entity.Teacher" select="getConflictCourseStrategyById">
                 <id property="teacherId" column="teacherId"/>
                 <result property="name" column="TeacherName"/>
             </association>

@@ -1,6 +1,6 @@
 <template>
   <div class="course">
-    <x-header title="OOAD" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
+    <x-header :title="this.$store.state.teacher.currentCourse.courseName" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
     <div style="margin-left:10px">
     <div title='新建讨论课' style="text-align:center;margin-top:20px">新建讨论课</div>
@@ -16,7 +16,6 @@
         <datetime v-model="signupStartTime" :start-date="startDate" :end-date="endDate" format="YYYY-MM-DD HH:mm"  title="报名开始时间"></datetime>
         <datetime v-model="signupEndTime" :start-date="startDate" :end-date="endDate" format="YYYY-MM-DD HH:mm" title="报名截止时间"></datetime>
         <popup-picker title="报名小组数" :data="teamNums" v-model="teamNum" ></popup-picker>
-        <!-- <x-switch title="报名顺序自定" :value-map="['不自定','自定']"></x-switch> -->
         <popup-picker title="所属round" :data="roundOrders" v-model="roundOrder"></popup-picker>
     </group>
     </div>
@@ -35,21 +34,13 @@
 </template>
 
 <script>
-import {XHeader,XButton,Divider,Group,Datetime,XInput,PopupPicker,XSwitch,XTextarea,TransferDom,Popup} from 'vux'
+import {XHeader,XButton,Divider,Group,Datetime,XInput,PopupPicker,XSwitch,XTextarea,TransferDom,Popup,} from 'vux'
 export default {
   directives:{
     TransferDom
   },
     components:{
-        XHeader,
-        XButton,
-        Divider,
-        Group,
-        Datetime,
-        XInput,
-        PopupPicker,
-        XSwitch,
-        XTextarea,Popup
+        XHeader,XButton,Divider,Group,Datetime,XInput,PopupPicker,XSwitch,XTextarea,Popup
     },
     methods: {
     change (value) {
@@ -58,46 +49,55 @@ export default {
     },
     data () {
         return {
-            seminarOrder: '1',
+            seminarOrder: ['1'],
             seminarOrders: [['1', '2', '3','4','5']],
             startDate: '2018-01-01',
             endDate: '2018-12-31',
-            teamNum: '6',
+            teamNum: ['6'],
             teamNums: [['1', '2', '3','4','5','6']],
-            roundOrder: '无',
-            roundOrders: [['无', '1' ,'2', '3','4','5','6']],
+            roundOrder: ['1'],
+            roundOrders: [['1' ,'2', '3','4','5','6','7','8','9','10']],
             topic:'',
             intro:'',
             visible:false,
             signupStartTime:'',
             signupEndTime:'',
             show:false,
+            roundList:[],
         }
+    },
+    mounted:function(){
+        this.$axios.get('/course/'+this.$store.state.teacher.currentCourse.courseId+'/roundlist')
+        .then((res)=>{
+            this.roundList=res.data
+            this.roundOrders=[this.roundOrders[0].slice(0,this.roundList.length)]
+
+        })
     },
     methods:{
         submit:function(){
             console.log({
                 topic:this.topic,
                 intro:this.intro,
-                order:this.seminarOrder,
-                roundOrder:this.roundOrder,
+                signOrder:this.seminarOrder[0],
+                round:{roundId:this.roundList[parseInt(this.roundOrder[0])].roundId,},
                 visible:this.visible,
-                teamNumLimit:this.teamNum,
+                maxTeamNum:this.teamNum[0],
                 signupStartTime:this.signupStartTime.slice(0,4)+'/'+this.signupStartTime.slice(5,7)+'/'+this.signupStartTime.slice(8,10),
                 signupEndTime:this.signupEndTime.slice(0,4)+'/'+this.signupEndTime.slice(5,7)+'/'+this.signupEndTime.slice(8,10),
-                courseId:this.$store.state.teacher.currentCourse.courseId
             })
-            // this.$axios.post('/seminar',{
-            //     topic:this.topic,
-            //     intro:this.intro,
-            //     order:this.seminarOrder,
-            //     roundOrder:'',
-            //     visible:'',
-            //     teamNumLimit:'',
-            //     signupStartTime:'',
-            //     signupEndTime:'',
-            //     courseId:''
-            // })
+            this.$axios.post('/course/'+this.$store.state.teacher.currentCourse.courseId+'/seminar',{
+                topic:this.topic,
+                intro:this.intro,
+                signOrder:this.seminarOrder[0],
+                round:{roundId:this.roundList[parseInt(this.roundOrder[0])].roundId,},
+                visible:this.visible,
+                maxTeamNum:this.teamNum[0],
+                signupStartTime:this.signupStartTime.slice(0,4)+'/'+this.signupStartTime.slice(5,7)+'/'+this.signupStartTime.slice(8,10),
+                signupEndTime:this.signupEndTime.slice(0,4)+'/'+this.signupEndTime.slice(5,7)+'/'+this.signupEndTime.slice(8,10),
+            }).then((res)=>{
+                this.$router.go(-1)
+            })
         },
     Undo(){
             this.$router.push('/mobile/teacher/notify')

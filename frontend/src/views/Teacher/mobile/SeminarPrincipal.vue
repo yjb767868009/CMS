@@ -220,9 +220,9 @@ export default {
           this.rounds = response.data;
           //为返回数据绑定show属性用于折叠显示
           for(var i=0;i<this.rounds.length;i++){
-              this.rounds[i].showRoundContent=false
+              this.$set(this.rounds[i],'showRoundContent',false)
               for(var j=0;j<this.rounds[i].seminars.length;j++){
-                  this.rounds[i].seminars[j].showSeminarContent=false
+                  this.$set(this.rounds[i].seminars[j],'showSeminarContent',false)
               }
           }
         });

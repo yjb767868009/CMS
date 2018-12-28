@@ -1,6 +1,7 @@
 package com.xmu.cms.dao;
 
 import com.xmu.cms.entity.Course;
+import com.xmu.cms.entity.Klass;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Team;
 import com.xmu.cms.mapper.CourseMapper;
@@ -56,12 +57,17 @@ public class TeamDao {
         Team bigTeam = teamMapper.getLastTeamInKlass(klassId);
         newTeam.setKlassSerial(bigTeam.getKlassSerial());
         newTeam.setTeamSerial(bigTeam.getTeamSerial() + 1);
-        teamMapper.insertTeam(klassId, courseId, studentId, newTeam);
-        Team team = teamMapper.getTeamByKlass(klassId, studentId);
-        List<Student> students = newTeam.getMembers();
+        newTeam.setLeader(new Student(studentId));
+        newTeam.setKlass(new Klass(klassId));
+        newTeam.setCourse(new Course(courseId));
+        teamMapper.insertTeam(newTeam);
+        Team team = teamMapper.getTeamBySerial(newTeam.getKlassSerial(), newTeam.getTeamSerial());
         klassMapper.addMembers(klassId, studentId, team.getTeamId());
-        for (Student student : students) {
-            klassMapper.addMembers(klassId, student.getStudentId(), team.getTeamId());
+        List<Student> students = newTeam.getMembers();
+        if (students != null) {
+            for (Student student : students) {
+                klassMapper.addMembers(klassId, student.getStudentId(), team.getTeamId());
+            }
         }
         return getFullTeam(team.getTeamId());
     }
@@ -72,6 +78,7 @@ public class TeamDao {
 
     public Integer deleteTeam(BigInteger teamId) {
         klassMapper.deleteTeamStudent(teamId);
+        klassMapper.deleteKlassTeam(teamId);
         return teamMapper.deleteTeamByTeamId(teamId);
     }
 

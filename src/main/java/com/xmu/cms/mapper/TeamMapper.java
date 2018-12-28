@@ -66,16 +66,9 @@ public interface TeamMapper {
     /**
      * 新建队伍（不包括新建队伍学生关系），默认status为0
      *
-     * @param klassId   班级id
-     * @param courseId  课程id
-     * @param studentId 队长id
-     * @param team      队伍信息
-     * @return 新建成功信息
+     * @param team 队伍信息
      */
-    Integer insertTeam(@Param("klassId") BigInteger klassId,
-                       @Param("courseId") BigInteger courseId,
-                       @Param("studentId") BigInteger studentId,
-                       @Param("team") Team team);
+    void insertTeam(@Param("team") Team team);
 
     /**
      * 根据班级和队长获取队伍
@@ -84,7 +77,8 @@ public interface TeamMapper {
      * @param studentId 学生id
      * @return 队伍信息
      */
-    Team getTeamByKlass(@Param("klassId") BigInteger klassId, @Param("studentId") BigInteger studentId);
+    Team getTeamByKlass(@Param("klassId") BigInteger klassId,
+                        @Param("studentId") BigInteger studentId);
 
     /**
      * 更新队伍合法性
@@ -148,4 +142,12 @@ public interface TeamMapper {
      */
     Team getStudentTeamInRound(@Param("studentId") BigInteger studentId,
                                @Param("roundId") BigInteger roundId);
+
+    /**
+     * 根据队伍序号获取队伍
+     * @param klassSerial 班级序号
+     * @param teamSerial 队伍序号
+     * @return 队伍
+     */
+    Team getTeamBySerial(Integer klassSerial, Integer teamSerial);// TODO: 2018/12/28
 }

@@ -160,7 +160,7 @@ public class SeminarController {
                 if (team != null) {
                     for (Attendance attendance : attendances) {
                         if (attendance.getTeam().getTeamId().equals(team.getTeamId())) {
-                            message.put("message", "join");
+                            message.put("message", attendance.getTeamOrder());
                             break;
                         }
                     }

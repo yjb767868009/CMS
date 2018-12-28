@@ -9,7 +9,7 @@
             <result property="courseName" column="courseOneName"/>
             <association property="teacher" javaType="com.xmu.cms.entity.Teacher">
                 <id property="teacherId" column="teacherOneId"/>
-                <result property="teacherName" column="TeacherOneName"/>
+                <result property="name" column="TeacherOneName"/>
             </association>
         </association>
         <association property="courseTwo" javaType="com.xmu.cms.entity.Course">
@@ -17,7 +17,7 @@
             <result property="courseName" column="courseTwoName"/>
             <association property="teacher" javaType="com.xmu.cms.entity.Teacher">
                 <id property="teacherId" column="teacherTwoId"/>
-                <result property="teacherName" column="TeacherTwoName"/>
+                <result property="name" column="TeacherTwoName"/>
             </association>
         </association>
     </resultMap>

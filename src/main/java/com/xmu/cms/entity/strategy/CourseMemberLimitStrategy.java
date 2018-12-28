@@ -6,6 +6,7 @@ import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Team;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,6 +69,10 @@ public class CourseMemberLimitStrategy implements Strategy {
     public Boolean checkValid(Team team) {
         Integer courseCount = 0;
         List<Student> students = team.getMembers();
+        if (students == null) {
+            students = new ArrayList<>();
+        }
+        students.add(team.getLeader());
         for (Student student : students) {
             List<Course> courses = student.getCourses();
             for (Course studentCourse : courses) {

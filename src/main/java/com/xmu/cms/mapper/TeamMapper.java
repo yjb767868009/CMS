@@ -67,6 +67,7 @@ public interface TeamMapper {
      * 新建队伍（不包括新建队伍学生关系），默认status为0
      *
      * @param team 队伍信息
+     * @return 新增信息
      */
     Integer insertTeam(@Param("team") Team team);
 
@@ -145,8 +146,9 @@ public interface TeamMapper {
 
     /**
      * 根据队伍序号获取队伍
+     *
      * @param klassSerial 班级序号
-     * @param teamSerial 队伍序号
+     * @param teamSerial  队伍序号
      * @return 队伍
      */
     Team getTeamBySerial(@Param("klassSerial") Integer klassSerial,

@@ -181,6 +181,9 @@ import {TransferDom,XHeader,
                 this.newMembers=[]
                 this.newMembersname=[]
             })
+            
+            this.newMembers=[]
+            this.newMembersname=[]
             // console.log(['members'=this.newMembers,'teamName'=this.teamName]);
         }
     }

@@ -28,10 +28,10 @@ public class SeminarService {
     private RoundDao roundDao;
 
     @Autowired
-    private RoundScoreDao roundScoreDao;
+    private ScoreDao scoreDao;
 
     @Autowired
-    private SeminarScoreDao seminarScoreDao;
+    private ScoreDao ScoreDao;
 
     @Autowired
     private QuestionDao questionDao;
@@ -136,28 +136,23 @@ public class SeminarService {
     }
 
     public RoundScore getRoundTeamScore(BigInteger roundId, BigInteger teamId) {
-        return roundScoreDao.getRoundTeamScore(roundId, teamId);
+        return scoreDao.getRoundTeamScore(roundId, teamId);
     }
 
     public List<RoundScore> getRoundScore(BigInteger roundId) {
-        return roundScoreDao.getRoundScore(roundId);
+        return scoreDao.getRoundScore(roundId);
     }
 
     public SeminarScore getSeminarTeamScore(BigInteger seminarId, BigInteger teamId) {
-        return seminarScoreDao.getSeminarTeamScore(seminarId, teamId);
+        return ScoreDao.getSeminarTeamScore(seminarId, teamId);
     }
 
     public List<SeminarScore> getSeminarScore(BigInteger seminarId) {
-        return seminarScoreDao.getSeminarScoreInSeminar(seminarId);
+        return ScoreDao.getSeminarScoreInSeminar(seminarId);
     }
 
     public List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId) {
-        return questionDao.getQuestionInKlassSeminar(klassSeminarId);
-    }
-
-    public Question askQuestion(BigInteger userId, BigInteger attendanceId) {
-        //todo
-        return null;
+        return questionDao.getAttendanceQuestionInKlassSeminar(klassSeminarId);
     }
 
     public Map<String, String> scoreQuestion(Question question) {
@@ -179,7 +174,7 @@ public class SeminarService {
         return klassSeminarDao.getKlassSeminarByKlassAndSeminar(klassId, seminarId);
     }
 
-    public Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId) {
+    public Attendance getStudentAttendanceInKlassAndSeminar(BigInteger studentId, BigInteger klassId, BigInteger seminarId) {
         return attendanceDao.getStudentAttendanceInKlassAndSeminar(studentId, klassId, seminarId);
     }
 
@@ -280,7 +275,7 @@ public class SeminarService {
         List<Map<String, Object>> allScore = new ArrayList<>();
         for (Team team : teams) {
             Map<String, Object> score = new HashMap<>(2);
-            RoundScore roundScore = roundScoreDao.getRoundTeamScore(roundId, team.getTeamId());
+            RoundScore roundScore = scoreDao.getRoundTeamScore(roundId, team.getTeamId());
             score.put("team", team);
             score.put("score", roundScore.getTotalScore());
             allScore.add(score);
@@ -293,8 +288,8 @@ public class SeminarService {
     }
 
     public void modifyTeamSeminarScore(SeminarScore seminarScore) {
-        seminarScoreDao.modifyTeamSeminarScore(seminarScore);
-        roundScoreDao.updateRoundScore(seminarScore.getKlassSeminar().getKlassSeminarId(), seminarScore.getTeam().getTeamId());
+        ScoreDao.modifyTeamSeminarScore(seminarScore);
+        scoreDao.updateRoundScore(seminarScore.getKlassSeminar().getKlassSeminarId(), seminarScore.getTeam().getTeamId());
     }
 
     public void scoreReportScore(BigInteger attendanceId, SeminarScore seminarScore) throws Exception {
@@ -304,7 +299,7 @@ public class SeminarService {
         }
         seminarScore.setKlassSeminar(new KlassSeminar(attendance.getKlassSeminar().getKlassSeminarId()));
         seminarScore.setTeam(new Team(attendance.getTeam().getTeamId()));
-        seminarScoreDao.updateReportScore(seminarScore);
+        ScoreDao.updateReportScore(seminarScore);
     }
 
     public void scorePresentationScore(BigInteger attendanceId, SeminarScore seminarScore) throws Exception {
@@ -314,13 +309,13 @@ public class SeminarService {
         }
         seminarScore.setKlassSeminar(new KlassSeminar(attendance.getKlassSeminar().getKlassSeminarId()));
         seminarScore.setTeam(new Team(attendance.getTeam().getTeamId()));
-        seminarScoreDao.updatePresentationScore(seminarScore);
+        ScoreDao.updatePresentationScore(seminarScore);
     }
 
     public Map<String, Object> getStudentRoundScoreAndSeminarScore(BigInteger studentId, BigInteger roundId) {
         Team team = teamDao.getStudentTeamInRound(studentId, roundId);
-        RoundScore roundScore = roundScoreDao.getRoundTeamScore(roundId, team.getTeamId());
-        List<SeminarScore> seminarScores = seminarScoreDao.getTeamSeminarScoreInRound(team.getTeamId(), roundId);
+        RoundScore roundScore = scoreDao.getRoundTeamScore(roundId, team.getTeamId());
+        List<SeminarScore> seminarScores = ScoreDao.getTeamSeminarScoreInRound(team.getTeamId(), roundId);
         Map<String, Object> score = new HashMap<>(2);
         score.put("roundScore", roundScore);
         score.put("seminarScore", seminarScores);
@@ -328,8 +323,8 @@ public class SeminarService {
     }
 
     public Map<String, Object> getTeamRoundScoreAndSeminarScore(BigInteger teamId, BigInteger roundId) {
-        RoundScore roundScore = roundScoreDao.getRoundTeamScore(roundId, teamId);
-        List<SeminarScore> seminarScores = seminarScoreDao.getTeamSeminarScoreInRound(teamId, roundId);
+        RoundScore roundScore = scoreDao.getRoundTeamScore(roundId, teamId);
+        List<SeminarScore> seminarScores = ScoreDao.getTeamSeminarScoreInRound(teamId, roundId);
         Map<String, Object> score = new HashMap<>(2);
         score.put("roundScore", roundScore);
         score.put("seminarScore", seminarScores);
@@ -338,5 +333,9 @@ public class SeminarService {
 
     public List<Round> getRoundListInCourse(BigInteger courseId) {
         return roundDao.getRoundListInCourse(courseId);
+    }
+
+    public Attendance getStudentAttendanceInKlassSeminar(BigInteger studentId, BigInteger klassSeminarId) {
+        return attendanceDao.getStudentAttendanceInKlassSeminar(studentId, klassSeminarId);
     }
 }

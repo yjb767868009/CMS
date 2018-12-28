@@ -207,7 +207,7 @@ public class CourseService {
         return teamDao.getStudentTeamInKlassSeminar(studentId, klassSeminarId);
     }
 
-    public List<Course> getAllCourse() {
-        return teamDao.getAllCourse();
+    public List<Course> getAllCourse(Course course) {
+        return teamDao.getAllCourse(course);
     }
 }

@@ -31,10 +31,14 @@ public class TeamController {
 
     @Secured("ROLE_STUDENT")
     @PostMapping(value = "/course/{courseId}/class/{classId}/team")
-    public Team newTeam(UserInfo userInfo, @PathVariable("courseId") BigInteger courseId,
-                        @PathVariable("classId") BigInteger classId,
-                        @RequestBody Team team) {
-        return teamService.newTeam(courseId, classId, userInfo.getUserId(), team);
+    public Object newTeam(UserInfo userInfo, @PathVariable("courseId") BigInteger courseId,
+                          @PathVariable("classId") BigInteger classId,
+                          @RequestBody Team team) {
+        try {
+            return teamService.newTeam(courseId, classId, userInfo.getUserId(), team);
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})

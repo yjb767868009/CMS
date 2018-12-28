@@ -38,8 +38,8 @@ public class CourseController {
 
     @Secured("ROLE_TEACHER")
     @GetMapping(value = "/allcourse")
-    public List<Course> getAllCourse() throws Exception {
-        return courseService.getAllCourse();
+    public List<Course> getAllCourse(@RequestBody Course course) throws Exception {
+        return courseService.getAllCourse(course);
     }
 
     @Secured("ROLE_TEACHER")
@@ -289,7 +289,7 @@ public class CourseController {
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
     @PostMapping(value = "/course/{courseId}/seminarsharerequest")
-    public Map<String, String> sendTeamShareRequest(@PathVariable("courseId") BigInteger courseId,
+    public Map<String, String> sendShareSeminar(@PathVariable("courseId") BigInteger courseId,
                                                     @RequestBody ShareSeminar shareSeminar) {
         shareSeminar.setMasterCourse(new Course(courseId));
         Map<String, String> message = new HashMap<String, String>(1);

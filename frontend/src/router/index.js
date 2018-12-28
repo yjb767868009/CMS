@@ -61,6 +61,7 @@ import SeminarSubordinate from '@/views/Teacher/mobile/SeminarSubordinate'
 import SeminarUnstarted from '@/views/Teacher/mobile/SeminarUnstarted'
 import MobileTeacher from '@/views/Teacher/mobile/MobileTeacher'
 import teacherCheckPPT from '@/views/Teacher/mobile/TeacherCheckPPT'
+import ModifySeminar from '@/views/Teacher/mobile/ModifySeminar'
 
 import SetRound from '@/views/Teacher/mobile/SetRound'
 import CreateSeminar from '@/views/Teacher/mobile/CreateSeminar'
@@ -320,9 +321,14 @@ export default new Router({
       component:SetRound
     },
     {
-      path:'/mobile/teacher/createseminar',
+      path:'/mobile/teacher/createseminar',//新建讨论课
       name:'CreateSeminar',
       component:CreateSeminar
+    },
+    {
+      path:'/mobile/teacher/modifySeminar',//修改讨论课
+      name:'ModifySeminar',
+      component:ModifySeminar
     },
     {
       path:'/mobile/teacher/seminars',//老师讨论课
@@ -375,12 +381,12 @@ export default new Router({
       component:teacherCheckPPT
     },
     {
-      path:'/mobile/teacher/teamlist',
+      path:'/mobile/teacher/teamlist',//学生组队
       name:'TeamList',
       component:TeamList
     },
     {
-      path:'/mobile/teacher/gradelist',
+      path:'/mobile/teacher/gradelist',//学生成绩
       name:'GradeList',
       component:GradeList
     },
@@ -395,7 +401,7 @@ export default new Router({
       component:ClassInfo
     },
     {
-      path:'/mobile/teacher/notify',
+      path:'/mobile/teacher/notify',//待办
       name:'Notify',
       component:Notify
     },

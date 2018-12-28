@@ -66,12 +66,6 @@ import {XHeader,
         })
     },
     methods:{
-        toast:function(){
-            Toast(this.name)
-        },
-        onClick:function(){
-            console.log("sss");
-        },
     Undo(){
             this.$router.push('/mobile/teacher/notify')
         },
@@ -79,7 +73,7 @@ import {XHeader,
             this.$router.push('/mobile/teacher')
         },
     GoSeminar(){
-            this.$router.push('/mobile/teacher/seminar')
+            this.$router.push('/mobile/teacher/seminars')
         },
     }
         

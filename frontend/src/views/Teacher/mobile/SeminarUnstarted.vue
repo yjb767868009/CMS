@@ -47,11 +47,13 @@ export default {
       this.$router.push('/mobile/teacher/checkPPT')
     },
     presentation:function(){
-      console.log('present')
-        this.$router.push('')
+      this.$axios.put('/klassseminar/'+this.$store.state.teacher.currentKlassSeminar.klassSeminarId+'/start')
+      .then((res)=>{
+        this.$router.push('/mobile/teacher/manageSeminar')
+      })
     },
     modifySeminar:function(){
-      this.$router.push('')
+      this.$router.push('/mobile/teacher/modifySeminar')
     },
     Undo(){
             this.$router.push('/mobile/teacher/notify')

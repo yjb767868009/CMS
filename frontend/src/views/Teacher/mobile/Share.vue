@@ -33,7 +33,7 @@
         </template>
     </group>
 
-    <x-button @click="newshare" style="margin-top:100px" type="primary">新增共享</x-button>
+    <x-button @click.native="newshare" style="margin-top:100px" type="primary">新增共享</x-button>
     <div v-transfer-dom>
       <popup v-model="show" height="23%">
           <div>
@@ -82,6 +82,9 @@ export default {
         GoSeminar(){
             this.$router.push('/mobile/teacher/seminars')
         },
+        newshare:function(){
+            this.$router.push('/mobile/teacher/createshare')
+        }
     }
 }
 </script>

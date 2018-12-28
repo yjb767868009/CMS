@@ -90,4 +90,20 @@
         where klass_seminar_id = #{seminarScore.klassSeminar.klassSeminarId}
           and team_id = #{seminarScore.team.teamId}
     </update>
+
+    <select id="getSeminarTeamScore" resultMap="SeminarScoreResultMap">
+        SELECT team.team_name     as teamName,
+               team_id            as teamId,
+               presentation_score as presentationScore,
+               question_score     as questionScore,
+               report_score       as reportScore,
+               total_score        as totalScore
+        FROM seminar_score,
+             team,
+             klass_seminar
+        WHERE seminar_id = #{seminarId}
+          and seminar_score.team_id = #{teamId}
+          and klass_seminar_id = klass_seminar.id
+          AND team.id = seminar_score.team_id
+    </select>
 </mapper>

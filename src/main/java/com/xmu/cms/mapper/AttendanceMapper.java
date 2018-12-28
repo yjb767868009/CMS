@@ -115,5 +115,6 @@ public interface AttendanceMapper {
      * @param roundId 轮次id
      * @return 展示列表
      */
-    List<Attendance> getTeamAttendancesInRound(BigInteger teamId, BigInteger roundId);// TODO: 2018/12/27
+    List<Attendance> getTeamAttendancesInRound(@Param("teamId") BigInteger teamId,
+                                               @Param("roundId") BigInteger roundId);
 }

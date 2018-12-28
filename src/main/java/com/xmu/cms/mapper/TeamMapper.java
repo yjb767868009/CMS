@@ -110,7 +110,8 @@ public interface TeamMapper {
      * @param klassId   班级id
      * @return 队伍
      */
-    Team getStudentTeamInKlass(@Param("studentId") BigInteger studentId, @Param("klassId") BigInteger klassId);
+    Team getStudentTeamInKlass(@Param("studentId") BigInteger studentId,
+                               @Param("klassId") BigInteger klassId);
 
     /**
      * 获取简单的队伍信息，无嵌套关系
@@ -136,7 +137,7 @@ public interface TeamMapper {
      * @param klassId 班级id
      * @return 队伍
      */
-    Team getLastTeamInKlass(BigInteger klassId);// TODO: 2018/12/28
+    Team getLastTeamInKlass(@Param("klassId") BigInteger klassId);
 
     /**
      * 获取学生在轮次下的队伍
@@ -145,5 +146,5 @@ public interface TeamMapper {
      * @param roundId   轮次id
      * @return 队伍
      */
-    Team getStudentTeamInRound(BigInteger studentId, BigInteger roundId);// TODO: 2018/12/28  
+    Team getStudentTeamInRound(BigInteger studentId, BigInteger roundId);// TODO: 2018/12/28
 }

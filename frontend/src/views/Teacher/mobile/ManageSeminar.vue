@@ -116,7 +116,7 @@
     mounted: function () {
       this.initWebSocket()
       //this.$store.state.teacher.currentKlassSeminar.klassSeminarId
-      this.$axios.get('/klassseminar/1/run')
+      this.$axios.get('/klassseminar/'+this.$store.state.teacher.currentKlassSeminar.klassSeminarId+'/run')
         .then((response) => {
           console.log(response)
           this.questions = response.data.questions

@@ -9,8 +9,8 @@
         <cell :key="course.courseId" :title="course.courseName" is-link :border-intent="false" :arrow-direction="course.showCourseContent?'up':'down'"
           @click.native="course.showCourseContent=!course.showCourseContent">
         </cell>
-        <template v-if="course.showCourseContent" style="margin-left:20px">
-          <div :key="course.courseId">
+        <template v-if="course.showCourseContent">
+          <div style="margin-left:20px" :key="course.courseId">
           <cell-box :border-intent="false" class="sub-item" is-link @click.native="classInfo(course)">学生成绩</cell-box>
           <cell-box class="sub-item" is-link @click.native="classInfo(course)">学生组队</cell-box>
           <cell-box class="sub-item" is-link @click.native="classInfo(course)">课程信息</cell-box>

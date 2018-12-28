@@ -122,5 +122,10 @@ public interface CourseMapper {
      */
     Course getSeminarMainCourseByCourseId(@Param("courseId") BigInteger courseId);
 
+    /**
+     * 获取系统中全部课程
+     *
+     * @return 课程列表
+     */
     List<Course> getAllCourse();
 }

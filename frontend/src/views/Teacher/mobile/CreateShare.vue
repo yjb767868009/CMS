@@ -80,7 +80,7 @@ export default {
     },
     onConfirm () {
         if(this.type=='共享讨论课'){
-            this.$axios.post('/course/'+this.$store.state.teacher.currentCourse.courseId+'/seminarsharerequest',{masterCourse:this.$store.state.teacher.currentCourse.courseId,receiveCourse:this.followklassId,receiveTeacher:this.followteacherId,shareSeminar:''})
+            this.$axios.post('/course/'+this.$store.state.teacher.currentCourse.courseId+'/seminarsharerequest',{masterCourse:{courseId:this.$store.state.teacher.currentCourse.courseId},receiveCourse:{courseId:this.followklassId},receiveTeacher:{teacherId:this.followteacherId}})
             .then((response)=>{
                 console.log(response.data)
             })

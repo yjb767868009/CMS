@@ -4,10 +4,10 @@
 <mapper namespace="com.xmu.cms.mapper.ConflictCourseStrategyMapper">
     <resultMap id="ConflictCourseResultMap" type="com.xmu.cms.entity.strategy.ConflictCourseStrategy">
         <id property="strategyId" column="conflictCourseId" javaType="java.math.BigInteger"/>
-        <collection property="courses" javaType="com.xmu.cms.entity.Course">
+        <collection property="courses" javaType="com.xmu.cms.entity.Course" select="getConflictCourseStrategyById">
             <id property="courseId" column="courseId"/>
             <result property="courseName" column="courseName"/>
-            <association property="teacher" javaType="com.xmu.cms.entity.Teacher" select="getConflictCourseStrategyById">
+            <association property="teacher" javaType="com.xmu.cms.entity.Teacher">
                 <id property="teacherId" column="teacherId"/>
                 <result property="name" column="TeacherName"/>
             </association>

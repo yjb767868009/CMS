@@ -26,5 +26,5 @@ public interface CourseMemberLimitStrategyMapper {
      * @param strategy 规则
      * @return 规则的id
      */
-    BigInteger insertCourseMemberLimitStrategy(CourseMemberLimitStrategyMapper strategy);// TODO: 2018/12/28
+    BigInteger insertCourseMemberLimitStrategy(@Param("strategyId") CourseMemberLimitStrategyMapper strategy);
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="login" style="background:#eee">
-<x-header :title="this.$store.state.teacher.currentCourse.courseName" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
+    <x-header :title="this.$store.state.teacher.currentCourse.courseName" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
     <group :title="轮次">
       <template v-for="round in rounds">
@@ -13,14 +13,6 @@
           @click.native="round.showRoundContent=!round.showRoundContent"
         ></cell>
         <template v-if="round.showRoundContent">
-          <!-- 从不能设置轮次 -->
-          <!-- <cell-box
-            :border-intent="false"
-            class="sub-item"
-            is-link
-            :key="round.roundId"
-            @click.native="setRound(round)"
-          >该轮轮次设置</cell-box> -->
           <template v-for="seminar in round.seminars">
             <cell
               :key="seminar.seminarId"
@@ -28,13 +20,15 @@
               is-link
               :arrow-direction="seminar.showSeminarContent ? 'up' : 'down'"
               @click.native="seminar.showSeminarContent=!seminar.showSeminarContent"
+              style="margin-left:20px"
             ></cell>
             <template v-if="seminar.showSeminarContent">
               <template v-for="klassSeminar in seminar.klassSeminars">
                 <cell-box
                   :key="klassSeminar.klassSeminarId"
                   is-link
-                  @click.native="clickClassSeminar(klassSeminar)"
+                  @click.native="clickClassSeminar(seminar,klassSeminar)"
+                  style="margin-left:40px"
                 >{{klassSeminar.klass.name}}</cell-box>
               </template>
             </template>
@@ -42,6 +36,8 @@
         </template>
       </template>
     </group>
+
+
     <div v-transfer-dom>
       <popup v-model="show" height="23%">
           <div>
@@ -51,8 +47,6 @@
           </div>
       </popup>
     </div>
-
-    
   </div>
 </template>
 
@@ -209,27 +203,42 @@ export default {
       ]
     };
   },
-  //   mounted: function() {
-  //     this.$axios
-  //       .get(
-  //         "/course/" + this.$store.state.teacher.currentCourse.courseId + "/round"
-  //       )
-  //       .then(response => {
-  //         this.rounds = response.data;
-  //       });
-  //   },
+    mounted: function() {
+      this.$axios
+        .get(
+          "/course/" + this.$store.state.teacher.currentCourse.courseId + "/round"
+        )
+        .then(response => {
+          this.rounds = response.data;
+          //为返回数据绑定show属性用于折叠显示
+          for(var i=0;i<this.rounds.length;i++){
+              this.$set(this.rounds[i],'showRoundContent',false)
+              for(var j=0;j<this.rounds[i].seminars.length;j++){
+                  this.$set(this.rounds[i].seminars[j],'showSeminarContent',false)
+              }
+          }
+        });
+    },
   methods: {
-    onClick() {
-      console.log("on click");
+    newSeminar: function() {
+      this.$router.push("/mobile/teacher/createseminar");
     },
-    back: function() {
-      this.$router.push("/mobile/teacher/course");
+    clickClassSeminar: function(seminar,klassSeminar) {
+        this.$store.state.teacher.currentSeminar=seminar
+        this.$store.state.teacher.currentKlassSeminar=klassSeminar
+        if(klassSeminar.status===0){
+            //未开始
+            this.$router.push('/mobile/teacher/seminarUnstarted')
+        }
+        else if(klassSeminar.status===1){
+            //正在进行
+            this.$router.push('/mobile/teacher/seminarOngoing')
+        }
+        else if(klassSeminar.status===2){
+            //已结束
+            this.$router.push('/mobile/teacher/seminarFinished')
+        }
     },
-    more: function() {},
-    newround: function() {
-      this.$router.push("/mobile/teacher/createround");
-    },
-    clickClassSeminar: function(klassSeminar) {},
     Undo(){
             this.$router.push('/mobile/teacher/notify')
         },

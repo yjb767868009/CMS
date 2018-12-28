@@ -3,34 +3,15 @@
     <x-header title="OOAD讨论课" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
 
-    <x-header
-      style="background:#fff;margin:20px 0px 0px;height:60px;padding-top:12px"
-      :left-options="{showBack:false}"
-    >
-      <div
-        slot="left"
-        style="font-size:1.3em;color:#000;padding-top:6px;"
-      >主题：{{this.$store.state.teacher.currentSeminar.topic}}</div>
-    </x-header>
-    <x-header style="background:#eee;height:60px;padding-top:12px" :left-options="{showBack:false}">
-      <div slot="left" style="font-size:1.3em;color:#000;padding-top:6px;">课次序号：&emsp;&emsp;&emsp;1</div>
-    </x-header>
-    <x-header style="background:#fff;height:85px;padding-top:12px" :left-options="{showBack:false}">
-      <div
-        slot="left"
-        style="font-size:1.3em;color:#000;padding-top:18px;"
-      >要求：{{this.$store.state.teacher.currentSeminar.introduction}}</div>
-    </x-header>
-    <x-header style="background:#eee;height:85px;padding-top:12px" :left-options="{showBack:false}">
-      <div slot="left" style="font-size:1.3em;color:#000;padding-top:18px;">课程情况：&emsp;&emsp;未开始</div>
-      <p
-        slot="right"
-        @click="edit"
-        style="text-decoration:underline;color:#1AAD19;font-size:1.1em"
-      >查看信息</p>
-    </x-header>
-
-    <x-button @click="presentation" type="primary" style="margin-top:100px;color:#fff">开始讨论课</x-button>
+    <group>
+      <cell :title="'主题'" :value="this.$store.state.teacher.currentSeminar.topic"></cell>
+      <cell :title="'课次序号'" :value="this.$store.state.teacher.currentKlassSeminar.klass.klassId"></cell>
+      <x-textarea :title="'要求'" :show-counter="false" :placeholder="this.$store.state.teacher.currentSeminar.introduction" disabled></x-textarea>
+      <cell :title="'课程情况'" value="未开始"></cell>
+      <x-button @click="edit" type="primary" style="margin-top:100px;color:#fff">查看信息</x-button>
+      <x-button @click="presentation" type="primary" style="margin-top:18px;color:#fff">开始讨论课</x-button>
+    </group>
+    
     <div v-transfer-dom>
       <popup v-model="show" height="23%">
           <div>
@@ -44,7 +25,7 @@
 </template>
 
 <script>
-import { XHeader, Cell, Group, CellBox, XButton ,TransferDom,Popup} from "vux";
+import { XHeader, Cell, Group, CellBox, XButton ,TransferDom,Popup,XTextarea} from "vux";
 export default {
   directives:{
     TransferDom
@@ -54,7 +35,7 @@ export default {
     Cell,
     CellBox,
     Group,
-    XButton,Popup
+    XButton,Popup,XTextarea
   },
   data() {
     return {

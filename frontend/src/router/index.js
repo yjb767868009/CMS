@@ -335,7 +335,7 @@ export default new Router({
       component:SeminarPrincipal
     },
     {
-      path:'/mobile/teacher/seminarS',//某课程从
+      path:'/mobile/teacher/seminarSub',//某课程从
       name:'SeminarSubordinate',
       component:SeminarSubordinate
     },

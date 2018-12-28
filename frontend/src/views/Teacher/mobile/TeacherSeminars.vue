@@ -83,7 +83,7 @@ export default {
         this.$router.push("/mobile/teacher/seminarP");
       } else if (this.coursePlus[course.courseId] === "从") {
         //老师从
-        this.$router.push("/mobile/teacher/seminarS");
+        this.$router.push("/mobile/teacher/seminarSub");
       }
     },
     Undo(){

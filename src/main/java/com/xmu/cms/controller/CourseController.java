@@ -233,9 +233,6 @@ public class CourseController {
         return seminarService.getRoundScoreInCourse(courseId, roundId);
     }
 
-
-
-
     @Secured("ROLE_STUDENT")
     @GetMapping(value = "/course/{courseId}/round/{roundId}/score")
     public Map<String, Object> getStudentScoreInCourse(UserInfo info,
@@ -248,7 +245,6 @@ public class CourseController {
     @Secured("ROLE_TEACHER")
     @CheckCoursePermission
     @PostMapping(value = "/course/{courseId}/teamsharerequest")
-
     public Map<String, String> sendShareTeam(@PathVariable("courseId") BigInteger courseId,
                                              @RequestBody ShareTeam shareTeam) {
         shareTeam.setMasterCourse(new Course(courseId));

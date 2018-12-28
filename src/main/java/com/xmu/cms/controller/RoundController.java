@@ -4,6 +4,7 @@ import com.xmu.cms.entity.Round;
 import com.xmu.cms.entity.RoundScore;
 import com.xmu.cms.entity.Seminar;
 import com.xmu.cms.service.SeminarService;
+import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -53,9 +54,15 @@ public class RoundController {
 
     @Secured("ROLE_TEACHER")
     @GetMapping(value = "/round/{roundId}/team/{teamId}/score")
-    public Map<String, Object> getTeamScoreInCourse(@PathVariable("roundId") BigInteger roundId,
-                                                    @PathVariable("teamId") BigInteger teamId) {
+    public Map<String, Object> getTeamScoreInRound(@PathVariable("roundId") BigInteger roundId,
+                                                   @PathVariable("teamId") BigInteger teamId) {
         return seminarService.getTeamRoundScoreAndSeminarScore(teamId, roundId);
+    }
+
+    @Secured("ROLE_STUDENT")
+    @GetMapping(value = "/round/{roundId}/score")
+    public Map<String, Object> getMyScoreInRound(UserInfo info, @PathVariable("roundId") BigInteger roundId) {
+        return seminarService.getMyScoreInRound(info.getUserId(), roundId);
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})

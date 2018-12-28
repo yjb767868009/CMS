@@ -339,4 +339,14 @@ public class SeminarService {
         score.put("seminarScore", seminarScores);
         return score;
     }
+
+    public Map<String, Object> getMyScoreInRound(BigInteger studentId, BigInteger roundId) {
+        Team team = teamDao.getStudentTeamInRound(studentId, roundId);
+        RoundScore roundScore = roundScoreDao.getRoundTeamScore(roundId, team.getTeamId());
+        List<SeminarScore> seminarScores = seminarScoreDao.getTeamSeminarScoreInRound(team.getTeamId(), roundId);
+        Map<String, Object> score = new HashMap<>();
+        score.put("roundScore", roundScore);
+        score.put("seminarScore", seminarScores);
+        return score;
+    }
 }

@@ -2,23 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xmu.cms.mapper.ConflictCourseStrategyMapper">
-    <resultMap id="ConflictCourseResultMap" type="com.xmu.cms.entity.strategy.ConflictCourseStrategy">
-        <id property="strategyId" column="conflictCourseId" javaType="java.math.BigInteger"/>
-        <collection property="courses" javaType="com.xmu.cms.entity.Course">
-            <id property="courseId" column="courseId"/>
-            <result property="courseName" column="courseName"/>
-            <association property="teacher" javaType="com.xmu.cms.entity.Teacher">
-                <id property="teacherId" column="teacherId"/>
-                <result property="name" column="TeacherName"/>
-            </association>
-        </collection>
+    <resultMap id="ConflictCourseResultMap" type="com.xmu.cms.entity.Course">
+        <id property="courseId" column="courseId" javaType="java.math.BigInteger"/>
+        <result property="courseName" column="courseName"/>
+        <association property="teacher" javaType="com.xmu.cms.entity.Teacher">
+            <id property="teacherId" column="teacherId"/>
+            <result property="name" column="teacherName"/>
+            <result property="email" column="teacherEmail"/>
+        </association>
     </resultMap>
 
-    <select id="getConflictCourseStrategyById" resultMap="com.xmu.cms.entity.Course">
+    <select id="getConflictCourseStrategyById" resultMap="ConflictCourseResultMap">
         select course.id as courseOneId,
                course.course_name as courseOneName,
                course.teacher_id  as teacherOneId,
-               teacher.teacher_name as teacherOneName
+               teacher_name       as teacherName
         from conflict_course_strategy,
              course,
              teacher

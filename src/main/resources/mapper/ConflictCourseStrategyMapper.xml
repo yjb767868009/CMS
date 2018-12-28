@@ -12,7 +12,7 @@
         </association>
     </resultMap>
 
-    <select id="getConflictCourseStrategyById" resultType="ConflictCourseResultMap">
+    <select id="getConflictCourseStrategyById" resultMap="ConflictCourseResultMap">
         select course.id as courseOneId,
                course.course_name as courseOneName,
                course.teacher_id  as teacherOneId,

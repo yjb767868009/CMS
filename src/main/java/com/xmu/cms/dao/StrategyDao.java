@@ -50,7 +50,9 @@ public class StrategyDao {
                 strategy = memberLimitStrategyMapper.getMemberLimitStrategyById(strategyId);
                 break;
             case CONFLICT_COURSE_STRATEGY:
-                strategy = conflictCourseStrategyMapper.getConflictCourseStrategyById(strategyId);
+                strategy = new ConflictCourseStrategy();
+                strategy.setStrategyId(strategyId);
+                ((ConflictCourseStrategy) strategy).setCourses(conflictCourseStrategyMapper.getConflictCourseStrategyById(strategyId));
                 break;
             case COURSE_MEMBER_LIMIT_STRATEGY:
                 strategy = courseMemberLimitStrategyMapper.getCourseMemberLimitStrategyById(strategyId);

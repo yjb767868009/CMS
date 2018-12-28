@@ -1,6 +1,5 @@
 package com.xmu.cms.mapper;
 
-import com.xmu.cms.entity.strategy.ConflictCourseStrategy;
 import com.xmu.cms.entity.Course;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

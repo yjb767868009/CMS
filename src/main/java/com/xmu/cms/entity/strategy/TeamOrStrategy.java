@@ -108,7 +108,6 @@ public class TeamOrStrategy implements Strategy {
             teamOrStrategy.setType(TEAM_OR_STRATEGY_TYPE);
             strategies.add(0, teamOrStrategy);
         }
-        strategies.add(strategy);
         strategies = subStrategyTwo.getStrategy(strategies);
         return strategies;
     }

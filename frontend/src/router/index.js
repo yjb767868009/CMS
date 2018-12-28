@@ -411,7 +411,7 @@ export default new Router({
     },
     {
       path:'/mobile/teacher/createshare',
-      name:'CreateShare',
+      name:'CreateShare', 
       component:CreateShare
     }
     

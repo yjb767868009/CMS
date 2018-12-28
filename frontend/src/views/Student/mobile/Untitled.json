@@ -1,0 +1,41 @@
+[{
+  "strategyId": 1,
+  "minMember": 3,
+  "maxMember": 5
+}, {
+  "strategyId": 1,
+  "course": {
+    "courseId": 17,
+    "courseName": "J2EE"
+  },
+  "minMember": 3,
+  "maxMember": 5
+}, {
+  "strategyId": 2,
+  "course": {
+    "courseId": 20,
+    "courseName": ".NET"
+  },
+  "minMember": 3,
+  "maxMember": 5
+}, {
+  "strategyId": 1,
+  "courseOne": {
+    "courseId": 17,
+    "courseName": "J2EE"
+  },
+  "courseTwo": {
+    "courseId": 20,
+    "courseName": ".NET"
+  }
+}, {
+  "strategyId": 2,
+  "courseOne": {
+    "courseId": 18,
+    "courseName": "SE"
+  },
+  "courseTwo": {
+    "courseId": 19,
+    "courseName": "SE"
+  }
+}]

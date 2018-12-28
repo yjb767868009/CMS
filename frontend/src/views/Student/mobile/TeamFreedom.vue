@@ -1,22 +1,42 @@
 <template>
 <div class="student" style="height:20px;background:#fff">
-    <x-header :title="this.$store.state.student.currentCourse.name" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
+    <x-header :title="this.$store.state.student.currentCourse.courseName" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
+    <flexbox style="margin-top:30px">
+            <flexbox-item>
+                <template v-if="teamInfo.myTeam==null">
+                <x-button type="primary"  @click.native="newteam">创建小组</x-button>
+                </template>
+                <template v-if="teamInfo.myTeam!=null">
+                <x-button type="primary"  @click.native="myteam">我的小组</x-button>
+                </template>
+            </flexbox-item>
+    </flexbox>
+    <cell is-link :border-intent="false" :arrow-direction="showNoTeam ? 'up' : 'down'"
+         @click.native="getNoTeam" value-align="left" style="margin-top:20px">
+        
+        <img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;" width="30px" height="30px"/>
+        <span style="color:#000">未组队学生</span>
+        </cell>
+
+            <template v-if="showNoTeam">
+                <template v-for="stu in noteam">
+                <cell :key="stu.id" :border-intent="false" value-align="left" style="height:20px"><span style="color:#000;padding-left:20px">&emsp;{{stu.account}} &emsp;{{stu.name}}</span></cell>
+                </template>
+            </template>
     <group>
-        
-        
+        <template v-if="teamInfo.myTeam!=null">
         <cell is-link :border-intent="false" :arrow-direction="showMyContent ? 'up' : 'down'"
-         @click.native="showMyContent = !showMyContent" value-align="left">
-        <img slot="icon" src="@/assets/book.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><span style="color:#000">{{myteam.name}}</span> (我的小组)
+         @click.native="getmyteam(teamInfo.myTeam)" value-align="left">
+        <img slot="icon" src="@/assets/book.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><span style="color:#000">{{this.teamInfo.myTeam.teamName}}</span> (我的小组)
         </cell>
             <template v-if="showMyContent">
-                <cell :border-intent="false"  value-align="left" title="组长：" style="height:20px"><span style="color:#000;padding-left:20px">&emsp;{{myteam.leader.account}} &emsp;{{myteam.leader.name}}</span></cell>
-                <template v-for="memb in myteam.members">
+                <cell :border-intent="false"  value-align="left" title="组长：" style="height:20px"><span style="color:#000;padding-left:20px">&emsp;{{this.teamInfo.myTeam.members.leader.account}} &emsp;{{this.teamInfo.myTeam.members.leader.name}}</span></cell>
+                <template v-for="memb in teamInfo.myTeam.members.members">
                 <cell :key="memb.id" :border-intent="false" value-align="left" title="组员：" style="height:20px"><span style="color:#000;padding-left:20px">&emsp;{{memb.account}} &emsp;{{memb.name}}</span></cell>
                 </template>    
             </template>
-
-
+        </template>
         <!-- 连接好后端后我的小组信息显示代码，小组信息登录后保存在内存中，组队更新时内存也刷新 -->
 
         <!-- <cell is-link :border-intent="false" :arrow-direction="showMyContent ? 'up' : 'down'"
@@ -31,44 +51,24 @@
                 </template>
             </template> -->
       
-        <template v-for="team in teams">
-        <cell :key="team.leader.id" is-link :border-intent="false" :arrow-direction="team.showMemberContent ? 'up' : 'down'"
-         @click.native="team.showMemberContent = !team.showMemberContent" value-align="left">
+        <template v-for="team in teamInfo.teams">
+        <cell :key="team.teamId" is-link :border-intent="false" :arrow-direction="team.showMemberContent ? 'up' : 'down'"
+         @click.native="getmembers(team)" value-align="left">
         
         <img slot="icon" src="@/assets/book.png" style="display:block;margin-right:10px;" width="30px" height="30px"/>
-        <span style="color:#000">{{team.name}}</span> {{team.invalid}}
+        <span style="color:#000">{{team.teamName}}</span> <span v-if="!team.valid" style="color:#E80000">invalid</span>
         </cell>
 
             <template v-if="team.showMemberContent">
-                <cell :border-intent="false" value-align="left" title="组长：" style="height:20px"><span style="color:#000">&emsp;{{team.leader.account}} &emsp;{{team.leader.name}}</span></cell>
-                <template v-for="member in team.members">
-                <cell :key="member.id" :border-intent="false" value-align="left" title="组员：" style="height:20px"><span style="color:#000">&emsp;{{member.account}}&emsp;{{member.name}}</span></cell>
+                <cell :key="team.teamId" :border-intent="false" value-align="left" title="组长：" style="height:20px"><span style="color:#000">&emsp;{{team.members.leader.account}}&emsp;{{team.members.leader.name}}</span></cell>
+                <template v-for="member in team.members.members">
+                <cell :key="member.id" :border-intent="false" value-align="left" title="组员：" style="height:20px;"><span style="color:#000">&emsp;{{member.account}}&emsp;{{member.name}}</span></cell>
                 </template>
             </template>
         </template>
-         <cell is-link :border-intent="false" :arrow-direction="showNoTeam ? 'up' : 'down'"
-         @click.native="getNoTeam" value-align="left">
+         
         
-        <img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;" width="30px" height="30px"/>
-        <span style="color:#000">未组队学生</span>
-        </cell>
-
-            <template v-if="showNoTeam">
-                <template v-for="stu in noteam">
-                <cell :key="stu.id" :border-intent="false" value-align="left" style="height:20px"><span style="color:#000;padding-left:20px">&emsp;{{stu.account}} &emsp;{{stu.name}}</span></cell>
-                </template>
-            </template>
         
-        <flexbox style="margin-top:30px">
-            <flexbox-item>
-                <template v-if="this.$store.state.student.currentCourse.myteam==null">
-                <x-button type="primary"  @click.native="newteam">创建小组</x-button>
-                </template>
-                <template v-if="this.$store.state.student.currentCourse.myteam!=null">
-                <x-button type="primary"  @click.native="myteam">我的小组</x-button>
-                </template>
-            </flexbox-item>
-        </flexbox>
     </group>
     
     <div v-transfer-dom>
@@ -117,102 +117,21 @@ import {TransferDom,XHeader,
             showMyContent:false,
             showNoTeam:false,
             show:false,
-            myteam:{
-    "name": "1-32 早早鸟小组",
-    "valid": true,
-    "leader": {
-      "id": "001",
-      "account": 121,
-      "name": "张三"
-    },
-    "members": [
-      {
-        "id": "002",
-        "account": 123,
-        "name": "李四"
-      },
-      {
-        "id": "003",
-        "account": 124,
-        "name": "王五"
-      }
-    ]
-  },
-            noteam:[
-  {
-    "id": "001",
-    "account": "111111",
-    "name": "张三"
-  },
-  {
-    "id": "002",
-    "account": "222222",
-    "name": "张四"
-  }
-],
-            teams:[
-  {
-    "showMemberContent":false,
-    "name": "1-33 早早早鸟小组",
-    "valid": true,
-    "leader": {
-      "id": "007",
-      "account": 1218,
-      "name": "张七"
-    },
-    "members": [
-      {
-        "id": "008",
-        "account": 1234,
-        "name": "李八"
-      },
-      {
-        "id": "009",
-        "account": 1246,
-        "name": "王九"
-      }
-    ]
-  },
-  {
-    "showMemberContent":false,
-    "name": "1-34 早鸟小组",
-    "valid": true,
-    "leader": {
-      "id": "004",
-      "account": 112,
-      "name": "三张"
-    },
-    "members": [
-      {
-        "id": "005",
-        "account": 132,
-        "name": "四李"
-      },
-      {
-        "id": "006",
-        "account": 142,
-        "name": "五王"
-      }
-    ]
-  }
-]
+            noteam:'',
+            teamInfo:'',
+            gotten:false,
         }
     },
     mounted:function(){
-    //     this.$axios.get('/course/'+this.$store.state.student.currentCourse.id+'/team')
-    //     .then((response)=>{
-    //         this.teams=response.data;
-    //         for(var i=0;i<this.teams.length;i++){
-    //             this.teams[i].showMemberContent=false;
-    //         }
-    //     })
-    //         this.$axios.get('/course/'+this.$store.state.student.currentCourse.id+'/noteam')
-    //     .then((response)=>{
-    //         this.noteam=response.data;
-    //         for(var i=0;i<this.noteam.length;i++){
-    //             this.noteam[i].showNoTeam=false;
-    //         }
-    //     });
+        this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId+'/team')
+        .then((response)=>{
+            this.teamInfo=response.data;
+            this.$store.state.student.Myteam=this.teamInfo.myTeam;
+            for(var i=0;i<this.teamInfo.teams.length;i++){
+                this.$set(this.teamInfo.teams[i],'showMemberContent',false);
+            }
+        })
+            
     },
         
     methods:{
@@ -229,14 +148,32 @@ import {TransferDom,XHeader,
             this.$router.push('/mobile/student/newTeam')
         },
         getNoTeam:function(){
-            this.showNoTeam = !this.showNoTeam;
-            // this.$axios.get('/course/'+this.$store.state.student.currentCourse.id+'/noTeam')
-            // .then((response)=>{
-            //     this.noteam=response.data;
-            // })
+            this.showNoTeam=!this.showNoTeam
+            if(!this.gotten){
+                this.gotten=true
+            this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId+'/noteam')
+        .then((response)=>{
+            this.noteam=response.data;
+        });}
         },
         myteam:function(){
             this.$router.push('/mobile/student/teamed')
+        },
+        getmembers(currentteam){
+            currentteam.showMemberContent = !currentteam.showMemberContent
+            this.$axios.get('/team/'+currentteam.teamId)
+            .then((response)=>{
+                this.$set(currentteam,'members','')
+                currentteam.members=response.data.team
+            })
+        },
+        getmyteam:function(currentteam){
+            this.showMyContent = !this.showMyContent
+            this.$axios.get('/team/'+currentteam.teamId)
+            .then((response)=>{
+                this.$set(currentteam,'members','')
+                currentteam.members=response.data.team
+            })
         }
     }
         

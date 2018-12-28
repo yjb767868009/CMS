@@ -1,10 +1,13 @@
 <template>
 <div class="student" style="height:20px;background:#fff">
-    <x-header :title="this.$store.state.student.currentCourse.name" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
+    <x-header :title="this.$store.state.student.currentCourse.courseName" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
-    
-    
-        <cell :border-intent="false" title="小组名：" value-align="left" style="padding-top:18px;height:30px;padding-right:50px"><el-input style="padding-left:20px;font-size:1.2em;"></el-input></cell>
+        <group>
+        <cell :border-intent="false" title="小组名：" value-align="left" style="height:30px;padding-right:50px"> 
+            <x-input v-model="teamName"></x-input>
+        </cell>
+        </group>
+
         <group>
         <cell is-link :border-intent="false" :arrow-direction="showContent002 ? 'up' : 'down'"
          @click.native="showContent002 = !showContent002" value-align="left">
@@ -14,37 +17,51 @@
 
             <template v-if="showContent002">
                 <template v-for="klass in klasses">
-                <cell-box :key="klass.id" :border-intent="false" class="sub-item" style="padding-left:130px" @click.native="currentklass=klass.name">{{klass.name}}</cell-box>
+                <cell-box :key="klass.id" :border-intent="false" class="sub-item" style="padding-left:130px" @click.native="chooseKlass(klass)">{{klass.name}}</cell-box>
                 </template>
             </template>
     
-
-        <cell :border-intent="false" value-align="left" title="添加成员：" style="margin-top:15px;height:20px"><span style="color:#000;padding-left:20px"></span></cell>
-        <template v-for="stu in noteam">
-            <check-icon :key="stu.id" :value.sync="stu.showNoTeam" style="color:#000;padding-left:15px">  &emsp;&emsp;&emsp;{{stu.account}} &emsp;{{stu.name}}&emsp;&emsp;</check-icon>
-        </template>
         <group>
-        <cell :border-intent="false" value-align="left" title="搜索成员：" style="padding-top:20px;height:20px;padding-right:30px">
+        <cell :border-intent="false" value-align="left" title="搜索成员：" style="height:20px">
         <x-input style="height:20px" placeholder="请输入成员学号或姓名" v-model="searchstu"></x-input>
         </cell>
         </group>
-        <template v-for="stu in noteam">
-        <check-icon :key="stu.id" v-if="(searchstu===stu.account||searchstu===stu.name)" :value.sync="stu.showNoTeam" style="color:#000;padding-left:15px">  &emsp;&emsp;&emsp;{{stu.account}} &emsp;{{stu.name}}&emsp;&emsp;</check-icon>
+        <template v-for="stu in this.noteam">
+        <check-icon :key="stu.id" v-if="(searchstu===stu.account||searchstu===stu.name)" :value.sync="stu.showNoTeam" style="color:#000;padding-left:15px">&emsp;{{stu.account}} &emsp;{{stu.name}}&emsp;&emsp;</check-icon>
+        </template>
+        <cell :border-intent="false" value-align="left" title="添加成员：" style="margin-top:20px;height:20px"><span style="color:#000;padding-left:20px"></span></cell>
+        <template v-for="stu in this.noteam">
+            <check-icon :key="stu.id" :value.sync="stu.showNoTeam" style="color:#000;padding-left:15px">&emsp;{{stu.account}} &emsp;{{stu.name}}<span v-if="stu.showNoTeam">&emsp; (｡･∀･)ﾉﾞ</span></check-icon>
         </template>
 
         <flexbox style="margin-top:30px">
             <flexbox-item>
-                <x-button type="primary" @click.native="submit=!submit">确认提交</x-button>
+                <x-button type="primary" @click.native="newTeam">确认提交</x-button>
             </flexbox-item>
         </flexbox>
     <div v-transfer-dom>
       <confirm v-model="submit"
-        :show-cancel-button="false"
-        title="提示"
-        @on-confirm="onConfirm">
-        <p style="text-align:center;">新建队伍成功</p>
+        title="请确认信息"
+        @on-confirm="onConfirm"
+        @on-cancel="onCancel">
+        <p style="text-align:center;">队伍名:{{this.teamName}}</p>
+        <p>班级：{{this.currentklass}}</p>
+        <p>组长：<span style="padding-left:5px">{{this.$store.state.student.name}}</span></p>
+        <p>小组成员：</p>
+        <template v-for="mem in this.newMembers"><span :key="mem.id" style="padding-left:10px">{{mem}}</span></template>
       </confirm>
-      
+      <confirm v-model="error"
+        title="错误"
+        :show-cancel-button="false"
+        @on-confirm="onConfirm">
+        <p style="text-align:center;">请输入小组名</p>
+      </confirm>
+      <confirm v-model="error1"
+        title="错误"
+        :show-cancel-button="false"
+        @on-confirm="onConfirm">
+        <p style="text-align:center;">请选择班级</p>
+      </confirm>
       <popup v-model="show" height="15%">
           <div>
               <cell value-align="left" title=""><img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="StudentInfo">个人页</div></cell>
@@ -85,7 +102,7 @@ import {TransferDom,XHeader,
     },
     data() {
         return{
-            name:'aaa',
+            name:'',
             newItem:'newItem',
             show:false,
             submit:false,
@@ -93,50 +110,28 @@ import {TransferDom,XHeader,
             showContent002:false,
             currentklass:'',
             searchstu:"",
-            stunum:1111111111,
-            klasses:[
-  {
-    "id": 45,
-    "name": "2016-1",
-    "time": "周三 7、8节",
-    "classroom": "海韵教学楼"
-  },
-  {
-    "id": 48,
-    "name": "2016-2",
-    "time": "周二7、8节",
-    "classroom": "海韵教学楼"
-  }
-],
-            noteam:[
-  {
-    "id": "001",
-    "account": "111111",
-    "name": "张三",
-    "showNoTeam":false,
-  },
-  {
-    "id": "002",
-    "account": "222222",
-    "name": "张四",
-    "showNoTeam":false,
-  }
-]
+            klasses:'',
+            noteam:'',
+            teamName:'',
+            error:false,
+            newMembers:{},
+            error1:false,
         }
     },
-    // mounted:function(){
-    //     this.$axios.get('/course/'+this.$store.state.student.currentCourse.id+'/noteam')
-    //     .then((response)=>{
-    //         this.noteam=response.data;
-    //         for(var i=0;i<this.noteam.length;i++){
-    //             this.noteam[i].showNoTeam=false;
-    //         }
-    //     });
-    //     this.$axios.get('/course/'+this.$store.state.student.currentCourse.id+'/class')
-    //     .then((response)=>{
-    //         this.klasses=response.data;
-    //     })
-    // },
+    mounted:function(){
+        this.name=this.$store.state.student.name;
+        this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId+'/noteam')
+        .then((response)=>{
+            this.noteam=response.data;
+            for(var i=0;i<this.noteam.length;i++){
+                this.$set(this.noteam[i],'showNoTeam',false);
+            }
+        });
+        this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId+'/class')
+        .then((response)=>{
+            this.klasses=response.data;
+        })
+    },
     methods:{
         toast:function(){
             Toast(this.name)
@@ -149,10 +144,32 @@ import {TransferDom,XHeader,
         },
         onCancel:function(){
             console.log('取消')
+            this.newMembers={}
         },
         onConfirm:function(){
             console.log('确认')
+            // this.$router.push('/mobile/Student/teamFreedom')
         },
+        newTeam:function(){
+            if(this.teamName===''){
+                this.error=!this.error;
+            }else{
+                if(this.currentklass===''){
+                    this.error1=!this.error1
+                }else{
+                for(var i=0;i<this.noteam.length;i++){
+                    if(this.noteam[i].showNoTeam===true){
+                        this.newMembers[this.noteam[i].studentId]=this.noteam[i].name
+                    }
+                }
+                this.submit=!this.submit;
+                }
+            }
+        },
+        chooseKlass:function(klass){
+            this.currentklass=klass.name
+            this.showContent002=!this.showContent002
+        }
     }
         
   };

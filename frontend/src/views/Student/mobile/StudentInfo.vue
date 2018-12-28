@@ -51,18 +51,17 @@ import {TransferDom,XHeader,
 		Popup
     },
     mounted:function(){
-            this.$store.state.student.account=this.myInfo.account;
-            this.$store.state.student.name=this.myInfo.name;
-            this.$store.state.student.email=this.myInfo.email;
-        // this.$axios.get('/user/information')
-        // .then((response)=>{
-        //     this.myInfo.account=response.data.account;
-        //     this.myInfo.name=response.data.name;
-        //     this.myInfo.email=response.data.email;
-        //     this.$store.state.student.account=response.data.account;
-        //     this.$store.state.student.name=response.data.name;
-        //     this.$store.state.student.email=response.data.email;
-        // })
+        this.$axios.get('/user/information')
+        .then((response)=>{
+            this.myInfo.account=response.data.account;
+            this.myInfo.name=response.data.name;
+            this.$store.state.student.account=response.data.account;
+            this.$store.state.student.name=response.data.name;
+        })
+        this.$axios.get('/user/email')
+        .then((response)=>{
+            this.$store.state.student.email=response.data;
+        })
     },
     data() {
         return{

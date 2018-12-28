@@ -138,7 +138,7 @@
           and question.student_id = student.id
     </select>
 
-    <select id="getAttendanceQuestionByQuestionId" resultMap="QuestionResultMap">
+    <select id="getQuestionByQuestionId" resultMap="QuestionResultMap">
         select question.id          as questionId,
                score,
                is_selected,

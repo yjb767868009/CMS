@@ -221,7 +221,7 @@
         select team.id              as teamId,
                team_name            as teamName,
                team.status,
-               team.klass_id             as klassId,
+               klass.id             as klassId,
                leader_id            as leaderId,
                student.account      as leaderAccount,
                student.student_name as leaderName,
@@ -230,12 +230,16 @@
                team_serial          as teamSerial,
                team.klass_serial    as klassSerial
         from team,
+             klass,
              student,
              course,
-             klass_student
-        where klass_student.klass_id = #{klassId}
-          and klass_student.student_id = #{studentId}
-          and klass_student.team_id = team.id
+             klass_team,
+             team_student
+        where klass_team.klass_id = #{klassId}
+          and team_student.student_id = #{studentId}
+          and team_student.team_id = klass_team.team_id
+          and team.id = team_student.team_id
+          and team.klass_id = klass.id
           and team.leader_id = student.id
           and team.course_id = course.id
     </select>

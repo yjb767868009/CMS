@@ -148,7 +148,7 @@ public class SeminarService {
     }
 
     public List<SeminarScore> getSeminarScore(BigInteger seminarId) {
-        return null;
+        return seminarScoreDao.getSeminarScoreInSeminar(seminarId);
     }
 
     public List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId) {

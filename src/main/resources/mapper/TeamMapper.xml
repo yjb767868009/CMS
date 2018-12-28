@@ -306,4 +306,31 @@
           and team.leader_id = student.id
           and team.course_id = course.id
     </select>
+
+    <select id="getStudentTeamInRound" resultMap="TeamResultMap">
+        select team.id              as teamId,
+               team_name            as teamName,
+               team.status,
+               klass.id             as klassId,
+               leader_id            as leaderId,
+               student.account      as leaderAccount,
+               student.student_name as leaderName,
+               team_serial          as teamSerial,
+               team.klass_serial    as klassSerial
+        from team,
+             klass,
+             student,
+             team_student,
+             klass_seminar,
+             seminar,
+             attendance
+        where team_student.student_id = #{studentId}
+          and seminar.round_id = #{roundId}
+          and klass_seminar.seminar_id = seminar.id
+          and attendance.klass_seminar_id = klass_seminar.id
+          and team_student.team_id = attendance.team_id
+          and team.id = team_student.team_id
+          and team.klass_id = klass.id
+          and team.leader_id = student.id
+    </select>
 </mapper>

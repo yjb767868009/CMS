@@ -184,9 +184,5 @@ public class SeminarController {
         return message;
     }
 
-    @Secured("ROLE_STUDENT")
-    @GetMapping(value = "/klassseminar/{klassSeminarId}/attendance")
-    public Attendance getAttendance(UserInfo info, @PathVariable("klassSeminarId") BigInteger klassSeminarId) {
-        return seminarService.getStudentAttendanceInKlassSeminar(info.getUserId(), klassSeminarId);
-    }
+
 }

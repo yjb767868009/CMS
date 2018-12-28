@@ -140,6 +140,12 @@ public interface KlassMapper {
      */
     void deleteKlassTeam(@Param("teamId") BigInteger teamId);
 
+    /**
+     * 添加班级队伍
+     *
+     * @param klassId 班级id
+     * @param teamId 队伍id
+     */
     void addTeam(@Param("klassId") BigInteger klassId,
                  @Param("teamId") BigInteger teamId);
 }

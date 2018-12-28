@@ -81,4 +81,9 @@ public class TeamStrategy implements Strategy {
     public String getType() {
         return TEAM_STRATEGY;
     }
+
+    @Override
+    public void setStrategyId(BigInteger strategyId) {
+
+    }
 }

@@ -60,6 +60,7 @@ public class TeamDao {
         newTeam.setLeader(new Student(studentId));
         newTeam.setKlass(new Klass(klassId));
         newTeam.setCourse(new Course(courseId));
+        klassMapper.addTeam(klassId,newTeam.getTeamId());
         teamMapper.insertTeam(newTeam);
         Team team = teamMapper.getTeamBySerial(newTeam.getKlassSerial(), newTeam.getTeamSerial());
         klassMapper.addMembers(team.getTeamId(), studentId);

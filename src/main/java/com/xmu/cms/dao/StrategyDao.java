@@ -123,8 +123,12 @@ public class StrategyDao {
                 strategy.setStrategyId(strategyId);
                 return strategy;
             case CONFLICT_COURSE_STRATEGY:
-                strategyId = conflictCourseStrategyMapper.insertConflictCourseStrategy((ConflictCourseStrategy) strategy);
+                ConflictCourseStrategy conflictCourseStrategy = (ConflictCourseStrategy) strategy;
+                strategyId = conflictCourseStrategyMapper.getMaxId().add(new BigInteger("1"));
                 strategy.setStrategyId(strategyId);
+                for (Course course : conflictCourseStrategy.getCourses()) {
+                    conflictCourseStrategyMapper.insertConflictCourseStrategy(strategyId, course.getCourseId());
+                }
                 return strategy;
             case COURSE_MEMBER_LIMIT_STRATEGY:
                 strategyId = courseMemberLimitStrategyMapper.insertCourseMemberLimitStrategy((CourseMemberLimitStrategyMapper) strategy);

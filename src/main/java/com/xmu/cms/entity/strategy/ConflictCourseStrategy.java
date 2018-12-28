@@ -47,7 +47,7 @@ public class ConflictCourseStrategy implements Strategy {
     @Override
     public Boolean checkValid(Team team) {
         List<Student> students = team.getMembers();
-        Course hasCourse = null;
+        BigInteger hasCourse = null;
         if (students == null) {
             students = new ArrayList<>();
         }
@@ -56,8 +56,14 @@ public class ConflictCourseStrategy implements Strategy {
             List<Course> studentCourses = student.getCourses();
             for (Course studentCourse : studentCourses) {
                 for (Course course : courses) {
-                    if (course.getCourseId().equals(hasCourse.getCourseId())) {
-                        // TODO: 2018/12/28
+                    if (course.getCourseId().equals(studentCourse.getCourseId())) {
+                        if (hasCourse == null) {
+                            hasCourse = course.getCourseId();
+                        } else {
+                            if (!hasCourse.equals(course.getCourseId())) {
+                                return false;
+                            }
+                        }
                     }
                 }
             }

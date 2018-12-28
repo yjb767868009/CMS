@@ -152,12 +152,7 @@ public class SeminarService {
     }
 
     public List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId) {
-        return questionDao.getQuestionInKlassSeminar(klassSeminarId);
-    }
-
-    public Question askQuestion(BigInteger userId, BigInteger attendanceId) {
-        //todo
-        return null;
+        return questionDao.getAttendanceQuestionInKlassSeminar(klassSeminarId);
     }
 
     public Map<String, String> scoreQuestion(Question question) {

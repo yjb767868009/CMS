@@ -59,4 +59,6 @@ public interface QuestionMapper {
      * @return 提问
      */
     Question getQuestionByKlassSeminarAndStudent(@Param("klassSeminarId") BigInteger klassSeminarId, @Param("studentId") BigInteger studentId);
+
+    List<Question> getAttendanceQuestionInKlassSeminar(BigInteger klassSeminarId);// TODO: 2018/12/29
 }

@@ -55,14 +55,23 @@ public class TeamDao {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Team newTeam(BigInteger courseId, BigInteger klassId, BigInteger studentId, Team newTeam) {
+    public Team newTeam(BigInteger courseId, BigInteger klassId, BigInteger studentId, Team newTeam) throws Exception {
         Team myTeam = teamMapper.getStudentTeamInKlass(studentId, klassId);
         if (myTeam != null) {
-            return null;
+            throw new Exception("已创建队伍");
         }
         Team bigTeam = teamMapper.getLastTeamInKlass(klassId);
-        newTeam.setKlassSerial(bigTeam.getKlassSerial());
-        newTeam.setTeamSerial(bigTeam.getTeamSerial() + 1);
+        Integer newKlassSerial;
+        Integer newTeamSerial;
+        if (bigTeam != null) {
+            newKlassSerial = bigTeam.getKlassSerial();
+            newTeamSerial = bigTeam.getTeamSerial() + 1;
+        } else {
+            newKlassSerial = klassMapper.getKlassByKlassId(klassId).getKlassSerial();
+            newTeamSerial = 1;
+        }
+        newTeam.setKlassSerial(newKlassSerial);
+        newTeam.setTeamSerial(newTeamSerial);
         newTeam.setLeader(new Student(studentId));
         newTeam.setKlass(new Klass(klassId));
         newTeam.setCourse(new Course(courseId));
@@ -146,7 +155,11 @@ public class TeamDao {
         return teamMapper.getStudentTeamInRound(studentId, roundId);
     }
 
-    public List<Course> getAllCourse() {
-        return courseMapper.getAllCourse();
+    public List<Course> getAllCourse(Course course) {
+        List<Course> allCourse = courseMapper.getAllCourse();
+        for (Course oneCourse : allCourse) {
+            // TODO: 2018/12/29
+        }
+        return allCourse;
     }
 }

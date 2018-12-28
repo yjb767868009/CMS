@@ -38,8 +38,8 @@ public class CourseController {
 
     @Secured("ROLE_TEACHER")
     @GetMapping(value = "/allcourse")
-    public List<Course> getAllCourse() throws Exception {
-        return courseService.getAllCourse();
+    public List<Course> getAllCourse(@RequestBody Course course) throws Exception {
+        return courseService.getAllCourse(course);
     }
 
     @Secured("ROLE_TEACHER")

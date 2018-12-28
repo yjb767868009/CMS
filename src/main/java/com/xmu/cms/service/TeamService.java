@@ -34,11 +34,11 @@ public class TeamService {
     @Autowired
     private TeamApplicationDao teamApplicationDao;
 
-    public Team newTeam(BigInteger courseId, BigInteger classId, BigInteger studentId, Team team) {
+    public Team newTeam(BigInteger courseId, BigInteger classId, BigInteger studentId, Team team) throws Exception {
         Team newTeam = teamDao.newTeam(courseId, classId, studentId, team);
         Strategy strategy = strategyDao.getCourseStrategy(courseId);
         Boolean valid = strategy.checkValid(newTeam);
-        if (!valid.equals(newTeam.getValid())){
+        if (!valid.equals(newTeam.getValid())) {
             newTeam.setValid(valid);
             teamDao.updateTeamValid(team);
         }

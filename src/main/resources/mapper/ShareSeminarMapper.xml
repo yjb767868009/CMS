@@ -22,13 +22,13 @@
 
     <select id="getShareSeminar" resultMap="ShareSeminarResultMap">
         select share_seminar_application.id as shareId,
-               course1.id as masterCourseId,
-               course1.course_name as masterCourseName,
-               course2.id as receiveCourseId,
-               course2.course_name as receiveCourseName,
-               teacher.id as receiveTeacherId,
-               teacher.teacher_name as receiveTeacherName,
-               teacher.email as receiveTeacherEmail,
+               course1.id                   as masterCourseId,
+               course1.course_name          as masterCourseName,
+               course2.id                   as receiveCourseId,
+               course2.course_name          as receiveCourseName,
+               teacher.id                   as receiveTeacherId,
+               teacher.teacher_name         as receiveTeacherName,
+               teacher.email                as receiveTeacherEmail,
                status
         from share_seminar_application,
              course course1,
@@ -45,7 +45,8 @@
             select last_insert_id()
         </selectKey>
         insert share_seminar_application (main_course_id, sub_course_id, sub_course_teacher_id, status)
-        values (#{shareSeminar.masterCourse.courseId}, #{shareSeminar.receiveCourse.courseId}, #{shareSeminar.receiveTeacher.teacherId}, #{shareSeminar.status})
+        values (#{shareSeminar.masterCourse.courseId}, #{shareSeminar.receiveCourse.courseId},
+        #{shareSeminar.receiveTeacher.teacherId}, #{shareSeminar.status})
     </insert>
 
     <delete id="deleteShareSeminar">
@@ -56,25 +57,26 @@
 
     <update id="updateShareSeminar" parameterType="com.xmu.cms.entity.ShareSeminar">
         update share_seminar_application
-        set status= #{shareSeminar.status}
+        set status = #{shareSeminar.status}
         where id = #{shareSeminar.shareSeminarId}
     </update>
 
     <delete id="deleteShareSeminarByCourseId">
         delete
         from share_seminar_application
-        where sub_course_id = #{courseId} or main_course_id = #{courseId}
+        where sub_course_id = #{courseId}
+           or main_course_id = #{courseId}
     </delete>
 
     <select id="getShareSeminarInCourse" resultMap="ShareSeminarResultMap">
         select share_seminar_application.id as shareId,
-               course1.id as masterCourseId,
-               course1.course_name as masterCourseName,
-               course2.id as receiveCourseId,
-               course2.course_name as receiveCourseName,
-               teacher.id as receiveTeacherId,
-               teacher.teacher_name as receiveTeacherName,
-               teacher.email as receiveTeacherEmail,
+               course1.id                   as masterCourseId,
+               course1.course_name          as masterCourseName,
+               course2.id                   as receiveCourseId,
+               course2.course_name          as receiveCourseName,
+               teacher.id                   as receiveTeacherId,
+               teacher.teacher_name         as receiveTeacherName,
+               teacher.email                as receiveTeacherEmail,
                status
         from share_seminar_application,
              course course1,
@@ -89,13 +91,13 @@
 
     <select id="getShareSeminarByTwoCourse" resultMap="ShareSeminarResultMap">
         select share_seminar_application.id as shareId,
-               course1.id as masterCourseId,
-               course1.course_name as masterCourseName,
-               course2.id as receiveCourseId,
-               course2.course_name as receiveCourseName,
-               teacher.id as receiveTeacherId,
-               teacher.teacher_name as receiveTeacherName,
-               teacher.email as receiveTeacherEmail,
+               course1.id                   as masterCourseId,
+               course1.course_name          as masterCourseName,
+               course2.id                   as receiveCourseId,
+               course2.course_name          as receiveCourseName,
+               teacher.id                   as receiveTeacherId,
+               teacher.teacher_name         as receiveTeacherName,
+               teacher.email                as receiveTeacherEmail,
                status
         from share_seminar_application,
              course course1,
@@ -110,13 +112,13 @@
 
     <select id="getShareSeminarByTeacher" resultMap="ShareSeminarResultMap">
         select share_seminar_application.id as shareId,
-               course1.id as masterCourseId,
-               course1.course_name as masterCourseName,
-               course2.id as receiveCourseId,
-               course2.course_name as receiveCourseName,
-               teacher.id as receiveTeacherId,
-               teacher.teacher_name as receiveTeacherName,
-               teacher.email as receiveTeacherEmail,
+               course1.id                   as masterCourseId,
+               course1.course_name          as masterCourseName,
+               course2.id                   as receiveCourseId,
+               course2.course_name          as receiveCourseName,
+               teacher.id                   as receiveTeacherId,
+               teacher.teacher_name         as receiveTeacherName,
+               teacher.email                as receiveTeacherEmail,
                status
         from share_seminar_application,
              course course1,

@@ -37,7 +37,7 @@ public class TeamService {
     public Team newTeam(BigInteger courseId, BigInteger classId, BigInteger studentId, Team team) {
         Team newTeam = teamDao.newTeam(courseId, classId, studentId, team);
         Strategy strategy = strategyDao.getCourseStrategy(courseId);
-        Boolean valid = strategy.checkValid(team);
+        Boolean valid = strategy.checkValid(newTeam);
         if (!valid.equals(newTeam.getValid())){
             newTeam.setValid(valid);
             teamDao.updateTeamValid(team);

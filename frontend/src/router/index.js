@@ -59,8 +59,8 @@ import ManageCourse from '@/views/Teacher/mobile/ManageCourse'
 import SeminarPrincipal from '@/views/Teacher/mobile/SeminarPrincipal'
 import SeminarSubordinate from '@/views/Teacher/mobile/SeminarSubordinate'
 import SeminarUnstarted from '@/views/Teacher/mobile/SeminarUnstarted'
-import seminarPaused from '@/views/Teacher/mobile/seminarPaused'
 import MobileTeacher from '@/views/Teacher/mobile/MobileTeacher'
+import teacherCheckPPT from '@/views/Teacher/mobile/TeacherCheckPPT'
 
 import SetRound from '@/views/Teacher/mobile/SetRound'
 import CreateSeminar from '@/views/Teacher/mobile/CreateSeminar'
@@ -355,7 +355,7 @@ export default new Router({
       component:Report
     },
     {
-      path:'/mobile/teacher/seminargrade',//讨论课 已 --》查看
+      path:'/mobile/teacher/seminarGrade',//讨论课 已 --》查看
       name:'SeminarGrade',
       component:SeminarGrade
     },
@@ -370,9 +370,9 @@ export default new Router({
       component:ManageSeminar
     },
     {
-      path:'/mobile/teacher/seminarPaused',//讨论课 正 暂停
-      name:'seminarPaused',
-      component:seminarPaused
+      path:'/mobile/teacher/checkPPT',//讨论课 ppt
+      name:'teacherCheckPPT',
+      component:teacherCheckPPT
     },
     {
       path:'/mobile/teacher/teamlist',

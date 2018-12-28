@@ -2,7 +2,7 @@
   <div class="activation" style="background:#eee">
     <x-header title="账户邮箱" style="height:60px;padding-top:12px" :left-options="{showBack:false}">
     </x-header>
-    <div style="padding-left:10px;margin-top:10px;height:10px">当前邮箱：{{this.$store.state.student.email}}</div>
+    <div style="padding-left:10px;margin-top:10px;height:10px">当前邮箱：{{this.$store.state.email}}</div>
   <group>
     <x-input v-model="account" style="margin-top:20px;background-color:#fff" title="e-mail:" placeholder="填写修改邮箱"></x-input>  
 

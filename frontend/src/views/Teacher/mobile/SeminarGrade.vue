@@ -15,6 +15,34 @@
         </thead>
         <tbody>
           <tr>
+            <td>213</td>
+            <td>5.0</td>
+            <td>5.0</td>
+            <td>5.0</td>
+            <td>5.0</td>
+          </tr>
+          <tr>
+            <td>1-2</td>
+            <td>5.0</td>
+            <td>5.0</td>
+            <td>5.0</td>
+            <td>5.0</td>
+          </tr>
+          <tr>
+            <td>1-1</td>
+            <td>5.0</td>
+            <td>5.0</td>
+            <td>5.0</td>
+            <td>5.0</td>
+          </tr>
+          <tr>
+            <td>1-2</td>
+            <td>5.0</td>
+            <td>5.0</td>
+            <td>5.0</td>
+            <td>5.0</td>
+          </tr>
+          <tr>
             <td>1-1</td>
             <td>5.0</td>
             <td>5.0</td>
@@ -33,8 +61,7 @@
 
 
 
-    <x-button @click="comfirm" type="primary" style="margin-top:100px;color:#fff">确认</x-button>
-    <x-button @click="modify" type="primary" plain style="margin-top:10px">修改</x-button>
+    <x-button @click.native="comfirm" type="primary" style="margin-top:100px;color:#fff">确认</x-button>
     <div v-transfer-dom>
       <popup v-model="show" height="23%">
           <div>
@@ -64,22 +91,28 @@ export default {
     data(){
         return{
           show:false,
+          roundScore:'',
+          teamScores:[null,null,null,null,null,null]
         } 
     },
+    mounted:function(){
+      this.teamScores=[null,null,null,null,null,null]
+      this.$axios.get('/course/'+this.$store.state.teacher.currentCourse.courseId+'/round/'+this.$store.state.teacher.currentRound.roundId+'/teamscore')
+      .then((res)=>{
+        this.roundScore=res.data
+        for(var i=0;i<this.roundScore.length;i++){
+          if(this.roundScore[i]){
+            this.$axios.get('/round/'+this.$store.state.teacher.currentRound.roundId+'/team/'+roundScore[i].team.teamId+'/score')
+            .then((res)=>{
+              this.teamScores[i]=res.data
+            })
+          }
+        }
+      })
+    },
     methods: {
-        onClick () {
-            console.log('on click')
-        },
-        back:function(){
-            this.$router.push('/mobile/teacher/seminar')
-        },
-        more:function(){
-        },
-        comfirm:function(){
-
-        },
-        modify:function(){
-
+    comfirm:function(){
+          this.$router.push('/mobile/teacher/seminarFinished')
         },
     Undo(){
             this.$router.push('/mobile/teacher/notify')

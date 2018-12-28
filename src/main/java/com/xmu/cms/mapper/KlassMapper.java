@@ -87,14 +87,12 @@ public interface KlassMapper {
     /**
      * 队伍增加学生
      *
-     * @param klassId   班级id
      * @param teamId    队伍id
      * @param studentId 学生id
      * @return 修改信息
      */
-    Integer addMembers(@Param("klassId") BigInteger klassId,
-                       @Param("teamId") BigInteger teamId,
-                       @Param("studentId") BigInteger studentId);//klassId不需要
+    Integer addMembers(@Param("teamId") BigInteger teamId,
+                       @Param("studentId") BigInteger studentId);
 
     /**
      * 删除单个学生和队伍的关系

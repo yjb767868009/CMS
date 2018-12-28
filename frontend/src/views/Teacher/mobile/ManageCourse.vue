@@ -5,12 +5,12 @@
     </x-header>
 
     <group>
-      <template v-for="course in courses">
+      <template v-for="course in this.courses">
         <cell :key="course.courseId" :title="course.courseName" is-link :border-intent="false" :arrow-direction="course.showCourseContent?'up':'down'"
           @click.native="course.showCourseContent=!course.showCourseContent">
         </cell>
         <template v-if="course.showCourseContent">
-          <div :key="course.teacher.email" style="margin-left:20px">
+          <div style="margin-left:20px">
           <cell-box :border-intent="false" class="sub-item" is-link @click.native="classInfo(course)">学生成绩</cell-box>
           <cell-box class="sub-item" is-link @click.native="classInfo(course)">学生组队</cell-box>
           <cell-box class="sub-item" is-link @click.native="classInfo(course)">课程信息</cell-box>
@@ -71,37 +71,7 @@
     data() {
       return {
         show: false,
-        courses: [{
-          showCourseContent: false,
-          courseId: 1,
-          teacher: {
-            teacherId: 1,
-            email: "992964285@qq.com",
-            name: "wu wei"
-          },
-          courseName: "j2ee",
-          introduction: "j2ee",
-          presentationWeight: 50,
-          reportWeight: 20,
-          questionWeight: 30,
-          teamStartTime: "2018-11-27T14:00:00.000+0000",
-          teamEndTime: "2018-12-01T14:00:00.000+0000"
-        },{
-          showCourseContent: false,
-          courseId: 2,
-          teacher: {
-            teacherId: 1,
-            email: "992964285@qq.com",
-            name: "wu wei"
-          },
-          courseName: "ooad",
-          introduction: "j2ee",
-          presentationWeight: 50,
-          reportWeight: 20,
-          questionWeight: 30,
-          teamStartTime: "2018-11-27T14:00:00.000+0000",
-          teamEndTime: "2018-12-01T14:00:00.000+0000"
-        }],
+        courses:'',
         coursePlus: {
           "1": "主",
           "2": "从"
@@ -113,11 +83,12 @@
         .then((response) => {
           this.courses = response.data.courses
           this.coursePlus = response.data.coursePlus
-        })
-      //为返回数据绑定show属性用于折叠显示
+          //为返回数据绑定show属性用于折叠显示
       for (var i = 0; i < this.courses.length; i++) {
-        this.courses.showCourseContent = false
+        this.$set(this.courses[i],'showCourseContent', false)
       }
+        })
+      
     },
     methods: {
       onClick() {

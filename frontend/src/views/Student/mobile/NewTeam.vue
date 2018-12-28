@@ -31,7 +31,7 @@
         </template>
         <cell :border-intent="false" value-align="left" title="添加成员：" style="margin-top:20px;height:20px"><span style="color:#000;padding-left:20px"></span></cell>
         <template v-for="stu in this.noteam">
-            <check-icon :key="stu.id" :value.sync="stu.showNoTeam" style="color:#000;padding-left:15px">&emsp;{{stu.account}} &emsp;{{stu.name}}<span v-if="stu.showNoTeam">&emsp; (｡･∀･)ﾉﾞ</span></check-icon>
+            <check-icon v-if="myaccount!=stu.account" :key="stu.id" :value.sync="stu.showNoTeam" style="color:#000;padding-left:15px">&emsp;{{stu.account}} &emsp;{{stu.name}}<span v-if="stu.showNoTeam">&emsp; (｡･∀･)ﾉﾞ</span></check-icon>
         </template>
 
         <flexbox style="margin-top:30px">
@@ -117,6 +117,7 @@ import {TransferDom,XHeader,
             newMembers:[],
             error1:false,
             newMembersname:[],
+            myaccount:'',
         }
     },
     mounted:function(){
@@ -132,6 +133,7 @@ import {TransferDom,XHeader,
         .then((response)=>{
             this.klasses=response.data;
         })
+        this.myaccount=this.$store.state.student.account
     },
     methods:{
         toast:function(){

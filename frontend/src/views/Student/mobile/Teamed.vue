@@ -30,11 +30,11 @@
                 <x-button type="warn"  @click.native="dissolved=!dissolved">解散小组</x-button>
             </flexbox-item>
             <flexbox-item>
-                <x-button type="default"  @click.native="addmember">添加</x-button>
+                <x-button type="primary"  @click.native="addmember">添加</x-button>
             </flexbox-item>
-            <flexbox-item>
+            <!-- <flexbox-item>
                 <x-button type="primary" @click.native="save=!save">保存</x-button>
-            </flexbox-item>
+            </flexbox-item> -->
         </flexbox>
         <!-- invalid组申请 -->
             <template v-if="teaminfo.team.valid===true">
@@ -49,7 +49,7 @@
         <template v-if="teaminfo.role==='member'">
             <flexbox style="margin-top:30px">
                 <flexbox-item>
-                    <x-button type="warn"  @click.native="leave=!leave">退出小组</x-button>
+                    <x-button type="warn"  @click.native="getmyId">退出小组</x-button>
                 </flexbox-item>
             </flexbox>
         </template>
@@ -74,7 +74,7 @@
         @on-cancel="onCancelnew"
         @on-confirm="onConfirm">
         <p style="text-align:center;">添加组员：</p>
-        <template v-for="mem in this.newMembers"><span :key="mem.id" style="padding-left:10px">{{mem}}</span></template>
+        <template v-for="mem in this.newMembersname"><span :key="mem.id" style="padding-left:10px">{{mem.studentId}}</span></template>
       </confirm>
         <confirm v-model="nomember"
         :show-cancel-button="false"
@@ -103,7 +103,6 @@
         @on-confirm="leaveGroup">
         <p style="text-align:center;">确定退出该组吗</p>
       </confirm>
-
       <popup v-model="show" height="15%">
           <div>
               <cell value-align="left" title=""><img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="StudentInfo">个人页</div></cell>
@@ -163,8 +162,10 @@ import { notEqual } from 'assert';
             myteam:'',
             noteam:'',
             newMembers:[],
+            newMembersname:[],
             nomember:false,
             memberWillBeDe:'',
+            myId:'s',
         }
     },
     mounted:function(){
@@ -196,6 +197,7 @@ import { notEqual } from 'assert';
         onCancelnew:function(){
             console.log('取消')
             this.newMembers=[]
+            this.newMembersname=[]
         },
         Return:function(){
             console.log('返回')
@@ -203,10 +205,11 @@ import { notEqual } from 'assert';
         onConfirm:function(){
             console.log('添加')
             console.log(this.newMembers)
-            this.$axios.put('/team/'+this.teaminfo.team.teamId+'/add',this.newMembers)  //学生List待完成
+            this.$axios.put('/team/'+this.teaminfo.team.teamId+'/add',this.newMembers) 
             .then((response)=>{
                 console.log(response.data)
                 this.newMembers=[]
+                this.newMembersname=[]
                 window.location.reload()
             })
         },
@@ -215,6 +218,7 @@ import { notEqual } from 'assert';
             for(var i=0;i<this.noteam.length;i++){
                 if(this.noteam[i].showNoTeam){
                     this.newMembers.push({'studentId':this.noteam[i].studentId})
+                    this.newMembersname.push({'studentId':this.noteam[i].name})
                 }
             }
             if(JSON.stringify(this.newMembers)=='[]'){
@@ -228,6 +232,7 @@ import { notEqual } from 'assert';
             this.$axios.delete('/team/'+this.teaminfo.team.teamId)
             .then((response)=>{
                 console.log(response.data)
+                this.$router.push('/mobile/Student/teamFreedom')
             })
         },
         deleteMem:function(){
@@ -253,14 +258,25 @@ import { notEqual } from 'assert';
         },
         leaveGroup:function(){
             console.log('离开小组')
-            //不太清楚到底调用那个接口
-            // this.$router.push('/mobile/Student/teamFreedom')
+            this.$axios.put('/team/'+this.teaminfo.team.teamId+'/remove',{studentId:this.myId})
+            .then((response)=>{
+                console.log(response.data)
+            })
+            //回到未组队界面
+            this.$router.push('/mobile/Student/teamFreedom')
         },
         //这里将要删除的组员信息存在memberWillBeDe中
         deleting:function(memberAC){
             this.Delete=!this.Delete
             this.memberWillBeDe=memberAC
             console.log(memberAC)
+        },
+        getmyId:function(){
+            for(var i=0;i<this.teaminfo.team.members.length;i++){
+            if(this.$store.state.student.account==this.teaminfo.team.members[i].account)
+            this.myId=this.teaminfo.team.members[i].studentId
+            }
+            this.leave=!this.leave
         }
     }
         

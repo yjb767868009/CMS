@@ -11,12 +11,12 @@
         </cell>
         <template v-if="course.showCourseContent">
           <div style="margin-left:20px" :key="course.courseId">
-          <cell-box :border-intent="false" class="sub-item" is-link @click.native="classInfo(course)">学生成绩</cell-box>
-          <cell-box class="sub-item" is-link @click.native="classInfo(course)">学生组队</cell-box>
-          <cell-box class="sub-item" is-link @click.native="classInfo(course)">课程信息</cell-box>
+          <cell-box :border-intent="false" class="sub-item" is-link @click.native="studentScore(course)">学生成绩</cell-box>
+          <cell-box class="sub-item" is-link @click.native="studentTeam(course)">学生组队</cell-box>
+          <cell-box class="sub-item" is-link @click.native="courseInfo(course)">课程信息</cell-box>
           <cell-box class="sub-item" is-link @click.native="classInfo(course)">班级信息</cell-box>
-          <cell-box class="sub-item" is-link @click.native="classInfo(course)">讨论课设置</cell-box>
-          <cell-box class="sub-item" is-link @click.native="classInfo(course)">共享设置</cell-box>
+          <cell-box class="sub-item" is-link @click.native="seminarSetting(course)">讨论课设置</cell-box>
+          <cell-box class="sub-item" is-link @click.native="shareSetting(course)">共享设置</cell-box>
           </div>
         </template>
       </template>
@@ -106,7 +106,23 @@
       newCourse(){
           this.$router.push('/mobile/teacher/createcourse')
       },
-      classInfo(){
+
+      classInfo(course){
+        
+      },
+      studentInfo(course){
+
+      },
+      studentScore(course){
+
+      },
+      studentTeam(course){
+
+      },
+      seminarSetting(course){
+
+      },
+      shareSetting(course){
 
       }
     }

@@ -26,4 +26,11 @@ public interface ConflictCourseStrategyMapper {
      * @param strategy 规则
      */
     void insertConflictCourseStrategy(@Param("strategy") ConflictCourseStrategy strategy);
+
+    /**
+     * 获取最大的id
+     *
+     * @return 最大id
+     */
+    BigInteger getMaxId();
 }

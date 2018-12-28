@@ -68,13 +68,13 @@ export default {
       seminar_on_going: false
     };
   },
-  //   mounted:function(){
-  //       this.$axios.get('/course')
-  //       .then((response)=>{
-  //           this.courses=response.data.courses
-  //           this.coursePlus=response.data.coursePlus
-  //       })
-  // },
+    mounted:function(){
+        this.$axios.get('/course')
+        .then((response)=>{
+            this.courses=response.data.courses
+            this.coursePlus=response.data.coursePlus
+        })
+  },
   methods: {
     clickCourse: function(course) {
       this.$store.state.teacher.currentCourse = course;

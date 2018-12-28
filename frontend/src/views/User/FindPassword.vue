@@ -25,7 +25,7 @@ export default {
   methods: {
     next: function() {
       this.$axios
-        .post("/user/password",{
+        .get("/user/password",{
           account:this.account
         })
         .then(response => {

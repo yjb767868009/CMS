@@ -1,9 +1,12 @@
 package com.xmu.cms.controller;
 
 import com.xmu.cms.entity.Attendance;
+import com.xmu.cms.entity.KlassSeminar;
 import com.xmu.cms.entity.Question;
+import com.xmu.cms.entity.Student;
 import com.xmu.cms.service.SeminarService;
 import com.xmu.cms.support.KlassSeminarRun;
+import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -24,11 +27,13 @@ public class WebSocketController {
 
     @MessageMapping("/{klassSeminarId}/question")
     @SendTo("/topic/klassSeminar/{klassSeminarId}")
-    public KlassSeminarRun question(@DestinationVariable("klassSeminarId") BigInteger klassSeminarId,
+    public KlassSeminarRun question(UserInfo info, @DestinationVariable("klassSeminarId") BigInteger klassSeminarId,
                                     Question question) throws Exception {
         Thread.sleep(1000);
         question.setSelected(false);
         question.setScore((float) 0);
+        question.setStudent(new Student(info.getUserId()));
+        question.setKlassSeminar(new KlassSeminar(klassSeminarId));
         question = seminarService.askQuestion(question);
         KlassSeminarRun klassSeminarRun = new KlassSeminarRun();
         klassSeminarRun.setNewQuestion(question);

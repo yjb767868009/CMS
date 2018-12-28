@@ -50,4 +50,8 @@ public class QuestionDao {
     public void selectQuestion(Question question) {
         questionMapper.selectQuestion(question);
     }
+
+    public List<Question> getAttendanceQuestionInKlassSeminar(BigInteger klassSeminarId) {
+        return questionMapper.getAttendanceQuestionInKlassSeminar(klassSeminarId);
+    }
 }

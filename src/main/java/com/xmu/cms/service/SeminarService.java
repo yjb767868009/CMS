@@ -46,10 +46,10 @@ public class SeminarService {
     private TeamDao teamDao;
 
     public void newSeminar(Seminar seminar) throws Exception {
-        seminarDao.insertSeminar(seminar);
+        BigInteger seminarId = seminarDao.insertSeminar(seminar);
         List<Klass> klasses = klassDao.getAllKlass(seminar.getCourse().getCourseId());
         for (Klass klass : klasses) {
-            klassSeminarDao.insertKlassSeminar(klass.getKlassId(), seminar.getSeminarId());
+            klassSeminarDao.insertKlassSeminar(klass.getKlassId(), seminarId);
         }
     }
 
@@ -152,12 +152,7 @@ public class SeminarService {
     }
 
     public List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId) {
-        return questionDao.getQuestionInKlassSeminar(klassSeminarId);
-    }
-
-    public Question askQuestion(BigInteger userId, BigInteger attendanceId) {
-        //todo
-        return null;
+        return questionDao.getAttendanceQuestionInKlassSeminar(klassSeminarId);
     }
 
     public Map<String, String> scoreQuestion(Question question) {

@@ -137,4 +137,27 @@
           and question.team_id = team.id
           and question.student_id = student.id
     </select>
+
+    <select id="getQuestionByQuestionId" resultMap="QuestionResultMap">
+        select question.id          as questionId,
+               score,
+               is_selected,
+               student.id           as studentId,
+               student.student_name as studentName,
+               team.id              as teamId,
+               team.team_name       as teamName,
+               attendance.id        as attendanceId,
+               klass_seminar.id     as klassSeminarId
+        from student,
+             question,
+             team,
+             attendance,
+             klass_seminar
+        where attendance.klass_seminar_id = #{klassSeminarId}
+          and attendance.is_present = 1
+          and question.klass_seminar_id = #{klassSeminarId}
+          and question.attendance_id = attendance.id
+          and question.team_id = team.id
+          and question.student_id = student.id
+    </select>
 </mapper>

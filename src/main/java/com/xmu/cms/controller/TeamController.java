@@ -85,7 +85,6 @@ public class TeamController {
     }
 
     @Secured("ROLE_STUDENT")
-    @CheckTeamPermission
     @PutMapping(value = "/team/{teamId}/remove")
     public Map<String, String> removeTeamMember(@PathVariable("teamId") BigInteger teamId,
                                                 @RequestBody Student student) {

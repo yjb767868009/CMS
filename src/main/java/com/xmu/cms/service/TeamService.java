@@ -54,7 +54,7 @@ public class TeamService {
     }
 
     public Map<String, String> teamAddMembers(BigInteger teamId, List<Student> students) {
-        Map<String, String> message = new HashMap<String, String>(1);
+        Map<String, String> message = new HashMap<>(1);
         Team team = teamDao.addMembers(teamId, students);
         Strategy strategy = strategyDao.getCourseStrategy(team.getCourse().getCourseId());
         Boolean valid = strategy.checkValid(team);

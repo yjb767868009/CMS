@@ -75,7 +75,10 @@ public class TeamDao {
     public Team addMembers(BigInteger teamId, List<Student> students) {
         Team team = teamMapper.getTeamByTeamId(teamId);
         for (Student student : students) {
-            klassMapper.addMembers(team.getKlass().getKlassId(), team.getTeamId(), student.getStudentId());
+            Team findTeam = teamMapper.getStudentTeamInKlass(student.getStudentId(), team.getKlass().getKlassId());
+            if (findTeam == null) {
+                klassMapper.addMembers(team.getKlass().getKlassId(), team.getTeamId(), student.getStudentId());
+            }
         }
         return getFullTeam(teamId);
     }

@@ -171,7 +171,7 @@
 
     <update id="updateTeamValid" parameterType="com.xmu.cms.entity.Team">
         update team
-        set status = #{team.status}
+        set status = #{team.valid}
         where id = #{team.teamId}
     </update>
 

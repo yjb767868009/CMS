@@ -36,41 +36,36 @@
         set klass_location = #{klassPlace}
         where id = #{klassId}
     </update>
-    
+
     <select id="getKlassByKlassId" resultMap="KlassResultMap">
-        select klass.id as klassId,
+        select klass.id    as klassId,
                grade,
                klass_serial,
                klass_time,
                klass_location,
-               course.id  as courseId,
-               course_name  as courseName
+               course.id   as courseId,
+               course_name as courseName
         from klass,
              course
         where klass.id = #{klassId}
-        and course.id = klass.course_id
+          and course.id = klass.course_id
     </select>
 
     <insert id="addStudent" parameterType="com.xmu.cms.entity.Student">
-        insert klass_student(klass_id, student_id, course_id)
+        insert klass_student (klass_id, student_id, course_id)
         values (#{klassId}, #{student.studentId}, #{courseId})
     </insert>
 
     <select id="getKlassesInCourse" resultMap="KlassResultMap">
-        select klass.id as klassId,
-               grade,
-               klass_serial,
-               klass_time,
-               klass_location
+        select klass.id as klassId, grade, klass_serial, klass_time, klass_location
         from klass,
              course
         where klass.course_id = #{courseId}
           and course.id = klass.course_id
     </select>
-    
+
     <select id="getKlassEnrollNumber">
-        select klass_id as klassId,
-               enroll_number as enrollNumber
+        select klass_id as klassId, enroll_number as enrollNumber
         from klass_round
         where round_id = #{roundId}
     </select>
@@ -83,9 +78,8 @@
     </delete>
 
     <update id="addMembers">
-        update team_student
-        set student_id = #{studentId}
-        where team_id = #{teamId}
+        insert team_student (team_id, student_id)
+        value (#{teamId}, #{studentId})
     </update>
 
     <delete id="deleteTeamStudent">
@@ -98,7 +92,7 @@
         delete
         from team_student
         where team_id = #{teamId}
-        and student_id = #{student.studentId}
+          and student_id = #{student.studentId}
     </delete>
 
     <insert id="insertKlassRound">
@@ -107,13 +101,13 @@
     </insert>
 
     <select id="getKlassByStudent" resultMap="KlassResultMap">
-        select klass.id as klassId,
+        select klass.id    as klassId,
                grade,
                klass_serial,
                klass_time,
                klass_location,
-               course.id  as courseId,
-               course_name  as courseName
+               course.id   as courseId,
+               course_name as courseName
         from klass,
              klass_student,
              course

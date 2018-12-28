@@ -110,7 +110,7 @@ public interface TeamMapper {
      * @param klassId   班级id
      * @return 队伍
      */
-    Team getStudentTeamInKlass(BigInteger studentId, BigInteger klassId);
+    Team getStudentTeamInKlass(@Param("studentId") BigInteger studentId,@Param("klassId") BigInteger klassId);
 
     /**
      * 获取简单的队伍信息，无嵌套关系

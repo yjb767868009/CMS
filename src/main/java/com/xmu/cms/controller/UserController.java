@@ -71,7 +71,6 @@ public class UserController {
         return message;
     }
 
-    @Secured({"ROLE_STUDENT", "ROLE_TEACHER"})
     @GetMapping(value = "/user/password")
     public Map<String, String> getPassword(@RequestBody MyUser user) {
         return mailService.sendPassword(user);

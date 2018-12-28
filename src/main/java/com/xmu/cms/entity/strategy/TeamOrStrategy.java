@@ -39,6 +39,7 @@ public class TeamOrStrategy implements Strategy {
         return strategyId;
     }
 
+    @Override
     public void setStrategyId(BigInteger strategyId) {
         this.strategyId = strategyId;
     }

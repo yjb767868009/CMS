@@ -1,15 +1,14 @@
 package com.xmu.cms.dao;
 
-import com.xmu.cms.entity.strategy.Strategy;
-import com.xmu.cms.entity.strategy.TeamAndStrategy;
-import com.xmu.cms.entity.strategy.TeamOrStrategy;
-import com.xmu.cms.entity.strategy.TeamStrategy;
+import com.xmu.cms.entity.strategy.*;
 import com.xmu.cms.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 import java.util.List;
+
+import static com.xmu.cms.entity.strategy.Strategy.*;
 
 /**
  * @author JuboYu on 2018/12/22.
@@ -38,21 +37,21 @@ public class StrategyDao {
     private Strategy getStrategy(BigInteger strategyId, String subStrategy) {
         Strategy strategy = null;
         switch (subStrategy) {
-            case "TeamAndStrategy":
+            case TEAM_AND_STRATEGY_TYPE:
                 strategy = teamAndStrategyMapper.getTeamAndStrategyById(strategyId);
                 strategy = setSubStrategy(strategy);
                 break;
-            case "TeamOrStrategy":
+            case TEAM_OR_STRATEGY_TYPE:
                 strategy = teamOrStrategyMapper.getTeamOrStrategyById(strategyId);
                 strategy = setSubStrategy(strategy);
                 break;
-            case "MEMBER_LIMIT_STRATEGY":
+            case MEMBER_LIMIT_STRATEGY:
                 strategy = memberLimitStrategyMapper.getMemberLimitStrategyById(strategyId);
                 break;
-            case "CONFLICT_COURSE_STRATEGY":
+            case CONFLICT_COURSE_STRATEGY:
                 strategy = conflictCourseStrategyMapper.getConflictCourseStrategyById(strategyId);
                 break;
-            case "COURSE_MEMBER_LIMIT_STRATEGY":
+            case COURSE_MEMBER_LIMIT_STRATEGY:
                 strategy = courseMemberLimitStrategyMapper.getCourseMemberLimitStrategyById(strategyId);
                 break;
             default:
@@ -68,13 +67,13 @@ public class StrategyDao {
         Strategy subStrategyOne = null;
         Strategy subStrategyTwo = null;
         switch (subStrategyName) {
-            case "TEAM_STRATEGY":
+            case TEAM_STRATEGY:
                 TeamStrategy teamStrategy = (TeamStrategy) strategy;
                 subStrategy = getStrategy(teamStrategy.getSubStrategyId(), teamStrategy.getSubStrategyName());
                 teamStrategy.setSubStrategy(subStrategy);
                 strategy = teamStrategy;
                 break;
-            case "TeamAndStrategy":
+            case TEAM_AND_STRATEGY_TYPE:
                 TeamAndStrategy teamAndStrategy = (TeamAndStrategy) strategy;
                 subStrategyOne = getStrategy(teamAndStrategy.getSubStrategyOneId(), teamAndStrategy.getSubStrategyOneName());
                 teamAndStrategy.setSubStrategyOne(subStrategyOne);
@@ -82,7 +81,7 @@ public class StrategyDao {
                 teamAndStrategy.setSubStrategyTwo(subStrategyTwo);
                 strategy = teamAndStrategy;
                 break;
-            case "TeamOrStrategy":
+            case TEAM_OR_STRATEGY_TYPE:
                 TeamOrStrategy teamOrStrategy = (TeamOrStrategy) strategy;
                 subStrategyOne = getStrategy(teamOrStrategy.getSubStrategyOneId(), teamOrStrategy.getSubStrategyOneName());
                 teamOrStrategy.setSubStrategyOne(subStrategyOne);
@@ -90,11 +89,11 @@ public class StrategyDao {
                 teamOrStrategy.setSubStrategyTwo(subStrategyTwo);
                 strategy = teamOrStrategy;
                 break;
-            case "MEMBER_LIMIT_STRATEGY":
+            case MEMBER_LIMIT_STRATEGY:
                 break;
-            case "CONFLICT_COURSE_STRATEGY":
+            case CONFLICT_COURSE_STRATEGY:
                 break;
-            case "COURSE_MEMBER_LIMIT_STRATEGY":
+            case COURSE_MEMBER_LIMIT_STRATEGY:
                 break;
             default:
                 break;
@@ -107,10 +106,66 @@ public class StrategyDao {
         return setSubStrategy(teamStrategy);
     }
 
-    public Strategy newStrategy(List<Strategy> strategies) {
-        Strategy firstStrategy = strategies.get(0);
-        if (firstStrategy.getType().equals(Strategy.TEAM_OR_STRATEGY_TYPE)) {
+    private Strategy insertStrategy(Strategy strategy) {
+        BigInteger strategyId;
+        switch (strategy.getType()) {
+            case TEAM_AND_STRATEGY_TYPE:
+                strategyId = teamAndStrategyMapper.insertTeamAndStrategy((TeamAndStrategy) strategy);
+                strategy.setStrategyId(strategyId);
+                return strategy;
+            case TEAM_OR_STRATEGY_TYPE:
+                strategyId = teamOrStrategyMapper.insertTeamOrStrategy((TeamOrStrategy) strategy);
+                strategy.setStrategyId(strategyId);
+                return strategy;
+            case MEMBER_LIMIT_STRATEGY:
+                strategyId = memberLimitStrategyMapper.insertMemberLimitStrategy((MemberLimitStrategy) strategy);
+                strategy.setStrategyId(strategyId);
+                return strategy;
+            case CONFLICT_COURSE_STRATEGY:
+                strategyId = conflictCourseStrategyMapper.insertConflictCourseStrategy((ConflictCourseStrategy) strategy);
+                strategy.setStrategyId(strategyId);
+                return strategy;
+            case COURSE_MEMBER_LIMIT_STRATEGY:
+                strategyId = courseMemberLimitStrategyMapper.insertCourseMemberLimitStrategy((CourseMemberLimitStrategyMapper) strategy);
+                strategy.setStrategyId(strategyId);
+                return strategy;
+            default:
+                return null;
         }
-        return null;
+    }
+
+    public void newStrategy(List<Strategy> strategies) throws Exception {
+        Strategy firstStrategy = strategies.get(0);
+        if (firstStrategy.getType().equals(TEAM_OR_STRATEGY_TYPE)) {
+            strategies.remove(0);
+            Strategy beforeStrategy = null;
+            TeamOrStrategy teamOrStrategy = null;
+            for (Strategy strategy : strategies) {
+                if (strategy.getType().equals(COURSE_MEMBER_LIMIT_STRATEGY)) {
+                    if (beforeStrategy == null) {
+                        beforeStrategy = insertStrategy(strategy);
+                    } else {
+                        strategy = insertStrategy(strategy);
+                        TeamOrStrategy newTeamOrStrategy = new TeamOrStrategy();
+                        if (teamOrStrategy == null) {
+                            newTeamOrStrategy.setSubStrategyOne(beforeStrategy);
+                        } else {
+                            newTeamOrStrategy.setSubStrategyOne(teamOrStrategy);
+                        }
+                        newTeamOrStrategy.setSubStrategyTwo(strategy);
+                        newTeamOrStrategy = (TeamOrStrategy) insertStrategy(newTeamOrStrategy);
+                        teamOrStrategy = newTeamOrStrategy;
+                    }
+                    strategies.remove(strategy);
+                }
+            }
+            if (teamOrStrategy != null) {
+                beforeStrategy = teamOrStrategy;
+            }
+            TeamAndStrategy teamAndStrategy = null;
+            for (Strategy strategy : strategies) {
+                // TODO: 2018/12/28
+            }
+        }
     }
 }

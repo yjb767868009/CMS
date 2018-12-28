@@ -33,6 +33,7 @@ public class ConflictCourseStrategy implements Strategy {
         return strategyId;
     }
 
+    @Override
     public void setStrategyId(BigInteger strategyId) {
         this.strategyId = strategyId;
     }

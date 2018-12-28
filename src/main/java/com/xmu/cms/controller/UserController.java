@@ -106,7 +106,7 @@ public class UserController {
     }
 
     @Secured({"ROLE_STUDENT", "ROLE_TEACHER"})
-    @GetMapping(value = "/information")
+    @GetMapping(value = "/user/information")
     public Map<String, String> getMyInfo(UserInfo info) {
         return userService.getMyInfo(info);
     }

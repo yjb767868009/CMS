@@ -4,7 +4,6 @@ import com.xmu.cms.aspect.annoatation.CheckTeamPermission;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Team;
 import com.xmu.cms.entity.TeamApplication;
-import com.xmu.cms.service.CourseService;
 import com.xmu.cms.service.MailService;
 import com.xmu.cms.service.TeamService;
 import com.xmu.cms.support.UserInfo;
@@ -23,9 +22,6 @@ import java.util.Map;
  */
 @RestController
 public class TeamController {
-
-    @Autowired
-    private CourseService courseService;
 
     @Autowired
     private TeamService teamService;

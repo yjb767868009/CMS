@@ -2,36 +2,38 @@
   <div class="course" style="background:#eee">
     <x-header title="共享设置" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
-    <group :title="课程">
-      <cell
-      title="J2EE（x老师）"
+    <template v-for="share in shares">
+    <group :key="share.shareTeamId">
+        <template v-if="myCourseId===share.masterCourse.courseId">
+      <cell style="height:40px"
+      :title="share.receiveCourse.courseName+' ('+share.receiveTeacher.name+'老师)'"
       is-link
       :border-intent="false"
-      :arrow-direction="showContent001 ? 'up' : 'down'"
-      @click.native="showContent001 = !showContent001"></cell>
-
-        <template v-if="showContent001">
-            <cell-box :border-intent="false" class="sub-item">共享类型</cell-box>
-            <cell-box class="sub-item">共享情况</cell-box>
+      :arrow-direction="share.showContent ? 'up' : 'down'"
+      @click.native="share.showContent = !share.showContent"></cell>
+        <template v-if="share.showContent">
+            <cell-box :border-intent="false" class="sub-item">共享类型&emsp;&emsp;&emsp;&emsp;&emsp;共享组队 </cell-box>
+            <cell-box class="sub-item">共享情况&emsp;&emsp;&emsp;&emsp;该课程为从课程</cell-box>
             <x-button mini type='warn'>取消共享</x-button>
         </template>
-    </group>
+        </template>
 
-
-    <group :title="课程">
+        <template v-if="myCourseId===share.receiveCourse.courseId">
       <cell
-      title="OOAD（a老师）"
+      :title="share.masterCourse.courseName+' (邱明老师)'"
       is-link
       :border-intent="false"
-      :arrow-direction="showContent002 ? 'up' : 'down'"
-      @click.native="showContent002 = !showContent002"></cell>
+      :arrow-direction="share.showContent ? 'up' : 'down'"
+      @click.native="share.showContent = !share.showContent"></cell>
 
-        <template v-if="showContent002">
-            <cell-box :border-intent="false" class="sub-item">共享类型</cell-box>
-            <cell-box class="sub-item">共享情况</cell-box>
+        <template v-if="share.showContent">
+            <cell-box :border-intent="false" class="sub-item">共享类型&emsp;&emsp;&emsp;&emsp;&emsp;共享组队 </cell-box>
+            <cell-box class="sub-item">共享情况&emsp;&emsp;&emsp;&emsp;该课程为主课程</cell-box>
             <x-button mini type='warn'>取消共享</x-button>
         </template>
+        </template>
     </group>
+    </template>
 
     <x-button @click.native="newshare" style="margin-top:100px" type="primary">新增共享</x-button>
     <div v-transfer-dom>
@@ -63,8 +65,19 @@ export default {
         return{
             show:false,
             showContent001: false,
-            showContent002: false
+            shares:'',
+            myCourseId:'',
         }   
+    },
+    mounted:function(){
+        this.myCourseId=this.$store.state.teacher.currentCourse.courseId
+        this.$axios.get('/course/'+this.$store.state.teacher.currentCourse.courseId+'/share')
+        .then((response)=>{
+            this.shares=response.data;
+            for(var i=0;i<this.shares.length;i++){
+                this.$set(this.shares[i],'showContent',false);
+            }
+        })
     },
     methods: {
         onClick () {

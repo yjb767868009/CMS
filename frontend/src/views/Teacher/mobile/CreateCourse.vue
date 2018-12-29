@@ -5,27 +5,26 @@
 
 
 
-    <group label-width="5em">
-        <x-input v-model="courseName" placeholder="课程名称"></x-input>
+    <group>
+        <x-input v-model="courseName" placeholder="课程名称"  style="padding-left:8em"></x-input>
         <x-textarea v-model="courseRequirement" placeholder="课程要求"></x-textarea>
     </group>
 
-    <div style="height:30px;padding-top:12px;text-align:left" class="box">
-        成绩计算规则（百分比）：
-            <group style="height:20px" label-width="5em">
-            <popup-picker title="展示" :data="percentageOptions" v-model="presentation"></popup-picker>
-            <popup-picker title="提问" :data="percentageOptions" v-model="question"></popup-picker>
-            <popup-picker title="报告" :data="percentageOptions" v-model="report"></popup-picker>
-            </group>
-    </div>
+       
+    <group title="成绩计算规则（百分比）：">
+        <popup-picker title="展示" :data="percentageOptions" v-model="presentation"></popup-picker>
+        <popup-picker title="提问" :data="percentageOptions" v-model="question"></popup-picker>
+        <popup-picker title="报告" :data="percentageOptions" v-model="report"></popup-picker>
+    </group>
+    
 
-    <group label-width="6em" style="margin-top:140px;padding-top:12px;text-align:left">
-        <cell is-link title="组队要求:" @click.native="teamRequirement"></cell>
-        <datetime v-model="teamStartTime" :start-date="startDateS" :end-date="endDateS" format="YYYY-MM-DD HH:mm"  title="组队开始时间"></datetime>
-        <datetime v-model="teamEndTime" :start-date="startDateE" :end-date="endDateE" format="YYYY-MM-DD HH:mm"  title="组队截止时间"></datetime>
+    <group label-width="6em" style="text-align:left" >
+        <cell style="height:1.5em" is-link title="组队要求:" @click.native="teamRequirement"></cell>
+        <datetime style="height:1.5em" v-model="teamStartTime" :start-date="startDateS" :end-date="endDateS" format="YYYY-MM-DD HH:mm"  title="组队开始时间"></datetime>
+        <datetime style="height:1.5em" v-model="teamEndTime" :start-date="startDateE" :end-date="endDateE" format="YYYY-MM-DD HH:mm"  title="组队截止时间"></datetime>
     </group>
 
-    <x-button @click.native="newCourse" type="primary" style="margin-top:100px;color:#fff">发布</x-button>
+    <x-button @click.native="newCourse" type="primary" style="margin-top:40px;color:#fff">发布</x-button>
     
     <div v-transfer-dom>
       <popup v-model="show" height="23%">
@@ -93,8 +92,7 @@ export default {
         //rule
     },
     teamRequirement(){
-        console.log('team require')
-        this.$router.push('')
+        this.$router.push('/mobile/teacher/teamrequire')
     }
     },
 

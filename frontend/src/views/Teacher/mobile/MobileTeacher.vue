@@ -1,5 +1,5 @@
 <template>
-<div class="student" style="background:#eee">
+<div class="student" style="height:370px;background:#eee">
     <x-header title="我" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
     <x-header align="right" style="background:#fff;margin:20px 0px 0px;height:90px;padding-top:12px border:1" :left-options="{showBack:false}">

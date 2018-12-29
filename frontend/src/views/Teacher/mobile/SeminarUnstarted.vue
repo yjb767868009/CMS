@@ -6,9 +6,9 @@
     <group>
       <cell :title="'轮次'" :value="'第'+this.$store.state.student.currentRound.order+'轮'"></cell>
       
-      <cell :title="'主题'" :value="this.$store.state.student.currentSeminar.topic"></cell>
-      <cell :title="'课次序号'" :value="this.$store.state.student.currentSeminar.klassSeminars[0].klass.klassSerial"></cell>
-      <x-textarea :title="'要求'" :show-counter="false" :placeholder="this.$store.state.student.currentSeminar.introduction" disabled></x-textarea>
+      <cell :title="'主题'" :value="this.$store.state.teacher.currentSeminar.topic"></cell>
+      <cell :title="'课次序号'" :value="this.$store.state.teacher.currentSeminar.klassSeminars[0].klass.klassSerial"></cell>
+      <x-textarea :title="'要求'" :show-counter="false" :placeholder="this.$store.state.teacher.currentSeminar.introduction" readonly></x-textarea>
       <cell :title="'课程情况'">未开始&emsp;&emsp;&emsp;<a style="color:#1AAD19;text-decoration:underline" @click="checkInfo">查看信息</a></cell>
       <x-button @click.native="presentation" type="primary" style="margin-top:18px;color:#fff">开始讨论课</x-button>
       <x-button @click.native="modifySeminar" type="primary" style="margin-top:18px;color:#fff">修改讨论课</x-button>

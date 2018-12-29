@@ -6,25 +6,34 @@
       :left-options="{showBack:false}"
     ></x-header>
     <group>
-      <x-input v-model="account" style="margin-top:40px;background-color:#fff" placeholder="学号/教工号"></x-input>
+      <x-input v-model="account" style="margin-left:20px;margin-right:20px;margin-top:120px;background-color:#fff" placeholder="学号/教工号"></x-input>
       <x-input
         type="password"
         v-model="password"
-        style="margin-top:20px;background-color:#fff"
+        style="margin-top:20px;margin-left:20px;margin-right:20px;background-color:#fff"
         placeholder="登录密码"
       ></x-input>
     </group>
-    <x-button @click.native="login" style="margin-top:100px">登陆</x-button>
+    <x-button @click.native="login" style="margin-top:80px">登陆</x-button>
     <button
       @click="forget"
       style="background:0;height:10px;border:0;margin-left:80%;margin-top:10px"
     >忘记密码</button>
     <div style="color:green;margin-top:50%">初次登录默认密码为123456</div>
+
+    
+  <div v-transfer-dom>
+      <x-dialog v-model="welcome" :dialog-style="{'max-width': '100%', width: '100%', height: '30%', 'background-color': 'transparent'}">
+        <p style="color:#fff;text-align:center;" @click="welc">
+          <span style="font-size:30px;">HELLO WORLD</span>
+        </p>
+      </x-dialog>
+    </div>
+
   </div>
 </template>
-
 <script>
-import { XHeader, XButton, XInput } from "vux";
+import { XHeader, XButton, XInput,TransferDom,XDialog } from "vux";
 import Qs from "qs";
 
 export default {
@@ -32,6 +41,8 @@ export default {
     return {
       account: "",
       password: "",
+      welcome:false,
+      data:'',
     };
   },
   mounted() {
@@ -41,10 +52,13 @@ export default {
       this.$router.replace("/login");
     }
   },
+  directives:{
+    TransferDom
+  },
   components: {
     XHeader,
     XButton,
-    XInput
+    XInput,XDialog
   },
   methods: {
     isMobile: function() {
@@ -66,12 +80,19 @@ export default {
             password: this.password
           })
       }).then((response) => {
-        let data = response.data;
-        if (data.role === "teacher") {
+        this.data = response.data;
+        this.welcome=!this.welcome
+
+      }).catch((error)=>{
+        this.$message.error(error)
+      });
+    },
+    welc:function(){
+      if (this.data.role === "teacher") {
           console.log('teacher');
-          this.$store.state.token = data.token;
+          this.$store.state.token = this.data.token;
           this.$store.state.userType = "teacher";
-          if(data.active==="false"){//需要激活
+          if(this.data.active==="false"){//需要激活
             this.$router.push('/mobile/teacher/activation')
           }
           else{//不用激活
@@ -79,21 +100,17 @@ export default {
           }
         }
 
-        if(data.role==='student'){
+        if(this.data.role==='student'){
           console.log('student');
-          this.$store.state.token=data.token;
+          this.$store.state.token=this.data.token;
           this.$store.state.userType='student';
-          if(data.active==="false"){//需要激活
+          if(this.data.active==="false"){//需要激活
             this.$router.push('/mobile/student/activation')
           }
           else{//不用激活
             this.$router.push('/mobile/student/studentInfo')
           }
         }
-
-      }).catch((error)=>{
-        console.log(error)
-      });
     }
   }
 };

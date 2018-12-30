@@ -6,15 +6,15 @@
     <group :key="share.shareTeamId">
         <template v-if="myCourseId===share.masterCourse.courseId">
       <cell style="height:40px"
-      :title="share.receiveCourse.courseName+' ('+share.receiveTeacher.name+'老师)'"
+      :title="share.receiveCourse.courseName+' ('+share.receiveCourse.teacher.name+'老师)'"
       is-link
       :border-intent="false"
       :arrow-direction="share.showContent ? 'up' : 'down'"
-      @click.native="share.showContent = !share.showContent"></cell>
+      @click.native="current(share,'0')"></cell>
         <template v-if="share.showContent">
             <cell-box :border-intent="false" class="sub-item">共享类型&emsp;&emsp;&emsp;&emsp;&emsp;共享组队 </cell-box>
             <cell-box class="sub-item">共享情况&emsp;&emsp;&emsp;&emsp;该课程为从课程</cell-box>
-            <x-button mini type='warn'>取消共享</x-button>
+            <x-button @click.native="cancel" mini type='warn'>取消共享</x-button>
         </template>
         </template>
 
@@ -24,12 +24,12 @@
       is-link
       :border-intent="false"
       :arrow-direction="share.showContent ? 'up' : 'down'"
-      @click.native="share.showContent = !share.showContent"></cell>
+      @click.native="current(share,'1')"></cell>
 
         <template v-if="share.showContent">
             <cell-box :border-intent="false" class="sub-item">共享类型&emsp;&emsp;&emsp;&emsp;&emsp;共享组队 </cell-box>
             <cell-box class="sub-item">共享情况&emsp;&emsp;&emsp;&emsp;该课程为主课程</cell-box>
-            <x-button mini type='warn'>取消共享</x-button>
+            <x-button @click.native="cancel" mini type='warn'>取消共享</x-button>
         </template>
         </template>
     </group>
@@ -37,6 +37,11 @@
 
     <x-button @click.native="newshare" style="margin-top:40px" type="primary">新增共享</x-button>
     <div v-transfer-dom>
+      <confirm v-model="nomoreshare"
+        title="提示"
+        @on-confirm="sure">
+        <p style="text-align:center;">确定取消与该课程的共享吗？</p>
+      </confirm>
       <popup v-model="show" height="23%">
           <div>
               <cell value-align="left" title=""><img slot="icon" src="@/assets/message.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="Undo">代办</div></cell>
@@ -49,7 +54,7 @@
 </template>
 
 <script>
-import {XHeader,Cell,CellBox,Group,XButton,Popup,TransferDom} from 'vux'
+import {XHeader,Cell,CellBox,Group,XButton,Popup,TransferDom,Confirm} from 'vux'
 export default {
     directives:{
         TransferDom
@@ -59,7 +64,7 @@ export default {
         Cell,
         CellBox,
         Group,
-        XButton,Popup
+        XButton,Popup,Confirm
     },
     data(){
         return{
@@ -67,6 +72,8 @@ export default {
             showContent001: false,
             shares:'',
             myCourseId:'',
+            nomoreshare:false,
+            clickcourse:'',
         }   
     },
     mounted:function(){
@@ -97,6 +104,23 @@ export default {
         },
         newshare:function(){
             this.$router.push('/mobile/teacher/createshare')
+        },
+        cancel(){
+            this.nomoreshare=!this.nomoreshare
+        },
+        sure(){
+            this.$axios.delete('/shareteam/'+this.clickcourse)
+            .then((res)=>{
+                console.log(res)
+            })
+        },
+        current(share,p){
+            share.showContent = !share.showContent
+            if(p=='0'){
+                this.clickcourse=share.receiveCourse.courseId
+            }else if(p=='1'){
+                this.clickcourse=share.masterCourse.courseId
+            }
         }
     }
 }

@@ -52,7 +52,7 @@ export default {
     },
     data () {
         return {
-            seminarOrder: '1',
+            seminarOrder: ['1'],
             seminarOrders: [['1', '2', '3','4','5']],
             startDate: '2018-01-01',
             endDate: '2018-12-31',

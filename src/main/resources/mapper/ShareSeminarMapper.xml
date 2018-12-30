@@ -8,20 +8,20 @@
         <association property="masterCourse" javaType="com.xmu.cms.entity.Course">
             <id property="courseId" column="masterCourseId"/>
             <result property="courseName" column="masterCourseName"/>
+            <association property="teacher" javaType="com.xmu.cms.entity.Teacher">
+                <id property="teacherId" column="masterTeacherId"/>
+                <result property="name" column="masterTeacherName"/>
+                <result property="email" column="masterTeacherEmail"/>
+            </association>
         </association>
         <association property="receiveCourse" javaType="com.xmu.cms.entity.Course">
             <id property="courseId" column="receiveCourseId"/>
             <result property="courseName" column="receiveCourseName"/>
-        </association>
-        <association property="masterTeacher" javaType="com.xmu.cms.entity.Teacher">
-            <id property="teacherId" column="masterTeacherId"/>
-            <result property="name" column="masterTeacherName"/>
-            <result property="email" column="masterTeacherEmail"/>
-        </association>
-        <association property="receiveTeacher" javaType="com.xmu.cms.entity.Teacher">
-            <id property="teacherId" column="receiveTeacherId"/>
-            <result property="name" column="receiveTeacherName"/>
-            <result property="email" column="receiveTeacherEmail"/>
+            <association property="teacher" javaType="com.xmu.cms.entity.Teacher">
+                <id property="teacherId" column="receiveTeacherId"/>
+                <result property="name" column="receiveTeacherName"/>
+                <result property="email" column="receiveTeacherEmail"/>
+            </association>
         </association>
     </resultMap>
 

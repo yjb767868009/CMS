@@ -276,6 +276,9 @@ public class SeminarService {
         for (Team team : teams) {
             Map<String, Object> score = new HashMap<>(2);
             RoundScore roundScore = scoreDao.getRoundTeamScore(roundId, team.getTeamId());
+            if (roundScore==null){
+                continue;
+            }
             score.put("team", team);
             score.put("score", roundScore.getTotalScore());
             allScore.add(score);

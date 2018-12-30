@@ -64,8 +64,7 @@ public class StrategyDao {
     }
 
     private Strategy setSubStrategy(Strategy strategy) {
-        String subStrategyClass = strategy.getClass().getName();
-        String subStrategyName = subStrategyClass.substring(subStrategyClass.lastIndexOf(".") + 1);
+        String subStrategyName = strategy.getType();
         Strategy subStrategy = null;
         Strategy subStrategyOne = null;
         Strategy subStrategyTwo = null;

@@ -19,18 +19,18 @@
     </resultMap>
 
     <select id="getAllCourseByTeacherId" resultMap="CourseResultMap">
-    SELECT course.id               as courseId,
-            course.course_name             as courseName,
-            course.introduction,
-            course.presentation_percentage as presentationWeight,
-            course.report_percentage       as reportWeight,
-            course.question_percentage     as questionWeight,
-            course.team_start_time         as teamStartDate,
-            course.team_end_time           as teamEndDate
-    FROM course,
-          teacher
-    WHERE teacher.id = #{teacherId}
-      AND teacher.id = course.teacher_id
+        SELECT course.id                      as courseId,
+               course.course_name             as courseName,
+               course.introduction,
+               course.presentation_percentage as presentationWeight,
+               course.report_percentage       as reportWeight,
+               course.question_percentage     as questionWeight,
+               course.team_start_time         as teamStartDate,
+               course.team_end_time           as teamEndDate
+        FROM course,
+             teacher
+        WHERE teacher.id = #{teacherId}
+          AND teacher.id = course.teacher_id
     </select>
 
 
@@ -73,7 +73,7 @@
     </select>
 
     <delete id="deleteCourseById" parameterType="java.math.BigInteger">
-        DELETE *
+        DELETE
         FROM course
         WHERE id = #{courseId}
     </delete>
@@ -83,21 +83,21 @@
             select last_insert_id()
         </selectKey>
         insert into course (teacher_id,
-                            course_name,
-                            introduction,
-                            presentation_percentage,
-                            report_percentage,
-                            question_percentage,
-                            team_start_time,
-                            team_end_time)
+        course_name,
+        introduction,
+        presentation_percentage,
+        report_percentage,
+        question_percentage,
+        team_start_time,
+        team_end_time)
         values (#{course.teacher.teacherId},
-                #{course.courseName},
-                #{course.introduction},
-                #{course.presentationWeight},
-                #{course.reportWeight},
-                #{course.questionWeight},
-                #{course.teamStartDate},
-                #{course.teamEndDate})
+        #{course.courseName},
+        #{course.introduction},
+        #{course.presentationWeight},
+        #{course.reportWeight},
+        #{course.questionWeight},
+        #{course.teamStartDate},
+        #{course.teamEndDate})
     </insert>
 
     <select id="getMainShareCourseByTeacher" resultMap="CourseResultMap">
@@ -176,8 +176,7 @@
     </select>
 
     <select id="getTeamMainCourseByCourseId" resultMap="CourseResultMap">
-        select course1.id as courseId,
-               course1.course_name as courseName
+        select course1.id as courseId, course1.course_name as courseName
         from course,
              course course1
         where course.id = #{courseId}
@@ -185,8 +184,7 @@
     </select>
 
     <select id="getSeminarMainCourseByCourseId">
-        select course1.id as courseId,
-               course1.course_name as courseName
+        select course1.id as courseId, course1.course_name as courseName
         from course,
              course course1
         where course.id = #{courseId}

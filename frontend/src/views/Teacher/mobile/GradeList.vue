@@ -53,7 +53,8 @@
                     展示：{{score.preScpre}}<span v-if="score.preScore==null">0</span>&emsp;&emsp;&emsp;提问：{{score.questionScore}}<span v-if="score.questionScore==null">0</span>&emsp;&emsp;&emsp;书面报告：{{score.reportScore}}<span v-if="score.reportScore==null">0</span>
                     </div>
                 </cell>
-            </template>s
+            </template>
+            <!-- s -->
             </template>
                     <p  style="color:#000;padding-left:220px;margin-top:0">本轮成绩：{{roundscore.totalScore}}<span v-if="roundscore.totalScore==null">0</span></p>
         

@@ -2,16 +2,16 @@
   <div class="login" style="background:#eee">
     <x-header :title="this.$store.state.teacher.currentCourse.courseName" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
-    <group :title="轮次">
+    <group>
       <template v-for="round in rounds">
-        <cell
-          :title="'第'+round.order+'轮'"
+        <cell style="height:40px"
           :key="round.roundId"
           is-link
+          value-align="left"
           :border-intent="false"
           :arrow-direction="round.showRoundContent ? 'up' : 'down'"
           @click.native="round.showRoundContent=!round.showRoundContent"
-        ></cell>
+        >第{{round.order}}轮</cell>
         <template v-if="round.showRoundContent">
           <template v-for="seminar in round.seminars">
             <cell
@@ -20,7 +20,7 @@
               is-link
               :arrow-direction="seminar.showSeminarContent ? 'up' : 'down'"
               @click.native="seminar.showSeminarContent=!seminar.showSeminarContent"
-              style="margin-left:20px"
+              style="height:30px;margin-left:5px"
             ></cell>
             <template v-if="seminar.showSeminarContent">
               <template v-for="klassSeminar in seminar.klassSeminars">
@@ -28,7 +28,7 @@
                   :key="klassSeminar.klassSeminarId"
                   is-link
                   @click.native="clickClassSeminar(seminar,klassSeminar)"
-                  style="margin-left:40px"
+                  style="padding-left:140px"
                 >{{klassSeminar.klass.name}}</cell-box>
               </template>
             </template>

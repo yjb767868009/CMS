@@ -1,9 +1,7 @@
 package com.xmu.cms.dao;
 
-import com.xmu.cms.entity.Round;
-import com.xmu.cms.entity.RoundScore;
-import com.xmu.cms.entity.SeminarScore;
-import com.xmu.cms.entity.Team;
+import com.xmu.cms.entity.*;
+import com.xmu.cms.mapper.CourseMapper;
 import com.xmu.cms.mapper.RoundMapper;
 import com.xmu.cms.mapper.RoundScoreMapper;
 import com.xmu.cms.mapper.SeminarScoreMapper;
@@ -19,6 +17,9 @@ import java.util.List;
  */
 @Component
 public class ScoreDao {
+
+    @Autowired
+    private CourseMapper courseMapper;
 
     @Autowired
     private RoundScoreMapper roundScoreMapper;
@@ -84,6 +85,9 @@ public class ScoreDao {
         }
         roundScore.setQuestionScore(questionScore);
 
+        Course course = courseMapper.getCourseById(round.getCourse().getCourseId());
+        Float totalScore = presentationScore * course.getPresentationWeight() / 100 + reportScore * course.getReportWeight() / 1000 + questionScore * course.getQuestionWeight() / 100;
+        roundScore.setTotalScore(totalScore);
         roundScoreMapper.updateRoundScore(roundScore);
     }
 

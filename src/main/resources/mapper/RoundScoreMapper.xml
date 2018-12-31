@@ -41,7 +41,8 @@
         update round_score, team
         set presentation_score = #{roundScore.presentationScore},
             question_score     = #{roundScore.questionScore},
-            report_score       = #{roundScore.reportScore}
+            report_score       = #{roundScore.reportScore},
+            total_score        = #{roundScore.totalScore}
         where round_score.round_id = #{roundScore.round.roundId}
           and team.id = round_score.team_id
     </update>

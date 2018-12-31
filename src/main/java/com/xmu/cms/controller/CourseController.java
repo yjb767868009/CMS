@@ -38,8 +38,8 @@ public class CourseController {
 
     @Secured("ROLE_TEACHER")
     @GetMapping(value = "/allcourse")
-    public List<Course> getAllCourse(@RequestBody Course course) {
-        return courseService.getAllCourse(course);
+    public List<Course> getAllCourse() {
+        return courseService.getAllCourse();
     }
 
     @Secured("ROLE_TEACHER")

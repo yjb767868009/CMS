@@ -155,13 +155,7 @@ public class TeamDao {
         return teamMapper.getStudentTeamInRound(studentId, roundId);
     }
 
-    public List<Course> getAllCourse(Course course) {
-        List<Course> allCourse = courseMapper.getAllCourse();
-        for (Course oneCourse : allCourse) {
-            if (oneCourse.getCourseId().equals(course.getCourseId())) {
-                allCourse.remove(oneCourse);
-            }
-        }
-        return allCourse;
+    public List<Course> getAllCourse() {
+        return courseMapper.getAllCourse();
     }
 }

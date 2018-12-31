@@ -8,7 +8,7 @@
       @on-click-more="show=!show"
     ></x-header>
     <group>
-      <cell v-for="course in this.courses" :key="course.couresId" @click.native="click(course)" style="margin:20px">
+      <cell v-for="course in this.courses" :key="course.couresId" @click.native="clickCourse(course)" style="margin:20px">
         {{course.courseName}}
         <img
           slot="icon"
@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     // /mobile/Student/studentSeminarList
-    click: function(course) {
+    clickCourse: function(course) {
       this.$store.state.student.currentCourse=course
       this.$router.push({ name: 'StudentCourseSeminar'})
     },

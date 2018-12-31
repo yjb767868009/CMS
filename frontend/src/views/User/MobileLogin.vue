@@ -5,7 +5,7 @@
       style="height:60px;padding-top:12px"
       :left-options="{showBack:false}"
     ></x-header>
-    <group>
+
       <x-input v-model="account" style="margin-left:20px;margin-right:20px;margin-top:120px;background-color:#fff" placeholder="学号/教工号"></x-input>
       <x-input
         type="password"
@@ -13,7 +13,7 @@
         style="margin-top:20px;margin-left:20px;margin-right:20px;background-color:#fff"
         placeholder="登录密码"
       ></x-input>
-    </group>
+
     <x-button @click.native="login" style="margin-top:80px">登陆</x-button>
     <button
       @click="forget"
@@ -23,9 +23,9 @@
 
     
   <div v-transfer-dom>
-      <x-dialog v-model="welcome" :dialog-style="{'max-width': '100%', width: '100%', height: '30%', 'background-color': 'transparent'}">
-        <p style="color:#fff;text-align:center;" @click="welc">
-          <span style="font-size:30px;">HELLO WORLD</span>
+      <x-dialog v-model="welcome" @click.native="welc" :dialog-style="{'max-width': '100%', width: '100%', height: '30%', 'background-color': 'transparent'}">
+        <p style="color:#fff;text-align:center;" >
+          <span style="font-size:30px;">欢迎</span>
         </p>
       </x-dialog>
     </div>
@@ -33,7 +33,7 @@
   </div>
 </template>
 <script>
-import { XHeader, XButton, XInput,TransferDom,XDialog } from "vux";
+import { XHeader, XButton, XInput,TransferDom,XDialog} from "vux";
 import Qs from "qs";
 
 export default {

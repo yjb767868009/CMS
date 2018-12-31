@@ -89,9 +89,10 @@ export default {
             // })
             this.$message.error('该功能已取消！')
         }else if(this.type=='共享组队'){
-            this.$axios.post('/course/'+this.$store.state.teacher.currentCourse.courseId+'/teamsharerequest',{masterCourse:this.$store.state.teacher.currentCourse.courseId,receiveCourse:this.followklassId})
+            this.$axios.post('/course/'+this.$store.state.teacher.currentCourse.courseId+'/teamsharerequest',{masterCourse:{courseId:this.$store.state.teacher.currentCourse.courseId},receiveCourse:{courseId:this.followklassId},receiveTeacher:{teacherId:this.followteacherId}})
             .then((response)=>{
                 console.log(response.data)
+                this.$router.push('/mobile/teacher/share')
             })
         }
         },

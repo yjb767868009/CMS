@@ -15,7 +15,8 @@
         </association>
         <association property="klass" javaType="com.xmu.cms.entity.Klass">
             <id property="klassId" column="klassId"/>
-            <!--<result property="grade" column="grade"/>-->
+            <result property="grade" column="grade"/>
+            <result property="klassSerial" column="klass_serial"/>
         </association>
         <association property="course" javaType="com.xmu.cms.entity.Course">
             <id property="courseId" column="courseId"/>
@@ -27,7 +28,7 @@
         SELECT team.id              as teamId,
                team_name            as teamName,
                team.status          as status,
-               team.klass_id             as klassId,
+               team.klass_id        as klassId,
                leader_id            as leaderId,
                student.account      as leaderAccount,
                student.student_name as leaderName,
@@ -74,6 +75,8 @@
                team_name            as teamName,
                team.status,
                klass_id             as klassId,
+               klass.grade,
+               klass.klass_serial,
                leader_id            as leaderId,
                student.account      as leaderAccount,
                student.student_name as leaderName,
@@ -83,17 +86,19 @@
                team.klass_serial    as klassSerial
         from team,
              student,
-             course
+             course,
+             klass
         where team.id = #{teamId}
           and team.leader_id = student.id
           and team.course_id = course.id
+          and klass_id = klass.id
     </select>
 
     <select id="getStudentTeamInKlassSeminar" resultMap="TeamResultMap">
         select team.id              as teamId,
                team_name            as teamName,
                team.status,
-               team.klass_id             as klassId,
+               team.klass_id        as klassId,
                leader_id            as leaderId,
                student.account      as leaderAccount,
                student.student_name as leaderName,
@@ -134,7 +139,7 @@
         select team.id              as teamId,
                team_name            as teamName,
                team.status,
-               team.klass_id             as klassId,
+               team.klass_id        as klassId,
                leader_id            as leaderId,
                student.account      as leaderAccount,
                student.student_name as leaderName,
@@ -162,12 +167,12 @@
         </selectKey>
         insert team (klass_id, course_id, leader_id, team_name, team_serial, klass_serial, status)
         values (#{team.klass.klassId},
-                #{team.course.courseId},
-                #{team.leader.studentId},
-                #{team.teamName},
-                #{team.teamSerial},
-                #{team.klassSerial},
-                0)
+        #{team.course.courseId},
+        #{team.leader.studentId},
+        #{team.teamName},
+        #{team.teamSerial},
+        #{team.klassSerial},
+        0)
     </insert>
 
     <update id="updateTeamValid" parameterType="com.xmu.cms.entity.Team">
@@ -276,7 +281,7 @@
         select team.id              as teamId,
                team_name            as teamName,
                team.status,
-               team.klass_id             as klassId,
+               team.klass_id        as klassId,
                leader_id            as leaderId,
                student.account      as leaderAccount,
                student.student_name as leaderName,

@@ -7,8 +7,8 @@
     <group title="组员基本要求：">
         <template>
         <popup-picker title="小组总人数(含组长)：" :data="percentageOptions" v-model="presentation"></popup-picker>
-        <popup-picker title="提问" :data="percentageOptions" v-model="question"></popup-picker>
-        <popup-picker title="报告" :data="percentageOptions" v-model="report"></popup-picker>
+        <popup-picker title="OOAD" :data="percentageOptions" v-model="question"></popup-picker>
+        <popup-picker title="J2EE" :data="percentageOptions" v-model="report"></popup-picker>
         </template>
         <x-button mini style="margin-left:21em;margin-bottom:8px" @click.native="newCourse" type="primary">新增</x-button>
     </group>
@@ -22,8 +22,8 @@
 
     <group title="冲突课程：" style="text-align:left" >
         <template>
-        <datetime style="height:1.5em" v-model="teamStartTime" :start-date="startDateS" :end-date="endDateS" format="YYYY-MM-DD HH:mm"  title="组队开始时间"></datetime>
-        <datetime style="height:1.5em" v-model="teamEndTime" :start-date="startDateE" :end-date="endDateE" format="YYYY-MM-DD HH:mm"  title="组队截止时间"></datetime>
+        <popup-picker title="OOAD" :data="percentageOptions" v-model="question"></popup-picker>
+        <popup-picker title="J2EE" :data="percentageOptions" v-model="report"></popup-picker>
         </template>
         <x-button mini style="margin-left:21em;margin-bottom:8px" @click.native="newCourse" type="primary">新增</x-button>
     </group>

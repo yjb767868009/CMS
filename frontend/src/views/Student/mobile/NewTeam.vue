@@ -31,7 +31,7 @@
         </template>
         <cell :border-intent="false" value-align="left" title="添加成员：" style="margin-top:20px;height:20px"><span style="color:#000;padding-left:20px"></span></cell>
         <template v-for="stu in this.noteam">
-            <check-icon v-if="myaccount!=stu.account" :key="stu.id" :value.sync="stu.showNoTeam" style="color:#000;padding-left:15px">&emsp;{{stu.account}} &emsp;{{stu.name}}<span v-if="stu.showNoTeam">&emsp; (｡･∀･)ﾉﾞ</span></check-icon>
+            <check-icon v-if="myaccount!=stu.account" :key="stu.id" :value.sync="stu.showNoTeam" style="color:#000;padding-left:15px">&emsp;{{stu.account}} &emsp;{{stu.name}}</check-icon>
         </template>
 
         <flexbox style="margin-top:30px">
@@ -180,6 +180,7 @@ import {TransferDom,XHeader,
             .then((response)=>{
                 this.newMembers=[]
                 this.newMembersname=[]
+                this.$router.push('/mobile/Student/teamFreedom')
             })
             
             this.newMembers=[]

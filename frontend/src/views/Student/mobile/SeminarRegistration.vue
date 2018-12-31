@@ -66,12 +66,6 @@ import {XHeader,
     }
     },
     methods:{
-        toast:function(){
-            Toast(this.name)
-        },
-        onClick:function(){
-            console.log("sss");
-        },
         edit:function(){
             this.$router.push('/seminarSeqFinished')
         },

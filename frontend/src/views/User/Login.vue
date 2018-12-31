@@ -74,7 +74,7 @@ export default {
           this.$store.state.token = data.token;
           this.$store.state.userType = "teacher";
           this.$router.push("/pc/teacher");
-        } else if (authority === "stduent") {
+        } else if (authority === "student") {
           this.$store.state.token = data.token;
           this.$store.state.userType = "student";
           this.$router.push("/pc/student");

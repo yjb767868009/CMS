@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import {XHeader,Cell,Group,CellBox,XButton,TransferDom,Popup} from 'vux'
+import {XHeader,Cell,XTextarea,Group,CellBox,XButton,TransferDom,Popup} from 'vux'
 export default {
   directives:{
     TransferDom
@@ -36,7 +36,7 @@ export default {
         Cell,
         CellBox,
         Group,
-        XButton,Popup
+        XButton,Popup,XTextarea
     },
     data(){
         return{

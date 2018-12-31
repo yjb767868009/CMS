@@ -218,7 +218,6 @@ public class CourseController {
     }
 
     @Secured("ROLE_TEACHER")
-    @CheckCoursePermission
     @DeleteMapping(value = "shareteam/{shareTeamId}")
     public Map<String, String> deleteShareTeam(@PathVariable("shareTeamId") BigInteger shareTeamId) {
         Map<String, String> message = new HashMap<String, String>(1);
@@ -236,7 +235,6 @@ public class CourseController {
     }
 
     @Secured("ROLE_TEACHER")
-    @CheckCoursePermission
     @DeleteMapping(value = "shareseminar/{shareSeminarId}")
     public Map<String, String> deleteSeminarShare(@PathVariable("shareSeminarId") BigInteger shareSeminarId) {
         Map<String, String> message = new HashMap<String, String>(1);

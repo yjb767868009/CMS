@@ -80,7 +80,7 @@ import Notify from '@/views/Teacher/mobile/Notify'
 import CreateCourse from '@/views/Teacher/mobile/CreateCourse'
 import Share from '@/views/Teacher/mobile/Share'
 import CreateShare from '@/views/Teacher/mobile/CreateShare'
-
+import TeamRequire from '@/views/Teacher/mobile/TeamRequire'
 
 Vue.use(Router)
 
@@ -419,7 +419,11 @@ export default new Router({
       path:'/mobile/teacher/createshare',
       name:'CreateShare', 
       component:CreateShare
+    },
+    {
+      path:'/mobile/teacher/teamrequire',
+      name:'TeamRequire',
+      component:TeamRequire
     }
-    
   ]
 })

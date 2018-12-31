@@ -1,26 +1,19 @@
 <template>
-  <div class="login" style="background:#eee">
+  <div class="login" style="height:20px;background:#eee">
     <x-header :title="this.$store.state.teacher.currentCourse.courseName" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
-    <group :title="轮次">
+    <group>
       <template v-for="round in rounds">
-        <cell
-          :title="'第'+round.order+'轮'"
+        <cell style="height:40px"
           :key="round.roundId"
           is-link
+          value-align="left"
           :border-intent="false"
           :arrow-direction="round.showRoundContent ? 'up' : 'down'"
           @click.native="round.showRoundContent=!round.showRoundContent"
-        ></cell>
+        >第{{round.order}}轮</cell>
         <template v-if="round.showRoundContent">
-          <cell-box
-            :border-intent="false"
-            class="sub-item"
-            is-link
-            :key="round.roundId"
-            @click.native="setRound(round)"
-            style="margin-left:20px"
-          >该轮轮次设置</cell-box>
+          
           <template v-for="seminar in round.seminars">
             <cell
               :key="seminar.seminarId"
@@ -28,7 +21,7 @@
               is-link
               :arrow-direction="seminar.showSeminarContent ? 'up' : 'down'"
               @click.native="seminar.showSeminarContent=!seminar.showSeminarContent"
-              style="margin-left:20px"
+              style="height:40px;margin-left:5px"
             ></cell>
             <template v-if="seminar.showSeminarContent">
               <template v-for="klassSeminar in seminar.klassSeminars">
@@ -36,16 +29,24 @@
                   :key="klassSeminar.klassSeminarId"
                   is-link
                   @click.native="clickClassSeminar(round,seminar,klassSeminar)"
-                  style="margin-left:40px"
+                  style="padding-left:140px"
                 >{{klassSeminar.klass.name}}</cell-box>
               </template>
             </template>
           </template>
+          <cell
+            :border-intent="false"
+            class="sub-item"
+            is-link
+            :key="round.roundId"
+            @click.native="setRound(round)"
+            style="margin-left:20px;height:15px"
+          >该轮轮次设置</cell>
         </template>
       </template>
     </group>
 
-    <x-button @click.native="newSeminar" style="margin-top:100%;background-color:#35495e;color:#fff">新建讨论课</x-button>
+    <x-button @click.native="newSeminar" style="margin-top:20%;background-color:#35495e;color:#fff">新建讨论课</x-button>
     <div v-transfer-dom>
       <popup v-model="show" height="23%">
           <div>
@@ -120,94 +121,6 @@ export default {
             }
           ]
         },
-        {
-          roundId: 2,
-          showRoundContent: false,
-          order: 2,
-          course: {
-            courseName: "j2ee"
-          },
-          presentationScoreType: 1,
-          reportScoreType: 0,
-          questionScoreType: 1,
-          seminars: [
-            {
-              seminarId: 2,
-              showSeminarContent: false,
-              course: {
-                courseId: 4,
-                courseName: "ssss"
-              },
-              round: {
-                roundId: 2
-              },
-              maxTeamNum: 6,
-              topic: "2222",
-              introduction: "2",
-              signStartTime: "2018-11-17T14:00:00.000+0000",
-              signEndTime: "2018-11-24T14:00:00.000+0000",
-              signOrder: true,
-              visible: true,
-              klassSeminars: [
-                {
-                  klassSeminarId: 2,
-                  klass: {
-                    klassId: 1,
-                    grade: 2016,
-                    klassSerial: 1,
-                    name: "2016-1"
-                  },
-                  reportDDL: "2018-12-18T18:28:39.000+0000",
-                  status: 1
-                }
-              ]
-            }
-          ]
-        },
-        {
-          roundId: 3,
-          showRoundContent: false,
-          order: 3,
-          course: {
-            courseName: "j2ee"
-          },
-          presentationScoreType: 0,
-          reportScoreType: 1,
-          questionScoreType: 0,
-          seminars: [
-            {
-              seminarId: 3,
-              showSeminarContent: false,
-              course: {
-                courseId: 4,
-                courseName: "ssss"
-              },
-              round: {
-                roundId: 3
-              },
-              maxTeamNum: 4,
-              topic: "3333",
-              introduction: "3333",
-              signStartTime: "2018-11-17T14:00:00.000+0000",
-              signEndTime: "2018-11-24T14:00:00.000+0000",
-              signOrder: true,
-              visible: false,
-              klassSeminars: [
-                {
-                  klassSeminarId: 3,
-                  klass: {
-                    klassId: 1,
-                    grade: 2016,
-                    klassSerial: 1,
-                    name: "2016-1"
-                  },
-                  reportDDL: "2018-12-18T18:28:48.000+0000",
-                  status: 2
-                }
-              ]
-            }
-          ]
-        }
       ]
     };
   },

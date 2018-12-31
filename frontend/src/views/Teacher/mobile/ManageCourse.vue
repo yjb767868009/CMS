@@ -1,36 +1,26 @@
 <template>
-  <div class="course" style="background:#eee">
+  <div class="course" style="background:#fff">
     <x-header title="课程管理" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}"
       @on-click-more="show=!show">
     </x-header>
-    <group>
+    <group title="我的课程">
       <template v-for="course in this.courses">
         <cell :key="course.courseId" :title="course.courseName" is-link :border-intent="false" :arrow-direction="course.showCourseContent?'up':'down'"
-          @click.native="select(course)">
+          @click.native="select(course)" style="height:30px">
         </cell>
-<<<<<<< HEAD
-        <template v-if="course.showCourseContent" style="margin-left:20px">
-          <div :key="course.courseId">
+        <template v-if="course.showCourseContent">
+          <div style="margin-left:20px" :key="course.courseId">
           <cell-box :border-intent="false" class="sub-item" is-link @click.native="gradelist">学生成绩</cell-box>
           <cell-box class="sub-item" is-link @click.native="teamlist">学生组队</cell-box>
           <cell-box class="sub-item" is-link @click.native="courseinfo">课程信息</cell-box>
-          <cell-box class="sub-item" is-link @click.native="klassinfo">班级信息</cell-box>
-=======
-        <template v-if="course.showCourseContent">
-          <div style="margin-left:20px" :key="course.courseId">
-          <cell-box :border-intent="false" class="sub-item" is-link @click.native="studentScore(course)">学生成绩</cell-box>
-          <cell-box class="sub-item" is-link @click.native="studentTeam(course)">学生组队</cell-box>
-          <cell-box class="sub-item" is-link @click.native="courseInfo(course)">课程信息</cell-box>
-          <cell-box class="sub-item" is-link @click.native="classInfo(course)">班级信息</cell-box>
->>>>>>> c2deb32ca5a2a34e457c87b265b3c1ec220f2752
-          <cell-box class="sub-item" is-link @click.native="classInfo(course)">讨论课设置</cell-box>
-          <cell-box class="sub-item" is-link @click.native="setShare(course)">共享设置</cell-box>
+          <cell-box class="sub-item" is-link @click.native="classInfo">班级信息</cell-box>
+          <cell-box class="sub-item" is-link @click.native="setSeminar">讨论课设置</cell-box>
+          <cell-box class="sub-item" is-link @click.native="setShare">共享设置</cell-box>
           </div>
         </template>
       </template>
     </group>
-    <br/>
-    <x-button  type="primary" @click.native="newCourse">新建课程</x-button>
+    <x-button style="margin-top:40px"  type="primary" @click.native="newCourse">新建课程</x-button>
 
 
 
@@ -114,30 +104,8 @@
       newCourse(){
           this.$router.push('/mobile/teacher/createcourse')
       },
-
-      classInfo(course){
-        
-      },
-      studentInfo(course){
-
-      },
-      studentScore(course){
-
-      },
-      studentTeam(course){
-
-      },
-      seminarSetting(course){
-
-      },
-      shareSetting(course){
-
-      },
       setShare:function(){
         this.$router.push('/mobile/teacher/share')
-      },
-      studentteam:function(){
-
       },
       gradelist:function(){
         this.$router.push('/mobile/teacher/gradelist')
@@ -149,13 +117,13 @@
       courseinfo:function(){
         this.$router.push('/mobile/teacher/courseinfo')
       },
-      klassinfo:function(){
+      classInfo:function(){
         this.$router.push('/mobile/teacher/classinfo')
       },
       teamlist:function(){
         this.$router.push('/mobile/teacher/teamlist')
       },
-      classInfo(s){
+      setSeminar(s){
         this.$router.push('/mobile/teacher/modifySeminar')
       }
     }

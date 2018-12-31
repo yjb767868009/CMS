@@ -6,21 +6,20 @@
     <div title='新建讨论课' style="text-align:center;margin-top:20px">新建讨论课</div>
 
 
-    <group label-width="5em">
-        <x-input v-model="topic" placeholder="主题 讨论课大纲"></x-input>
+    <group>
+        <x-input v-model="topic" placeholder="主题  讨论课大纲"></x-input>
         <x-textarea v-model="intro" placeholder="讨论课主要内容 要求 具体讨论部分"></x-textarea>
         <popup-picker title="讨论课次序号" :data="seminarOrders" v-model="seminarOrder"></popup-picker>
         <x-switch v-model="visible" title="讨论课可见" :value-map="[false,true]"></x-switch>
-    </group>
-    <group label-width="6em">
-        <datetime v-model="signupStartTime" :start-date="startDate" :end-date="endDate" format="YYYY-MM-DD HH:mm"  title="报名开始时间"></datetime>
-        <datetime v-model="signupEndTime" :start-date="startDate" :end-date="endDate" format="YYYY-MM-DD HH:mm" title="报名截止时间"></datetime>
+
+        <datetime style="height:20px" v-model="signupStartTime" :start-date="startDate" :end-date="endDate" format="YYYY-MM-DD HH:mm"  title="报名开始时间"></datetime>
+        <datetime style="height:20px" v-model="signupEndTime" :start-date="startDate" :end-date="endDate" format="YYYY-MM-DD HH:mm" title="报名截止时间"></datetime>
         <popup-picker title="报名小组数" :data="teamNums" v-model="teamNum" ></popup-picker>
         <popup-picker title="所属round" :data="roundOrders" v-model="roundOrder"></popup-picker>
     </group>
     </div>
 
-    <x-button @click.native="submit" type="primary" style="margin-top:100px;color:#fff">发布</x-button>
+    <x-button @click.native="submit" type="primary" style="margin-top:55px;color:#fff">发布</x-button>
     <div v-transfer-dom>
       <popup v-model="show" height="23%">
           <div>
@@ -34,13 +33,13 @@
 </template>
 
 <script>
-import {XHeader,XButton,Divider,Group,Datetime,XInput,PopupPicker,XSwitch,XTextarea,TransferDom,Popup,} from 'vux'
+import {XHeader,XButton,Divider,Group,Datetime,XInput,PopupPicker,XSwitch,XTextarea,TransferDom,Popup,Cell} from 'vux'
 export default {
   directives:{
     TransferDom
   },
     components:{
-        XHeader,XButton,Divider,Group,Datetime,XInput,PopupPicker,XSwitch,XTextarea,Popup
+        XHeader,XButton,Divider,Group,Datetime,XInput,PopupPicker,XSwitch,XTextarea,Popup,Cell
     },
     methods: {
     change (value) {

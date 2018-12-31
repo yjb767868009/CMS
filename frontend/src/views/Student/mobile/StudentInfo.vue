@@ -77,9 +77,6 @@ import {TransferDom,XHeader,
 		}
     },
     methods:{
-        toast:function(){
-            Toast(this.name)
-        },
         running:function(){
             this.$router.push('/mobile/Student/studentSeminarList')
         },

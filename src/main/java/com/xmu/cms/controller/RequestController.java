@@ -66,9 +66,9 @@ public class RequestController {
     public Map<String, String> updateShareSeminar(UserInfo info,
                                                   @PathVariable("seminarshareId") BigInteger shareSeminarId,
                                                   @RequestBody ShareSeminar shareSeminar) {
-        shareSeminar.setShareSeminarId(shareSeminarId);
         Map<String, String> message = new HashMap<String, String>(1);
         try {
+            shareSeminar.setShareSeminarId(shareSeminarId);
             ShareSeminar newShareSeminar = courseService.updateShareSeminar(shareSeminar);
             mailService.sendUpdateShareSeminar(newShareSeminar);
             message.put("message", "Success");
@@ -83,9 +83,9 @@ public class RequestController {
     public Map<String, String> updateTeamApplication(UserInfo info,
                                                      @PathVariable("teamvalidId") BigInteger teamApplicationId,
                                                      @RequestBody TeamApplication teamApplication) {
-        teamApplication.setTeamApplicationId(teamApplicationId);
         Map<String, String> message = new HashMap<String, String>(1);
         try {
+            teamApplication.setTeamApplicationId(teamApplicationId);
             TeamApplication newTeamApplication = courseService.updateTeamApplication(teamApplication);
             mailService.sendUpdateTeamApplication(newTeamApplication);
             message.put("message", "Success");

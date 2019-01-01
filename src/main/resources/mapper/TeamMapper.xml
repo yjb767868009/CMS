@@ -12,6 +12,7 @@
             <id property="studentId" column="leaderId"/>
             <result property="name" column="leaderName"/>
             <result property="account" column="leaderAccount"/>
+            <result property="email" column="leaderEmail"/>
         </association>
         <association property="klass" javaType="com.xmu.cms.entity.Klass">
             <id property="klassId" column="klassId"/>
@@ -80,6 +81,7 @@
                leader_id            as leaderId,
                student.account      as leaderAccount,
                student.student_name as leaderName,
+               student.email        as leaderEmail,
                course.id            as courseId,
                course.course_name   as courseName,
                team_serial          as teamSerial,

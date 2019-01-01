@@ -2,6 +2,7 @@ package com.xmu.cms.service;
 
 import com.xmu.cms.dao.StudentDao;
 import com.xmu.cms.dao.TeacherDao;
+import com.xmu.cms.dao.TeamDao;
 import com.xmu.cms.entity.*;
 import com.xmu.cms.support.MyUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class MailService {
 
     @Autowired
     private JavaMailSender mailSender;
+
+    @Autowired
+    private TeamDao teamDao;
 
     @Autowired
     private TeacherDao teacherDao;
@@ -170,8 +174,15 @@ public class MailService {
     public void sendUpdateTeamApplication(TeamApplication teamApplication) throws Exception {
         String subject = "主题：组队合法申请返回邮件";
         Team team = teamApplication.getTeam();
+        team = teamDao.getTeamByTeamId(team.getTeamId());
         Student leader = team.getLeader();
+        if (leader == null) {
+            throw new Exception(emptyReceiver);
+        }
         String email = leader.getEmail();
+        if (email == null) {
+            throw new Exception(emptyReceiver);
+        }
         String answer = getAnswer(teamApplication.getStatus());
         String text = "用户" + leader.getName() + ",您好\n"
                 + "你提出的" + team.getCourse().getCourseName() + "队伍" + team.getTeamName() + "合法申请" + answer + "。\n"

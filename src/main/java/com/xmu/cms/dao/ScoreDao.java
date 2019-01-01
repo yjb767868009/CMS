@@ -114,4 +114,8 @@ public class ScoreDao {
     public List<SeminarScore> getSeminarScoreInSeminar(BigInteger seminarId) {
         return seminarScoreMapper.getSeminarScoreInSeminar(seminarId);
     }
+
+    public void updateQuestionScore(Question question) {
+        seminarScoreMapper.updateQuestionScore(question);
+    }
 }

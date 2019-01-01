@@ -106,4 +106,11 @@
           and klass_seminar_id = klass_seminar.id
           AND team.id = seminar_score.team_id
     </select>
+
+    <update id="updateQuestionScore">
+        UPDATE seminar_score
+        SET question_score = #{question.score}
+        WHERE team_id = #{question.team.teamId}
+          AND klass_seminar_id = #{question.klassSeminar.klassSeminarId}
+    </update>
 </mapper>

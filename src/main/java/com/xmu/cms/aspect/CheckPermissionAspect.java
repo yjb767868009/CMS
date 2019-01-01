@@ -23,7 +23,8 @@ import java.math.BigInteger;
 @Aspect
 @Configuration
 public class CheckPermissionAspect {
-    private String teacherType = "teacher";
+    static private String teacherType = "teacher";
+    static private String permissionError = "权限不足";
 
     @Autowired
     private CourseDao courseDao;
@@ -36,7 +37,7 @@ public class CheckPermissionAspect {
 
     @Around(value = "@annotation(com.xmu.cms.aspect.annoatation.CheckCoursePermission)&&args(courseId,..)")
     private Object checkCoursePermission(ProceedingJoinPoint point, BigInteger courseId) throws Throwable {
-        Object result = null;
+        Object result = permissionError;
         UserInfo userInfo = JwtUtils.getToken();
         Course course = courseDao.getCourse(courseId);
         if (userInfo.getUserType().equals(teacherType) && course.getTeacher().getTeacherId().equals(userInfo.getUserId())) {
@@ -47,7 +48,7 @@ public class CheckPermissionAspect {
 
     @Around(value = "@annotation(com.xmu.cms.aspect.annoatation.CheckKlassPermission)&&args(klassId,..)")
     private Object checkKlassPermission(ProceedingJoinPoint point, BigInteger klassId) throws Throwable {
-        Object result = null;
+        Object result = permissionError;
         UserInfo userInfo = JwtUtils.getToken();
         Klass klass = klassDao.getKlass(klassId);
         if (userInfo.getUserType().equals(teacherType) && klass.getCourse().getTeacher().getTeacherId().equals(userInfo.getUserId())) {
@@ -58,7 +59,7 @@ public class CheckPermissionAspect {
 
     @Around(value = "@annotation(com.xmu.cms.aspect.annoatation.CheckTeamPermission)&&args(teamId,..)")
     private Object checkTeamPermission(ProceedingJoinPoint point, BigInteger teamId) throws Throwable {
-        Object result = null;
+        Object result = permissionError;
         UserInfo userInfo = JwtUtils.getToken();
         Team team = teamDao.getTeamByTeamId(teamId);
         if (userInfo.getUserType().equals("student") && team.getLeader().getStudentId().equals(userInfo.getUserId())) {

@@ -95,7 +95,7 @@ public class MailService {
 
     public void sendShareTeam(ShareTeam shareTeam) throws Exception {
         String subject = "主题：共享组队申请邮件";
-        Teacher receiveTeacher = shareTeam.getReceiveTeacher();
+        Teacher receiveTeacher = shareTeam.getReceiveCourse().getTeacher();
         String receiveTeacherName = receiveTeacher.getName();
         String email = receiveTeacher.getEmail();
         if (receiveTeacherName == null || email == null) {

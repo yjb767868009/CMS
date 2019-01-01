@@ -182,7 +182,8 @@
         this.stompClient = Stomp.over(this.socket)
         //this.$store.state.teacher.currentKlassSeminar.klassSeminarId
         this.stompClient.connect({}, (frame) => {
-          this.stompClient.subscribe('/topic/klassSeminar/1', (KlassSeminarRun) => {
+          this.stompClient.subscribe('/topic/klassSeminar/'+this.$store.state.teacher.currentKlassSeminar.klassSeminarId
+          , (KlassSeminarRun) => {
             this.KlassSeminarRun=JSON.parse(KlassSeminarRun.body)
             console.log(KlassSeminarRun.body)
           })
@@ -198,14 +199,19 @@
       },
 
       nextQuestion: function () {
-        this.stompClient.send('/app/1/getQuestion', {}, {})
+        this.stompClient.send('/app/'+this.$store.state.teacher.currentKlassSeminar.klassSeminarId
+        +'/getQuestion', {}, {})
       },
       nextTeam: function () {
-        this.stompClient.send('/app/1/nextAttendance')
+        
+
         if (this.currentTeamIndex >= -1 && this.currentTeamIndex < this.Teams.length - 1) {
           console.log('nextTeam')
+          this.stompClient.send('/app/'+this.$store.state.teacher.currentKlassSeminar.klassSeminarId
+        +'/nextAttendance',{},{})
           this.currentTeamIndex = this.currentTeamIndex + 1
           this.currentTeam = this.Teams[this.currentTeamIndex]
+
         } else {
           console.log('no more team')
         }

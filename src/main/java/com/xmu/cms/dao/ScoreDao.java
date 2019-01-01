@@ -110,7 +110,6 @@ public class ScoreDao {
 //        } else {
 //            seminarScoreMapper.updatePresentationScore(seminarScore);
 //        }
-        // TODO: 2019/1/1  
     }
 
     public SeminarScore getSeminarTeamScore(BigInteger seminarId, BigInteger teamId) {

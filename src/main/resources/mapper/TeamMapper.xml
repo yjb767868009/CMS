@@ -109,10 +109,11 @@
         from team,
              student,
              team_student,
-             attendance
-        where attendance.klass_seminar_id = #{klassSeminarId}
+             klass_seminar,
+             klass
+        where klass_seminar.id = #{klassSeminarId}
           and team_student.student_id = #{studentId}
-          and team_student.team_id = attendance.team_id
+          and klass.id = klass_seminar.klass_id
           and team.id = team_student.team_id
           and team.leader_id = student.id
     </select>

@@ -27,12 +27,11 @@ public class WebSocketController {
 
     @MessageMapping("/{klassSeminarId}/question")
     @SendTo("/topic/klassSeminar/{klassSeminarId}")
-    public KlassSeminarRun question(UserInfo info, @DestinationVariable("klassSeminarId") BigInteger klassSeminarId,
+    public KlassSeminarRun question(@DestinationVariable("klassSeminarId") BigInteger klassSeminarId,
                                     Question question) throws Exception {
         Thread.sleep(1000);
         question.setSelected(false);
         question.setScore((float) 0);
-        question.setStudent(new Student(info.getUserId()));
         question.setKlassSeminar(new KlassSeminar(klassSeminarId));
         question = seminarService.askQuestion(question);
         KlassSeminarRun klassSeminarRun = new KlassSeminarRun();

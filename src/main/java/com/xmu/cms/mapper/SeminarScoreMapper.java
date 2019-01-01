@@ -76,4 +76,19 @@ public interface SeminarScoreMapper {
      * @param question 提问
      */
     void updateQuestionScore(@Param("question") Question question);
+
+    /**
+     * 获取讨论课成绩
+     *
+     * @param seminarScore 讨论课成绩
+     * @return 讨论课成绩
+     */
+    SeminarScore getSeminarScoreInKlassSeminarAndTeam(@Param("seminarScore") SeminarScore seminarScore);
+
+    /**
+     * 新建讨论课成绩
+     *
+     * @param seminarScore 讨论课成绩
+     */
+    void insertSeminarScore(@Param("seminarScore") SeminarScore seminarScore);
 }

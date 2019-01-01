@@ -34,7 +34,13 @@ public class TeamApplicationDao {
 
     public TeamApplication updateTeamApplication(TeamApplication teamApplication) {
         teamApplicationMapper.updateTeamApplication(teamApplication);
-        return teamApplicationMapper.getTeamApplication(teamApplication.getTeamApplicationId());
+        teamApplication = teamApplicationMapper.getTeamApplication(teamApplication.getTeamApplicationId());
+        if (teamApplication.getStatus()) {
+            Team team = teamApplication.getTeam();
+            team.setValid(true);
+            teamMapper.updateTeamValid(team);
+        }
+        return teamApplication;
     }
 
     public TeamApplication sendTeamApplication(TeamApplication teamApplication) throws Exception {

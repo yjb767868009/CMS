@@ -52,7 +52,7 @@ public class MultiHttpSecurityConfiguration {
                     .addFilterBefore(authJwtAuthenticationFilter(), JwtLoginFilter.class);
             http.antMatcher("/admin/**")
                     .authorizeRequests()
-                    .antMatchers("/user/login", "/user/password", "/admin/login").permitAll()
+                    .antMatchers("/user/login", "/user/password", "/admin/login","/gs-guide-websocket/**").permitAll()
                     .anyRequest().authenticated();
             http.formLogin()
                     .loginPage("/admin/login").loginProcessingUrl("/admin/login")

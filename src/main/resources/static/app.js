@@ -40,8 +40,7 @@ function sendName() {
 function askQuestion() {
     stompClient.send("/app/1/question", {}, JSON.stringify({
         'student': {"studentId": $("#name").val()},
-        'attendance': {"attendanceId": 1},
-        'klassSeminar': {"klassSeminarId": 1}
+        'attendance': {"attendanceId": 1}
     }));
 }
 

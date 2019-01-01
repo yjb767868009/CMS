@@ -4,8 +4,7 @@
     </x-header>
 
     <group>
-      <cell :title="'轮次'" :value="'第'+this.$store.state.student.currentRound.order+'轮'"></cell>
-      
+      <cell :title="'轮次'" :value="'第'+this.$store.state.teacher.currentRound.order+'轮'"></cell>
       <cell :title="'主题'" :value="this.$store.state.teacher.currentSeminar.topic"></cell>
       <cell :title="'课次序号'" :value="this.$store.state.teacher.currentSeminar.klassSeminars[0].klass.klassSerial"></cell>
       <x-textarea :title="'要求'" :show-counter="false" :placeholder="this.$store.state.teacher.currentSeminar.introduction" readonly></x-textarea>

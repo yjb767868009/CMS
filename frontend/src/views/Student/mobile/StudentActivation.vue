@@ -2,7 +2,6 @@
   <div class="activation" style="background:#eee;height:700px;">
     <x-header title="密码设置" style="height:60px;padding-top:12px"  :left-options="{showBack:false}">
     </x-header>
-    <group>
       <el-input
         type="password"
         v-model="password1"
@@ -16,7 +15,6 @@
         placeholder="确认密码"
       />
       <el-input v-model="email" style="margin-top:20px;background-color:#fff" placeholder="填写邮箱"/>
-    </group>
     <div style="text-align:left;margin-top:150px;font-size:10px">可包含数字、字母、下划线，长度不少于六位</div>
     <flexbox>
       <flexbox-item>
@@ -36,7 +34,6 @@ export default {
       password1: "",
       password2: "",
       email:"",
-      identifying,
     };
   },
   components: {

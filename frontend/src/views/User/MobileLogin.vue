@@ -102,6 +102,7 @@ export default {
 
         if(this.data.role==='student'){
           console.log('student');
+          this.$store.state.student.studentId=this.data.id
           this.$store.state.token=this.data.token;
           this.$store.state.userType='student';
           if(this.data.active==="false"){//需要激活

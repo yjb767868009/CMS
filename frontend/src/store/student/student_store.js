@@ -8,6 +8,7 @@ export default new vuex.Store({
         name:'', 
         account:'',
         email:'',
+        studentId:'',
         currentCourse:'',//courseId,courseName
         Myteam:'',
         newMembers:'',

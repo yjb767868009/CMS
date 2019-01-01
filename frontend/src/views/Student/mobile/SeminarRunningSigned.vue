@@ -119,9 +119,7 @@ export default {
   },
   methods: {
     presentation:function(){
-        this.$router.push({
-            name:'/mobile/student/course/seminar/running'
-        })
+        this.$router.push('/mobile/student/course/seminar/running')
     },
     running: function() {
       this.$router.push("/mobile/Student/studentSeminarList");

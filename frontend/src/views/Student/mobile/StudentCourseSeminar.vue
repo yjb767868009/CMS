@@ -116,6 +116,7 @@ export default {
   },
   methods: {
     click: function(round,seminar) {
+      console.log(round)
       this.$store.state.student.currentRound=round
       this.$store.state.student.currentSeminar = seminar
       

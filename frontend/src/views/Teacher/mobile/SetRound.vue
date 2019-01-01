@@ -1,6 +1,6 @@
 <template>
-  <div class="course" style="background:#eee">
-    <x-header title="第一轮" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
+  <div >
+    <x-header :title="'第'+this.$store.state.teacher.currentRound.order+'轮'" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
     <div style="height:30px;padding-top:12px;text-align:left" class="box">讨论课：
       <div style="padding:0 50px;padding-top:12px">业务流程分析</div>
@@ -31,9 +31,6 @@
               v-model="classRound.enrollNum"
             ></popup-picker>
           </template>
-          <!-- <popup-picker title="一班" :data="list2" v-model="value2"></popup-picker>
-          <popup-picker title="二班" :data="list2" v-model="value2"></popup-picker>
-          <popup-picker title="三班" :data="list2" v-model="value2"></popup-picker> -->
         </group>
       </div>
     </div>
@@ -58,7 +55,7 @@
 
 <script>
 import axios from "axios";
-import { XHeader, XButton, Group, PopupPicker, Picker,Popup,TransferDom } from "vux";
+import { XHeader, XButton, Group, PopupPicker, Picker,Popup,TransferDom,Cell } from "vux";
 export default {
   directives:{
     TransferDom
@@ -68,7 +65,7 @@ export default {
     XButton,
     Group,
     PopupPicker,
-    Picker,Popup
+    Picker,Popup,Cell
   },
   data() {
     return {

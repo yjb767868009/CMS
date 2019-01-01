@@ -116,7 +116,6 @@
       //this.$store.state.teacher.currentKlassSeminar.klassSeminarId
       this.$axios.get('/klassseminar/'+this.$store.state.teacher.currentKlassSeminar.klassSeminarId+'/run')
         .then((response) => {
-          console.log(response)
           this.questions = response.data.questions
           this.attendances = response.data.attendances
           this.Questions = []
@@ -161,7 +160,6 @@
 
 
       confirmModification: function () {
-        console.log('post')
         this.is_modifying = false
       },
       typePresentationScore: function (value) {
@@ -179,10 +177,9 @@
 
       connection: function () {
         //建立链接对象
-        this.socket = new SockJS('http://119.23.49.112:8000/gs-guide-websocket')
+        this.socket = new SockJS('http://localhost:8000/gs-guide-websocket')
         //获取STOMP子协议的客户端对象
         this.stompClient = Stomp.over(this.socket)
-        //空header
         //this.$store.state.teacher.currentKlassSeminar.klassSeminarId
         this.stompClient.connect({}, (frame) => {
           this.stompClient.subscribe('/topic/klassSeminar/1', (KlassSeminarRun) => {

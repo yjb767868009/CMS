@@ -12,12 +12,17 @@
     
     <x-header style="background-color:#fff;">
       <span style="color:#000;">{{this.$store.state.student.currentSeminar.topic}}</span>
-      <span style="color:#000;" slot="overwrite-left">{{'第'+'组 展示'}}</span>
+      <span style="color:#000;" slot="overwrite-left">{{'第'+currentTeamOrder+'组 展示'}}</span>
       <span style="color:#000;" slot="right">{{'已有'+questions.length+'位同学提问'}}</span>
     </x-header>
     
     <template v-for="attendance in attendances">
-      <cell :key="attendance.attendanceId" :title="'第'+attendance.teamOrder+'组'">{{attendance.team.teamName}}</cell>
+      <template v-if="attendance.present">
+        <cell style="color:#E64340" :key="attendance.attendanceId" :title="'第'+attendance.teamOrder+'组'">{{attendance.team.teamName}}</cell>
+      </template>
+      <template v-else>
+        <cell :key="attendance.attendanceId" :title="'第'+attendance.teamOrder+'组'">{{attendance.team.teamName}}</cell>
+      </template>
     </template>
 
     </group>
@@ -119,12 +124,46 @@ export default {
       // 页面离开时断开连接
       this.disconnect();
     },
+  computed:{
+    currentAttendanceId:function(){
+      for(var i=0;i<this.attendances.length;i++){
+        if(this.attendances[i].present){
+          return this.attendances[i].attendanceId
+        }
+      }
+      return -1
+    },
+    currentTeamOrder:function(){
+      for(var i=0;i<this.attendances.length;i++){
+        if(this.attendances[i].present){
+          return this.attendances[i].teamOrder
+        }
+      }
+      return -1
+    },
+  },
   methods: {
     ask:function(){
       this.questionConfrimShow=true
     },
     onConfirm: function() {
-      this.stompClient.send('/app/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/question', {}, {})
+        console.log(JSON.stringify({
+          student:{
+            studentId:this.$store.state.student.studentId
+          },
+          attendance:this.currentAttendanceId
+        }))
+        this.stompClient
+        .send('/app/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/question', 
+        {
+          'Authorization':"Bearer "+this.$store.state.token
+        }, 
+        JSON.stringify({
+          student:{
+            studentId:this.$store.state.student.studentId
+          },
+          attendance:this.currentAttendanceId
+        }))
     },
     running: function() {
       this.$router.push("/mobile/Student/studentSeminarList");
@@ -161,12 +200,7 @@ export default {
         }
       },
       postQuestion: function () {
-        console.log(this.attendances[this.attendances.length].attendanceId+1)
-        this.stompClient.send('/app/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/question', {}, JSON.stringify({
-          student:{
-            studentId:this.$store.state.student.studentId
-          }
-        }))
+        
       },
   }
 };

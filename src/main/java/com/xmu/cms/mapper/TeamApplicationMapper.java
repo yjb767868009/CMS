@@ -34,7 +34,7 @@ public interface TeamApplicationMapper {
      * @param teamApplicationId 队伍合法申请id
      * @return 队伍合法申请
      */
-    TeamApplication getTeamApplication(@Param("teamApplication") BigInteger teamApplicationId);
+    TeamApplication getTeamApplication(@Param("teamApplicationId") BigInteger teamApplicationId);
 
     /**
      * 新建队伍合法申请

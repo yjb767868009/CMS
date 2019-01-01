@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigInteger;
@@ -26,7 +27,7 @@ public class WebSocketController {
     @MessageMapping("/{klassSeminarId}/question")
     @SendTo("/topic/klassSeminar/{klassSeminarId}")
     public KlassSeminarRun question(@DestinationVariable("klassSeminarId") BigInteger klassSeminarId,
-                                    Question question) throws Exception {
+                                    @RequestBody Question question) throws Exception {
         Thread.sleep(1000);
         question.setSelected(false);
         question.setScore((float) 0);

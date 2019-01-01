@@ -162,11 +162,11 @@ export default {
       },
       postQuestion: function () {
         console.log(this.attendances[this.attendances.length].attendanceId+1)
-        this.stompClient.send('/app/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/question', {}, {
+        this.stompClient.send('/app/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/question', {}, JSON.stringify({
           student:{
             studentId:this.$store.state.student.studentId
           }
-        })
+        }))
       },
   }
 };

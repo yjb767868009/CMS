@@ -54,7 +54,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { XHeader, XButton, Group, PopupPicker, Picker,Popup,TransferDom,Cell } from "vux";
 export default {
   directives:{

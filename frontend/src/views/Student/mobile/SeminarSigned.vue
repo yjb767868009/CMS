@@ -1,24 +1,61 @@
 <template>
-  <div class="student" style="height:800px;background:#eee;">
+  <div>
     <x-header
-      title="OOAD-讨论课"
+      :title="this.$store.state.student.currentCourse.courseName"
       style="height:60px;padding-top:12px;font-size:20px"
       :left-options="{showBack:false}"
       :right-options="{showMore: true}"
       @on-click-more="show=!show"
     ></x-header>
-    
-    <group>
+
       <cell :title="'轮次'" :value="'第'+this.$store.state.student.currentRound.order+'轮'"></cell>
       <cell :title="'主题'" :value="this.$store.state.student.currentSeminar.topic"></cell>
       <cell :title="'课次序号'" :value="this.$store.state.student.currentSeminar.klassSeminars[0].klass.klassSerial"></cell>
       <x-textarea :title="'要求'" :show-counter="false" :placeholder="this.$store.state.student.currentSeminar.introduction" disabled></x-textarea>
       <cell :title="'报名:'">已报名</cell>
-      <cell :title="'课程情况'">已完成&emsp;&emsp;&emsp;<a @click="checkInfo">报名情况</a></cell>
-      <cell :title="'PPT'">{{'未提交'}}</cell>
-      <cell :title="'书面报告'">{{'未提交'}}</cell>
-      <x-button @click.native="register" type="primary" style="margin-top:18px;color:#fff">报名</x-button>
-    </group>
+      <cell :title="'课程情况'">已完成&emsp;&emsp;&emsp;<a @click="checkInfo" style="text-decoration:underline;color:#1AAD19">报名情况</a></cell>
+
+      <template v-if="is_due">
+          <!-- 截止 -->
+          <template v-if="this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].presentationFile">
+            <cell title="PPT">已提交</cell>
+          </template>
+          <template v-if="!this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].presentationFile">
+            <cell title="PPT">未提交</cell>
+          </template>
+          <template v-if="this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].reportFile">
+            <cell title="书面报告">已提交</cell>
+          </template>
+          <template v-if="!this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].reportFile">
+            <cell title="书面报告">未提交</cell>
+          </template>
+          <x-button type="primary" style="margin-top:18px;color:#fff">查看成绩</x-button>
+      </template>
+
+      <template v-if="!is_due">
+          <!-- 未截止 -->
+          <template v-if="this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].presentationFile">
+            <cell title="PPT">已提交</cell>
+          </template>
+          <template v-if="!this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].presentationFile">
+            <cell title="PPT">未提交</cell>
+            <el-upload :action="'http://localhost:8000/attendance/'+this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].attendanceId+'/powerpoint'"
+            :headers="headers">
+                <x-button type="primary" style="width:200px;margin-top:18px;color:#fff">提交PPT</x-button>
+            </el-upload>
+          </template>
+          <template v-if="this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].reportFile">
+            <cell title="书面报告">已提交</cell>
+          </template>
+          <template v-if="!this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].reportFile">
+            <cell title="书面报告">未提交</cell>
+            <el-upload :action="'http://localhost:8000/attendance/'+this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].attendanceId+'/report'"
+            :headers="headers">
+                <x-button type="primary" style="width:200px;margin-top:18px;color:#fff">提交书面报告</x-button>
+            </el-upload>
+          </template>
+      </template>
+
 
     <div v-transfer-dom>
       <confirm
@@ -74,6 +111,7 @@
 
 <script>
 import axios from "axios";
+import moment from "moment"
 import {
   XHeader,
   XButton,
@@ -103,8 +141,19 @@ export default {
   data() {
     return {
       show: false,
-      submit: false
+      submit: false,
+      is_due:false,
     };
+  },
+  computed:{
+    headers(){
+      return{
+        'Authorization':"Bearer "+this.$store.state.token
+      }
+    }
+  },
+  mounted:function(){
+    this.is_due=moment(this.$store.state.student.currentSeminar.klassSeminars[0].reportDDL)<moment()
   },
   methods: {
     state: function() {
@@ -132,7 +181,10 @@ export default {
     },
     score: function() {
       this.$router.push("/mobile/student/course/seminar/seminarScore");
-    }
+    },
+    checkInfo:function(){
+            this.$router.push('/mobile/student/course/seminar/seminarRegistrationModification')
+        },
   }
 };
 </script>

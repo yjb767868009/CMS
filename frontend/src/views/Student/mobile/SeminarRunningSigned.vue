@@ -1,68 +1,39 @@
 <template>
-  <div class="student" style="height:800px;background:#eee;">
+  <div>
     <x-header
-      title="OOAD-讨论课"
+      :title="this.$store.state.student.currentCourse.courseName"
       style="height:60px;padding-top:12px;font-size:20px"
       :left-options="{showBack:false}"
       :right-options="{showMore: true}"
       @on-click-more="show=!show"
     ></x-header>
-    <div style="font-size:18px;background:#fff">
-      <cell primary="content" title="轮次：" value-align="left">
-        <div style="padding-left:30px;color:#000;">&emsp;&emsp;&emsp;&emsp;第二轮</div>
-      </cell>
-    </div>
-    <div style="font-size:18px;background:#eee">
-      <cell primary="content" title="主题：" value-align="left">
-        <div style="padding-left:30px;color:#000;">&emsp;&emsp;&emsp;领域模型</div>
-      </cell>
-    </div>
-    <div style="font-size:18px;background:#fff">
-      <cell primary="content" title="课次序号：" value-align="left">
-        <div style="padding-left:30px;color:#000;">&emsp;&emsp;第二次</div>
-      </cell>
-    </div>
 
-    <cell primary="content" title="要求：" value-align="left">
-      <div style="padding-left:30px">界面导航图和所有界面原型设计课堂讨论每个小组15分钟</div>
-    </cell>
-    <div style="font-size:18px;background:#fff">
-      <cell style="height:30px" primary="content" title="报名情况：" value-align="left">
-        <div style="padding-left:65px;color:#000;">正在进行
-          <span
-            @click="registrationStatus"
-            style="text-decoration:underline;padding-left:15px;font-size:0.8em;color:#FF3333"
-          >报名情况</span>
-        </div>
+     <cell :title="'轮次'" :value="'第'+this.$store.state.student.currentRound.order+'轮'"></cell>
+      
+      <cell :title="'主题'" :value="this.$store.state.student.currentSeminar.topic"></cell>
+      <cell :title="'课次序号'" :value="this.$store.state.student.currentSeminar.klassSeminars[0].klass.klassSerial"></cell>
+      <x-textarea :title="'要求'" :show-counter="false" :placeholder="this.$store.state.student.currentSeminar.introduction" disabled></x-textarea>
+      <cell title="报名">{{'第'+this.$store.state.student.currentAttendance.message+'组'}}
       </cell>
-    </div>
-
-    <div style="font-size:15px;background:#fff;margin-top:10px">
-      <cell style="height:20px" primary="content" title="PPT：" value-align="left">
-        <div style="padding-left:100px;color:#00DB00;">已提交</div>
+      <cell title="课程情况">正在进行
+        &emsp;&emsp;&emsp;&emsp;<a @click="checkInfo" style="text-decoration:underline;color:#1AAD19">报名情况</a>
       </cell>
-    </div>
+      <cell title="PPT">
+        <template v-if="this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].presentationFile">
+          已提交
+        </template>
+        <template v-if="!this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].presentationFile">
+          <el-upload :action="'http://localhost:8000/attendance/'+this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].attendanceId+'/powerpoint'"
+          :headers="headers">
+              <x-button type="primary" style="width:200px;margin-top:18px;color:#fff">提交PPT</x-button>
+          </el-upload>
+        </template>
+      </cell>
+      <x-button @click.native="presentation" style="margin-top:20px">进入讨论课</x-button>
+      
 
-    <flexbox style="margin-top:15px">
-      <flexbox-item>
-        <x-button type="primary" @click.native="presentation">进入讨论课</x-button>
-      </flexbox-item>
-    </flexbox>
-    <flexbox style="margin-top:15px">
-      <flexbox-item>
-        <x-button type="primary" @click.native="submit=!submit">提交PPT</x-button>
-      </flexbox-item>
-    </flexbox>
+
     <div v-transfer-dom>
-      <confirm
-        v-model="submit"
-        ref="confirm"
-        :show-cancel-button="false"
-        title="上传文件"
-        show-input
-        @on-confirm="onConfirm"
-        @on-show="onshow"
-      ></confirm>
       <popup v-model="show" height="15%">
         <div>
           <cell value-align="left" title>
@@ -117,7 +88,7 @@ import {
   Popup,
   Confirm,
   Flexbox,
-  FlexboxItem
+  FlexboxItem,XTextarea
 } from "vux";
 export default {
   directives: {
@@ -131,7 +102,7 @@ export default {
     Popup,
     Confirm,
     Flexbox,
-    FlexboxItem
+    FlexboxItem,XTextarea
   },
   data() {
     return {
@@ -139,17 +110,14 @@ export default {
       submit: false
     };
   },
+  computed:{
+    headers(){
+      return{
+        'Authorization':"Bearer "+this.$store.state.token
+      }
+    }
+  },
   methods: {
-    modify: function() {
-      this.$router.push(
-        "/mobile/student/course/seminar/seminarRegistrationModification"
-      );
-    },
-    registrationStatus:function(){
-        this.$router.push(
-            "/mobile/student/course/seminar/running/presentation"
-        )
-    },
     presentation:function(){
         this.$router.push({
             name:'/mobile/student/course/seminar/running'
@@ -161,15 +129,12 @@ export default {
     StudentInfo: function() {
       this.$router.push("/mobile/student/studentInfo");
     },
-    onConfirm: function() {
-      console.log("确认");
-    },
-    onshow: function() {
-      this.$refs.confirm.setInputValue("业务流程分析1-1.doc");
-    },
     score: function() {
       this.$router.push("/mobile/student/course/seminar/seminarScore");
-    }
+    },
+    checkInfo:function(){
+            this.$router.push('/mobile/student/course/seminar/seminarRegistrationModification')
+        },
   }
 };
 </script>

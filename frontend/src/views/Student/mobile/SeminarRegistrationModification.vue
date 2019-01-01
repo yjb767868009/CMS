@@ -1,30 +1,38 @@
 <template>
-<div class="student" style="height:800px;background:#eee;">
-    <x-header title="OOAD-讨论课" style="height:60px;padding-top:12px;font-size:20px" :left-options="{showBack:false}" :right-options="{showMore: true}"  @on-click-more="show=!show">
+<div>
+    <x-header :title="this.$store.state.student.currentCourse.courseName" style="height:60px;padding-top:12px;font-size:20px" :left-options="{showBack:false}" :right-options="{showMore: true}"  @on-click-more="show=!show">
     </x-header>
-    <div style="font-size:18px;background:#fff;margin-top:7px;margin-bottom:5px"><cell primary="content" value-align="left">
-        <div style="text-align:center;color:#000;height:35px;"><span style="font-size:1.2em">业务流程分析</span>
-        </div>
-        </cell></div>
     
-    <div style="font-size:18px;background:#fff"><cell primary="content" title="第一组：" value-align="left"><div style="padding-left:30px;color:#000;">1-1 业务流程.PPT</div></cell></div>
-    <div style="font-size:18px;background:#eee"><cell primary="content" title="第二组：" value-align="left"><div style="padding-left:30px;color:#00DB00;">可报名</div></cell></div>
-    <div style="font-size:18px;background:#fff"><cell primary="content" title="第三组：" value-align="left"><div style="padding-left:30px;color:#000;">
-        <span style="font-weight:bold;color:#FF3333">1-3 未提交</span></div></cell></div>
-    <div style="font-size:18px;background:#eee"><cell primary="content" title="第四组：" value-align="left"><div style="padding-left:30px;color:#00DB00;">可报名</div></cell></div>
     
-        <flexbox style="margin-top:30px">
-                <x-button type="warn" @click.native="registration=!registration">取消报名</x-button>
-        </flexbox>
+    <cell title="第一组">
+        <template v-if="attendances[0]">{{attendances[0].team.teamName}}</template>
+        <template v-else><a @click="register(0)" style="text-decoration:underline;color:#1AAD19">可报名</a></template>
+    </cell>
+    <cell title="第二组">
+        <template v-if="attendances[1]">{{attendances[1].team.teamName}}</template>
+        <template v-else><a @click="register(1)" style="text-decoration:underline;color:#1AAD19">可报名</a></template>
+    </cell>
+    <cell title="第三组">
+        <template v-if="attendances[2]">{{attendances[2].team.teamName}}</template>
+        <template v-else><a @click="register(2)" style="text-decoration:underline;color:#1AAD19">可报名</a></template>
+    </cell>
+    <cell title="第四组">
+        <template v-if="attendances[3]">{{attendances[3].team.teamName}}</template>
+        <template v-else><a @click="register(3)" style="text-decoration:underline;color:#1AAD19">可报名</a></template>
+    </cell>
+    <cell title="第五组">
+        <template v-if="attendances[4]">{{attendances[4].team.teamName}}</template>
+        <template v-else><a @click="register(4)" style="text-decoration:underline;color:#1AAD19">可报名</a></template>
+    </cell>
+    <cell title="第六组">
+        <template v-if="attendances[5]">{{attendances[5].team.teamName}}</template>
+        <template v-else><a @click="register(5)" style="text-decoration:underline;color:#1AAD19">可报名</a></template>
+    </cell>
+    
+    <template v-if="this.$store.state.student.currentAttendance.message!=='other'">
+        <x-button type="warn" @click="cancelRegistration">取消报名</x-button>
+    </template>
     <div v-transfer-dom>
-        <confirm v-model="registration"
-        title="提示"
-        @on-cancel="onCancel"
-        @on-confirm="onConfirm"
-        >
-        <p style="text-align:center;">确认取消吗</p>
-      </confirm>
-
       <popup v-model="show" height="15%">
           <div>
               <cell value-align="left" title=""><img slot="icon" src="@/assets/man.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="StudentInfo">个人页</div></cell>
@@ -68,28 +76,37 @@ import {XHeader,Cell,XButton,
     data() {
        return{ 
         show:false,
-        registration:false,
+        attendances:[],
     }
     },
+    mounted:function(){
+        this.attendances=[]
+        for(var i=0;i<this.$store.state.student.currentAttendance.attendance.length;i++){
+            if(parseInt(this.$store.state.student.currentAttendance.attendance[i].teamOrder)===i+1){
+                this.$set(this.attendances,i,this.$store.state.student.currentAttendance.attendance[i])
+            }else{
+                this.$set(this.attendances,i,null)
+            }
+        }
+    },
    methods:{
-        toast:function(){
-            Toast(this.name);
-        },
-        sign:function(){
-            console.log("aaa");
-        },
         running:function(){
             this.$router.push('/mobile/Student/studentSeminarList')
         },
         StudentInfo:function(){
             this.$router.push('/mobile/student/studentInfo')
         },
-        onCancel:function(){
-            console.log('取消')
+        cancelRegistration:function(){
+            this.$axios.delete('/attendance/'+this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].attendanceId)
+            .then((response)=>{
+                this.$router.go(0)
+            })
         },
-        onConfirm:function(){
-            console.log('确认')
-        },
+        register:function(index){
+            this.$axios.post('/klassseminar/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/attendance',{
+                order:index+1
+            })
+        }
    }
   }
 </script>

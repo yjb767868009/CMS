@@ -22,7 +22,6 @@ import AdminTeacher from '@/views/Admin/AdminTeacher'
 //Student mobile
 import SeminarDetail from '@/views/Student/mobile/SeminarDetail'
 import StudentActivation from '@/views/Student/mobile/StudentActivation'
-import SeminarPresentation from '@/views/Student/mobile/SeminarPresentation'
 import SeminarModifyRegistration from '@/views/Student/mobile/SeminarModifyRegistration'
 import SeminarRunningSigned from '@/views/Student/mobile/SeminarRunningSigned'
 
@@ -30,7 +29,6 @@ import SeminarRegistration from '@/views/Student/mobile/SeminarRegistration'
 import SeminarRegistrationModification from '@/views/Student/mobile/SeminarRegistrationModification'
 import SeminarScore from '@/views/Student/mobile/SeminarScore'
 import SeminarSeqFinished from '@/views/Student/mobile/SeminarSeqFinished'
-import SeminarSeqFinishedStatus from '@/views/Student/mobile/SeminarSeqFinishedStatus'
 import SeminarSeqRunning from '@/views/Student/mobile/SeminarSeqRunning'
 import SeminarUnstartSigned from '@/views/Student/mobile/SeminarUnstartSigned'
 import SeminarSigned from '@/views/Student/mobile/SeminarSigned'
@@ -237,19 +235,9 @@ export default new Router({
       component:SeminarDetail
     },
     {
-      path:'/mobile/student/course/seminar/running/presentation',//正在 未报 -》讨论课情况
-      name:'SeminarPresentation',
-      component:SeminarPresentation
-    },
-    {
       path:'/mobile/student/course/seminar/finished',//已完 未报
       name:'SeminarSeqFinished',
       component:SeminarSeqFinished
-    },
-    {
-      path:'/mobile/student/course/seminar/finished/status',//已完 未报-》讨论课情况
-      name:'SeminarSeqFinishedStatus',
-      component:SeminarSeqFinishedStatus
     },
     {
       path:'/mobile/student/course/seminar/unstartedSigned',//未开始 已报
@@ -287,7 +275,7 @@ export default new Router({
       component:SeminarScore
     },
     {
-      path:'/mobile/student/course/seminar/seminarRegistrationModification',
+      path:'/mobile/student/course/seminar/seminarRegistrationModification',//修改报名和报名
       name:'SeminarRegistrationModification',
       component:SeminarRegistrationModification
     },

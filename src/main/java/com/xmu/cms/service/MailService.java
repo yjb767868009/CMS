@@ -152,7 +152,7 @@ public class MailService {
         }
         String answer = getAnswer(shareTeam.getStatus());
         String text = "用户" + receiveTeacher.getName() + ",您好\n"
-                + "你提出的与" + shareTeam.getReceiveCourse().getCourseName() + "-" + shareTeam.getReceiveTeacher().getName() + "共享组队" + answer + "。\n"
+                + "你提出的与" + shareTeam.getReceiveCourse().getCourseName() + "-" + receiveTeacher.getName() + "共享组队" + answer + "。\n"
                 + "请登录系统进行查看";
         sendEmailToAccount(subject, text, email);
     }

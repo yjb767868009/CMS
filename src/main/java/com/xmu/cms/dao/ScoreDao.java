@@ -104,7 +104,13 @@ public class ScoreDao {
     }
 
     public void updatePresentationScore(SeminarScore seminarScore) {
-        seminarScoreMapper.updatePresentationScore(seminarScore);
+//        SeminarScore findSeminarScore = seminarScoreMapper.getSeminarScoreInKlassSeminarAndTeam(seminarScore);
+//        if (findSeminarScore == null) {
+//            seminarScoreMapper.newSeminarScore(seminarScore);
+//        } else {
+//            seminarScoreMapper.updatePresentationScore(seminarScore);
+//        }
+        // TODO: 2019/1/1  
     }
 
     public SeminarScore getSeminarTeamScore(BigInteger seminarId, BigInteger teamId) {

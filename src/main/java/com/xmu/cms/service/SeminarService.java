@@ -306,6 +306,7 @@ public class SeminarService {
         if (attendance == null) {
             throw new Exception(emptyAttendance);
         }
+        seminarScore.setAttendance(attendance);
         seminarScore.setKlassSeminar(new KlassSeminar(attendance.getKlassSeminar().getKlassSeminarId()));
         seminarScore.setTeam(new Team(attendance.getTeam().getTeamId()));
         scoredao.updatePresentationScore(seminarScore);

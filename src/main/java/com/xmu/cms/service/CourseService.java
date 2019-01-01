@@ -126,7 +126,7 @@ public class CourseService {
         return shareSeminarDao.deleteShareSeminar(seminarShareId);
     }
 
-    public ShareTeam newShareTeam(ShareTeam shareTeam) {
+    public ShareTeam newShareTeam(ShareTeam shareTeam) throws Exception {
         return shareTeamDao.newShareTeam(shareTeam);
     }
 

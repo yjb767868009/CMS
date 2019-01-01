@@ -272,9 +272,9 @@ public class CourseController {
     @PostMapping(value = "/course/{courseId}/teamsharerequest")
     public Map<String, String> sendShareTeam(@PathVariable("courseId") BigInteger courseId,
                                              @RequestBody ShareTeam shareTeam) {
-        shareTeam.setMasterCourse(new Course(courseId));
         Map<String, String> message = new HashMap<String, String>(1);
         try {
+            shareTeam.setMasterCourse(new Course(courseId));
             ShareTeam newShareTeam = courseService.newShareTeam(shareTeam);
             mailService.sendShareTeam(newShareTeam);
             message.put("message", "Success");

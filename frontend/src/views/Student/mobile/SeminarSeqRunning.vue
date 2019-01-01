@@ -162,7 +162,7 @@ export default {
           student:{
             studentId:this.$store.state.student.studentId
           },
-          attendance:this.currentAttendanceId
+          attendance:{attendanceId:this.currentAttendanceId}
         }))
     },
     running: function() {

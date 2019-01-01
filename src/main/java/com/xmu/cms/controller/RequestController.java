@@ -8,10 +8,7 @@ import com.xmu.cms.service.MailService;
 import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -65,7 +62,7 @@ public class RequestController {
     }
 
     @Secured("ROLE_TEACHER")
-    @GetMapping(value = "/request/seminarshare/{seminarshareId}")
+    @PutMapping(value = "/request/seminarshare/{seminarshareId}")
     public Map<String, String> updateShareSeminar(UserInfo info,
                                                   @PathVariable("seminarshareId") BigInteger shareSeminarId,
                                                   @RequestBody ShareSeminar shareSeminar) {
@@ -82,7 +79,7 @@ public class RequestController {
     }
 
     @Secured("ROLE_TEACHER")
-    @GetMapping(value = "/request/teamvalid/{teamvalidId}")
+    @PutMapping(value = "/request/teamvalid/{teamvalidId}")
     public Map<String, String> updateTeamApplication(UserInfo info,
                                                      @PathVariable("teamvalidId") BigInteger teamApplicationId,
                                                      @RequestBody TeamApplication teamApplication) {

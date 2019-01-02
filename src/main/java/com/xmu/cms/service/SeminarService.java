@@ -104,6 +104,10 @@ public class SeminarService {
     }
 
     public void newAttendance(BigInteger studentId, BigInteger klassSeminarId, Attendance attendance) throws Exception {
+        Attendance findAttendance = attendanceDao.getStudentAttendanceInKlassSeminar(studentId, klassSeminarId);
+        if (findAttendance != null) {
+            throw new Exception("请勿重复报名");
+        }
         attendance.setKlassSeminar(new KlassSeminar(klassSeminarId));
         KlassSeminar klassSeminar = klassSeminarDao.getKlassSeminar(klassSeminarId);
         Team team = teamDao.getStudentTeamInKlassSeminar(studentId, klassSeminarId);

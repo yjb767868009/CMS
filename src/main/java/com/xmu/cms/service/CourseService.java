@@ -55,8 +55,10 @@ public class CourseService {
         courseDao.deleteCourse(courseId);
     }
 
-    public void createCourse(Course course) {
+    public void createCourse(Course course) throws Exception {
         courseDao.createCourse(course);
+        List<Strategy> strategies = course.getStrategies();
+        strategyDao.newStrategy(course.getCourseId(), strategies);
     }
 
     public Course getCourse(BigInteger courseId) throws Exception {
@@ -64,6 +66,10 @@ public class CourseService {
         if (course == null) {
             throw new Exception(noCourseError);
         }
+        Strategy strategy = strategyDao.getCourseStrategy(courseId);
+        List<Strategy> strategies = new ArrayList<>();
+        strategy.getStrategy(strategies);
+        course.setStrategies(strategies);
         return course;
     }
 

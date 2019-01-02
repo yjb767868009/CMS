@@ -104,7 +104,9 @@ import {XHeader,Cell,XButton,
         },
         register:function(index){
             this.$axios.post('/klassseminar/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/attendance',{
-                order:index+1
+                teamOrder:index+1
+            }).then((response)=>{
+                this.$router.go(0)
             })
         }
    }

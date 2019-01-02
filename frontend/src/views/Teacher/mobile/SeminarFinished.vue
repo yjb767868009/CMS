@@ -5,7 +5,7 @@
 
     <group>
       <cell :title="'主题'" :value="this.$store.state.teacher.currentSeminar.topic"></cell>
-      <cell :title="'课次序号'" :value="this.$store.state.teacher.currentKlassSeminar.klass.klassId"></cell>
+      <cell :title="'课次序号'" :value="this.$store.state.teacher.currentKlassSeminar.klass.klassSerial"></cell>
       <x-textarea :title="'要求'" :show-counter="false" :placeholder="this.$store.state.teacher.currentSeminar.introduction" disabled></x-textarea>
       <cell :title="'课程情况'">已完成&emsp;&emsp;&emsp;<a style="color:#1AAD19;text-decoration:underline" @click="checkInfo">查看信息</a></cell>
 

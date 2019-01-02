@@ -19,7 +19,7 @@
     <insert id="insertStudent" parameterType="com.xmu.cms.entity.Student">
         INSERT INTO student (account, password, email, student_name, is_active)
         VALUE (#{student.account}, #{student.password}, null, #{student.name}, #{student.activation})
-        <selectKey keyColumn="id" keyProperty="student.studentId" order="AFTER" resultType="java.math.BigInteger">
+        <selectKey keyProperty="student.studentId" order="AFTER" resultType="java.math.BigInteger">
             select last_insert_id();
         </selectKey>
     </insert>

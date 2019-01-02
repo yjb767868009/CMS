@@ -77,4 +77,13 @@ public interface QuestionMapper {
      */
     Question getQuestion(@Param("questionId") BigInteger questionId);
 
+    /**
+     * 获取当前展示组的提问
+     *
+     * @param attendanceId 展示id
+     * @param studentId    学生id
+     * @return 提问
+     */
+    Question getQuestionByAttendanceAndStudent(@Param("attendanceId") BigInteger attendanceId,
+                                               @Param("studentId") BigInteger studentId);
 }

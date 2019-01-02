@@ -69,9 +69,9 @@ public class TeamStrategy implements Strategy {
     public List<Strategy> getStrategy(List<Strategy> strategies) {
         List<Strategy> newStrategies = subStrategy.getStrategy(strategies);
         String firstStrategyType = newStrategies.get(0).getType();
-        if (!TEAM_OR_STRATEGY_TYPE.equals(firstStrategyType) && !TEAM_AND_STRATEGY_TYPE.equals(firstStrategyType)) {
+        if (!TEAM_OR_STRATEGY.equals(firstStrategyType) && !TEAM_AND_STRATEGY.equals(firstStrategyType)) {
             TeamOrStrategy teamOrStrategy = new TeamOrStrategy();
-            teamOrStrategy.setType(TEAM_OR_STRATEGY_TYPE);
+            teamOrStrategy.setType(TEAM_OR_STRATEGY);
             newStrategies.add(0, teamOrStrategy);
         }
         return newStrategies;

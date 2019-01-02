@@ -1,7 +1,7 @@
 package com.xmu.cms.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.xmu.cms.entity.strategy.Strategy;
+import com.xmu.cms.entity.strategy.*;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -25,12 +25,16 @@ public class Course {
     private List<Klass> klasses;
     private Course teamMainCourse;
     private Course seminarMainCourse;
-    private List<Strategy> strategies;
+    private MemberLimitStrategy memberLimitStrategy;
+    private List<CourseMemberLimitStrategy> courseMemberLimitStrategies;
+    private TeamAndStrategy teamAndStrategy;
+    private TeamOrStrategy teamOrStrategy;
+    private ConflictCourseStrategy conflictCourseStrategy;
 
-    public Course(BigInteger courseId, Teacher teacher, String coursename, String introduction, Integer presentationWeight, Integer reportWeight, Integer questionWeight, Timestamp teamStartTime, Timestamp teamEndTime, List<Klass> klasses, Course teamMainCourse, Course seminarMainCourse, List<Strategy> strategies) {
+    public Course(BigInteger courseId, Teacher teacher, String courseName, String introduction, Integer presentationWeight, Integer reportWeight, Integer questionWeight, Timestamp teamStartTime, Timestamp teamEndTime, List<Klass> klasses, Course teamMainCourse, Course seminarMainCourse, MemberLimitStrategy memberLimitStrategy, List<CourseMemberLimitStrategy> courseMemberLimitStrategies, TeamAndStrategy teamAndStrategy, TeamOrStrategy teamOrStrategy, ConflictCourseStrategy conflictCourseStrategy) {
         this.courseId = courseId;
         this.teacher = teacher;
-        this.courseName = coursename;
+        this.courseName = courseName;
         this.introduction = introduction;
         this.presentationWeight = presentationWeight;
         this.reportWeight = reportWeight;
@@ -40,7 +44,11 @@ public class Course {
         this.klasses = klasses;
         this.teamMainCourse = teamMainCourse;
         this.seminarMainCourse = seminarMainCourse;
-        this.strategies = strategies;
+        this.memberLimitStrategy = memberLimitStrategy;
+        this.courseMemberLimitStrategies = courseMemberLimitStrategies;
+        this.teamAndStrategy = teamAndStrategy;
+        this.teamOrStrategy = teamOrStrategy;
+        this.conflictCourseStrategy = conflictCourseStrategy;
     }
 
     public Course(BigInteger courseId) {
@@ -146,11 +154,43 @@ public class Course {
         this.seminarMainCourse = seminarMainCourse;
     }
 
-    public List<Strategy> getStrategies() {
-        return strategies;
+    public MemberLimitStrategy getMemberLimitStrategy() {
+        return memberLimitStrategy;
     }
 
-    public void setStrategies(List<Strategy> strategies) {
-        this.strategies = strategies;
+    public void setMemberLimitStrategy(MemberLimitStrategy memberLimitStrategy) {
+        this.memberLimitStrategy = memberLimitStrategy;
+    }
+
+    public List<CourseMemberLimitStrategy> getCourseMemberLimitStrategies() {
+        return courseMemberLimitStrategies;
+    }
+
+    public void setCourseMemberLimitStrategies(List<CourseMemberLimitStrategy> courseMemberLimitStrategies) {
+        this.courseMemberLimitStrategies = courseMemberLimitStrategies;
+    }
+
+    public TeamAndStrategy getTeamAndStrategy() {
+        return teamAndStrategy;
+    }
+
+    public void setTeamAndStrategy(TeamAndStrategy teamAndStrategy) {
+        this.teamAndStrategy = teamAndStrategy;
+    }
+
+    public TeamOrStrategy getTeamOrStrategy() {
+        return teamOrStrategy;
+    }
+
+    public void setTeamOrStrategy(TeamOrStrategy teamOrStrategy) {
+        this.teamOrStrategy = teamOrStrategy;
+    }
+
+    public ConflictCourseStrategy getConflictCourseStrategy() {
+        return conflictCourseStrategy;
+    }
+
+    public void setConflictCourseStrategy(ConflictCourseStrategy conflictCourseStrategy) {
+        this.conflictCourseStrategy = conflictCourseStrategy;
     }
 }

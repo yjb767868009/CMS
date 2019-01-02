@@ -10,8 +10,8 @@ import java.util.List;
  * @version 1.0
  */
 public interface Strategy {
-    static String TEAM_OR_STRATEGY_TYPE = "TeamOrStrategy";
-    static String TEAM_AND_STRATEGY_TYPE = "TeamAndStrategy";
+    static String TEAM_OR_STRATEGY = "TeamOrStrategy";
+    static String TEAM_AND_STRATEGY = "TeamAndStrategy";
     static String CONFLICT_COURSE_STRATEGY = "ConflictCourseStrategy";
     static String COURSE_MEMBER_LIMIT_STRATEGY = "CourseMemberLimitStrategy";
     static String MEMBER_LIMIT_STRATEGY = "MemberLimitStrategy";

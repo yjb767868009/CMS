@@ -3,8 +3,9 @@
     <x-header :title="'第'+this.$store.state.teacher.currentRound.order+'轮'" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
     <div style="height:30px;padding-top:12px;text-align:left" class="box">讨论课：
-      <div style="padding:0 50px;padding-top:12px">业务流程分析</div>
-      <div style="padding:0 50px;padding-top:12px">领域模型设计</div>
+      <template v-for="seminar in this.$store.state.teacher.currentRound.seminars">
+        <cell :key="seminar.seminarId">{{seminar.topic}}</cell>
+      </template>
     </div>
 
     <div style="height:30px;padding-top:12px;text-align:left;margin-top:100px" class="box">成绩设置：
@@ -37,10 +38,10 @@
 
     <x-button
       @click.native="modify"
-      style="margin-top:100%;margin-left:20%;margin-right:20%;width:60%"
-      mini
+      style="margin-top:50%;margin-left:20%;margin-right:20%;width:60%"
       type="primary"
     >修改</x-button>
+
     <div v-transfer-dom>
       <popup v-model="show" height="23%">
           <div>
@@ -50,6 +51,7 @@
           </div>
       </popup>
     </div>
+
   </div>
 </template>
 
@@ -75,39 +77,19 @@ export default {
       calculateQueTypes: [["最高分", "平均分"]],
       calculateRepType: ["最高分"],
       calculateRepTypes: [["最高分", "平均分"]],
-      enrollNums: [["1", "2"]],
-      roundSeminars: [
-        {
-          id: 45,
-          topic: "业务流程分析",
-          order: 2
-        }
-      ],
+
+      enrollNums: [["1", "2","3","4","5"]],
+      
       classRounds: [
         {
           id: 1,
-          enrollNum: 2,
+          enrollNum: ['2'],
           classSerial: 2
         }
       ]
     };
   },
-  // mounted: function() {
-  //   this.$axios
-  //     .get(
-  //       "/round/" + this.$store.state.teacher.currentRound.roundId + "/seminar"
-  //     )
-  //     .then(response => {
-  //       this.roundSeminars = response.data;
-  //     });
-  //   this.$axios
-  //     .get("/round/" + this.$store.state.teacher.currentRound.roundId)
-  //     .then(response => {
-  //       this.calculatePreType = response.data.calculatePreType;
-  //       this.calculateQueType = response.data.calculateQueType;
-  //       this.calculateRepType = response.data.calculateRepType;
-  //     });
-  // },
+  
   methods: {
     modify: function() {
       this.$axios.put(
@@ -118,7 +100,9 @@ export default {
           calculateRepType: this.calculateRepType[0],
           classRound: this.classRounds
         }
-      );
+      ).then((response)=>{
+        this.$router.go(-1)
+      });
     },
     
         Undo(){

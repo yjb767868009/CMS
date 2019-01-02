@@ -27,7 +27,7 @@
                 <cell-box
                   :key="klassSeminar.klassSeminarId"
                   is-link
-                  @click.native="clickClassSeminar(seminar,klassSeminar)"
+                  @click.native="clickClassSeminar(round,seminar,klassSeminar)"
                   style="padding-left:140px"
                 >{{klassSeminar.klass.name}}</cell-box>
               </template>
@@ -132,7 +132,8 @@ export default {
         });
     },
   methods: {
-    clickClassSeminar: function(seminar,klassSeminar) {
+    clickClassSeminar: function(round,seminar,klassSeminar) {
+        this.$store.state.teacher.currentRound=round
         this.$store.state.teacher.currentSeminar=seminar
         this.$store.state.teacher.currentKlassSeminar=klassSeminar
         if(klassSeminar.status===0){

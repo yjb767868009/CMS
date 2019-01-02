@@ -182,7 +182,7 @@ export default {
             teamStartTime:this.teamStartTime,
             teamEndTime:this.teamEndTime,
             MemberLimitStrategy:{minMember:this.minmember,maxMember:this.maxmember},
-            strategies:this.strategies})
+            })
             this.$axios.post('/course',{
             courseName:this.courseName,
             introduction:this.courseRequirement,
@@ -191,10 +191,10 @@ export default {
             questionWeight:this.question[0],
             teamStartTime:this.teamStartTime.slice(0,4)+'-'+this.teamStartTime.slice(5,7)+'-'+this.teamStartTime.slice(8,10)+'T18:07:14.384+0000',
             teamEndTime:this.teamEndTime.slice(0,4)+'-'+this.teamEndTime.slice(5,7)+''+this.teamEndTime.slice(8,10)+'T18:10:14.384+0000',
-            MemberLimitStrategy:{minMember:this.minmember,maxMember:this.maxmember},
-            TeamAndStrategy:'',
-            CourseMemberLimitStrategies: this.CourseMemberLimitStrategies,
-            ConflictCourseStrategies:this.ConflictCourseStrategies,
+            memberLimitStrategy:{minMember:this.minmember,maxMember:this.maxmember},
+            teamAndStrategy:'',
+            courseMemberLimitStrategies: this.CourseMemberLimitStrategies,
+            conflictCourseStrategies:this.ConflictCourseStrategies,
             }
         ).then((res)=>{
             console.log(res)

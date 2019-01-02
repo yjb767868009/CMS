@@ -128,4 +128,12 @@ public interface CourseMapper {
      * @return 课程列表
      */
     List<Course> getAllCourse();
+
+    /**
+     * 根据轮次返回课程
+     *
+     * @param roundId 轮次id
+     * @return 课程
+     */
+    Course getCourseByRound(BigInteger roundId);
 }

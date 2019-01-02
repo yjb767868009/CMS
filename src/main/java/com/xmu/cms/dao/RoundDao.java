@@ -109,6 +109,9 @@ public class RoundDao {
 
     public Round getRoundById(BigInteger roundId) {
         Round round = roundMapper.getRoundByRoundId(roundId);
+        if (round == null) {
+            return null;
+        }
         List<Klass> klasses = klassMapper.getKlassesInCourse(round.getCourse().getCourseId());
         List<KlassEnrollNumber> klassEnrollNumbers = new ArrayList<>();
         for (Klass klass : klasses) {

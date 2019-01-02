@@ -53,6 +53,7 @@ public interface KlassSeminarMapper {
      * 修改班级讨论课
      *
      * @param klassSeminar 班级讨论课
+     * @return 修改的信息
      */
     Integer updateKlassSeminar(@Param("klassSeminar") KlassSeminar klassSeminar);
 
@@ -66,7 +67,13 @@ public interface KlassSeminarMapper {
     KlassSeminar getKlassSeminarByStudentAndSeminar(@Param("studentId") BigInteger studentId,
                                                     @Param("seminarId") BigInteger seminarId);
 
-    KlassSeminar getRunningKlassSeminarByTeacherId(@Param("teacherId") BigInteger teacherId);
+    /**
+     * 返回老师的正在展示的讨论课
+     *
+     * @param teacherId 老师id
+     * @return 正在展示的讨论课
+     */
+    List<KlassSeminar> getRunningKlassSeminarByTeacherId(@Param("teacherId") BigInteger teacherId);
 
     /**
      * 停止班级讨论课
@@ -96,9 +103,10 @@ public interface KlassSeminarMapper {
      *
      * @param klassId   班级id
      * @param seminarId 讨论课id
+     * @return 新建的班级讨论课的id
      */
     Integer insertKlassSeminar(@Param("klassId") BigInteger klassId,
-                            @Param("seminarId") BigInteger seminarId);
+                               @Param("seminarId") BigInteger seminarId);
 
     /**
      * 获取班级下所有班级讨论课

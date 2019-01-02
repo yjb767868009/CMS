@@ -41,6 +41,7 @@ public interface QuestionMapper {
      * 发出提问
      *
      * @param question 新的提问
+     * @return 新建提问的id
      */
     Integer insertQuestion(@Param("question") Question question);
 

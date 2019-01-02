@@ -91,7 +91,7 @@ public class SeminarService {
         return roundDao.newRound(round);
     }
 
-    public KlassSeminar getRunningKlassSeminarByTeacherId(BigInteger teacherId) {
+    public List<KlassSeminar> getRunningKlassSeminarByTeacherId(BigInteger teacherId) {
         return klassSeminarDao.getRunningKlassSeminarByTeacherId(teacherId);
     }
 

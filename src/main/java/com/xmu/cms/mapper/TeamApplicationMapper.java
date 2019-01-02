@@ -40,6 +40,7 @@ public interface TeamApplicationMapper {
      * 新建队伍合法申请
      *
      * @param teamApplication 新的队伍合法申请
+     * @return 新建队伍合法申请的id
      */
     Integer insertTeamApplication(@Param("teamApplication") TeamApplication teamApplication);
 

@@ -21,10 +21,11 @@ public interface TeacherMapper {
     List<Teacher> getAllTeachers();
 
     /**
-     * create a new teacher
+     * 新建老师
      *
-     * @param teacher new teacher
-     * @return the num of new teacher
+     * @param teacher 老师
+     * @return 新建老师的id
+     * @throws Exception 新建错误报错
      */
     Integer insertTeacher(@Param("teacher") Teacher teacher) throws Exception;
 

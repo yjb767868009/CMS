@@ -37,7 +37,7 @@ public class KlassSeminarDao {
         return klassSeminarMapper.getKlassSeminarByKlassAndSeminar(klassId, seminarId);
     }
 
-    public KlassSeminar getRunningKlassSeminarByTeacherId(BigInteger teacherId) {
+    public List<KlassSeminar> getRunningKlassSeminarByTeacherId(BigInteger teacherId) {
         return klassSeminarMapper.getRunningKlassSeminarByTeacherId(teacherId);
     }
 

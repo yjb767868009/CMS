@@ -42,6 +42,7 @@ public interface ShareTeamMapper {
      * 新建共享组队
      *
      * @param shareTeam 新的共享组队
+     * @return 新建共享组队的id
      */
     Integer insertShareTeam(@Param("shareTeam") ShareTeam shareTeam);
 

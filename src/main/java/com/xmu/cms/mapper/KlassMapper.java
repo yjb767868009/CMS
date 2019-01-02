@@ -81,6 +81,7 @@ public interface KlassMapper {
      * 删除班级学生关系中队伍信息
      *
      * @param teamId 队伍id
+     * @return 删除信息
      */
     Integer deleteTeamStudent(@Param("teamId") BigInteger teamId);
 

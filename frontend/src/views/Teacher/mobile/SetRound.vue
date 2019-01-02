@@ -122,7 +122,10 @@ export default {
         },
     };
   },
-  
+  computed:{
+    postRound:function(){
+    }
+  },
   mounted:function(){
     this.$axios.get('/round/'+this.$store.state.teacher.currentRound.roundId)
     .then((response)=>{
@@ -135,13 +138,35 @@ export default {
   },
   methods: {
     modify: function() {
-      console.log(this.round)
-      this.$axios.put(
-        "/round/" + this.$store.state.teacher.currentRound.roundId,
-        )
+      if(this.calculatePreType[0]==='最高分'){
+        this.round.presentationScoreType=0
+      }else{
+        this.round.presentationScoreType=1
       }
-      
-    },
+
+      if(this.calculateQueType[0]==='最高分'){
+        this.round.questionScoreType=0
+      }else{
+        this.round.questionScoreType=1
+      }
+
+      if(this.calculateRepType[0]==='最高分'){
+        this.round.reportScoreType=0
+      }else{
+        this.round.reportScoreType=1
+      }
+      for(var i=0;i<this.round.klassEnrollNumbers.length;i++){
+        this.round.klassEnrollNumbers[i].enrollNumber
+        =parseInt(this.round.klassEnrollNumbers[i].enrollNumber)
+      }
+      console.log(this.round)
+
+      this.$axios.put(
+        "/round/" + this.$store.state.teacher.currentRound.roundId,this.round
+        ).then((response)=>{
+          this.$router.go(-1)
+        })
+      },
     
         Undo(){
             this.$router.push('/mobile/teacher/notify')
@@ -153,7 +178,8 @@ export default {
             this.$router.push('/mobile/teacher/seminars')
         },
   
-};
+  }
+}
 </script>
 
 <style scoped>

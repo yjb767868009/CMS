@@ -14,6 +14,15 @@
         </association>
     </resultMap>
 
+    <resultMap id="KlassEnrollNumberResultMap" type="com.xmu.cms.entity.KlassEnrollNumber">
+        <result property="enrollNumber" column="enroll_number"/>
+        <association property="klass" javaType="com.xmu.cms.entity.Klass">
+            <id property="klassId" column="klassId" javaType="java.math.BigInteger"/>
+            <result property="grade" column="grade" javaType="java.lang.Integer"/>
+            <result property="klassSerial" column="klass_serial" javaType="java.lang.Integer"/>
+        </association>
+    </resultMap>
+
     <insert id="insertKlass" parameterType="com.xmu.cms.entity.Klass">
         <selectKey keyProperty="klassId" order="AFTER" resultType="java.lang.Integer">
             select last_insert_id()
@@ -67,10 +76,11 @@
           and course.id = klass.course_id
     </select>
 
-    <select id="getKlassEnrollNumber">
-        select klass_id as klassId, enroll_number as enrollNumber
+    <select id="getKlassEnrollNumber" resultMap="KlassEnrollNumberResultMap">
+        select klass.id as klassId, klass.grade, klass.klass_serial, enroll_number
         from klass_round
-        where round_id = #{roundId}
+                 join klass on klass_round.klass_id = klass.id
+        where klass_round.round_id = #{roundId}
     </select>
 
     <delete id="deleteKlassRound">

@@ -112,7 +112,13 @@ public class SeminarService {
         }
         Round round = roundDao.getRoundByKlassSeminar(klassSeminarId);
         List<Attendance> attendances = attendanceDao.getTeamAttendanceInRound(team.getTeamId(), round.getRoundId());
-        Integer maxNumber = round.getKlassEnrollNumber().get(klassSeminar.getKlass().getKlassId());
+        List<KlassEnrollNumber> klassEnrollNumbers = round.getKlassEnrollNumbers();
+        Integer maxNumber = 0;
+        for (KlassEnrollNumber klassEnrollNumber : klassEnrollNumbers) {
+            if (klassEnrollNumber.getKlass().getKlassId().equals(klassSeminar.getKlass().getKlassId())) {
+                maxNumber = klassEnrollNumber.getEnrollNumber();
+            }
+        }
         Integer count = 0;
         if (attendances != null) {
             for (Attendance everAttendance : attendances) {

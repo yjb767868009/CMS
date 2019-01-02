@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author JuboYu on 2018/11/27.
@@ -19,12 +18,9 @@ public class Round {
     private Integer reportScoreType;
     private Integer questionScoreType;
     private List<Seminar> seminars;
-    /**
-     * Map<klassId,enrollNumber>
-     */
-    private Map<BigInteger, Integer> klassEnrollNumber;
+    private List<KlassEnrollNumber> klassEnrollNumbers;
 
-    public Round(BigInteger roundId, Integer order, Course course, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType, List<Seminar> seminars, Map<BigInteger, Integer> klassEnrollNumber) {
+    public Round(BigInteger roundId, Integer order, Course course, Integer presentationScoreType, Integer reportScoreType, Integer questionScoreType, List<Seminar> seminars, List<KlassEnrollNumber> klassEnrollNumbers) {
         this.roundId = roundId;
         this.order = order;
         this.course = course;
@@ -32,7 +28,7 @@ public class Round {
         this.reportScoreType = reportScoreType;
         this.questionScoreType = questionScoreType;
         this.seminars = seminars;
-        this.klassEnrollNumber = klassEnrollNumber;
+        this.klassEnrollNumbers = klassEnrollNumbers;
     }
 
     public Round() {
@@ -86,12 +82,12 @@ public class Round {
         this.order = order;
     }
 
-    public Map<BigInteger, Integer> getKlassEnrollNumber() {
-        return klassEnrollNumber;
+    public List<KlassEnrollNumber> getKlassEnrollNumbers() {
+        return klassEnrollNumbers;
     }
 
-    public void setKlassEnrollNumber(Map<BigInteger, Integer> klassEnrollNumber) {
-        this.klassEnrollNumber = klassEnrollNumber;
+    public void setKlassEnrollNumbers(List<KlassEnrollNumber> klassEnrollNumbers) {
+        this.klassEnrollNumbers = klassEnrollNumbers;
     }
 
     public List<Seminar> getSeminars() {

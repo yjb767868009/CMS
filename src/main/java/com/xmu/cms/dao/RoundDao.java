@@ -1,9 +1,6 @@
 package com.xmu.cms.dao;
 
-import com.xmu.cms.entity.KlassEnrollNumber;
-import com.xmu.cms.entity.KlassSeminar;
-import com.xmu.cms.entity.Round;
-import com.xmu.cms.entity.Seminar;
+import com.xmu.cms.entity.*;
 import com.xmu.cms.mapper.*;
 import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,7 +109,15 @@ public class RoundDao {
 
     public Round getRoundById(BigInteger roundId) {
         Round round = roundMapper.getRoundByRoundId(roundId);
-        List<KlassEnrollNumber> klassEnrollNumbers = klassMapper.getKlassEnrollNumber(roundId);
+        if (round == null) {
+            return null;
+        }
+        List<Klass> klasses = klassMapper.getKlassesInCourse(round.getCourse().getCourseId());
+        List<KlassEnrollNumber> klassEnrollNumbers = new ArrayList<>();
+        for (Klass klass : klasses) {
+            KlassEnrollNumber klassEnrollNumber = klassMapper.getKlassEnrollNumber(roundId, klass.getKlassId());
+            klassEnrollNumbers.add(klassEnrollNumber);
+        }
         round.setKlassEnrollNumbers(klassEnrollNumbers);
         return round;
     }

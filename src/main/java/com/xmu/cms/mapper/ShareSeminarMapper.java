@@ -1,7 +1,6 @@
 package com.xmu.cms.mapper;
 
 import com.xmu.cms.entity.ShareSeminar;
-import com.xmu.cms.entity.ShareTeam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -42,6 +41,7 @@ public interface ShareSeminarMapper {
      * 新增分享讨论课
      *
      * @param shareSeminar 新增的共享讨论课
+     * @return 新建共享讨论课的id
      */
     Integer insertShareSeminar(@Param("shareSeminar") ShareSeminar shareSeminar);
 

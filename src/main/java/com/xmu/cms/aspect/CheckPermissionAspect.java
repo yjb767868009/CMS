@@ -6,8 +6,8 @@ import com.xmu.cms.dao.TeamDao;
 import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Klass;
 import com.xmu.cms.entity.Team;
-import com.xmu.cms.support.UserInfo;
 import com.xmu.cms.support.JwtUtils;
+import com.xmu.cms.support.UserInfo;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -24,6 +24,7 @@ import java.math.BigInteger;
 @Configuration
 public class CheckPermissionAspect {
     static private String teacherType = "teacher";
+    static private String studentType = "student";
     static private String permissionError = "权限不足";
 
     @Autowired
@@ -39,9 +40,11 @@ public class CheckPermissionAspect {
     private Object checkCoursePermission(ProceedingJoinPoint point, BigInteger courseId) throws Throwable {
         Object result = permissionError;
         UserInfo userInfo = JwtUtils.getToken();
-        Course course = courseDao.getCourse(courseId);
-        if (userInfo.getUserType().equals(teacherType) && course.getTeacher().getTeacherId().equals(userInfo.getUserId())) {
-            result = point.proceed();
+        if (userInfo != null) {
+            Course course = courseDao.getCourse(courseId);
+            if (userInfo.getUserType().equals(teacherType) && course.getTeacher().getTeacherId().equals(userInfo.getUserId())) {
+                result = point.proceed();
+            }
         }
         return result;
     }
@@ -50,9 +53,11 @@ public class CheckPermissionAspect {
     private Object checkKlassPermission(ProceedingJoinPoint point, BigInteger klassId) throws Throwable {
         Object result = permissionError;
         UserInfo userInfo = JwtUtils.getToken();
-        Klass klass = klassDao.getKlass(klassId);
-        if (userInfo.getUserType().equals(teacherType) && klass.getCourse().getTeacher().getTeacherId().equals(userInfo.getUserId())) {
-            result = point.proceed();
+        if (userInfo != null) {
+            Klass klass = klassDao.getKlass(klassId);
+            if (userInfo.getUserType().equals(teacherType) && klass.getCourse().getTeacher().getTeacherId().equals(userInfo.getUserId())) {
+                result = point.proceed();
+            }
         }
         return result;
     }
@@ -61,9 +66,11 @@ public class CheckPermissionAspect {
     private Object checkTeamPermission(ProceedingJoinPoint point, BigInteger teamId) throws Throwable {
         Object result = permissionError;
         UserInfo userInfo = JwtUtils.getToken();
-        Team team = teamDao.getTeamByTeamId(teamId);
-        if (userInfo.getUserType().equals("student") && team.getLeader().getStudentId().equals(userInfo.getUserId())) {
-            result = point.proceed();
+        if (userInfo != null) {
+            Team team = teamDao.getTeamByTeamId(teamId);
+            if (userInfo.getUserType().equals(studentType) && team.getLeader().getStudentId().equals(userInfo.getUserId())) {
+                result = point.proceed();
+            }
         }
         return result;
     }

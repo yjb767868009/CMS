@@ -21,7 +21,7 @@
             select last_insert_id()
         </selectKey>
         INSERT INTO student (account, password, email, student_name, is_active)
-        VALUE (#{student.account}, #{student.password}, #{student.email}, #{student.name}, #{student.activation})
+        VALUE (#{student.account}, #{student.password}, null, #{student.name}, #{student.activation})
     </insert>
 
 

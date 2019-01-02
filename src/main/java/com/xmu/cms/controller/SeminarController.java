@@ -70,7 +70,7 @@ public class SeminarController {
 
     @Secured("ROLE_TEACHER")
     @GetMapping(value = "/runklassseminar")
-    public KlassSeminar getRunningKlassSeminar(UserInfo userInfo) {
+    public List<KlassSeminar> getRunningKlassSeminar(UserInfo userInfo) {
         return seminarService.getRunningKlassSeminarByTeacherId(userInfo.getUserId());
     }
 

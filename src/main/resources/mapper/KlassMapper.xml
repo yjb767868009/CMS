@@ -81,6 +81,7 @@
         from klass_round
                  join klass on klass_round.klass_id = klass.id
         where klass_round.round_id = #{roundId}
+          and klass.id = #{klassId}
     </select>
 
     <delete id="deleteKlassRound">

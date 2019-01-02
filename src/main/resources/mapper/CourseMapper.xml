@@ -212,4 +212,14 @@
              teacher
         WHERE course.teacher_id = teacher.id
     </select>
+
+    <select id="getCourseByRound" resultMap="CourseResultMap">
+        SELECT course.id as courseId, seminar_main_course_id, team_main_course_id
+        FROM course,
+             klass,
+             klass_round
+        WHERE klass_round.round_id = #{roundId}
+          AND klass_round.klass_id = klass.id
+          AND klass.course_id = course.id
+    </select>
 </mapper>

@@ -95,6 +95,7 @@ public interface AttendanceMapper {
      * 新建展示
      *
      * @param attendance 新的展示
+     * @return 新建展示的id
      */
     Integer insertAttendance(@Param("attendance") Attendance attendance);
 

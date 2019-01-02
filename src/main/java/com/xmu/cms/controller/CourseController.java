@@ -44,9 +44,10 @@ public class CourseController {
 
     @Secured("ROLE_TEACHER")
     @PostMapping(value = "/course")
-    public Map<String, String> createCourse(@RequestBody Course course) throws Exception {
+    public Map<String, String> createCourse(UserInfo info, @RequestBody Course course) throws Exception {
         Map<String, String> message = new HashMap<String, String>(1);
         try {
+            course.setTeacher(new Teacher(info.getUserId()));
             courseService.createCourse(course);
             message.put("message", "Success");
         } catch (Exception e) {

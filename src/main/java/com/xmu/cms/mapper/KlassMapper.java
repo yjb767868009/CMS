@@ -3,8 +3,7 @@ package com.xmu.cms.mapper;
 import com.xmu.cms.entity.Klass;
 import com.xmu.cms.entity.KlassEnrollNumber;
 import com.xmu.cms.entity.Student;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.*;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -82,6 +81,7 @@ public interface KlassMapper {
      * 删除班级学生关系中队伍信息
      *
      * @param teamId 队伍id
+     * @return 删除信息
      */
     Integer deleteTeamStudent(@Param("teamId") BigInteger teamId);
 
@@ -154,7 +154,8 @@ public interface KlassMapper {
      * 获取班级与轮次的关系
      *
      * @param roundId 轮次id
+     * @param klassId 课程id
      * @return 班级轮次关系列表
      */
-    List<KlassEnrollNumber> getKlassEnrollNumber(@Param("roundId") BigInteger roundId);
+    KlassEnrollNumber getKlassEnrollNumber(@Param("roundId") BigInteger roundId, @Param("klassId") BigInteger klassId);
 }

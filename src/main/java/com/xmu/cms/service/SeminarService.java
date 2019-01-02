@@ -91,7 +91,7 @@ public class SeminarService {
         return roundDao.newRound(round);
     }
 
-    public KlassSeminar getRunningKlassSeminarByTeacherId(BigInteger teacherId) {
+    public List<KlassSeminar> getRunningKlassSeminarByTeacherId(BigInteger teacherId) {
         return klassSeminarDao.getRunningKlassSeminarByTeacherId(teacherId);
     }
 
@@ -104,6 +104,10 @@ public class SeminarService {
     }
 
     public void newAttendance(BigInteger studentId, BigInteger klassSeminarId, Attendance attendance) throws Exception {
+        Attendance findAttendance = attendanceDao.getStudentAttendanceInKlassSeminar(studentId, klassSeminarId);
+        if (findAttendance != null) {
+            throw new Exception("请勿重复报名");
+        }
         attendance.setKlassSeminar(new KlassSeminar(klassSeminarId));
         KlassSeminar klassSeminar = klassSeminarDao.getKlassSeminar(klassSeminarId);
         Team team = teamDao.getStudentTeamInKlassSeminar(studentId, klassSeminarId);
@@ -189,7 +193,7 @@ public class SeminarService {
     public Question selectQuestionInKlassSeminar(BigInteger klassSeminarId) {
         List<Question> questions = questionDao.getQuestionInKlassSeminar(klassSeminarId);
         List<Question> noSelectQuestions = questionDao.getNoSelectedQuestionInKlassSeminar(klassSeminarId);
-        Map<BigInteger, Float> teamProbability = new HashMap<BigInteger, Float>(16);
+        Map<BigInteger, Float> teamProbability = new HashMap<>(16);
         for (Question question : questions) {
             Team team = question.getTeam();
             Float probability = teamProbability.get(team.getTeamId());

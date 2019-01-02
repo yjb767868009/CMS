@@ -205,7 +205,8 @@ export default {
                 }
               }
             }else if(this.KlassSeminarRun.newQuestion){
-              this.questions.push(this.KlassSeminarRun.newQuestion)
+              this.$set(this.questions,this.questions.length,this.KlassSeminarRun.newQuestion)
+              // this.questions.push(this.KlassSeminarRun.newQuestion)
             }else if(this.KlassSeminarRun.selectQuestion){
               if(this.KlassSeminarRun.selectQuestion.student.studentId===this.$store.state.student.studentId){
                 //被抽到了

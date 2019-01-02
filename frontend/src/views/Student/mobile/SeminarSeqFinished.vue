@@ -77,6 +77,40 @@ export default {
       show: false
     };
   },
+  mounted:function(){
+        this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId+'/round')
+        .then((response)=>{
+            this.rounds=response.data;
+            for(var i=0;i<this.rounds.length;i++){
+                if(this.rounds[i].roundId===this.$store.state.student.currentRound.roundId){
+                    for(var j=0;j<this.rounds[i].seminars;j++){
+                        if(this.rounds[i].seminars[j].seminarId===this.$store.state.student.currentSeminar.seminarId){
+                            if(parseInt(this.rounds[i].seminars[j].klassSeminars[0].status)===0&&this.$store.state.student.currentAttendance.message==='other'){
+                                console.log('未开未报')
+                                this.$router.push({name:'SeminarRegistration'})
+                            }else if(parseInt(this.rounds[i].seminars[j].klassSeminars[0].status)===1&&this.$store.state.student.currentAttendance.message==='other'){
+                                console.log('正在未报')
+                                this.$router.push({name:'SeminarDetail'})
+                            }
+                            else if(parseInt(this.rounds[i].seminars[j].klassSeminars[0].status)===2&&this.$store.state.student.currentAttendance.message==='other'){
+                                console.log('已完未报')
+                            }else if(parseInt(this.rounds[i].seminars[j].klassSeminars[0].status)===0&&this.$store.state.student.currentAttendance.message!=='other'){
+                                console.log('未开始已报')
+                                this.$router.push({name:'SeminarUnstartSigned'})
+                            }else if(parseInt(this.rounds[i].seminars[j].klassSeminars[0].status)===1&&this.$store.state.student.currentAttendance.message!=='other'){
+                                console.log('正在已报')
+                                this.$router.push({name:'SeminarRunningSigned'})
+                            }
+                            else if(parseInt(this.rounds[i].seminars[j].klassSeminars[0].status)===2&&this.$store.state.student.currentAttendance.message!=='other'){
+                                console.log('已完已报')
+                                this.$router.push({name:'SeminarSigned'})
+                            }
+                        }
+                    }
+                }
+            }
+          });
+    },
   methods: {
     running: function() {
       this.$router.push("/mobile/Student/studentSeminarList");

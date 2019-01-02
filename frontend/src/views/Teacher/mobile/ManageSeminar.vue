@@ -1,5 +1,5 @@
 <template>
-  <div class="login" title="2016-(1)">
+  <div>
     <x-header :title="this.$store.state.teacher.currentCourse.courseName" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}"
       @on-click-more="show=!show">
     </x-header>
@@ -15,15 +15,21 @@
       </flexbox-item>
 
       <flexbox-item>
+        <template v-if="!question_scoring">
         <group>
           展示分数:
           <x-input v-model="presentationScore" :is-type="typePresentationScore"></x-input>
         </group>
+        </template>
+        <template v-if="question_scoring">
+          提问分数:
+          <x-input v-model="questionScore" :is-type="typeQuestionScore"></x-input>
+        </template>
       </flexbox-item>
 
       <flexbox-item>
         <group :title="'已有'+questionForShow.length+'位同学提问'">
-          <radio v-model="currentQuestion" :options="questionForShow"></radio>
+          <radio v-model="currentQuestion" :options="questionForShow" @on-change="questionChange"></radio>
         </group>
       </flexbox-item>
     </flexbox>
@@ -116,6 +122,7 @@
         currentTeamIndex: 0,
         currentTeam: '',
         currentQuestion: '',
+        question_scoring:false,
         is_modifying: false,
         is_end:false,
         presentationScore: '',
@@ -152,13 +159,18 @@
           }
         }
         return -1
+      },
+      currentAttendanceId:function(){
+        for(var i=0;i<this.attendances.length;i++){
+          if(this.attendances[i].team.teamName===this.currentTeam){
+            return this.attendances[i].attendanceId
+          }
+        }
+        return -1
       }
     },
 
     methods: {
-      back: function () {
-        this.$router.push('/mobile/teacher/seminar')
-      },
       finish(index) {
         this.show = false
         this.value = 'completed'
@@ -173,19 +185,41 @@
       GoSeminar() {
         this.$router.push('/mobile/teacher/seminars')
       },
-
-
-      confirmModification: function () {
-        // console.log(this.currentQuestionId)
-        var qid=this.currentQuestionId
-        this.$axios.put('/question/'+qid,{
-          score:this.presentationScore
-        }).then((response)=>{
-          this.is_modifying = false
-          this.presentationScore=null
-        })
+      
+      questionChange:function(value, label){
+        this.question_scoring=true
       },
 
+      confirmModification: function () {
+        if(this.question_scoring){//提问分数
+          var qid=this.currentQuestionId
+          this.$axios.put('/question/'+qid,{
+            score:this.presentationScore
+          }).then((response)=>{
+            this.is_modifying = false
+            this.question_scoring=false
+            this.presentationScore=null
+            this.questionScore=null
+          })
+        }else if(!this.question_scoring){//展示分数
+          this.$axios.put('/attendance/'+this.currentAttendanceId+'/questionscore',{
+            questionScore:this.questionScore
+          }).then((response)=>{
+            this.is_modifying=false
+            this.question_scoring=false
+            this.presentationScore=null
+            this.questionScore=null
+          })
+        }
+      },
+
+      typeQuestionScore:function(value){
+        this.is_modifying=true
+        return{
+          valid: (['0','1', '2', '3', '4', '5'].indexOf(value)) !== -1,
+          msg: '分数为小于6的整数'
+        }
+      },
       typePresentationScore: function (value) {
         this.is_modifying = true
         return {

@@ -36,6 +36,12 @@ export default {
     post:function(){
       this.$axios.put('/user/email',{
         email:this.email
+      }).then((response)=>{
+        if(this.$store.state.userType==='teacher'){
+          this.$router.push('/mobile/teacher')
+        }else if(this.$store.state.userType==='student'){
+          this.$router.push('/mobile/student')
+        }
       })
     }
   }

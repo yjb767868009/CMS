@@ -27,8 +27,7 @@ public class StudentDao {
         for (Student newStudent : students) {
             Student student = studentMapper.getStudentByAccount(newStudent.getAccount());
             if (student == null) {
-                BigInteger studentId = BigInteger.valueOf(studentMapper.insertStudent(newStudent));
-                newStudent.setStudentId(studentId);
+                studentMapper.insertStudent(newStudent);
                 newStudents.add(newStudent);
             } else {
                 newStudents.add(student);

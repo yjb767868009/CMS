@@ -54,7 +54,7 @@ public class CourseDao {
     }
 
     public BigInteger createCourse(Course course) {
-        return BigInteger.valueOf(courseMapper.createCourse(course));
+        return BigInteger.valueOf(courseMapper.insertCourse(course));
     }
 
     public Course getCourse(BigInteger courseId) {

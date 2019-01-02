@@ -105,7 +105,7 @@ public class StrategyDao {
 
     public Strategy getCourseStrategy(BigInteger courseId) {
         TeamStrategy teamStrategy = teamStrategyMapper.getCourseStrategy(courseId);
-        return setSubStrategy(teamStrategy);
+       return setSubStrategy(teamStrategy);
     }
 
     private Strategy insertStrategy(Strategy strategy) {

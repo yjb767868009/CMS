@@ -99,14 +99,14 @@ import {XHeader,Cell,XButton,
         cancelRegistration:function(){
             this.$axios.delete('/attendance/'+this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].attendanceId)
             .then((response)=>{
-                this.$router.go(-1)
+                this.$router.push('/mobile/student/studentSeminarList')
             })
         },
         register:function(index){
             this.$axios.post('/klassseminar/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/attendance',{
                 teamOrder:index+1
             }).then((response)=>{
-                this.$router.go(-1)
+                this.$router.push('/mobile/student/studentSeminarList')
             })
         }
    }

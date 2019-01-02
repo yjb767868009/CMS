@@ -4,7 +4,7 @@
     </x-header>
     <div style="padding-left:10px;margin-top:10px;height:10px">当前邮箱：{{this.$store.state.email}}</div>
   <group>
-    <x-input v-model="account" style="margin-top:20px;background-color:#fff" title="e-mail:" placeholder="填写修改邮箱"></x-input>  
+    <x-input v-model="email" style="margin-top:20px;background-color:#fff" title="e-mail:" placeholder="填写修改邮箱"></x-input>  
 
   </group>
       <div style="text-align:left;margin-top:100px;font-size:10px">邮箱格式如：useremail@host.domainnames</div>
@@ -19,7 +19,7 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      account:'',
+      email:'',
       password:'',
       identifying:''
     }
@@ -34,7 +34,9 @@ export default {
   },
   methods:{
     post:function(){
-
+      this.$axios.put('/user/email',{
+        email:this.email
+      })
     }
   }
 }

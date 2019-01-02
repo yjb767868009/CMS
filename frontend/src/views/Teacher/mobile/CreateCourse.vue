@@ -19,30 +19,36 @@
     
     <group title="组员基本要求：">
         <template>
-        <popup-picker title="小组总人数(含组长)：" :data="percentageOptions" v-model="presentation"></popup-picker>
-        <cell><x-input placeholder="上限"></x-input><x-input placeholder="下限"></x-input></cell>
+        <span style="padding-left:15px">小组总人数(含组长)：</span>
+        <x-input placeholder="上限" v-model="maxmember"></x-input><x-input placeholder="下限" v-model="minmember"></x-input>
         </template>
-        <x-button mini style="margin-left:21em;margin-bottom:8px" @click.native="newTeamRule" type="primary">新增</x-button>
     </group>
-    
-    <group title="选修课人数要求：">
+    <template>
+        <template v-for="teamrule in teamruleCourses"> 
+            <group>
+                <cell style="margin-top:1em" value-align="left"><span style="padding-left:6em;color:#000">{{teamrule.course.courseName+' '+teamrule.course.teacher.name}}</span></cell>
+                <x-input placeholder="上限" v-model="teamrule.max"></x-input>
+                <x-input placeholder="下限" v-model="teamrule.min"></x-input>
+            </group>
+        </template>
+        <x-button mini style="margin-left:21em;margin-bottom:8px" @click.native="newTeamRule()" type="primary">新增</x-button>
+    </template>
+
+    <group title="选修课人数要求：" v-if="this.teamruleCourses!=''">
       <button-tab v-model="strategy">
-        <button-tab-item @on-item-click="consoleIndex()">仅满足</button-tab-item>
-        <button-tab-item @on-item-click="consoleIndex()">均满足</button-tab-item>
+        <button-tab-item @on-item-click="consoleIndex('0')">仅满足</button-tab-item>
+        <button-tab-item @on-item-click="consoleIndex('1')">均满足</button-tab-item>
       </button-tab>
     </group>
 
-    <!-- <group title="冲突课程：" style="text-align:left" >
+    <group title="冲突课程：" style="text-align:left" >
         <template v-for="conflictCourse in conflictCourses"> 
-            <cell>
-                <x-input></x-input>
-                <x-input></x-input>
-            </cell>
+                <cell value-align="left"><span style="padding-left:6em;color:#000">{{conflictCourse.courseName+' '+conflictCourse.teacher.name}}</span></cell>
+                <!-- <x-input></x-input>
+                <x-input></x-input> -->
         </template>
-        <x-button mini style="margin-left:21em;margin-bottom:8px" @click.native="" type="primary">新增</x-button>
+        <x-button mini style="margin-left:21em;margin-bottom:8px" @click.native="newConflict()" type="primary">新增</x-button>
     </group>
-
-    <x-button @click.native="" type="primary" style="margin-top:40px;color:#fff">确认设置</x-button> -->
 
     <group label-width="6em" style="text-align:left" >
         <datetime style="height:1.5em" v-model="teamStartTime" :start-date="startDateS" :end-date="endDateS" format="YYYY-MM-DD HH:mm"  title="组队开始时间"></datetime>
@@ -51,6 +57,22 @@
 
     <x-button @click.native="newCourse" type="primary" style="margin-top:40px;color:#fff">发布</x-button>
     
+    <div v-transfer-dom>
+        <popup v-model="showteam">
+        <template v-for="course in courses">
+            <cell :title="course.courseName+' '+course.teacher.name" @click.native="addteamrule(course)"></cell>
+        </template>
+        </popup>
+    </div>
+
+    <div v-transfer-dom>
+        <popup v-model="showConflict">
+        <template v-for="course in courses">
+            <cell :title="course.courseName+' '+course.teacher.name" @click.native="addmenu(course)"></cell>
+        </template>
+        </popup>
+    </div>
+
     <div v-transfer-dom>
       <popup v-model="show" height="23%">
           <div>
@@ -64,7 +86,7 @@
 </template>
 
 <script>
-import {XHeader,XButton,Divider,Group,Datetime,XInput,PopupPicker,TransferDom,Popup,Cell,XTextarea} from 'vux'
+import {XHeader,XButton,Divider,Group,Datetime,XInput,PopupPicker,TransferDom,Popup,Cell,XTextarea,ButtonTab, ButtonTabItem} from 'vux'
 export default {
   directives:{
     TransferDom
@@ -76,15 +98,15 @@ export default {
         Group,
         Datetime,
         XInput,
-        PopupPicker,Popup,Cell,XTextarea
+        PopupPicker,Popup,Cell,XTextarea,ButtonTab, ButtonTabItem
     },
         data () {
         return {
             percentageOptions: [['10','15', '20','25', '30','35', '40','45','50','55','60','65','70','75','80','85','90','95','100']],
             startDateS:'2018-01-01',
-            endDateS: '2020-12-31',
+            endDateS: '2018-12-31',
             startDateE:'2018-01-01',
-            endDateE: '2020-12-31',
+            endDateE: '2018-12-31',
             show:false,
             courseName:'',
             courseRequirement:'',
@@ -93,7 +115,32 @@ export default {
             report:['10'],
             teamStartTime:'',
             teamEndTime:'',
+            strategy:'',
+            courses:'',
+            conflictCourses:[],
+            teamruleCourses:[],
+            showteam:false,
+            showConflict:false,
+            ruleCourseList:[],
+            conflictCourseList:[],
+            maxMemberList:[],
+            minMemberList:[],
+            maxmember:'',
+            minmember:'',
+            max:'',
+            min:'',
+            strategies:[],
+            type:'TeamOrStrategy',
+            CourseMemberLimitStrategies:[],
+            ConflictCourseStrategies:[]
+
         }
+    },
+    mounted(){
+        this.$axios.get('/allcourse')
+        .then((res)=>{
+            this.courses=res.data
+        })
     },
     methods: {
     Undo(){
@@ -108,14 +155,25 @@ export default {
     newCourse(){
         console.log(
         this.courseName,//courseName
-        this.courseRequirement,//introduction
+        this.introduction,//introduction
         this.presentation[0],//presentationWeight
         this.question[0],//questionWeight
         this.report[0],
+        this.type,
         this.teamStartTime,//~~~
         this.teamEndTime,)//~~~
-        
-        this.$axios.post('/course',{
+        for(var i=0;i<this.teamruleCourses.length;i++){
+            this.minMemberList.push(this.teamruleCourses[i].min)
+            this.maxMemberList.push(this.teamruleCourses[i].max)
+        }
+        this.strategies.push({type:this.type})
+        for(var i=0;i<this.teamruleCourses.length;i++){
+            this.CourseMemberLimitStrategies.push({courseId:this.ruleCourseList[i],maxMember:this.maxMemberList[i],minMember:this.minMemberList[i]})
+        }
+        for(var j=0;j<this.conflictCourseList.length;j++){
+            this.ConflictCourseStrategies.push({courseId:this.conflictCourseList[j]})
+        }
+        console.log({
             courseName:this.courseName,
             introduction:this.courseRequirement,
             presentationWeight:this.presentation[0],
@@ -123,10 +181,53 @@ export default {
             questionWeight:this.question[0],
             teamStartTime:this.teamStartTime,
             teamEndTime:this.teamEndTime,
+            MemberLimitStrategy:{minMember:this.minmember,maxMember:this.maxmember},
+            strategies:this.strategies})
+            this.$axios.post('/course',{
+            courseName:this.courseName,
+            introduction:this.courseRequirement,
+            presentationWeight:this.presentation[0],
+            reportWeight:this.report[0],
+            questionWeight:this.question[0],
+            teamStartTime:this.teamStartTime.slice(0,4)+'-'+this.teamStartTime.slice(5,7)+'-'+this.teamStartTime.slice(8,10)+'T18:07:14.384+0000',
+            teamEndTime:this.teamEndTime.slice(0,4)+'-'+this.teamEndTime.slice(5,7)+''+this.teamEndTime.slice(8,10)+'T18:10:14.384+0000',
+            MemberLimitStrategy:{minMember:this.minmember,maxMember:this.maxmember},
+            TeamAndStrategy:'',
+            CourseMemberLimitStrategies: this.CourseMemberLimitStrategies,
+            ConflictCourseStrategies:this.ConflictCourseStrategies,
+            }
+        ).then((res)=>{
+            console.log(res)
         })
+        this.strategies=[]
     },
     newTeamRule(){
-        console.log('newtr')
+        this.showteam=!this.showteam
+    },
+    consoleIndex(t){
+        if(t=='0'){
+            this.type='TeamOrStrategy'
+        }else if(t=='1'){
+            this.type='TeamAndStrategy'
+        }
+    },
+    newConflict(){
+        this.showConflict=true
+    },
+    addmenu(cour){
+        this.conflictCourses.push(cour)
+        this.conflictCourseList.push(cour.courseId)
+        console.log(this.conflictCourseList)
+        this.showConflict=false
+    },
+    addteamrule(cour){
+        this.teamruleCourses.push({
+            course:cour,
+            max:0,
+            min:0,})
+        this.ruleCourseList.push(cour.courseId)
+        console.log(this.ruleCourseList)
+        this.showteam=false
     }
   },
 

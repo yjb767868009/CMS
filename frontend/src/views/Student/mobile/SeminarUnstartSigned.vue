@@ -18,12 +18,12 @@
       </cell>
       <cell title="课程情况">未开始</cell>
       <cell title="PPT">
-        <template v-if="this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].presentationFile">
+        <!-- <template v-if="this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].presentationFile"> -->
           已提交  
-        </template>
-        <template v-else>
+        <!-- </template> -->
+        <!-- <template v-else>
           未提交
-        </template>
+        </template> -->
       </cell>
       <el-upload :action="'http://localhost:8000/attendance/'+this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].attendanceId+'/powerpoint'"
       :headers="headers">

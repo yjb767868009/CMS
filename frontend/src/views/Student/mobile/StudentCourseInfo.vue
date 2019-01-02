@@ -26,14 +26,9 @@
         <div style="padding-left:15px;margin-top:1em">选修课人数要求:&emsp;&emsp;<span v-if="this.strategy[0].type=='TeamAndStrategy'">均满足</span><span v-if="this.strategy[0].type=='TeamOrStrategy'">满足其一</span></div>
     </template>
     <div style="padding-left:15px;margin-top:1em;font-size:0.8em;color:#aaa">均满足只选修课人数均达到要求</div>
-    <div style="padding-left:15px;font-size:0.8em;color:#aaa">满足其一指任意选修课人数满足即可（多指冲突课程）</div>
-    <!-- <div style="padding-left:15px;color:#000;margin-top:35px">冲突课程：
-        <div style="padding-left:100px;color:#000;">
-            <p>.Net(xxx老师)</p>
-            <p>.Net(xxx老师)</p>
-        </div>
-    </div> -->
+    <div style="padding-left:15px;font-size:0.8em;color:#aaa">满足其一指任意选修课人数满足即可（多指冲突课程）</div>    
     </group>
+    
     <group title="冲突课程">
         <template v-for="stra in strategy">
             <div style="padding-left:6em" v-if="stra.type==='CourseMemberLimitStrategy'">{{stra.course.courseName}}&emsp;&emsp;({{stra.course.teacher.name}}老师)</div>

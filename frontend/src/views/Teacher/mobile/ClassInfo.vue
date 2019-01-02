@@ -1,5 +1,5 @@
 <template>
-  <div class="course" style="background:#eee">
+  <div class="course" style="background:#fff">
 
     <!-- 班级信息 -->
     <template v-if="!addingKlass">
@@ -8,7 +8,7 @@
       </x-header>
       <template v-for="klass in klasses" style="text-decoration:none">
 
-        <form-preview :key="klass.klassId" :header-label="klass.grade+'-'+klass.klassSerial" :body-items="[{
+        <!-- <form-preview :key="klass.klassId" :header-label="klass.grade+'-'+klass.klassSerial" :body-items="[{
         label:'讨论课时间',
         value:klass.klassTime
         },
@@ -20,7 +20,21 @@
         value:filename
       }]"
           :footer-buttons="footerButtons" :name="klass.klassId">
-        </form-preview>
+        </form-preview> -->
+        <group :title="klass.grade+'-'+klass.klassSerial" style="margin-top:2em">
+        <cell style="height:20px" title="讨论课时间">{{klass.klassTime}}</cell>
+        <cell style="height:20px" title="讨论课地点">{{klass.klassPlace}}</cell>
+        <cell style="height:20px" title="班级学生名单">{{klass.klassName}}</cell>
+        <input style="padding-left:7em" type="file" accept=""/>
+        <flexbox style="margin-top:0.5em">
+        <flexbox-item>
+        <x-button @click.native="submit(klass.klassId)">提交</x-button>
+        </flexbox-item>
+        <flexbox-item>
+        <x-button @click.native="Deleteclass(klass.klassId)">删除班级</x-button>
+        </flexbox-item>
+        </flexbox>
+        </group>
       </template>
 
       <br />
@@ -81,7 +95,7 @@
     XInput,
     Group,
     FormPreview,
-    Confirm
+    Confirm,Flexbox,FlexboxItem
   } from 'vux'
   export default {
     directives: {
@@ -97,7 +111,7 @@
       Group,
       FormPreview,
       DatetimeRange,
-      Confirm
+      Confirm,Flexbox,FlexboxItem
     },
     data() {
       return {
@@ -119,32 +133,32 @@
           klassTime: '2t',
           klassPlace: '2p'
         }],
-        footerButtons: [{
-          style: 'primary',
-          text: '提交',
-          onButtonClick: (name) => {
-            console.log('klassId:', name)
-            // this.$axios.put('/class/'+name+'/classfile',this.filename)
-            // .then((response)=>{
-            //   console.log(response)
-            //   this.$message('提交成功')
-            // })
-          }
-        }, {
-          style: "default",
-          text: '删除班级',
-          onButtonClick: (name) => {
-            this.Delete=!this.Delete
-            this.deleteKlass=name
-            console.log('klassId:', name)
-          }
-        }, {
-          style: "default",
-          text: '上传学生名单',
-          onButtonClick: (name) => {
-            console.log('klassId:', name)
-          }
-        }]
+        // footerButtons: [{
+        //   style: 'primary',
+        //   text: '提交',
+        //   onButtonClick: (name) => {
+        //     console.log('klassId:', name)
+        //     // this.$axios.put('/class/'+name+'/classfile',this.filename)
+        //     // .then((response)=>{
+        //     //   console.log(response)
+        //     //   this.$message('提交成功')
+        //     // })
+        //   }
+        // }, {
+        //   style: "default",
+        //   text: '删除班级',
+        //   onButtonClick: (name) => {
+        //     this.Delete=!this.Delete
+        //     this.deleteKlass=name
+        //     console.log('klassId:', name)
+        //   }
+        // }, {
+        //   style: "default",
+        //   text: '上传学生名单',
+        //   onButtonClick: (name) => {
+        //     console.log('klassId:', name)
+        //   }
+        // }]
       }
     },
     mounted:function(){
@@ -156,6 +170,9 @@
         })
     },
     methods: {
+      submit(){
+        this.$message('提交成功')
+      },
       sure(){
         console.log(this.deleteKlass,'delete')
         this.$axios.delete('/class/'+this.deleteKlass)
@@ -202,6 +219,11 @@
       onChange(val){
           console.log(val)
           this.newKlassTime=val[0]
+      },
+      Deleteclass(name){
+        this.Delete=!this.Delete
+            this.deleteKlass=name
+            console.log('klassId:', name)
       }
     }
   }

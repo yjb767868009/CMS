@@ -3,9 +3,10 @@
     <x-header :title="this.$store.state.teacher.currentCourse.courseName" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
     <group>
+      <!-- :key="round.roundId" -->
       <template v-for="round in rounds">
         <cell style="height:40px"
-          :key="round.roundId"
+          
           is-link
           value-align="left"
           :border-intent="false"
@@ -14,9 +15,10 @@
         >第{{round.order}}轮</cell>
         <template v-if="round.showRoundContent">
           
+          <!-- :key="seminar.seminarId" -->
           <template v-for="seminar in round.seminars">
             <cell
-              :key="seminar.seminarId"
+              
               :title="seminar.topic"
               is-link
               :arrow-direction="seminar.showSeminarContent ? 'up' : 'down'"

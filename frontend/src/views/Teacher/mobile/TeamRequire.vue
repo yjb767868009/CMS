@@ -10,7 +10,7 @@
         <popup-picker title="OOAD" :data="percentageOptions" v-model="question"></popup-picker>
         <popup-picker title="J2EE" :data="percentageOptions" v-model="report"></popup-picker>
         </template>
-        <x-button mini style="margin-left:21em;margin-bottom:8px" @click.native="newCourse" type="primary">新增</x-button>
+        <x-button mini style="margin-left:21em;margin-bottom:8px" @click.native="" type="primary">新增</x-button>
     </group>
     
     <group title="选修课人数要求：">
@@ -25,10 +25,10 @@
         <popup-picker title="OOAD" :data="percentageOptions" v-model="question"></popup-picker>
         <popup-picker title="J2EE" :data="percentageOptions" v-model="report"></popup-picker>
         </template>
-        <x-button mini style="margin-left:21em;margin-bottom:8px" @click.native="newCourse" type="primary">新增</x-button>
+        <x-button mini style="margin-left:21em;margin-bottom:8px" @click.native="" type="primary">新增</x-button>
     </group>
 
-    <x-button @click.native="newCourse" type="primary" style="margin-top:40px;color:#fff">确认设置</x-button>
+    <x-button @click.native="" type="primary" style="margin-top:40px;color:#fff">确认设置</x-button>
     
     <div v-transfer-dom>
       <popup v-model="show" height="23%">

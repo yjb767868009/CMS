@@ -24,12 +24,12 @@
     >本轮讨论课报名次数：
       <div>
         <group style="height:20px" label-width="5em">
-          <template v-for="classRound in classRounds">
+          <template v-for="klassEnrollNumber in round.klassEnrollNumbers">
             <popup-picker
-              :key="classRound.id"
-              :title="'第'+classRound.classSerial+'班'"
+              :key="klassEnrollNumber.klass.id"
+              :title="'第'+klassEnrollNumber.klass.klassSerial+'班'"
               :data="enrollNums"
-              v-model="classRound.enrollNum"
+              v-model="klassEnrollNumber.enrollNumber"
             ></popup-picker>
           </template>
         </group>
@@ -80,29 +80,67 @@ export default {
 
       enrollNums: [["1", "2","3","4","5"]],
       
-      classRounds: [
-        {
-          id: 1,
-          enrollNum: ['2'],
-          classSerial: 2
-        }
-      ]
+      round:{
+            "roundId": 3,
+            "order": 1,
+            "course": {
+                "courseId": 16,
+                "courseName": "OOAD"
+            },
+            "presentationScoreType": 0,//最高分是0，平均分是1
+            "reportScoreType": 0,
+            "questionScoreType": 0,
+            "klassEnrollNumbers": [
+                {
+                    "klass": {
+                        "klassId": 21,
+                        "grade": 2016,
+                        "klassSerial": 1,
+                        "name": "2016-1"
+                    },
+                    "enrollNumber": 1
+                },
+                {
+                    "klass": {
+                        "klassId": 22,
+                        "grade": 2016,
+                        "klassSerial": 2,
+                        "name": "2016-2"
+                    },
+                    "enrollNumber": 1
+                },
+                {
+                    "klass": {
+                        "klassId": 23,
+                        "grade": 2016,
+                        "klassSerial": 3,
+                        "name": "2016-3"
+                    },
+                    "enrollNumber": 2
+                }
+            ]
+        },
     };
   },
   
+  mounted:function(){
+    this.$axios.get('/round/'+this.$store.state.teacher.currentRound.roundId)
+    .then((response)=>{
+      this.round=response.data
+      for(var i=0;i<this.round.klassEnrollNumbers.length;i++){
+        this.round.klassEnrollNumbers[i].enrollNumber
+        =[this.round.klassEnrollNumbers[i].enrollNumber]
+      }
+    })
+  },
   methods: {
     modify: function() {
+      console.log(this.round)
       this.$axios.put(
         "/round/" + this.$store.state.teacher.currentRound.roundId,
-        {
-          calculatePreType: this.calculatePreType[0],
-          calculateQueType: this.calculateQueType[0],
-          calculateRepType: this.calculateRepType[0],
-          classRound: this.classRounds
-        }
-      ).then((response)=>{
-        this.$router.go(-1)
-      });
+        )
+      }
+      
     },
     
         Undo(){
@@ -114,7 +152,7 @@ export default {
         GoSeminar(){
             this.$router.push('/mobile/teacher/seminars')
         },
-  }
+  
 };
 </script>
 

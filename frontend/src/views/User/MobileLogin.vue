@@ -15,10 +15,8 @@
       ></x-input>
 
     <x-button @click.native="login" style="margin-top:80px">登陆</x-button>
-    <button
-      @click="forget"
-      style="background:0;height:10px;border:0;margin-left:80%;margin-top:10px"
-    >忘记密码</button>
+    <x-button @click.native="forget" style="margin-top:18px">忘记密码</x-button>
+    
     <div style="color:green;margin-top:50%">初次登录默认密码为123456</div>
 
     

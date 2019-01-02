@@ -17,9 +17,34 @@
         <popup-picker title="报告" :data="percentageOptions" v-model="report"></popup-picker>
     </group>
     
+    <group title="组员基本要求：">
+        <template>
+        <popup-picker title="小组总人数(含组长)：" :data="percentageOptions" v-model="presentation"></popup-picker>
+        <cell><x-input placeholder="上限"></x-input><x-input placeholder="下限"></x-input></cell>
+        </template>
+        <x-button mini style="margin-left:21em;margin-bottom:8px" @click.native="newTeamRule" type="primary">新增</x-button>
+    </group>
+    
+    <group title="选修课人数要求：">
+      <button-tab v-model="strategy">
+        <button-tab-item @on-item-click="consoleIndex()">仅满足</button-tab-item>
+        <button-tab-item @on-item-click="consoleIndex()">均满足</button-tab-item>
+      </button-tab>
+    </group>
+
+    <!-- <group title="冲突课程：" style="text-align:left" >
+        <template v-for="conflictCourse in conflictCourses"> 
+            <cell>
+                <x-input></x-input>
+                <x-input></x-input>
+            </cell>
+        </template>
+        <x-button mini style="margin-left:21em;margin-bottom:8px" @click.native="" type="primary">新增</x-button>
+    </group>
+
+    <x-button @click.native="" type="primary" style="margin-top:40px;color:#fff">确认设置</x-button> -->
 
     <group label-width="6em" style="text-align:left" >
-        <cell style="height:1.5em" is-link title="组队要求:" @click.native="teamRequirement"></cell>
         <datetime style="height:1.5em" v-model="teamStartTime" :start-date="startDateS" :end-date="endDateS" format="YYYY-MM-DD HH:mm"  title="组队开始时间"></datetime>
         <datetime style="height:1.5em" v-model="teamEndTime" :start-date="startDateE" :end-date="endDateE" format="YYYY-MM-DD HH:mm"  title="组队截止时间"></datetime>
     </group>
@@ -89,12 +114,21 @@ export default {
         this.report[0],
         this.teamStartTime,//~~~
         this.teamEndTime,)//~~~
-        //rule
+        
+        this.$axios.post('/course',{
+            courseName:this.courseName,
+            introduction:this.courseRequirement,
+            presentationWeight:this.presentation[0],
+            reportWeight:this.report[0],
+            questionWeight:this.question[0],
+            teamStartTime:this.teamStartTime,
+            teamEndTime:this.teamEndTime,
+        })
     },
-    teamRequirement(){
-        this.$router.push('/mobile/teacher/teamrequire')
+    newTeamRule(){
+        console.log('newtr')
     }
-    },
+  },
 
 }
 </script>

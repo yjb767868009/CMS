@@ -21,9 +21,6 @@
     </resultMap>
 
     <insert id="insertSeminar" parameterType="com.xmu.cms.entity.Seminar">
-        <selectKey keyProperty="seminarId" order="AFTER" resultType="java.lang.Integer">
-            select last_insert_id()
-        </selectKey>
         INSERT seminar (course_id, round_id, seminar_name, introduction, max_team, is_visible, seminar_serial, enroll_start_time, enroll_end_time)
         VALUE (#{seminar.course.courseId},
                #{seminar.round.roundId},
@@ -34,6 +31,9 @@
                #{seminar.signOrder},
                #{seminar.signStartTime},
                #{seminar.signEndTime})
+        <selectKey keyProperty="seminarId" order="AFTER" resultType="java.lang.Integer">
+            select last_insert_id()
+        </selectKey>
     </insert>
 
     <update id="modifySeminar" parameterType="com.xmu.cms.entity.Seminar">

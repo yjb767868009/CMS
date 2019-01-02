@@ -6,32 +6,32 @@
     <group>
       <cell :title="'第一组'">
           <template v-if="AttendancesForShow[0]===null">未报名</template>
-          <template v-else-if="AttendancesForShow[0].reportFile===null">{{AttendancesForShow[0].team.teamName+' 未提交'}}</template>
+          <template v-else-if="!AttendancesForShow[0].reportFile">{{AttendancesForShow[0].team.teamName+' 未提交'}}</template>
           <template v-else>{{AttendancesForShow[0].team.teamName+' 已提交'}}</template>
           </cell>
       <cell :title="'第二组'">
           <template v-if="AttendancesForShow[1]===null">未报名</template>
-          <template v-else-if="AttendancesForShow[1].reportFile===null">{{AttendancesForShow[1].team.teamName+' 未提交'}}</template>
+          <template v-else-if="!AttendancesForShow[1].reportFile">{{AttendancesForShow[1].team.teamName+' 未提交'}}</template>
           <template v-else>{{AttendancesForShow[1].team.teamName+' 已提交'}}</template>
       </cell>
-      <cell :title="'第四组'">
+      <cell :title="'第三组'">
           <template v-if="AttendancesForShow[2]===null">未报名</template>
-          <template v-else-if="AttendancesForShow[2].reportFile===null">{{AttendancesForShow[2].team.teamName+' 未提交'}}</template>
+          <template v-else-if="!AttendancesForShow[2].reportFile">{{AttendancesForShow[2].team.teamName+' 未提交'}}</template>
           <template v-else>{{AttendancesForShow[2].team.teamName+' 已提交'}}</template>
       </cell>
-      <cell :title="'第五组'">
+      <cell :title="'第四组'">
           <template v-if="AttendancesForShow[3]===null">未报名</template>
-          <template v-else-if="AttendancesForShow[3].reportFile===null">{{AttendancesForShow[3].team.teamName+' 未提交'}}</template>
+          <template v-else-if="!AttendancesForShow[3].reportFile">{{AttendancesForShow[3].team.teamName+' 未提交'}}</template>
           <template v-else>{{AttendancesForShow[3].team.teamName+' 已提交'}}</template>
       </cell>
-      <cell :title="'第三组'">
+      <cell :title="'第五组'">
           <template v-if="AttendancesForShow[4]===null">未报名</template>
-          <template v-else-if="AttendancesForShow[4].reportFile===null">{{AttendancesForShow[4].team.teamName+' 未提交'}}</template>
+          <template v-else-if="!AttendancesForShow[4].reportFile">{{AttendancesForShow[4].team.teamName+' 未提交'}}</template>
           <template v-else>{{AttendancesForShow[4].team.teamName+' 已提交'}}</template>
       </cell>
       <cell :title="'第六组'">
           <template v-if="AttendancesForShow[5]===null">未报名</template>
-          <template v-else-if="AttendancesForShow[5].reportFile===null">{{AttendancesForShow[5].team.teamName+' 未提交'}}</template>
+          <template v-else-if="!AttendancesForShow[5].reportFile">{{AttendancesForShow[5].team.teamName+' 未提交'}}</template>
           <template v-else>{{AttendancesForShow[5].team.teamName+' 已提交'}}</template>
       </cell>
       <x-button @click.native="back">返回</x-button>
@@ -66,7 +66,7 @@ export default {
         return{
             show:false,
             AttendancesForShow:[null,null,null,null,null,null],
-             Attendances: [
+        Attendances: [
           {
             "attendanceId": 2,
             "team": {

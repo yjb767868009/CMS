@@ -1,26 +1,29 @@
 <template>
   <div class="login" title="2016-(1)">
-    <x-header title="OOAD-讨论课" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}"
+    <x-header :title="this.$store.state.teacher.currentCourse.courseName" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}"
       @on-click-more="show=!show">
     </x-header>
 
-    <cell title="业务流程分析" style="text-align:center">
+    <cell :title="this.$store.state.teacher.currentKlassSeminar.seminar.topic" style="text-align:center">
     </cell>
+
     <flexbox :gutter="10">
       <flexbox-item>
         <group title="展示队伍">
           <radio v-model="currentTeam" :options="Teams" disabled></radio>
         </group>
       </flexbox-item>
+
       <flexbox-item>
         <group>
           展示分数:
           <x-input v-model="presentationScore" :is-type="typePresentationScore"></x-input>
         </group>
       </flexbox-item>
+
       <flexbox-item>
-        <group :title="'已有'+Questions.length+'位同学提问'">
-          <radio v-model="currentQuestion" :options="Questions"></radio>
+        <group :title="'已有'+questionForShow.length+'位同学提问'">
+          <radio v-model="currentQuestion" :options="questionForShow"></radio>
         </group>
       </flexbox-item>
     </flexbox>
@@ -34,6 +37,13 @@
     <template v-if="is_modifying">
       <x-button @click.native="confirmModification" type="primary" style="margin-top:100px;color:#fff;width:50%">确认修改</x-button>
     </template>
+
+    <div v-transfer-dom>
+      <confirm v-model="is_end"
+      @on-confirm="endSeminar">
+        <p style="text-align:center;">是否结束讨论?</p>
+      </confirm>
+    </div>
 
     <div v-transfer-dom>
       <popup v-model="show" height="23%">
@@ -100,13 +110,14 @@
     data() {
       return {
         show: false,
-        Teams: ['1-1', '1-2', '1-3'],
-        Questions: ['111', '1111', '11111', 'fdfad'],
-        currentTeamIndex: -1,
+        Teams: [],
+        questions:[],
+        questionForShow: [],
+        currentTeamIndex: 0,
         currentTeam: '',
-        currentQuestionIndex: -1,
         currentQuestion: '',
         is_modifying: false,
+        is_end:false,
         presentationScore: '',
         questionScore: '',
       }
@@ -118,13 +129,13 @@
         .then((response) => {
           this.questions = response.data.questions
           this.attendances = response.data.attendances
-          this.Questions = []
+          this.questionForShow = []
           for (var i = 0; i < this.questions.length; i++) {
-            this.Questions.push(this.questions[i].name)
+            this.$set(this.questionForShow,i,this.questions[i].name)
           }
           this.Teams = []
           for (var i = 0; i < this.attendances.length; i++) {
-            this.Teams.push(this.attendances[i].team.teamName)
+            this.$set(this.Teams,i,this.attendances[i].team.teamName)
           }
         })
     },
@@ -132,13 +143,20 @@
       // 页面离开时断开连接,清除定时器
       this.disconnect();
     },
+    computed:{
+      currentQuestionId:function(){
+        for(var i=0;i<this.questions.length;i++){
+          if(this.questions[i].name===this.currentQuestion){
+            return this.questions[i].questionId
+          }
+        }
+        return -1
+      }
+    },
 
     methods: {
       back: function () {
         this.$router.push('/mobile/teacher/seminar')
-      },
-      pause: function () {
-        this.is_pause = true
       },
       finish(index) {
         this.show = false
@@ -154,14 +172,19 @@
       GoSeminar() {
         this.$router.push('/mobile/teacher/seminars')
       },
-      keepUp: function () {
-        this.is_pause = false
-      },
 
 
       confirmModification: function () {
-        this.is_modifying = false
+        // console.log(this.currentQuestionId)
+        var qid=this.currentQuestionId
+        this.$axios.put('/question/'+qid,{
+          score:this.presentationScore
+        }).then((response)=>{
+          this.is_modifying = false
+          this.presentationScore=null
+        })
       },
+
       typePresentationScore: function (value) {
         this.is_modifying = true
         return {
@@ -185,7 +208,19 @@
           this.stompClient.subscribe('/topic/klassSeminar/'+this.$store.state.teacher.currentKlassSeminar.klassSeminarId
           , (KlassSeminarRun) => {
             this.KlassSeminarRun=JSON.parse(KlassSeminarRun.body)
-            console.log(KlassSeminarRun.body)
+            if(this.KlassSeminarRun.newQuestion){
+              this.$set(this.questions,this.questions.length,this.KlassSeminarRun.newQuestion)
+              this.$set(this.questionForShow,this.questionForShow.length,this.KlassSeminarRun.newQuestion.name)
+            }else if(this.KlassSeminarRun.nowAttendance){
+
+            }else if(this.KlassSeminarRun.selectQuestion){
+
+            }else if(this.KlassSeminarRun.message){
+              if(this.KlassSeminarRun.message==='end'){
+                this.$router.push('/mobile/teacher/seminarFinished')
+              }
+            }
+            
           })
         })
 
@@ -203,19 +238,20 @@
         +'/getQuestion', {}, {})
       },
       nextTeam: function () {
-        
-
-        if (this.currentTeamIndex >= -1 && this.currentTeamIndex < this.Teams.length - 1) {
-          console.log('nextTeam')
+        if (this.currentTeamIndex >= 0 && this.currentTeamIndex < this.Teams.length -1) {
           this.stompClient.send('/app/'+this.$store.state.teacher.currentKlassSeminar.klassSeminarId
         +'/nextAttendance',{},{})
           this.currentTeamIndex = this.currentTeamIndex + 1
           this.currentTeam = this.Teams[this.currentTeamIndex]
 
         } else {
-          console.log('no more team')
+          this.is_end=true
         }
       },
+      endSeminar:function(){
+        this.stompClient.send('/app/'+this.$store.state.teacher.currentKlassSeminar.klassSeminarId
+        +'/endAttendance',{},{})
+      }
     }
   }
 

@@ -28,7 +28,7 @@
       </flexbox-item>
 
       <flexbox-item>
-        <group :title="'已有'+questionForShow.length+'位同学提问'">
+        <group :title="'已有'+questionLength+'位同学提问'">
           <radio v-model="currentQuestion" :options="questionForShow" @on-change="questionChange"></radio>
         </group>
       </flexbox-item>
@@ -127,6 +127,7 @@
         is_end:false,
         presentationScore: '',
         questionScore: '',
+        questionLength:0,
       }
     },
     mounted: function () {
@@ -202,7 +203,7 @@
             this.questionScore=null
           })
         }else if(!this.question_scoring){//展示分数
-          this.$axios.put('/attendance/'+this.currentAttendanceId+'/questionscore',{
+          this.$axios.put('/attendance/'+this.currentAttendanceId+'/presentationscore',{
             questionScore:this.questionScore
           }).then((response)=>{
             this.is_modifying=false
@@ -244,12 +245,13 @@
           , (KlassSeminarRun) => {
             this.KlassSeminarRun=JSON.parse(KlassSeminarRun.body)
             if(this.KlassSeminarRun.newQuestion){
+              this.questionLength=this.questionLength+1
               this.$set(this.questions,this.questions.length,this.KlassSeminarRun.newQuestion)
               this.$set(this.questionForShow,this.questionForShow.length,this.KlassSeminarRun.newQuestion.name)
             }else if(this.KlassSeminarRun.nowAttendance){
 
             }else if(this.KlassSeminarRun.selectQuestion){
-
+              this.questionLength=this.questionLength-1
             }else if(this.KlassSeminarRun.message){
               if(this.KlassSeminarRun.message==='end'){
                 this.$router.push('/mobile/teacher/seminarFinished')

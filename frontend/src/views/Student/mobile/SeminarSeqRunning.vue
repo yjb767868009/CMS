@@ -10,12 +10,10 @@
     
     <group>
     
-    <x-header style="background-color:#fff;">
-      <span style="color:#000;">{{this.$store.state.student.currentSeminar.topic}}</span>
-      <span style="color:#000;" slot="overwrite-left">{{'第'+currentTeamOrder+'组 展示'}}</span>
-      <span style="color:#000;" slot="right">{{'已有'+questions.length+'位同学提问'}}</span>
-    </x-header>
-    
+    <cell>{{this.$store.state.student.currentSeminar.topic}}</cell>
+    <cell>{{'第'+currentTeamOrder+'组 展示'}}</cell>
+    <cell>{{'已有'+questionLength+'位同学提问'}}</cell>
+
     <template v-for="attendance in attendances">
       <template v-if="attendance.teamOrder===parseInt(currentTeamOrder)">
         <cell style="color:#E64340" :key="attendance.attendanceId" :title="'第'+attendance.teamOrder+'组'">{{attendance.team.teamName}}</cell>
@@ -127,14 +125,15 @@ export default {
   },],
       KlassSeminarRun:'',
       user_selected:false,
-      currentTeamOrder:1
+      currentTeamOrder:1,
+      questionLength:0,
     };
   },
   mounted: function () {
       this.initWebSocket()
       this.$axios.get('/klassseminar/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/run')
         .then((response) => {
-          this.questions = response.data.questions
+          // this.questions = response.data.questions
           this.attendances = response.data.attendances
         })
     },
@@ -205,9 +204,10 @@ export default {
                 }
               }
             }else if(this.KlassSeminarRun.newQuestion){
-              this.questions.push(this.KlassSeminarRun.newQuestion)
+              this.questionLength=this.questionLength+1
             }else if(this.KlassSeminarRun.selectQuestion){
-              if(this.KlassSeminarRun.selectQuestion.student.studentId===this.$store.state.student.studentId){
+              this.questionLength=this.questionLength-1
+              if(parseInt(this.KlassSeminarRun.selectQuestion.student.studentId)===parseInt(this.$store.state.student.studentId)){
                 //被抽到了
                 this.user_selected=true
               }
@@ -219,6 +219,8 @@ export default {
                 }else{
                   this.$router.push('/mobile/student/course/seminar/finished')
                 }
+              }else{
+                this.$message.error(this.KlassSeminarRun.message)
               }
             }
 

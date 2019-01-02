@@ -51,7 +51,7 @@ export default {
             seminarOrder: ['1'],
             seminarOrders: [['1', '2', '3','4','5']],
             startDate: '2018-01-01',
-            endDate: '2018-12-31',
+            endDate: '2020-12-31',
             teamNum: ['6'],
             teamNums: [['1', '2', '3','4','5','6']],
             roundOrder: ['1'],

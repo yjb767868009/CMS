@@ -65,7 +65,6 @@ import {XHeader,
                         if(this.rounds[i].seminars[j].seminarId===this.$store.state.student.currentSeminar.seminarId){
                             if(parseInt(this.rounds[i].seminars[j].klassSeminars[0].status)===0&&this.$store.state.student.currentAttendance.message==='other'){
                                 console.log('未开未报')
-                                this.$router.push({name:'SeminarRegistration'})
                             }else if(parseInt(this.rounds[i].seminars[j].klassSeminars[0].status)===1&&this.$store.state.student.currentAttendance.message==='other'){
                                 console.log('正在未报')
                                 this.$router.push({name:'SeminarDetail'})

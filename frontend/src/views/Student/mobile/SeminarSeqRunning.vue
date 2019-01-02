@@ -219,6 +219,8 @@ export default {
                 }else{
                   this.$router.push('/mobile/student/course/seminar/finished')
                 }
+              }else{
+                this.$message.error(this.KlassSeminarRun.message)
               }
             }
 

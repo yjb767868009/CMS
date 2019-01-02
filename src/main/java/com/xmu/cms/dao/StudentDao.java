@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,13 +22,19 @@ public class StudentDao {
         return studentMapper.getAllStudents();
     }
 
-    public void newStudent(List<Student> students) {
+    public List<Student> newStudent(List<Student> students) {
+        List<Student> newStudents = new ArrayList<>();
         for (Student newStudent : students) {
             Student student = studentMapper.getStudentByAccount(newStudent.getAccount());
             if (student == null) {
-                studentMapper.insertStudent(newStudent);
+                BigInteger studentId = BigInteger.valueOf(studentMapper.insertStudent(newStudent));
+                newStudent.setStudentId(studentId);
+                newStudents.add(newStudent);
+            } else {
+                newStudents.add(student);
             }
         }
+        return newStudents;
     }
 
     public Integer modifyStudentInfo(Student student) {

@@ -5,6 +5,7 @@ import com.xmu.cms.entity.Klass;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.mapper.CourseMapper;
 import com.xmu.cms.mapper.KlassMapper;
+import com.xmu.cms.mapper.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +23,9 @@ public class KlassDao {
 
     @Autowired
     private CourseMapper courseMapper;
+
+    @Autowired
+    private StudentMapper studentMapper;
 
     public void newKlass(BigInteger courseId, Klass klass) {
         Course course = courseMapper.getCourseById(courseId);

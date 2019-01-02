@@ -185,8 +185,8 @@ public class CourseService {
     }
 
     public void uploadKlassFile(BigInteger klassId, List<Student> students) throws Exception {
-        studentDao.newStudent(students);
-        klassDao.addStudentInKlass(klassId, students);
+        List<Student> newStudents = studentDao.newStudent(students);
+        klassDao.addStudentInKlass(klassId, newStudents);
     }
 
     public Team getStudentTeamInKlass(BigInteger studentId, BigInteger klassId) {

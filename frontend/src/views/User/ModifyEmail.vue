@@ -8,7 +8,7 @@
 
   </group>
       <div style="text-align:left;margin-top:100px;font-size:10px">邮箱格式如：useremail@host.domainnames</div>
-    <x-button type="primary" @click="post" style="margin-top:10px">确认提交</x-button>
+    <x-button type="primary" @click.native="post" style="margin-top:10px">确认提交</x-button>
   </div>
 </template>
 

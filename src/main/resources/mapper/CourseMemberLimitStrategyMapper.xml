@@ -35,7 +35,7 @@
     <insert id="insertCourseMemberLimitStrategy" parameterType="com.xmu.cms.entity.strategy.CourseMemberLimitStrategy">
         insert course_member_limit_strategy (course_id, min_member, max_member)
         VALUES (#{strategy.course.courseId}, #{strategy.minMember}, #{strategy.maxMember})
-        <selectKey keyProperty="strategyId" order="AFTER" resultType="java.lang.Integer">
+        <selectKey keyProperty="strategy.strategyId" order="AFTER" resultType="java.math.BigInteger">
             select last_insert_id()
         </selectKey>
     </insert>

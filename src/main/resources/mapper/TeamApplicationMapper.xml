@@ -61,7 +61,7 @@
         insert team_valid_application (team_id, teacher_id, reason, status)
         values (#{teamApplication.team.teamId}, #{teamApplication.teacher.teacherId}, #{teamApplication.reason},
         #{teamApplication.status})
-        <selectKey keyProperty="teamApplicationId" order="AFTER" resultType="java.lang.Integer">
+        <selectKey keyProperty="teamApplication.teamApplicationId" order="AFTER" resultType="java.math.BigInteger">
             select last_insert_id()
         </selectKey>
     </insert>

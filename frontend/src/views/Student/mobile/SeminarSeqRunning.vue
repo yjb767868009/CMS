@@ -134,7 +134,7 @@ export default {
       this.initWebSocket()
       this.$axios.get('/klassseminar/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/run')
         .then((response) => {
-          this.questions = response.data.questions
+          // this.questions = response.data.questions
           this.attendances = response.data.attendances
         })
     },

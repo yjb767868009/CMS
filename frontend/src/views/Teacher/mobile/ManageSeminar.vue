@@ -202,7 +202,7 @@
             this.questionScore=null
           })
         }else if(!this.question_scoring){//展示分数
-          this.$axios.put('/attendance/'+this.currentAttendanceId+'/questionscore',{
+          this.$axios.put('/attendance/'+this.currentAttendanceId+'/presentationscore',{
             questionScore:this.questionScore
           }).then((response)=>{
             this.is_modifying=false

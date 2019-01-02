@@ -19,11 +19,11 @@
         &emsp;&emsp;&emsp;&emsp;<a @click="checkInfo" style="text-decoration:underline;color:#1AAD19">报名情况</a>
       </cell>
       <cell title="PPT">
-        <template v-if="this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].presentationFile">
+        <template v-if="this.$store.state.student.currentAttendance.attendance[attendanceIndex].presentationFile">
           已提交
         </template>
-        <template v-if="!this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].presentationFile">
-          <el-upload :action="'http://localhost:8000/attendance/'+this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].attendanceId+'/powerpoint'"
+        <template v-if="!this.$store.state.student.currentAttendance.attendance[attendanceIndex].presentationFile">
+          <el-upload :action="'http://localhost:8000/attendance/'+this.$store.state.student.currentAttendance.attendance[attendanceIndex].attendanceId+'/powerpoint'"
           :headers="headers">
               <x-button type="primary" style="width:200px;margin-top:18px;color:#fff">提交PPT</x-button>
           </el-upload>
@@ -115,7 +115,15 @@ export default {
       return{
         'Authorization':"Bearer "+this.$store.state.token
       }
-    }
+    },
+    attendanceIndex(){
+      for(var i=0;i<this.$store.state.student.currentAttendance.attendance.length;i++){
+        if(this.$store.state.student.currentAttendance.attendance[i].teamOrder===
+        this.$store.state.student.currentAttendance.message){
+          return i
+        }
+      }
+    },
   },
   mounted:function(){
         this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId+'/round')

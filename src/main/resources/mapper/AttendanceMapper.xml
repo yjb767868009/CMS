@@ -58,7 +58,7 @@
         </selectKey>
     </insert>
 
-    <delete id="deleteAttendance" parameterType="java.lang.Integer">
+    <delete id="deleteAttendance">
         delete
         from attendance
         where id = #{attendanceId}

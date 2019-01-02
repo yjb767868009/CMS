@@ -39,6 +39,7 @@ public class AttendanceController {
         return message;
     }
 
+    @Secured("ROLE_STUDENT")
     @DeleteMapping(value = "/attendance/{attendanceId}")
     public Map<String, String> cancelAttendance(@PathVariable("attendanceId") BigInteger attendanceId) {
         Map<String, String> message = new HashMap<String, String>(1);

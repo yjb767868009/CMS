@@ -168,7 +168,7 @@ export default {
         }
         this.strategies.push({type:this.type})
         for(var i=0;i<this.teamruleCourses.length;i++){
-            this.CourseMemberLimitStrategies.push({courseId:this.ruleCourseList[i],maxMember:this.maxMemberList[i],minMember:this.minMemberList[i]})
+            this.CourseMemberLimitStrategies.push({course:{courseId:this.ruleCourseList[i]},maxMember:this.maxMemberList[i],minMember:this.minMemberList[i]})
         }
         for(var j=0;j<this.conflictCourseList.length;j++){
             this.ConflictCourseStrategies.push({courseId:this.conflictCourseList[j]})
@@ -183,6 +183,7 @@ export default {
             teamEndTime:this.teamEndTime,
             MemberLimitStrategy:{minMember:this.minmember,maxMember:this.maxmember},
             })
+            if(this.type=='TeamAndStrategy'){
             this.$axios.post('/course',{
             courseName:this.courseName,
             introduction:this.courseRequirement,
@@ -192,15 +193,34 @@ export default {
             teamStartTime:this.teamStartTime.slice(0,4)+'-'+this.teamStartTime.slice(5,7)+'-'+this.teamStartTime.slice(8,10)+'T18:07:14.384+0000',
             teamEndTime:this.teamEndTime.slice(0,4)+'-'+this.teamEndTime.slice(5,7)+'-'+this.teamEndTime.slice(8,10)+'T18:10:14.384+0000',
             memberLimitStrategy:{minMember:this.minmember,maxMember:this.maxmember},
-            teamAndStrategy:'',
+            teamAndStrategy:{},
             courseMemberLimitStrategies: this.CourseMemberLimitStrategies,
-            conflictCourseStrategies:this.ConflictCourseStrategies,
+            conflictCourseStrategy:{courses:this.ConflictCourseStrategies},
             }
         ).then((res)=>{
             console.log(res)
-        })
+            this.$router.go(-1)
+        })}else if(this.type=='TeamOrStrategy'){
+        this.$axios.post('/course',{
+                    courseName:this.courseName,
+                    introduction:this.courseRequirement,
+                    presentationWeight:this.presentation[0],
+                    reportWeight:this.report[0],
+                    questionWeight:this.question[0],
+                    teamStartTime:this.teamStartTime.slice(0,4)+'-'+this.teamStartTime.slice(5,7)+'-'+this.teamStartTime.slice(8,10)+'T18:07:14.384+0000',
+                    teamEndTime:this.teamEndTime.slice(0,4)+'-'+this.teamEndTime.slice(5,7)+'-'+this.teamEndTime.slice(8,10)+'T18:10:14.384+0000',
+                    memberLimitStrategy:{minMember:this.minmember,maxMember:this.maxmember},
+                    teamOrStrategy:{},
+                    courseMemberLimitStrategies: this.CourseMemberLimitStrategies,
+                    conflictCourseStrategy:{courses:this.ConflictCourseStrategies},
+                    }
+                ).then((res)=>{
+                    console.log(res)
+                    this.$router.go(-1)
+                })
+        }
         this.strategies=[]
-    },
+        },
     newTeamRule(){
         this.showteam=!this.showteam
     },
@@ -223,8 +243,8 @@ export default {
     addteamrule(cour){
         this.teamruleCourses.push({
             course:cour,
-            max:0,
-            min:0,})
+            max:'',
+            min:'',})
         this.ruleCourseList.push(cour.courseId)
         console.log(this.ruleCourseList)
         this.showteam=false

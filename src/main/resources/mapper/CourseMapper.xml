@@ -78,7 +78,7 @@
         WHERE id = #{courseId}
     </delete>
 
-    <insert id="createCourse" parameterType="com.xmu.cms.entity.Course">
+    <insert id="insertCourse" parameterType="com.xmu.cms.entity.Course">
         insert into course (teacher_id,
         course_name,
         introduction,
@@ -93,8 +93,8 @@
         #{course.presentationWeight},
         #{course.reportWeight},
         #{course.questionWeight},
-        #{course.teamStartDate},
-        #{course.teamEndDate})
+        #{course.teamStartTime},
+        #{course.teamEndTime})
         <selectKey keyProperty="course.courseId" order="AFTER" resultType="java.math.BigInteger">
             select last_insert_id()
         </selectKey>

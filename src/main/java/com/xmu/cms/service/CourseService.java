@@ -66,6 +66,10 @@ public class CourseService {
         if (course == null) {
             throw new Exception(noCourseError);
         }
+        Course teamMainCourse = courseDao.getTeamMainCourse(courseId);
+        if (teamMainCourse != null) {
+            courseId = teamMainCourse.getCourseId();
+        }
         Strategy strategy = strategyDao.getCourseStrategy(courseId);
         List<Strategy> strategies = new ArrayList<>();
         strategy.getStrategy(strategies);
@@ -194,6 +198,10 @@ public class CourseService {
     }
 
     public Strategy getCourseStrategy(BigInteger courseId) {
+        Course teamMainCourse = courseDao.getTeamMainCourse(courseId);
+        if (teamMainCourse != null) {
+            courseId = teamMainCourse.getCourseId();
+        }
         return strategyDao.getCourseStrategy(courseId);
     }
 

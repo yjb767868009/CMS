@@ -38,21 +38,21 @@
 
     <insert id="insertAttendance" parameterType="com.xmu.cms.entity.Attendance">
         insert attendance (klass_seminar_id,
-                           team_id,
-                           team_order,
-                           is_present,
-                           report_name,
-                           report_url,
-                           ppt_name,
-                           ppt_url)
+        team_id,
+        team_order,
+        is_present,
+        report_name,
+        report_url,
+        ppt_name,
+        ppt_url)
         values (#{attendance.klassSeminar.klassSeminarId},
-                #{attendance.team.teamId},
-                #{attendance.teamOrder},
-                #{attendance.present},
-                #{attendance.reportFile},
-                null,
-                #{attendance.presentationFile},
-                null)
+        #{attendance.team.teamId},
+        #{attendance.teamOrder},
+        #{attendance.present},
+        #{attendance.reportFile},
+        null,
+        #{attendance.presentationFile},
+        null)
         <selectKey keyProperty="attendance.attendanceId" order="AFTER" resultType="java.math.BigInteger">
             select last_insert_id()
         </selectKey>
@@ -121,13 +121,14 @@
     </update>
 
     <select id="getAttendanceByAttendanceId" resultMap="AttendanceResultMap">
-        SELECT attendance.id      as attendanceId,
+        SELECT attendance.id               as attendanceId,
                team_order,
                ppt_name,
                report_name,
                is_present,
-               attendance.team_id as teamId,
-               team.team_name     as teamName
+               attendance.klass_seminar_id as klassSeminarId,
+               attendance.team_id          as teamId,
+               team.team_name              as teamName
         FROM attendance,
              team
         WHERE attendance.id = #{attendanceId}

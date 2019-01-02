@@ -1,9 +1,7 @@
 package com.xmu.cms.service;
 
-import com.xmu.cms.dao.StrategyDao;
-import com.xmu.cms.dao.StudentDao;
-import com.xmu.cms.dao.TeamApplicationDao;
-import com.xmu.cms.dao.TeamDao;
+import com.xmu.cms.dao.*;
+import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.entity.Team;
 import com.xmu.cms.entity.TeamApplication;
@@ -26,6 +24,9 @@ public class TeamService {
     private TeamDao teamDao;
 
     @Autowired
+    private CourseDao courseDao;
+
+    @Autowired
     private StudentDao studentDao;
 
     @Autowired
@@ -36,6 +37,10 @@ public class TeamService {
 
     public Team newTeam(BigInteger courseId, BigInteger classId, BigInteger studentId, Team team) throws Exception {
         Team newTeam = teamDao.newTeam(courseId, classId, studentId, team);
+        Course teamMainCourse = courseDao.getTeamMainCourse(courseId);
+        if (teamMainCourse != null) {
+            courseId = teamMainCourse.getCourseId();
+        }
         Strategy strategy = strategyDao.getCourseStrategy(courseId);
         Boolean valid = strategy.checkValid(newTeam);
         if (!valid.equals(newTeam.getValid())) {
@@ -63,7 +68,12 @@ public class TeamService {
     public Map<String, String> teamAddMembers(BigInteger teamId, List<Student> students) {
         Map<String, String> message = new HashMap<>(1);
         Team team = teamDao.addMembers(teamId, students);
-        Strategy strategy = strategyDao.getCourseStrategy(team.getCourse().getCourseId());
+        BigInteger courseId = team.getCourse().getCourseId();
+        Course teamMainCourse = courseDao.getTeamMainCourse(courseId);
+        if (teamMainCourse != null) {
+            courseId = teamMainCourse.getCourseId();
+        }
+        Strategy strategy = strategyDao.getCourseStrategy(courseId);
         Boolean valid = strategy.checkValid(team);
         if (!team.getValid().equals(valid)) {
             team.setValid(valid);
@@ -76,7 +86,12 @@ public class TeamService {
     public Map<String, String> teamRemoveMember(BigInteger teamId, Student student) {
         Map<String, String> message = new HashMap<String, String>(1);
         Team team = teamDao.removeMember(teamId, student);
-        Strategy strategy = strategyDao.getCourseStrategy(team.getCourse().getCourseId());
+        BigInteger courseId = team.getCourse().getCourseId();
+        Course teamMainCourse = courseDao.getTeamMainCourse(courseId);
+        if (teamMainCourse != null) {
+            courseId = teamMainCourse.getCourseId();
+        }
+        Strategy strategy = strategyDao.getCourseStrategy(courseId);
         Boolean valid = strategy.checkValid(team);
         if (!team.getValid().equals(valid)) {
             team.setValid(valid);
@@ -90,7 +105,7 @@ public class TeamService {
         return teamDao.getAllTeamsInSeminar(seminarId);
     }
 
-    public TeamApplication sendTeamApplication(TeamApplication teamApplication) throws Exception{
+    public TeamApplication sendTeamApplication(TeamApplication teamApplication) throws Exception {
         return teamApplicationDao.sendTeamApplication(teamApplication);
     }
 

@@ -22,8 +22,8 @@ public class SeminarDao {
     @Autowired
     private KlassSeminarMapper klassSeminarMapper;
 
-    public BigInteger insertSeminar(Seminar seminar) {
-        return BigInteger.valueOf(seminarMapper.insertSeminar(seminar));
+    public void insertSeminar(Seminar seminar) {
+        seminarMapper.insertSeminar(seminar);
     }
 
     public Integer deleteSeminar(BigInteger seminarId) {

@@ -4,7 +4,7 @@
     </x-header>
     <group style="text-align:left" title="特殊小组:">
         <template v-for="valid in valids">
-      <cell :key="valid.teamApplicationId" v-if="valid.showValidContent" style="height:30px" is-link :title="valid.team.teamName+'分组邀请'" @click.native="valid.detail=!valid.detail" :arrow-direction="valid.detail?'up':'down'">
+      <cell :key="valid.teamApplicationId" v-if="valid.showValidContent" style="height:30px" is-link :title="valid.team.teamName+'特殊小组申请'" @click.native="valid.detail=!valid.detail" :arrow-direction="valid.detail?'up':'down'">
         <img slot="icon" src="@/assets/exclamation.png" style="display:block;margin-right:12px;margin-left:3px" width="20px" height="20px"/>
       </cell>
       <template v-if="valid.detail&&valid.showValidContent">
@@ -14,19 +14,18 @@
       </template>
         </template>
     </group>
-
-    <!-- <group style="text-align:left" title="共享组队：">
-      <template v-for="valid in valids">
-      <cell :key="valid.teamApplicationId" v-if="valid.showValidContent" style="height:30px" is-link :title="valid.team.teamName+'分组邀请'" @click.native="valid.detail=!valid.detail" :arrow-direction="detail?'up':'down'">
+    <group style="text-align:left" title="共享组队：">
+      <template v-for="share in shares">
+      <cell :key="share.shareTeamId" v-if="share.showShareContent&&share.status!=true   " style="height:30px" is-link :title="'课程 '+share.masterCourse.courseName+' 分组邀请'" @click.native="share.detail=!share.detail" :arrow-direction="share.detail?'up':'down'">
         <img slot="icon" src="@/assets/exclamation.png" style="display:block;margin-right:12px;margin-left:3px" width="20px" height="20px"/>
       </cell>
-      <template v-if="valid.detail&&valid.showValidContent">
-        <cell value-align="left" style="padding-left:30px">{{valid.team.teamName}}共享组队申请:{{valid.reason}}</cell>
-         <img @click="choice('yes')" src="@/assets/correct.png" style="margin-left:80px" width="20px" height="20px"/>
-         <img @click="choice('no')" src="@/assets/wrong.png" style="margin-left:135px" width="20px" height="20px"/>
+      <template v-if="share.detail&&share.showShareContent">
+        <cell value-align="left" style="padding-left:30px">来自--{{share.masterCourse.teacher.name}}老师 的共享组队申请</cell>
+         <img @click="choice(share,'y')" src="@/assets/correct.png" style="margin-left:80px" width="20px" height="20px"/>
+         <img @click="choice(share,'n')" src="@/assets/wrong.png" style="margin-left:135px" width="20px" height="20px"/>
       </template>
         </template>
-    </group> -->
+    </group>
     <div v-transfer-dom>
 
        <confirm v-model="todo"
@@ -78,7 +77,24 @@ import {XHeader,
                 },
                 reason:''
             }],
-            shares:'',
+            shares:[{
+                shareTeamId:'',
+                masterCourse:{
+                    courseId:'',
+                    courseName:'',
+                },
+                receiveCourse:{
+                    courseId:'',
+                    courseName:'',
+                    teacher:{
+                        teacherId:'',
+                        email:'',
+                        name:'',
+                    }
+                },status:'',
+                showContent:true,
+                detail:false
+            }],
             taskId:'',
         }
     },
@@ -86,9 +102,9 @@ import {XHeader,
         this.$axios.get('/request/teamshare')
         .then((response)=>{
             this.shares=response.data
-            for(var i=0;i<this.valids.length;i++){
-                this.$set(this.valids[i],'showShareContent',true)
-                this.$set(this.valids[i],'detail',false)
+            for(var i=0;i<this.shares.length;i++){
+                this.$set(this.shares[i],'showShareContent',true)
+                this.$set(this.shares[i],'detail',false)
             }
         })
         this.$axios.get('/request/teamvalid')
@@ -124,20 +140,52 @@ import {XHeader,
             }else if(which==='yes'){
                 this.taskId=va.teamApplicationId
                 this.YN='agree'
+            }else if(which==='n'){
+                this.taskId=va.shareTeamId
+                this.YN='re'
+            }else if(which==='y'){
+                this.taskId=va.shareTeamId
+                this.YN='ag'
             }
         },
         sure:function(){
             console.log('sure')
             if(this.YN==='agree'){
-            this.$axios.get('/request/teamvalid/'+this.taskId)
-            .then((response)=>{
-            }) 
+            this.$axios.put('/request/teamvalid/'+this.taskId,{status:true})
+            .then((res)=>{})
                 for(var i=0;i<this.valids.length;i++){
                 if(this.valids[i].teamApplicationId==this.taskId){
                     this.valids[i].showValidContent=false;
                 }
             }
-                this.YN=''}  
+
+            }else if(this.YN==='refuse'){
+                this.$axios.put('/request/teamvalid/'+this.taskId,{status:false}).then((res)=>{})
+                for(var i=0;i<this.valids.length;i++){
+                if(this.valids[i].teamApplicationId==this.taskId){
+                    this.valids[i].showValidContent=false;
+                }
+            }
+
+            }else if(this.YN==='ag'){
+                this.$axios.put('/request/teamshare/'+this.taskId,{status:true}).then((res)=>{})
+                for(var i=0;i<this.shares.length;i++){
+                if(this.share[i].shareTeamId==this.taskId){
+                    this.shares[i].showShareContent=false;
+                }
+            }
+
+            }else if(this.YN==='re'){
+                this.$axios.put('/request/teamshare/'+this.taskId,{status:false}).then((res)=>{})
+                for(var i=0;i<this.shares.length;i++){
+                if(this.share[i].shareTeamId==this.taskId){
+                    this.shares[i].showShareContent=false;
+                }
+            }
+            }
+                
+                this.YN=''  
+                this.taskId=''
         }
     }
         

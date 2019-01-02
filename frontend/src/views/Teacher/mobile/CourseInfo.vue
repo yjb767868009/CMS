@@ -12,11 +12,32 @@
         </div>
     </cell>
     <div style="font-size:15px;background:#fff;margin-top:15px">
-        <template v-if="this.strategy"><div style="padding-left:15px;color:#000;">小组人数：&emsp;&emsp;&emsp;&emsp;&emsp;{{this.strategy[0].minMember}}~{{this.strategy[0].maxMember}} 人</div></template>
         <div style="padding-left:15px;color:#000;margin-top:15px">组队开始时间：&emsp;{{this.courseInfo.teamStartTime.substring(0, 10)}}&emsp;{{this.courseInfo.teamStartTime.substring(11, 22)}}</div>
         <div style="padding-left:15px;color:#000;margin-top:15px">组队截止时间：&emsp;{{this.courseInfo.teamEndTime.substring(0, 10)}}&emsp;{{this.courseInfo.teamEndTime.substring(11, 22)}}</div>
     </div>
 
+    <cell primary="content" title="组队要求：" value-align="left" style="padding-left:8em"></cell>
+    <group title="组员基本要求">
+    <template v-if="this.strategy">
+        <div style="padding-left:15px;color:#000;">小组总人数（含组长）：&emsp;&emsp;&emsp;{{this.strategy[1].minMember}}~{{this.strategy[1].maxMember}} 人</div>
+        <div style="padding-left:15px;margin-top:1em">组内选修课程人数:</div>
+        <template v-for="stra in strategy">
+            <div style="padding-left:6em" v-if="stra.type==='CourseMemberLimitStrategy'">{{stra.course.courseName}}&emsp;&emsp;{{stra.minMember}}~{{stra.maxMember}}人</div>
+        </template>
+        <div style="padding-left:15px;margin-top:1em">选修课人数要求:&emsp;&emsp;<span v-if="this.strategy[0].type=='TeamAndStrategy'">均满足</span><span v-if="this.strategy[0].type=='TeamOrStrategy'">满足其一</span></div>
+    </template>
+    <div style="padding-left:15px;margin-top:1em;font-size:0.8em;color:#aaa">均满足只选修课人数均达到要求</div>
+    <div style="padding-left:15px;font-size:0.8em;color:#aaa">满足其一指任意选修课人数满足即可（多指冲突课程）</div>    
+    </group>
+
+    <group title="冲突课程">
+        <template v-for="stra in strategy">
+            <div style="padding-left:6em" v-if="stra.type==='CourseMemberLimitStrategy'">{{stra.course.courseName}}&emsp;&emsp;({{stra.course.teacher.name}}老师)</div>
+        </template>
+      
+    <div style="padding-left:15px;margin-top:1em;font-size:0.8em;color:#aaa">选修不同冲突课程学生不可同组</div>
+    <div style="padding-left:15px;font-size:0.8em;color:#aaa">注意同课程名不同教师名为不同课程</div>
+    </group>
     <x-button @click.native="deletecourse=!deletecourse" style="margin-top:40px;margin-left:63%" mini plain type="warn">删除课程</x-button>
     
     <div v-transfer-dom>

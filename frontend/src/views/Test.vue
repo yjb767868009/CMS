@@ -1,6 +1,14 @@
 <template>
   <div class="course">
-    <el-button><a href="/">test</a></el-button>
+    <el-button @click="newSubmitForm()">test</el-button>
+    <el-upload
+  :action="doUpload"
+  :before-upload="beforeUpload"
+  ref="newupload"
+  multiple
+  :auto-upload="false">
+  <em>点击上传</em>
+</el-upload>
   </div>
 </template>
 
@@ -18,12 +26,21 @@ export default {
         XSwitch
     },
     methods: {
-        clickF:function(){
-            console.log('fdjklfa')
-        }
+        beforeUpload(file){
+    let fd = new FormData();
+    fd.append('file',file);//传文件
+    this.$axios.post('/api/up/file',fd).then(function(res){
+            alert('成功');
+    })
+},
+newSubmitForm(){//确定上传
+    this.$refs.newupload.submit();
+}
     },
     data () {
         return {
+            s:'',
+            students:'',
             stopic:"",
             pp2:"",
             option1: '1',

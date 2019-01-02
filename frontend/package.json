@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.4.11",
+    "http2": "^3.3.7",
     "md5": "^2.2.1",
     "mint-ui": "^2.2.13",
     "moment": "^2.23.0",

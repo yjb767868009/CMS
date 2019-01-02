@@ -37,13 +37,14 @@ public class KlassDao {
         return klassMapper.getKlassesInCourse(courseId);
     }
 
-    public Integer addStudentInKlass(BigInteger klassId, List<Student> students) {
+    public void addStudentInKlass(BigInteger klassId, List<Student> students) {
         Klass klass = klassMapper.getKlassByKlassId(klassId);
-        Integer count = 0;
         for (Student student : students) {
-            count += klassMapper.addStudent(klass.getCourse().getCourseId(), klassId, student);
+            Student findStudent = studentMapper.getKlassStudent(klassId, student.getStudentId());
+            if (findStudent == null) {
+                klassMapper.addStudent(klass.getCourse().getCourseId(), klassId, student);
+            }
         }
-        return count;
     }
 
     public List<Klass> getKlassByStudent(BigInteger studentId) {

@@ -116,4 +116,15 @@ public interface StudentMapper {
      * @param student 学生
      */
     void activeStudent(@Param("student") Student student);
+
+
+    /**
+     * 检查学生是否已经和班级有关系
+     *
+     * @param klassId   班级id
+     * @param studentId 学生id
+     * @return 学生
+     */
+    Student getKlassStudent(@Param("klassId") BigInteger klassId,
+                            @Param("studentId") BigInteger studentId);
 }

@@ -114,4 +114,13 @@
         WHERE id = #{student.studentId}
     </update>
 
+    <select id="getKlassStudent" resultMap="StudentResultMap">
+        SELECT *
+        FROM student,
+             klass_student
+        WHERE klass_student.klass_id = #{klassId}
+          AND student.id = #{studentId}
+          AND student.id = klass_student.student_id
+    </select>
+
 </mapper>

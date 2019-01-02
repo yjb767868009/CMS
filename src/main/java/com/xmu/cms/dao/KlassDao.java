@@ -5,6 +5,7 @@ import com.xmu.cms.entity.Klass;
 import com.xmu.cms.entity.Student;
 import com.xmu.cms.mapper.CourseMapper;
 import com.xmu.cms.mapper.KlassMapper;
+import com.xmu.cms.mapper.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,9 @@ public class KlassDao {
     @Autowired
     private CourseMapper courseMapper;
 
+    @Autowired
+    private StudentMapper studentMapper;
+
     public void newKlass(BigInteger courseId, Klass klass) {
         Course course = courseMapper.getCourseById(courseId);
         klass.setCourse(course);
@@ -33,13 +37,14 @@ public class KlassDao {
         return klassMapper.getKlassesInCourse(courseId);
     }
 
-    public Integer addStudentInKlass(BigInteger klassId, List<Student> students) {
+    public void addStudentInKlass(BigInteger klassId, List<Student> students) {
         Klass klass = klassMapper.getKlassByKlassId(klassId);
-        Integer count = 0;
         for (Student student : students) {
-            count += klassMapper.addStudent(klass.getCourse().getCourseId(), klassId, student);
+            Student findStudent = studentMapper.getKlassStudent(klassId, student.getStudentId());
+            if (findStudent == null) {
+                klassMapper.addStudent(klass.getCourse().getCourseId(), klassId, student);
+            }
         }
-        return count;
     }
 
     public List<Klass> getKlassByStudent(BigInteger studentId) {

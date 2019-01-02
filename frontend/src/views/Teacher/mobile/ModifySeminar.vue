@@ -5,7 +5,6 @@
     <div style="margin-left:10px">
     <div style="text-align:center;margin-top:20px">修改讨论课</div>
 
-
     <group>
         <x-input v-model="topic" :title="'主题'" placeholder="主题 讨论课大纲" label-width="6em"></x-input>
         <x-textarea  v-model="intro" :title="'内容'" placeholder="讨论课主要内容 要求 具体讨论部分" ></x-textarea>
@@ -18,9 +17,14 @@
         <popup-picker title="所属round" :data="roundOrders" v-model="roundOrder"></popup-picker>
     </group>
     </div>
-
+    <x-button @click.native="deleteseminar=!deleteseminar" style="margin-top:40px;margin-left:63%" mini plain type="warn">删除讨论课</x-button>
     <x-button @click.native="submit" type="primary" style="margin-top:55px;color:#fff">发布</x-button>
     <div v-transfer-dom>
+         <confirm v-model="deleteseminar"
+        title="提示"
+        @on-confirm="sure">
+        <p style="text-align:center;">确定删除该讨论课吗？</p>
+      </confirm>
       <popup v-model="show" height="23%">
           <div>
               <cell value-align="left" title=""><img slot="icon" src="@/assets/message.png" style="display:block;margin-right:10px;" width="30px" height="30px"/><div style="padding-left:110px;font-size:1.3em;color:#000" @click="Undo">代办</div></cell>
@@ -33,7 +37,7 @@
 </template>
 
 <script>
-import {XHeader,XButton,Divider,Group,Datetime,XInput,PopupPicker,XSwitch,XTextarea,TransferDom,Popup,Cell} from 'vux'
+import {XHeader,XButton,Divider,Group,Datetime,XInput,PopupPicker,XSwitch,XTextarea,TransferDom,Popup,Cell,Confirm} from 'vux'
 export default {
   directives:{
     TransferDom
@@ -48,7 +52,7 @@ export default {
         PopupPicker,
         XSwitch,
         XTextarea,Popup,
-        Cell
+        Cell,Confirm
     },
     data () {
         return {
@@ -67,6 +71,9 @@ export default {
             signupEndTime:'',
             show:false,
             roundList:[],
+            deleteseminar:false,
+            ismaster:'',
+            currentCourseId:''
         }
     },
     mounted:function(){
@@ -76,6 +83,16 @@ export default {
             this.roundOrders=[this.roundOrders[0].slice(0,this.roundList.length)]
 
         })
+        // this.$axios.get('/course')
+        // .then((res)=>{
+        //     for(var i=0;i<res.data.coursePlus.length;i++){
+        //         if(this.$store.state.teacher.currentCourse.courseId==res.data.coursePlus[i]){
+
+        //         }
+        //     }
+        //     this.ismaster=res.data.coursePlus
+        //     this.currentCourseId=this.$store.state.teacher.currentCourse.courseId
+        // })
     },
     methods:{
         submit:function(){
@@ -101,6 +118,9 @@ export default {
     GoSeminar(){
             this.$router.push('/mobile/teacher/seminars')
         },
+        sure(){
+            this.$message('删除成功')
+        }
     // submit:function(){
     //     this.$message('修改成功')
     // }

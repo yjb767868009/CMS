@@ -1,40 +1,23 @@
 <template>
-  <div class="course" style="background:#fff">
+  <div class="course" style="background:#eee">
 
     <!-- 班级信息 -->
     <template v-if="!addingKlass">
       <x-header title="班级信息" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}"
         @on-click-more="show=!show">
       </x-header>
-      <template v-for="klass in klasses" style="text-decoration:none">
 
-        <!-- <form-preview :key="klass.klassId" :header-label="klass.grade+'-'+klass.klassSerial" :body-items="[{
+      <template v-for="klass in klasses" style="text-decoration:none">
+        <form-preview :key="klass.klassId" :header-label="klass.grade+'-'+klass.klassSerial" :body-items="[{
         label:'讨论课时间',
         value:klass.klassTime
         },
         {
         label:'讨论课地点',
         value:klass.klassPlace
-        },{
-        label:'班级学生名单',
-        value:filename
-      }]"
+        }]"
           :footer-buttons="footerButtons" :name="klass.klassId">
-        </form-preview> -->
-        <group :title="klass.grade+'-'+klass.klassSerial" style="margin-top:2em">
-        <cell style="height:20px" title="讨论课时间">{{klass.klassTime}}</cell>
-        <cell style="height:20px" title="讨论课地点">{{klass.klassPlace}}</cell>
-        <cell style="height:20px" title="班级学生名单">{{klass.klassName}}</cell>
-        <input style="padding-left:7em" type="file" accept=""/>
-        <flexbox style="margin-top:0.5em">
-        <flexbox-item>
-        <x-button @click.native="submit(klass.klassId)">提交</x-button>
-        </flexbox-item>
-        <flexbox-item>
-        <x-button @click.native="Deleteclass(klass.klassId)">删除班级</x-button>
-        </flexbox-item>
-        </flexbox>
-        </group>
+        </form-preview>
       </template>
 
       <br />
@@ -46,7 +29,7 @@
         theme="android"
         @on-confirm="sure">
         <p style="text-align:center;">确定删除该班级吗</p>
-      </confirm>
+        </confirm>
         <popup v-model="show" height="23%">
           <div>
             <cell value-align="left" title=""><img slot="icon" src="@/assets/message.png" style="display:block;margin-right:10px;"
@@ -64,6 +47,29 @@
           </div>
         </popup>
       </div>
+
+      <div v-transfer-dom>
+        <x-dialog v-model="showUpload" hide-on-blur>
+          <div>
+          <el-upload 
+          :action="'http://localhost:8000/class/' + this.currentKlassId + '/classfile'"
+          :headers="this.headers"
+          ref="upload"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          :on-exceed="handleExceed"
+          :auto-upload="false"
+          :limit="1"
+          :before-upload="beforeUpload"
+          :file-list="fileList">
+            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+            <el-button style="margin-left: 10px;" size="small" type="success" @click="newSubmitForm">上传到服务器</el-button>
+          </el-upload>
+          </div>
+          
+        </x-dialog>
+      </div>
+
     </template>
 
     <!-- 新建班级 -->
@@ -95,7 +101,7 @@
     XInput,
     Group,
     FormPreview,
-    Confirm,Flexbox,FlexboxItem
+    Confirm,XDialog 
   } from 'vux'
   export default {
     directives: {
@@ -111,12 +117,12 @@
       Group,
       FormPreview,
       DatetimeRange,
-      Confirm,Flexbox,FlexboxItem
+      Confirm,XDialog 
     },
     data() {
       return {
-        filename:[],
         addingKlass: false,
+        fileList: [],
         show: false,
         Delete:false,
         deleteKlass:'',
@@ -133,46 +139,53 @@
           klassTime: '2t',
           klassPlace: '2p'
         }],
-        // footerButtons: [{
-        //   style: 'primary',
-        //   text: '提交',
-        //   onButtonClick: (name) => {
-        //     console.log('klassId:', name)
-        //     // this.$axios.put('/class/'+name+'/classfile',this.filename)
-        //     // .then((response)=>{
-        //     //   console.log(response)
-        //     //   this.$message('提交成功')
-        //     // })
-        //   }
-        // }, {
-        //   style: "default",
-        //   text: '删除班级',
-        //   onButtonClick: (name) => {
-        //     this.Delete=!this.Delete
-        //     this.deleteKlass=name
-        //     console.log('klassId:', name)
-        //   }
-        // }, {
-        //   style: "default",
-        //   text: '上传学生名单',
-        //   onButtonClick: (name) => {
-        //     console.log('klassId:', name)
-        //   }
-        // }]
+        footerButtons: [
+          // {
+          // style: 'primary',
+          // text: '提交',
+          // onButtonClick: (name) => {
+          //   console.log('klassId:', name)
+          //   // this.$axios.put('/class/'+name+'/classfile',this.filename)
+          //   // .then((response)=>{
+          //   //   console.log(response)
+          //   //   this.$message('提交成功')
+          //   // })
+          // }}, 
+          {
+          style: "default",
+          text: '上传学生名单',
+          onButtonClick: (name) => {
+            console.log('klassId:', name)
+            this.showUpload=true
+            this.currentKlassId=name
+          }
+        },
+          {
+          style: "default",
+          text: '删除班级',
+          onButtonClick: (name) => {
+            this.Delete=!this.Delete
+            this.deleteKlass=name
+            console.log('klassId:', name)
+          }
+        }],
+        showUpload:false,
+        currentKlassId:''
+      }
+    },
+    computed:{
+      headers(){
+        return{
+          'Authorization':'Bearer '+this.$store.state.token
+        }
       }
     },
     mounted:function(){
         this.$axios.get('/course/'+this.$store.state.teacher.currentCourse.courseId+'/class').then((response)=>{
             this.klasses=response.data
-            for(var i=0;i<this.klasses.length;i++){
-              this.$set(this.klasses[i],'klassFile','')
-            }
         })
     },
     methods: {
-      submit(){
-        this.$message('提交成功')
-      },
       sure(){
         console.log(this.deleteKlass,'delete')
         this.$axios.delete('/class/'+this.deleteKlass)
@@ -210,7 +223,6 @@
         }).then((res)=>{
           console.log(res)
           this.addingKlass=false
-          window.location.reload()
         })
         }else{
           this.$message('请完善信息')
@@ -219,12 +231,28 @@
       onChange(val){
           console.log(val)
           this.newKlassTime=val[0]
-      },
-      Deleteclass(name){
-        this.Delete=!this.Delete
-            this.deleteKlass=name
-            console.log('klassId:', name)
       }
+    //   beforeUpload(file){
+    // let fd = new FormData();
+    // fd.append('file',file);//传文件
+    // this.$axios.post('/class/'+this.currentKlassId+'/classfile',fd).then(function(res){
+    // this.$message('上传成功')
+    // })
+    //     }
+        ,handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+        handlePreview(file) {
+        console.log(file);
+      },
+        handleExceed(files, fileList) {
+        this.$message.warning(`只能选择一个文件`);
+      },
+        newSubmitForm(){//确定上传
+    this.$refs.upload.submit();
+    this.showUpload=true
+    this.$message('上传成功')
+    }
     }
   }
 

@@ -24,7 +24,7 @@ public class KlassController {
     private CourseService courseService;
 
     @Secured("ROLE_TEACHER")
-    @PutMapping(value = "/class/{classId}/classfile")
+    @PostMapping(value = "/class/{classId}/classfile")
     public Map<String, String> uploadClassFile(@PathVariable("classId") BigInteger klassId,
                                                @RequestParam("file") MultipartFile file) {
         Map<String, String> message = new HashMap<String, String>(1);

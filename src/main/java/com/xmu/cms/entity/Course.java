@@ -1,6 +1,7 @@
 package com.xmu.cms.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.xmu.cms.entity.strategy.Strategy;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -24,8 +25,9 @@ public class Course {
     private List<Klass> klasses;
     private Course teamMainCourse;
     private Course seminarMainCourse;
+    private List<Strategy> strategies;
 
-    public Course(BigInteger courseId, Teacher teacher, String coursename, String introduction, Integer presentationWeight, Integer reportWeight, Integer questionWeight, Timestamp teamStartTime, Timestamp teamEndTime, List<Klass> klasses, Course teamMainCourse, Course seminarMainCourse) {
+    public Course(BigInteger courseId, Teacher teacher, String coursename, String introduction, Integer presentationWeight, Integer reportWeight, Integer questionWeight, Timestamp teamStartTime, Timestamp teamEndTime, List<Klass> klasses, Course teamMainCourse, Course seminarMainCourse, List<Strategy> strategies) {
         this.courseId = courseId;
         this.teacher = teacher;
         this.courseName = coursename;
@@ -38,6 +40,7 @@ public class Course {
         this.klasses = klasses;
         this.teamMainCourse = teamMainCourse;
         this.seminarMainCourse = seminarMainCourse;
+        this.strategies = strategies;
     }
 
     public Course(BigInteger courseId) {
@@ -141,5 +144,13 @@ public class Course {
 
     public void setSeminarMainCourse(Course seminarMainCourse) {
         this.seminarMainCourse = seminarMainCourse;
+    }
+
+    public List<Strategy> getStrategies() {
+        return strategies;
+    }
+
+    public void setStrategies(List<Strategy> strategies) {
+        this.strategies = strategies;
     }
 }

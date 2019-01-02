@@ -36,7 +36,7 @@ public interface KlassMapper {
      * @param klassId 班级id
      * @return 班级对象
      */
-    Klass getKlassByKlassId(@Param("kassId") BigInteger klassId);
+    Klass getKlassByKlassId(@Param("klassId") BigInteger klassId);
 
     /**
      * 在班级学生关系表中加入新学生的信息
@@ -47,7 +47,7 @@ public interface KlassMapper {
      * @return 插入学生成功信息
      */
     Integer addStudent(@Param("courseId") BigInteger courseId,
-                       @Param("kassId") BigInteger klassId,
+                       @Param("klassId") BigInteger klassId,
                        @Param("student") Student student);
 
     /**
@@ -65,7 +65,7 @@ public interface KlassMapper {
      * @param roundId 轮次信息
      * @return 删除信息
      */
-    Integer deleteKlassRound(@Param("kassId") BigInteger klassId,
+    Integer deleteKlassRound(@Param("klassId") BigInteger klassId,
                              @Param("roundId") BigInteger roundId);
 
     /**
@@ -74,7 +74,7 @@ public interface KlassMapper {
      * @param klassId 班级id
      * @return 删除信息
      */
-    Integer deleteKlassStudent(@Param("kassId") BigInteger klassId);
+    Integer deleteKlassStudent(@Param("klassId") BigInteger klassId);
 
 
     /**

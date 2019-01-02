@@ -141,10 +141,6 @@ export default {
         });
     },
   methods: {
-    onClick() {
-      console.log("on click");
-    },
-    more: function() {},
     newround: function() {
       this.$router.push("/mobile/teacher/createround");
     },

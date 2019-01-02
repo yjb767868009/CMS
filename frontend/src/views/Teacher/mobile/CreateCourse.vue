@@ -82,9 +82,9 @@ export default {
         return {
             percentageOptions: [['10','15', '20','25', '30','35', '40','45','50','55','60','65','70','75','80','85','90','95','100']],
             startDateS:'2018-01-01',
-            endDateS: '2018-12-31',
+            endDateS: '2020-12-31',
             startDateE:'2018-01-01',
-            endDateE: '2018-12-31',
+            endDateE: '2020-12-31',
             show:false,
             courseName:'',
             courseRequirement:'',

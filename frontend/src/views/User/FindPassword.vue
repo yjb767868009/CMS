@@ -29,7 +29,7 @@ export default {
           account:this.account
         })
         .then(response => {
-          this.$router.push("/mobile/modifypw", {
+          this.$router.push("/login", {
               account: this.account
           });
         })

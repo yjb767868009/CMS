@@ -57,7 +57,22 @@ public class CourseService {
 
     public void createCourse(Course course) throws Exception {
         courseDao.createCourse(course);
-        List<Strategy> strategies = course.getStrategies();
+        List<Strategy> strategies = new ArrayList<>();
+        if (course.getTeamAndStrategy() != null) {
+            strategies.add(course.getTeamAndStrategy());
+        }
+        if (course.getTeamOrStrategy() != null) {
+            strategies.add(course.getTeamOrStrategy());
+        }
+        if (course.getMemberLimitStrategy() != null) {
+            strategies.add(course.getMemberLimitStrategy());
+        }
+        if (course.getConflictCourseStrategy() != null) {
+            strategies.add(course.getConflictCourseStrategy());
+        }
+        if (course.getCourseMemberLimitStrategies() != null) {
+            strategies.addAll(course.getCourseMemberLimitStrategies());
+        }
         strategyDao.newStrategy(course.getCourseId(), strategies);
     }
 
@@ -66,14 +81,6 @@ public class CourseService {
         if (course == null) {
             throw new Exception(noCourseError);
         }
-        Course teamMainCourse = courseDao.getTeamMainCourse(courseId);
-        if (teamMainCourse != null) {
-            courseId = teamMainCourse.getCourseId();
-        }
-        Strategy strategy = strategyDao.getCourseStrategy(courseId);
-        List<Strategy> strategies = new ArrayList<>();
-        strategy.getStrategy(strategies);
-        course.setStrategies(strategies);
         return course;
     }
 

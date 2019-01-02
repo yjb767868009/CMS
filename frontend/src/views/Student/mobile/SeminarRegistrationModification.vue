@@ -30,7 +30,7 @@
     </cell>
     
     <template v-if="this.$store.state.student.currentAttendance.message!=='other'">
-        <x-button type="warn" @click="cancelRegistration">取消报名</x-button>
+        <x-button type="warn" @click.native="cancelRegistration">取消报名</x-button>
     </template>
     <div v-transfer-dom>
       <popup v-model="show" height="15%">
@@ -99,14 +99,14 @@ import {XHeader,Cell,XButton,
         cancelRegistration:function(){
             this.$axios.delete('/attendance/'+this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].attendanceId)
             .then((response)=>{
-                this.$router.go(0)
+                this.$router.go(-1)
             })
         },
         register:function(index){
             this.$axios.post('/klassseminar/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/attendance',{
                 teamOrder:index+1
             }).then((response)=>{
-                this.$router.go(0)
+                this.$router.go(-1)
             })
         }
    }

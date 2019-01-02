@@ -79,6 +79,16 @@ import {XHeader,Cell,XButton,
         attendances:[],
     }
     },
+    computed:{
+        attendanceIndex(){
+      for(var i=0;i<this.$store.state.student.currentAttendance.attendance.length;i++){
+        if(this.$store.state.student.currentAttendance.attendance[i].teamOrder===
+        this.$store.state.student.currentAttendance.message){
+          return i
+        }
+      }
+    },
+    },
     mounted:function(){
         this.attendances=[]
         for(var i=0;i<this.$store.state.student.currentAttendance.attendance.length;i++){
@@ -97,7 +107,7 @@ import {XHeader,Cell,XButton,
             this.$router.push('/mobile/student/studentInfo')
         },
         cancelRegistration:function(){
-            this.$axios.delete('/attendance/'+this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].attendanceId)
+            this.$axios.delete('/attendance/'+this.$store.state.student.currentAttendance.attendance[attendanceIndex].attendanceId)
             .then((response)=>{
                 this.$router.push('/mobile/student/studentSeminarList')
             })

@@ -17,16 +17,16 @@
 
       <template v-if="is_due">
           <!-- 截止 -->
-          <template v-if="this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].presentationFile">
+          <template v-if="this.$store.state.student.currentAttendance.attendance[attendanceIndex].presentationFile">
             <cell title="PPT">已提交</cell>
           </template>
-          <template v-if="!this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].presentationFile">
+          <template v-if="!this.$store.state.student.currentAttendance.attendance[attendanceIndex].presentationFile">
             <cell title="PPT">未提交</cell>
           </template>
-          <template v-if="this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].reportFile">
+          <template v-if="this.$store.state.student.currentAttendance.attendance[attendanceIndex].reportFile">
             <cell title="书面报告">已提交</cell>
           </template>
-          <template v-if="!this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].reportFile">
+          <template v-if="!this.$store.state.student.currentAttendance.attendance[attendanceIndex].reportFile">
             <cell title="书面报告">未提交</cell>
           </template>
           <x-button type="primary" style="margin-top:18px;color:#fff">查看成绩</x-button>
@@ -34,22 +34,22 @@
 
       <template v-if="!is_due">
           <!-- 未截止 -->
-          <template v-if="this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].presentationFile">
+          <template v-if="this.$store.state.student.currentAttendance.attendance[attendanceIndex].presentationFile">
             <cell title="PPT">已提交</cell>
           </template>
-          <template v-if="!this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].presentationFile">
+          <template v-if="!this.$store.state.student.currentAttendance.attendance[attendanceIndex].presentationFile">
             <cell title="PPT">未提交</cell>
-            <el-upload :action="'http://localhost:8000/attendance/'+this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].attendanceId+'/powerpoint'"
+            <el-upload :action="'http://localhost:8000/attendance/'+this.$store.state.student.currentAttendance.attendance[attendanceIndex].attendanceId+'/powerpoint'"
             :headers="headers">
                 <x-button type="primary" style="width:200px;margin-top:18px;color:#fff">提交PPT</x-button>
             </el-upload>
           </template>
-          <template v-if="this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].reportFile">
+          <template v-if="this.$store.state.student.currentAttendance.attendance[attendanceIndex].reportFile">
             <cell title="书面报告">已提交</cell>
           </template>
-          <template v-if="!this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].reportFile">
+          <template v-if="!this.$store.state.student.currentAttendance.attendance[attendanceIndex].reportFile">
             <cell title="书面报告">未提交</cell>
-            <el-upload :action="'http://localhost:8000/attendance/'+this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].attendanceId+'/report'"
+            <el-upload :action="'http://localhost:8000/attendance/'+this.$store.state.student.currentAttendance.attendance[attendanceIndex].attendanceId+'/report'"
             :headers="headers">
                 <x-button type="primary" style="width:200px;margin-top:18px;color:#fff">提交书面报告</x-button>
             </el-upload>
@@ -150,7 +150,15 @@ export default {
       return{
         'Authorization':"Bearer "+this.$store.state.token
       }
-    }
+    },
+    attendanceIndex(){
+      for(var i=0;i<this.$store.state.student.currentAttendance.attendance.length;i++){
+        if(this.$store.state.student.currentAttendance.attendance[i].teamOrder===
+        this.$store.state.student.currentAttendance.message){
+          return i
+        }
+      }
+    },
   },
   mounted:function(){
         this.$axios.get('/course/'+this.$store.state.student.currentCourse.courseId+'/round')

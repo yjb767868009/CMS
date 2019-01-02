@@ -71,7 +71,7 @@ public class UserController {
         return message;
     }
 
-    @GetMapping(value = "/user/password")
+    @PostMapping(value = "/user/password")
     public Map<String, String> getPassword(@RequestBody MyUser user) {
         return mailService.sendPassword(user);
     }

@@ -1,7 +1,9 @@
 package com.xmu.cms.dao;
 
+import com.xmu.cms.entity.Attendance;
 import com.xmu.cms.entity.Question;
 import com.xmu.cms.entity.Team;
+import com.xmu.cms.mapper.AttendanceMapper;
 import com.xmu.cms.mapper.QuestionMapper;
 import com.xmu.cms.mapper.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class QuestionDao {
     @Autowired
     private TeamMapper teamMapper;
 
+    @Autowired
+    private AttendanceMapper attendanceMapper;
+
     public List<Question> getQuestionInKlassSeminar(BigInteger klassSeminarId) {
         return questionMapper.getQuestionInKlassSeminar(klassSeminarId);
     }
@@ -35,17 +40,22 @@ public class QuestionDao {
         return questionMapper.getQuestion(question.getQuestionId());
     }
 
-    public Question insertQuestion(Question question) {
+    public Question insertQuestion(Question question) throws Exception {
         BigInteger klassSeminarId = question.getKlassSeminar().getKlassSeminarId();
         BigInteger studentId = question.getStudent().getStudentId();
-        Question findQuestion = questionMapper.getQuestionByKlassSeminarAndStudent(klassSeminarId, studentId);
+        Team team = teamMapper.getStudentTeamInKlassSeminar(studentId, klassSeminarId);
+        Attendance attendance = attendanceMapper.getAttendanceByAttendanceId(question.getAttendance().getAttendanceId());
+        if (attendance.getTeam().getTeamId().equals(team.getTeamId())) {
+            throw new Exception("请勿给自己组提问");
+        }
+        Question findQuestion = questionMapper.getQuestionByAttendanceAndStudent(attendance.getAttendanceId(), studentId);
         if (findQuestion == null) {
-            Team team = teamMapper.getStudentTeamInKlassSeminar(studentId, klassSeminarId);
             question.setTeam(team);
             questionMapper.insertQuestion(question);
             return questionMapper.getQuestionByKlassSeminarAndStudent(klassSeminarId, studentId);
+        } else {
+            throw new Exception("请勿重复提问");
         }
-        return null;
     }
 
     public void selectQuestion(Question question) {

@@ -32,9 +32,13 @@ public class WebSocketController {
         question.setSelected(false);
         question.setScore((float) 0);
         question.setKlassSeminar(new KlassSeminar(klassSeminarId));
-        question = seminarService.askQuestion(question);
         KlassSeminarRun klassSeminarRun = new KlassSeminarRun();
-        klassSeminarRun.setNewQuestion(question);
+        try {
+            question = seminarService.askQuestion(question);
+            klassSeminarRun.setNewQuestion(question);
+        } catch (Exception e) {
+            klassSeminarRun.setMessage(e.getMessage());
+        }
         return klassSeminarRun;
     }
 

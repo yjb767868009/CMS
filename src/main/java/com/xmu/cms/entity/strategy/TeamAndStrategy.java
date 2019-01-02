@@ -106,7 +106,7 @@ public class TeamAndStrategy implements Strategy {
 
     @Override
     public String getType() {
-        return TEAM_AND_STRATEGY_TYPE;
+        return TEAM_AND_STRATEGY;
     }
 
     public void setType(String type) {

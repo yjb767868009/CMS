@@ -38,11 +38,11 @@ public class StrategyDao {
     private Strategy getStrategy(BigInteger strategyId, String subStrategy) {
         Strategy strategy = null;
         switch (subStrategy) {
-            case TEAM_AND_STRATEGY_TYPE:
+            case TEAM_AND_STRATEGY:
                 strategy = teamAndStrategyMapper.getTeamAndStrategyById(strategyId);
                 strategy = setSubStrategy(strategy);
                 break;
-            case TEAM_OR_STRATEGY_TYPE:
+            case TEAM_OR_STRATEGY:
                 strategy = teamOrStrategyMapper.getTeamOrStrategyById(strategyId);
                 strategy = setSubStrategy(strategy);
                 break;
@@ -75,7 +75,7 @@ public class StrategyDao {
                 teamStrategy.setSubStrategy(subStrategy);
                 strategy = teamStrategy;
                 break;
-            case TEAM_AND_STRATEGY_TYPE:
+            case TEAM_AND_STRATEGY:
                 TeamAndStrategy teamAndStrategy = (TeamAndStrategy) strategy;
                 subStrategyOne = getStrategy(teamAndStrategy.getSubStrategyOneId(), teamAndStrategy.getSubStrategyOneName());
                 teamAndStrategy.setSubStrategyOne(subStrategyOne);
@@ -83,7 +83,7 @@ public class StrategyDao {
                 teamAndStrategy.setSubStrategyTwo(subStrategyTwo);
                 strategy = teamAndStrategy;
                 break;
-            case TEAM_OR_STRATEGY_TYPE:
+            case TEAM_OR_STRATEGY:
                 TeamOrStrategy teamOrStrategy = (TeamOrStrategy) strategy;
                 subStrategyOne = getStrategy(teamOrStrategy.getSubStrategyOneId(), teamOrStrategy.getSubStrategyOneName());
                 teamOrStrategy.setSubStrategyOne(subStrategyOne);
@@ -111,11 +111,11 @@ public class StrategyDao {
     private Strategy insertStrategy(Strategy strategy) {
         BigInteger strategyId;
         switch (strategy.getType()) {
-            case TEAM_AND_STRATEGY_TYPE:
+            case TEAM_AND_STRATEGY:
                 strategyId = BigInteger.valueOf(teamAndStrategyMapper.insertTeamAndStrategy((TeamAndStrategy) strategy));
                 strategy.setStrategyId(strategyId);
                 return strategy;
-            case TEAM_OR_STRATEGY_TYPE:
+            case TEAM_OR_STRATEGY:
                 strategyId = BigInteger.valueOf(teamOrStrategyMapper.insertTeamOrStrategy((TeamOrStrategy) strategy));
                 strategy.setStrategyId(strategyId);
                 return strategy;
@@ -143,7 +143,7 @@ public class StrategyDao {
     public void newStrategy(BigInteger courseId, List<Strategy> strategies) throws Exception {
         Strategy firstStrategy = strategies.get(0);
         Strategy beforeStrategy = null;
-        if (firstStrategy.getType().equals(TEAM_OR_STRATEGY_TYPE)) {
+        if (firstStrategy.getType().equals(TEAM_OR_STRATEGY)) {
             strategies.remove(0);
             TeamOrStrategy teamOrStrategy = null;
             for (Strategy strategy : strategies) {

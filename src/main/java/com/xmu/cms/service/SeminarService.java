@@ -186,7 +186,7 @@ public class SeminarService {
         return roundDao.getRoundsInCourse(info, courseId);
     }
 
-    public Question askQuestion(Question question) {
+    public Question askQuestion(Question question) throws Exception {
         return questionDao.insertQuestion(question);
     }
 

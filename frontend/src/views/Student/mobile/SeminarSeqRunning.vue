@@ -17,7 +17,7 @@
     </x-header>
     
     <template v-for="attendance in attendances">
-      <template v-if="attendance.present">
+      <template v-if="attendance.teamOrder===parseInt(currentTeamOrder)">
         <cell style="color:#E64340" :key="attendance.attendanceId" :title="'第'+attendance.teamOrder+'组'">{{attendance.team.teamName}}</cell>
       </template>
       <template v-else>
@@ -35,6 +35,10 @@
       @on-confirm="onConfirm">
         <p style="text-align:center;">确认提问?</p>
       </confirm>
+    </div>
+
+    <div v-transfer-dom>
+      <alert v-model="user_selected">提问已被抽取</alert>
     </div>
 
     <div v-transfer-dom>
@@ -89,7 +93,7 @@ import {
   Group,
   AlertPlugin,
   TransferDom,
-  Popup,Confirm,Flexbox
+  Popup,Confirm,Flexbox,Alert
 } from "vux";
 export default {
   directives: {
@@ -101,15 +105,29 @@ export default {
     XHeader,
     Cell,
     AlertPlugin,
-    Popup,Confirm,Flexbox
+    Popup,Confirm,Flexbox,Alert
   },
   data() {
     return {
       show: false,
       questionConfrimShow:false,
       questions:'',
-      attendances:'',
+      attendances:[{
+		"attendanceId": 40,
+		"team": {
+			"teamId": 3,
+			"leader": {
+				"studentId": 160,
+				"name": "周必群"
+			},
+			"teamName": "WEAK"
+		},
+		"teamOrder": 2,
+		"present": true
+  },],
       KlassSeminarRun:'',
+      user_selected:false,
+      currentTeamOrder:1
     };
   },
   mounted: function () {
@@ -133,26 +151,12 @@ export default {
       }
       return -1
     },
-    currentTeamOrder:function(){
-      for(var i=0;i<this.attendances.length;i++){
-        if(this.attendances[i].present){
-          return this.attendances[i].teamOrder
-        }
-      }
-      return -1
-    },
   },
   methods: {
     ask:function(){
       this.questionConfrimShow=true
     },
     onConfirm: function() {
-        console.log(JSON.stringify({
-          student:{
-            studentId:this.$store.state.student.studentId
-          },
-          attendance:this.currentAttendanceId
-        }))
         this.stompClient
         .send('/app/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/question', 
         {
@@ -187,7 +191,37 @@ export default {
         this.stompClient.connect({}, (frame) => {
           this.stompClient.subscribe('/topic/klassSeminar/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId, (KlassSeminarRun) => {
             this.KlassSeminarRun=JSON.parse(KlassSeminarRun.body)
-            console.log(KlassSeminarRun.body)
+
+
+            if(this.KlassSeminarRun.nowAttendance){
+              console.log('new attendance')
+              this.currentTeamOrder=this.KlassSeminarRun.nowAttendance.teamOrder
+              for(var i=0;i<this.attendances;i++){
+                if(this.attendances[i].teamOrder===this.KlassSeminarRun.nowAttendance.teamOrder){
+                  this.$set(this.attendances[i],'present',true)
+                }
+                else{
+                  this.$set(this.attendances[i],'present',false)
+                }
+              }
+            }else if(this.KlassSeminarRun.newQuestion){
+              this.questions.push(this.KlassSeminarRun.newQuestion)
+            }else if(this.KlassSeminarRun.selectQuestion){
+              if(this.KlassSeminarRun.selectQuestion.student.studentId===this.$store.state.student.studentId){
+                //被抽到了
+                this.user_selected=true
+              }
+            }else if(this.KlassSeminarRun.message){
+              if(this.KlassSeminarRun.message==='end'){
+                if(this.$store.state.student.currentAttendance.message!=='other'){
+                  //已完已报
+                  this.$router.push('/mobile/student/course/seminar/signed')
+                }else{
+                  this.$router.push('/mobile/student/course/seminar/finished')
+                }
+              }
+            }
+
           })
         })
 

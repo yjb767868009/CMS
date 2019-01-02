@@ -655,35 +655,36 @@
           </el-select>
           <div style="width:100%;height:1px; background:#E0E0E0;margin-top:18px;margin-bottom:18px"></div>
           
-
           <el-table
           :data="scoreTableData[selectedOrder-1]"
           style="width:100%"
+          @expand-change="expandChange"
           >
+          <el-table-column type="expand">
+            <template slot-scope="props">
+              
+                <el-table :data="props.row.seminarScore">
+                  <el-table-column label="参与讨论课" prop="seminarName"></el-table-column>
+                  <el-table-column label="展示分数" prop="presentationScore"></el-table-column>
+                  <el-table-column label="报告分数" prop="reportScore"></el-table-column>
+                  <el-table-column label="提问分数" prop="questionScore"></el-table-column>
+                  <el-table-column label="该次总分" prop="totalScore"></el-table-column>
+                </el-table>
+                
+            </template>
+          </el-table-column>
+
+            
+
+            <el-table-column
+            label="小组名称"
+            prop="teamName"
+            ></el-table-column>
             <el-table-column
             label="小组总分"
-            prop="score"
+            prop="teamScore"
             ></el-table-column>
-            <el-table-column
-            label="参与讨论课"
-            prop="seminarName"
-            ></el-table-column>
-            <el-table-column
-            label="发言成绩"
-            prop="presentationScore"
-            ></el-table-column>
-            <el-table-column
-            label="提问成绩"
-            prop="questionScore"
-            ></el-table-column>
-            <el-table-column
-            label="报告成绩"
-            prop="reportScore"
-            ></el-table-column>
-            <el-table-column
-            label="该次总成绩"
-            prop="roundScore"
-            ></el-table-column>
+            
 
           </el-table>
 
@@ -876,8 +877,14 @@
         selectedOrder:'',
         is_signed:[false,false,false,false,false,false],
         AttendancesForShow:[null,null,null,null,null,null],
+        seminarScore:[],
         scoreTableData:[[{
           score:'',
+          seminarName:'',
+          presentationScore:'',
+          questionScore:'',
+          reportScore:'',
+          roundScore:'',
         },{
 
         },],],
@@ -955,12 +962,14 @@
               resAll.forEach((res,i)=>{
                 this.scoreTableData[i]=res.data.map((teamScore)=>{
                   return {
-                    score:teamScore.team.teamName+':'+teamScore.score
+                    teamName:teamScore.team.teamName,
+                    teamScore:teamScore.score,
+                    teamId:teamScore.team.teamId
                   }
                 })
               })
             })
-
+            
           })
 
           this.showScoreCard=false,
@@ -1046,6 +1055,28 @@
       scoreRoundChange(value){
         console.log(value)
         console.log(this.scoreTableData[parseInt(value)-1])
+      },
+
+      expandChange(row,expandedRows){
+        this.$set(row,'seminarScore',[])
+
+        var promiseAll = this.rounds[this.selectedOrder-1].seminars.map((seminar)=>{
+          return this.$axios.get('/seminar/'+seminar.seminarId+'/team/'+row.teamId+'/seminarscore')
+        })
+
+        this.$axios.all(promiseAll).then((resAll)=>{
+          resAll.forEach((res,i)=>{
+            this.$set(row.seminarScore,i,{
+                seminarName:this.rounds[this.selectedOrder-1].seminars[i].topic,
+                presentationScore:res.data.presentationScore,
+                questionScore:res.data.questionScore,
+                reportScore:res.data.reportScore,
+            })
+          })
+        })
+        
+
+        console.log(row,expandedRows)
       }
       
     }

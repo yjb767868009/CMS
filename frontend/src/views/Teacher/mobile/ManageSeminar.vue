@@ -127,13 +127,14 @@
       //this.$store.state.teacher.currentKlassSeminar.klassSeminarId
       this.$axios.get('/klassseminar/'+this.$store.state.teacher.currentKlassSeminar.klassSeminarId+'/run')
         .then((response) => {
-          this.questions = response.data.questions
+          // this.questions = response.data.questions
           this.attendances = response.data.attendances
           this.questionForShow = []
           for (var i = 0; i < this.questions.length; i++) {
             this.$set(this.questionForShow,i,this.questions[i].name)
           }
           this.Teams = []
+          this.currentTeam=this.attendances[0].team.teamName
           for (var i = 0; i < this.attendances.length; i++) {
             this.$set(this.Teams,i,this.attendances[i].team.teamName)
           }
@@ -188,8 +189,8 @@
       typePresentationScore: function (value) {
         this.is_modifying = true
         return {
-          valid: (['1', '2', '3', '4', '5'].indexOf(value)) !== -1,
-          msg: '分数为大于0，小于6的整数'
+          valid: (['0','1', '2', '3', '4', '5'].indexOf(value)) !== -1,
+          msg: '分数为小于6的整数'
         }
       },
 

@@ -124,7 +124,7 @@
         this.$router.push('/mobile/teacher/teamlist')
       },
       setSeminar(s){
-        this.$router.push('/mobile/teacher/modifySeminar')
+        this.$router.push('/mobile/teacher/seminarP')
       }
     }
   }

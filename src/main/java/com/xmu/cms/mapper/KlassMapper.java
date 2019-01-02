@@ -1,6 +1,7 @@
 package com.xmu.cms.mapper;
 
 import com.xmu.cms.entity.Klass;
+import com.xmu.cms.entity.KlassEnrollNumber;
 import com.xmu.cms.entity.Student;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -144,8 +145,16 @@ public interface KlassMapper {
      * 添加班级队伍
      *
      * @param klassId 班级id
-     * @param teamId 队伍id
+     * @param teamId  队伍id
      */
     void addTeam(@Param("klassId") BigInteger klassId,
                  @Param("teamId") BigInteger teamId);
+
+    /**
+     * 获取班级与轮次的关系
+     *
+     * @param roundId 轮次id
+     * @return 班级轮次关系列表
+     */
+    List<KlassEnrollNumber> getKlassEnrollNumber(@Param("roundId") BigInteger roundId);
 }

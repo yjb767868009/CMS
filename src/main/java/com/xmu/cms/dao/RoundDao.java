@@ -1,12 +1,10 @@
 package com.xmu.cms.dao;
 
+import com.xmu.cms.entity.KlassEnrollNumber;
 import com.xmu.cms.entity.KlassSeminar;
 import com.xmu.cms.entity.Round;
 import com.xmu.cms.entity.Seminar;
-import com.xmu.cms.mapper.KlassMapper;
-import com.xmu.cms.mapper.KlassSeminarMapper;
-import com.xmu.cms.mapper.RoundMapper;
-import com.xmu.cms.mapper.SeminarMapper;
+import com.xmu.cms.mapper.*;
 import com.xmu.cms.support.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Component;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author JuboYu on 2018/12/18.
@@ -33,6 +30,9 @@ public class RoundDao {
 
     @Autowired
     private KlassSeminarMapper klassSeminarMapper;
+
+    @Autowired
+    private CourseMapper courseMapper;
 
     public List<Round> getFullRoundsByCourseId(UserInfo info, BigInteger courseId) {
         List<Round> rounds = roundMapper.getRoundsByCourseId(courseId);
@@ -111,7 +111,10 @@ public class RoundDao {
     }
 
     public Round getRoundById(BigInteger roundId) {
-        return roundMapper.getRoundByRoundId(roundId);
+        Round round = roundMapper.getRoundByRoundId(roundId);
+        List<KlassEnrollNumber> klassEnrollNumbers = klassMapper.getKlassEnrollNumber(roundId);
+        round.setKlassEnrollNumbers(klassEnrollNumbers);
+        return round;
     }
 
     public Round getFullRoundById(BigInteger roundId) {
@@ -120,10 +123,9 @@ public class RoundDao {
     }
 
     public BigInteger newRound(Round round) {
-        Map<BigInteger, Integer> klassEnrollNumber = round.getKlassEnrollNumber();
-        for (BigInteger klassId : klassEnrollNumber.keySet()) {
-            Integer enrollNumber = klassEnrollNumber.get(klassId);
-            klassMapper.insertKlassRound(klassId, round.getRoundId(), enrollNumber);
+        List<KlassEnrollNumber> klassEnrollNumbers = round.getKlassEnrollNumbers();
+        for (KlassEnrollNumber ken : klassEnrollNumbers) {
+            klassMapper.insertKlassRound(ken.getKlass().getKlassId(), round.getRoundId(), ken.getEnrollNumber());
         }
         return BigInteger.valueOf(roundMapper.insertRound(round));
     }

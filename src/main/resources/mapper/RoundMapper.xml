@@ -26,7 +26,7 @@
 
     <select id="getRoundByRoundId" resultMap="RoundResultMap">
         SELECT round.id                as roundId,
-               course_id               as couseId,
+               course_id               as courseId,
                course.course_name    as courseName,
                round_serial,
                presentation_score_method as presentationScoreType,

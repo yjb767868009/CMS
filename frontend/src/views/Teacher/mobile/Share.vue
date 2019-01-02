@@ -4,7 +4,7 @@
     </x-header>
     <template v-for="share in shares">
     <group :key="share.shareTeamId">
-        <template v-if="myCourseId===share.masterCourse.courseId">
+        <template v-if="myCourseId===share.masterCourse.courseId&&share.status==true">
       <cell style="height:40px"
       :title="share.receiveCourse.courseName+' ('+share.receiveCourse.teacher.name+'老师)'"
       is-link
@@ -19,7 +19,7 @@
         </template>
         </template>
 
-        <template v-if="myCourseId===share.receiveCourse.courseId">
+        <template v-if="myCourseId===share.receiveCourse.courseId&&share.status==true">
       <cell
       :title="share.masterCourse.courseName+' ('+share.masterCourse.teacher.name+'老师)'"
       is-link

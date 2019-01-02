@@ -22,7 +22,7 @@
         VALUE (#{klass.course.courseId}, #{klass.grade}, #{klass.klassSerial}, #{klass.klassTime}, #{klass.klassPlace})
     </insert>
 
-    <delete id="deleteKlassByKlassId" parameterType="java.lang.Integer">
+    <delete id="deleteKlassByKlassId">
         delete
         from klass
         where id = #{klassId}

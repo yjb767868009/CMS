@@ -1,5 +1,6 @@
 package com.xmu.cms.mapper;
 
+import com.xmu.cms.entity.Question;
 import com.xmu.cms.entity.SeminarScore;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -68,4 +69,26 @@ public interface SeminarScoreMapper {
      * @return 讨论课成绩列表
      */
     List<SeminarScore> getSeminarScoreInSeminar(@Param("seminarId") BigInteger seminarId);
+
+    /**
+     * 修改成绩的提问成绩
+     *
+     * @param question 提问
+     */
+    void updateQuestionScore(@Param("question") Question question);
+
+    /**
+     * 获取讨论课成绩
+     *
+     * @param seminarScore 讨论课成绩
+     * @return 讨论课成绩
+     */
+    SeminarScore getSeminarScoreInKlassSeminarAndTeam(@Param("seminarScore") SeminarScore seminarScore);
+
+    /**
+     * 新建讨论课成绩
+     *
+     * @param seminarScore 讨论课成绩
+     */
+    void insertSeminarScore(@Param("seminarScore") SeminarScore seminarScore);
 }

@@ -9,6 +9,10 @@
         <association property="course" javaType="com.xmu.cms.entity.Course">
             <id property="courseId" column="courseId"/>
             <result property="courseName" column="courseName"/>
+            <association property="teacher" javaType="com.xmu.cms.entity.Teacher">
+                <id property="teacherId" column="teacherId"/>
+                <result property="name" column="teacherName"/>
+            </association>
         </association>
     </resultMap>
 
@@ -16,12 +20,16 @@
         select course_member_limit_strategy.id as strategyId,
                min_member,
                max_member,
-               course.id as courseId,
-               course.course_name as courseName
+               course.id                       as courseId,
+               course.course_name              as courseName,
+               teacher.id                      as teacherId,
+               teacher.teacher_name            as teacherName
         from course_member_limit_strategy,
-             course
+             course,
+             teacher
         where course_member_limit_strategy.id = #{strategyId}
           and course.id = course_member_limit_strategy.course_id
+          and teacher_id = teacher.id
     </select>
 
     <insert id="insertCourseMemberLimitStrategy" parameterType="com.xmu.cms.entity.strategy.CourseMemberLimitStrategy">

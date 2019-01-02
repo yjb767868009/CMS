@@ -866,13 +866,12 @@
             <span>{{currentCourse.courseName+' 查看成绩'}}</span>
           </div>
 
-          <el-table style="width:100%">
-            <el-table-column label="轮数"></el-table-column>
-            <el-table-column label="参与讨论课"></el-table-column>
-            <el-table-column label="展示成绩"></el-table-column>
-            <el-table-column label="提问成绩"></el-table-column>
-            <el-table-column label="报告成绩"></el-table-column>
-            <el-table-column label="总成绩"></el-table-column>
+          <el-table style="width:100%" :data="scoreTableData">
+            <el-table-column label="轮数" prop="round"></el-table-column>
+            <el-table-column label="参与讨论课" prop="seminarName"></el-table-column>
+            <el-table-column label="展示成绩" prop="presentationScore"></el-table-column>
+            <el-table-column label="提问成绩" prop="questionScore"></el-table-column>
+            <el-table-column label="报告成绩" prop="reportScore"></el-table-column>
 
           </el-table>
         </el-card>
@@ -1269,7 +1268,14 @@
         is_join:true,
         currentCourse: '',
         currentSeminar: '',
-        uploadFileURL:'http://localhost:8000/'
+        uploadFileURL:'http://localhost:8000/',
+        scoreTableData:[{
+          round:'',
+          seminarName:'',
+          presentationScore:'',
+          questionScore:'',
+          reportScore:'',
+        },],
       }
     },
     mounted: function () {
@@ -1311,6 +1317,32 @@
           this.showSeminarFinished = false
         } else if (index === '2') {
           //查看成绩
+          this.$axios.get('/course/'+this.currentCourse.courseId+'/round')
+          .then((response)=>{
+            this.rounds=response.data
+            this.scoreTableData=[]
+
+            for(var i=0;i<this.rounds.length;i++){
+              var roundNum=''+i
+              this.$axios.get('/course/'+this.currentCourse.courseId+'/round/'+this.rounds[i].roundId+'/score')
+              .then((response)=>{
+                response.data.seminarScore.forEach(
+                  (item)=>{
+                    this.scoreTableData.push({
+                      round:roundNum,
+                      seminarName:item.seminar.topic,
+                      presentationScore:item.presentationScore,
+                      questionScore:item.questionScore,
+                      reportScore:item.reportScore,
+                    })
+                  }
+                )
+              })
+            }
+
+          })
+          
+          console.log(this.scoreTableData)
           this.showScoreCard = true
           this.showSeminarCard = false
           this.showSeminarOngoing = false

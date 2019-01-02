@@ -46,8 +46,8 @@ public class RequestController {
     }
 
     @Secured("ROLE_TEACHER")
-    @GetMapping(value = "/request/teamshare/{teamShareId}")
-    public Map<String, String> updateShareTeam(@PathVariable("teamshareid") BigInteger shareTeamId,
+    @PutMapping(value = "/request/teamshare/{teamShareId}")
+    public Map<String, String> updateShareTeam(@PathVariable("teamShareId") BigInteger shareTeamId,
                                                @RequestBody ShareTeam shareTeam) {
         shareTeam.setShareTeamId(shareTeamId);
         Map<String, String> message = new HashMap<String, String>(1);

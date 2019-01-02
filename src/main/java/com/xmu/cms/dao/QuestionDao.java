@@ -30,8 +30,9 @@ public class QuestionDao {
         return questionMapper.getNoSelectedQuestionInKlassSeminar(klassSeminar);
     }
 
-    public Integer scoreQuestion(Question question) {
-        return questionMapper.scoreQuestion(question);
+    public Question scoreQuestion(Question question) {
+        questionMapper.scoreQuestion(question);
+        return questionMapper.getQuestion(question.getQuestionId());
     }
 
     public Question insertQuestion(Question question) {

@@ -100,11 +100,25 @@ public class ScoreDao {
     }
 
     public void updateReportScore(SeminarScore seminarScore) {
-        seminarScoreMapper.updateReportScore(seminarScore);
+        SeminarScore findSeminarScore = seminarScoreMapper.getSeminarScoreInKlassSeminarAndTeam(seminarScore);
+        if (findSeminarScore == null) {
+            seminarScore.setPresentationScore((float) 0);
+            seminarScore.setQuestionScore((float) 0);
+            seminarScoreMapper.insertSeminarScore(seminarScore);
+        } else {
+            seminarScoreMapper.updateReportScore(seminarScore);
+        }
     }
 
     public void updatePresentationScore(SeminarScore seminarScore) {
-        seminarScoreMapper.updatePresentationScore(seminarScore);
+        SeminarScore findSeminarScore = seminarScoreMapper.getSeminarScoreInKlassSeminarAndTeam(seminarScore);
+        if (findSeminarScore == null) {
+            seminarScore.setReportScore((float) 0);
+            seminarScore.setQuestionScore((float) 0);
+            seminarScoreMapper.insertSeminarScore(seminarScore);
+        } else {
+            seminarScoreMapper.updatePresentationScore(seminarScore);
+        }
     }
 
     public SeminarScore getSeminarTeamScore(BigInteger seminarId, BigInteger teamId) {
@@ -113,5 +127,10 @@ public class ScoreDao {
 
     public List<SeminarScore> getSeminarScoreInSeminar(BigInteger seminarId) {
         return seminarScoreMapper.getSeminarScoreInSeminar(seminarId);
+    }
+
+    public void updateQuestionScore(Question question) {
+        // TODO: 2019/1/1  
+        seminarScoreMapper.updateQuestionScore(question);
     }
 }

@@ -67,4 +67,13 @@ public interface QuestionMapper {
      * @return 提问列表
      */
     List<Question> getAttendanceQuestionInKlassSeminar(@Param("klassSeminarId") BigInteger klassSeminarId);
+
+    /**
+     * 获取提问
+     *
+     * @param questionId 提问id
+     * @return 提问
+     */
+    Question getQuestion(@Param("questionId") BigInteger questionId);
+
 }

@@ -153,4 +153,35 @@
           and teacher2.id = course2.teacher_id
           and teacher1.id = course1.teacher_id
     </select>
+
+    <update id="updateShareTeam">
+        UPDATE share_team_application
+        SET status = #{shareTeam.status}
+        WHERE id = #{shareTeam.shareTeamId}
+    </update>
+
+    <select id="getShareTeam" resultMap="ShareTeamResultMap">
+        select share_team_application.id as shareId,
+               course1.id                as masterCourseId,
+               course1.course_name       as masterCourseName,
+               teacher1.id               as masterTeacherId,
+               teacher1.teacher_name     as masterTeacherName,
+               teacher1.email            as masterTeacherEmail,
+               course2.id                as receiveCourseId,
+               course2.course_name       as receiveCourseName,
+               teacher2.id               as receiveTeacherId,
+               teacher2.teacher_name     as receiveTeacherName,
+               teacher2.email            as receiveTeacherEmail,
+               status
+        from share_team_application,
+             course course1,
+             course course2,
+             teacher teacher1,
+             teacher teacher2
+        where share_team_application.id = #{shareTeamId}
+          and course1.id = share_team_application.main_course_id
+          and course2.id = share_team_application.sub_course_id
+          and teacher2.id = course2.teacher_id
+          and teacher1.id = course1.teacher_id
+    </select>
 </mapper>

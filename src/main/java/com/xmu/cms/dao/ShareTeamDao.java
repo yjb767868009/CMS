@@ -1,6 +1,5 @@
 package com.xmu.cms.dao;
 
-import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.ShareTeam;
 import com.xmu.cms.mapper.CourseMapper;
 import com.xmu.cms.mapper.KlassMapper;
@@ -55,16 +54,6 @@ public class ShareTeamDao {
 
     public ShareTeam updateShareTeam(ShareTeam shareTeam) {
         shareTeamMapper.updateShareTeam(shareTeam);
-        ShareTeam newShareTeam = shareTeamMapper.getShareTeam(shareTeam.getShareTeamId());
-
-        Course masterCourse = shareTeam.getMasterCourse();
-        Course receiveCourse = shareTeam.getReceiveCourse();
-
-        masterCourse = courseMapper.getCourseById(masterCourse.getCourseId());
-        receiveCourse = courseMapper.getCourseById(receiveCourse.getCourseId());
-
-        newShareTeam.setMasterCourse(masterCourse);
-        newShareTeam.setReceiveCourse(receiveCourse);
-        return newShareTeam;
+        return shareTeamMapper.getShareTeam(shareTeam.getShareTeamId());
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -25,7 +26,14 @@ public class QuestionController {
     @PutMapping(value = "/question/{questionId}")
     public Map<String, String> scoreQuestion(@PathVariable("questionId") BigInteger questionId,
                                              @RequestBody Question question) {
-        question.setQuestionId(questionId);
-        return seminarService.scoreQuestion(question);
+        Map<String, String> message = new HashMap<String, String>(1);
+        try {
+            question.setQuestionId(questionId);
+            seminarService.scoreQuestion(question);
+            message.put("message", "Success");
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+        }
+        return message;
     }
 }

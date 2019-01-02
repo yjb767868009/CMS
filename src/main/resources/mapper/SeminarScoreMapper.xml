@@ -44,7 +44,7 @@
           AND team.id = #{seminarScore.team.teamId}
     </update>
 
-    <insert id="newScoreInSeminar">
+    <insert id="insertSeminarScore">
         insert into seminar_score (team_id,
                                    klass_seminar_id,
                                    presentation_score,
@@ -105,5 +105,24 @@
           and seminar_score.team_id = #{teamId}
           and klass_seminar_id = klass_seminar.id
           AND team.id = seminar_score.team_id
+    </select>
+
+    <update id="updateQuestionScore">
+        UPDATE seminar_score
+        SET question_score = #{question.score}
+        WHERE team_id = #{question.team.teamId}
+          AND klass_seminar_id = #{question.klassSeminar.klassSeminarId}
+    </update>
+
+    <select id="getSeminarScoreInKlassSeminarAndTeam" resultMap="SeminarScoreResultMap">
+        SELECT team_id            as teamId,
+               klass_seminar_id   as klassSeminarId,
+               presentation_score as presentationScore,
+               question_score     as questionScore,
+               report_score       as reportScore,
+               total_score        as totalScore
+        FROM seminar_score
+        WHERE seminar_score.klass_seminar_id = #{seminarScore.klassSeminar.klassSeminarId}
+          and seminar_score.team_id = #{seminarScore.team.teamId}
     </select>
 </mapper>

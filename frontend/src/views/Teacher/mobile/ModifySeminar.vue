@@ -101,9 +101,9 @@ export default {
     GoSeminar(){
             this.$router.push('/mobile/teacher/seminars')
         },
-    submit:function(){
-        this.$message('修改成功')
-    }
+    // submit:function(){
+    //     this.$message('修改成功')
+    // }
     }
 }
 </script>

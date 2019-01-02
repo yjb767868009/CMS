@@ -1,14 +1,14 @@
 <template>
-  <div class="course" style="background:#eee">
+  <div class="course" style="background:#fff">
 
     <!-- 班级信息 -->
     <template v-if="!addingKlass">
       <x-header title="班级信息" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}"
         @on-click-more="show=!show">
       </x-header>
-
       <template v-for="klass in klasses" style="text-decoration:none">
-        <form-preview :key="klass.klassId" :header-label="klass.grade+'-'+klass.klassSerial" :body-items="[{
+
+        <!-- <form-preview :key="klass.klassId" :header-label="klass.grade+'-'+klass.klassSerial" :body-items="[{
         label:'讨论课时间',
         value:klass.klassTime
         },
@@ -17,16 +17,36 @@
         value:klass.klassPlace
         },{
         label:'班级学生名单',
-        value:'等一个is_uploaded的api'
+        value:filename
       }]"
           :footer-buttons="footerButtons" :name="klass.klassId">
-        </form-preview>
+        </form-preview> -->
+        <group :title="klass.grade+'-'+klass.klassSerial" style="margin-top:2em">
+        <cell style="height:20px" title="讨论课时间">{{klass.klassTime}}</cell>
+        <cell style="height:20px" title="讨论课地点">{{klass.klassPlace}}</cell>
+        <cell style="height:20px" title="班级学生名单">{{klass.klassName}}</cell>
+        <input style="padding-left:7em" type="file" accept=""/>
+        <flexbox style="margin-top:0.5em">
+        <flexbox-item>
+        <x-button @click.native="submit(klass.klassId)">提交</x-button>
+        </flexbox-item>
+        <flexbox-item>
+        <x-button @click.native="Deleteclass(klass.klassId)">删除班级</x-button>
+        </flexbox-item>
+        </flexbox>
+        </group>
       </template>
 
       <br />
       <x-button type="primary" @click.native="newKlass">新建班级</x-button>
 
       <div v-transfer-dom>
+        <confirm v-model="Delete"
+        title="提示"
+        theme="android"
+        @on-confirm="sure">
+        <p style="text-align:center;">确定删除该班级吗</p>
+      </confirm>
         <popup v-model="show" height="23%">
           <div>
             <cell value-align="left" title=""><img slot="icon" src="@/assets/message.png" style="display:block;margin-right:10px;"
@@ -53,7 +73,8 @@
       <group>
         <x-input title="新班级年级" text-align="right" v-model="newKlassGrade"></x-input>
         <x-input title="班级号" text-align="right" v-model="newKlassSerial"></x-input>
-        <datetime-range title="上课时间:" v-model="dateValue" start-date="2018-12-25" end-date="2019-06-08" format="YYYY年MM月DD日" @on-change="onChange"></datetime-range>
+        <x-input title="上课地点" text-align="right" v-model="newKlassPlace"></x-input>
+        <x-input title="上课时间" text-align="right" v-model="newKlassTime"></x-input>
       </group>
 
       <x-button type="primary" @click.native="postNewKlass">保存</x-button>
@@ -73,7 +94,8 @@
     DatetimeRange,
     XInput,
     Group,
-    FormPreview
+    FormPreview,
+    Confirm,Flexbox,FlexboxItem
   } from 'vux'
   export default {
     directives: {
@@ -88,13 +110,16 @@
       XInput,
       Group,
       FormPreview,
-      DatetimeRange
+      DatetimeRange,
+      Confirm,Flexbox,FlexboxItem
     },
     data() {
       return {
+        filename:[],
         addingKlass: false,
         show: false,
-        dateValue: ['2017-01-15', '03', '05'],
+        Delete:false,
+        deleteKlass:'',
         klasses: [{
           klassId: 1,
           grade: '2016',
@@ -108,33 +133,55 @@
           klassTime: '2t',
           klassPlace: '2p'
         }],
-        footerButtons: [{
-          style: 'primary',
-          text: '提交',
-          onButtonClick: (name) => {
-            console.log('klassId:', name)
-          }
-        }, {
-          style: "default",
-          text: '删除班级',
-          onButtonClick: (name) => {
-            console.log('klassId:', name)
-          }
-        }, {
-          style: "default",
-          text: '上传学生名单',
-          onButtonClick: (name) => {
-            console.log('klassId:', name)
-          }
-        }]
+        // footerButtons: [{
+        //   style: 'primary',
+        //   text: '提交',
+        //   onButtonClick: (name) => {
+        //     console.log('klassId:', name)
+        //     // this.$axios.put('/class/'+name+'/classfile',this.filename)
+        //     // .then((response)=>{
+        //     //   console.log(response)
+        //     //   this.$message('提交成功')
+        //     // })
+        //   }
+        // }, {
+        //   style: "default",
+        //   text: '删除班级',
+        //   onButtonClick: (name) => {
+        //     this.Delete=!this.Delete
+        //     this.deleteKlass=name
+        //     console.log('klassId:', name)
+        //   }
+        // }, {
+        //   style: "default",
+        //   text: '上传学生名单',
+        //   onButtonClick: (name) => {
+        //     console.log('klassId:', name)
+        //   }
+        // }]
       }
     },
-    // mounted:function(){
-    //     this.$axios.get('/course/'+this.$store.state.teacher.currentCourse.courseId+'/Klass').then((response)=>{
-    //         this.klasses=response.data
-    //     })
-    // },
+    mounted:function(){
+        this.$axios.get('/course/'+this.$store.state.teacher.currentCourse.courseId+'/class').then((response)=>{
+            this.klasses=response.data
+            for(var i=0;i<this.klasses.length;i++){
+              this.$set(this.klasses[i],'klassFile','')
+            }
+        })
+    },
     methods: {
+      submit(){
+        this.$message('提交成功')
+      },
+      sure(){
+        console.log(this.deleteKlass,'delete')
+        this.$axios.delete('/class/'+this.deleteKlass)
+        .then((res)=>{
+          console.log(res)
+          this.deleteKlass=''
+          window.location.reload()
+        })
+      },
       Undo() {
         this.$router.push('/mobile/teacher/notify')
       },
@@ -150,17 +197,33 @@
           this.newKlassTime = '',
           this.newKlassPlace = ''
         this.addingKlass = true
-        console.log('newKlass...')
       },
       postNewKlass() {
         //this.$axios.post('')
         //this.$axios.get('')
-        console.log(this.newKlassGrade, this.newKlassSerial)
-        this.addingKlass = false
+        if(this.newKlassGrade!=''&&this.newKlassSerial!=''&&this.newKlassPlace!=''&&this.newKlassTime!=''){
+        this.$axios.post('/course/'+this.$store.state.teacher.currentCourse.courseId+'/class',{
+          grade:this.newKlassGrade,
+          klassSerial:this.newKlassSerial,
+          klassTime:this.newKlassTime,
+          klassPlace:this.newKlassPlace
+        }).then((res)=>{
+          console.log(res)
+          this.addingKlass=false
+          window.location.reload()
+        })
+        }else{
+          this.$message('请完善信息')
+        }
       },
       onChange(val){
           console.log(val)
           this.newKlassTime=val[0]
+      },
+      Deleteclass(name){
+        this.Delete=!this.Delete
+            this.deleteKlass=name
+            console.log('klassId:', name)
       }
     }
   }

@@ -101,7 +101,12 @@ public class FileUtils {
         List<Student> students = new ArrayList<>();
         for (List<Object> studentMessage : list) {
             String account = (String) studentMessage.get(0);
+            account = account.replace(" ", "");
             String name = (String) studentMessage.get(1);
+            name = name.replace(" ", "");
+            if ("".equals(account) || "".equals(name)) {
+                continue;
+            }
             Student student = new Student();
             student.setAccount(account);
             student.setName(name);

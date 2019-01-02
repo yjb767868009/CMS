@@ -117,23 +117,27 @@ public class SeminarService {
         Round round = roundDao.getRoundByKlassSeminar(klassSeminarId);
         List<Attendance> attendances = attendanceDao.getTeamAttendanceInRound(team.getTeamId(), round.getRoundId());
         List<KlassEnrollNumber> klassEnrollNumbers = round.getKlassEnrollNumbers();
-        Integer maxNumber = 0;
-        for (KlassEnrollNumber klassEnrollNumber : klassEnrollNumbers) {
-            if (klassEnrollNumber.getKlass().getKlassId().equals(klassSeminar.getKlass().getKlassId())) {
-                maxNumber = klassEnrollNumber.getEnrollNumber();
-            }
-        }
-        Integer count = 0;
-        if (attendances != null) {
-            for (Attendance everAttendance : attendances) {
-                count++;
-            }
-        }
-        if (count < maxNumber) {
-            attendance.setTeam(team);
+        attendance.setTeam(team);
+        if (klassEnrollNumbers == null) {
             attendanceDao.insertAttendance(attendance);
         } else {
-            throw new Exception("超出报名上线");
+            Integer maxNumber = 0;
+            for (KlassEnrollNumber klassEnrollNumber : klassEnrollNumbers) {
+                if (klassEnrollNumber.getKlass().getKlassId().equals(klassSeminar.getKlass().getKlassId())) {
+                    maxNumber = klassEnrollNumber.getEnrollNumber();
+                }
+            }
+            Integer count = 0;
+            if (attendances != null) {
+                for (Attendance everAttendance : attendances) {
+                    count++;
+                }
+            }
+            if (count < maxNumber) {
+                attendanceDao.insertAttendance(attendance);
+            } else {
+                throw new Exception("超出报名上线");
+            }
         }
     }
 

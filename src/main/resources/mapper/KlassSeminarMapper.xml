@@ -170,8 +170,26 @@
         FROM klass_seminar,
              klass,
              seminar
+        WHERE klass_seminar.seminar_id = #{seminarId}
+          AND klass.id = klass_seminar.klass_id
+          and seminar.id = klass_seminar.seminar_id
+    </select>
+
+    <select id="getKlassSeminar" resultMap="KlassSeminarResultMap">
+        SELECT klass_seminar.id as klassSeminarId,
+               report_ddl,
+               status,
+               klass.id         as klassId,
+               grade,
+               klass_serial,
+               seminar.id       as seminarId,
+               seminar_name     as seminarName
+        FROM klass_seminar,
+             klass,
+             seminar
         WHERE klass_seminar.id = #{klassSeminarId}
           AND klass.id = klass_seminar.klass_id
           and seminar.id = klass_seminar.seminar_id
     </select>
+
 </mapper>

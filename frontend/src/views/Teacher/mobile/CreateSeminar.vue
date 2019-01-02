@@ -89,7 +89,7 @@ export default {
                 topic:this.topic,
                 intro:this.intro,
                 signOrder:this.seminarOrder[0],
-                round:{roundId:this.roundList[parseInt(this.roundOrder[0])].roundId,},
+                round:{roundId:this.roundList[parseInt(this.roundOrder[0])-1].roundId,},
                 visible:this.visible,
                 maxTeamNum:this.teamNum[0],
                 signupStartTime:this.signupStartTime.slice(0,4)+'/'+this.signupStartTime.slice(5,7)+'/'+this.signupStartTime.slice(8,10),

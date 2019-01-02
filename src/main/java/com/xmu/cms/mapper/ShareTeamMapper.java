@@ -76,5 +76,5 @@ public interface ShareTeamMapper {
      * @param shareTeamId 共享组队信息
      * @return 共享组队
      */
-    ShareTeam getShareTeam(@Param("shareId") BigInteger shareTeamId);
+    ShareTeam getShareTeam(@Param("shareTeamId") BigInteger shareTeamId);
 }

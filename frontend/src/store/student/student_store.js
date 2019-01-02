@@ -8,14 +8,14 @@ export default new vuex.Store({
         name:'', 
         account:'',
         email:'',
-        currentCourse:'',
+        studentId:'',
+        currentCourse:'',//courseId,courseName
         Myteam:'',
         newMembers:'',
-        currentSeminar:'',
+        currentSeminar:'',//seminarId,
         currentClass:'',
-        currentRound:'',
-        reportDDL:'',
-        seminarSignEndTime:''
+        currentRound:'',//roundId,order
+        currentAttendance:'',//message, attendance
     },
     mutations:{
         

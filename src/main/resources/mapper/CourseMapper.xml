@@ -142,14 +142,11 @@
     </update>
 
     <select id="getCourseByTeamId" resultMap="CourseResultMap">
-        SELECT course.id                      as courseId,
-               course.course_name             as courseName,
-               course.introduction,
-               course.presentation_percentage as presentationWeight,
-               course.report_percentage       as reportWeight,
-               course.question_percentage     as questionWeight,
-               course.team_start_time         as teamStartDate,
-               course.team_end_time           as teamEndDate
+        SELECT course.id              as courseId,
+               course.course_name     as courseName,
+               course.teacher_id      as teacherId,
+               course.team_start_time as teamStartDate,
+               course.team_end_time   as teamEndDate
         FROM course,
              teacher,
              team

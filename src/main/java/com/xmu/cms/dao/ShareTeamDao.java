@@ -1,6 +1,5 @@
 package com.xmu.cms.dao;
 
-import com.xmu.cms.entity.Course;
 import com.xmu.cms.entity.ShareTeam;
 import com.xmu.cms.mapper.CourseMapper;
 import com.xmu.cms.mapper.KlassMapper;
@@ -35,10 +34,17 @@ public class ShareTeamDao {
         return shareTeamMapper.deleteShareTeam(shareTeamId);
     }
 
-    public ShareTeam newShareTeam(ShareTeam shareTeam) {
-        shareTeamMapper.insertShareTeam(shareTeam);
+    public ShareTeam newShareTeam(ShareTeam shareTeam) throws Exception {
+        if (shareTeam.getMasterCourse() == null || shareTeam.getReceiveCourse() == null) {
+            throw new Exception("无效的申请");
+        }
         BigInteger masterCourseId = shareTeam.getMasterCourse().getCourseId();
         BigInteger receiveCourseId = shareTeam.getReceiveCourse().getCourseId();
+        ShareTeam findShareTeam = shareTeamMapper.getShareTeamByTwoCourse(masterCourseId, receiveCourseId);
+        if (findShareTeam != null) {
+            throw new Exception("请勿重新发起请求");
+        }
+        shareTeamMapper.insertShareTeam(shareTeam);
         return shareTeamMapper.getShareTeamByTwoCourse(masterCourseId, receiveCourseId);
     }
 
@@ -48,16 +54,6 @@ public class ShareTeamDao {
 
     public ShareTeam updateShareTeam(ShareTeam shareTeam) {
         shareTeamMapper.updateShareTeam(shareTeam);
-        ShareTeam newShareTeam = shareTeamMapper.getShareTeam(shareTeam.getShareTeamId());
-
-        Course masterCourse = shareTeam.getMasterCourse();
-        Course receiveCourse = shareTeam.getReceiveCourse();
-
-        masterCourse = courseMapper.getCourseById(masterCourse.getCourseId());
-        receiveCourse = courseMapper.getCourseById(receiveCourse.getCourseId());
-
-        newShareTeam.setMasterCourse(masterCourse);
-        newShareTeam.setReceiveCourse(receiveCourse);
-        return newShareTeam;
+        return shareTeamMapper.getShareTeam(shareTeam.getShareTeamId());
     }
 }

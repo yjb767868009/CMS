@@ -1,25 +1,31 @@
 <template>
-<div class="student" style="background:#eee">
+<div class="student" style="background:#fff">
     <x-header title="代办及通知" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
     </x-header>
-    <group style="text-align:left">
-      <cell v-if="done" style="height:30px" is-link title="xxxxx分组邀请" @click.native="detail=!detail" :arrow-direction="detail?'up':'down'">
+    <group style="text-align:left" title="特殊小组:">
+        <template v-for="valid in valids">
+      <cell :key="valid.teamApplicationId" v-if="valid.showValidContent" style="height:30px" is-link :title="valid.team.teamName+'分组邀请'" @click.native="valid.detail=!valid.detail" :arrow-direction="valid.detail?'up':'down'">
         <img slot="icon" src="@/assets/exclamation.png" style="display:block;margin-right:12px;margin-left:3px" width="20px" height="20px"/>
       </cell>
-      <template v-if="detail&&done">
-        <cell value-align="left" style="padding-left:30px">xxxx特殊组队申请</cell>
+      <template v-if="valid.detail&&valid.showValidContent">
+        <cell value-align="left" style="padding-left:30px">{{valid.team.teamName}}特殊组队申请:<p>{{valid.reason}}</p></cell>
+         <img @click="choice(valid,'yes')" src="@/assets/correct.png" style="margin-left:80px" width="20px" height="20px"/>
+         <img @click="choice(valid,'no')" src="@/assets/wrong.png" style="margin-left:135px" width="20px" height="20px"/>
+      </template>
+        </template>
+    </group>
+
+    <!-- <group style="text-align:left" title="共享组队：">
+      <template v-for="valid in valids">
+      <cell :key="valid.teamApplicationId" v-if="valid.showValidContent" style="height:30px" is-link :title="valid.team.teamName+'分组邀请'" @click.native="valid.detail=!valid.detail" :arrow-direction="detail?'up':'down'">
+        <img slot="icon" src="@/assets/exclamation.png" style="display:block;margin-right:12px;margin-left:3px" width="20px" height="20px"/>
+      </cell>
+      <template v-if="valid.detail&&valid.showValidContent">
+        <cell value-align="left" style="padding-left:30px">{{valid.team.teamName}}共享组队申请:{{valid.reason}}</cell>
          <img @click="choice('yes')" src="@/assets/correct.png" style="margin-left:80px" width="20px" height="20px"/>
          <img @click="choice('no')" src="@/assets/wrong.png" style="margin-left:135px" width="20px" height="20px"/>
       </template>
-    </group>
-
-    <!-- <group style="text-align:left">历史消息：
-      <cell is-link title="xxxx特殊组队申请">
-        <img slot="icon" src="@/assets/correct.png" style="display:block;margin-right:12px;margin-left:3px" width="20px" height="20px"/>
-      </cell>
-      <cell is-link title="aaaa特殊组队申请">
-        <img slot="icon" src="@/assets/wrong.png" style="display:block;margin-right:12px;margin-left:3px" width="20px" height="20px"/>
-      </cell>
+        </template>
     </group> -->
     <div v-transfer-dom>
 
@@ -61,11 +67,38 @@ import {XHeader,
             name:'name',
             newItem:'newItem',
             show:false,
-            detail:false,
             todo:false,
             YN:'',
             done:true,
+            valids:[{
+                showValidContent:false,
+                team:{
+                    teamId:'',
+                    teamName:'',
+                },
+                reason:''
+            }],
+            shares:'',
+            taskId:'',
         }
+    },
+    mounted:function(){
+        this.$axios.get('/request/teamshare')
+        .then((response)=>{
+            this.shares=response.data
+            for(var i=0;i<this.valids.length;i++){
+                this.$set(this.valids[i],'showShareContent',true)
+                this.$set(this.valids[i],'detail',false)
+            }
+        })
+        this.$axios.get('/request/teamvalid')
+        .then((response)=>{
+            this.valids=response.data
+            for(var i=0;i<this.valids.length;i++){
+                this.$set(this.valids[i],'showValidContent',true)
+                this.$set(this.valids[i],'detail',false)
+            }
+        })
     },
     methods:{
         
@@ -83,21 +116,28 @@ import {XHeader,
         },
         refuse(){
         },
-        choice(which){
+        choice(va,which){
             this.todo=!this.todo
             if(which==='no'){
+                this.taskId=va.teamApplicationId
                 this.YN='refuse'
-                console.log(this.YN)
-                this.YN=''
             }else if(which==='yes'){
+                this.taskId=va.teamApplicationId
                 this.YN='agree'
-                console.log(this.YN)
-                this.YN=''
             }
         },
         sure:function(){
             console.log('sure')
-            this.done=false
+            if(this.YN==='agree'){
+            this.$axios.get('/request/teamvalid/'+this.taskId)
+            .then((response)=>{
+            }) 
+                for(var i=0;i<this.valids.length;i++){
+                if(this.valids[i].teamApplicationId==this.taskId){
+                    this.valids[i].showValidContent=false;
+                }
+            }
+                this.YN=''}  
         }
     }
         

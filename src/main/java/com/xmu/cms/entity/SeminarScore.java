@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SeminarScore {
+    private Attendance attendance;
     private Team team;
     private KlassSeminar klassSeminar;
     private Seminar seminar;
@@ -16,7 +17,8 @@ public class SeminarScore {
     private Float reportScore;
     private Float totalScore;
 
-    public SeminarScore(Team team, KlassSeminar klassSeminar, Seminar seminar, Float presentationScore, Float questionScore, Float reportScore, Float totalScore) {
+    public SeminarScore(Attendance attendance, Team team, KlassSeminar klassSeminar, Seminar seminar, Float presentationScore, Float questionScore, Float reportScore, Float totalScore) {
+        this.attendance = attendance;
         this.team = team;
         this.klassSeminar = klassSeminar;
         this.seminar = seminar;
@@ -83,5 +85,13 @@ public class SeminarScore {
 
     public void setSeminar(Seminar seminar) {
         this.seminar = seminar;
+    }
+
+    public Attendance getAttendance() {
+        return attendance;
+    }
+
+    public void setAttendance(Attendance attendance) {
+        this.attendance = attendance;
     }
 }

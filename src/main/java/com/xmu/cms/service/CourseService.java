@@ -126,7 +126,7 @@ public class CourseService {
         return shareSeminarDao.deleteShareSeminar(seminarShareId);
     }
 
-    public ShareTeam newShareTeam(ShareTeam shareTeam) {
+    public ShareTeam newShareTeam(ShareTeam shareTeam) throws Exception {
         return shareTeamDao.newShareTeam(shareTeam);
     }
 
@@ -207,7 +207,7 @@ public class CourseService {
         return teamDao.getStudentTeamInKlassSeminar(studentId, klassSeminarId);
     }
 
-    public List<Course> getAllCourse(Course course) {
-        return teamDao.getAllCourse(course);
+    public List<Course> getAllCourse() {
+        return teamDao.getAllCourse();
     }
 }

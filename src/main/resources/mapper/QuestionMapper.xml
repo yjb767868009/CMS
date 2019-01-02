@@ -49,11 +49,11 @@
         </selectKey>
         insert question (klass_seminar_id, attendance_id, team_id, student_id, is_selected, score)
         values (#{question.klassSeminar.klassSeminarId},
-                #{question.attendance.attendanceId},
-                #{question.team.teamId},
-                #{question.student.studentId},
-                #{question.selected},
-                #{question.score})
+        #{question.attendance.attendanceId},
+        #{question.team.teamId},
+        #{question.student.studentId},
+        #{question.selected},
+        #{question.score})
     </insert>
 
     <delete id="deleteQuestion">
@@ -63,9 +63,9 @@
     </delete>
 
     <!--<update id="selectQuestionByQuestionId">-->
-        <!--update question-->
-        <!--set is_selected = 1-->
-        <!--where id = #{questionId}-->
+    <!--update question-->
+    <!--set is_selected = 1-->
+    <!--where id = #{questionId}-->
     <!--</update>-->
 
     <update id="setScore" parameterType="com.xmu.cms.entity.Question">
@@ -157,6 +157,23 @@
           and attendance.is_present = 1
           and question.klass_seminar_id = #{klassSeminarId}
           and question.attendance_id = attendance.id
+          and question.team_id = team.id
+          and question.student_id = student.id
+    </select>
+
+    <select id="questionId" resultMap="QuestionResultMap">
+        select question.id               as questionId,
+               score,
+               is_selected,
+               question.klass_seminar_id as klassSeminarId,
+               student.id                as studentId,
+               student.student_name      as studentName,
+               team.id                   as teamId,
+               team.team_name            as teamName
+        from question,
+             team,
+             student
+        where question.id = #{questionId}
           and question.team_id = team.id
           and question.student_id = student.id
     </select>

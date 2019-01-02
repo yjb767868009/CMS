@@ -20,7 +20,7 @@
         <template v-if="teaminfo.role==='leader'">
         <cell :border-intent="false" value-align="left" title="添加成员：" style="height:20px"><span style="color:#000;padding-left:20px"></span></cell>
         <template v-for="stu in this.noteam">
-        <check-icon  :key="stu.id" :value.sync="stu.showNoTeam" style="color:#000;padding-left:15px"> &emsp;{{stu.account}} &emsp;{{stu.name}} &emsp;<span v-if="stu.showNoTeam">(｡･∀･)ﾉﾞ</span></check-icon>
+        <check-icon  :key="stu.id" :value.sync="stu.showNoTeam" style="color:#000;padding-left:15px"> &emsp;{{stu.account}} &emsp;{{stu.name}} &emsp;</check-icon>
         </template>
             <cell :border-intent="false" value-align="left" title="搜索成员：" style="margin-top:30px;padding-top:20px;height:20px;padding-right:30px"><el-input placeholder="请输入成员学号或姓名"></el-input></cell>
         </template>
@@ -263,6 +263,7 @@ import { notEqual } from 'assert';
             })
             //回到未组队界面
             this.$router.push('/mobile/Student/teamFreedom')
+            window.location.reload()
         },
         //这里将要删除的组员信息存在memberWillBeDe中
         deleting:function(memberAC){

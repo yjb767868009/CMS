@@ -12,7 +12,8 @@
       :arrow-direction="share.showContent ? 'up' : 'down'"
       @click.native="current(share,'0')"></cell>
         <template v-if="share.showContent">
-            <cell-box :border-intent="false" class="sub-item">共享类型&emsp;&emsp;&emsp;&emsp;&emsp;共享组队 </cell-box>
+            <cell-box :border-intent="false" class="sub-item">共享类型&emsp;&emsp;&emsp;&emsp;&emsp;<span v-if="share.shareSeminarId!=null">共享讨论课</span>
+            <span v-if="share.shareTeamId!=null">共享组队</span> </cell-box>
             <cell-box class="sub-item">共享情况&emsp;&emsp;&emsp;&emsp;该课程为从课程</cell-box>
             <x-button @click.native="cancel" mini type='warn'>取消共享</x-button>
         </template>
@@ -20,14 +21,15 @@
 
         <template v-if="myCourseId===share.receiveCourse.courseId">
       <cell
-      :title="share.masterCourse.courseName+' (邱明老师)'"
+      :title="share.masterCourse.courseName+' ('+share.masterCourse.teacher.name+'老师)'"
       is-link
       :border-intent="false"
       :arrow-direction="share.showContent ? 'up' : 'down'"
       @click.native="current(share,'1')"></cell>
 
         <template v-if="share.showContent">
-            <cell-box :border-intent="false" class="sub-item">共享类型&emsp;&emsp;&emsp;&emsp;&emsp;共享组队 </cell-box>
+            <cell-box :border-intent="false" class="sub-item">共享类型&emsp;&emsp;&emsp;&emsp;&emsp;<span v-if="share.shareSeminarId!=null">共享讨论课</span>
+            <span v-if="share.shareTeamId!=null">共享组队</span></cell-box>
             <cell-box class="sub-item">共享情况&emsp;&emsp;&emsp;&emsp;该课程为主课程</cell-box>
             <x-button @click.native="cancel" mini type='warn'>取消共享</x-button>
         </template>
@@ -74,6 +76,7 @@ export default {
             myCourseId:'',
             nomoreshare:false,
             clickcourse:'',
+            p:'',
         }   
     },
     mounted:function(){
@@ -109,17 +112,27 @@ export default {
             this.nomoreshare=!this.nomoreshare
         },
         sure(){
+            if(this.p==0){
             this.$axios.delete('/shareteam/'+this.clickcourse)
             .then((res)=>{
                 console.log(res)
+                window.location.reload()
+            })}else if(this.p==1){
+                this.$axios.delete('/shareseminar/'+this.clickcourse)
+            .then((res)=>{
+                console.log(res)
+                window.location.reload()
             })
+            }
         },
-        current(share,p){
+        current(share){
             share.showContent = !share.showContent
-            if(p=='0'){
-                this.clickcourse=share.receiveCourse.courseId
-            }else if(p=='1'){
-                this.clickcourse=share.masterCourse.courseId
+            if(share.shareTeamId!=null){
+                this.clickcourse=share.shareTeamId
+                this.p=0;
+            }else if(share.shareSeminarId){
+                this.clickcourse=share.shareSeminarId
+                this.p=1;
             }
         }
     }

@@ -90,7 +90,7 @@ public class TeamService {
         return teamDao.getAllTeamsInSeminar(seminarId);
     }
 
-    public TeamApplication sendTeamApplication(TeamApplication teamApplication) {
+    public TeamApplication sendTeamApplication(TeamApplication teamApplication) throws Exception{
         return teamApplicationDao.sendTeamApplication(teamApplication);
     }
 

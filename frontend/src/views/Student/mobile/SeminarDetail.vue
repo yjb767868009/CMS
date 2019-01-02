@@ -1,45 +1,24 @@
 <template>
-  <div class="student" style="height:800px;background:#eee;">
+  <div>
     <x-header
-      title="OOAD-讨论课"
+      :title="this.$store.state.student.currentCourse.courseName"
       style="height:60px;padding-top:12px;font-size:20px"
       :left-options="{showBack:false}"
       :right-options="{showMore: true}"
       @on-click-more="show=!show"
     ></x-header>
-    <div style="font-size:18px;background:#fff">
-      <cell primary="content" title="轮次：" value-align="left">
-        <div style="padding-left:30px;color:#000;">&emsp;&emsp;&emsp;&emsp;第二轮</div>
-      </cell>
-    </div>
-    <div style="font-size:18px;background:#eee">
-      <cell primary="content" title="主题：" value-align="left">
-        <div style="padding-left:30px;color:#000;">&emsp;&emsp;&emsp;业务流程分析</div>
-      </cell>
-    </div>
-    <div style="font-size:18px;background:#fff">
-      <cell primary="content" title="课次序号：" value-align="left">
-        <div style="padding-left:30px;color:#000;">&emsp;&emsp;第二次</div>
-      </cell>
-    </div>
 
-    <cell primary="content" title="要求：" value-align="left">
-      <div style="padding-left:30px">界面导航图和所有界面原型设计课堂讨论每个小组15分钟</div>
-    </cell>
-    <div style="font-size:18px;background:#fff">
-      <cell primary="content" title="课程情况：" value-align="left">
-        <div style="padding-left:65px;color:#000;">
-          正在进行
-          <span
-            @click="presentation"
-            style="text-decoration:underline;padding-left:15px;font-size:0.8em;color:#00DB00"
-          >查看信息</span>
-        </div>
+     <cell :title="'轮次'" :value="'第'+this.$store.state.student.currentRound.order+'轮'"></cell>
+      
+      <cell :title="'主题'" :value="this.$store.state.student.currentSeminar.topic"></cell>
+      <cell :title="'课次序号'" :value="this.$store.state.student.currentSeminar.klassSeminars[0].klass.klassSerial"></cell>
+      <x-textarea :title="'要求'" :show-counter="false" :placeholder="this.$store.state.student.currentSeminar.introduction" disabled></x-textarea>
+      <cell title="课程情况">正在进行
+        &emsp;&emsp;&emsp;&emsp;<a @click="checkInfo" style="text-decoration:underline;color:#1AAD19">报名情况</a>
       </cell>
-    </div>
-    <flexbox style="margin-top:30px">
-      <x-button type="primary" @click.native="runningSeminar">进入讨论课</x-button>
-    </flexbox>
+      <x-button @click.native="presentation" style="margin-top:20px">进入讨论课</x-button>
+      
+
 
     <div v-transfer-dom>
       <popup v-model="show" height="15%">
@@ -86,7 +65,18 @@
 
 <script>
 import axios from "axios";
-import { TransferDom, XHeader, XButton, Cell, Flexbox, Popup } from "vux";
+import {
+  XHeader,
+  XButton,
+  GroupTitle,
+  Cell,
+  Picker,
+  TransferDom,
+  Popup,
+  Confirm,
+  Flexbox,
+  FlexboxItem,XTextarea
+} from "vux";
 export default {
   directives: {
     TransferDom
@@ -94,28 +84,35 @@ export default {
   components: {
     XHeader,
     XButton,
+    GroupTitle,
     Cell,
     Popup,
-    Flexbox
+    Confirm,
+    Flexbox,
+    FlexboxItem,XTextarea
   },
   data() {
     return {
-      show: false
+      show: false,
+      submit: false
     };
   },
   methods: {
+    presentation:function(){
+        this.$router.push('/mobile/student/course/seminar/running')
+    },
     running: function() {
       this.$router.push("/mobile/Student/studentSeminarList");
     },
     StudentInfo: function() {
       this.$router.push("/mobile/student/studentInfo");
     },
-    runningSeminar: function() {
-      this.$router.push("/mobile/student/course/seminar/running");
+    score: function() {
+      this.$router.push("/mobile/student/course/seminar/seminarScore");
     },
-    presentation: function() {
-      this.$router.push("/mobile/student/course/seminar/running/presentation");
-    }
+    checkInfo:function(){
+            this.$router.push('/mobile/student/course/seminar/seminarRegistrationModification')
+        },
   }
 };
 </script>

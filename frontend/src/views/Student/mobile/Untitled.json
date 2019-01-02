@@ -1,111 +1,25 @@
-{
-  "teams": [{
-    "teamId": 2,
-    "teamName": "2-6",
-    "valid": true
-  }, {
-    "teamId": 3,
-    "teamName": "WEAK",
-    "valid": true
-  }, {
-    "teamId": 4,
-    "teamName": "j2ee",
-    "valid": true
-  }, {
-    "teamId": 5,
-    "teamName": "dotnet TIF小组",
-    "valid": true
-  }, {
-    "teamId": 6,
-    "teamName": "Intellij",
-    "valid": true
-  }, {
-    "teamId": 7,
-    "teamName": "FLAG",
-    "valid": true
-  }, {
-    "teamId": 8,
-    "teamName": "Knight",
-    "valid": true
-  }, {
-    "teamId": 9,
-    "teamName": "锦鲤",
-    "valid": true
-  }, {
-    "teamId": 10,
-    "teamName": "OJ",
-    "valid": true
-  }, {
-    "teamId": 11,
-    "teamName": "RBs",
-    "valid": true
-  }, {
-    "teamId": 12,
-    "teamName": "Beefcake",
-    "valid": true
-  }, {
-    "teamId": 13,
-    "teamName": "GHCT",
-    "valid": true
-  }, {
-    "teamId": 14,
-    "teamName": "Flyway",
-    "valid": true
-  }, {
-    "teamId": 15,
-    "teamName": "2-5",
-    "valid": true
-  }, {
-    "teamId": 16,
-    "teamName": "2018秋季智能教室JS爱好者小组",
-    "valid": true
-  }, {
-    "teamId": 17,
-    "teamName": "咕咕鸟",
-    "valid": true
-  }, {
-    "teamId": 18,
-    "teamName": "1-7",
-    "valid": true
-  }, {
-    "teamId": 19,
-    "teamName": "正经人",
-    "valid": true
-  }, {
-    "teamId": 20,
-    "teamName": "超励志小组",
-    "valid": true
-  }, {
-    "teamId": 21,
-    "teamName": "晚晚鸟",
-    "valid": true
-  }, {
-    "teamId": 22,
-    "teamName": "3-1",
-    "valid": true
-  }, {
-    "teamId": 23,
-    "teamName": "3-2",
-    "valid": true
-  }, {
-    "teamId": 24,
-    "teamName": "3-3",
-    "valid": true
-  }, {
-    "teamId": 25,
-    "teamName": "3-4",
-    "valid": true
-  }, {
-    "teamId": 26,
-    "teamName": "3-5",
-    "valid": true
-  }, {
-    "teamId": 27,
-    "teamName": "3-6",
-    "valid": true
-  }, {
+[{
+  "teamApplicationId": 5,
+  "team": {
     "teamId": 40,
-    "teamName": "123456",
-    "valid": false
-  }]
-}
+    "teamName": "123456"
+  },
+  "teacher": {
+    "teacherId": 3,
+    "email": "767868009@qq.com",
+    "name": "邱明"
+  },
+  "reason": "111"
+}, {
+  "teamApplicationId": 6,
+  "team": {
+    "teamId": 19,
+    "teamName": "正经人"
+  },
+  "teacher": {
+    "teacherId": 3,
+    "email": "767868009@qq.com",
+    "name": "邱明"
+  },
+  "reason": "321"
+}]

@@ -101,9 +101,6 @@ export default {
         }
       ],
       show: false,
-      showContent: {},
-      showContent1: false,
-      showContent2: false,
     };
   },
   mounted: function() {//挂载:获取round 和 seminar
@@ -115,48 +112,41 @@ export default {
               this.$set(rounditem,'showRoundContent',false);
             })
           });
-    for (var i = 0; i < this.rounds.length; i++) {
-      this.rounds[i].seminar = this.seminars;
-    }
+          
   },
   methods: {
     click: function(round,seminar) {
+      console.log(round)
       this.$store.state.student.currentRound=round
       this.$store.state.student.currentSeminar = seminar
-      this.$axios
-        .get(
-          "/seminar/" + seminar.seminarId + "/class/" + seminar.klassSeminars[0].klass.klassId
-        )
-        .then(response => {
-          this.$store.state.student.currentClass=response.data
-          this.$store.state.student.reportDDL=response.data.klassSeminar.reportDDL
-          this.$store.state.student.seminarSignEndTime=moment(response.data.seminar.signEndTime)
-          
-          if(response.data.klassSeminar.status===0&&response.data.attendance===null){
-            //未开未报
+      
+      this.$axios.get('/klassseminar/'+seminar.klassSeminars[0].klassSeminarId+'/attendance')
+        .then((response)=>{
+          this.$store.state.student.currentAttendance=response.data
+          if(parseInt(seminar.klassSeminars[0].status)===0&&response.data.message==='other'){
+            console.log('未开未报')
             this.$router.push({name:'SeminarRegistration'})
-          }
-          else if(response.data.klassSeminar.status===1&&response.data.attendance===null){
-            //正在未报
+          }else if(parseInt(seminar.klassSeminars[0].status)===1&&response.data.message==='other'){
+            console.log('正在未报')
             this.$router.push({name:'SeminarDetail'})
           }
-          else if(response.data.klassSeminar.status===2&&response.data.attendance===null){
-            //已完未报
+          else if(parseInt(seminar.klassSeminars[0].status)===2&&response.data.message==='other'){
+            console.log('已完未报')
             this.$router.push({name:'SeminarSeqFinished'})
-          }
-          else if(response.data.klassSeminar.status===0&&response.data.attendance!==null){
-            //未开始已报
+          }else if(parseInt(seminar.klassSeminars[0].status)===0&&response.data.message!=='other'){
+            console.log('未开始已报')
             this.$router.push({name:'SeminarUnstartSigned'})
-          }
-          else if(response.data.klassSeminar.status===1&&response.data.attendance!==null){
-            //正在已报
+          }else if(parseInt(seminar.klassSeminars[0].status)===1&&response.data.message!=='other'){
+            console.log('正在已报')
             this.$router.push({name:'SeminarRunningSigned'})
           }
-          else if(response.data.klassSeminar.status===2&&response.data.attendance!==null){
-            //已完已报 -》分成有没有截止的
+          else if(parseInt(seminar.klassSeminars[0].status)===2&&response.data.message!=='other'){
+            console.log('已完已报')
             this.$router.push({name:'SeminarSigned'})
           }
-        });
+        })
+          
+          
     },
     running: function() {
       this.$router.push("/mobile/Student/studentSeminarList");

@@ -99,7 +99,12 @@ public class TeamOrStrategy implements Strategy {
 
     @Override
     public List<Strategy> getStrategy(List<Strategy> strategies) {
-        strategies = subStrategyOne.getStrategy(strategies);
+        if (subStrategyOne != null) {
+            strategies = subStrategyOne.getStrategy(strategies);
+        }
+        if (subStrategyTwo != null) {
+            strategies = subStrategyTwo.getStrategy(strategies);
+        }
         TeamOrStrategy strategy = new TeamOrStrategy();
         strategy.setType(TEAM_OR_STRATEGY_TYPE);
         String firstStrategyType = strategies.get(0).getType();
@@ -108,7 +113,6 @@ public class TeamOrStrategy implements Strategy {
             teamOrStrategy.setType(TEAM_OR_STRATEGY_TYPE);
             strategies.add(0, teamOrStrategy);
         }
-        strategies = subStrategyTwo.getStrategy(strategies);
         return strategies;
     }
 

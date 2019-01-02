@@ -1,35 +1,39 @@
 <template>
   <div class="student">
     <x-header
-      title="OOAD-讨论课"
+      :title="this.$store.state.student.currentCourse.courseName"
       style="height:60px;padding-top:12px;font-size:20px"
       :left-options="{showBack:false}"
       :right-options="{showMore: true}"
       @on-click-more="show=!show"
     ></x-header>
 
-
-      <group>
       <cell :title="'轮次'" :value="'第'+this.$store.state.student.currentRound.order+'轮'"></cell>
       
       <cell :title="'主题'" :value="this.$store.state.student.currentSeminar.topic"></cell>
       <cell :title="'课次序号'" :value="this.$store.state.student.currentSeminar.klassSeminars[0].klass.klassSerial"></cell>
       <x-textarea :title="'要求'" :show-counter="false" :placeholder="this.$store.state.student.currentSeminar.introduction" disabled></x-textarea>
-      <cell :title="'课程情况'">未开始</cell>
-      <cell :title="'PPT'">未开始</cell>
-      <x-button @click.native="postPPT" type="primary" style="margin-top:18px;color:#fff">提交PPT</x-button>
-    </group>
+      <cell title="报名">{{'第'+this.$store.state.student.currentAttendance.message+'组'}}
+        &emsp;&emsp;&emsp;&emsp;<a @click="modify" style="text-decoration:underline;color:#1AAD19">修改</a>
+      </cell>
+      <cell title="课程情况">未开始</cell>
+      <cell title="PPT">
+        <template v-if="this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].presentationFile">
+          已提交  
+        </template>
+        <template v-else>
+          未提交
+        </template>
+      </cell>
+      <el-upload :action="'http://localhost:8000/attendance/'+this.$store.state.student.currentAttendance.attendance[parseInt(this.$store.state.student.currentAttendance.message)-1].attendanceId+'/powerpoint'"
+      :headers="headers">
+          <x-button type="primary" style="width:200px;margin-top:18px;color:#fff">提交PPT</x-button>
+      </el-upload>
+      
+      
+    
 
     <div v-transfer-dom>
-      <confirm
-        v-model="submit"
-        ref="confirm"
-        :show-cancel-button="false"
-        title="上传文件"
-        show-input
-        @on-confirm="onConfirm"
-        @on-show="onshow"
-      ></confirm>
       <popup v-model="show" height="15%">
         <div>
           <cell value-align="left" title>
@@ -103,8 +107,14 @@ export default {
   data() {
     return {
       show: false,
-      submit: false
     };
+  },
+  computed:{
+    headers(){
+      return{
+        'Authorization':"Bearer "+this.$store.state.token
+      }
+    }
   },
   methods: {
     modify: function() {
@@ -118,18 +128,9 @@ export default {
     StudentInfo: function() {
       this.$router.push("/mobile/student/studentInfo");
     },
-    onConfirm: function() {
-      console.log("确认");
-    },
-    onshow: function() {
-      this.$refs.confirm.setInputValue("业务流程分析1-1.doc");
-    },
     score: function() {
       this.$router.push("/mobile/student/course/seminar/seminarScore");
     },
-    postPPT:function(){
-
-    }
   }
 };
 </script>

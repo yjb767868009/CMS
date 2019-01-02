@@ -1,9 +1,7 @@
 package com.xmu.cms.dao;
 
-import com.xmu.cms.entity.Round;
-import com.xmu.cms.entity.RoundScore;
-import com.xmu.cms.entity.SeminarScore;
-import com.xmu.cms.entity.Team;
+import com.xmu.cms.entity.*;
+import com.xmu.cms.mapper.CourseMapper;
 import com.xmu.cms.mapper.RoundMapper;
 import com.xmu.cms.mapper.RoundScoreMapper;
 import com.xmu.cms.mapper.SeminarScoreMapper;
@@ -19,6 +17,9 @@ import java.util.List;
  */
 @Component
 public class ScoreDao {
+
+    @Autowired
+    private CourseMapper courseMapper;
 
     @Autowired
     private RoundScoreMapper roundScoreMapper;
@@ -84,6 +85,9 @@ public class ScoreDao {
         }
         roundScore.setQuestionScore(questionScore);
 
+        Course course = courseMapper.getCourseById(round.getCourse().getCourseId());
+        Float totalScore = presentationScore * course.getPresentationWeight() / 100 + reportScore * course.getReportWeight() / 1000 + questionScore * course.getQuestionWeight() / 100;
+        roundScore.setTotalScore(totalScore);
         roundScoreMapper.updateRoundScore(roundScore);
     }
 
@@ -96,11 +100,25 @@ public class ScoreDao {
     }
 
     public void updateReportScore(SeminarScore seminarScore) {
-        seminarScoreMapper.updateReportScore(seminarScore);
+        SeminarScore findSeminarScore = seminarScoreMapper.getSeminarScoreInKlassSeminarAndTeam(seminarScore);
+        if (findSeminarScore == null) {
+            seminarScore.setPresentationScore((float) 0);
+            seminarScore.setQuestionScore((float) 0);
+            seminarScoreMapper.insertSeminarScore(seminarScore);
+        } else {
+            seminarScoreMapper.updateReportScore(seminarScore);
+        }
     }
 
     public void updatePresentationScore(SeminarScore seminarScore) {
-        seminarScoreMapper.updatePresentationScore(seminarScore);
+        SeminarScore findSeminarScore = seminarScoreMapper.getSeminarScoreInKlassSeminarAndTeam(seminarScore);
+        if (findSeminarScore == null) {
+            seminarScore.setReportScore((float) 0);
+            seminarScore.setQuestionScore((float) 0);
+            seminarScoreMapper.insertSeminarScore(seminarScore);
+        } else {
+            seminarScoreMapper.updatePresentationScore(seminarScore);
+        }
     }
 
     public SeminarScore getSeminarTeamScore(BigInteger seminarId, BigInteger teamId) {
@@ -109,5 +127,10 @@ public class ScoreDao {
 
     public List<SeminarScore> getSeminarScoreInSeminar(BigInteger seminarId) {
         return seminarScoreMapper.getSeminarScoreInSeminar(seminarId);
+    }
+
+    public void updateQuestionScore(Question question) {
+        // TODO: 2019/1/1  
+        seminarScoreMapper.updateQuestionScore(question);
     }
 }

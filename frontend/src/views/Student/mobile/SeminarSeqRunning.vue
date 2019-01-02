@@ -1,7 +1,7 @@
 <template>
-  <div class="student" style="height:800px;background:#eee;">
+  <div>
     <x-header
-      title="讨论课正在进行"
+      :title="this.$store.state.student.currentCourse.courseName"
       style="height:60px;padding-top:12px;font-size:20px"
       :left-options="{showBack:false}"
       :right-options="{showMore: true}"
@@ -9,27 +9,35 @@
     ></x-header>
     
     <group>
-
-      <cell>{{KlassSeminarRun}}</cell>
-    <cell>{{'第'+KlassSeminarRun.teamOrder+'组展示中    '+this.$store.state.student.currentSeminar.topic+'   已有'+Questions.length+'位同学提问'}}</cell>
+    
+    <x-header style="background-color:#fff;">
+      <span style="color:#000;">{{this.$store.state.student.currentSeminar.topic}}</span>
+      <span style="color:#000;" slot="overwrite-left">{{'第'+currentTeamOrder+'组 展示'}}</span>
+      <span style="color:#000;" slot="right">{{'已有'+questions.length+'位同学提问'}}</span>
+    </x-header>
+    
     <template v-for="attendance in attendances">
-      <cell :key="attendance.attendanceId" :title="'第'+attendance.teamOrder+'组'">{{attendance.team.teamName}}</cell>
+      <template v-if="attendance.present">
+        <cell style="color:#E64340" :key="attendance.attendanceId" :title="'第'+attendance.teamOrder+'组'">{{attendance.team.teamName}}</cell>
+      </template>
+      <template v-else>
+        <cell :key="attendance.attendanceId" :title="'第'+attendance.teamOrder+'组'">{{attendance.team.teamName}}</cell>
+      </template>
     </template>
 
     </group>
 
-    <flexbox style="margin-top:30px">
-        <x-button type="primary" @click.native="question=!question">发起提问</x-button>
-    </flexbox>
+    <x-button style="margin-top:30px" type="primary" @click.native="ask">发起提问</x-button>
 
     <div v-transfer-dom>
-
-      <confirm v-model="question"
-        :show-cancel-button="false"
-        title="提问成功"
-        @on-confirm="onConfirm">
-        <p style="text-align:center;">等待老师抽取</p>
+      <confirm v-model="questionConfrimShow"
+      title="提问"
+      @on-confirm="onConfirm">
+        <p style="text-align:center;">确认提问?</p>
       </confirm>
+    </div>
+
+    <div v-transfer-dom>
       <popup v-model="show" height="15%">
         <div>
           <cell value-align="left" title>
@@ -98,46 +106,64 @@ export default {
   data() {
     return {
       show: false,
-      question:false,
+      questionConfrimShow:false,
       questions:'',
-      Questions:'',
       attendances:'',
       KlassSeminarRun:'',
     };
   },
   mounted: function () {
       this.initWebSocket()
-      //this.$store.state.teacher.currentKlassSeminar.klassSeminarId
       this.$axios.get('/klassseminar/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/run')
         .then((response) => {
-          console.log(response)
           this.questions = response.data.questions
           this.attendances = response.data.attendances
-          this.Questions = []
-          for (var i = 0; i < this.questions.length; i++) {
-            this.Questions.push(this.questions[i].name)
-          }
-          this.Teams = []
-          for (var i = 0; i < this.attendances.length; i++) {
-            this.Teams.push(this.attendances[i].team.teamName)
-          }
         })
     },
     beforeDestroy: function () {
-      // 页面离开时断开连接,清除定时器
+      // 页面离开时断开连接
       this.disconnect();
     },
+  computed:{
+    currentAttendanceId:function(){
+      for(var i=0;i<this.attendances.length;i++){
+        if(this.attendances[i].present){
+          return this.attendances[i].attendanceId
+        }
+      }
+      return -1
+    },
+    currentTeamOrder:function(){
+      for(var i=0;i<this.attendances.length;i++){
+        if(this.attendances[i].present){
+          return this.attendances[i].teamOrder
+        }
+      }
+      return -1
+    },
+  },
   methods: {
-    onCancel: function() {
-      console.log("取消");
+    ask:function(){
+      this.questionConfrimShow=true
     },
     onConfirm: function() {
-      console.log("确认");
-      let len = this.attendances.length
-      console.log(this.attendances[len-1].attendanceId+1)
-        this.stompClient.send('/app/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/question', {}, {
-          attendanceId:this.attendances[len-1].attendanceId+1
-        })
+        console.log(JSON.stringify({
+          student:{
+            studentId:this.$store.state.student.studentId
+          },
+          attendance:this.currentAttendanceId
+        }))
+        this.stompClient
+        .send('/app/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/question', 
+        {
+          'Authorization':"Bearer "+this.$store.state.token
+        }, 
+        JSON.stringify({
+          student:{
+            studentId:this.$store.state.student.studentId
+          },
+          attendance:{attendanceId:this.currentAttendanceId}
+        }))
     },
     running: function() {
       this.$router.push("/mobile/Student/studentSeminarList");
@@ -145,6 +171,8 @@ export default {
     StudentInfo: function() {
       this.$router.push("/mobile/student/studentInfo");
     },
+
+
     //websocket
       initWebSocket: function () {
         this.connection()
@@ -152,11 +180,10 @@ export default {
 
       connection: function () {
         //建立链接对象
-        this.socket = new SockJS('http://119.23.49.112:8000/gs-guide-websocket')
+        this.socket = new SockJS('http://localhost:8000/gs-guide-websocket')
         //获取STOMP子协议的客户端对象
         this.stompClient = Stomp.over(this.socket)
-        //空header
-        //this.$store.state.teacher.currentKlassSeminar.klassSeminarId
+
         this.stompClient.connect({}, (frame) => {
           this.stompClient.subscribe('/topic/klassSeminar/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId, (KlassSeminarRun) => {
             this.KlassSeminarRun=JSON.parse(KlassSeminarRun.body)
@@ -173,10 +200,7 @@ export default {
         }
       },
       postQuestion: function () {
-        console.log(this.attendances[this.attendances.length].attendanceId+1)
-        this.stompClient.send('/app/'+this.$store.state.student.currentSeminar.klassSeminars[0].klassSeminarId+'/question', {}, {
-          attendanceId:this.attendances[this.attendances.length].attendanceId+1
-        })
+        
       },
   }
 };

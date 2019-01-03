@@ -127,4 +127,14 @@ public interface StudentMapper {
      */
     Student getKlassStudent(@Param("klassId") BigInteger klassId,
                             @Param("studentId") BigInteger studentId);
+
+    /**
+     * 获取课程里的队伍的成员
+     *
+     * @param courseId 课程id
+     * @param teamId   队伍id
+     * @return 学生列表
+     */
+    List<Student> getMembersInTeamAndCourse(@Param("courseId") BigInteger courseId,
+                                            @Param("teamId") BigInteger teamId);
 }

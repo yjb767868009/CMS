@@ -158,4 +158,10 @@ public class TeamDao {
     public List<Course> getAllCourse() {
         return courseMapper.getAllCourse();
     }
+
+    public Team getCourseTeamAndMembers(BigInteger courseId, BigInteger teamId) {
+        Team team = teamMapper.getTeamByTeamId(teamId);
+        team.setMembers(studentMapper.getMembersInTeamAndCourse(courseId, team.getTeamId()));
+        return team;
+    }
 }

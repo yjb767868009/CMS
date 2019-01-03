@@ -121,4 +121,17 @@ public class TeamService {
         }
         return team;
     }
+
+    public Team getCourseTeamAndMembers(BigInteger courseId, BigInteger teamId) {
+        Team team = teamDao.getCourseTeamAndMembers(courseId, teamId);
+        List<Student> students = team.getMembers();
+        for (Student student : students) {
+            if (student.getStudentId().equals(team.getLeader().getStudentId())) {
+                students.remove(student);
+                team.setMembers(students);
+                break;
+            }
+        }
+        return team;
+    }
 }

@@ -240,7 +240,9 @@
         //获取STOMP子协议的客户端对象
         this.stompClient = Stomp.over(this.socket)
         //this.$store.state.teacher.currentKlassSeminar.klassSeminarId
-        this.stompClient.connect({}, (frame) => {
+        this.stompClient.connect({
+          'Authorization':"Bearer "+this.$store.state.token
+        }, (frame) => {
           this.stompClient.subscribe('/topic/klassSeminar/'+this.$store.state.teacher.currentKlassSeminar.klassSeminarId
           , (KlassSeminarRun) => {
             this.KlassSeminarRun=JSON.parse(KlassSeminarRun.body)
@@ -272,12 +274,12 @@
 
       nextQuestion: function () {
         this.stompClient.send('/app/'+this.$store.state.teacher.currentKlassSeminar.klassSeminarId
-        +'/getQuestion', {}, {})
+        +'/getQuestion', {'Authorization':"Bearer "+this.$store.state.token}, {})
       },
       nextTeam: function () {
         if (this.currentTeamIndex >= 0 && this.currentTeamIndex < this.Teams.length -1) {
           this.stompClient.send('/app/'+this.$store.state.teacher.currentKlassSeminar.klassSeminarId
-        +'/nextAttendance',{},{})
+        +'/nextAttendance',{'Authorization':"Bearer "+this.$store.state.token},{})
           this.currentTeamIndex = this.currentTeamIndex + 1
           this.currentTeam = this.Teams[this.currentTeamIndex]
 
@@ -287,7 +289,7 @@
       },
       endSeminar:function(){
         this.stompClient.send('/app/'+this.$store.state.teacher.currentKlassSeminar.klassSeminarId
-        +'/endAttendance',{},{})
+        +'/endAttendance',{'Authorization':"Bearer "+this.$store.state.token},{})
       }
     }
   }

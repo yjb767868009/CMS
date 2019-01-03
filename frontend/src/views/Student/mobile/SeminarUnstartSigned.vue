@@ -25,7 +25,7 @@
           未提交
         </template>
       </cell>
-      <el-upload :action="'http://localhost:8000/attendance/'+this.$store.state.student.currentAttendance.attendance[attendanceIndex].attendanceId+'/powerpoint'"
+      <el-upload :action="'http://119.23.49.112:8000/attendance/'+this.$store.state.student.currentAttendance.attendance[attendanceIndex].attendanceId+'/powerpoint'"
       :headers="headers">
           <x-button type="primary" style="width:200px;margin-top:18px;color:#fff">提交PPT</x-button>
       </el-upload>

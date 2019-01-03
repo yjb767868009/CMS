@@ -1268,7 +1268,7 @@
         is_join:true,
         currentCourse: '',
         currentSeminar: '',
-        uploadFileURL:'http://localhost:8000/',
+        uploadFileURL:'http://119.23.49.112:8000/',
         scoreTableData:[{
           round:'',
           seminarName:'',

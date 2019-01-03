@@ -39,7 +39,7 @@
           </template>
           <template v-if="!this.$store.state.student.currentAttendance.attendance[attendanceIndex].presentationFile">
             <cell title="PPT">未提交</cell>
-            <el-upload :action="'http://localhost:8000/attendance/'+this.$store.state.student.currentAttendance.attendance[attendanceIndex].attendanceId+'/powerpoint'"
+            <el-upload :action="'http://119.23.49.112:8000/attendance/'+this.$store.state.student.currentAttendance.attendance[attendanceIndex].attendanceId+'/powerpoint'"
             :headers="headers">
                 <x-button type="primary" style="width:200px;margin-top:18px;color:#fff">提交PPT</x-button>
             </el-upload>
@@ -49,7 +49,7 @@
           </template>
           <template v-if="!this.$store.state.student.currentAttendance.attendance[attendanceIndex].reportFile">
             <cell title="书面报告">未提交</cell>
-            <el-upload :action="'http://localhost:8000/attendance/'+this.$store.state.student.currentAttendance.attendance[attendanceIndex].attendanceId+'/report'"
+            <el-upload :action="'http://119.23.49.112:8000/attendance/'+this.$store.state.student.currentAttendance.attendance[attendanceIndex].attendanceId+'/report'"
             :headers="headers">
                 <x-button type="primary" style="width:200px;margin-top:18px;color:#fff">提交书面报告</x-button>
             </el-upload>

@@ -52,7 +52,7 @@
         <x-dialog v-model="showUpload" hide-on-blur>
           <div>
           <el-upload 
-          :action="'http://localhost:8000/class/' + this.currentKlassId + '/classfile'"
+          :action="'http://119.23.49.112:8000/class/' + this.currentKlassId + '/classfile'"
           :headers="this.headers"
           ref="upload"
           :on-preview="handlePreview"

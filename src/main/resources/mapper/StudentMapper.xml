@@ -123,7 +123,7 @@
           AND student.id = klass_student.student_id
     </select>
 
-    <select id="getMembersInTeamAndCourse" resultType="StudentResultMap">
+    <select id="getMembersInTeamAndCourse" resultMap="StudentResultMap">
         select *
         from student,
              klass,

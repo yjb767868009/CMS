@@ -119,7 +119,7 @@
         this.$router.push('/mobile/teacher/seminars')
       },
       getmembers(teams){
-        this.$axios.get('/team/'+teams.teamId)
+        this.$axios.get('/course/'+this.$store.state.teacher.currentCourse.courseId+'/team/'+teams.teamId)
         .then((res)=>{
             this.$set(teams,'members','')
             teams.members=res.data.team

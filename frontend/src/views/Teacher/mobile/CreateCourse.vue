@@ -59,7 +59,7 @@
     <div v-transfer-dom>
         <popup v-model="showteam">
         <template v-for="course in courses">
-            <cell v-if="course.selected===false" :title="course.courseName+' '+course.teacher.name" @click.native="addteamrule(course)"></cell>
+            <cell :key="course.courseId" v-if="course.selected===false" :title="course.courseName+' '+course.teacher.name" @click.native="addteamrule(course)"></cell>
         </template>
         </popup>
     </div>
@@ -67,7 +67,7 @@
     <div v-transfer-dom>
         <popup v-model="showConflict">
         <template v-for="course in cours">
-            <cell v-if="course.selected===false" :title="course.courseName+' '+course.teacher.name" @click.native="addmenu(course)"></cell>
+            <cell :key="course.courseId" v-if="course.selected===false" :title="course.courseName+' '+course.teacher.name" @click.native="addmenu(course)"></cell>
         </template>
         </popup>
     </div>
@@ -290,8 +290,6 @@ export default {
     <group title="冲突课程：" style="text-align:left" >
         <template v-for="conflictCourse in conflictCourses"> 
                 <cell value-align="left"><span style="padding-left:6em;color:#000">{{conflictCourse.courseName+' '+conflictCourse.teacher.name}}</span></cell>
-                <!-- <x-input></x-input>
-                <x-input></x-input> -->
         </template>
         <x-button mini style="margin-left:21em;margin-bottom:8px" @click.native="newConflict()" type="primary">新增</x-button>
     </group>

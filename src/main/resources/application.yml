@@ -7,9 +7,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://119.23.49.112:3306/standard_seminar_system?characterEncoding=utf8&useSSL=true
-    username: dbuser
-    password: weak
+    url: jdbc:mysql://47.52.88.176:3306/DB3_3?characterEncoding=utf8&useSSL=true
+    username: user3_3
+    password: ooad3
   redis:
     host: localhost
     port: 6379

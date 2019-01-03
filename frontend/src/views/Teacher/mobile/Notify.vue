@@ -183,7 +183,7 @@ import {XHeader,
                 }
             }
             }
-                
+                this.$router.go(0)
                 this.YN=''  
                 this.taskId=''
         }

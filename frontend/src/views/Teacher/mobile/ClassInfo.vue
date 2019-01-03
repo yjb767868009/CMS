@@ -223,6 +223,7 @@
         }).then((res)=>{
           console.log(res)
           this.addingKlass=false
+          this.$router.go(0)
         })
         }else{
           this.$message('请完善信息')

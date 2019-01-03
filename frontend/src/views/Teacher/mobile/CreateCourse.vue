@@ -60,15 +60,15 @@
     <div v-transfer-dom>
         <popup v-model="showteam">
         <template v-for="course in courses">
-            <cell :title="course.courseName+' '+course.teacher.name" @click.native="addteamrule(course)"></cell>
+            <cell v-if="course.selected==false" :title="course.courseName+' '+course.teacher.name" @click.native="addteamrule(course)"></cell>
         </template>
         </popup>
     </div>
 
     <div v-transfer-dom>
         <popup v-model="showConflict">
-        <template v-for="course in courses">
-            <cell :title="course.courseName+' '+course.teacher.name" @click.native="addmenu(course)"></cell>
+        <template v-for="course in cours">
+            <cell v-if="course.selected==false" :title="course.courseName+' '+course.teacher.name" @click.native="addmenu(course)"></cell>
         </template>
         </popup>
     </div>
@@ -116,7 +116,7 @@ export default {
             teamStartTime:'',
             teamEndTime:'',
             strategy:'',
-            courses:'',
+            courses:'',cours:'',
             conflictCourses:[],
             teamruleCourses:[],
             showteam:false,
@@ -140,6 +140,11 @@ export default {
         this.$axios.get('/allcourse')
         .then((res)=>{
             this.courses=res.data
+            this.cours=res.data
+            for(var i=0;i<res.data.length;i++){
+                this.$set(this.courses[i],'selected',false)
+                this.$set(this.cours[i],'selected',false)
+            }
         })
     },
     methods: {
@@ -219,6 +224,7 @@ export default {
         this.conflictCourseList.push(cour.courseId)
         console.log(this.conflictCourseList)
         this.showConflict=false
+        cour.selected=true
     },
     addteamrule(cour){
         this.teamruleCourses.push({
@@ -226,6 +232,7 @@ export default {
             max:0,
             min:0,})
         this.ruleCourseList.push(cour.courseId)
+        cour.selected=true
         console.log(this.ruleCourseList)
         this.showteam=false
     }

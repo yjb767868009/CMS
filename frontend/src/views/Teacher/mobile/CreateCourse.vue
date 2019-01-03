@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <template>
   <div class="course">
     <x-header title="新建课程" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
@@ -33,7 +32,7 @@
             </group>
         </template>
         <x-button mini style="margin-left:21em;margin-bottom:8px" @click.native="newTeamRule()" type="primary">新增</x-button>
-    </template>
+    </template>ss
 
     <group title="选修课人数要求：" v-if="this.teamruleCourses!=''">
       <button-tab v-model="strategy">
@@ -55,13 +54,12 @@
         <datetime style="height:1.5em" v-model="teamStartTime" :start-date="startDateS" :end-date="endDateS" format="YYYY-MM-DD HH:mm"  title="组队开始时间"></datetime>
         <datetime style="height:1.5em" v-model="teamEndTime" :start-date="startDateE" :end-date="endDateE" format="YYYY-MM-DD HH:mm"  title="组队截止时间"></datetime>
     </group>
-
     <x-button @click.native="newCourse" type="primary" style="margin-top:40px;color:#fff">发布</x-button>
     
     <div v-transfer-dom>
         <popup v-model="showteam">
         <template v-for="course in courses">
-            <cell v-if="course.selected==false" :title="course.courseName+' '+course.teacher.name" @click.native="addteamrule(course)"></cell>
+            <cell v-if="course.selected===false" :title="course.courseName+' '+course.teacher.name" @click.native="addteamrule(course)"></cell>
         </template>
         </popup>
     </div>
@@ -69,11 +67,10 @@
     <div v-transfer-dom>
         <popup v-model="showConflict">
         <template v-for="course in cours">
-            <cell v-if="course.selected==false" :title="course.courseName+' '+course.teacher.name" @click.native="addmenu(course)"></cell>
+            <cell v-if="course.selected===false" :title="course.courseName+' '+course.teacher.name" @click.native="addmenu(course)"></cell>
         </template>
         </popup>
     </div>
-
     <div v-transfer-dom>
       <popup v-model="show" height="23%">
           <div>
@@ -247,7 +244,6 @@ export default {
   padding: 0 15px;
 }
 </style>
-=======
 <template>
   <div class="course">
     <x-header title="新建课程" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}" @on-click-more="show=!show">
@@ -509,4 +505,3 @@ export default {
   padding: 0 15px;
 }
 </style>
->>>>>>> ca256986ab5b3ba32ce9e270a2ac02cc059055ff

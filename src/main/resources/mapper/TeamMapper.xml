@@ -325,4 +325,17 @@
           and team.leader_id = student.id
           and team.course_id = course.id
     </select>
+
+    <select id="getSimpleTeamInShareCourse" resultMap="TeamResultMap">
+        select team.id as teamId, team_name as teamName, team.status
+        from team,
+             team_student,
+             klass_student,
+             klass
+        where team.course_id = #{mainCourseId}
+          and team_student.team_id = team.id
+          and team_student.student_id = klass_student.student_id
+          and klass_student.klass_id = klass.id
+          and klass.course_id = #{courseId}
+    </select>
 </mapper>

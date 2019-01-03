@@ -153,4 +153,13 @@ public interface TeamMapper {
      */
     Team getTeamBySerial(@Param("klassSerial") Integer klassSerial,
                          @Param("teamSerial") Integer teamSerial);
+
+    /**
+     * 获取共享组队后的队伍列表
+     *
+     * @param mainCourseId 主课程id
+     * @param courseId     课程id
+     * @return 队伍列表
+     */
+    List<Team> getSimpleTeamInShareCourse(@Param("mainCourseId") BigInteger mainCourseId, @Param("courseId") BigInteger courseId);
 }

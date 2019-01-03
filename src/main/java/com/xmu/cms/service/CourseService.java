@@ -87,7 +87,8 @@ public class CourseService {
     public List<Team> getTeamInCourse(BigInteger courseId) {
         Course mainCourse = courseDao.getTeamMainCourse(courseId);
         if (mainCourse != null) {
-            courseId = mainCourse.getCourseId();
+            BigInteger mainCourseId = mainCourse.getCourseId();
+            return teamDao.getSimpleTeamInShareCourse(mainCourseId, courseId);
         }
         return teamDao.getSimpleTeamInCourse(courseId);
     }

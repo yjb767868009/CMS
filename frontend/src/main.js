@@ -28,6 +28,7 @@ Vue.use(VueCookie)
 Vue.use(MintUI)
 
 axios.defaults.baseURL='http://119.23.49.112:8000'
+//axios.defaults.baseURL='http://localhost:8000'
 axios.defaults.withCredentials=true
 
 

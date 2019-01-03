@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div>
     <x-header :title="this.$store.state.teacher.currentCourse.courseName" style="height:60px;padding-top:12px" :left-options="{showBack:false}" :right-options="{showMore: true}"
       @on-click-more="show=!show">
@@ -236,7 +236,7 @@
 
       connection: function () {
         //建立链接对象
-        this.socket = new SockJS('http://localhost:8000/gs-guide-websocket')
+        this.socket = new SockJS('http://119.23.49.112/gs-guide-websocket')
         //获取STOMP子协议的客户端对象
         this.stompClient = Stomp.over(this.socket)
         //this.$store.state.teacher.currentKlassSeminar.klassSeminarId

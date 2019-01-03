@@ -71,6 +71,37 @@ public class TeamController {
         return message;
     }
 
+    @Secured({"ROLE_TEACHER", "ROLE_STUDENT"})
+    @GetMapping(value = "/course/{courseId}/team/{teamId}")
+    public Map<String, Object> getCourseTeam(UserInfo info, @PathVariable("courseId") BigInteger courseId,
+                                             @PathVariable("teamId") BigInteger teamId) {
+        Map<String, Object> message = new HashMap<>(2);
+        switch (info.getUserType()) {
+            case "teacher":
+                message.put("team", teamService.getCourseTeamAndMembers(courseId, teamId));
+                break;
+            case "student":
+                Team team = teamService.getCourseTeamAndMembers(courseId, teamId);
+                List<Student> students = team.getMembers();
+                message.put("role", "no");
+                if (team.getLeader().getStudentId().equals(info.getUserId())) {
+                    message.put("role", "leader");
+                } else {
+                    for (Student student : students) {
+                        if (student.getStudentId().equals(info.getUserId())) {
+                            message.put("role", "member");
+                            break;
+                        }
+                    }
+                }
+                message.put("team", team);
+                break;
+            default:
+                break;
+        }
+        return message;
+    }
+
     @Secured("ROLE_STUDENT")
     @CheckTeamPermission
     @DeleteMapping(value = "/team/{teamId}")

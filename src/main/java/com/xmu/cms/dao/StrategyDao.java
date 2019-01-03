@@ -105,23 +105,20 @@ public class StrategyDao {
 
     public Strategy getCourseStrategy(BigInteger courseId) {
         TeamStrategy teamStrategy = teamStrategyMapper.getCourseStrategy(courseId);
-       return setSubStrategy(teamStrategy);
+        return setSubStrategy(teamStrategy);
     }
 
     private Strategy insertStrategy(Strategy strategy) {
         BigInteger strategyId;
         switch (strategy.getType()) {
             case TEAM_AND_STRATEGY:
-                strategyId = BigInteger.valueOf(teamAndStrategyMapper.insertTeamAndStrategy((TeamAndStrategy) strategy));
-                strategy.setStrategyId(strategyId);
+                teamAndStrategyMapper.insertTeamAndStrategy((TeamAndStrategy) strategy);
                 return strategy;
             case TEAM_OR_STRATEGY:
-                strategyId = BigInteger.valueOf(teamOrStrategyMapper.insertTeamOrStrategy((TeamOrStrategy) strategy));
-                strategy.setStrategyId(strategyId);
+                teamOrStrategyMapper.insertTeamOrStrategy((TeamOrStrategy) strategy);
                 return strategy;
             case MEMBER_LIMIT_STRATEGY:
-                strategyId = BigInteger.valueOf(memberLimitStrategyMapper.insertMemberLimitStrategy((MemberLimitStrategy) strategy));
-                strategy.setStrategyId(strategyId);
+                memberLimitStrategyMapper.insertMemberLimitStrategy((MemberLimitStrategy) strategy);
                 return strategy;
             case CONFLICT_COURSE_STRATEGY:
                 ConflictCourseStrategy conflictCourseStrategy = (ConflictCourseStrategy) strategy;
@@ -132,8 +129,7 @@ public class StrategyDao {
                 }
                 return strategy;
             case COURSE_MEMBER_LIMIT_STRATEGY:
-                strategyId = BigInteger.valueOf(courseMemberLimitStrategyMapper.insertCourseMemberLimitStrategy((CourseMemberLimitStrategyMapper) strategy));
-                strategy.setStrategyId(strategyId);
+                courseMemberLimitStrategyMapper.insertCourseMemberLimitStrategy((CourseMemberLimitStrategy) strategy);
                 return strategy;
             default:
                 return null;
@@ -170,6 +166,7 @@ public class StrategyDao {
             }
         }
         TeamAndStrategy teamAndStrategy = null;
+        strategies.remove(0);
         for (Strategy strategy : strategies) {
             if (beforeStrategy == null) {
                 beforeStrategy = insertStrategy(strategy);

@@ -123,4 +123,16 @@
           AND student.id = klass_student.student_id
     </select>
 
+    <select id="getMembersInTeamAndCourse" resultMap="StudentResultMap">
+        select *
+        from student,
+             klass,
+             klass_student,
+             team_student
+        where team_student.team_id = #{teamId}
+          and klass.course_id = #{courseId}
+          and student.id = team_student.student_id
+          and klass.id = klass_student.klass_id
+          and klass_student.student_id = student.id
+    </select>
 </mapper>

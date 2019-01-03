@@ -18,7 +18,8 @@
 
     <insert id="insertTeamAndStrategy" parameterType="com.xmu.cms.entity.strategy.TeamAndStrategy">
         insert team_and_strategy (strategy_1_name, strategy_1_id, strategy_2_name, strategy_2_id)
-        VALUES (#{strategy.subStrategyOneName}, #{strategy.subStrategyOneId}, #{strategy.subStrategyTwoName}, #{strategy.subStrategyTwoId})
+        VALUES (#{strategy.subStrategyOne.type}, #{strategy.subStrategyOne.strategyId}, #{strategy.subStrategyTwo.type},
+        #{strategy.subStrategyTwo.strategyId})
         <selectKey keyProperty="strategy.strategyId" order="AFTER" resultType="java.math.BigInteger">
             select last_insert_id()
         </selectKey>

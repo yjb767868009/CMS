@@ -13,7 +13,7 @@
     </resultMap>
 
     <select id="getConflictCourseStrategyById" resultMap="ConflictCourseResultMap">
-        select course.id as courseOneId,
+        select course.id          as courseOneId,
                course.course_name as courseOneName,
                course.teacher_id  as teacherId,
                teacher_name       as teacherName
@@ -25,9 +25,9 @@
           and teacher.id = course.teacher_id
     </select>
 
-    <insert id="newConflictCourse" parameterType="com.xmu.cms.entity.strategy.ConflictCourseStrategy">
+    <insert id="insertConflictCourseStrategy">
         insert conflict_course_strategy (id, course_id)
-        values (#{strategy.strategyId}, #{strategy.course.courseId})
+        values (#{strategyId}, #{courseId})
     </insert>
 
     <delete id="deleteConflictCourse">
@@ -36,8 +36,9 @@
         where id = #{conflictCourseId}
     </delete>
 
-    <select id="getMaxId">
+    <select id="getMaxId" resultType="java.math.BigInteger">
         select max(id)
         from conflict_course_strategy
     </select>
+
 </mapper>

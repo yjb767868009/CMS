@@ -5,12 +5,12 @@
 
     <group>
       <cell :title="'主题'" :value="this.$store.state.teacher.currentSeminar.topic"></cell>
-      <cell :title="'课次序号'" :value="this.$store.state.teacher.currentKlassSeminar.klass.klassId"></cell>
+      <cell :title="'课次序号'" :value="this.$store.state.teacher.currentKlassSeminar.klass.klassSerial"></cell>
       <x-textarea :title="'要求'" :show-counter="false" :placeholder="this.$store.state.teacher.currentSeminar.introduction" disabled></x-textarea>
       <cell :title="'课程情况'">已完成&emsp;&emsp;&emsp;<a style="color:#1AAD19;text-decoration:underline" @click="checkInfo">查看信息</a></cell>
 
-      <x-button @click="report" type="primary" style="margin-top:100px;color:#fff">书面报告</x-button>
-      <x-button @click="grade" type="primary" plain style="margin-top:10px">查看成绩</x-button>
+      <x-button @click.native="report" type="primary" style="margin-top:100px;color:#fff">书面报告</x-button>
+      <x-button @click.native="grade" type="primary" plain style="margin-top:10px">查看成绩</x-button>
     </group>
 
     <div v-transfer-dom>

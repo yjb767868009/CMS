@@ -231,4 +231,8 @@ public class CourseService {
     public List<Course> getAllCourse() {
         return teamDao.getAllCourse();
     }
+
+    public List<Course> getCourseByTeacher(BigInteger teacherId) {
+        return courseDao.getAllCoursesByTeacherId(teacherId);
+    }
 }

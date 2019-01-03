@@ -65,14 +65,13 @@ public class CourseController {
         List<Course> courses = new ArrayList<Course>();
         switch (info.getUserType()) {
             case "teacher":
+                courses = courseService.getCourseByTeacher(info.getUserId());
                 List<Course> mainShareCourses = courseService.getMainShareCourseByTeacher(info.getUserId());
                 for (Course course : mainShareCourses) {
-                    courses.add(course);
                     coursePlus.put(course.getCourseId(), "主");
                 }
                 List<Course> subShareCourses = courseService.getSubShareCourseByTeacher(info.getUserId());
                 for (Course course : subShareCourses) {
-                    courses.add(course);
                     coursePlus.put(course.getCourseId(), "从");
                 }
                 break;
